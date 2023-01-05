@@ -68,7 +68,6 @@ let Bloodhound = require('bloodhound-js');
 			});
 		}
 	}
-
 	$(function () {
 		if ($('#kr-autosearch-wrapper').length) {
 			new Krautosearch();

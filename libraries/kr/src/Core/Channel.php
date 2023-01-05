@@ -146,25 +146,21 @@ class Channel
 
 		if ($this->hub->getValue('isEdit'))
 		{
-			KrFactory::getAdminModel('contractnote')::createContractNote($this->id, 'Reservation amended by channel',
-				'3', false);
+			KrFactory::getAdminModel('contractnote')::createContractNote($this->id, 'Reservation amended by channel', '3', false);
 		}
 		else
 		{
 			if ($this->hub->agent->deposit_paid)
 			{
-				KrFactory::getAdminModel('contractnote')::createContractNote($this->id,
-					'Channel confirmed reservation (deposit paid by agent)', '3', false);
+				KrFactory::getAdminModel('contractnote')::createContractNote($this->id, 'Channel confirmed reservation (deposit paid by agent)', '3', false);
 			}
 			else if ((int) $this->hub->getValue('on_request') > 0)
 			{
-				KrFactory::getAdminModel('contractnote')::createContractNote($this->id, 'Channel request reservation',
-					'3', false);
+				KrFactory::getAdminModel('contractnote')::createContractNote($this->id, 'Channel request reservation', '3', false);
 			}
 			else
 			{
-				KrFactory::getAdminModel('contractnote')::createContractNote($this->id,
-					'Channel provisional reservation', '3', false);
+				KrFactory::getAdminModel('contractnote')::createContractNote($this->id, 'Channel provisional reservation', '3', false);
 			}
 		}
 	}

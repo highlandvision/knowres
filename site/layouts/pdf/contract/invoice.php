@@ -39,8 +39,7 @@ extract($displayData);
 
 			<br><br>
 
-			<table
-				style="padding:5px;width:100%;border:1px solid #666;border-collapse:collapse;background-color:#d3f0f3;">
+			<table style="padding:5px;width:100%;border:1px solid #666;border-collapse:collapse;background-color:#d3f0f3;">
 				<tr>
 					<td colspan="2">
 						<?php echo KrMethods::plain('COM_KNOWRES_PDF_INVOICE_DSC'); ?>

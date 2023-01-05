@@ -93,6 +93,7 @@ class KrFactory
 		}
 		else if ($area == 'library')
 		{
+			// TODO-v4 test service forms again
 			$filepath = JPATH_LIBRARIES . '/' . $name . '/forms/' . $source . '.xml';
 		}
 		else

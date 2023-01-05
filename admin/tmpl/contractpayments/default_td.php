@@ -30,8 +30,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 				'cb'); ?>
 		</td>
 		<th scope="row">
-			<?php echo KrMethods::render('html.list.editable',
-				['data' => $this, 'item' => $this->item, 'i' => $i, 'column' => 'payment_date']); ?>
+			<?php echo KrMethods::render('html.list.editable', ['data' => $this, 'item' => $this->item, 'i' => $i, 'column' => 'payment_date']); ?>
 		</th>
 		<td>
 			<a href="<?php echo KrMethods::route('index.php?option=com_knowres&task=contract.show&id='

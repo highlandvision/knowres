@@ -14,6 +14,7 @@ defined('_JEXEC') or die;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Carbon\CarbonTimeZone;
+use Carbon\Exceptions\InvalidFormatException;
 use Exception as Exception;
 use HighlandVision\KR\Framework\KrMethods;
 
@@ -195,6 +196,7 @@ class TickTock
 	 * @param   string  $format  Return format Date format required
 	 * @param   string  $tz      Timezone
 	 *
+	 * @throws InvalidFormatException
 	 * @since  3.3.0
 	 * @return string
 	 */
@@ -381,6 +383,7 @@ class TickTock
 	 * @param   string  $sign    + or - to date
 	 * @param   string  $format  Output format
 	 *
+	 * @throws InvalidFormatException
 	 * @since  3.3.0
 	 * @return string
 	 */
@@ -408,6 +411,7 @@ class TickTock
 	 * @param   string  $sign    + to add or - to subtract from date
 	 * @param   string  $format  Output format
 	 *
+	 * @throws InvalidFormatException
 	 * @since  3.3.0
 	 * @return string
 	 */
@@ -435,6 +439,7 @@ class TickTock
 	 * @param   string  $sign    + or - to date
 	 * @param   string  $format  Output format
 	 *
+	 * @throws InvalidFormatException
 	 * @since  3.3.0
 	 * @return string
 	 */
@@ -501,6 +506,7 @@ class TickTock
 	 * @param   string  $string  Date string to parse
 	 * @param   string  $format  Return format Date format required
 	 *
+	 * @throws InvalidFormatException
 	 * @since  3.3.0
 	 * @return string
 	 */

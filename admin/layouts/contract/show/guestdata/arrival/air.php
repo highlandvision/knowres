@@ -20,16 +20,11 @@ extract($displayData);
 ?>
 
 	<div class="row">
-		<div
-			class="col-2 small italic"><?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATA_ARRIVAL_AIRLINE_LBL'); ?></div>
-		<div
-			class="col-2 small italic"><?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATA_ARRIVAL_NUMBER_LBL'); ?></div>
-		<div
-			class="col-3 small italic"><?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATA_ARRIVAL_AIR_FROM_LBL'); ?></div>
-		<div
-			class="col-3 small italic"><?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATA_ARRIVAL_AIR_TO_LBL'); ?></div>
-		<div
-			class="col-2 small italic"><?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATA_ARRIVAL_TIME_LBL'); ?></div>
+		<div class="col-2 small italic"><?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATA_ARRIVAL_AIRLINE_LBL'); ?></div>
+		<div class="col-2 small italic"><?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATA_ARRIVAL_NUMBER_LBL'); ?></div>
+		<div class="col-3 small italic"><?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATA_ARRIVAL_AIR_FROM_LBL'); ?></div>
+		<div class="col-3 small italic"><?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATA_ARRIVAL_AIR_TO_LBL'); ?></div>
+		<div class="col-2 small italic"><?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATA_ARRIVAL_TIME_LBL'); ?></div>
 	</div>
 
 <?php foreach ($air as $a): ?>

@@ -91,7 +91,6 @@ class PropertyroomController extends FormController
 		$translation->updateDefault('propertyroom', $id, 'name', $name);
 		$translation->updateDefault('propertyroom', $id, 'description', $description);
 
-		KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updateProperty', (int) $validData['property_id'],
-			0, 'ru');
+		KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updateProperty', (int) $validData['property_id'], 0, 'ru');
 	}
 }

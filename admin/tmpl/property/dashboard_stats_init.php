@@ -65,7 +65,6 @@ foreach ($this->stats as $p => $d)
 }
 ?>
 
-<div id="kr-stats-data" data-day='<?php echo $day; ?>' data-week='<?php echo $week; ?>'
-     data-month='<?php echo $month; ?>'
+<div id="kr-stats-data" data-day='<?php echo $day; ?>' data-week='<?php echo $week; ?>' data-month='<?php echo $month; ?>'
      data-year='<?php echo $year; ?>'>
 </div>

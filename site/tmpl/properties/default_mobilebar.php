@@ -27,8 +27,7 @@ use HighlandVision\KR\Framework\KrMethods;
 				</button>
 			</li>
 			<li>
-				<button type="button" class="button expanded top-off-canvas-toggle"
-				        data-toggle="kr-properties-search-off-canvas"
+				<button type="button" class="button expanded top-off-canvas-toggle" data-toggle="kr-properties-search-off-canvas"
 				        title="<?php echo KrMethods::plain('COM_KNOWRES_SEARCH'); ?>"
 				        aria-label="<?php echo KrMethods::plain('COM_KNOWRES_SEARCH'); ?>">
 					<i class="fas fa-search"></i>

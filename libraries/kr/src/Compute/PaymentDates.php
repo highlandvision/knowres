@@ -122,8 +122,7 @@ class PaymentDates
 			return $balance_date;
 		}
 
-		$balance_date = TickTock::modifyDays($this->Hub->getValue('arrival'), $this->Hub->getValue('balance_days'),
-			'-');
+		$balance_date = TickTock::modifyDays($this->Hub->getValue('arrival'), $this->Hub->getValue('balance_days'), '-');
 		if ($balance_date < $expiry_date)
 		{
 			$balance_date = $expiry_date;

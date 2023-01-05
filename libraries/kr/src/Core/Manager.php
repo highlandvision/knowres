@@ -117,13 +117,11 @@ class Manager
 		{
 			if (!$this->hub->getValue('fixrate'))
 			{
-				KrFactory::getAdminModel('contractnote')::createContractNote($this->id,
-					KrMethods::plain('COM_KNOWRES_CONTRACTNOTE_TEXT_EDIT'));
+				KrFactory::getAdminModel('contractnote')::createContractNote($this->id, KrMethods::plain('COM_KNOWRES_CONTRACTNOTE_TEXT_EDIT'));
 			}
 			else
 			{
-				KrFactory::getAdminModel('contractnote')::createContractNote($this->id,
-					KrMethods::plain('COM_KNOWRES_CONTRACTNOTE_TEXT_FIXRATE'));
+				KrFactory::getAdminModel('contractnote')::createContractNote($this->id, KrMethods::plain('COM_KNOWRES_CONTRACTNOTE_TEXT_FIXRATE'));
 			}
 		}
 	}

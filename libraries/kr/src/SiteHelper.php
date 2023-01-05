@@ -629,7 +629,7 @@ class SiteHelper
 	 */
 	public static function redirectProperty(int $id): void
 	{
-		$Itemid = self::getItemId('com_knowres', 'property', array('id' => $id));
+		$Itemid = self::getItemId('com_knowres', 'property', ['id' => $id]);
 		KrMethods::redirect(
 			KrMethods::route(
 				'index.php?option=com_knowres&view=property&id=' . $id . '&Itemid=' . $Itemid, false

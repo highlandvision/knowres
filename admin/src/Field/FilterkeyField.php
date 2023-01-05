@@ -30,7 +30,7 @@ class FilterkeyField extends KrListField
 	 * Keys to populate filter key list
 	 *
 	 * @throws RuntimeException|Exception
-	  * @since  3.4
+	  @since  3.4
 	 * @return array  The field option objects.
 	 */
 	protected function getOptions(): array

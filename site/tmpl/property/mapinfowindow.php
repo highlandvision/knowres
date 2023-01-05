@@ -45,8 +45,7 @@ use HighlandVision\KR\Utility;
 		<p>
 			<?php echo Utility::cutString($this->item->p1, 190); ?>
 		</p>
-		<a href="<?php echo $this->link; ?>" class="button small no-margin-bottom"
-		   title="<?php echo $this->item->property_name; ?>">
+		<a href="<?php echo $this->link; ?>" class="button small no-margin-bottom" title="<?php echo $this->item->property_name; ?>">
 			<?php echo KrMethods::plain('COM_KNOWRES_READ_MORE'); ?>
 		</a>
 	</div>

@@ -34,13 +34,11 @@ use Joomla\CMS\HTML\HTMLHelper;
 			$this->listDirn, $this->listOrder); ?>
 	</th>
 	<th scope="col" class="w-15 d-none d-md-table-cell">
-		<?php echo HTMLHelper::_('searchtools.sort', 'COM_KNOWRES_CONTRACTPAYMENTS_SERVICE_ID', 'service_name',
-			$this->listDirn,
+		<?php echo HTMLHelper::_('searchtools.sort', 'COM_KNOWRES_CONTRACTPAYMENTS_SERVICE_ID', 'service_name', $this->listDirn,
 			$this->listOrder); ?>
 	</th>
 	<th scope="col" class="w-5 d-none d-md-table-cell text-center">
-		<?php echo HTMLHelper::_('searchtools.sort', 'COM_KNOWRES_CONTRACTPAYMENTS_CONFIRMED', 'a.confirmed',
-			$this->listDirn,
+		<?php echo HTMLHelper::_('searchtools.sort', 'COM_KNOWRES_CONTRACTPAYMENTS_CONFIRMED', 'a.confirmed', $this->listDirn,
 			$this->listOrder); ?>
 	</th>
 	<th scope="col" class='w-10 d-none d-md-table-cell text-end'>
@@ -56,8 +54,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 			$this->listDirn, $this->listOrder); ?>
 	</th>
 	<th scope="col" class="w-1 d-none d-md-table-cell text-center">
-		<?php echo HTMLHelper::_('searchtools.sort', 'COM_KNOWRES_CONTRACTPAYMENTS_ACTIONED', 'a.actioned',
-			$this->listDirn,
+		<?php echo HTMLHelper::_('searchtools.sort', 'COM_KNOWRES_CONTRACTPAYMENTS_ACTIONED', 'a.actioned', $this->listDirn,
 			$this->listOrder); ?>
 	</th>
 	<th scope="col" class="w-3 d-none d-md-table-cell">

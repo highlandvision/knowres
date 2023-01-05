@@ -36,8 +36,7 @@ use HighlandVision\KR\Service;
 				</div>
 				<div class="card-footer text-center">
 					<?php if (!$type[1] && !$type[2]): ?>
-						<?php $link = KrMethods::route("index.php?option=com_knowres&view=service&layout=edit&plugin="
-							. $plugin); ?>
+						<?php $link = KrMethods::route("index.php?option=com_knowres&view=service&layout=edit&plugin=" . $plugin); ?>
 						<a href="<?php echo $link; ?>" class="button btn btn-primary">
 							<?php echo KrMethods::plain('COM_KNOWRES_SERVICES_NEW'); ?>
 						</a>

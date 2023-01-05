@@ -37,10 +37,14 @@ class Calendar
 	protected bool $blocked_done = false;
 	/** @var array Bookings */
 	protected array $bookings;
+	/** @var int Property booking type */
+	protected int $booking_type = 0;
 	/** @var array Changeover values */
 	protected array $changeovers = [];
 	/** @var int Contract ID if editing */
 	protected int $edit_id;
+	/** @var string Final rate date */
+	protected string $final;
 	/** @var string First date */
 	protected string $first;
 	/** @var array Copy of blocked Dates */
@@ -772,7 +776,8 @@ class Calendar
 			throw new RuntimeException('Property ID is not valid');
 		}
 
-		$this->property_id = $property_id;
+		$this->property_id  = $property_id;
+		$this->booking_type = $item->booking_type;
 	}
 
 	/**
@@ -853,7 +858,7 @@ class Calendar
 	}
 
 	/**
-	 * Get array of weekly dates outwith specified changeover day
+	 * Get array of all non changeover dates for weekly rates
 	 *
 	 * @throws Exception
 	 * @since  3.4.0
@@ -864,7 +869,7 @@ class Calendar
 		{
 			if ($r->min_guests == 1)
 			{
-				$dates = TickTock::allDatesBetween($r->valid_from, $r->valid_to);
+				$dates = TickTock::allDatesBetween($r->valid_from, TickTock::modifyDays($r->valid_to));
 				foreach ($dates as $date)
 				{
 					if ($date >= $this->first && $date <= $this->final)

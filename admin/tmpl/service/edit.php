@@ -154,10 +154,8 @@ if ($this->item->type == 'g')
 		<input type="hidden" name="jform[plugin]" value="<?php echo $this->item->plugin; ?>">
 		<input type="hidden" name="jform[type]" value="<?php echo $this->item->type; ?>">
 	<?php else: ?>
-		<input type="hidden" name="jform[plugin]"
-		       value="<?php echo $this->adhoc->getFieldAttribute('plugin', 'default'); ?>">
-		<input type="hidden" name="jform[type]"
-		       value="<?php echo $this->adhoc->getFieldAttribute('type', 'default'); ?>">
+		<input type="hidden" name="jform[plugin]" value="<?php echo $this->adhoc->getFieldAttribute('plugin', 'default'); ?>">
+		<input type="hidden" name="jform[type]" value="<?php echo $this->adhoc->getFieldAttribute('type', 'default'); ?>">
 	<?php endif; ?>
 
 	<input type="hidden" name="jform[parameters]"

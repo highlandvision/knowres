@@ -29,8 +29,7 @@ $contractSession->updateData($this->item);
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div class="modal-body">
-				<form
-					action="<?php echo KrMethods::route('index.php?option=com_knowres&id=' . (int) $this->item->id); ?>"
+				<form action="<?php echo KrMethods::route('index.php?option=com_knowres&id=' . (int) $this->item->id); ?>"
 					class="form-validate" id="kr-contract-quick-form" method="post" name="adminForm">
 					<div class="row">
 						<div class="col">

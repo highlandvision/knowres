@@ -58,8 +58,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 			'a.calculated', $this->listDirn, $this->listOrder); ?>
 	</th>
 	<th scope="col" class="w-15 d-none d-md-table-cell text-center nowrap">
-		<?php echo HTMLHelper::_('searchtools.sort', 'COM_KNOWRES_CONFIRM', 'a.confirmed', $this->listDirn,
-			$this->listOrder); ?>
+		<?php echo HTMLHelper::_('searchtools.sort', 'COM_KNOWRES_CONFIRM', 'a.confirmed', $this->listDirn, $this->listOrder); ?>
 	</th>
 	<th scope="col" class="w-5 d-none d-md-table-cell">
 		<?php echo HTMLHelper::_('searchtools.sort', 'JGRID_HEADING_ID', 'a.id', $this->listDirn, $this->listOrder); ?>

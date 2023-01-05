@@ -24,8 +24,7 @@ $show = false;
 <div class="pagination-wrapper">
 	<div class="row">
 		<div class="small-12 medium-6 columns">
-			<h2><?php echo KrMethods::plain('COM_KNOWRES_PROPERTY_HEADER_GUEST_REVIEW') . ' '
-					. $this->property->property_name; ?></h2>
+			<h2><?php echo KrMethods::plain('COM_KNOWRES_PROPERTY_HEADER_GUEST_REVIEW') . ' ' . $this->property->property_name; ?></h2>
 		</div>
 		<div class="small-12 medium-6 columns">
 			<div class="kr-pager">

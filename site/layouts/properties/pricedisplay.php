@@ -56,8 +56,7 @@ $params       = KrMethods::getParams();
 	<a class="button rate" href="<?php echo $plink; ?>">
 		<?php if ($booking_type): ?>
 			<?php if ($byAvailability): ?>
-				<?php echo KrMethods::sprintf('COM_KNOWRES_SEARCH_PRICE',
-					Utility::displayValue($net, $currency, false)); ?>
+				<?php echo KrMethods::sprintf('COM_KNOWRES_SEARCH_PRICE', Utility::displayValue($net, $currency, false)); ?>
 			<?php elseif ($weekly) : ?>
 				<?php echo KrMethods::plain('COM_KNOWRES_SEARCH_PRICE_FROM'); ?>
 				<?php echo Utility::displayValue($net, $currency, false); ?>
@@ -89,7 +88,6 @@ $params       = KrMethods::getParams();
 		<?php endif; ?>
 	</a>
 	<a class="button viewproperty" href="<?php echo $plink; ?>">
-		<?php echo KrFactory::getAdminModel('property')::bookingTypeText($booking_type); ?> <i
-			class="fas fa-chevron-right"></i>
+		<?php echo KrFactory::getAdminModel('property')::bookingTypeText($booking_type); ?> <i class="fas fa-chevron-right"></i>
 	</a>
 </div>

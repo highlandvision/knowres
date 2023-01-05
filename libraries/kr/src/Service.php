@@ -18,11 +18,12 @@ use HighlandVision\KR\Framework\KrMethods;
 use InvalidArgumentException;
 use JetBrains\PhpStorm\Pure;
 use Joomla\CMS\Cache\Cache;
-use Joomla\CMS\Object\CMSObject;
 use Joomla\Registry\Registry;
 use RuntimeException;
 use stdClass;
 
+use function count;
+use function implode;
 use function str_repeat;
 use function trim;
 
@@ -44,11 +45,11 @@ abstract class Service
 	protected bool $cache_json = true;
 	/** @var  array Override cache options */
 	protected array $cache_options = [];
-	/** @var  CMSObject Existing contract item */
-	public CMSObject $contract;
+	/** @var  object Existing contract item */
+	protected object $contract;
 	/** @var  int ID of current contract */
 	protected int $contract_id = 0;
-	/** @var object|null Contract guest data */
+	/** @var ?object Contract guest data */
 	protected ?object $contractguestdata = null;
 	/** @var  string Path to cookie file */
 	protected string $cookie_file = JPATH_ROOT . '/cookie.txt';
@@ -56,23 +57,23 @@ abstract class Service
 	protected string $currency = '';
 	/** @var  string Error display message */
 	protected string $error_to_display = '';
-	/** @var object|null Exception to be logged */
+	/** @var ?object Exception to be logged */
 	protected ?object $exception = null;
-	/** @var  string Queue foreign key */
+	/** @var  string Foreign key */
 	protected string $foreign_key = '';
 	/** @var string Foreign key guest */
 	protected string $foreign_key_guest = '';
 	/** @var string Foreign key owner */
 	protected string $foreign_key_owner = '';
-	/** @var ?object|null Guest item */
+	/** @var ?object Guest item */
 	protected ?object $guest = null;
 	/** @var  array Logging messages */
 	protected array $messages = [];
 	/** @var  string API method */
 	protected string $method = '';
-	/** @var object|null Owner item */
+	/** @var ?object Owner item */
 	protected ?object $owner = null;
-	/** @var object|null Service parameters */
+	/** @var ?object Service parameters */
 	protected ?object $parameters = null;
 	/** @var  Registry KR parameters */
 	protected Registry $params;
@@ -98,8 +99,8 @@ abstract class Service
 	protected array $settings = [];
 	/** @var  string Email subject */
 	protected string $subject = '';
-	/** @var  bool Testing indicator */
-	protected bool $test = false;
+	/** @var  int Testing indicator */
+	protected int $test = 0;
 	/** @var  string Today Y-m-d */
 	protected string $today = '';
 
@@ -232,17 +233,15 @@ abstract class Service
 			$subject = "Attention: Alert from " . KrMethods::getCfg('sitename');
 			$body    = 'An exception has occurred. Please see the details below.';
 			$body    .= ' Full details of the error can be found in Service Logs for ID ' . $log_id;
-			$body    .= "\r\n\r\n";
+			$body    .= "<br>";
 			$body    .= $error;
 
 			$to = KrMethods::getParams()->get('alert_email', '');
-			if (!$to)
+			if (empty($to))
 			{
 				$to = KrMethods::getCfg('mailfrom');
 			}
-
-			KrMethods::sendEmail(KrMethods::getCfg('mailfrom'), KrMethods::getCfg('fromname'), $to, $subject, $body,
-				false);
+			KrMethods::sendEmail(KrMethods::getCfg('mailfrom'), KrMethods::getCfg('fromname'), $to, $subject, $body);
 		}
 
 		$this->messages  = [];
@@ -322,18 +321,19 @@ abstract class Service
 	{
 		if (is_a($this->exception, 'Exception') || is_subclass_of($this->exception, 'Exception'))
 		{
-			return 'ERROR:' . "\r\n\r\n" . $this->exception->getMessage();
-		}
-		else if (is_countable($this->messages) && count($this->messages))
-		{
-			$text = $success ? '' : 'ERROR:<br>';
-
-			return $text . implode('<br>', $this->messages);
+			$text = 'ERROR:' . $this->exception->getMessage() . '<br>';
 		}
 		else
 		{
-			return '';
+			$text = $success ? '' : 'ERROR:<br>';
 		}
+
+		if (is_countable($this->messages) && count($this->messages))
+		{
+			$text .= implode('<br>', $this->messages);
+		}
+
+		return $text;
 	}
 
 	/**

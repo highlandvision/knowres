@@ -11,7 +11,8 @@ defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrMethods;
 
-if ($this->settings['shortstay_percentage2'] == 100 && $this->settings['shortstay_percentage3'] == 100
+if ($this->settings['shortstay_percentage2'] == 100
+	&& $this->settings['shortstay_percentage3'] == 100
 	&& $this->settings['shortstay_percentage4'] == 100
 	&& $this->settings['shortstay_percentage5'] == 100
 	&& $this->settings['shortstay_percentage6'] == 100

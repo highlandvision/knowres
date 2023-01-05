@@ -29,8 +29,7 @@ $wa->useScript('keepalive')
 
 	<div id="message"></div>
 
-	<form
-		action="<?php echo KrMethods::route('index.php?option=com_knowres&layout=edit&id=' . (int) $this->item->id); ?>"
+	<form action="<?php echo KrMethods::route('index.php?option=com_knowres&layout=edit&id=' . (int) $this->item->id); ?>"
 		class="form-validate" id="contract-form" method="post" name="adminForm">
 
 		<div class="main-card">

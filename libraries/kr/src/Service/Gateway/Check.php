@@ -56,7 +56,6 @@ class Check extends Gateway
 	 * Set payment object
 	 *
 	 * @throws Exception
-	 * @throws Exception
 	 * @since 3.3.0
 	 */
 	protected function setPayment()

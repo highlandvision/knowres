@@ -23,8 +23,7 @@ $wa->useScript('com_knowres.site')
 <div class="narrower">
 	<div class="row">
 		<div class="small-12 medium-12 columns">
-			<h1><?php echo KrMethods::sprintf('COM_KNOWRES_TITLE_REVIEW_REQUEST',
-					$this->contract->property_name); ?></h1>
+			<h1><?php echo KrMethods::sprintf('COM_KNOWRES_TITLE_REVIEW_REQUEST', $this->contract->property_name); ?></h1>
 		</div>
 	</div>
 

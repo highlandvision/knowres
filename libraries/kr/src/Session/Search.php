@@ -11,6 +11,7 @@ namespace HighlandVision\KR\Session;
 
 defined('_JEXEC') or die;
 
+use Exception;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Session;
 use stdClass;
@@ -28,6 +29,7 @@ class Search extends Session
 	/**
 	 * Initialise
 	 *
+	 * @throws Exception
 	 * @since 3.3.0
 	 */
 	public function __construct()

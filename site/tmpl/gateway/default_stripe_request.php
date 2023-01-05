@@ -51,10 +51,8 @@ StripeLib::setApiKey($this->paymentData->secret_key);
 			<div id="card-errors" role="alert"></div>
 			<br><br>
 
-			<button id="card-button" class="button large expanded"
-			        data-secret="<?php echo $this->paymentData->client_secret; ?>">
-				<?php $payment_amount = Utility::displayValue($this->paymentData->amount,
-					$this->paymentData->currency); ?>
+			<button id="card-button" class="button large expanded" data-secret="<?php echo $this->paymentData->client_secret; ?>">
+				<?php $payment_amount = Utility::displayValue($this->paymentData->amount, $this->paymentData->currency); ?>
 				<?php echo KrMethods::sprintf('COM_KNOWRES_PAYMENT_CARD_SUBMIT', $payment_amount); ?>
 			</button>
 		</div>

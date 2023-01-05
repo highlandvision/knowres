@@ -15,7 +15,6 @@ function toggleCron() {
 		document.getElementById("krcron_section1").style.display = "none";
 	}
 }
-
 // eslint-disable-next-line no-unused-vars
 function switchList() {
 	let emailtype = document.getElementById('jform_switch').value;

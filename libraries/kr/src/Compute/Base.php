@@ -310,9 +310,7 @@ class Base
 				}
 			}
 
-			if ($nights < $xmin
-				&& ($nights < $this->Hub->settings['canwebook']
-					|| empty($this->Hub->settings['canwebook'])))
+			if ($nights < $xmin && ($nights < $this->Hub->settings['canwebook'] || empty($this->Hub->settings['canwebook'])))
 			{
 				$this->Hub->setValue('shortbook', 1);
 				$this->Hub->setValue('shortbook_departure', $departure);

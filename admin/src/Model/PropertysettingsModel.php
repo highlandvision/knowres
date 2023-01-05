@@ -348,8 +348,7 @@ class PropertysettingsModel extends ListModel
 
 					if ($rates_update)
 					{
-						KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updatePropertyRates',
-							$property_id);
+						KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updatePropertyRates', $property_id);
 					}
 
 					// Update beyond if min / base rates have changed and solo property
@@ -362,10 +361,8 @@ class PropertysettingsModel extends ListModel
 					{
 						if ($property_id)
 						{
-							KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updateProperty',
-								$property_id);
-							KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updatePropertyRates',
-								$property_id);
+							KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updateProperty', $property_id);
+							KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updatePropertyRates', $property_id);
 						}
 						else
 						{

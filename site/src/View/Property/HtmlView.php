@@ -383,8 +383,7 @@ class HtmlView extends KrHtmlView\Site
 
 		if (count($this->searchData->baseIds))
 		{
-			$Itemid = SiteHelper::getItemId('com_knowres', 'properties',
-				['layout' => 'search', 'region_id' => $region_id]);
+			$Itemid = SiteHelper::getItemId('com_knowres', 'properties', ['layout' => 'search', 'region_id' => $region_id]);
 
 			$pathway = self::searchPathway($pathway, $region_id, $Itemid);
 		}

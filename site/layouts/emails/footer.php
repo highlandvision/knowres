@@ -58,16 +58,14 @@ $amex  = $url . 'media/com_knowres/images/credit_cards/amex_48.png';
 
 <table style="border:none;border-collapse:collapse;">
 	<tr>
-		<td class="footer"
-		    style="text-align:center;font-family:<?php echo $font; ?>;color:<?php echo $color; ?>;font-size:11px;padding:5px 20px 10px 20px;">
+		<td class="footer" style="text-align:center;font-family:<?php echo $font; ?>;color:<?php echo $color; ?>;font-size:11px;padding:5px 20px 10px 20px;">
 			<p style="font-family:<?php echo $font; ?>;color:<?php echo $color; ?>;">
 				<?php echo KrMethods::sprintf('COM_KNOWRES_EMAIL_DISCLAIMER', $company); ?>
 			</p>
 		</td>
 	</tr>
 	<tr>
-		<td class="footer"
-		    style="text-align:center;font-family:<?php echo $font; ?>;color:<?php echo $color; ?>;font-size:11px;margin: 0 auto;padding:5px 20px 20px 20px;">
+		<td class="footer" style="text-align:center;font-family:<?php echo $font; ?>;color:<?php echo $color; ?>;font-size:11px;margin: 0 auto;padding:5px 20px 20px 20px;">
 			<?php if ($contact) : ?>
 				<?php echo $contact; ?><br>
 			<?php endif; ?>

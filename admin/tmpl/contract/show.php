@@ -22,8 +22,7 @@ $wa->useScript('keepalive')
    ->useScript('core');
 ?>
 
-	<form
-		action="<?php echo KrMethods::route('index.php?option=com_knowres&layout=edit&id=' . (int) $this->item->id); ?>"
+	<form action="<?php echo KrMethods::route('index.php?option=com_knowres&layout=edit&id=' . (int) $this->item->id); ?>"
 		id="contract-form" method="post" name="adminForm">
 		<input type="hidden" name="id" value="<?php echo $this->item->id; ?>">
 		<input type="hidden" name="property_id" value="<?php echo $this->item->property_id; ?>">

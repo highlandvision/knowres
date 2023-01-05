@@ -105,8 +105,7 @@ $image  = Media\Images::getPropertyImageName($contract->property_id);
 			<!--			</div>-->
 			<!--			<div>-->
 			<!--				<dt>--><?php //echo KrMethods::plain('COM_KNOWRES_CHILD_AGES'); ?><!--</dt>-->
-			<!--				<dd>-->
-			<?php //echo implode(',', Utility::decodeJson($contract->child_ages, true)); ?><!--</dd>-->
+<!--				            <dd>--><?php //echo implode(',', Utility::decodeJson($contract->child_ages, true)); ?><!--</dd>-->
 			<!--			</div>-->
 			<!--			--><?php //endif; ?>
 			<?php if ($contract->agent_id) : ?>
