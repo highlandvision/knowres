@@ -15,6 +15,7 @@ use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Session as KnowresSession;
+use Joomla\Registry\Registry;
 use RuntimeException;
 use stdClass;
 
@@ -42,6 +43,8 @@ class Search
 	protected int $highval = 9999999;
 	/** @var array Price ranges. */
 	protected array $ranges = [];
+	/** @var Registry KR paramaters. */
+	private Registry $params;
 	/** @var Translations Translations object. */
 	protected Translations $Translations;
 

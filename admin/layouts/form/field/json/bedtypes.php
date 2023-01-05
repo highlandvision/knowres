@@ -50,8 +50,7 @@ $count = 0;
 					<?php foreach ($allbedtypes as $b): ?>
 						<div class="<?php echo $fieldset->class; ?>">
 							<?php if (!empty($v[2][$b->id])): ?>
-								<?php $bedtype = $group . '[' . $k . ']' . '[bed_types][' . $b->id . '][bed_number]'
-									. $v[2][$b->id]; ?>
+								<?php $bedtype = $group . '[' . $k . ']' . '[bed_types][' . $b->id . '][bed_number]' . $v[2][$b->id]; ?>
 								<?php $fieldXml = new SimpleXMLElement('<field></field>'); ?>
 								<?php $fieldXml->addAttribute('name', $bedtype); ?>
 								<?php $fieldXml->addAttribute('hiddenLabel', 'true'); ?>

@@ -92,8 +92,7 @@ class DashboardView extends KrHtmlView\Property
 		ToolbarHelper::title($title, 'fas fa-home knowres');
 		$Toolbar = Toolbar::getInstance();
 		$this->addToolbar($Toolbar, 'dashboard');
-		KrMethods::setUserState('com_knowres.gobackto',
-			'task=property.dashboard&layout=dashboard&id=' . $this->property_id);
+		KrMethods::setUserState('com_knowres.gobackto', 'task=property.dashboard&layout=dashboard&id=' . $this->property_id);
 
 		parent::display($tpl);
 	}

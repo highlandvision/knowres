@@ -34,8 +34,8 @@ class TextmoneyField extends TextField
 	/**
 	 * Method to get the field options.
 	 *
-	 * @since   4.0.0
 	 * @return  array  The field option objects.
+	 * @since   4.0.0
 	 */
 	protected function getOptions(): array
 	{

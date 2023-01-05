@@ -44,15 +44,13 @@ $wa->useScript('keepalive')
 	</div>
 </div>
 
-<div aria-hidden="true" aria-labelledby="kr-contract-modal-book-label" class="modal draggable fade"
-     id="kr-contract-modal-book" tabindex="-1">
+<div aria-hidden="true" aria-labelledby="kr-contract-modal-book-label" class="modal draggable fade" id="kr-contract-modal-book" tabindex="-1">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 		</div>
 	</div>
 </div>
-<div aria-hidden="true" aria-labelledby="kr-calendar-modal-show-label" class="modal draggable fade"
-     id="kr-calendar-modal-show" tabindex="-1">
+<div aria-hidden="true" aria-labelledby="kr-calendar-modal-show-label" class="modal draggable fade" id="kr-calendar-modal-show" tabindex="-1">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 		</div>

@@ -51,8 +51,7 @@ class JsoncancellationpenaltyField extends FormField
 			$values[] = $tmp;
 		}
 
-		$form = KrFactory::getAdhocForm('json-cancellationpenalty', 'json_cancellationpenalty.xml', 'administrator',
-			null);
+		$form = KrFactory::getAdhocForm('json-cancellationpenalty', 'json_cancellationpenalty.xml', 'administrator', null);
 
 		$data           = [];
 		$data['form']   = $form;

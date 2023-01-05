@@ -26,8 +26,7 @@ use HighlandVision\KR\Framework\KrMethods;
 					<div class="col">
 						<p><?php echo KrMethods::plain('COM_KNOWRES_PROPERTIES_ICS_LINK'); ?></p>
 						<p class="lead">
-							<?php echo KrMethods::getRoot(); ?>
-							index.php?option=com_knowres&task=property.ics&id=<?php echo $this->property_id; ?>
+							<?php echo KrMethods::getRoot(); ?>index.php?option=com_knowres&task=property.ics&id=<?php echo $this->property_id; ?>
 						</p>
 					</div>
 				</div>
@@ -37,8 +36,7 @@ use HighlandVision\KR\Framework\KrMethods;
 					<div class="col">
 						<p><?php echo KrMethods::plain('COM_KNOWRES_PROPERTIES_ICS_DOWNLOAD'); ?></p>
 						<p class="lead">
-							<?php echo KrMethods::getRoot(); ?>
-							index.php?option=com_knowres&task=property.ics&action=dl&id=<?php echo $this->property_id; ?>
+							<?php echo KrMethods::getRoot(); ?>index.php?option=com_knowres&task=property.ics&action=dl&id=<?php echo $this->property_id; ?>
 						</p>
 					</div>
 				</div>

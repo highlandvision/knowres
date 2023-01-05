@@ -55,8 +55,7 @@ if ((int) $guestdata->children)
 		<?php if ($property->sleeps_infant_age): ?>
 			<div class="row">
 				<div class="col-4">
-					<?php echo KrMethods::sprintf('COM_KNOWRES_CONTRACTGUESTDATA_INFANTS_LBL',
-						$property->sleeps_infant_age); ?>
+					<?php echo KrMethods::sprintf('COM_KNOWRES_CONTRACTGUESTDATA_INFANTS_LBL', $property->sleeps_infant_age); ?>
 				</div>
 				<div class="col-2">
 					<?php echo $guestdata->infants; ?>

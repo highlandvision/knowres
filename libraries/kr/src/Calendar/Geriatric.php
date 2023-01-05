@@ -101,7 +101,7 @@ class Geriatric extends Calendar
 		}
 
 		$params = KrMethods::getParams();
-		if ($params->get('calendar_norates', 0))
+		if ($params->get('calendar_norates', 0) && $this->booking_type > 0)
 		{
 			$this->setRateBlocks();
 		}

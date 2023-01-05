@@ -20,6 +20,8 @@ use InvalidArgumentException;
 use RuntimeException;
 use stdClass;
 
+use function count;
+
 /**
  * Service channel
  *
@@ -37,8 +39,6 @@ class Channel extends Service
 	protected string $final = '';
 	/** @var string First date to send */
 	protected string $first = '';
-	/** @var string Current foreign booking */
-	protected string $foreign_booking = '';
 	/** @var string Foreign key */
 	protected string $foreign_key = '';
 	/** @var array Hold form data */
@@ -55,7 +55,7 @@ class Channel extends Service
 	protected array $range = [];
 	/** @var array Service property xrefs */
 	protected array $xrefs;
-
+//TODO-v4 Check what is used and not used
 	/**
 	 * Constructor
 	 *
@@ -68,60 +68,6 @@ class Channel extends Service
 	public function __construct(int $service_id, int $test = 1)
 	{
 		parent::__construct($service_id, $test);
-	}
-
-	/**
-	 * Get the booking agent either from the foreign key or the agent ID
-	 * This will depend on the CM/channel being processed
-	 *
-	 * @param   string  $foreign_key  The agent foreign key
-	 * @param   int     $agent_id     The ID for the agent
-	 * @param   bool    $confirmed    Set to true to return confirmed agent info
-	 *
-	 * @throws RuntimeException
-	 * @throws Exception
-	 * @since  3.1.0
-	 * @return void
-	 */
-	protected function setAgent(string $foreign_key, int $agent_id = 0, bool $confirmed = false): void
-	{
-		if ($agent_id)
-		{
-			$this->agent = KrFactory::getAdminModel('agent')->getItem($agent_id);
-			if (!$this->agent->id)
-			{
-				throw new RuntimeException('Agent not found for ID ' . $agent_id);
-			}
-		}
-		else if ($foreign_key)
-		{
-			$agents = KrFactory::getListModel('agents')->getAgentByForeignKey($this->service_id, $foreign_key);
-			if (count($agents) == 1)
-			{
-				$this->agent = $agents[0];
-			}
-			else
-			{
-				foreach ($agents as $agent)
-				{
-					if ($agent->deposit_paid && $confirmed)
-					{
-						$this->agent = $agent;
-						break;
-					}
-					else if (!$agent->deposit_paid && !$confirmed)
-					{
-						$this->agent = $agent;
-						break;
-					}
-				}
-			}
-
-			if (!$this->agent->id)
-			{
-				throw new RuntimeException('Agent not found for foreign key ' . $foreign_key);
-			}
-		}
 	}
 
 	/**
@@ -153,7 +99,7 @@ class Channel extends Service
 	protected function getContractByForeignKey(): bool|array
 	{
 		$contract_ids = KrFactory::getListModel('servicexrefs')
-		                         ->getContractForForeignKey($this->service_id, $this->foreign_booking);
+		                         ->getContractForForeignKey($this->service_id, $this->foreign_key);
 		if (!count($contract_ids))
 		{
 			return false;
@@ -218,7 +164,7 @@ class Channel extends Service
 	/**
 	 * Read xref for property
 	 *
-	 * @param   int  $property_id  ID of property
+	 * @param  int  $property_id  ID of property
 	 *
 	 * @throws RuntimeException
 	 * @throws RuntimeException
@@ -293,6 +239,60 @@ class Channel extends Service
 	}
 
 	/**
+	 * Get the booking agent either from the foreign key or the agent ID
+	 * This will depend on the CM/channel being processed
+	 *
+	 * @param   string  $foreign_key  The agent foreign key
+	 * @param   int     $agent_id     The ID for the agent
+	 * @param   bool    $confirmed    Set to true to return confirmed agent info
+	 *
+	 * @throws RuntimeException
+	 * @throws Exception
+	 * @since  3.1.0
+	 * @return void
+	 */
+	protected function setAgent(string $foreign_key, int $agent_id = 0, bool $confirmed = false): void
+	{
+		if ($agent_id)
+		{
+			$this->agent = KrFactory::getAdminModel('agent')->getItem($agent_id);
+			if (!$this->agent->id)
+			{
+				throw new RuntimeException('Agent not found for ID ' . $agent_id);
+			}
+		}
+		else if ($foreign_key)
+		{
+			$agents = KrFactory::getListModel('agents')->getAgentByForeignKey($this->service_id, $foreign_key);
+			if (count($agents) == 1)
+			{
+				$this->agent = $agents[0];
+			}
+			else
+			{
+				foreach ($agents as $agent)
+				{
+					if ($agent->deposit_paid && $confirmed)
+					{
+						$this->agent = $agent;
+						break;
+					}
+					else if (!$agent->deposit_paid && !$confirmed)
+					{
+						$this->agent = $agent;
+						break;
+					}
+				}
+			}
+
+			if (!$this->agent->id)
+			{
+				throw new RuntimeException('Agent not found for foreign key ' . $foreign_key);
+			}
+		}
+	}
+
+	/**
 	 * Set the date range to process
 	 *
 	 * @throws Exception
@@ -309,17 +309,74 @@ class Channel extends Service
 	 *
 	 * @param   string  $first  First date
 	 * @param   int     $cbl    Max advance bookings for channel
-	 * @param   int     $abl    Max advance bookings from property settings
+	 * @param  int     $pbl    Max advance bookings for property
 	 *
 	 * @throws Exception
 	 * @since  3.3.1
 	 */
-	protected function setDates(string $first, int $cbl, int $abl = 365)
+	protected function setDates(string $first, int $cbl, int $pbl = 365)
 	{
 		$this->first = $first;
+		$this->final = min(TickTock::modifyDays($this->first, $cbl), TickTock::modifyDays($this->first, $pbl));
+	}
 
-		$channel     = TickTock::modifyDays($this->first, $cbl);
-		$settings    = TickTock::modifyDays($this->first, $abl);
-		$this->final = min($settings, $channel);
+	/**
+	 * Set property features
+	 *
+	 * @param $room_count    bool    Room amenities exist
+	 * @param $room          string  Type of room
+	 *
+	 * @since  4.0.0
+	 * @return array
+	 */
+	protected function setPropertyFeatures(bool $room_count, string $room = ''): array
+	{
+		$generic = [];
+
+		foreach ($this->features as $f)
+		{
+			if ($f->generic && !$room_count)
+			{
+				$generic[$f->id] = $f->generic;
+			}
+			else if ($f->generic && $room_count && !$room && str_contains($f->room_type, 'property'))
+			{
+				$generic[$f->id] = $f->generic;
+			}
+			else if ($f->generic && $room_count && $room)
+			{
+				$types = [];
+				if ($room == 'lk')
+				{
+					$types[] = 'living';
+					$types[] = 'kitchen';
+				}
+				else if ($room == 'lb')
+				{
+					$types[] = 'living';
+					$types[] = 'bedroom';
+				}
+				else if ($room == 'lbk')
+				{
+					$types[] = 'living';
+					$types[] = 'bedroom';
+					$types[] = 'kitchen';
+				}
+				else
+				{
+					$types[] = $room;
+				}
+
+				foreach ($types as $t)
+				{
+					if (str_contains($f->room_type, $t))
+					{
+						$generic[$f->id] = $f->generic;
+					}
+				}
+			}
+		}
+
+		return $generic;
 	}
 }

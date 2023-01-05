@@ -61,8 +61,7 @@ $wa->useScript('keepalive')
 		echo HTMLHelper::_('uitab.endTab');
 	}
 
-	echo HTMLHelper::_('uitab.addTab', 'propertyTabs', 'checkinout',
-		KrMethods::plain('COM_KNOWRES_PROPERTY_TAB_CHECKINOUT'));
+	echo HTMLHelper::_('uitab.addTab', 'propertyTabs', 'checkinout', KrMethods::plain('COM_KNOWRES_PROPERTY_TAB_CHECKINOUT'));
 	echo $this->loadTemplate('checkinout');
 	echo HTMLHelper::_('uitab.endTab');
 	echo HTMLHelper::_('uitab.endTabSet');

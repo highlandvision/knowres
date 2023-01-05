@@ -23,8 +23,7 @@ use HighlandVision\KR\Utility;
 			$rate = $r->rate;
 			if ($this->settings['net_rates'])
 			{
-				$rate = KrFactory::getAdminModel('ratemarkup')::getGrossRate((float) $rate,
-					$this->settings['net_markup'],
+				$rate = KrFactory::getAdminModel('ratemarkup')::getGrossRate((float) $rate, $this->settings['net_markup'],
 					$this->settings['currency']);
 			}
 			else

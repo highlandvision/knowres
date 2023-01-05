@@ -45,17 +45,17 @@ class Los extends Calendar
 	}
 
 	/**
-	 * Check if weekly is set for date
+	 * Check if date is not a valid changeover date for weekly rates
 	 *
 	 * @param   string  $date  Date to check
 	 *
 	 * @throws Exception
-	 * @since  3.4.0
-	 * @return bool
+	 * @since  4.0.0
+	 * @return bool True if date is a changeover day
 	 */
-	public function checkWeekly(string $date): bool
+	public function weeklyChangeOverDay(string $date): bool
 	{
-		return isset($this->weekly[$date]);
+		return !isset($this->weekly[$date]);
 	}
 
 	//	/**

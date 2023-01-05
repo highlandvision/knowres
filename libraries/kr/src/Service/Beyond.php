@@ -34,8 +34,6 @@ class Beyond extends Service
 	 * @param   int  $test  1 for testing
 	 *
 	 * @throws Exception
-	 * @throws Exception
-	 * @throws Exception
 	 * @since  2.4.0
 	 */
 	public function __construct(int $test = 0)

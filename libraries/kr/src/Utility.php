@@ -95,7 +95,7 @@ class Utility
 	 * Compare two floats
 	 *
 	 * @param   float  $one      First float
-	 * @param   float  $two      second float
+	 * @param   float  $two      Second float
 	 * @param   int    $decimal  Decimal points
 	 *
 	 * @since  3.4.0

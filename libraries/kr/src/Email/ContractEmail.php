@@ -142,9 +142,6 @@ class ContractEmail extends Email
 		$this->fees     = KrFactory::getListModel('contractfees')->getForContract($this->contract_id);
 		$this->notes    = KrFactory::getListModel('contractnotes')->getForContract($this->contract_id);
 		$this->manager  = KrFactory::getAdminModel('manager')->getItem($this->contract->manager_id);
-		$this->settings = KrFactory::getListModel('propertysettings')
-		                           ->getPropertysettings($this->contract->property_id);
-
 		if ($this->contract->agent_id)
 		{
 			$this->agent = KrFactory::getAdminModel('agent')->getItem($this->contract->agent_id);
@@ -207,7 +204,7 @@ class ContractEmail extends Email
 		$notes                    = $this->setNotes('2');
 		$this->data['OWNERNOTES'] = $notes ?: KrMethods::plain('JNO');
 
-		if ($this->agency_id)
+		if ($this->agency->id)
 		{
 			$this->setHelpScout();
 		}
@@ -758,9 +755,8 @@ class ContractEmail extends Email
 
 		$this->caretaker_email        = $this->property->caretaker_email;
 		$this->data['SECURITYTEXT']   = $this->property->security_text;
-		$this->data['SECURITYAMOUNT'] = Utility::displayValue(
-			$this->property->security_amount, $this->settings['currency']
-		);
+		$this->data['SECURITYAMOUNT'] = Utility::displayValue($this->property->security_amount,
+			$this->contract->currency);
 
 		if (isset($this->property->nearest_transport))
 		{

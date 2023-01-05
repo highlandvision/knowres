@@ -291,6 +291,7 @@ class PlgOSMapKnowres extends Base implements ContentInterface
 
 			$collector->printNode($node);
 		}
+
 		//		$collector->changeLevel(-1);
 	}
 }

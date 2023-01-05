@@ -106,11 +106,12 @@ class Ical extends Service
 		$due = KrFactory::getListModel('propertyicals')->getByTime($this->service->id, $hours);
 		foreach ($due as $d)
 		{
+			$this->method      = 'processSchedule';
+			$this->request     = $d->link;
+			$this->property_id = $d->property_id;
+
 			try
 			{
-				$this->method      = 'processSchedule';
-				$this->request     = $d->link;
-				$this->property_id = $d->property_id;
 				$this->readProperty($this->property_id);
 				$this->response = $this->fetchIcal();
 

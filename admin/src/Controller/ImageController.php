@@ -52,7 +52,6 @@ class ImageController extends FormController
 		$translation->updateDefault('image', $id, 'description', $description);
 		$translation->updateDefault('image', $id, 'alt_text', $alt_text);
 
-		KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updateProperty', (int) $validData['property_id'],
-			0, 'ru');
+		KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updateProperty', (int) $validData['property_id'], 0, 'ru');
 	}
 }

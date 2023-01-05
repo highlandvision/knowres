@@ -12,8 +12,7 @@ defined('_JEXEC') or die;
 use HighlandVision\KR\Framework\KrMethods;
 ?>
 
-<?php if ($this->params->get('review_ratings') && count($this->reviews) && isset($this->ratings->avgrating)
-	&& $this->ratings->avgrating > 0) : ?>
+<?php if ($this->params->get('review_ratings') && count($this->reviews) && isset($this->ratings->avgrating) && $this->ratings->avgrating > 0) : ?>
 	<div class="text-center" style="margin:1rem 0;">
 		<span class="score">
 			<?php $width = round($this->ratings->avgrating / 10 * 100, 1); ?>

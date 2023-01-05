@@ -86,13 +86,11 @@ class HtmlView extends KrHtmlView
 		$layout = $this->getLayout();
 		if ($layout == 'balances')
 		{
-			ToolbarHelper::custom('export.dobalances', 'download.png', 'download_f2.png', 'COM_KNOWRES_DOWNLOAD',
-				false);
+			ToolbarHelper::custom('export.dobalances', 'download.png', 'download_f2.png', 'COM_KNOWRES_DOWNLOAD', false);
 		}
 		else if ($layout == 'contracts')
 		{
-			ToolbarHelper::custom('export.docontracts', 'download.png', 'download_f2.png', 'COM_KNOWRES_DOWNLOAD',
-				false);
+			ToolbarHelper::custom('export.docontracts', 'download.png', 'download_f2.png', 'COM_KNOWRES_DOWNLOAD', false);
 		}
 		else if ($layout == 'ownerpayments')
 		{
@@ -101,8 +99,7 @@ class HtmlView extends KrHtmlView
 		}
 		else if ($layout == 'payments')
 		{
-			ToolbarHelper::custom('export.dopayments', 'download.png', 'download_f2.png', 'COM_KNOWRES_DOWNLOAD',
-				false);
+			ToolbarHelper::custom('export.dopayments', 'download.png', 'download_f2.png', 'COM_KNOWRES_DOWNLOAD', false);
 		}
 
 		ToolbarHelper::cancel('export.cancel', 'JTOOLBAR_CLOSE');

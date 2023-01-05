@@ -18,11 +18,8 @@ $wa->useScript('keepalive')
    ->useScript('bootstrap.modal');
 ?>
 
-<?php if (!is_countable($this->lines)
-	|| (!count($this->lines) && !count($this->payments)
-		&& !count($this->ownerpayments)
-		&& !count($this->approvals)
-		&& !count($this->reviews))): ?>
+<?php if (!is_countable($this->lines) || (!count($this->lines) && !count($this->payments)
+		&& !count($this->ownerpayments) && !count($this->approvals) && !count($this->reviews))): ?>
 	<div class="main-card" style="padding:1rem;">
 		<div class="row">
 			<h2><?php echo KrMethods::plain('COM_KNOWRES_CONTRACTS_OVERVIEW_EMPTY'); ?></h2>

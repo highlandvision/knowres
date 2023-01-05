@@ -53,10 +53,8 @@ class ExtraController extends FormController
 
 		if ($validData['cleaning'])
 		{
-			KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updateProperty',
-				(int) $validData['property_id'], 0, 'ru');
-			KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updatePropertyRates',
-				(int) $validData['property_id'], 0, 'vrbo');
+			KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updateProperty', (int) $validData['property_id'], 0, 'ru');
+			KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updatePropertyRates', (int) $validData['property_id'], 0, 'vrbo');
 		}
 	}
 }

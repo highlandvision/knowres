@@ -68,7 +68,6 @@ if (typeof jQuery === 'undefined') jQuery.noConflict();
 function refreshShow(id) {
 	window.location.href = "index.php?option=com_knowres&task=property.dashboard&id=" + id;
 }
-
 function switchAmenities(room) {
 	let types = document.querySelectorAll('.roomtype');
 	for (let i = 0; i < types.length; i++) {
@@ -78,7 +77,6 @@ function switchAmenities(room) {
 	let current = document.getElementById(room);
 	current.classList.remove('hideme')
 }
-
 function togglerates(id, action) {
 	if (action) {
 		if (id === "managed_rates") {

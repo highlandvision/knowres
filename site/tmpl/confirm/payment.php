@@ -54,7 +54,6 @@ $wa->useScript('com_knowres.site')
 <?php echo $this->loadTemplate('modals'); ?>
 
 <?php if ($this->paypal_found): ?>
-	<script
-		src="https://www.paypal.com/sdk/js?client-id=<?php echo $this->client_id; ?>&currency=<?php echo $this->currency; ?>"
+	<script src="https://www.paypal.com/sdk/js?client-id=<?php echo $this->client_id; ?>&currency=<?php echo $this->currency; ?>"
 		data-order-id="<?php echo $this->contractData->tag; ?>"></script>
 <?php endif; ?>

@@ -84,8 +84,7 @@ class PropertyroomModel extends AdminModel
 					$item = parent::getItem($id);
 					if ($item)
 					{
-						KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updateProperty',
-							$item->property_id, 0, 'ru');
+						KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updateProperty', $item->property_id, 0, 'ru');
 					}
 
 					$first = false;

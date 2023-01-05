@@ -112,11 +112,11 @@ class LosRates
 		int $max_nights): array
 	{
 		$base   = [];
-		$weekly = $this->Calendar->checkWeekly($arrival);
+		$wcod = $this->Calendar->weeklyChangeOverDay($arrival);
 
 		for ($nights = 1; $nights <= $max_nights; $nights++)
 		{
-			if ($nights < $min_nights || $weekly)
+			if ($nights < $min_nights || !$wcod)
 			{
 				$base[$r->max_guests][$nights] = 0;
 			}
@@ -132,7 +132,7 @@ class LosRates
 			{
 				if (!empty($m->more_pppn))
 				{
-					if ($nights < $min_nights || $weekly)
+					if ($nights < $min_nights || !$wcod)
 					{
 						$base[(int) $m->more_max][$nights] = 0;
 					}
@@ -144,9 +144,9 @@ class LosRates
 				}
 				else if (!empty($m->more_min) && !empty($m->more_max))
 				{
-					for ($g = (int) $m->more_min; $g >= (int) $m->more_max; $g++)
+					for ($g = (int) $m->more_min; $g <= (int) $m->more_max; $g++)
 					{
-						if ($nights < $min_nights || $weekly)
+						if ($nights < $min_nights || !$wcod)
 						{
 							$base[$g][$nights] = 0;
 						}
@@ -187,8 +187,8 @@ class LosRates
 	{
 		for ($nights = 1; $nights <= $max_nights; $nights++)
 		{
-			$weekly = $this->Calendar->checkWeekly(TickTock::modifyDays($arrival, $nights));
-			if ($weekly)
+			$wcod = $this->Calendar->weeklyChangeOverDay(TickTock::modifyDays($arrival, $nights));
+			if (!$wcod)
 			{
 				$prices[$arrival][$r->max_guests][$nights] = 0;
 			}
@@ -214,7 +214,7 @@ class LosRates
 
 				if ((int) $m->more_pppn)
 				{
-					if ($weekly)
+					if (!$wcod)
 					{
 						$prices[$arrival][$m->more_max][$nights] = 0;
 					}
@@ -232,7 +232,7 @@ class LosRates
 				{
 					for ($g = (int) $m->more_min; $g <= (int) $m->more_max; $g++)
 					{
-						if ($weekly)
+						if (!$wcod)
 						{
 							$prices[$arrival][$g][$nights] = 0;
 						}
@@ -267,17 +267,14 @@ class LosRates
 		{
 			return false;
 		}
-
 		if ($this->do_discounts && count($this->discounts))
 		{
 			return false;
 		}
-
 		if (!empty($this->settings['canwebook']))
 		{
 			return false;
 		}
-
 		if (!empty($this->settings['shortbook']))
 		{
 			return false;
@@ -352,6 +349,10 @@ class LosRates
 			$this->Hub->setValue('contract_total', 0);
 			$this->Hub->setValue('room_total', 0);
 			$this->Hub->setValue('room_total_gross', 0);
+
+			$this->Hub->settings['canwebook'] = $this->settings['canwebook'];
+			$this->Hub->settings['shortbook'] = $this->settings['shortbook'];
+
 			$this->Hub->setValue('tax_total', 0);
 		}
 
@@ -436,7 +437,7 @@ class LosRates
 		{
 			$this->computations[] = 'shortstay';
 		}
-		if ($nights >= (int) $this->settings['longstay_days1'])
+		if ((int) $this->settings['longstay_days1'] > 0 && $nights >= (int) $this->settings['longstay_days1'])
 		{
 			$this->computations[] = 'longstay';
 		}
@@ -481,7 +482,7 @@ class LosRates
 			}
 
 			$qrates = [];
-			if ($quickie && $cutoff > $start)
+			if ($quickie && $cutoff > $start && $r->start_day == 7)
 			{
 				$qrates = $this->calcLosBaseRate($r, $start, $more_guests, $min_nights, $max_nights);
 			}
@@ -494,7 +495,7 @@ class LosRates
 					$qrates = [];
 				}
 
-				if ($this->Calendar->checkWeekly($arrival))
+				if (!$this->Calendar->weeklyChangeOverDay($arrival))
 				{
 					continue;
 				}

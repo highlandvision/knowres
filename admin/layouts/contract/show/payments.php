@@ -29,8 +29,7 @@ $count = 0;
 		<div class="col-3 strong"><?php echo KrMethods::plain('COM_KNOWRES_DATE'); ?></div>
 		<div class="col-3 strong"><?php echo KrMethods::plain('COM_KNOWRES_STATUS'); ?></div>
 		<div class="col-3 strong text-end"><?php echo KrMethods::plain('COM_KNOWRES_CONTRACTPAYMENTS_AMOUNT'); ?></div>
-		<div
-			class="col-3 strong text-end"><?php echo KrMethods::plain('COM_KNOWRES_CONTRACTPAYMENTS_BASE_AMOUNT'); ?></div>
+		<div class="col-3 strong text-end"><?php echo KrMethods::plain('COM_KNOWRES_CONTRACTPAYMENTS_BASE_AMOUNT'); ?></div>
 	</div>
 
 <?php foreach ($payments as $p): ?>

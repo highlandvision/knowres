@@ -34,7 +34,6 @@ class RatemarkupController extends FormController
 	 */
 	protected function postSaveHook(BaseDatabaseModel $model, $validData = [])
 	{
-		KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updatePropertyRates',
-			(int) $validData['property_id']);
+		KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updatePropertyRates', (int) $validData['property_id']);
 	}
 }

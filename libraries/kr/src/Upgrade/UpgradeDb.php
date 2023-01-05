@@ -134,8 +134,7 @@ class UpgradeDb
 			$db->setQuery($query);
 			$db->execute();
 			// RENAME TABLE `#__knowres_interface_xref` TO `#__knowres_service_xref`;
-			$query = 'RENAME TABLE ' . $db->qn('#__knowres_interface_xref') . ' TO '
-				. $db->qn('#__knowres_service_xref');
+			$query = 'RENAME TABLE ' . $db->qn('#__knowres_interface_xref') . ' TO ' . $db->qn('#__knowres_service_xref');
 			$db->setQuery($query);
 			$db->execute();
 		}
@@ -328,8 +327,7 @@ class UpgradeDb
 		$db->setQuery($query);
 		$db->execute();
 		// UPDATE `#__knowres_service` SET `plugin` = 'vrbo' WHERE `plugin` = 'ha';
-		$query = 'UPDATE ' . $db->qn('#__knowres_service') . ' SET ' . $db->qn('plugin') . '=' . $db->q('vrbo')
-			. ' WHERE ' . $db->qn('plugin') . '=' . $db->q('ha');
+		$query = 'UPDATE ' . $db->qn('#__knowres_service') . ' SET ' . $db->qn('plugin') . '=' . $db->q('vrbo') . ' WHERE ' . $db->qn('plugin') . '=' . $db->q('ha');
 		$db->setQuery($query);
 		$db->execute();
 	}
@@ -339,8 +337,7 @@ class UpgradeDb
 		$columns = $db->getTableColumns($table);
 		if (!array_key_exists($field, $columns))
 		{
-			$query = 'ALTER TABLE ' . $db->qn($table) . ' ADD COLUMN ' . $db->qn($field) . ' ' . $default . ' AFTER '
-				. $db->qn($after);
+			$query = 'ALTER TABLE ' . $db->qn($table) . ' ADD COLUMN ' . $db->qn($field) . ' ' . $default . ' AFTER ' . $db->qn($after);
 			$db->setQuery($query);
 			$db->execute();
 		}

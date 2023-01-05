@@ -13,8 +13,7 @@ use HighlandVision\KR\Framework\KrMethods;
 ?>
 
 <?php
-if ($this->settings['longstay_days1'] == 0 && $this->settings['longstay_days2'] == 0
-	&& $this->settings['longstay_days3'] == 0)
+if ($this->settings['longstay_days1'] == 0 && $this->settings['longstay_days2'] == 0 && $this->settings['longstay_days3'] == 0)
 {
 	return;
 }

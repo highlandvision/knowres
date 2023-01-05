@@ -56,8 +56,7 @@ class FilterownerrestrictField extends KrListField
 			$query->where($db->qn('c.departure') . '>=' . $db->q($departure));
 		}
 
-		$query->join('INNER',
-			$db->qn('#__knowres_property', 'p') . 'ON' . $db->qn('p.id') . '=' . $db->qn('c.property_id'))
+		$query->join('INNER', $db->qn('#__knowres_property', 'p') . 'ON' . $db->qn('p.id') . '=' . $db->qn('c.property_id'))
 		      ->join('INNER', $db->qn('#__knowres_owner', 'o') . 'ON' . $db->qn('o.id') . '=' . $db->qn('p.owner_id'));
 
 		$userSession     = new KrSession\User();
