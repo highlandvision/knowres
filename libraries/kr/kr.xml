@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="library" version="4.0" method="upgrade">
+	<name>KR Library</name>
+	<libraryname>highlandvision/kr</libraryname>
+	<version>4.0.0</version>
+	<creationDate>September 2020</creationDate>
+	<author>Highland Vision</author>
+	<authorEmail>support@highlandvision.com</authorEmail>
+	<authorUrl>https://www.highlandvision.com</authorUrl>
+	<copyright>2022 Highland Vision, all rights reserved.</copyright>
+	<license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
+	<description>Know Reservations KR Library</description>
+	<namespace path="src">HighlandVision\KR</namespace>
+	<files>
+		<folder>src</folder>
+		<filename>kr.xml</filename>
+	</files>
+</extension>

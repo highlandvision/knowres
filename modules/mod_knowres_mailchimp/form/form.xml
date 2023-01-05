@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form addfieldpath="/components/com_knowres/models/fields">
+	<fieldset>
+		<field name="name"
+			filter="string"
+			hiddenLabel="true"
+			required="true"
+			type="text"
+			hint="MOD_KNOWRES_MAILCHIMP_NAME"
+			label="MOD_KNOWRES_MAILCHIMP_NAME"/>
+		<field name="email"
+			filter="email"
+			hiddenLabel="true"
+			required="true"
+			type="email"
+			hint="MOD_KNOWRES_MAILCHIMP_EMAIL"
+			label="MOD_KNOWRES_MAILCHIMP_EMAIL"/>
+	</fieldset>
+</form>

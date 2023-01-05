@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form addfieldprefix="HighlandVision\Component\Knowres\Administrator\Field"
+	addruleprefix="HighlandVision\Component\Knowres\Administrator\Rule">
+	<fieldset name="krdata">
+		<field name="valid_from"
+			class="input-mini"
+			datepicker='{"minDate": "-10Y", "maxDate": "+10Y", "altField": "#jform_valid_from"}'
+			required="true"
+			start_date="-1 Months"
+			type="uicalendar"
+			label="COM_KNOWRES_EXPORT_OWNERPAYMENT_DATE_FROM_LBL"
+			description="COM_KNOWRES_EXPORT_OWNERPAYMENT_DATE_FROM_DSC"/>
+		<field name="valid_to"
+			class="input-mini"
+			datepicker='{"minDate": "-10Y", "maxDate": "+10Y", "altField": "#jform_valid_to"}'
+			required="true"
+			type="uicalendar"
+			validate="daterange"
+			label="COM_KNOWRES_EXPORT_OWNERPAYMENT_DATE_TO_LBL"
+			description="COM_KNOWRES_EXPORT_OWNERPAYMENT_DATE_TO_DSC"/>
+		<field name="confirmed"
+			class="btn-group"
+			default="2"
+			type="radio"
+			label="COM_KNOWRES_EXPORT_OWNERPAYMENT_CONFIRMED_LBL"
+			description="COM_KNOWRES_EXPORT_OWNERPAYMENT_CONFIRMED_DSC">
+			<option class="btn btn-outline-danger" value="0">JNO</option>
+			<option class="btn btn-outline-success" value="1">JYES</option>
+			<option class="btn btn-outline-primary" value="2">COM_KNOWRES_ALL</option>
+		</field>
+		<field name="owner_id"
+			filter="integerarray"
+			input_type="list"
+			key_field="id"
+			layout="joomla.form.field.list-fancy-select"
+			multiple="true"
+			table="#__knowres_owner"
+			type="listforeignkey"
+			value_field="name"
+			label="COM_KNOWRES_EXPORT_OWNER_SELECT_LBL"
+			description="COM_KNOWRES_EXPORT_OWNER_SELECT_DSC"
+			hint="COM_KNOWRES_SELECT_MULTIPLE"/>
+		<field name="property_id"
+			filter="integerarray"
+			input_type="list"
+			key_field="id"
+			layout="joomla.form.field.list-fancy-select"
+			multiple="true"
+			table="#__knowres_property"
+			type="listforeignkey"
+			value_field="property_name"
+			label="COM_KNOWRES_EXPORT_PROPERTY_LBL"
+			description="COM_KNOWRES_EXPORT_PROPERTY_DSC"
+			hint="COM_KNOWRES_SELECT_MULTIPLE"/>
+	</fieldset>
+</form>

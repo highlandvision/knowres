@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="COM_KNOWRES_TITLE_CONFIRM_SUCCESS" option="COM_KNOWRES_TITLE_CONFIRM_SUCCESS_OPT">
+		<message>
+			<![CDATA[COM_KNOWRES_TITLE_CONFIRM_SUCCESS_DSC]]>
+		</message>
+	</layout>
+</metadata>

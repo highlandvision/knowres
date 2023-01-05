@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form addfieldprefix="HighlandVision\Component\Knowres\Administrator\Field"
+	addruleprefix="HighlandVision\Component\Knowres\Administrator\Rule">
+	<fieldset name="krdata">
+		<field name="valid_from"
+			class="input-mini"
+			datepicker='{"minDate": "-10Y", "maxDate": "+10Y", "altField": "#jform_valid_from"}'
+			required="true"
+			type="uicalendar"
+			label="COM_KNOWRES_EXPORT_ARRIVAL_LBL"
+			description="COM_KNOWRES_EXPORT_ARRIVAL_DSC"/>
+		<field name="valid_to"
+			class="input-mini"
+			datepicker='{"minDate": "-10Y", "maxDate": "+10Y", "altField": "#jform_valid_to"}'
+			required="true"
+			type="uicalendar"
+			validate="daterange"
+			label="COM_KNOWRES_EXPORT_DEPARTURE_LBL"
+			description="COM_KNOWRES_EXPORT_DEPARTURE_DSC"/>
+		<field name="datetype"
+			class="btn-group btn-group-yesno"
+			default="0"
+			required="true"
+			type="radio"
+			label="COM_KNOWRES_EXPORT_DATETYPE_LBL"
+			description="COM_KNOWRES_EXPORT_DATETYPE_DSC">
+			<option value="0">COM_KNOWRES_EXPORT_DATETYPE_CREATION_LBL</option>
+			<option value="1">COM_KNOWRES_EXPORT_DATETYPE_ARRIVAL_LBL</option>
+		</field>
+		<field name="inresidence"
+			class="btn-group btn-group-yesno"
+			default="0"
+			type="radio"
+			label="COM_KNOWRES_EXPORT_INRESIDENCE_LBL"
+			description="COM_KNOWRES_EXPORT_INRESIDENCE_DSC">
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+		<field name="agent_id"
+			input_type="list"
+			table="#__knowres_agent"
+			key_field="id"
+			value_field="name"
+			type="listforeignkey"
+			label="COM_KNOWRES_EXPORT_AGENT_LBL"
+			description="COM_KNOWRES_EXPORT_AGENT_DSC">
+			<option value="0">COM_KNOWRES_SELECT</option>
+		</field>
+		<field name="owner_id"
+			input_type="list"
+			layout="joomla.form.field.list-fancy-select"
+			table="#__knowres_owner"
+			key_field="id"
+			value_field="name"
+			type="listforeignkey"
+			label="COM_KNOWRES_EXPORT_FOR_OWNER_LBL"
+			description="COM_KNOWRES_EXPORT_FOR_OWNER_DSC">
+			<option value="0">COM_KNOWRES_SELECT</option>
+		</field>
+		<field name="property_id"
+			filter="integerarray"
+			input_type="list"
+			layout="joomla.form.field.list-fancy-select"
+			multiple="true"
+			table="#__knowres_property"
+			key_field="id"
+			value_field="property_name"
+			type="listforeignkey"
+			label="COM_KNOWRES_EXPORT_PROPERTY_LBL"
+			description="COM_KNOWRES_EXPORT_PROPERTY_DSC"
+			hint="COM_KNOWRES_SELECT_MULTIPLE"/>
+		<field name="region_id"
+			allow_property="true"
+			type="listregions"
+			label="COM_KNOWRES_EXPORT_REGION_LBL"
+			description="COM_KNOWRES_EXPORT_REGION_DSC">
+			<option value="">COM_KNOWRES_SELECT</option>
+		</field>
+		<field name="payments"
+			class="btn-group btn-group-yesno"
+			default="0"
+			type="radio"
+			label="COM_KNOWRES_EXPORT_PAYMENTS_LBL"
+			description="COM_KNOWRES_EXPORT_PAYMENTS_DSC">
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+		<field name="property"
+			class="btn-group btn-group-yesno"
+			default="0"
+			type="radio"
+			label="COM_KNOWRES_EXPORT_PROPERTY_ADDRESS_LBL"
+			description="COM_KNOWRES_EXPORT_PROPERTY_ADDRESS_DSC">
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+		<field name="guest"
+			class="btn-group btn-group-yesno"
+			default="0"
+			type="radio"
+			label="COM_KNOWRES_EXPORT_GUEST_LBL"
+			description="COM_KNOWRES_EXPORT_GUEST_DSC">
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+		<field name="owner"
+			class="btn-group btn-group-yesno"
+			default="0"
+			type="radio"
+			label="COM_KNOWRES_EXPORT_OWNER_LBL"
+			description="COM_KNOWRES_EXPORT_OWNER_DSC">
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+		<field name="referral"
+			class="btn-group btn-group-yesno"
+			default="0"
+			type="radio"
+			label="COM_KNOWRES_EXPORT_REFERRAL_LBL"
+			description="COM_KNOWRES_EXPORT_REFERRAL_DSC">
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+		<field name="cancelled"
+			class="btn-group btn-group-yesno"
+			default="0"
+			type="radio"
+			label="COM_KNOWRES_EXPORT_CANCELLED_LBL"
+			description="COM_KNOWRES_EXPORT_CANCELLED_DSC">
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+	</fieldset>
+</form>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fields group="cancellationpenalty">
+		<fieldset name="f1" class="col">
+			<field name="cancellation_penalty_from"
+				class="input-mini"
+				filter="int"
+				hiddenLabel="true"
+				label="COM_KNOWRES_PROPERTY_CANCELLATION_FROM_LBL"
+				description="COM_KNOWRES_PROPERTY_CANCELLATION_FROM_DSC">
+			</field>
+		</fieldset>
+		<fieldset name="f2" class="col">
+			<field name="cancellation_penalty_to"
+				class="input-mini"
+				filter="int"
+				hiddenLabel="true"
+				label="COM_KNOWRES_PROPERTY_CANCELLATION_TO_LBL"
+				description="COM_KNOWRES_PROPERTY_CANCELLATION_TO_LBL"/>
+		</fieldset>
+		<fieldset name="f3" class="col">
+			<field name="cancellation_penalty_pc"
+				addonAfter="%"
+				class="input-mini"
+				filter="string"
+				hiddenLabel="true"
+				type="text"
+				label="COM_KNOWRES_PROPERTY_CANCELLATION_PERCENTAGE_LBL"
+				description="COM_KNOWRES_PROPERTY_CANCELLATION_PERCENTAGE_DSC">
+			</field>
+		</fieldset>
+	</fields>
+</form>

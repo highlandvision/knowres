@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fields group="guest_types">
+		<fieldset name="f1" class="col">
+			<field name="type"
+				filter="string"
+				hiddenLabel="true"
+				type="text"
+				label="COM_KNOWRES_PROPERTY_GUEST_TYPES_TYPE_LBL"
+				description="COM_KNOWRES_PROPERTY_GUEST_TYPES_TYPE_DSC">
+			</field>
+		</fieldset>
+		<fieldset name="f2" class="col">
+			<field name="max"
+				filter="int"
+				hiddenLabel="true"
+				type="number"
+				min="0"
+				max="30"
+				step="1"
+				label="COM_KNOWRES_PROPERTY_GUEST_TYPES_MAX_LBL"
+				description="COM_KNOWRES_PROPERTY_GUEST_TYPES_MAX_DSC"/>
+		</fieldset>
+	</fields>
+</form>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fields group="rooms">
+		<fieldset name="f1" class="col">
+			<field name="room_id"
+				filter="string"
+				hiddenLabel="true"
+				type="listrooms"
+				label="COM_KNOWRES_PROPERTY_ROOM_NAME_LBL"
+				description="COM_KNOWRES_PROPERTY_ROOM_NAME_DSC">
+				<option value="0">COM_KNOWRES_SELECT_REQUIRED</option>
+			</field>
+		</fieldset>
+		<fieldset name="f2" class="col">
+			<field name="sleeps"
+				filter="string"
+				hiddenLabel="true"
+				type="number"
+				min="0"
+				max="20"
+				step="1"
+				label="COM_KNOWRES_PROPERTY_ROOM_SLEEPS_LBL"
+				description="COM_KNOWRES_PROPERTY_ROOM_SLEEPS_DSC"/>
+		</fieldset>
+		<fieldset name="f3" class="col">
+			<field
+				name="maxsell"
+				filter="int"
+				hiddenLabel="true"
+				type="number"
+				min="0"
+				max="20"
+				step="1"
+				label="COM_KNOWRES_PROPERTY_ROOM_MAXSELL_LBL"
+				description="COM_KNOWRES_PROPERTY_ROOM_MAXSELL_DSC">
+			</field>
+		</fieldset>
+	</fields>
+</form>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form addfieldprefix="HighlandVision\Component\Knowres\Administrator\Field">
+	<fields name="filter">
+		<field
+			name="search"
+			type="text"
+			inputmode="search"
+			label="COM_KNOWRES_SEARCH"
+			description="COM_KNOWRES_OWNERPAYMENTS_SEARCH"
+			hint="COM_KNOWRES_SEARCH"/>
+		<field name="payment_date"
+			addonBefore="Payments from"
+			class="input-mini kr-search-date-filter"
+			datepicker='{"minDate": "-10Y", "maxDate": "+0D", "altField": "#filter_payment_date"}'
+			default="-3 Months"
+			hiddenLabel="true"
+			type="uicalendar"
+			label="COM_KNOWRES_FILTER_PAYMENT_DATE"/>
+		<field
+			name="state"
+			type="status"
+			onchange="this.form.submit();">
+			<option value="">JOPTION_SELECT_PUBLISHED</option>
+		</field>
+		<field
+			name="owner_id"
+			type="filterowner"
+			table="#__knowres_owner_payment"
+			onchange="this.form.submit();">
+			<option value="">COM_KNOWRES_SELECT_OWNER</option>
+		</field>
+		<field
+			name="type"
+			type="list"
+			default=""
+			onchange="this.form.submit();">
+			<option value="">COM_KNOWRES_SELECT_OWNERPAYMENTS_TYPE</option>
+			<option value="dep">COM_KNOWRES_SELECT_OWNERPAYMENTS_TYPE_DEP</option>
+			<option value="rgp">COM_KNOWRES_SELECT_OWNERPAYMENTS_TYPE_RGP</option>
+			<option value="dba">COM_KNOWRES_SELECT_OWNERPAYMENTS_TYPE_DBA</option>
+			<option value="dad">COM_KNOWRES_SELECT_OWNERPAYMENTS_TYPE_DAD</option>
+			<option value="eom">COM_KNOWRES_SELECT_OWNERPAYMENTS_TYPE_EOM</option>
+		</field>
+		<field
+			name="confirmed"
+			type="list"
+			default=""
+			onchange="this.form.submit();">
+			<option value="">COM_KNOWRES_SELECT_CONFIRMED</option>
+			<option value="0">COM_KNOWRES_SELECT_CONFIRMED_NO</option>
+			<option value="1">COM_KNOWRES_SELECT_CONFIRMED_YES</option>
+			<option value="2">COM_KNOWRES_SELECT_CONFIRMED_ALL</option>
+		</field>
+	</fields>
+	<fields name="list">
+		<field
+			name="fullordering"
+			type="listorderingkr"
+			statuses="*,0,1,2,-2"
+			onchange="this.form.submit();"
+			default="a.payment_date ASC"
+			label="JGLOBAL_SORT_BY"
+			description="JGLOBAL_SORT_BY">
+			<option value="">JGLOBAL_SORT_BY</option>
+			<option value="a.state ASC">JSTATUS_ASC</option>
+			<option value="a.state DESC">JSTATUS_DESC</option>
+			<option value="a.payment_date ASC">COM_KNOWRES_CONTRACTPAYMENTS_PAYMENT_DATE COM_KNOWRES_ASCENDING</option>
+			<option value="a.payment_date DESC">COM_KNOWRES_CONTRACTPAYMENTS_PAYMENT_DATE COM_KNOWRES_DESCENDING</option>
+			<option value="owner_name ASC">COM_KNOWRES_OWNERPAYMENTS_OWNER_ID COM_KNOWRES_ASCENDING</option>
+			<option value="owner_name DESC">COM_KNOWRES_OWNERPAYMENTS_OWNER_ID COM_KNOWRES_DESCENDING</option>
+			<option value="property_name ASC">COM_KNOWRES_OWNERPAYMENTS_PROPERTY_ID COM_KNOWRES_ASCENDING</option>
+			<option value="property_name DESC">COM_KNOWRES_OWNERPAYMENTS_PROPERTY_ID COM_KNOWRES_DESCENDING</option>
+			<option value="contract_tag ASC">COM_KNOWRES_TAG COM_KNOWRES_ASCENDING</option>
+			<option value="contract_tag DESC">COM_KNOWRES_TAG COM_KNOWRES_DESCENDING</option>
+			<option value="a.type ASC">COM_KNOWRES_OWNERPAYMENTS_TYPE COM_KNOWRES_ASCENDING</option>
+			<option value="a.type DESC">COM_KNOWRES_OWNERPAYMENTS_TYPE COM_KNOWRES_DESCENDING</option>
+			<option value="a.amount ASC">COM_KNOWRES_OWNERPAYMENTS_AMOUNT COM_KNOWRES_ASCENDING</option>
+			<option value="a.amount DESC">COM_KNOWRES_OWNERPAYMENTS_AMOUNT COM_KNOWRES_DESCENDING</option>
+			<option value="a.calculated ASC">COM_KNOWRES_OWNERPAYMENTS_CALCULATED COM_KNOWRES_ASCENDING</option>
+			<option value="a.calculated DESC">COM_KNOWRES_OWNERPAYMENTS_CALCULATED COM_KNOWRES_DESCENDING</option>
+			<option value="a.confirmed ASC">COM_KNOWRES_OWNERPAYMENTS_CONFIRMED COM_KNOWRES_ASCENDING</option>
+			<option value="a.confirmed DESC">COM_KNOWRES_OWNERPAYMENTS_CONFIRMED COM_KNOWRES_DESCENDING</option>
+			<option value="a.id ASC">JGRID_HEADING_ID_ASC</option>
+			<option value="a.id DESC">JGRID_HEADING_ID_DESC</option>
+		</field>
+		<field
+			name="limit"
+			type="limitbox"
+			class="input-mini"
+			default="25"
+			onchange="this.form.submit();"
+			label="COM_KNOWRES_LIST_LIMIT"
+			description="COM_KNOWRES_LIST_LIMIT_DSC"/>
+	</fields>
+</form>

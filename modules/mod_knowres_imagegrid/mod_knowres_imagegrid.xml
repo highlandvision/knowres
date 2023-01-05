@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="module" client="site" method="upgrade">
+	<name>MOD_KNOWRES_IMAGEGRID</name>
+	<author>Highland Vision</author>
+	<creationDate>September 2015</creationDate>
+	<authorUrl>https://www.highlandvision.com</authorUrl>
+	<authorEmail>hazel@highlandvision.com</authorEmail>
+	<copyright>2020 Highland Vision, all rights reserved.</copyright>
+	<license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
+	<version>4.0.0</version>
+	<description>MOD_KNOWRES_IMAGEGRID_DSC</description>
+	<files>
+		<filename module="mod_knowres_imagegrid">mod_knowres_imagegrid.php</filename>
+		<filename>mod_knowres_imagegrid.xml</filename>
+		<folder>form</folder>
+		<folder>language</folder>
+		<folder>tmpl</folder>
+	</files>
+	<config>
+		<fields name="params">
+			<fieldset name="Basic">
+				<field name="width"
+					addonAfter="px"
+					type="text"
+					label="MOD_KNOWRES_IMAGEGRID_WIDTH"
+					description="MOD_KNOWRES_IMAGEGRID_WIDTH_DSC"/>
+				<field name="height"
+					addonAfter="px"
+					type="text"
+					label="MOD_KNOWRES_IMAGEGRID_HEIGHT"
+					description="MOD_KNOWRES_IMAGEGRID_HEIGHT_DSC"/>
+				<field name="textcolor"
+					default="#ffffff"
+					type="color"
+					label="MOD_KNOWRES_IMAGEGRID_TEXTCOLOR"
+					description="MOD_KNOWRES_IMAGEGRID_TEXTCOLOR_DSC"/>
+				<field name="textbg"
+					default=""
+					type="color"
+					label="MOD_KNOWRES_IMAGEGRID_TEXTBG"
+					description="MOD_KNOWRES_IMAGEGRID_TEXTBG_DSC"/>
+				<field name="textsize"
+					class="input-mini"
+					default=""
+					type="text"
+					label="MOD_KNOWRES_IMAGEGRID_TEXTSIZE"
+					description="MOD_KNOWRES_IMAGEGRID_TEXTSIZE_DSC"/>
+				<field name="textbold"
+					class="btn-group btn-group-yesno"
+					default="0"
+					type="radio"
+					label="MOD_KNOWRES_IMAGEGRID_TEXTBOLD"
+					description="MOD_KNOWRES_IMAGEGRID_TEXTBOLD_DSC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="textoverlay"
+					class="btn-group btn-group-yesno"
+					default="0"
+					type="radio"
+					label="MOD_KNOWRES_IMAGEGRID_TEXTOVERLAY"
+					description="MOD_KNOWRES_IMAGEGRID_TEXTOVERLAY_DSC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="textalign"
+					class="btn-group"
+					default="center"
+					type="radio"
+					label="MOD_KNOWRES_IMAGEGRID_TEXTALIGN"
+					description="MOD_KNOWRES_IMAGEGRID_TEXTALIGN_DSC">
+					<option value="left">MOD_KNOWRES_IMAGEGRID_LEFT</option>
+					<option value="center">MOD_KNOWRES_IMAGEGRID_CENTER</option>
+				</field>
+				<field name="verticalalign"
+					class="btn-group"
+					default="center"
+					type="radio"
+					label="MOD_KNOWRES_IMAGEGRID_VERTICAL_ALIGN"
+					description="MOD_KNOWRES_IMAGEGRID_VERTICAL_ALIGN_DSC">
+					<option value="top">MOD_KNOWRES_IMAGEGRID_TOP</option>
+					<option value="middle">MOD_KNOWRES_IMAGEGRID_MIDDLE</option>
+					<option value="bottom">MOD_KNOWRES_IMAGEGRID_BOTTOM</option>
+				</field>
+				<field name="imagegrid"
+					formsource="modules/mod_knowres_imagegrid/form/imagegrid.xml"
+					layout="joomla.form.field.subform.repeatable-table"
+					min="1"
+					multiple="true"
+					required="true"
+					type="subform"
+					label="MOD_KNOWRES_IMAGEGRID_IMAGES_LINKS_LBL"
+					description="MOD_KNOWRES_IMAGEGRID_IMAGES_LINKS_DSC"/>
+			</fieldset>
+			<fieldset name="advanced">
+				<field name="layout"
+					class="form-select"
+					type="modulelayout"
+					validate="moduleLayout"
+					label="JFIELD_ALT_LAYOUT_LABEL"/>
+				<field name="moduleclass_sfx"
+					type="text"
+					label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"/>
+				<field name="cache"
+					type="list"
+					default="1"
+					label="COM_MODULES_FIELD_CACHING_LABEL">
+					<option value="1">JGLOBAL_USE_GLOBAL</option>
+					<option value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
+				</field>
+				<field name="cache_time"
+					type="text"
+					default="900"
+					label="COM_MODULES_FIELD_CACHE_TIME_LABEL"/>
+				<field name="cachemode"
+					type="hidden"
+					default="static"/>
+			</fieldset>
+		</fields>
+	</config>
+</extension>

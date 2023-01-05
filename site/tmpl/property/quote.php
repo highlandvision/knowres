@@ -1,0 +1,100 @@
+<?php
+/**
+ * @package    Know Reservations
+ * @subpackage Site View
+ * @copyright  2020 Highland Vision. All rights reserved.
+ * @license    See the file "LICENSE.txt" for the full license governing this code.
+ * @author     Hazel Wilson <hazel@highlandvision.com>
+ */
+
+/** @noinspection PhpUnhandledExceptionInspection */
+
+defined('_JEXEC') or die;
+
+use HighlandVision\KR\Framework\KrFactory;
+use HighlandVision\KR\Framework\KrMethods;
+use HighlandVision\KR\SiteHelper;
+use HighlandVision\KR\TickTock;
+use HighlandVision\KR\Utility;
+
+$currency   = $this->quote->getValue('currency');
+$price      = Utility::displayValue($this->quote->getValue('contract_total'), $currency);
+$price_text = KrMethods::plain('COM_KNOWRES_QUOTE_TOTAL_NOTAX');
+if ((isset($this->quote->settings['tax_ignore']) && $this->quote->settings['tax_ignore'])
+	|| KrMethods::getParams()->get('tax_ignore', 0))
+{
+	$price_text = KrMethods::plain('COM_KNOWRES_QUOTE_TOTAL');
+}
+
+$discount = $this->quote->getValue('discount');
+if (!empty($discount))
+{
+	$discount = Utility::displayValue($this->quote->getValue('discount'), $currency);
+	$total    = $this->quote->getValue('contract_total') + $this->quote->getValue('discount');
+	$full     = Utility::displayValue($total, $currency);
+}
+
+$deposit = Utility::displayValue($this->quote->getValue('deposit'), $currency);
+if ($this->quote->getValue('booking_type') == 2)
+{
+	$deposit_text = KrMethods::plain('COM_KNOWRES_CONFIRM_BOOK_DEPOSIT_DUE');
+}
+else
+{
+	$deposit_text = KrMethods::plain('COM_KNOWRES_CONFIRM_REQUEST_DEPOSIT_DUE');
+}
+
+// TODO-v4.0 Revisit below to see if fixed in 4sef
+$Itemid = SiteHelper::getItemId('com_knowres', 'confirm', ['layout' => 'html']);
+$action = KrMethods::getRoot() . 'index.php?option=com_knowres&view=confirm&Itemid=' . $Itemid;
+?>
+
+<?php if (!empty($this->error)): ?>
+	<h4 class="h5">
+		<?php echo $this->error; ?>
+		<br><br>
+	</h4>
+<?php else: ?>
+	<form action="<?php echo $action; ?>" method="post" id="kr-form-prebook">
+		<h4><?php echo $price_text; ?></h4>
+		<div class="total-price">
+			<?php echo $price; ?>
+		</div>
+
+		<?php if (!empty($discount)): ?>
+			<p class="discount">
+				<i class="fas fa-cut fa-1x">&nbsp;</i>
+				<?php echo KrMethods::plain('COM_KNOWRES_QUOTE_DISCOUNT_TEXT1'); ?>
+				<del><?php echo $full; ?></del>
+			</p>
+		<?php endif; ?>
+
+		<?php if (!empty($deposit)): ?>
+			<div class="deposit">
+				<h4 class="h6">
+					<i class="fas fa-credit-card fa-1x">&nbsp;</i><?php echo $deposit_text; ?>
+				</h4>
+				<?php echo $deposit; ?>
+			</div>
+		<?php endif; ?>
+
+		<div class="booknow">
+			<button class="button expanded medium" type="submit">
+				<?php echo KrFactory::getAdminModel('property')::bookingTypeText($this->quote->getValue('booking_type')); ?>
+			</button>
+		</div>
+
+		<div class="booking-summary text-center">
+			<p><?php echo KrMethods::plain('COM_KNOWRES_ARRIVAL'); ?>
+				<br><span class="color-primary"><?php echo TickTock::displayDate($this->quote->getValue('arrival'),
+						'D, j F Y'); ?></span>
+			</p>
+			<p><?php echo KrMethods::plain('COM_KNOWRES_DEPARTURE'); ?>
+				<br><span class="color-primary"><?php echo TickTock::displayDate($this->quote->getValue('departure'),
+						'D, j F Y'); ?></span>
+			</p>
+			<p>(<?php echo KrMethods::sprintf('COM_KNOWRES_NIGHTS_GUESTS', $this->quote->getValue('nights'),
+					$this->quote->getValue('guests')); ?>)</p>
+		</div>
+	</form>
+<?php endif; ?>

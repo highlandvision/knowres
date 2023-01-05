@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form addruleprefix="HighlandVision\Component\Knowres\Administrator\Rule">
+	<fieldset name="custom">
+		<field name="email"
+			filter="string"
+			required="true"
+			type="email"
+			validate="email"
+			label="COM_KNOWRES_SERVICE_EMAIL_LBL"
+			description="COM_KNOWRES_SERVICE_EMAIL_DSC"/>
+		<field name="usesandbox"
+			class="btn-group btn-group-yesno"
+			default="0"
+			type="radio"
+			label="COM_KNOWRES_SERVICE_USESANDBOX_LBL"
+			description="COM_KNOWRES_SERVICE_USESANDBOX_DSC">
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+		<field name="client_id"
+			filter="string"
+			type="text"
+			label="COM_KNOWRES_SERVICE_CLIENT_ID_LBL"
+			description="COM_KNOWRES_SERVICE_CLIENT_ID_DSC"/>
+		<field name="client_secret"
+			filter="string"
+			type="text"
+			label="COM_KNOWRES_SERVICE_CLIENT_SECRET_LBL"
+			description="COM_KNOWRES_SERVICE_CLIENT_SECRET_DSC"/>
+		<field name="sandbox_client_id"
+			filter="string"
+			type="text"
+			label="COM_KNOWRES_SERVICE_SANDBOX_CLIENT_ID_LBL"
+			description="COM_KNOWRES_SERVICE_SANDBOX_CLIENT_ID_DSC"/>
+		<field name="sandbox_client_secret"
+			filter="string"
+			type="text"
+			label="COM_KNOWRES_SERVICE_SANDBOX_CLIENT_SECRET_LBL"
+			description="COM_KNOWRES_SERVICE_SANDBOX_CLIENT_SECRET_DSC"/>
+		<field name="description"
+			filter="string"
+			type="textarea"
+			label="COM_KNOWRES_SERVICE_DESCRIPTION_LBL"
+			description="COM_KNOWRES_SERVICE_DESCRIPTION_DSC"/>
+		<field name="obd"
+			class="btn-group btn-group-yesno"
+			default="0"
+			type="radio"
+			label="COM_KNOWRES_SERVICE_OBD_LBL"
+			description="COM_KNOWRES_SERVICE_OBD_DSC">
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+		<field name="surcharge"
+			class="input-mini"
+			filter="string"
+			type="text"
+			label="COM_KNOWRES_SERVICE_SURCHARGE_LBL"
+			description="COM_KNOWRES_SERVICE_SURCHARGE_DSC"/>
+		<field name="surchargetype"
+			class="btn-group btn-group-yesno"
+			default="0"
+			type="radio"
+			label="COM_KNOWRES_SERVICE_SURCHARGETYPE_LBL"
+			description="COM_KNOWRES_SERVICE_SURCHARGETYPE_DSC">
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+		<field name="surchargedeposit"
+			class="btn-group btn-group-yesno"
+			default="0"
+			type="radio"
+			label="COM_KNOWRES_SERVICE_SURCHARGEDEPOSIT_LBL"
+			description="COM_KNOWRES_SERVICE_SURCHARGEDEPOSIT_DSC">
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+	</fieldset>
+</form>

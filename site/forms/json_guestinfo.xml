@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset name="name" class="small-12 medium-6 large-3 columns">
+		<field name="name"
+			filter="string"
+			hiddenDescription="true"
+			type="text"
+			label="COM_KNOWRES_CONTRACTGUESTDATAFORM_GUESTINFO_NAME1_LBL"
+			description="COM_KNOWRES_CONTRACTGUESTDATAFORM_GUESTINFO_NAME1_LBL"/>
+	</fieldset>
+	<fieldset name="surname1" class="small-12 medium-6 large-3 columns">
+		<field name="surname1"
+			filter="string"
+			hiddenDescription="true"
+			type="text"
+			label="COM_KNOWRES_CONTRACTGUESTDATAFORM_GUESTINFO_NAME2_LBL"
+			description="COM_KNOWRES_CONTRACTGUESTDATAFORM_GUESTINFO_NAME2_LBL"/>
+	</fieldset>
+	<fieldset name="surname2" class="small-12 medium-6 large-3 columns">
+		<field name="surname2"
+			filter="string"
+			hiddenDescription="true"
+			type="text"
+			label="COM_KNOWRES_CONTRACTGUESTDATAFORM_GUESTINFO_NAME3_LBL"
+			description="COM_KNOWRES_CONTRACTGUESTDATAFORM_GUESTINFO_NAME3_LBL"/>
+	</fieldset>
+	<fieldset name="sex" class="small-12 medium-6 large-3 columns">
+		<field name="sex"
+			addfieldprefix="HighlandVision\Component\Knowres\Administrator\Field"
+			class="input-mini"
+			filter="string"
+			hiddenDescription="true"
+			type="listsex"
+			label="COM_KNOWRES_CONTRACTGUESTDATAFORM_SEX_LBL"
+			description="COM_KNOWRES_CONTRACTGUESTDATAFORM_SEX_LBL"/>
+	</fieldset>
+	<fieldset name="dob" class="small-12 medium-6 large-3 columns">
+		<field name="dob"
+			class="dobissue input-mini"
+			filter="string"
+			hiddenDescription="true"
+			type="text"
+			label="COM_KNOWRES_CONTRACTGUESTDATAFORM_DOB_LBL"
+			description="COM_KNOWRES_CONTRACTGUESTDATAFORM_DOB_LBL"/>
+	</fieldset>
+	<fieldset name="document_type" class="small-12 medium-6 large-3 columns">
+		<field name="document_type"
+			addfieldprefix="HighlandVision\Component\Knowres\Administrator\Field"
+			filter="int"
+			hiddenDescription="true"
+			type="listdocumenttype"
+			label="COM_KNOWRES_CONTRACTGUESTDATAFORM_DOCUMENT_TYPE_LBL"
+			description="COM_KNOWRES_CONTRACTGUESTDATAFORM_DOCUMENT_TYPE_LBL">
+			<option value="0">COM_KNOWRES_SELECT_REQUIRED</option>
+		</field>
+	</fieldset>
+	<fieldset name="document_id" class="small-12 medium-6 large-3 columns">
+		<field name="document_id"
+			filter="string"
+			hiddenDescription="true"
+			type="text"
+			label="COM_KNOWRES_CONTRACTGUESTDATAFORM_DOCUMENT_NUMBER_LBL"
+			description="COM_KNOWRES_CONTRACTGUESTDATAFORM_DOCUMENT_NUMBER_LBL"/>
+	</fieldset>
+	<fieldset name="document_nat" class="small-12 medium-6 large-3 columns">
+		<field name="document_nat"
+			addfieldprefix="HighlandVision\Component\Knowres\Administrator\Field"
+			filter="int"
+			hiddenDescription="true"
+			type="listcountry"
+			label="COM_KNOWRES_CONTRACTGUESTDATAFORM_DOCUMENT_COUNTRY_LBL"
+			description="COM_KNOWRES_CONTRACTGUESTDATAFORM_DOCUMENT_COUNTRY_LBL">
+			<option value="0">COM_KNOWRES_SELECT_REQUIRED</option>
+		</field>
+	</fieldset>
+	<fieldset name="document_issue" class="small-12 medium-6 large-3 columns">
+		<field name="document_issue"
+			class="dobissue input-mini"
+			filter="string"
+			hiddenDescription="true"
+			type="string"
+			label="COM_KNOWRES_CONTRACTGUESTDATAFORM_DOCUMENT_DOI_LBL"
+			description="COM_KNOWRES_CONTRACTGUESTDATAFORM_DOCUMENT_DOI_LBL"/>
+	</fieldset>
+</form>

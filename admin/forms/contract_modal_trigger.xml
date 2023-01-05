@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form addfieldprefix="HighlandVision\Component\Knowres\Administrator\Field"
+	addruleprefix="HighlandVision\Component\Knowres\Administrator\Rule">
+	<fieldset name="krdata">
+		<field name="email_trigger"
+			class="btn-group"
+			default="0"
+			filter="integer"
+			required="true"
+			type="radio"
+			label="COM_KNOWRES_CONTRACT_SEND_EMAIL_LBL"
+			description="COM_KNOWRES_CONTRACT_SEND_EMAIL_DSC">
+			<option value="0">COM_KNOWRES_GUEST</option>
+			<option value="1">COM_KNOWRES_OWNER</option>
+			<option value="2">COM_KNOWRES_BOTH</option>
+		</field>
+	</fieldset>
+</form>

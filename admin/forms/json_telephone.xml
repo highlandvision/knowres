@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fields group="telephone">
+		<fieldset name="f1" class="col-xl-5">
+			<field name="country"
+				filter="integer"
+				hiddenLabel="true"
+				type="listdialcode"
+				label="COM_KNOWRES_GUEST_ALTERNATIVE_COUNTRY_LBL"
+				description="COM_KNOWRES_GUEST_ALTERNATIVE_COUNTRY_DSC">
+				<option value="0">COM_KNOWRES_PLEASE_SELECT</option>
+			</field>
+		</fieldset>
+		<fieldset name="f2" class="col">
+			<field name="number"
+				filter="string"
+				hiddenLabel="true"
+				type="string"
+				label="COM_KNOWRES_GUEST_ALTERNATIVE_NUMBER_LBL"
+				description="COM_KNOWRES_GUEST_ALTERNATIVE_NUMBER_DSC"/>
+		</fieldset>
+		<fieldset name="f3" class="col">
+			<field name="type"
+				filter="int"
+				hiddenLabel="true"
+				type="list"
+				description="COM_KNOWRES_GUEST_PHONE_TYPE_DSC">
+				<option value="0">COM_KNOWRES_SELECT_REQUIRED</option>
+				<option value="1">COM_KNOWRES_GUEST_PHONE_TYPE1</option>
+				<option value="2">COM_KNOWRES_GUEST_PHONE_TYPE2</option>
+				<option value="3">COM_KNOWRES_GUEST_PHONE_TYPE3</option>
+			</field>
+		</fieldset>
+	</fields>
+</form>

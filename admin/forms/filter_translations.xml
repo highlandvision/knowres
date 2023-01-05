@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form addfieldprefix="HighlandVision\Component\Knowres\Administrator\Field"
+	addruleprefix="HighlandVision\Component\Knowres\Administrator\Rule">
+	<fields name="filter">
+		<field
+			name="search"
+			type="text"
+			inputmode="search"
+			label="COM_KNOWRES_SEARCH"
+			description="COM_KNOWRES_TRANSLATIONS_SEARCH"
+			hint="COM_KNOWRES_SEARCH"/>
+		<field
+			name="state"
+			type="status"
+			onchange="this.form.submit();">
+			<option value="">JOPTION_SELECT_PUBLISHED</option>
+		</field>
+		<field
+			name="item"
+			type="filteritem"
+			onchange="this.form.submit();">
+			<option value="">COM_KNOWRES_SELECT_ITEM</option>
+		</field>
+		<field
+			name="item_id"
+			type="filteritemid"
+			onchange="this.form.submit();">
+			<option value="">COM_KNOWRES_SELECT_PROPERTY</option>
+		</field>
+		<field
+			name="field"
+			type="filterfield"
+			onchange="this.form.submit();">
+			<option value="">COM_KNOWRES_SELECT_FIELD</option>
+		</field>
+		<field
+			name="language"
+			type="contentlanguage"
+			label="JOPTION_FILTER_LANGUAGE"
+			description="JOPTION_FILTER_LANGUAGE_DESC"
+			onchange="this.form.submit();">
+			<option value="">JOPTION_SELECT_LANGUAGE</option>
+		</field>
+	</fields>
+	<fields name="list">
+		<field
+			name="fullordering"
+			type="listorderingkr"
+			statuses="*,0,1,2,-2"
+			onchange="this.form.submit();"
+			default="a.item ASC"
+			label="JGLOBAL_SORT_BY"
+			description="JGLOBAL_SORT_BY">
+			<option value="">JGLOBAL_SORT_BY</option>
+			<option value="a.state ASC">JSTATUS_ASC</option>
+			<option value="a.state DESC">JSTATUS_DESC</option>
+			<option value="a.item ASC">COM_KNOWRES_TRANSLATIONS_ITEM COM_KNOWRES_ASCENDING</option>
+			<option value="a.item DESC">COM_KNOWRES_TRANSLATIONS_ITEM COM_KNOWRES_DESCENDING</option>
+			<option value="name ASC">COM_KNOWRES_TRANSLATIONS_ITEM_ID COM_KNOWRES_ASCENDING</option>
+			<option value="name DESC">COM_KNOWRES_TRANSLATIONS_ITEM_ID COM_KNOWRES_DESCENDING</option>
+			<option value="a.field ASC">COM_KNOWRES_TRANSLATIONS_FIELD COM_KNOWRES_ASCENDING</option>
+			<option value="a.field DESC">COM_KNOWRES_TRANSLATIONS_FIELD COM_KNOWRES_DESCENDING</option>
+			<option value="a.text ASC">COM_KNOWRES_TRANSLATIONS_TEXT COM_KNOWRES_ASCENDING</option>
+			<option value="a.text DESC">COM_KNOWRES_TRANSLATIONS_TEXT COM_KNOWRES_DESCENDING</option>
+			<option value="a.language ASC">COM_KNOWRES_TRANSLATIONS_LANGUAGE COM_KNOWRES_ASCENDING</option>
+			<option value="a.language DESC">COM_KNOWRES_TRANSLATIONS_LANGUAGE COM_KNOWRES_DESCENDING</option>
+			<option value="a.id ASC">JGRID_HEADING_ID_ASC</option>
+			<option value="a.id DESC">JGRID_HEADING_ID_DESC</option>
+		</field>
+		<field
+			name="limit"
+			type="limitbox"
+			class="input-mini"
+			default="25"
+			onchange="this.form.submit();"
+			label="COM_KNOWRES_LIST_LIMIT"
+			description="COM_KNOWRES_LIST_LIMIT_DSC"/>
+	</fields>
+</form>

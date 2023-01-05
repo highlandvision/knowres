@@ -1,0 +1,93 @@
+<?php
+/**
+ * @package     Know Reservations
+ * @subpackage  Site Controller
+ * @copyright   2017 Highland Vision. All rights reserved.
+ * @license     See the file "LICENSE.txt" for the full license governing this code.
+ * @author      Hazel Wilson <hazel@highlandvision.com>
+ */
+
+defined('_JEXEC') or die;
+
+use HighlandVision\KR\Framework\KrMethods;
+
+$this->form->setFieldAttribute('guest_note', 'hiddenLabel', false);
+?>
+
+<fieldset class="fieldset">
+	<legend><?php echo KrMethods::plain('COM_KNOWRES_CONFIRM_CONTACT_DETAILS'); ?></legend>
+	<div class="callout small gray">
+		<div class="row">
+			<div class="small-12 medium-6 columns">
+				<?php echo $this->guestForm->renderField('email'); ?>
+			</div>
+		</div>
+
+		<?php if ($this->guestForm->getFieldAttribute('firstname', 'type', 'hidden') != 'hidden'
+			|| $this->guestForm->getFieldAttribute('surname', 'type', 'hidden') != 'hidden'): ?>
+			<div class="row">
+				<div class="medium-6 columns">
+					<?php echo $this->guestForm->renderField('firstname'); ?>
+				</div>
+				<div class="medium-6 columns">
+					<?php echo $this->guestForm->renderField('surname'); ?>
+				</div>
+			</div>
+		<?php endif; ?>
+
+		<?php if ($this->guestForm->getFieldAttribute('mobile', 'type', 'hidden') != 'hidden'): ?>
+			<div class="row">
+				<div class="medium-6 columns">
+					<?php echo $this->guestForm->renderField('mobile_country_id'); ?>
+				</div>
+				<div class="medium-6 columns">
+					<?php echo $this->guestForm->renderField('mobile'); ?>
+				</div>
+			</div>
+		<?php endif; ?>
+
+		<?php if ($this->guestForm->getFieldAttribute('address1', 'type', 'hidden') != 'hidden'): ?>
+			<div class="row">
+				<div class="medium-6 columns">
+					<?php echo $this->guestForm->renderField('address1'); ?>
+				</div>
+				<div class="medium-6 columns">
+					<?php echo $this->guestForm->renderField('address2'); ?>
+				</div>
+			</div>
+		<?php endif; ?>
+
+		<?php if ($this->guestForm->getFieldAttribute('town', 'type', 'hidden') != 'hidden'): ?>
+			<div class="row">
+				<div class="medium-6 columns">
+					<?php echo $this->guestForm->renderField('town'); ?>
+				</div>
+				<div class="medium-6 columns">
+					<?php echo $this->guestForm->renderField('postcode'); ?>
+				</div>
+			</div>
+		<?php endif; ?>
+
+		<?php if ($this->guestForm->getFieldAttribute('region_id', 'type', 'hidden') != 'hidden'): ?>
+			<div class="row">
+				<div class="medium-6 columns">
+					<?php echo $this->guestForm->renderField('country_id'); ?>
+				</div>
+				<div class="medium-6 columns">
+					<?php echo $this->guestForm->renderField('region_id'); ?>
+				</div>
+			</div>
+		<?php endif; ?>
+	</div>
+</fieldset>
+
+<fieldset class="fieldset">
+	<legend><?php echo KrMethods::plain('COM_KNOWRES_CONFIRM_ADDITIONAL_INFO'); ?></legend>
+	<div class="callout small gray">
+		<div class="row">
+			<div class="small-12 columns">
+				<?php echo $this->form->renderField('guest_note'); ?>
+			</div>
+		</div>
+	</div>
+</fieldset>

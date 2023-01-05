@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+	<fieldset>
+		<field name="qarrivaldsp"
+			addfieldprefix="HighlandVision\Component\Knowres\Site\Field"
+			class="notranslate datepicker"
+			filter="string"
+			type="mobiquote"
+			label="COM_KNOWRES_QUOTE_ARRIVAL"/>
+		<field name="qdeparturedsp"
+			addfieldprefix="HighlandVision\Component\Knowres\Site\Field"
+			class="notranslate datepicker"
+			filter="string"
+			type="mobiquote"
+			label="COM_KNOWRES_QUOTE_DEPARTURE"/>
+		<field name="qarrival"
+			filter="string"
+			type="hidden"/>
+		<field name="qdeparture"
+			filter="string"
+			type="hidden"/>
+		<field name="guests"
+			addfieldprefix="HighlandVision\Component\Knowres\Site\Field"
+			class="kr-quote-auto"
+			default="2"
+			type="listguests"
+			hint="MOD_KNOWRES_SEARCH_GUESTS_LBL"
+			label="COM_KNOWRES_QUOTE_GUESTS"/>
+	</fieldset>
+</form>

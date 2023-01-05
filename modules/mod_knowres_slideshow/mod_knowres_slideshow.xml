@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="module" client="site" method="upgrade">
+	<name>MOD_KNOWRES_SLIDESHOW</name>
+	<author>Highland Vision</author>
+	<creationDate>September 2015</creationDate>
+	<authorUrl>https://www.highlandvision.com</authorUrl>
+	<authorEmail>hazel@highlandvision.com</authorEmail>
+	<copyright>2020 Highland Vision, all rights reserved.</copyright>
+	<license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
+	<version>4.0.0</version>
+	<description>MOD_KNOWRES_SLIDESHOW_DSC</description>
+	<files>
+		<filename module="mod_knowres_slideshow">mod_knowres_slideshow.php</filename>
+		<filename>mod_knowres_slideshow.xml</filename>
+		<folder>language</folder>
+		<folder>tmpl</folder>
+	</files>
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field name="image1"
+					type="media"
+					directory="krslideshow"
+					label="Image"
+					description="MOD_KNOWRES_SLIDESHOW_SELECT_IMAGE"/>
+				<field name="property1"
+					addfieldprefix="HighlandVision\Component\Knowres\Administrator\Field"
+					class="form-select"
+					default="0"
+					required="false"
+					type="listproperties"
+					label="MOD_KNOWRES_SLIDESHOW_PROPERTY_LBL"
+					description="MOD_KNOWRES_SLIDESHOW_PROPERTY_DSC">
+					<option value="0">MOD_KNOWRES_SLIDESHOW_SELECT</option>
+				</field>
+				<field type="spacer"
+					name="myspacer1"
+					hr="true"/>
+				<field name="image2"
+					type="media"
+					directory="krslideshow"
+					label="Image"
+					description="MOD_KNOWRES_SLIDESHOW_SELECT_IMAGE"/>
+				<field name="property2"
+					addfieldprefix="HighlandVision\Component\Knowres\Administrator\Field"
+					class="form-select"
+					default="0"
+					required="false"
+					type="listproperties"
+					label="MOD_KNOWRES_SLIDESHOW_PROPERTY_LBL"
+					description="MOD_KNOWRES_SLIDESHOW_PROPERTY_DSC">
+					<option value="0">MOD_KNOWRES_SLIDESHOW_SELECT</option>
+				</field>
+				<field type="spacer"
+					name="myspacer2"
+					hr="true"/>
+				<field name="image3"
+					type="media"
+					directory="krslideshow"
+					label="Image"
+					description="MOD_KNOWRES_SLIDESHOW_SELECT_IMAGE"/>
+				<field name="property3"
+					addfieldprefix="HighlandVision\Component\Knowres\Administrator\Field"
+					class="form-select"
+					default="0"
+					required="false"
+					type="listproperties"
+					label="MOD_KNOWRES_SLIDESHOW_PROPERTY_LBL"
+					description="MOD_KNOWRES_SLIDESHOW_PROPERTY_DSC">
+					<option value="0">MOD_KNOWRES_SLIDESHOW_SELECT</option>
+				</field>
+				<field type="spacer"
+					name="myspacer3"
+					hr="true"/>
+				<field name="image4"
+					type="media"
+					directory="krslideshow"
+					label="Image"
+					description="MOD_KNOWRES_SLIDESHOW_SELECT_IMAGE"/>
+				<field name="property4"
+					addfieldprefix="HighlandVision\Component\Knowres\Administrator\Field"
+					class="form-select"
+					default="0"
+					required="false"
+					type="listproperties"
+					label="MOD_KNOWRES_SLIDESHOW_PROPERTY_LBL"
+					description="MOD_KNOWRES_SLIDESHOW_PROPERTY_DSC">
+					<option value="0">MOD_KNOWRES_SLIDESHOW_SELECT</option>
+				</field>
+				<field type="spacer"
+					name="myspacer4"
+					hr="true"/>
+				<field name="image5"
+					type="media"
+					directory="krslideshow"
+					label="Image"
+					description="MOD_KNOWRES_SLIDESHOW_SELECT_IMAGE"/>
+				<field name="property5"
+					addfieldprefix="HighlandVision\Component\Knowres\Administrator\Field"
+					class="form-select"
+					default="0"
+					required="false"
+					type="listproperties"
+					label="MOD_KNOWRES_SLIDESHOW_PROPERTY_LBL"
+					description="MOD_KNOWRES_SLIDESHOW_PROPERTY_DSC">
+					<option value="0">MOD_KNOWRES_SLIDESHOW_SELECT</option>
+				</field>
+				<field type="spacer"
+					name="myspacer5"
+					hr="true"/>
+				<field name="image6"
+					type="media"
+					directory="krslideshow"
+					label="Image"
+					description="MOD_KNOWRES_SLIDESHOW_SELECT_IMAGE"/>
+				<field name="property6"
+					addfieldprefix="HighlandVision\Component\Knowres\Administrator\Field"
+					class="form-select"
+					default="0"
+					required="false"
+					type="listproperties"
+					label="MOD_KNOWRES_SLIDESHOW_PROPERTY_LBL"
+					description="MOD_KNOWRES_SLIDESHOW_PROPERTY_DSC">
+					<option value="0">MOD_KNOWRES_SLIDESHOW_SELECT</option>
+				</field>
+			</fieldset>
+			<fieldset name="advanced">
+				<field name="layout"
+					class="form-select"
+					type="modulelayout"
+					validate="moduleLayout"
+					label="JFIELD_ALT_LAYOUT_LABEL"/>
+				<field name="moduleclass_sfx"
+					type="text"
+					label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"/>
+				<field name="cache"
+					type="list"
+					default="1"
+					label="COM_MODULES_FIELD_CACHING_LABEL">
+					<option value="1">JGLOBAL_USE_GLOBAL</option>
+					<option value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
+				</field>
+				<field name="cache_time"
+					type="text"
+					default="900"
+					label="COM_MODULES_FIELD_CACHE_TIME_LABEL"/>
+				<field name="cachemode"
+					type="hidden"
+					default="static"/>
+			</fieldset>
+		</fields>
+	</config>
+</extension>

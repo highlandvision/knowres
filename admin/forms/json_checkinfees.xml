@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fields group="checkinfees">
+		<fieldset name="f1" class="col">
+			<field name="checkin_fees_from"
+				class="input-mini"
+				filter="string"
+				hiddenLabel="true"
+				type="listtime"
+				label="COM_KNOWRES_PROPERTY_FEES_FROM_LBL"
+				description="COM_KNOWRES_PROPERTY_FEES_FROM_DSC">
+			</field>
+		</fieldset>
+		<fieldset name="f2" class="col">
+			<field name="checkin_fees_to"
+				class="input-mini"
+				filter="string"
+				hiddenLabel="true"
+				type="listtime"
+				label="COM_KNOWRES_PROPERTY_FEES_TO_LBL"
+				description="COM_KNOWRES_PROPERTY_FEES_TO_DSC"/>
+		</fieldset>
+		<fieldset name="f3" class="col">
+			<field name="checkin_fees_amount"
+				addonBefore=""
+				class="input-mini"
+				filter="string"
+				hiddenLabel="true"
+				type="text"
+				label="COM_KNOWRES_PROPERTY_FEES_AMOUNT_LBL"
+				description="COM_KNOWRES_PROPERTY_FEES_AMOUNT_DSC">
+			</field>
+		</fieldset>
+	</fields>
+</form>

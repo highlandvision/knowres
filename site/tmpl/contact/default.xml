@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="COM_KNOWRES_TITLE_CONTACT" option="COM_KNOWRES_TITLE_CONTACT_OPT">
+		<message>
+			<![CDATA[COM_KNOWRES_TITLE_CONTACT_DSC]]>
+		</message>
+	</layout>
+	<fields name="params">
+	</fields>
+</metadata>

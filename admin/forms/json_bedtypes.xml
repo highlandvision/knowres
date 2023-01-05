@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fields group="bed_types">
+		<fieldset name="f1" class="col-6 col-xl-2">
+			<field name="room_id"
+				default="0"
+				filter="integer"
+				hiddenLabel="true"
+				type="list"
+				label="COM_KNOWRES_BEDTYPE_LBL_ROOM_ID"
+				description="COM_KNOWRES_BEDTYPE_DESC_ROOM_ID">
+				<option value="0">COM_KNOWRES_SELECT</option>
+				<option value="1">COM_KNOWRES_ROOMTYPE_1</option>
+				<option value="2">COM_KNOWRES_ROOMTYPE_2</option>
+				<option value="3">COM_KNOWRES_ROOMTYPE_3</option>
+				<option value="4">COM_KNOWRES_ROOMTYPE_4</option>
+				<option value="5">COM_KNOWRES_ROOMTYPE_5</option>
+			</field>
+		</fieldset>
+		<fieldset name="f2" class="col-6 col-xl-1">
+			<field name="room_number"
+				default="1"
+				hiddenLabel="true"
+				min="0"
+				max="20"
+				type="number"
+				label="COM_KNOWRES_BEDTYPE_LBL_ROOM_NUMBER"
+				description="COM_KNOWRES_BEDTYPE_DESC_ROOM_NUMBER"/>
+		</fieldset>
+		<fieldset name="f3" class="col-3 col-lg-1 col-xl-1 d-flex align-items-start flex-fill">
+			<field name="bed_number"
+				class="input-number"
+				min="0"
+				max="10"
+				type="number"/>
+		</fieldset>
+	</fields>
+</form>

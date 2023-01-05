@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="COM_KNOWRES_TITLE_PROPERTIES_SEARCH" option="COM_KNOWRES_TITLE_PROPERTIES_SEARCH_OPT">
+		<message>
+			<![CDATA[COM_KNOWRES_TITLE_PROPERTIES_SEARCH_DSC]]>
+		</message>
+	</layout>
+	<!-- Add fields to the request variables for the layout. -->
+	<fields name="request">
+		<fieldset name="request">
+			<field name="region_id"
+				addfieldprefix="HighlandVision\Component\Knowres\Administrator\Field"
+				allow_property="true"
+				filter="integer"
+				required="true"
+				type="listregions"
+				label="Select Region"
+				description="Select the region for the search"/>
+			<field name="area"
+				addfieldprefix="HighlandVision\Component\Knowres\Administrator\Field"
+				description="Select the property area for the search"
+				filter="string"
+				type="listareas"
+				label="Select Area">
+				<option value="">COM_KNOWRES_SELECT</option>
+			</field>
+			<field name="type_id"
+				addfieldprefix="HighlandVision\Component\Knowres\Administrator\Field"
+				filter="integer"
+				type="listtypes"
+				label="Select Type"
+				description="Select the type for the search">
+				<option value="">COM_KNOWRES_SELECT</option>
+			</field>
+			<field name="feature_id"
+				addfieldprefix="HighlandVision\Component\Knowres\Administrator\Field"
+				filter="integer"
+				type="listfeatures"
+				label="Select Feature"
+				description="Select the feature for the search">
+				<option value="">COM_KNOWRES_SELECT</option>
+			</field>
+			<field name="category_id"
+				addfieldprefix="HighlandVision\Component\Knowres\Administrator\Field"
+				filter="integer"
+				type="listcategories"
+				label="Select Category"
+				description="Select the category for the search">
+				<option value="">COM_KNOWRES_SELECT</option>
+			</field>
+		</fieldset>
+	</fields>
+</metadata>

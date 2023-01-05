@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form addfieldprefix="HighlandVision\Component\Knowres\Administrator\Field">
+	<fieldset name="krdata">
+		<field name="contract_id"
+			type="listforeignkey"
+			required="true"
+			today="arrival"
+			where="black_booking = 0 AND cancelled=0 and state=1"
+			label="COM_KNOWRES_EMAILACTION_CONTRACT_ID_LBL"
+			description="COM_KNOWRES_EMAILACTION_CONTRACT_ID_DSC"
+			input_type="list"
+			table="#__knowres_contract"
+			key_field="id"
+			value_field="tag"/>
+		<field name="email_trigger"
+			type="list"
+			required="true"
+			filter="string"
+			label="COM_KNOWRES_EMAILACTION_TRIGGER_LBL"
+			description="COM_KNOWRES_EMAILACTION_TRIGGER_DSC">
+			<option value="CRONARRDEPUPDATE">Owner Arrival Details Update (after 29 days)</option>
+		</field>
+	</fieldset>
+	<fieldset name="krcommon">
+		<field name="id"
+			type="text"
+			default="0"
+			readonly="true"
+			class="readonly"
+			label="COM_KNOWRES_ID"
+			description="JGLOBAL_FIELD_ID_DESC"/>
+		<field name="created_at"
+			type="calendar"
+			format="%d %b %Y %H:%M:%S"
+			filter="user_utc"
+			readonly="true"
+			label="COM_KNOWRES_CREATED_AT_LBL"
+			description="COM_KNOWRES_CREATED_AT_DSC"/>
+		<field name="created_by"
+			type="user"
+			readonly="true"
+			label="COM_KNOWRES_CREATED_BY_LBL"
+			description="COM_KNOWRES_CREATED_BY_DSC"/>
+		<field name="updated_at"
+			type="calendar"
+			format="%d %b %Y %H:%M:%S"
+			filter="user_utc"
+			readonly="true"
+			label="COM_KNOWRES_UPDATED_AT_LBL"
+			description="COM_KNOWRES_UPDATED_AT_DSC"/>
+		<field name="updated_by"
+			type="user"
+			readonly="true"
+			label="COM_KNOWRES_UPDATED_BY_LBL"
+			description="COM_KNOWRES_UPDATED_BY_DSC"/>
+		<field name="checked_out"
+			type="hidden"
+			filter="unset"/>
+		<field name="checked_out_time"
+			type="hidden"
+			filter="unset"/>
+	</fieldset>
+</form>

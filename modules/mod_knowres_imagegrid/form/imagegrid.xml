@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+	<field name="image"
+		type="media"
+		directory="imagegrid"
+		label="MOD_KNOWRES_IMAGEGRID_IMAGE"
+		description="MOD_KNOWRES_IMAGEGRID_IMAGE_DSC"/>
+	<field name="text"
+		type="text"
+		default=""
+		label="MOD_KNOWRES_IMAGEGRID_TEXT"
+		description="MOD_KNOWRES_IMAGEGRID_TEXT_DSC"/>
+	<field name="link"
+		type="menuitem"
+		default=""
+		label="MOD_KNOWRES_IMAGEGRID_LINK"
+		description="MOD_KNOWRES_IMAGEGRID_LINK_DSC"/>
+</form>

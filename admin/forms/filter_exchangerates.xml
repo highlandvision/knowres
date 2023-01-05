@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form addfieldprefix="HighlandVision\Component\Knowres\Administrator\Field">
+	<fields name="filter">
+		<field
+			name="search"
+			type="text"
+			inputmode="search"
+			label="COM_KNOWRES_SEARCH"
+			description="COM_KNOWRES_EXCHANGERATES_SEARCH"
+			hint="COM_KNOWRES_SEARCH"/>
+		<field
+			name="state"
+			type="status"
+			onchange="this.form.submit();">
+			<option value="">JOPTION_SELECT_PUBLISHED</option>
+		</field>
+		<field
+			name="currency_from"
+			type="filtercurrency"
+			table="#__knowres_exchange_rate"
+			column="currency_from"
+			onchange="this.form.submit();">
+			<option value="">COM_KNOWRES_SELECT_CURRENCY_FROM</option>
+		</field>
+		<field
+			name="currency_to"
+			type="filtercurrency"
+			table="#__knowres_exchange_rate"
+			column="currency_to"
+			onchange="this.form.submit();">
+			<option value="">COM_KNOWRES_SELECT_CURRENCY_TO</option>
+		</field>
+	</fields>
+	<fields name="list">
+		<field
+			name="fullordering"
+			type="listorderingkr"
+			statuses="*,0,1,2,-2"
+			onchange="this.form.submit();"
+			default="a.updated_at DESC"
+			label="JGLOBAL_SORT_BY"
+			description="JGLOBAL_SORT_BY">
+			<option value="">JGLOBAL_SORT_BY</option>
+			<option value="a.state ASC">JSTATUS_ASC</option>
+			<option value="a.state DESC">JSTATUS_DESC</option>
+			<option value="a.currency_from ASC">COM_KNOWRES_EXCHANGERATES_CURRENCY_FROM COM_KNOWRES_ASCENDING</option>
+			<option value="a.currency_from DESC">COM_KNOWRES_EXCHANGERATES_CURRENCY_FROM COM_KNOWRES_DESCENDING</option>
+			<option value="a.currency_to ASC">COM_KNOWRES_EXCHANGERATES_CURRENCY_TO COM_KNOWRES_ASCENDING</option>
+			<option value="a.currency_to DESC">COM_KNOWRES_EXCHANGERATES_CURRENCY_TO COM_KNOWRES_DESCENDING</option>
+			<option value="a.rate ASC">COM_KNOWRES_EXCHANGERATES_RATE COM_KNOWRES_ASCENDING</option>
+			<option value="a.rate DESC">COM_KNOWRES_EXCHANGERATES_RATE COM_KNOWRES_DESCENDING</option>
+			<option value="a.factor ASC">COM_KNOWRES_EXCHANGERATES_FACTOR COM_KNOWRES_ASCENDING</option>
+			<option value="a.factor DESC">COM_KNOWRES_EXCHANGERATES_FACTOR COM_KNOWRES_DESCENDING</option>
+			<option value="a.updated_at ASC">COM_KNOWRES_UPDATED_AT_LBL COM_KNOWRES_ASCENDING</option>
+			<option value="a.updated_at DESC">COM_KNOWRES_UPDATED_AT_LBL COM_KNOWRES_DESCENDING</option>
+			<option value="a.id ASC">JGRID_HEADING_ID_ASC</option>
+			<option value="a.id DESC">JGRID_HEADING_ID_DESC</option>
+		</field>
+		<field
+			name="limit"
+			type="limitbox"
+			class="input-mini"
+			default="25"
+			onchange="this.form.submit();"
+			label="COM_KNOWRES_LIST_LIMIT"
+			description="COM_KNOWRES_LIST_LIMIT_DSC"/>
+	</fields>
+</form>

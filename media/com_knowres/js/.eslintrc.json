@@ -1,0 +1,26 @@
+{
+  "extends": "eslint:recommended",
+  "parserOptions": {
+    "ecmaVersion": 2017
+  },
+  "rules": {
+    "no-unused-vars": "error",
+    "no-alert": "off"
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "jquery": true
+  },
+  "globals": {
+    "barrating": true,
+    "Bloodhound": true,
+    "bootstrap": true,
+    "dropzone": true,
+    "google": true,
+    "google.maps": true,
+    "google.maps.LatLng": true,
+    "Joomla": true,
+    "MarkerClusterer": true
+  }
+}

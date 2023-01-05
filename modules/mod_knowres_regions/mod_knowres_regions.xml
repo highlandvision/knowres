@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="module" client="site" method="upgrade">
+	<name>MOD_KNOWRES_REGIONS</name>
+	<author>Highland Vision</author>
+	<creationDate>September 2015</creationDate>
+	<authorUrl>https://www.highlandvision.com</authorUrl>
+	<authorEmail>hazel@highlandvision.com</authorEmail>
+	<copyright>2020 Highland Vision, all rights reserved.</copyright>
+	<license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
+	<version>4.0.0</version>
+	<description>MOD_KNOWRES_REGIONS_DSC</description>
+	<files>
+		<filename module="mod_knowres_regions">mod_knowres_regions.php</filename>
+		<filename>mod_knowres_regions.xml</filename>
+		<folder>language</folder>
+		<folder>tmpl</folder>
+	</files>
+	<config>
+		<fields name="params"
+			addfieldpath="administrator/components/com_knowres/models/fields">
+			<fieldset name="basic">
+				<field name="region1"
+					input_type="list"
+					key_field="id"
+					required="true"
+					table="#__knowres_region"
+					translation_item="region"
+					type="foreignkeytranslate"
+					value_field="name"
+					where="allow_property=1 and state=1"
+					label="MOD_KNOWRES_REGIONS_SELECT_LBL"
+					description="MOD_KNOWRES_REGIONS_SELECT_DSC"/>
+				<field name="image1"
+					directory=""
+					type="media"
+					label="Image"
+					description="MOD_KNOWRES_REGIONS_SELECT_IMAGE"/>
+				<field type="spacer"
+					hr="true"/>
+				<field name="region2"
+					input_type="list"
+					key_field="id"
+					required="true"
+					table="#__knowres_region"
+					translation_item="region"
+					type="foreignkeytranslate"
+					value_field="name"
+					where="allow_property=1 and state=1"
+					label="MOD_KNOWRES_REGIONS_SELECT_LBL"
+					description="MOD_KNOWRES_REGIONS_SELECT_DSC"/>
+				<field name="image2"
+					directory=""
+					type="media"
+					label="MOD_KNOWRES_REGIONS_IMAGE"
+					description="MOD_KNOWRES_REGIONS_SELECT_IMAGE"/>
+				<field type="spacer"
+					hr="true"/>
+				<field name="region3"
+					type="foreignkeytranslate"
+					translation_item="region"
+					input_type="list"
+					required="true"
+					table="#__knowres_region"
+					key_field="id"
+					value_field="name"
+					where="allow_property=1 and state=1"
+					label="MOD_KNOWRES_REGIONS_SELECT_LBL"
+					description="MOD_KNOWRES_REGIONS_SELECT_DSC"/>
+				<field name="image3"
+					type="media"
+					directory=""
+					label="Image"
+					description="MOD_KNOWRES_REGIONS_SELECT_IMAGE"/>
+				<field type="spacer"
+					hr="true"/>
+				<field name="region4"
+					type="foreignkeytranslate"
+					translation_item="region"
+					input_type="list"
+					required="true"
+					table="#__knowres_region"
+					key_field="id"
+					value_field="name"
+					where="allow_property=1 and state=1"
+					label="MOD_KNOWRES_REGIONS_SELECT_LBL"
+					description="MOD_KNOWRES_REGIONS_SELECT_DSC"/>
+				<field name="image4"
+					type="media"
+					directory=""
+					label="Image"
+					description="MOD_KNOWRES_REGIONS_SELECT_IMAGE"/>
+				<field type="spacer"
+					hr="true"/>
+				<field name="region5"
+					type="foreignkeytranslate"
+					translation_item="region"
+					input_type="list"
+					required="true"
+					table="#__knowres_region"
+					key_field="id"
+					value_field="name"
+					where="allow_property=1 and state=1"
+					label="MOD_KNOWRES_REGIONS_SELECT_LBL"
+					description="MOD_KNOWRES_REGIONS_SELECT_DSC"/>
+				<field name="image5"
+					type="media"
+					directory=""
+					label="Image"
+					description="MOD_KNOWRES_REGIONS_SELECT_IMAGE"/>
+				<field type="spacer"
+					hr="true"/>
+				<field name="region6"
+					type="foreignkeytranslate"
+					translation_item="region"
+					input_type="list"
+					required="true"
+					table="#__knowres_region"
+					key_field="id"
+					value_field="name"
+					where="allow_property=1 and state=1"
+					label="MOD_KNOWRES_REGIONS_SELECT_LBL"
+					description="MOD_KNOWRES_REGIONS_SELECT_DSC"/>
+				<field name="image6"
+					type="media"
+					directory=""
+					label="Image"
+					description="MOD_KNOWRES_REGIONS_SELECT_IMAGE"/>
+				<field type="spacer"
+					hr="true"/>
+			</fieldset>
+			<fieldset name="advanced">
+				<field name="layout"
+					class="form-select"
+					type="modulelayout"
+					validate="moduleLayout"
+					label="JFIELD_ALT_LAYOUT_LBL"/>
+				<field name="moduleclass_sfx"
+					type="text"
+					label="COM_MODULES_FIELD_MODULECLASS_SFX_LBL"/>
+				<field name="cache"
+					type="list"
+					default="1"
+					label="COM_MODULES_FIELD_CACHING_LBL">
+					<option value="1">JGLOBAL_USE_GLOBAL</option>
+					<option value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
+				</field>
+				<field name="cache_time"
+					type="text"
+					default="900"
+					label="COM_MODULES_FIELD_CACHE_TIME_LBL"/>
+				<field name="cachemode"
+					type="hidden"
+					default="static"/>
+			</fieldset>
+		</fields>
+	</config>
+</extension>

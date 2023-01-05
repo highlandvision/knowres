@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form addfieldprefix="HighlandVision\Component\Knowres\Administrator\Field"
+	addruleprefix="HighlandVision\Component\Knowres\Administrator\Rule">
+	<fieldset name="name"
+		class="col-lg-3">
+		<field name="name"
+			filter="string"
+			hiddenLabel="true"
+			type="text"
+			label="COM_KNOWRES_CONTRACTGUESTDATA_GUESTINFO_NAME1_LBL"
+			description="COM_KNOWRES_CONTRACTGUESTDATA_GUESTINFO_NAME1_LBL"/>
+	</fieldset>
+	<fieldset name="surname1" class="col-lg-3">
+		<field name="surname1"
+			filter="string"
+			hiddenLabel="true"
+			type="text"
+			label="COM_KNOWRES_CONTRACTGUESTDATA_GUESTINFO_NAME2_LBL"
+			description="COM_KNOWRES_CONTRACTGUESTDATA_GUESTINFO_NAME2_LBL"/>
+	</fieldset>
+	<fieldset name="surname2" class="col-lg-3">
+		<field name="surname2"
+			filter="string"
+			hiddenLabel="true"
+			type="text"
+			label="COM_KNOWRES_CONTRACTGUESTDATA_GUESTINFO_NAME3_LBL"
+			description="COM_KNOWRES_CONTRACTGUESTDATA_GUESTINFO_NAME3_LBL"/>
+	</fieldset>
+	<fieldset name="sex" class="col-lg-3">
+		<field name="sex"
+			class="input-mini"
+			filter="string"
+			hiddenLabel="true"
+			type="listsex"
+			label="COM_KNOWRES_CONTRACTGUESTDATA_SEX_LBL"
+			description="COM_KNOWRES_CONTRACTGUESTDATA_SEX_LBL"/>
+	</fieldset>
+	<fieldset name="dob" class="col-lg-3">
+		<field name="dob"
+			class="dobissue input-mini"
+			filter="string"
+			hiddenLabel="true"
+			type="text"
+			label="COM_KNOWRES_CONTRACTGUESTDATA_DOB_LBL"
+			description="COM_KNOWRES_CONTRACTGUESTDATA_DOB_LBL"/>
+	</fieldset>
+	<fieldset name="document_type" class="col-lg-3">
+		<field name="document_type"
+			filter="int"
+			hiddenLabel="true"
+			type="listdocumenttype"
+			label="COM_KNOWRES_CONTRACTGUESTDATA_DOCUMENT_TYPE_LBL"
+			description="COM_KNOWRES_CONTRACTGUESTDATA_DOCUMENT_TYPE_LBL">
+			<option value="0">COM_KNOWRES_SELECT_REQUIRED</option>
+		</field>
+	</fieldset>
+	<fieldset name="document_id" class="col-lg-3">
+		<field name="document_id"
+			filter="string"
+			hiddenLabel="true"
+			type="text"
+			label="COM_KNOWRES_CONTRACTGUESTDATA_DOCUMENT_NUMBER_LBL"
+			description="COM_KNOWRES_CONTRACTGUESTDATA_DOCUMENT_NUMBER_LBL"/>
+	</fieldset>
+	<fieldset name="document_nat" class="col-lg-3">
+		<field name="document_nat"
+			filter="int"
+			hiddenLabel="true"
+			type="listcountry"
+			label="COM_KNOWRES_CONTRACTGUESTDATA_DOCUMENT_COUNTRY_LBL"
+			description="COM_KNOWRES_CONTRACTGUESTDATA_DOCUMENT_COUNTRY_LBL">
+			<option value="0">COM_KNOWRES_SELECT_REQUIRED</option>
+		</field>
+	</fieldset>
+	<fieldset name="document_issue" class="col-lg-3">
+		<field name="document_issue"
+			class="dobissue input-mini"
+			filter="string"
+			hiddenLabel="true"
+			type="string"
+			label="COM_KNOWRES_CONTRACTGUESTDATA_DOCUMENT_DOI_LBL"
+			description="COM_KNOWRES_CONTRACTGUESTDATA_DOCUMENT_DOI_LBL"/>
+	</fieldset>
+</form>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fields group="arrival_air">
+		<fieldset name="f1" class="small-6 large-2 columns">
+			<field name="airline"
+				filter="string"
+				hiddenDescription="true"
+				type="string"
+				label="COM_KNOWRES_CONTRACTGUESTDATAFORM_ARRIVAL_AIRLINE_LBL"
+				description="COM_KNOWRES_CONTRACTGUESTDATAFORM_ARRIVAL_AIRLINE_DSC">
+			</field>
+		</fieldset>
+		<fieldset name="f2" class="small-6 large-2 columns">
+			<field name="flight"
+				filter="string"
+				hiddenDescription="true"
+				type="string"
+				label="COM_KNOWRES_CONTRACTGUESTDATAFORM_ARRIVAL_NUMBER_LBL"
+				description="COM_KNOWRES_CONTRACTGUESTDATAFORM_ARRIVAL_NUMBER_DSC"/>
+		</fieldset>
+		<fieldset name="f3" class="small-6 large-3 columns">
+			<field name="from"
+				filter="string"
+				hiddenDescription="true"
+				type="string"
+				label="COM_KNOWRES_CONTRACTGUESTDATAFORM_ARRIVAL_AIR_FROM_LBL"
+				description="COM_KNOWRES_CONTRACTGUESTDATAFORM_ARRIVAL_AIR_FROM_DSC">
+			</field>
+		</fieldset>
+		<fieldset name="f4" class="small-6 large-3 columns">
+			<field name="to"
+				filter="string"
+				hiddenDescription="true"
+				type="string"
+				label="COM_KNOWRES_CONTRACTGUESTDATAFORM_ARRIVAL_AIR_TO_LBL"
+				description="COM_KNOWRES_CONTRACTGUESTDATAFORM_ARRIVAL_AIR_TO_DSC"/>
+		</fieldset>
+		<fieldset name="f5" class="small-6 large-2 columns">
+			<field name="eta"
+				filter="string"
+				hiddenDescription="true"
+				type="string"
+				label="COM_KNOWRES_CONTRACTGUESTDATAFORM_ARRIVAL_TIME_LBL"
+				description="COM_KNOWRES_CONTRACTGUESTDATAFORM_ARRIVAL_TIME_DSC">
+			</field>
+		</fieldset>
+	</fields>
+</form>

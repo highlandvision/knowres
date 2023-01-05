@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form addfieldprefix="HighlandVision\Component\Knowres\Administrator\Field">
+	<fields name="filter">
+		<field
+			name="search"
+			type="text"
+			inputmode="search"
+			label="COM_KNOWRES_SEARCH"
+			description="COM_KNOWRES_EMAILACTIONS_SEARCH"
+			hint="COM_KNOWRES_SEARCH"/>
+	</fields>
+	<fields name="list">
+		<field
+			name="fullordering"
+			type="listorderingkr"
+			onchange="this.form.submit();"
+			default="a.id ASC"
+			label="JGLOBAL_SORT_BY"
+			description="JGLOBAL_SORT_BY">
+			<option value="">JGLOBAL_SORT_BY</option>
+			<option value='contract_tag ASC'>COM_KNOWRES_CONTRACT_TITLE COM_KNOWRES_ASCENDING</option>
+			<option value='contract_tag DESC'>COM_KNOWRES_CONTRACT_TITLE COM_KNOWRES_DESCENDING</option>
+			<option value="a.id ASC">JGRID_HEADING_ID_ASC</option>
+			<option value="a.id DESC">JGRID_HEADING_ID_DESC</option>
+		</field>
+		<field
+			name="limit"
+			type="limitbox"
+			class="input-mini"
+			default="25"
+			onchange="this.form.submit();"
+			label="COM_KNOWRES_LIST_LIMIT"
+			description="COM_KNOWRES_LIST_LIMIT_DSC"/>
+	</fields>
+</form>

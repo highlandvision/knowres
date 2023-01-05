@@ -1,0 +1,112 @@
+.choices__input::placeholder {
+	opacity: 1 !important;
+	font-style: normal !important;
+}
+.content {
+	.card.kr-card {
+		margin-bottom: 0.5rem;
+		.card-header {
+			background: #f9f9f9 !important;
+			border-bottom: 1px solid #ccc;
+			padding: 0.4rem 1rem !important;
+			font-size: 1rem !important;
+			font-weight: 400;
+			a.showbefore {
+				&:before {
+					float: left !important;
+					font-family: "Font Awesome 5 Free";
+					font-size: 1.2rem;
+					font-weight: 900;
+					content: "\f146";
+					padding-right: 10px;
+				}
+				&.collapsed:before {
+					color: #cc0000;
+					content: "\f0fe";
+				}
+			}
+		}
+		.card-body {
+			line-height: 1.6;
+		}
+	}
+	.card.kr-daily {
+		margin-bottom: 0.5rem;
+		.card-header {
+			background: #f9f9f9 !important;
+			border-bottom: 1px solid #ccc;
+			padding: 0.5rem !important;
+			font-size: 1rem !important;
+			font-weight: 400;
+			a.showbefore {
+				&:before {
+					float: left !important;
+					font-family: "Font Awesome 5 Free", sans-serif;
+					font-size: 1rem;
+					font-weight: 900;
+					content: "\f146";
+					padding-right: 10px;
+				}
+				&.collapsed:before {
+					color: #cc0000;
+					content: "\f0fe";
+				}
+			}
+		}
+		.card-body {
+			padding: 0 1rem !important;
+		}
+	}
+}
+.control-group .controls {
+	min-width: 150px !important;
+}
+.control-label span.spacer label {
+	width: 800px !important;
+}
+input[type="file"] {
+	line-height: normal !important;
+}
+input[type="number"], .input-tiny {
+	min-width: 5rem !important;
+	max-width: 5rem !important;
+	width: 100% !important;
+	padding-left: .8rem !important;
+	padding-right: .8rem !important;
+}
+.modal-batch.modal-body {
+	overflow-y: visible !important;
+	max-height: 100% !important;
+}
+legend {
+	font-size: 18px !important;
+	color: #999 !important;
+	border-bottom: 1px solid #ccc !important;
+	padding-top: 15px !important;
+	margin-bottom: 15px !important;
+}
+.main-card {
+	padding: 2rem;
+	&.property-dashboard {
+		.alert-heading {
+			font-size: 1.1rem;
+		}
+	}
+}
+.modal-header {
+	padding: 1rem !important;
+}
+.modal-body {
+	padding: 1rem !important;
+}
+.modal-body pre {
+	word-break: break-all;
+	font-size: 14px;
+	border: 1px solid #ccc;
+	background: #efefef;
+	padding: 5px;
+}
+.table th.right,
+.table td.right {
+	text-align: right;
+}

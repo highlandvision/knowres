@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="module" client="site" method="upgrade">
+	<name>MOD_KNOWRES_CAROUSEL</name>
+	<author>Highland Vision</author>
+	<creationDate>September 2015</creationDate>
+	<authorUrl>https://www.highlandvision.com</authorUrl>
+	<authorEmail>hazel@highlandvision.com</authorEmail>
+	<copyright>2020 Highland Vision, all rights reserved.</copyright>
+	<license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
+	<version>4.0.0</version>
+	<description>MOD_KNOWRES_CAROUSEL_DSC</description>
+	<files>
+		<filename module="mod_knowres_carousel">mod_knowres_carousel.php</filename>
+		<filename>mod_knowres_carousel.xml</filename>
+		<folder>language</folder>
+		<folder>tmpl</folder>
+	</files>
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field name="folder"
+					directory="images"
+					hide_none="true"
+					type="folderlist"
+					label="MOD_KNOWRES_CAROUSEL_SELECT_FOLDER"
+					description="MOD_KNOWRES_CAROUSEL_SELECT_FOLDER_DSC"/>
+				<field name="width"
+					addonAfter="px"
+					class="input-mini"
+					default="200"
+					type="text"
+					label="MOD_KNOWRES_CAROUSEL_WIDTH"
+					description="MOD_KNOWRES_CAROUSEL_WIDTH_DSC"/>
+				<field name="height"
+					addonAfter="px"
+					class="input-mini"
+					default="200"
+					type="text"
+					label="MOD_KNOWRES_CAROUSEL_HEIGHT"
+					description="MOD_KNOWRES_CAROUSEL_HEIGHT_DSC"/>
+				<field name="speed"
+					class="input-mini"
+					default="50"
+					type="text"
+					label="MOD_KNOWRES_CAROUSEL_SPEED"
+					description="MOD_KNOWRES_CAROUSEL_SPEED_DSC"/>
+				<field name="autoPlaySpeed"
+					class="input-mini"
+					default="5000"
+					type="text"
+					label="MOD_KNOWRES_CAROUSEL_AUTOPLAYSPEED"
+					description="MOD_KNOWRES_CAROUSEL_AUTOPLAYSPEED_DSC"/>
+				<field name="url"
+					default=""
+					type="menuitem"
+					label="MOD_KNOWRES_CAROUSEL_URL"
+					description="MOD_KNOWRES_CAROUSEL_URL_DSC"/>
+			</fieldset>
+			<fieldset name="advanced">
+				<field name="layout"
+					class="form-select"
+					type="modulelayout"
+					validate="moduleLayout"
+					label="JFIELD_ALT_LAYOUT_LABEL"/>
+				<field name="moduleclass_sfx"
+					type="text"
+					label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"/>
+				<field name="cache"
+					type="list"
+					default="1"
+					label="COM_MODULES_FIELD_CACHING_LABEL">
+					<option value="1">JGLOBAL_USE_GLOBAL</option>
+					<option value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
+				</field>
+				<field name="cache_time"
+					type="text"
+					default="900"
+					label="COM_MODULES_FIELD_CACHE_TIME_LABEL"/>
+				<field name="cachemode"
+					type="hidden"
+					default="static"/>
+			</fieldset>
+		</fields>
+	</config>
+</extension>

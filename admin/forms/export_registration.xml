@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form addfieldprefix="HighlandVision\Component\Knowres\Administrator\Field"
+	addruleprefix="HighlandVision\Component\Knowres\Administrator\Rule">
+	<fieldset name="krdata">
+		<field name="arrival"
+			class="input-mini"
+			datepicker='{"minDate": "-1M", "maxDate": "+1D", "altField": "#jform_arrival"}'
+			required="true"
+			type="uicalendar"
+			label="COM_KNOWRES_CONTRACT_ARRIVAL_LBL"
+			description="COM_KNOWRES_CONTRACT_ARRIVAL_DSC"/>
+	</fieldset>
+</form>

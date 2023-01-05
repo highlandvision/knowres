@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form addruleprefix="HighlandVision\Component\Knowres\Administrator\Rule">
+	<fieldset name="krdefaults">
+		<field name="plugin"
+			default="ical"
+			filter="string"
+			readonly="true"
+			type="text"
+			label="COM_KNOWRES_SERVICE_PLUGIN_LBL"
+			description="COM_KNOWRES_SERVICE_PLUGIN_DSC"/>
+		<field name="type"
+			default="i"
+			readonly="true"
+			size="1"
+			type="text"
+			label="COM_KNOWRES_SERVICE_TYPE_LBL"
+			description="COM_KNOWRES_SERVICE_TYPE_DSC"/>
+	</fieldset>
+	<fieldset name="custom">
+		<field name="schedule"
+			class="input-mini"
+			default="4"
+			min="1"
+			max="24"
+			step="1"
+			required="true"
+			type="number"
+			label="COM_KNOWRES_SERVICE_SCHEDULE_LBL"
+			description="COM_KNOWRES_SERVICE_SCHEDULE_DSC"/>
+	</fieldset>
+</form>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="module" client="administrator" method="upgrade">
+	<name>MOD_KNOWRES_HEADERMENU</name>
+	<author>Highland Vision</author>
+	<creationDate>September 2021</creationDate>
+	<authorUrl>https://www.highlandvision.com</authorUrl>
+	<authorEmail>hazel@highlandvision.com</authorEmail>
+	<copyright>2021 Highland Vision, all rights reserved.</copyright>
+	<license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
+	<version>4.0.0</version>
+	<description>MOD_KNOWRES_HEADERMENU_DSC</description>
+	<namespace path="src">Knowres\Module\Headermenu</namespace>
+	<scriptfile>installation.script.php</scriptfile>
+	<files>
+		<filename module="mod_knowres_headermenu">mod_knowres_headermenu.php</filename>
+		<folder>language</folder>
+		<folder>src</folder>
+		<folder>tmpl</folder>
+	</files>
+	<config>
+		<fields name="params">
+			<fieldset name="advanced">
+				<field name="layout"
+					class="form-select"
+					type="modulelayout"
+					validate="moduleLayout"
+					label="JFIELD_ALT_LAYOUT_LABEL"/>
+				<field name="moduleclass_sfx"
+					type="text"
+					label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"/>
+				<field name="cache"
+					type="list"
+					default="1"
+					label="COM_MODULES_FIELD_CACHING_LABEL">
+					<option value="1">JGLOBAL_USE_GLOBAL</option>
+					<option value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
+				</field>
+				<field name="cache_time"
+					type="text"
+					default="900"
+					label="COM_MODULES_FIELD_CACHE_TIME_LABEL"/>
+				<field name="cachemode"
+					type="hidden"
+					default="static"/>
+			</fieldset>
+		</fields>
+	</config>
+</extension>

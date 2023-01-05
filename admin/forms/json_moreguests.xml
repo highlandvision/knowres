@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fields group="more_guests">
+		<fieldset name="f1"
+			class="col-lg-3">
+			<field name="more_min"
+				filter="integer"
+				hiddenDescription="true"
+				hiddenLabel="true"
+				type="number"
+				min="0"
+				max="99"
+				step="1"
+				label="COM_KNOWRES_RATE_MIN_GUESTS_LBL"
+				description="COM_KNOWRES_RATE_MIN_GUESTS_DSC"/>
+		</fieldset>
+		<fieldset name="f2"
+			class="col-lg-3">
+			<field name="more_max"
+				filter="integer"
+				hiddenDescription="true"
+				hiddenLabel="true"
+				type="number"
+				min="0"
+				max="99"
+				step="1"
+				label="COM_KNOWRES_RATE_MAX_GUESTS_LBL"
+				description="COM_KNOWRES_RATE_MAX_GUESTS_DSC"/>
+		</fieldset>
+		<fieldset name="f3"
+			class="col-lg-3">
+			<field name="more_rate"
+				class="input-mini"
+				filter="string"
+				hiddenDescription="true"
+				hiddenLabel="true"
+				type="text"
+				label="COM_KNOWRES_RATE_RATE_LBL"
+				description="COM_KNOWRES_RATE_RATE_DSC"/>
+		</fieldset>
+		<fieldset name="f4"
+			class="col-lg-3">
+			<field name="more_pppn"
+				class="btn-group btn-group-yesno"
+				default="0"
+				hiddenDescription="true"
+				hiddenLabel="true"
+				type="radio"
+				label="COM_KNOWRES_RATE_IGNORE_PPPN_LBL"
+				description="COM_KNOWRES_RATE_IGNORE_PPPN_DSC">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+		</fieldset>
+	</fields>
+</form>

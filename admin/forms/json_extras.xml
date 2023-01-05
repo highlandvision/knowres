@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fields group="extras">
+		<fieldset name="f1" class="col-lg-8">
+			<field name="quantity"
+				class="kr-calculate input-mini"
+				filter="integer"
+				first="0"
+				last="99"
+				step="1"
+				type="integer"
+				label="COM_KNOWRES_NAME"
+				description="COM_KNOWRES_EXTRA_NAME_DSC"/>
+		</fieldset>
+		<fieldset name="f2" class="">
+			<field name="id"
+				filter="integer"
+				type="hidden"/>
+		</fieldset>
+	</fields>
+</form>

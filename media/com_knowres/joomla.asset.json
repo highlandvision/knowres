@@ -1,0 +1,387 @@
+{
+  "$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+  "name": "com_knowres",
+  "version": "4.0.0",
+  "description": "Joomla CMS",
+  "license": "GPL-2.0-or-later",
+  "assets": [
+    {
+      "name": "com_knowres.admin-ajaxmodal",
+      "type": "script",
+      "uri": "com_knowres/admin.ajaxmodal.min.js",
+      "dependencies": [
+        "bootstrap.modal",
+        "core"
+      ],
+      "attributes": {
+        "defer": true
+      }
+    },
+    {
+      "name": "com_knowres.admin-book",
+      "type": "script",
+      "uri": "com_knowres/admin.book.min.js",
+      "dependencies": [
+        "com_knowres.admin-datepicker",
+        "com_knowres.vendor-typeahead",
+        "com_knowres.admin-combogeo"
+      ],
+      "attributes": {
+        "defer": true
+      }
+    },
+    {
+      "name": "com_knowres.admin-book",
+      "type": "style",
+      "dependencies": [
+        "com_knowres.admin-datepicker"
+      ]
+    },
+    {
+      "name": "com_knowres.admin-combogeo",
+      "type": "script",
+      "uri": "com_knowres/admin.combogeo.min.js",
+      "attributes": {
+        "defer": true,
+        "module": true
+      }
+    },
+    {
+      "name": "com_knowres.admin-datepicker",
+      "type": "script",
+      "uri": "com_knowres/admin.datepicker.min.js",
+      "dependencies": [
+        "com_knowres.vendor-jqueryui"
+      ],
+      "attributes": {
+        "defer": true
+      }
+    },
+    {
+      "name": "com_knowres.admin-datepicker",
+      "type": "style",
+      "uri": "com_knowres/admin.jquery-ui.min.css"
+    },
+    {
+      "name": "com_knowres.admin-datetextentry",
+      "type": "script",
+      "uri": "com_knowres/admin.jquery.datetextentry.min.js",
+      "dependencies": [
+        "jquery"
+      ],
+      "attributes": {
+        "defer": true
+      }
+    },
+    {
+      "name": "com_knowres.admin-datetextentry",
+      "type": "style",
+      "uri": "com_knowres/admin.datetextentry.min.css"
+    },
+    {
+      "name": "com_knowres.admin-editinplace",
+      "type": "script",
+      "uri": "com_knowres/admin.editinplace.min.js",
+      "attributes": {
+        "defer": true
+      }
+    },
+    {
+      "name": "com_knowres.admin-emails",
+      "type": "script",
+      "uri": "com_knowres/admin.emails.min.js",
+      "attributes": {
+        "defer": true
+      }
+    },
+    {
+      "name": "com_knowres.admin-gantt",
+      "type": "script",
+      "uri": "com_knowres/admin.gantt.min.js",
+      "dependencies": [
+        "bootstrap.modal",
+        "bootstrap.popover",
+        "bootstrap.tab",
+        "com_knowres.vendor-jqueryui",
+        "com_knowres.vendor-typeahead",
+        "core",
+        "jquery"
+      ],
+      "attributes": {
+        "defer": true
+      }
+    },
+    {
+      "name": "com_knowres.admin-gantt",
+      "type": "style",
+      "uri": "com_knowres/admin.gantt.min.css",
+      "dependencies": [
+        "com_knowres.admin-datepicker"
+      ]
+    },
+    {
+      "name": "com_knowres.admin-generic",
+      "type": "script",
+      "uri": "com_knowres/admin.generic.min.js",
+      "dependencies": [
+        "choicesjs",
+        "jquery"
+      ],
+      "attributes": {
+        "defer": true
+      }
+    },
+    {
+      "name": "com_knowres.admin-generic",
+      "type": "style",
+      "uri": "com_knowres/admin.generic.min.css"
+    },
+    {
+      "name": "com_knowres.admin-geriatric",
+      "type": "script",
+      "uri": "com_knowres/admin.calendar.min.js",
+      "dependencies": [
+        "bootstrap.modal",
+        "bootstrap.popover",
+        "bootstrap.tab",
+        "com_knowres.admin-datepicker",
+        "core"
+      ],
+      "attributes": {
+        "defer": true
+      }
+    },
+    {
+      "name": "com_knowres.admin-geriatric",
+      "type": "style",
+      "uri": "com_knowres/admin.calendar.min.css",
+      "dependencies": [
+        "com_knowres.admin-datepicker"
+      ]
+    },
+    {
+      "name": "com_knowres.admin-gmap",
+      "type": "script",
+      "uri": "com_knowres/admin.gmap.min.js",
+      "attributes": {
+        "defer": true
+      },
+      "dependencies": [
+        "jquery"
+      ]
+    },
+    {
+      "name": "com_knowres.admin-guest",
+      "type": "script",
+      "uri": "com_knowres/admin.guest.min.js",
+      "attributes": {
+        "defer": true
+      },
+      "dependencies": [
+        "com_knowres.admin-combogeo"
+      ]
+    },
+    {
+      "name": "com_knowres.admin-guestdata",
+      "type": "script",
+      "uri": "com_knowres/admin.guestdata.min.js",
+      "dependencies": [
+        "com_knowres.admin-datetextentry",
+        "jquery"
+      ],
+      "attributes": {
+        "defer": true
+      }
+    },
+    {
+      "name": "com_knowres.admin-guestdata",
+      "type": "style",
+      "uri": "com_knowres/admin.datetextentry.min.css",
+      "attributes": {
+        "defer": true
+      }
+    },
+    {
+      "name": "com_knowres.admin-images",
+      "type": "script",
+      "uri": "com_knowres/admin.images.min.js",
+      "dependencies": [
+        "bootstrap.button",
+        "bootstrap.modal",
+        "com_knowres.vendor-dropzone",
+        "com_knowres.admin-editinplace",
+        "jquery"
+      ],
+      "attributes": {
+        "defer": true
+      }
+    },
+    {
+      "name": "com_knowres.admin-images",
+      "type": "style",
+      "uri": "com_knowres/admin.images.min.css",
+      "dependencies": [
+        "com_knowres.vendor-dropzone"
+      ]
+    },
+    {
+      "name": "com_knowres.admin-propertydashboard",
+      "type": "script",
+      "uri": "com_knowres/admin.propertydashboard.min.js",
+      "dependencies": [
+        "jquery",
+        "com_knowres.admin-stats"
+      ],
+      "attributes": {
+        "defer": true
+      }
+    },
+    {
+      "name": "com_knowres.admin-ownerpayment",
+      "type": "script",
+      "uri": "com_knowres/admin.ownerpayment.min.js",
+      "dependencies": [
+        "bootstrap.modal",
+        "bootstrap.popover",
+        "com_knowres.admin-datepicker",
+        "core",
+        "jquery"
+      ],
+      "attributes": {
+        "defer": true
+      }
+    },
+    {
+      "name": "com_knowres.admin-ownerpayment",
+      "type": "style",
+      "dependencies": [
+        "com_knowres.admin-datepicker"
+      ]
+    },
+    {
+      "name": "com_knowres.admin-stats",
+      "type": "script",
+      "uri": "com_knowres/admin.stats.min.js",
+      "dependencies": [
+        "jquery"
+      ],
+      "attributes": {
+        "defer": true
+      }
+    },
+    {
+      "name": "com_knowres.vendor-dropzone",
+      "type": "script",
+      "uri": "media/com_knowres/vendor/enyo/dropzone/dist/min/dropzone.min.js",
+      "version": "5.9.3",
+      "attributes": {
+        "defer": true
+      }
+    },
+    {
+      "name": "com_knowres.vendor-dropzone",
+      "type": "style",
+      "uri": "media/com_knowres/vendor/enyo/dropzone/dist/min/dropzone.min.css",
+      "version": "5.9.3"
+    },
+    {
+      "name": "com_knowres.vendor-jqueryui",
+      "type": "script",
+      "uri": "com_knowres/admin.jquery-ui.min.js",
+      "dependencies": [
+        "jquery"
+      ],
+      "attributes": {
+        "defer": true
+      }
+    },
+    {
+      "name": "com_knowres.vendor-typeahead",
+      "type": "script",
+      "uri": "media/com_knowres/vendor/corejavascript/typeahead.js/dist/typeahead.bundle.min.js",
+      "dependencies": [
+        "jquery"
+      ],
+      "attributes": {
+        "defer": true
+      },
+      "version": "1.3.1"
+    },
+    {
+      "name": "com_knowres.site",
+      "description": "KR js files",
+      "type": "script",
+      "uri": "com_knowres/site.min.js",
+      "dependencies": [
+        "com_knowres.site-foundation",
+        "com_knowres.site-common",
+        "com_knowres.site-runtime",
+        "jquery"
+      ],
+      "attributes": {
+        "defer": true
+      }
+    },
+    {
+      "name": "com_knowres.modules",
+      "description": "Template js modules",
+      "type": "script",
+      "uri": "com_knowres/modules.min.js",
+      "dependencies": [
+        "com_knowres.module-search",
+        "com_knowres.site-foundation",
+        "com_knowres.site-common",
+        "com_knowres.site-runtime",
+        "jquery"
+      ],
+      "attributes": {
+        "defer": true
+      }
+    },
+    {
+      "name": "jquery",
+      "description": "Jquery",
+      "type": "script",
+      "uri": "media/vendor/jquery/js/jquery.min.js",
+      "attributes": {
+        "defer": true
+      }
+    },
+    {
+      "name": "com_knowres.site-common",
+      "description": "Template js common",
+      "type": "script",
+      "uri": "com_knowres/common.min.js",
+      "attributes": {
+        "defer": true
+      }
+    },
+    {
+      "name": "com_knowres.site-runtime",
+      "description": "Template js runtime",
+      "type": "script",
+      "uri": "com_knowres/runtime.min.js",
+      "attributes": {
+        "defer": true
+      }
+    },
+    {
+      "name": "com_knowres.site-foundation",
+      "description": "Template js foundation",
+      "type": "script",
+      "uri": "com_knowres/foundation.min.js",
+      "attributes": {
+        "defer": true
+      }
+    },
+    {
+      "name": "com_knowres.module-search",
+      "type": "script",
+      "uri": "com_knowres/module-search.min.js",
+      "attributes": {
+        "defer": true
+      },
+      "version": "4efda122de260213f85aceee619bfc3ea5b4a0aa"
+    }
+  ]
+}

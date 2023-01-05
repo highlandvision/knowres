@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form addfieldprefix="HighlandVision\Component\Knowres\Administrator\Field"
+	addruleprefix="HighlandVision\Component\Knowres\Administrator\Rule">
+	<fieldset name="krdata">
+		<field name="new_name"
+			type="text"
+			required="true"
+			class="input-xlarge"
+			filter="string"
+			label="COM_KNOWRES_PROPERTY_CLONE_NAME"/>
+	</fieldset>
+	<fieldset name="kroptions">
+		<field name="image"
+			type="radio"
+			default="1"
+			class="btn-group btn-group-yesno"
+			filter="integer"
+			label="COM_KNOWRES_PROPERTY_CLONE_IMAGES">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+		<field name="propertyoption"
+			type="radio"
+			default="1"
+			class="btn-group btn-group-yesno"
+			filter="integer"
+			label="COM_KNOWRES_PROPERTY_CLONE_PROPERTYOPTIONS">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+		<field name="propertyroom"
+			type="radio"
+			default="1"
+			class="btn-group btn-group-yesno"
+			filter="integer"
+			label="COM_KNOWRES_PROPERTY_CLONE_PROPERTYROOMS">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+		<field name="rate"
+			type="radio"
+			default="1"
+			class="btn-group btn-group-yesno"
+			filter="integer"
+			label="COM_KNOWRES_PROPERTY_CLONE_RATES">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+		<field name="discount"
+			type="radio"
+			default="1"
+			class="btn-group btn-group-yesno"
+			filter="integer"
+			label="COM_KNOWRES_PROPERTY_CLONE_DISCOUNTS">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+		<field name="extra"
+			type="radio"
+			default="1"
+			class="btn-group btn-group-yesno"
+			filter="integer"
+			label="COM_KNOWRES_PROPERTY_CLONE_EXTRAS">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+	</fieldset>
+</form>

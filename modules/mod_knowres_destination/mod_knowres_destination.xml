@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="module" client="site" method="upgrade">
+	<name>MOD_KNOWRES_DESTINATION</name>
+	<author>Highland Vision</author>
+	<creationDate>July 2017</creationDate>
+	<authorUrl>https://www.highlandvision.com</authorUrl>
+	<authorEmail>hazel@highlandvision.com</authorEmail>
+	<copyright>2020 Highland Vision, all rights reserved.</copyright>
+	<license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
+	<version>4.0.0</version>
+	<description>MOD_KNOWRES_DESTINATION_DSC</description>
+	<files>
+		<filename module="mod_knowres_destination">mod_knowres_destination.php</filename>
+		<filename>mod_knowres_destination.xml</filename>
+		<folder>language</folder>
+		<folder>tmpl</folder>
+	</files>
+	<config>
+		<fields name="params">
+			<fieldset name="Basic" addfieldprefix="HighlandVision\Component\Knowres\Administrator\Field">
+				<field name="region_id"
+					type="listregions"
+					label="MOD_KNOWRES_DESTINATION_REGION"
+					description="MOD_KNOWRES_DESTINATION_REGION_DSC">
+					<option value="0">COM_KNOWRES_SELECT</option>
+				</field>
+				<field name="image"
+					directory="destinations"
+					type="media"
+					label="MOD_KNOWRES_DESTINATION_IMAGE"
+					description="MOD_KNOWRES_DESTINATION_IMAGE_DSC"/>
+				<field name="width"
+					addonAfter="px"
+					class="input-mini"
+					type="text"
+					label="MOD_KNOWRES_DESTINATION_WIDTH"
+					description="MOD_KNOWRES_DESTINATION_WIDTH_DSC"/>
+				<field name="height"
+					addonAfter="px"
+					class="input-mini"
+					type="text"
+					label="MOD_KNOWRES_DESTINATION_HEIGHT"
+					description="MOD_KNOWRES_DESTINATION_HEIGHT_DSC"/>
+				<field type="spacer"
+					name="spacer1"
+					label="&lt;b&gt;Text 1&lt;/b&gt;"/>
+				<field name="heading1"
+					default=""
+					type="text"
+					label="MOD_KNOWRES_DESTINATION_HEADING"
+					description="MOD_KNOWRES_DESTINATION_HEADING_DSC"/>
+				<field name="text1"
+					filter="safehtml"
+					rows="20"
+					type="editor"
+					label="MOD_KNOWRES_DESTINATION_TEXT"
+					description="MOD_KNOWRES_DESTINATION_TEXT_DSC"/>
+				<field type="spacer"
+					name="spacer2"
+					label="&lt;b&gt;Text 2&lt;/b&gt;"/>
+				<field name="heading2"
+					default=""
+					type="text"
+					label="MOD_KNOWRES_DESTINATION_HEADING"
+					description="MOD_KNOWRES_DESTINATION_HEADING_DSC"/>
+				<field name="text2"
+					filter="safehtml"
+					rows="20"
+					type="editor"
+					label="MOD_KNOWRES_DESTINATION_TEXT"
+					description="MOD_KNOWRES_DESTINATION_TEXT_DSC"/>
+				<field type="spacer"
+					name="spacer3"
+					label="&lt;b&gt;Text 3&lt;/b&gt;"/>
+				<field name="heading3"
+					type="text"
+					label="MOD_KNOWRES_DESTINATION_HEADING"
+					description="MOD_KNOWRES_DESTINATION_HEADING_DSC"/>
+				<field name="text3"
+					filter="safehtml"
+					rows="20"
+					type="editor"
+					label="MOD_KNOWRES_DESTINATION_TEXT"
+					description="MOD_KNOWRES_DESTINATION_TEXT_DSC"/>
+				<field type="spacer"
+					name="spacer4"
+					label="&lt;b&gt;Text 4&lt;/b&gt;"/>
+				<field name="heading4"
+					default=""
+					type="text"
+					label="MOD_KNOWRES_DESTINATION_HEADING"
+					description="MOD_KNOWRES_DESTINATION_HEADING_DSC"/>
+				<field name="text4"
+					filter="safehtml"
+					rows="20"
+					type="editor"
+					label="MOD_KNOWRES_DESTINATION_TEXT"
+					description="MOD_KNOWRES_DESTINATION_TEXT_DSC"/>
+			</fieldset>
+			<fieldset name="advanced">
+				<field name="layout"
+					class="form-select"
+					type="modulelayout"
+					validate="moduleLayout"
+					label="JFIELD_ALT_LAYOUT_LABEL"/>
+				<field name="moduleclass_sfx"
+					type="text"
+					label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"/>
+				<field name="cache"
+					type="list"
+					default="1"
+					label="COM_MODULES_FIELD_CACHING_LABEL">
+					<option value="1">JGLOBAL_USE_GLOBAL</option>
+					<option value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
+				</field>
+				<field name="cache_time"
+					type="text"
+					default="900"
+					label="COM_MODULES_FIELD_CACHE_TIME_LABEL"/>
+				<field name="cachemode"
+					type="hidden"
+					default="static"/>
+			</fieldset>
+		</fields>
+	</config>
+</extension>

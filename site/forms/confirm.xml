@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form addfieldprefix="HighlandVision\Component\Knowres\Site\Field">
+	<fieldset>
+		<field name="adults"
+			class="kr-calculate"
+			filter="int"
+			type="number"
+			min="1"
+			max="10"
+			step="1"
+			label="COM_KNOWRES_CONFIRM_ADULTS_LBL"/>
+		<field name="children"
+			class="kr-calculate"
+			default="0"
+			filter="int"
+			type="number"
+			min="0"
+			max="10"
+			step="1"
+			label="COM_KNOWRES_CONFIRM_CHILDREN_LBL"/>
+		<field name="coupon_code"
+			class="no-margin-bottom"
+			filter="string"
+			type="text"
+			label="COM_KNOWRES_CONFIRM_COUPON_LBL"
+			hint="COM_KNOWRES_CONFIRM_COUPON_DSC"/>
+		<field name="extras"
+			filter="string"
+			type="text"
+			label="COM_KNOWRES_CONFIRM_EXTRAS_LBL"
+			description="COM_KNOWRES_CONFIRM_EXTRAS_DSC"/>
+		<field name="guest_note"
+			filter="string"
+			rows="4"
+			type="textarea"
+			label="COM_KNOWRES_CONFIRM_GUEST_NOTE_LBL"/>
+	</fieldset>
+</form>

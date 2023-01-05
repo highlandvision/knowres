@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="COM_KNOWRES_TITLE_PROPERTIES_CATEGORY" option="COM_KNOWRES_TITLE_PROPERTIES_CATEGORY_OPT">
+		<message>
+			<![CDATA[COM_KNOWRES_TITLE_PROPERTIES_CATEGORY_DSC]]>
+		</message>
+	</layout>
+	<!-- Add fields to the request variables for the layout. -->
+	<fields name="request">
+		<fieldset name="request">
+			<field name="category_id"
+				addfieldprefix="HighlandVision\Component\Knowres\Administrator\Field"
+				required="true"
+				type="listcategories"
+				label="COM_KNOWRES_TITLE_PROPERTIES_CATEGORY_LBL"
+				description="COM_KNOWRES_TITLE_PROPERTIES_CATEGORY_SELECT"/>
+		</fieldset>
+	</fields>
+</metadata>

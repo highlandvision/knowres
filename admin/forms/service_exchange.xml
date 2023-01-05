@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form addruleprefix="HighlandVision\Component\Knowres\Administrator\Rule">
+	<fieldset name="krdefaults">
+		<field name="plugin"
+			default="exchange"
+			filter="string"
+			readonly="true"
+			type="text"
+			label="COM_KNOWRES_SERVICE_PLUGIN_LBL"
+			description="COM_KNOWRES_SERVICE_PLUGIN_DSC"/>
+		<field name="type"
+			default="s"
+			readonly="true"
+			size="1"
+			type="text"
+			label="COM_KNOWRES_SERVICE_TYPE_LBL"
+			description="COM_KNOWRES_SERVICE_TYPE_DSC"/>
+	</fieldset>
+	<fieldset name="custom">
+		<field name="url"
+			default="https://v3.exchangerate-api.com"
+			filter="string"
+			required="true"
+			type="url"
+			label="COM_KNOWRES_SERVICE_SERVICE_URL_LBL"
+			description="COM_KNOWRES_SERVICE_SERVICE_URL_DS"/>
+		<field name="apikey"
+			required="true"
+			type="text"
+			label="COM_KNOWRES_SERVICE_APIKEY_LBL"
+			description="COM_KNOWRES_SERVICE_APIKEY_DSC"/>
+	</fieldset>
+</form>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form addfieldprefix="HighlandVision\Component\Knowres\Administrator\Field"
+	addruleprefix="HighlandVision\Component\Knowres\Administrator\Rule">
+	<fieldset name="krdata">
+		<field name="agent_id"
+			input_type="list"
+			table="#__knowres_agent"
+			key_field="id"
+			value_field="name"
+			type="listforeignkey"
+			label="COM_KNOWRES_EXPORT_AGENT_LBL"
+			description="COM_KNOWRES_EXPORT_AGENT_DSC">
+			<option value="0">COM_KNOWRES_SELECT</option>
+		</field>
+		<field name="property_id"
+			filter="integerarray"
+			input_type="list"
+			layout="joomla.form.field.list-fancy-select"
+			multiple="true"
+			table="#__knowres_property"
+			key_field="id"
+			value_field="property_name"
+			type="listforeignkey"
+			label="COM_KNOWRES_EXPORT_PROPERTY_LBL"
+			description="COM_KNOWRES_EXPORT_PROPERTY_DSC"
+			hint="COM_KNOWRES_SELECT_MULTIPLE"/>
+		<field name="region_id"
+			allow_property="true"
+			type="listregions"
+			label="COM_KNOWRES_EXPORT_REGION_LBL"
+			description="COM_KNOWRES_EXPORT_REGION_DSC">
+			<option value="">COM_KNOWRES_SELECT</option>
+		</field>
+		<field name="guest"
+			type="radio"
+			default="0"
+			class="btn-group btn-group-yesno"
+			label="COM_KNOWRES_EXPORT_GUEST_LBL"
+			description="COM_KNOWRES_EXPORT_GUEST_DSC">
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+		<field name="owner"
+			type="radio"
+			default="0"
+			class="btn-group btn-group-yesno"
+			label="COM_KNOWRES_EXPORT_OWNER_LBL"
+			description="COM_KNOWRES_EXPORT_OWNER_DSC">
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+		<field name="cancelled"
+			type="radio"
+			default="0"
+			class="btn-group btn-group-yesno"
+			label="COM_KNOWRES_EXPORT_CANCELLED_LBL"
+			description="COM_KNOWRES_EXPORT_CANCELLED_DSC">
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+	</fieldset>
+</form>

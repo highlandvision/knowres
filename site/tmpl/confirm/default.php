@@ -1,0 +1,80 @@
+<?php
+/**
+ * @package     Know Reservations
+ * @subpackage  Site Controller
+ * @copyright   2021 Highland Vision. All rights reserved.
+ * @license     See the file "LICENSE.txt" for the full license governing this code.
+ * @author      Hazel Wilson <hazel@highlandvision.com>
+ */
+
+/** @noinspection PhpUnhandledExceptionInspection */
+
+defined('_JEXEC') or die;
+
+use HighlandVision\KR\Framework\KrMethods;
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+
+$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+$wa->useScript('com_knowres.site')
+   ->useScript('form.validate')
+   ->useScript('keepalive');
+?>
+
+<div id="kr-confirm">
+	<div class="row">
+		<div class="small-12 columns">
+			<?php if ($this->property->booking_type == 2) : ?>
+				<h1 class="h2"><?php echo KrMethods::sprintf('COM_KNOWRES_CONFIRM_BOOK_YOUR_RESERVATION',
+						$this->property->property_name); ?></h1>
+			<?php else: ?>
+				<h1 class="h2"><?php echo KrMethods::sprintf('COM_KNOWRES_CONFIRM_REQUEST_YOUR_RESERVATION',
+						$this->property->property_name); ?></h1>
+			<?php endif; ?>
+			<h6><?php echo KrMethods::plain('COM_KNOWRES_CONFIRM_BOOK_ENTER'); ?></h6>
+			<br>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="small-12 medium-7 large-8 columns">
+			<form action="<?php echo KrMethods::route('index.php?option=com_knowres&task=confirm.validate'); ?>"
+			      class="form-validate jsonform" id="kr-form-confirm" method="post">
+
+				<?php echo $this->loadTemplate('coupon'); ?>
+				<?php echo $this->loadTemplate('extras'); ?>
+				<?php echo $this->loadTemplate('guest'); ?>
+
+				<?php $gdpr = $this->Translations->getText('agency', $this->contractData->agency_id,
+					'gdpr_statement'); ?>
+				<?php if (!empty($gdpr)): ?>
+					<div class="callout small success">
+						<p><?php echo $gdpr; ?></p>
+					</div>
+				<?php endif; ?>
+
+				<button class="button expanded large primary" type="submit">
+					<?php echo KrMethods::plain('COM_KNOWRES_SELECT_PAY_METHOD'); ?>
+				</button>
+
+				<?php echo HTMLHelper::_('form.token'); ?>
+				<input type="hidden" name="jform[guest_id]" value="0">
+				<input type="hidden" name="jform[validate]" value="1">
+				<input type="hidden" name="jform[property_id]" value="<?php echo $this->contractData->property_id; ?>">
+				<input type="hidden" name="jform[arrival]" value="<?php echo $this->contractData->arrival; ?>">
+				<input type="hidden" name="jform[room_total]" value="<?php echo $this->contractData->room_total; ?>">
+			</form>
+		</div>
+		<div class="small-12 medium-5 large-4 columns">
+			<?php echo $this->loadTemplate('ajaxed'); ?>
+			<?php echo HTMLHelper::_('image', $this->pimage, $this->property->property_name,
+				['width' => $this->params->get('max_property_width', 100)]);
+			?>
+
+			<br><br>
+			<div class="text-center">
+				<?php echo KrMethods::loadInternal('{loadposition propertyview}'); ?>
+			</div>
+		</div>
+	</div>
+</div>

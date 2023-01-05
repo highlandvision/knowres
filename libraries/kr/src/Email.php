@@ -1,0 +1,489 @@
+<?php
+/**
+ * @package     Know Reservations
+ * @subpackage  Library
+ * @copyright   Copyright (c) 2020, Highland Vision. All rights reserved.
+ * @license     See the file "LICENSE.txt" for the full license governing this code.
+ * @author      Hazel Wilson <hazel@highlandvision.com>
+ */
+
+namespace HighlandVision\KR;
+
+defined('_JEXEC') or die;
+
+use Exception;
+use HighlandVision\KR\Email\HelpScoutEmailService;
+use HighlandVision\KR\Email\JoomlaEmailService;
+use HighlandVision\KR\Framework\KrFactory;
+use HighlandVision\KR\Framework\KrMethods;
+use HighlandVision\KR\Media\Pdf;
+use InvalidArgumentException;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Object\CMSObject;
+use Joomla\Registry\Registry;
+use RuntimeException;
+
+use function array_unique;
+use function count;
+use function is_dir;
+use function str_replace;
+use function strtolower;
+
+/**
+ * Class KnowresEmailHelper
+ *
+ * @since 1.0.0
+ */
+abstract class Email
+{
+	/** @var ?CMSObject Agency data */
+	protected ?CMSObject $agency;
+	/** @var array|null Email attachments */
+	protected ?array $attachments = [];
+	/** @var array|null Blind carbon copy */
+	protected ?array $bcc = [];
+	/** @var mixed Body background */
+	protected mixed $body_bg = '';
+	/** @var mixed Button background */
+	protected mixed $button_bg = '';
+	/** @var array|null  Carbon copy */
+	protected ?array $cc = [];
+	/** @var mixed Content background */
+	protected mixed $content_bg = '';
+	/** @var array Values for the placeholder data */
+	protected array $data = [];
+	/** @var mixed Email Font */
+	protected mixed $font = '';
+	/** @var mixed Email font color */
+	protected mixed $font_color = '#313131';
+	/** @var mixed Email font highlight color */
+	protected mixed $font_primary = '#212121';
+	/** @var mixed Font size */
+	protected mixed $font_size = '16';
+	/** @var string Mail from name |(config) */
+	protected string $fromname = '';
+	/** @var bool TRUE for Helpscout email */
+	protected bool $helpscout = false;
+	/** @var string Mail from (config) */
+	protected string $mailfrom = '';
+	/** @var mixed Manager email */
+	protected mixed $manager_email = '';
+	/** @var string Manager namey */
+	protected string $manager_name = '';
+	/** @var string Email body */
+	protected string $output_message = '';
+	/** @var string Email subject */
+	protected string $output_subject = '';
+	/** @var Registry KR params */
+	protected Registry $params;
+	/** @var ?CMSObject Property data */
+	protected ?CMSObject $property;
+	/** @var int ID of property */
+	protected int $property_id = 0;
+	/** @var string|null Reply to name */
+	protected ?string $reply_name = '';
+	/** @var string|null  Reply email */
+	protected ?string $reply_to = '';
+	/** @var string  Table styles */
+	protected string $table_style = '';
+	/** @var bool  Testing indicator */
+	protected bool $testing = false;
+	/** @var string Today as Y--m-d */
+	protected string $today = '';
+	/** @var Translations Translations */
+	protected Translations $Translations;
+	/** @var string The email trigger */
+	protected string $trigger = '';
+
+	/**
+	 * Constructor initialise
+	 *
+	 * @param   string  $trigger  Email trigger
+	 *
+	 * @throws Exception
+	 * @since  1.0.0
+	 */
+	public function __construct(string $trigger)
+	{
+		if (!$trigger)
+		{
+			throw new InvalidArgumentException(
+				KrMethods::sprintf(
+					'COM_KNOWRES_THROW_MISSING_PARAMETER', 'trigger'
+				)
+			);
+		}
+
+		Factory::getLanguage()->load('com_knowres', JPATH_ADMINISTRATOR . '/components/com_knowres');
+		Factory::getLanguage()->load('com_knowres', JPATH_SITE . '/components/com_knowres');
+
+		$this->trigger      = $trigger;
+		$this->params       = KrMethods::getParams();
+		$this->mailfrom     = KrMethods::getCfg('mailfrom');
+		$this->fromname     = KrMethods::getCfg('fromname');
+		$this->today        = TickTock::getDate();
+		$this->Translations = new Translations();
+		$this->body_bg      = $this->params->get('email_body_bg', $this->body_bg);
+		$this->content_bg   = $this->params->get('email_content_bg', $this->content_bg);
+		$this->button_bg    = $this->params->get('email_button_bg', $this->button_bg);
+		$this->font         = $this->params->get('email_font', $this->font);
+		$this->font_size    = $this->params->get('email_font_size', $this->font_size) . 'px';
+		$this->font_color   = $this->params->get('email_font_color', $this->font_color);
+		$this->font_primary = $this->params->get('email_font_primary', $this->font_primary);
+
+		$this->table_style = 'font-family:' . $this->font . ';';
+		$this->table_style .= 'mso-line-height-rule:exactly;line-height:120%;padding:0;margin:0;border:none;';
+		$this->table_style .= 'font-size:' . $this->font_size . ';';
+		$this->table_style .= 'color:' . $this->font_color . ';';
+	}
+
+	/**
+	 * Return string
+	 *
+	 * @since  1.0.0
+	 * @return string
+	 */
+	public function __toString(): string
+	{
+		return $this->output_message;
+	}
+
+	/**
+	 * Returns email message
+	 *
+	 * @since 1.0.0
+	 * @return string
+	 */
+	public function getOutputMessage(): string
+	{
+		return $this->output_message;
+	}
+
+	/**
+	 * Returns email subject
+	 *
+	 * @since 1.0.0
+	 * @return string
+	 */
+	public function getOutputSubject(): string
+	{
+		return $this->output_subject;
+	}
+
+	/**
+	 * Check for and add any auto generated email pdf attachments
+	 *
+	 * @param   array  $pdfs  Array of auto attachments
+	 *
+	 * @throws Exception
+	 * @since  1.0.0
+	 */
+	protected function addAutoAttachment(array $pdfs): void
+	{
+		foreach ($pdfs as $t)
+		{
+			if ($t == 'voucher')
+			{
+				$voucher             = new Pdf\Contract\Voucher('email', $this->contract_id);
+				$this->attachments[] = $voucher->getPdf();
+			}
+			else if ($t == 'guestdata' && $this->contract->guestdata_id)
+			{
+				$guestdata           = new Pdf\Contract\Guestdata('email', $this->contract_id);
+				$this->attachments[] = $guestdata->getPdf();
+			}
+		}
+	}
+
+	/**
+	 * Check for and add any uploaded email attachments
+	 *
+	 * @param   array  $pdfs  Uploaded attachments
+	 *
+	 * @since 1.0.0
+	 */
+	protected function addUploadedAttachment(array $pdfs): void
+	{
+		$matches = [];
+
+		foreach ($pdfs as $t)
+		{
+			if ($t == 'propertys')
+			{
+				$matches['propertys'] = $this->contract->property_id;
+			}
+			else if ($t == 'regions')
+			{
+				$matches['regions'] = $this->property->region_id;
+			}
+			else if ($t == 'towns')
+			{
+				$matches['towns'] = strtolower(str_replace(' ', '-', $this->property->town_name));
+			}
+			else if ($t == 'types')
+			{
+				$matches['types'] = $this->property->type_id;
+			}
+			else if ($t == 'contracts')
+			{
+				$matches['contracts'] = $this->contract->tag;
+			}
+		}
+
+		$matches = array_unique($matches);
+		foreach ($matches as $type => $id)
+		{
+			$pdfs = Media\Pdf::listPdfs($type, $id);
+			if (count($pdfs) > 0)
+			{
+				foreach ($pdfs as $pdf)
+				{
+					$this->attachments[] = $pdf;
+				}
+			}
+		}
+	}
+
+	/**
+	 * Check for any custom by date emails past their normal due date
+	 *
+	 * @throws Exception
+	 * @since  2.5.0
+	 */
+	protected function checkCustomByDate(): void
+	{
+		$emails = KrFactory::getListModel('emailtriggers')->getTriggers('CUSTOMBYDATE');
+		if ($emails)
+		{
+			foreach ($emails as $e)
+			{
+				if (!$e->days_before || !$e->send_guest)
+				{
+					continue;
+				}
+
+				$due_date = TickTock::modifyDays($this->today, $e->days);
+
+				if ($e->trigger_cron == 'arrival')
+				{
+					$actual_date = $this->contract->arrival;
+				}
+				else if ($e->trigger_cron == 'departure')
+				{
+					$actual_date = $this->contract->departure;
+				}
+				else if ($e->trigger_cron == 'expiry_date')
+				{
+					$actual_date = $this->contract->expiry_date;
+				}
+				else if ($e->trigger_cron == 'balance_date')
+				{
+					$actual_date = $this->contract->balance_date;
+				}
+
+				if ($due_date < $actual_date)
+				{
+					continue;
+				}
+
+				$values = Utility::decodeJson($e->booking_status, true);
+				if (!in_array($this->contract->booking_status, $values))
+				{
+					continue;
+				}
+
+				$this->sendEmails($e);
+			}
+		}
+	}
+
+	/**
+	 * Build email body and subject
+	 *
+	 * @param   int   $template_id        ID of template to be used
+	 * @param   bool  $check_attachments  Check for template attachments
+	 * @param   bool  $send_guest         Indicates a guest email
+	 *
+	 * @throws Exception
+	 * @since  1.0.0
+	 */
+	protected function constructEmail(int $template_id, bool $check_attachments = false, bool $send_guest = false): void
+	{
+		if (!$template_id)
+		{
+			throw new RuntimeException('Email Template ID has no value');
+		}
+
+		$template = KrFactory::getAdminModel('emailtemplate')->getItem($template_id);
+		if (!$template)
+		{
+			throw new RuntimeException('Email Template not found for ID ' . $template_id);
+		}
+
+		$this->output_message = $template->blurb;
+		$this->output_subject = $template->subject;
+
+		foreach ($this->data as $k => $v)
+		{
+			$this->output_message = str_replace(
+				"[$k]", $v, $this->output_message
+			);
+			$this->output_subject = str_replace(
+				"[$k]", $v, $this->output_subject
+			);
+		}
+
+		$this->attachments = null;
+		if ($check_attachments)
+		{
+			$this->addUploadedAttachment($template->pdf_uploaded);
+			$this->addAutoAttachment($template->pdf_auto);
+		}
+
+		$this->output_message = $this->makePretty($send_guest);
+	}
+
+	/**
+	 * Send via normal email or helpscout
+	 *
+	 * @param   string  $email_to   Recipient email
+	 * @param  ?string  $firstname  Name of recipient
+	 * @param  ?string  $surname    Surname of recipient
+	 * @param   array   $tags       Email related tags
+	 *
+	 * @throws Exception
+	 * @since  3.2.0
+	 */
+	protected function dispatchEmail(string $email_to, ?string $firstname = null, ?string $surname = null,
+		array $tags = []): void
+	{
+		$optional                = [];
+		$optional['firstname']   = $firstname;
+		$optional['surname']     = $surname;
+		$optional['tags']        = $tags;
+		$optional['cc']          = $this->cc;
+		$optional['bcc']         = $this->bcc;
+		$optional['attachments'] = $this->attachments;
+		$optional['mailfrom']    = $this->mailfrom;
+		$optional['fromname']    = $this->fromname;
+		$optional['reply_to']    = $this->reply_to;
+		$optional['reply_name']  = $this->reply_name;
+
+		try
+		{
+			if ($this->helpscout)
+			{
+				HelpScoutEmailService::dispatchEmail($email_to, $this->getOutputSubject(),
+					$this->getOutputMessage(), $optional);
+			}
+			else
+			{
+				JoomlaEmailService::dispatchEmail($email_to, $this->getOutputSubject(),
+					$this->getOutputMessage(), $optional);
+			}
+		}
+		catch (Exception $e)
+		{
+			Logger::logMe($e->getMessage(), 'alert');
+		}
+	}
+
+	/**
+	 * Gather all data, format emails and send
+	 *
+	 * @throws Exception
+	 * @since  1.0.0
+	 */
+	protected function gatherData(): void
+	{
+		$emails = KrFactory::getListModel('emailtriggers')->getTriggers($this->trigger, $this->trigger_id);
+		if (count($emails))
+		{
+			$this->setData();
+			foreach ($emails as $e)
+			{
+				$this->sendEmails($e);
+			}
+
+			if ($this->trigger == 'BOOKCONFIRM' || $this->trigger == 'PAYRECEIPT')
+			{
+				$this->checkCustomByDate();
+			}
+		}
+	}
+
+	/**
+	 * Set the "from" email
+	 *
+	 * @throws Exception
+	 * @since  3.2.0
+	 * @return string
+	 */
+	protected function getFromEmail(): string
+	{
+		if (empty($this->agency_email))
+		{
+			return $this->fromemail;
+		}
+
+		return $this->agency_email;
+	}
+
+	/**
+	 * Set the "from" name
+	 *
+	 * @throws Exception
+	 * @since  3.2.0
+	 */
+	protected function getFromName()
+	{
+		if (empty($this->agency_name))
+		{
+			return $this->fromname;
+		}
+
+		return $this->agency_name;
+	}
+
+	/**
+	 * Add headers and footers to the email text
+	 *
+	 * @param   bool  $send_guest  Send guest email
+	 *
+	 * @throws Exception
+	 * @since  1.0.0
+	 * @return string
+	 */
+	protected function makePretty(bool $send_guest): string
+	{
+		return KrMethods::render('emails.template', [
+			'agency_id'    => $this->agency->id,
+			'body_bg'      => $this->body_bg,
+			'content_bg'   => $this->content_bg,
+			'button_bg'    => $this->button_bg,
+			'font'         => $this->font,
+			'font_color'   => $this->font_color,
+			'font_size'    => $this->font_size,
+			'font_primary' => $this->font_primary,
+			'affiliates'   => $send_guest,
+			'message'      => $this->__toString(),
+		]);
+	}
+
+	/**
+	 * Check if Helpscout is enabled
+	 *
+	 * @throws RuntimeException
+	 * @since 3.2.0
+	 */
+	protected function setHelpScout(): void
+	{
+		$this->helpscout = KrFactory::getListModel('services')::checkForSingleService(false, 'helpscout',
+			$this->agency->id);
+
+		if ($this->helpscout && !is_dir(JPATH_LIBRARIES . '/helpscout/src'))
+		{
+			throw new RunTimeException('Please install Helpscout Library or disable Helpscout Service');
+		}
+	}
+}

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fields group="telephone">
+		<fieldset name="f1"
+			class="small-12 medium-6 large-4 columns">
+			<field name="country"
+				addfieldprefix="HighlandVision\Component\Knowres\Administrator\Field"
+				filter="integer"
+				hiddenDescription="true"
+				hiddenLabel="true"
+				type="listdialcode"
+				label="COM_KNOWRES_GUEST_TELEPHONE_COUNTRY_LBL"
+				description="COM_KNOWRES_GUEST_MOBILE_FORM_DSC"
+				hint="COM_KNOWRES_GUEST_MOBILE_DSC">
+				<option value="0">COM_KNOWRES_PLEASE_SELECT</option>
+			</field>
+		</fieldset>
+		<fieldset name="f2"
+			class="small-12 medium-6 large-4 columns">
+			<field name="number"
+				filter="integer"
+				hiddenDescription="true"
+				hiddenLabel="true"
+				type="string"
+				validate="number"
+				label="COM_KNOWRES_TELEPHONE"
+				description="COM_KNOWRES_GUEST_MOBILE_FORM_DSC"
+				hint="COM_KNOWRES_GUEST_MOBILE_DSC"/>
+		</fieldset>
+		<fieldset name="f3"
+			class="small-12 medium-6 large-4 columns">
+			<field name="type"
+				filter="int"
+				hiddenDescription="true"
+				hiddenLabel="true"
+				type="list"
+				label="COM_KNOWRES_GUEST_PHONE_TYPE_LBL"
+				description="COM_KNOWRES_GUEST_PHONE_TYPE_DSC">
+				<option value="0">COM_KNOWRES_SELECT_REQUIRED</option>
+				<option value="1">COM_KNOWRES_GUEST_PHONE_TYPE1</option>
+				<option value="2">COM_KNOWRES_GUEST_PHONE_TYPE2</option>
+				<option value="3">COM_KNOWRES_GUEST_PHONE_TYPE3</option>
+			</field>
+		</fieldset>
+	</fields>
+</form>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form addfieldprefix="HighlandVision\Component\Knowres\Administrator\Field"
+	addruleprefix="HighlandVision\Component\Knowres\Administrator\Rule">
+	<field name="property_name"
+		type="listpropertyswitch"
+		layout="joomla.form.field.list-fancy-select"
+		onchange="refreshShow(this.value);"
+		required="true"
+		filter="integer"
+		label="COM_KNOWRES_PROPERTY_SWITCH">
+	</field>
+</form>

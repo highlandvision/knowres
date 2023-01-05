@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<menu
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="urn:joomla.org"
+	xsi:schemaLocation="urn:joomla.org menu.xsd"
+>
+	<menuitem
+		title="COM_KNOWRES"
+		type="heading"
+		icon="calendar-check"
+		class="class:knowres">
+		<menuitem
+			title="COM_KNOWRES_GANTT_TITLE"
+			type="component"
+			element="com_knowres"
+			link="index.php?option=com_knowres&amp;view=gantt"/>
+		<menuitem
+			title="COM_KNOWRES_CONTRACTS_DAILY_TITLE"
+			type="component"
+			element="com_knowres"
+			link="index.php?option=com_knowres&amp;task=contracts.daily"/>
+		<menuitem
+			title="COM_KNOWRES_PROPERTIES_TITLE"
+			type="component"
+			element="com_knowres"
+			link="index.php?option=com_knowres&amp;view=properties"/>
+		<menuitem
+			title="COM_KNOWRES_CONTRACTS_TITLE"
+			type="component"
+			element="com_knowres"
+			link="index.php?option=com_knowres&amp;view=contracts"/>
+	</menuitem>
+</menu>

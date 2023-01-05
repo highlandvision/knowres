@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form addfieldprefix="HighlandVision\Component\Knowres\Administrator\Field"
+	addruleprefix="HighlandVision\Component\Knowres\Administrator\Rule">
+	<fieldset name="krdata">
+		<field name="arrivaldsp"
+			class="input-mini "
+			readonly="true"
+			type="string"
+			label="COM_KNOWRES_CONTRACT_BLOCK_START_DATE_LBL"
+			description="COM_KNOWRES_CONTRACT_BLOCK_START_DATE_DSC"/>
+		<field name="departuredsp"
+			class="input-mini"
+			readonly="true"
+			type="string"
+			label="COM_KNOWRES_CONTRACT_BLOCK_RESUME_DATE_LBL"
+			description="COM_KNOWRES_CONTRACT_BLOCK_RESUME_DATE_DSC"/>
+		<field name="block_note"
+			filter="string"
+			rows="6"
+			type="textarea"
+			label="COM_KNOWRES_CONTRACT_BLOCK_NOTE_LBL"
+			description="COM_KNOWRES_CONTRACT_BLOCK_NOTE_DSC"/>
+	</fieldset>
+</form>
