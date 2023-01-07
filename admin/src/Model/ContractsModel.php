@@ -190,10 +190,10 @@ class ContractsModel extends ListModel
 
 		if ($data['owner'])
 		{
-			$query->select($db->qn(array(
+			$query->select($db->qn([
 				'o.name',
 				'o.commission'
-			)));
+			]));
 		}
 
 		$query->from($db->qn('#__knowres_contract', 'a'));

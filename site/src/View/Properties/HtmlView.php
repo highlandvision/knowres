@@ -65,7 +65,7 @@ class HtmlView extends KrHtmlView\Site
 	 */
 	#[NoReturn] public function display($tpl = null): void
 	{
-		/** @var PropertiesModel $model * */
+		/** @var PropertiesModel $model */
 		$model        = $this->getModel();
 		$this->state  = $model->getState();
 		$this->params = KrMethods::getParams();

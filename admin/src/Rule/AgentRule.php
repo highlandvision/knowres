@@ -52,12 +52,18 @@ class AgentRule extends FormRule
 			return true;
 		}
 
-		//TODO-v4 Test this again
-		/* @var AgentModel $agent  */
+		/* @var AgentModel $agent */
 		$agent = KrFactory::getAdminModel('agent')->getItem($value);
-		if (!$agent->id || !$agent->state == 1)
+		if (empty($agent->id))
 		{
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_RULES_NO_AGENT'));
+
+			return false;
+		}
+
+		if (!$agent->state == 1)
+		{
+			KrMethods::message(KrMethods::plain('COM_KNOWRES_RULES_NO_AGENT_PUBLISHED'));
 
 			return false;
 		}
@@ -71,6 +77,7 @@ class AgentRule extends FormRule
 		if (!$agent_reference)
 		{
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_RULES_NO_AGENT_REFERENCE'));
+
 			return false;
 		}
 
