@@ -18,6 +18,7 @@ use HighlandVision\KR\Joomla\Extend\AdminModel;
 use HighlandVision\KR\Session as KrSession;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Utility;
+use InvalidArgumentException;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Object\CMSObject;
@@ -209,9 +210,9 @@ class ContractModel extends AdminModel
 	/**
 	 * Get current contract balance
 	 *
-	 * @param   int  $contract_id  ID of contract
+	 * @param  int  $contract_id  ID of contract
 	 *
-	 * @throws RuntimeException
+	 * @throws RuntimeException|InvalidArgumentException
 	 * @since  1.0.0
 	 * @return mixed
 	 */
