@@ -19,7 +19,6 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Object\CMSObject;
-use Joomla\CMS\Pagination;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\Registry\Registry;
@@ -37,8 +36,6 @@ use function is_null;
  */
 class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 {
-	//TODO-v4 Check that pagination still works
-
 	/** @var int User access level */
 	public int $access_level = 0;
 	/** @var ?array The active search filters */
@@ -61,8 +58,6 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 	public string $name = '';
 	/** @var bool True if ordering required. */
 	protected bool $ordering = true;
-	/** @var ?Pagination Page numbering */
-	public ?Pagination $pagination;
 	/** @var Registry KR params */
 	public Registry $params;
 	/** @var string User properties in csv string of IDs */
@@ -93,7 +88,6 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 	 */
 	public function __construct($config = [])
 	{
-		//TODO-v4 Test pagination
 		parent::__construct($config);
 
 		$this->today  = TickTock::getDate();
