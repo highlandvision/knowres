@@ -15,8 +15,9 @@ defined('_JEXEC') or die;
 
 use Exception;
 use Joomla\CMS\Application\CMSApplication;
-use Joomla\CMS\Pagination as JoomlaPagination;
+use Joomla\CMS\Pagination\Pagination as JoomlaPagination;
 
+use function defined;
 use function is_file;
 
 /**
@@ -29,17 +30,16 @@ class Pagination extends JoomlaPagination
 	/**
 	 * Constructor.
 	 *
-	 * @param   int             $total       The total number of items.
-	 * @param   int             $limitstart  The offset of the item to start at.
-	 * @param   int             $limit       The number of items to display per page.
-	 * @param   string          $prefix      The prefix used for request variables.
-	 * @param  ?CMSApplication  $app         The application object
+	 * @param  int                  $total       The total number of items.
+	 * @param  int                  $limitstart  The offset of the item to start at.
+	 * @param  int                  $limit       The number of items to display per page.
+	 * @param  string               $prefix      The prefix used for request variables.
+	 * @param  CMSApplication|null  $app         The application object
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function __construct(int $total, int $limitstart, int $limit, string $prefix = '',
-		?CMSApplication $app = null)
+	public function __construct($total, $limitstart, $limit, $prefix = '', CMSApplication $app = null)
 	{
 		parent::__construct($total, $limitstart, $limit, $prefix, $app);
 
@@ -73,7 +73,7 @@ class Pagination extends JoomlaPagination
 	/**
 	 * Create and return the pagination page list string, i.e. Previous, Next, 1 2 3 ... x.
 	 *
-	 * @param   bool  $ajax  True for ajax request (only properties)
+	 * @param  bool  $ajax  True for ajax request (only properties)
 	 *
 	 * @throws Exception
 	 * @since  1.5

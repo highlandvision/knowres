@@ -17,6 +17,7 @@ use HighlandVision\KR\Joomla\Extend\HtmlView\Site as KrHtmlView;
 use HighlandVision\KR\Search;
 use HighlandVision\KR\Session as KrSession;
 use HighlandVision\KR\SiteHelper;
+use Joomla\CMS\Pagination\Pagination;
 
 /**
  * Display property search results
@@ -27,12 +28,16 @@ class RawView extends KrHtmlView
 {
 	/** @var bool True if favourites selected */
 	protected bool $favs = false;
+	/** @var string Modules output */
+	protected string $modules;/**
 	/** @var bool True if favourites requested but none saved */
 	protected bool $nofavs = false;
+	/** @var Pagination Pagination data */
+	protected Pagination $pagination;/**
 	/** @var array Saved favourites */
 	protected array $saved;
 	/** @var Search Site search */
-	protected Search $Search;
+	protected Search $Search;/**
 
 	/**
 	 * Display the view
