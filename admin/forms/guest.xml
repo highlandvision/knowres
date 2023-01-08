@@ -4,14 +4,12 @@
 	<fieldset name="guestname">
 		<field name="firstname"
 			filter="string"
-			hiddenLabel="true"
 			required="true"
 			type="text"
 			label="COM_KNOWRES_FIRSTNAME"
 			description="COM_KNOWRES_FIRSTNAME_DSC"/>
 		<field name="surname"
 			filter="string"
-			hiddenLabel="true"
 			required="true"
 			type="text"
 			label="COM_KNOWRES_SURNAME"
@@ -33,7 +31,6 @@
 	<fieldset name="contact">
 		<field name="email"
 			filter="email"
-			hiddenLabel="true"
 			required="true"
 			type="email"
 			validate="email"
@@ -41,7 +38,6 @@
 			description="COM_KNOWRES_GUEST_EMAIL_DSC"/>
 		<field name="email_2"
 			filter="email"
-			hiddenLabel="true"
 			type="email"
 			validate="email"
 			label="COM_KNOWRES_GUEST_EMAIL_2_LBL"
@@ -54,19 +50,16 @@
 			description="COM_KNOWRES_GUEST_EMAIL_2_DSC"/>
 		<field name="mobile_country_id"
 			filter="integer"
-			hiddenLabel="true"
 			type="listdialcode"
 			label="COM_KNOWRES_GUEST_MOBILE_COUNTRY_LBL"
 			description="COM_KNOWRES_GUEST_MOBILE_COUNTRY_DSC"/>
 		<field name="mobile"
 			filter="string"
-			hiddenLabel="true"
 			type="text"
 			label="COM_KNOWRES_GUEST_MOBILE_LBL"
 			description="COM_KNOWRES_GUEST_MOBILE_DSC"/>
 		<field name="telephone"
 			filter="string"
-			hiddenDescription="true"
 			layout="form.field.json.generic"
 			type="jsontelephone"
 			label="COM_KNOWRES_GUEST_ALTERNATIVE_TELEPHONE_LBL"
@@ -96,7 +89,6 @@
 		<field name="country_id"
 			class="countrychain"
 			filter="integer"
-			hiddenLabel="true"
 			onchange="comboGeo(this.value, 'guest.combo', 'region');"
 			type="combocountry"
 			label="COM_KNOWRES_COUNTRY"
@@ -106,7 +98,6 @@
 		<field name="region_id"
 			class="regionchain"
 			filter="integer"
-			hiddenLabel="true"
 			type="comboregion"
 			label="COM_KNOWRES_REGION"
 			description="COM_KNOWRES_SELECT_REGION">

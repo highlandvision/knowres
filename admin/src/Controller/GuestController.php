@@ -17,6 +17,7 @@ use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\FormController;
 use HighlandVision\KR\Utility;
 use JetBrains\PhpStorm\NoReturn;
+use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Response\JsonResponse;
 
 use function jexit;
@@ -66,6 +67,7 @@ class GuestController extends FormController
 		$guest_id = KrMethods::inputInt('guest_id');
 		if ($guest_id)
 		{
+			/** @var GuestModel $model */
 			$model = $this->getModel();
 			$model->checkin($guest_id);
 		}
@@ -99,5 +101,23 @@ class GuestController extends FormController
 
 		echo new JsonResponse($wrapper);
 		jexit();
+	}
+
+	/**
+	 * Function that allows child controller access to model data after the data has been saved.
+	 *
+	 * @param   BaseDatabaseModel  $model      The data model object.
+	 * @param   array              $validData  The validated data.
+	 *
+	 * @throws Exception
+	 * @since  1.0.0
+	 */
+	protected function postSaveHook(BaseDatabaseModel $model, $validData = [])
+	{
+		$gobackto = Utility::getGoBackTo();
+		if ($gobackto)
+		{
+			KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&' . $gobackto, false));
+		}
 	}
 }

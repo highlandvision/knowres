@@ -30,7 +30,7 @@ $wa->useScript('com_knowres.site')
 	<?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATAFORM_INSTRUCTIONS'); ?>
 </div>
 
-<form action="<?php echo KrMethods::route('index.php?option=com_knowres'); ?>"
+<form action="<?php echo 'index.php?option=com_knowres'; ?>"
       aria-label="<?php echo $this->form_aria_label; ?>" class="form-validate" id="kr-guestdata-form"
       method="post" name="adminForm">
 
@@ -104,7 +104,6 @@ $wa->useScript('com_knowres.site')
 	<input type="hidden" name="jform[id]" value="<?php echo $this->item->id; ?>">
 	<input type="hidden" name="jform[contract_id]" value="<?php echo $this->contract->id; ?>">
 	<input type="hidden" name="jform[guest_id]" value="<?php echo $this->contract->guest_id; ?>">
-	<input type="hidden" name="jform[arrival_means]" id="jform_arrival_means"
-	       value="<?php echo $this->item->arrival_means; ?>">
+	<input type="hidden" name="jform[arrival_means]" id="jform_arrival_means" value="<?php echo $this->item->arrival_means; ?>">
 	<input type="hidden" name="task" value="contractguestdata.save">
 </form>

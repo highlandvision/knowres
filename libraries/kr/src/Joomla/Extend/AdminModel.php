@@ -17,7 +17,6 @@ use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Utility;
 use Joomla\CMS\Form\Form;
-use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Table\Table;
 use RuntimeException;
 use stdClass;
@@ -72,9 +71,9 @@ class AdminModel extends \Joomla\CMS\MVC\Model\AdminModel
 	 * @param   int  $pk  The id of the primary key.
 	 *
 	 * @since  1.6
-	 * @return CMSObject|bool  Object on success, false on failure.
+	 * @return object|bool  Object on success, false on failure.
 	 */
-	public function getItem($pk = null): CMSObject|bool
+	public function getItem($pk = null): object|bool
 	{
 		return parent::getItem($pk);
 	}

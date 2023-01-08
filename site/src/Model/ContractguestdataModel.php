@@ -15,7 +15,6 @@ use Exception;
 use HighlandVision\Component\Knowres\Administrator\Model\ContractguestdataModel as AdminContractguestdataModel;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
-use HighlandVision\KR\SiteHelper;
 use HighlandVision\KR\TickTock;
 use Joomla\CMS\Form\Form;
 use stdClass;
@@ -64,26 +63,6 @@ class ContractguestdataModel extends AdminContractguestdataModel
 	public function getForm($data = [], $loadData = true, ?string $source = 'contractguestdata'): Form|false
 	{
 		return parent::getForm();
-	}
-
-	/**
-	 * Method to save the form data.
-	 *
-	 * @param   array  $data  The existing form data.
-	 *
-	 * @throws Exception
-	 * @since  4.0.0
-	 * @return bool  True on success.
-	 */
-	public function save($data): bool
-	{
-		if (parent::save($data))
-		{
-			KrMethods::message(KrMethods::plain('COM_KNOWRES_ITEM_UPDATED_SUCCESSFULLY'));
-			SiteHelper::redirectDashboard();
-		}
-
-		return true;
 	}
 
 	/**

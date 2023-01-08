@@ -31,7 +31,7 @@ $wa->useScript('com_knowres.site')
 			<h1 class="h3"><?php echo KrMethods::plain('COM_KNOWRES_DASHBOARD_PAYMENT_GUEST'); ?></h1>
 		<?php endif; ?>
 
-		<form action="<?php echo KrMethods::route('index.php?option=com_knowres&id=' . (int) $this->item->id); ?>"
+		<form action="<?php echo 'index.php?option=com_knowres'; ?>"
 		      aria-label="<?php echo $this->form_aria_label; ?>" class="formbg form-validate" id="kr-guest-form"
 		      method="post" name="adminForm">
 
@@ -208,6 +208,7 @@ $wa->useScript('com_knowres.site')
 			</div>
 
 			<?php echo HTMLHelper::_('form.token'); ?>
+			<input type="hidden" name="id" value="<?php echo $this->item->id; ?>">
 			<input type="hidden" name="jform[id]" value="<?php echo $this->item->id; ?>">
 			<input type="hidden" name="jform[email]" value="<?php echo $this->item->email; ?>">
 			<input type="hidden" name="task" value="guest.save">

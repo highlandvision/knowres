@@ -88,7 +88,7 @@ class HtmlView extends KrHtmlView\Site
 		$this->params          = KrMethods::getParams();
 		$this->form_aria_label = KrMethods::plain('COM_KNOWRES_DASHBOARD_EDIT_CONTRACTGUESTDATA');
 
-		$this->meta_title       = KrMethods::plain('COM_KNOWRES_TITLE_DASHBOARD_CONTRACTGUESTDATA');
+		$this->meta_title       = KrMethods::plain('COM_KNOWRES_DASHBOARD_EDIT_CONTRACTGUESTDATA');
 		$this->meta_description = KrMethods::plain('COM_KNOWRES_TITLE_DASHBOARD_CONTRACTGUESTDATA');
 		$this->prepareDocument();
 
@@ -113,10 +113,10 @@ class HtmlView extends KrHtmlView\Site
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	protected function setPathway()
+	protected function setMyPathway()
 	{
 		$pathway = Factory::getApplication()->getPathway();
-		$pathway->setMyPathway([]);
+		$pathway->setPathway([]);
 
 		$pathway = HtmlView::dashboardPathway($pathway);
 		$pathway->addItem(KrMethods::plain('COM_KNOWRES_TITLE_DASHBOARD_CONTRACTGUESTDATA'));

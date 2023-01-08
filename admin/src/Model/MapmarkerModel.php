@@ -128,15 +128,18 @@ class MapmarkerModel extends AdminModel
 	 */
 	public function save($data): bool
 	{
-		parent::save($data);
-
-		$files = KrMethods::inputFiles('jform');
-		if (!empty($files['marker_image']['name']))
+		if (parent::save($data))
 		{
-			$id = $this->getState('mapmarker.id');
-			$this->saveImage($id, $files['marker_image']);
+			$files = KrMethods::inputFiles('jform');
+			if (!empty($files['marker_image']['name']))
+			{
+				$id = $this->getState('mapmarker.id');
+				$this->saveImage($id, $files['marker_image']);
+			}
+
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 }

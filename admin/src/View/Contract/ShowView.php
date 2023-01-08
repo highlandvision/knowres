@@ -72,7 +72,6 @@ class ShowView extends KrHtmlView\Contract
 		$this->getActions();
 		$this->params = KrMethods::getParams();
 
-		/** @var ContractModel $this */
 		$model       = new ContractModel();
 		$this->form  = $model->getForm();
 		$this->item  = $model->getItem();

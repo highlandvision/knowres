@@ -105,7 +105,6 @@ class GuestModel extends AdminModel
 	 */
 	public function getItem($pk = null): CMSObject|false
 	{
-		/* @var GuestModel $item */
 		$item = parent::getItem($pk);
 		if ($item)
 		{
@@ -166,20 +165,6 @@ class GuestModel extends AdminModel
 	}
 
 	/**
-	 * Method to save the form data.
-	 *
-	 * @param   array  $data  The existing form data.
-	 *
-	 * @throws Exception
-	 * @since  4.0.0
-	 * @return bool  True on success.
-	 */
-	public function save($data): bool
-	{
-		return parent::save($data);
-	}
-
-	/**
 	 * Method to validate the form data.
 	 *
 	 * @param   Form    $form      The form to validate against.
@@ -193,7 +178,7 @@ class GuestModel extends AdminModel
 	 */
 	public function validate($form, $data, $group = null, array $settings = []): array|bool
 	{
-		$data['telephone'] = Utility::encodeJson(KrMethods::inputArray('telephone', []));
+		$data['telephone'] = Utility::encodeJson(KrMethods::inputArray('telephone'));
 
 		if (is_countable($settings) && count($settings))
 		{

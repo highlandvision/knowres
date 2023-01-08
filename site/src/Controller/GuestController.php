@@ -11,7 +11,13 @@ namespace HighlandVision\Component\Knowres\Site\Controller;
 
 defined('_JEXEC') or die;
 
+use Exception;
+use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\FormController;
+use HighlandVision\KR\Model\DisplayModel;
+use HighlandVision\KR\Model\SiteModel;
+use HighlandVision\KR\Session as KrSession;
+use HighlandVision\KR\SiteHelper;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 
 /**
@@ -21,7 +27,6 @@ use Joomla\CMS\MVC\Model\BaseDatabaseModel;
  */
 class GuestController extends FormController
 {
-
 	/**
 	 * Proxy for getModel
 	 * Includes the admin model to save repetition and not a site model
@@ -37,6 +42,41 @@ class GuestController extends FormController
 		$config = ['ignore_request' => true]): BaseDatabaseModel
 	{
 		return parent::getModel($name, $prefix, $config);
+	}
+
+	/**
+	 * Method to save a record.
+	 *
+	 * @param   string  $key     The name of the primary key of the URL variable.
+	 * @param   string  $urlVar  The name of the URL variable if different from the primary key (sometimes required to avoid router collisions).
+	 *
+	 * @throws Exception
+	 * @since  4.0.0
+	 */
+	public function save($key = null, $urlVar = null): bool
+	{
+		$this->checkToken();
+
+		if (parent::save($key, $urlVar))
+		{
+			$userSession = new KrSession\User();
+			$userData    = $userSession->getData();
+			if ($userData->db_guest_update)
+			{
+				KrMethods::message(KrMethods::plain('COM_KNOWRES_ITEM_UPDATED_SUCCESSFULLY'));
+				SiteHelper::redirectDashboard();
+			}
+			else
+			{
+				$Itemid = SiteHelper::getItemId('com_knowres', 'paymentform');
+				KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&view=paymentform&Itemid=' . $Itemid,
+					false));
+			}
+
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

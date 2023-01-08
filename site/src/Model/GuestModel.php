@@ -15,8 +15,6 @@ use Exception;
 use HighlandVision\Component\Knowres\Administrator\Model\GuestModel as AdminGuestModel;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
-use HighlandVision\KR\Session as KrSession;
-use HighlandVision\KR\SiteHelper;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Utility;
 use Joomla\CMS\Form\Form;
@@ -56,38 +54,6 @@ class GuestModel extends AdminGuestModel
 	}
 
 	/**
-	 * Method to save the form data.
-	 *
-	 * @param   array  $data  The existing form data.
-	 *
-	 * @throws Exception
-	 * @since  4.0.0
-	 * @return bool  True on success.
-	 */
-	public function save($data): bool
-	{
-		if (parent::save($data))
-		{
-			$userSession = new KrSession\User();
-			$userData    = $userSession->getData();
-
-			if ($userData->db_guest_update)
-			{
-				KrMethods::message(KrMethods::plain('COM_KNOWRES_ITEM_UPDATED_SUCCESSFULLY'));
-				SiteHelper::redirectDashboard();
-			}
-			else
-			{
-				$Itemid = SiteHelper::getItemId('com_knowres', 'paymentform');
-				KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&view=paymentform&Itemid=' . $Itemid,
-					false));
-			}
-		}
-
-		return true;
-	}
-
-	/**
 	 * Method to validate the form data.
 	 *
 	 * @param   Form    $form      The form to validate against.
@@ -101,7 +67,7 @@ class GuestModel extends AdminGuestModel
 	 */
 	public function validate($form, $data, $group = null, array $settings = []): array|bool
 	{
-		$data['telephone'] = Utility::encodeJson(KrMethods::inputArray('telephone', []));
+		$data['telephone'] = Utility::encodeJson(KrMethods::inputArray('telephone'));
 
 		if (is_countable($settings) && count($settings))
 		{
