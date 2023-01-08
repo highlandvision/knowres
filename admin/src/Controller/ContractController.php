@@ -520,8 +520,7 @@ class ContractController extends FormController
 		$id = KrMethods::inputInt('id');
 		if (!$id)
 		{
-			KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN_CHECK'), 'error');
-			echo new JsonResponse(null, KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN_CHECK'), true);
+			echo new JsonResponse(null, KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN_CHECK'));
 			jexit();
 		}
 

@@ -15,10 +15,11 @@ use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\TickTock;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\WebAsset\WebAssetManager;
 
 /** @var HighlandVision\Component\Knowres\Administrator\View\Property\CalendarView $this */
 
-/** @var \Joomla\CMS\WebAsset\WebAssetManager $wa */
+/** @var WebAssetManager $wa */
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useScript('keepalive')
    ->useScript('bootstrap.dropdown')

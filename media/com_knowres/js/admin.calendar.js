@@ -140,7 +140,6 @@ if (typeof jQuery === 'undefined') jQuery.noConflict();
 		formData.append('id', id);
 		formData.append('block', block);
 		formData.append('gobackto', 'task=property.calendar&id=' + property_id);
-
 		$.ajax({
 			url:         'index.php?option=com_knowres&task=contract.modalshow',
 			type:        'POST',
@@ -150,13 +149,21 @@ if (typeof jQuery === 'undefined') jQuery.noConflict();
 			contentType: false,
 			processData: false,
 			success:     function (result) {
-				$('#kr-calendar-modal-show .modal-content').empty().append(result.data.html).draggable({
-					handle: '.modal-header'
-				});
-				$('#kr-calendar-modal-show').modal('show');
-				$('#kr-gantt-tab').tab();
+				if (!result.success) {
+					if (result.message) {
+						alert(result.message);
+					} else {
+						alert('Sorry we cannot process your request at the moment. Please try again later!');
+					}
+				} else {
+					$('#kr-calendar-modal-show .modal-content').empty().append(result.data.html).draggable({
+						handle: '.modal-header'
+					});
+					$('#kr-calendar-modal-show').modal('show');
+					$('#kr-gantt-tab').tab();
+				}
 			},
-			error:       function () {
+			error:       function (result) {
 				alert('Sorry we cannot process your request at the moment. Please try again later!');
 			},
 		});
