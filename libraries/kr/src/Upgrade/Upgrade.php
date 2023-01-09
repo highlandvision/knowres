@@ -583,11 +583,12 @@ class Upgrade
 		$query->select($db->qn(['id', 'name']))
 		      ->from($db->qn('#__knowres_agency'))
 		      ->setLimit(1);
-
 		$db->setQuery($query);
 		$rows = $db->loadObjectList();
+
 		if (is_countable($rows) && !count($rows))
 		{
+			$query = $db->getQuery(true);
 			$query->select($db->qn('user_id'))
 			      ->from($db->qn('#__user_usergroup_map'))
 			      ->where($db->qn('group_id') . '=8')
@@ -595,7 +596,6 @@ class Upgrade
 			$db->setQuery($query);
 			$user = $db->loadObject();
 
-			//TODO-v4.1 Installation - check that user is set correctly
 			$new                   = new stdClass();
 			$new->id               = 1;
 			$new->name             = 'Agency Name';
