@@ -6,6 +6,7 @@
  * @license     See the file LICENSE.txt for the full license governing this code.
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
+
 /** @noinspection PhpUnused */
 
 namespace HighlandVision\Component\Knowres\Site\Controller;
@@ -13,11 +14,11 @@ namespace HighlandVision\Component\Knowres\Site\Controller;
 defined('_JEXEC') or die;
 
 use Exception;
-use Vrbo\API\Manager;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Logger;
 use HighlandVision\KR\Media\Pdf\Property\Terms;
 use HighlandVision\KR\Utility;
+use HighlandVision\Vrbo\Manager;
 use JetBrains\PhpStorm\NoReturn;
 use Joomla\CMS\MVC\Controller\BaseController;
 use RuntimeException;

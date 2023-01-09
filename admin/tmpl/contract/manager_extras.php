@@ -9,7 +9,7 @@
 
 defined('_JEXEC') or die;
 
-use Highlandvision\KR\Framework\KrFactory;
+use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 
 $extras = KrFactory::getListModel('extras')->getByProperty($this->property_id);

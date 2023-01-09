@@ -15,7 +15,7 @@ namespace HighlandVision\Component\Knowres\Site\Controller;
 defined('_JEXEC') or die;
 
 use Exception;
-use Factura\Api as Factura;
+use HighlandVision\Factura;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Service\Beyond;
@@ -23,13 +23,13 @@ use HighlandVision\KR\Service\Ical;
 use HighlandVision\KR\Session as KrSession;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Utility;
+use HighlandVision\Ru\Manager as RuManager;
+use HighlandVision\VintageTravel;
+use HighlandVision\Vrbo\Manager as VrboManager;
 use JetBrains\PhpStorm\NoReturn;
 use Joomla\CMS\MVC\Controller\BaseController;
-use Ru\Api\Manager as RuManager;
 use RuntimeException;
 use stdClass;
-use VintageTravel\Api as VT;
-use VRBO\Api\Manager as VrboManager;
 
 use function class_exists;
 use function count;
@@ -121,8 +121,8 @@ class CronserviceController extends BaseController
 		{
 			$class = match ($s->plugin)
 			{
-				'ru' => 'Ru\src\Manager\Availability',
-				'vrbo' => 'HighlandVision\VRBO\Manager\Availability'
+				'ru' => 'HighlandVision\Ru\Manager\Availability',
+				'vrbo' => 'HighlandVision\Vrbo\Manager\Availability'
 			};
 
 			if (class_exists($class) && method_exists($class, 'processQueue'))
@@ -174,8 +174,8 @@ class CronserviceController extends BaseController
 		{
 			$class = match ($s->plugin)
 			{
-				'ru' => 'Ru\src\Manager\Properties',
-				'vrbo' => 'HighlandVision\VRBO\Manager\Properties'
+				'ru' => 'HighlandVision\Ru\Manager\Properties',
+				'vrbo' => 'HighlandVision\Vrbo\Manager\Properties'
 			};
 
 			if (class_exists($class))
@@ -234,8 +234,8 @@ class CronserviceController extends BaseController
 		{
 			$class = match ($s->plugin)
 			{
-				'ru' => 'Ru\src\Manager\Rates',
-				'vrbo' => 'HighlandVision\VRBO\Manager\Rates'
+				'ru' => 'HighlandVision\Ru\Manager\Rates',
+				'vrbo' => 'HighlandVision\Vrbo\Manager\Rates'
 			};
 
 			if (class_exists($class) && method_exists($class, 'processQueue'))
@@ -271,7 +271,7 @@ class CronserviceController extends BaseController
 		{
 			$class = match ($s->plugin)
 			{
-				'ru' => 'Ru\src\Manager\Sync',
+				'ru' => 'HighlandVision\Ru\Manager\Sync',
 			};
 
 			if (class_exists($class) && method_exists($class, 'sync'))
@@ -360,8 +360,8 @@ class CronserviceController extends BaseController
 		{
 			if ($s->plugin == 'vt')
 			{
-				$VT = new VT($s->id, $this->test);
-				$VT->updateApi();
+				$VintageTravel = new VintageTravel($s->id, $this->test);
+				$VintageTravel->updateApi();
 			}
 		}
 
@@ -419,7 +419,7 @@ class CronserviceController extends BaseController
 	/**
 	 * Get services by type
 	 *
-	 * @param   string  $type  Service type
+	 * @param  string  $type  Service type
 	 *
 	 * @throws RuntimeException
 	 * @since  1.2.0

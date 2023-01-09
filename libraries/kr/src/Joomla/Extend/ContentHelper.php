@@ -11,7 +11,7 @@ namespace HighlandVision\KR\Joomla\Extend;
 
 defined('_JEXEC') or die;
 
-use Highlandvision\KR\Framework\KrMethods;
+use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Session as KrSession;
 use Joomla\CMS\Access\Access;
 use Joomla\CMS\Factory;
