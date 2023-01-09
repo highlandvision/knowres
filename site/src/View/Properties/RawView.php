@@ -32,8 +32,6 @@ class RawView extends KrHtmlView
 	protected string $modules;/**
 	/** @var bool True if favourites requested but none saved */
 	protected bool $nofavs = false;
-	/** @var Pagination Pagination data */
-	protected Pagination $pagination;/**
 	/** @var array Saved favourites */
 	protected array $saved;
 	/** @var Search Site search */

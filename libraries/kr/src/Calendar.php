@@ -95,8 +95,8 @@ class Calendar
 	/**
 	 * Check booked dates to determine if we can reduce the stay nights
 	 *
-	 * @param   string  $date    To be checked
-	 * @param   int     $nights  Stay nights for date
+	 * @param  string  $date    To be checked
+	 * @param  int     $nights  Stay nights for date
 	 *
 	 * @throws Exception
 	 * @since  3.4.0
@@ -387,7 +387,11 @@ class Calendar
 	}
 
 	/**
-	 * Update blocked dates
+	 * Increment blocked dates count
+	 * 0 - booked (can allow nothing )
+	 * 1 - booked and arrival ( can allow departure )
+	 * 2 - booked and departure ( can allow arrival )
+	 * 3 - booked and arrival and departure (can allow nothing )
 	 *
 	 * @param   string  $d             Blocked date being processed
 	 * @param   string  $first         Date of first block
@@ -405,18 +409,15 @@ class Calendar
 			return;
 		}
 
-		//TODO-v4 Try to remember what this fixed
-		//		if ($check_frozen && isset($this->frozen[$d]))
-		//		{
-		//			if ($this->frozen[$d] == 0 || $this->frozen[$d] == 3)
-		//			{
-		//				return;
-		//			}
-		//		}
-
 		if ($d == $this->first)
 		{
 			$this->incrementBlocked($d, 2);
+			if ($d === $first)
+			{
+				$this->incrementBlocked($d, 1);
+			}
+
+			return;
 		}
 
 		if ($d === $first)
