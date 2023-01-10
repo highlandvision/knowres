@@ -67,6 +67,8 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 	public string $properties = '';
 	/** @var int ID of property */
 	public int $property_id = 0;
+	/** @var string Property name */
+	public string $property_name = '';
 	/** @var bool Show state columns */
 	public bool $show_state;
 	/** @var mixed The model state seems to be mixed */

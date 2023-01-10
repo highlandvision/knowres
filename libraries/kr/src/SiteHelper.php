@@ -66,7 +66,7 @@ class SiteHelper
 	 * @since  3.3.0
 	 * @return string
 	 */
-	public static function buildDashboardLink(object $contract, string $view = null, bool $external = false): string
+	public static function buildDashboardLink(object $contract, ?string $view = null, bool $external = false): string
 	{
 		if (is_null($view))
 		{

@@ -7,7 +7,7 @@
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
 
-namespace HighlandVision\Component\Knowres\Site\View\Review;
+namespace HighlandVision\Component\Knowres\Site\View\Reviewform;
 
 defined('_JEXEC') or die;
 
@@ -64,7 +64,7 @@ class HtmlView extends KrHtmlView\Site
 		$this->params = KrMethods::getParams();
 
 		/** @var ReviewModel $model */
-		$model      = $this->getModel();
+		$model      = KrFactory::getSiteModel('review');
 		$this->item = $model->getItem();
 		$this->form = $model->getForm();
 

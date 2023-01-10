@@ -100,6 +100,11 @@ class Knowres extends Base
 				$platformUri->delvar('view');
 				break;
 
+			case 'reviewform':
+				$sefSegments[] = KrMethods::plain('COM_KNOWRES_TITLE_REVIEWFORM');
+				$platformUri->delvar('view');
+				break;
+
 			case 'dashboard':
 				$sefSegments[] = KrMethods::plain('COM_KNOWRES_TITLE_DASHBOARD');
 				$platformUri->delvar('view');

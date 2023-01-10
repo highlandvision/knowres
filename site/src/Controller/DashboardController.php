@@ -211,7 +211,20 @@ class DashboardController extends BaseController
 			SiteHelper::badUser();
 		}
 
-		if ($view !== 'dashboard')
+		if ($view == 'reviewform')
+		{
+			$contract = KrFactory::getAdminModel('contract')->getItem($contract_id);
+			if (!$contract->id || $contract->qkey != $qkey || $contract->guest_id != $guest_id)
+			{
+				SiteHelper::redirectHome();
+			}
+
+			$userData->db_contract_id = $contract_id;
+			$userSession->setData($userData);
+
+			SiteHelper::redirectView($view);
+		}
+		else if ($view !== 'dashboard')
 		{
 			$contract = KrFactory::getAdminModel('contract')->getItem($contract_id);
 			if (!$contract->id || $contract->qkey != $qkey || $contract->guest_id != $guest_id)

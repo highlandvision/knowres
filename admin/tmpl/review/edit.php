@@ -26,70 +26,29 @@ $wa->useScript('keepalive')
 
 	<div class="main-card">
 		<div class="row">
-			<div class="col-xl-9 col-xxl-8">
-				<div class="row">
-					<div class="col">
-						<?php echo $this->form->renderField('contract_id'); ?>
-					</div>
-					<div class="col">
-						<?php echo $this->form->renderField('review_date'); ?>
-					</div>
-				</div>
-
+			<div class="col-lg-9">
+				<?php echo $this->form->renderField('contract_id'); ?>
+				<?php echo $this->form->renderField('review_date'); ?>
 				<?php echo $this->form->renderField('title'); ?>
 				<?php echo $this->form->renderField('review'); ?>
-
-				<div class="row">
-					<div class="col">
-						<?php echo $this->form->renderField('guest_name'); ?>
-					</div>
-					<div class="col">
-						<?php echo $this->form->renderField('guest_location'); ?>
-					</div>
-				</div>
-
-				<div class="row">
-					<div class="col">
-						<?php echo $this->form->renderField('rating'); ?>
-					</div>
-					<div class="col">
-						<?php echo $this->form->renderField('held'); ?>
-					</div>
-					<div class="col">
-						<?php echo $this->form->renderField('approved'); ?>
-					</div>
-				</div>
+				<?php echo $this->form->renderField('guest_name'); ?>
+				<?php echo $this->form->renderField('guest_location'); ?>
 
 				<?php if ($this->params->get('review_ratings')) : ?>
+					<h4>Guest ratings (1 to 10)</h4>
 					<?php $this->form->setFieldAttribute('rating1', 'label', $this->params->get('review_rating1')); ?>
+					<?php echo $this->form->renderField('rating1'); ?>
 					<?php $this->form->setFieldAttribute('rating2', 'label', $this->params->get('review_rating2')); ?>
+					<?php echo $this->form->renderField('rating2'); ?>
 					<?php $this->form->setFieldAttribute('rating3', 'label', $this->params->get('review_rating3')); ?>
+					<?php echo $this->form->renderField('rating3'); ?>
 					<?php $this->form->setFieldAttribute('rating4', 'label', $this->params->get('review_rating4')); ?>
+					<?php echo $this->form->renderField('rating4'); ?>
 					<?php $this->form->setFieldAttribute('rating5', 'label', $this->params->get('review_rating5')); ?>
+					<?php echo $this->form->renderField('rating5'); ?>
 					<?php $this->form->setFieldAttribute('rating6', 'label', $this->params->get('review_rating6')); ?>
-
-					<div class="row">
-						<div class="col">
-							<?php echo $this->form->renderField('rating1'); ?>
-						</div>
-						<div class="col">
-							<?php echo $this->form->renderField('rating2'); ?>
-						</div>
-						<div class="col">
-							<?php echo $this->form->renderField('rating3'); ?>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col">
-							<?php echo $this->form->renderField('rating4'); ?>
-						</div>
-						<div class="col">
-							<?php echo $this->form->renderField('rating5'); ?>
-						</div>
-						<div class="col">
-							<?php echo $this->form->renderField('rating6'); ?>
-						</div>
-					</div>
+					<?php echo $this->form->renderField('rating6'); ?>
+					<?php echo $this->form->renderField('rating'); ?>
 				<?php else : ?>
 					<input type="hidden" name="jform[rating1]" value="<?php echo $this->item->rating1; ?>" />
 					<input type="hidden" name="jform[rating2]" value="<?php echo $this->item->rating2; ?>" />
@@ -98,13 +57,17 @@ $wa->useScript('keepalive')
 					<input type="hidden" name="jform[rating5]" value="<?php echo $this->item->rating5; ?>" />
 					<input type="hidden" name="jform[rating6]" value="<?php echo $this->item->rating6; ?>" />
 				<?php endif; ?>
+
+				<?php echo $this->form->renderField('held'); ?>
+				<?php echo $this->form->renderField('approved'); ?>
 			</div>
-			<div class="col-xl-3 offset-xxl-1">
+			<div class="col-lg-3">
 				<?php echo KrMethods::render('joomla.edit.global', $this); ?>
 			</div>
 		</div>
 	</div>
 
+	<input type="hidden" name="jform[property_id]" value="<?php echo $this->property_id; ?>">
 	<input type="hidden" name="task" value="">
 	<?php echo HTMLHelper::_('form.token'); ?>
 </form>

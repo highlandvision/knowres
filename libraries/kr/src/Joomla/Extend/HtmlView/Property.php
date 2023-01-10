@@ -47,7 +47,7 @@ class Property extends KrHtmlView
 	/**
 	 * Add booking actions toolbar button.
 	 *
-	 * @param   Toolbar  $Toolbar  Toolbar instance
+	 * @param  Toolbar  $Toolbar  Toolbar instance
 	 *
 	 * @throws Exception
 	 * @since  4.0.0

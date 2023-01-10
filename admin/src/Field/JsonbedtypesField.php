@@ -74,18 +74,21 @@ class JsonbedtypesField extends FormField
 
 		foreach ($this->value as $v)
 		{
-			foreach ($v->bed_types as $bedtypes => $bed_number)
+			if (is_countable($v->bed_types))
 			{
-				foreach ($bed_number as $b)
+				foreach ($v->bed_types as $bedtypes => $bed_number)
 				{
-					$sub[$bedtypes] = $b;
+					foreach ($bed_number as $b)
+					{
+						$sub[$bedtypes] = $b;
+					}
 				}
-			}
 
-			$room_number = $v->room_number ?: $count;
-			$tmp         = [$v->room_id, $room_number, $sub];
-			$values[]    = $tmp;
-			$count++;
+				$room_number = $v->room_number ?: $count;
+				$tmp         = [$v->room_id, $room_number, $sub];
+				$values[]    = $tmp;
+				$count++;
+			}
 		}
 
 		for ($i = $count; $i <= $lines; $i++)

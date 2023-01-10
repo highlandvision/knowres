@@ -11,9 +11,7 @@ namespace HighlandVision\Component\Knowres\Site\Model;
 
 defined('_JEXEC') or die;
 
-use Exception;
 use HighlandVision\Component\Knowres\Administrator\Model\ReviewModel as AdminReviewModel;
-use HighlandVision\KR\Framework\KrMethods;
 
 use function defined;
 
@@ -47,28 +45,6 @@ class ReviewModel extends AdminReviewModel
 	 */
 	public function checkout($pk = null): bool
 	{
-		return true;
-	}
-
-	/**
-	 * Save a guest entered review.
-	 *
-	 * @param   array  $data  The existing form data.
-	 *
-	 * @throws  Exception
-	 * @since   1.6
-	 * @return  bool  True if successful, false otherwise.
-	 */
-	public function save($data): bool
-	{
-		if (parent::save($data))
-		{
-			KrMethods::message('');
-			$params = KrMethods::getParams();
-			KrMethods::redirect(KrMethods::route('index.php?Itemid=' . (int) $params->get('link_review_thanks'),
-				false));
-		}
-
 		return true;
 	}
 }

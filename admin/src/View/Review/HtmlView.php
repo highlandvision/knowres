@@ -15,6 +15,7 @@ use Exception;
 use HighlandVision\Component\Knowres\Administrator\Model\ReviewModel;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\HtmlView as KrHtmlView;
+use Joomla\CMS\Router\Route;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 
 use function defined;
@@ -38,13 +39,22 @@ class HtmlView extends KrHtmlView
 	 */
 	public function display($tpl = null): void
 	{
-		$this->getUserSessionData();
-
 		/** @var ReviewModel $model */
 		$model       = $this->getModel();
 		$this->form  = $model->getForm();
 		$this->item  = $model->getItem();
 		$this->state = $model->getState();
+
+		if (isset($this->item->id))
+		{
+			$this->property_id   = $this->item->property_id;
+			$this->property_name = $this->item->property_name;
+		}
+
+		if (!$this->property_id)
+		{
+			KrMethods::redirect(Route::_('index.php?option=com_knowres&view=properties', false));
+		}
 
 		$this->checkVersions();
 		$this->checkErrors();

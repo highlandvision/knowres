@@ -421,7 +421,7 @@ class ContractEmail extends Email
 	protected function setButtons()
 	{
 		$link                       = SiteHelper::buildDashboardLink($this->contract, 'reviewform', true);
-		$this->data['BUTTONREVIEW'] = KrMethods::render('emails . button',
+		$this->data['BUTTONREVIEW'] = KrMethods::render('emails.button',
 			['button_bg' => $this->button_bg,
 			 'font'      => $this->font,
 			 'link'      => $link,

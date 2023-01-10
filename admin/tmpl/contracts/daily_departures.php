@@ -22,7 +22,7 @@ if (empty($this->lines['departures']))
 	<div class="card-header">
 		<a class="showbefore" data-bs-toggle="collapse" href="#panel-departures" role="button"
 		   aria-expanded="true" aria-controls="panel-departures">
-			<?php echo KrMethods::plain('COM_KNOWRES_CONTRACTS_DEPARTURES'); ?>
+			<?php echo KrMethods::plain('COM_KNOWRES_CONTRACTS_DAILY_DEPARTURES'); ?>
 		</a>
 	</div>
 	<div class="collapse show" id="panel-departures">
