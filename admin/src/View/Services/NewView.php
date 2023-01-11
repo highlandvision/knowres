@@ -44,7 +44,7 @@ class NewView extends KrHtmlView
 	public function display($tpl = null): void
 	{
 		$this->setLayout('new');
-		$this->status = Service::getServices();
+		$this->installed = Service::getServices();
 
 		ToolbarHelper::title(KrMethods::plain('COM_KNOWRES_SERVICE_ADD'), 'tasks knowres');
 		$Toolbar = Toolbar::getInstance();

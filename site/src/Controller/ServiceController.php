@@ -6,6 +6,7 @@
  * @license     See the file "LICENSE.txt" for the full license governing this code.
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
+
 /** @noinspection PhpUnused */
 
 namespace HighlandVision\Component\Knowres\Site\Controller;
@@ -14,16 +15,16 @@ defined('_JEXEC') or die;
 
 use DOMDocument;
 use Exception;
+use HighlandVision\Helpscout\Helpdesk;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Logger;
 use HighlandVision\KR\Payments\PostPayment;
-use HighlandVision\KR\Service\Channel\Ru\Bookings;
 use HighlandVision\KR\Service\Gateway;
 use HighlandVision\KR\Service\Mailchimp;
 use HighlandVision\KR\Session as KrSession;
 use HighlandVision\KR\SiteHelper;
 use HighlandVision\KR\Utility;
-use HighlandVision\HELPSCOUT\Helpscout;
+use HighlandVision\Ru\Manager\Bookings;
 use InvalidArgumentException;
 use JetBrains\PhpStorm\NoReturn;
 use Joomla\CMS\MVC\Controller\BaseController;
@@ -38,11 +39,10 @@ use function json_encode;
 use function simplexml_load_string;
 use function trim;
 
-//TODO-v4 Was not in backup why?
 /**
  * Service controller
  *
- * @since       1.0.0
+ * @since   1.0.0
  */
 class ServiceController extends BaseController
 {
@@ -74,24 +74,6 @@ class ServiceController extends BaseController
 	}
 
 	/**
-	 * Enable RU LNM
-	 *
-	 * @throws Exception
-	 * @throws RuntimeException
-	 * @since  3.1.0
-	 */
-	#[NoReturn] public function enablerulnm()
-	{
-		//TODO-v4 Run Enable LNM to modify URL from interface to service
-		$this->checkSecret();
-
-		$Bookings = new Bookings($this->test);
-		$Bookings->enableLNM();
-
-		jexit();
-	}
-
-	/**
 	 * Helpscout custom sidebar app
 	 *
 	 * @throws RuntimeException
@@ -100,7 +82,7 @@ class ServiceController extends BaseController
 	 */
 	#[NoReturn] public function hsdynamic()
 	{
-		$hs = new Helpscout\Dynamic();
+		$hs = new Helpdesk\Dynamic();
 		echo $hs->getDynamicResponse();
 
 		jexit();
@@ -461,7 +443,7 @@ class ServiceController extends BaseController
 	/**
 	 * Get contract ID
 	 *
-	 * @param  object  $session  Payment session data
+	 * @param   object  $session  Payment session data
 	 *
 	 * @throws RuntimeException
 	 * @throws RuntimeException
@@ -577,7 +559,7 @@ class ServiceController extends BaseController
 
 			try
 			{
-				$redsys      = new Gateway\Redsys($service_id, $paymentData);
+				$redsys = new Gateway\Redsys($service_id, $paymentData);
 				$redsys->setResponseData();
 
 				$postPayment = new PostPayment($service_id, $paymentData);
@@ -607,7 +589,7 @@ class ServiceController extends BaseController
 	/**
 	 * Set the redirect for errors
 	 *
-	 * @param  string  $payment_type  Payment type being processed
+	 * @param   string  $payment_type  Payment type being processed
 	 *
 	 * @throws Exception
 	 * @throws Exception
@@ -634,8 +616,8 @@ class ServiceController extends BaseController
 	/**
 	 * Set the redirect for successful payments
 	 *
-	 * @param  string  $payment_type  Payment type
-	 * @param  int     $contract_id   ID of contract
+	 * @param   string  $payment_type  Payment type
+	 * @param   int     $contract_id   ID of contract
 	 *
 	 * @throws Exception
 	 * @since  1.0.0

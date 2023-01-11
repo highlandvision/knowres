@@ -289,7 +289,7 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 	/**
 	 * Add the page title and default toolbar for form view.
 	 *
-	 * @param   string  $name  Name of the form
+	 * @param  string  $name  Name of the form
 	 *
 	 * @throws Exception
 	 * @since  4.0.0

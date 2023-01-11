@@ -16,7 +16,9 @@ use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\FormController;
 use HighlandVision\KR\Utility;
+use HighlandVision\Ru\Manager\Bookings;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
+use RuntimeException;
 
 /**
  * Service controller form class.
@@ -37,6 +39,23 @@ class ServiceController extends FormController
 		{
 			KrMethods::redirect('index.php?option=com_knowres&task=services.new');
 		}
+	}
+
+	/**
+	 * Refresh LNM password
+	 *
+	 * @throws Exception
+	 * @throws RuntimeException
+	 * @since  4.0.0
+	 */
+	public function lnm()
+	{
+		$service_id = KrFactory::getListModel('services')::checkForSingleService(true, 'ru');
+		$Bookings   = new Bookings();
+		$Bookings->enableLNM();
+
+		KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&task=service.edit&id=' . $service_id,
+			false));
 	}
 
 	/**

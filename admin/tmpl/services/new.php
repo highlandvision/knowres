@@ -15,7 +15,7 @@ use HighlandVision\KR\Service;
 ?>
 
 <div class="row row-cols-1 row-cols-md-4 g-4">
-	<?php foreach ($this->status as $plugin => $type): ?>
+	<?php foreach ($this->installed as $plugin => $type): ?>
 		<div class="col">
 			<div class="card h-100">
 				<div class="card-header" style="background-color:#f5f5f5;border-bottom:1px solid #e1e1e1;">

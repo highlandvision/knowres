@@ -17,6 +17,7 @@ use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\HtmlView as KrHtmlView;
 use Joomla\CMS\Form\Form;
+use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 
 use function defined;
@@ -77,8 +78,25 @@ class HtmlView extends KrHtmlView
 		$this->form_name = KrMethods::plain('COM_KNOWRES_SERVICE_TITLE');
 		$this->getFormAriaLabel();
 		ToolbarHelper::title($this->form_name, 'fas fa-exchange-alt knowres');
-		$this->addFormToolbar(strtolower($this->getName()));
+		$Toolbar = $this->addFormToolbar(strtolower($this->getName()));
+		$Toolbar = $this->addCustomToolbar($Toolbar);
 
 		parent::display($tpl);
+	}
+
+	/**
+	 * Add the toolbar.
+	 *
+	 * @param   Toolbar  $Toolbar  Current toolbar
+	 *
+	 * @throws  Exception
+	 * @since   4.0.0
+	 * @return  Toolbar
+	 */
+	protected function addCustomToolbar(Toolbar $Toolbar): Toolbar
+	{
+		ToolbarHelper::custom('service.lnm', 'refresh', 'refresh', 'COM_KNOWRES_RU_RENEW_LNM', false);
+
+		return $Toolbar;
 	}
 }
