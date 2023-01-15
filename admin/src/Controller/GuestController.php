@@ -32,7 +32,7 @@ class GuestController extends FormController
 	/**
 	 * Method to cancel an edit.
 	 *
-	 * @param   null  $key  The name of the primary key of the URL variable.
+	 * @param  null  $key  The name of the primary key of the URL variable.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -84,20 +84,30 @@ class GuestController extends FormController
 	 */
 	#[NoReturn] public function combo()
 	{
-		$model  = new GuestModel();
-		$form   = $model->getForm([], false, false);
-		$target = KrMethods::inputString('target');
-		$child  = KrMethods::inputInt('child');
+		$model     = new GuestModel();
+		$form      = $model->getForm([], false);
+		$parent_id = KrMethods::inputInt('parent');
+		$target    = KrMethods::inputString('target');
 
-		$wrapper = [];
-		if ($child)
+		if ($target == 'region_id')
 		{
-			$wrapper['html'] = $form->getInput($target, null, $child);
+			$form->setValue('country_id', null, $parent_id);
 		}
-		else
+		else if ($target == 'b_region_id')
 		{
-			$wrapper['html'] = $form->getInput($target);
+			$form->setValue('b_country_id', null, $parent_id);
 		}
+		else if ($target == 'town_id')
+		{
+			$form->setValue('region_id', null, $parent_id);
+		}
+		else if ($target == 'b_town_id')
+		{
+			$form->setValue('region_id', null, $parent_id);
+		}
+
+		$wrapper         = [];
+		$wrapper['html'] = $form->getInput($target);
 
 		echo new JsonResponse($wrapper);
 		jexit();
@@ -106,8 +116,8 @@ class GuestController extends FormController
 	/**
 	 * Function that allows child controller access to model data after the data has been saved.
 	 *
-	 * @param   BaseDatabaseModel  $model      The data model object.
-	 * @param   array              $validData  The validated data.
+	 * @param  BaseDatabaseModel  $model      The data model object.
+	 * @param  array              $validData  The validated data.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0

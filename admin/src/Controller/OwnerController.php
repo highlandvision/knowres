@@ -32,7 +32,7 @@ class OwnerController extends FormController
 	/**
 	 * Method to cancel an edit.
 	 *
-	 * @param   null  $key  The name of the primary key of the URL variable.
+	 * @param  null  $key  The name of the primary key of the URL variable.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -63,8 +63,18 @@ class OwnerController extends FormController
 	#[NoReturn] public function combo()
 	{
 		$model  = new OwnerModel();
-		$form   = $model->getForm([], false);
-		$target = KrMethods::inputString('target');
+		$form      = $model->getForm([], false);
+		$parent_id = KrMethods::inputInt('parent');
+		$target    = KrMethods::inputString('target');
+
+		if ($target == 'region_id')
+		{
+			$form->setValue('country_id', null, $parent_id);
+		}
+		else
+		{
+			$form->setValue('region_id', null, $parent_id);
+		}
 
 		$wrapper         = [];
 		$wrapper['html'] = $form->getInput($target);
@@ -76,8 +86,8 @@ class OwnerController extends FormController
 	/**
 	 * Function that allows child controller access to model data after the data has been saved.
 	 *
-	 * @param   BaseDatabaseModel  $model      The data model object.
-	 * @param   array              $validData  The validated data.
+	 * @param  BaseDatabaseModel  $model      The data model object.
+	 * @param  array              $validData  The validated data.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0

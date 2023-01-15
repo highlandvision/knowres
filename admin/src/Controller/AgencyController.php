@@ -40,9 +40,19 @@ class AgencyController extends FormController
 	 */
 	#[NoReturn] public function combo()
 	{
-		$model  = new AgencyModel();
-		$form   = $model->getForm([], false);
-		$target = KrMethods::inputString('target');
+		$model     = new AgencyModel();
+		$form      = $model->getForm([], false);
+		$parent_id = KrMethods::inputInt('parent');
+		$target    = KrMethods::inputString('target');
+
+		if ($target == 'region_id')
+		{
+			$form->setValue('country_id', null, $parent_id);
+		}
+		else
+		{
+			$form->setValue('region_id', null, $parent_id);
+		}
 
 		$wrapper         = [];
 		$wrapper['html'] = $form->getInput($target);

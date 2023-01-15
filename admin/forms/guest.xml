@@ -92,7 +92,7 @@
 			onchange="comboGeo(this.value, 'guest.combo', 'region');"
 			type="combocountry"
 			label="COM_KNOWRES_COUNTRY"
-			description="COM_KNOWRES_SELECT_COUNTRY">
+			description="COM_KNOWRES_COUNTRY_DSC">
 			<option value="0">COM_KNOWRES_SELECT_COUNTRY</option>
 		</field>
 		<field name="region_id"
@@ -100,7 +100,7 @@
 			filter="integer"
 			type="comboregion"
 			label="COM_KNOWRES_REGION"
-			description="COM_KNOWRES_SELECT_REGION">
+			description="COM_KNOWRES_REGION_DSC">
 			<option value="0">COM_KNOWRES_SELECT_REGION</option>
 		</field>
 	</fieldset>
@@ -110,8 +110,8 @@
 			default="0"
 			type="radio"
 			label="COM_KNOWRES_BILLING_ADDRESS_CHECK">
-			<option value="0" onchange="fillBilling(0);">JNO</option>
-			<option value="1" onchange="fillBilling(1);">JYES</option>
+			<option value="0" onclick="fillBilling(0);">JNO</option>
+			<option value="1" onclick="fillBilling(1);">JYES</option>
 		</field>
 		<field name="b_address1"
 			filter="string"
