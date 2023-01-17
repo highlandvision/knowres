@@ -171,7 +171,7 @@ span.kr-editinplace input[type=text]:not(:focus) {
 }
 .content .card.kr-card .card-header a.showbefore:before {
 	float:         left !important;
-	font-family:   "Font Awesome 5 Free";
+	font-family:   "Font Awesome 5 Free", sans-serif;
 	font-size:     1.2rem;
 	font-weight:   900;
 	content:       "";
@@ -182,7 +182,8 @@ span.kr-editinplace input[type=text]:not(:focus) {
 	content: "";
 }
 .content .card.kr-card .card-body {
-	line-height: 1.6;
+	line-height: 1.5;
+	font-size:   90%;
 }
 .content .card.kr-daily {
 	margin-bottom: 0.5rem;
