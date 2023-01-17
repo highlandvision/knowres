@@ -289,8 +289,6 @@ class UpgradeDb
 		self::drop($db, '#__knowres_coupon', 'ordering');
 		//ALTER TABLE `#__knowres_tax_rate` ADD COLUMN `tax_type` VARCHAR(10) DEFAULT NULL AFTER `tax_id`;
 		self::add($db, '#__knowres_tax_rate', 'tax_type', 'tax_id', 'VARCHAR(10) DEFAULT NULL');
-		//ALTER TABLE `#__knowres_tax_rate` ADD COLUMN `service` VARCHAR(255) DEFAULT NULL AFTER `code`;
-		self::add($db, '#__knowres_tax_rate', 'service', 'code', 'VARCHAR(255) DEFAULT NULL');
 		//ALTER TABLE `#__knowres_tax_rate` ADD COLUMN `agent` VARCHAR(255) DEFAULT NULL AFTER `service`;
 		self::add($db, '#__knowres_tax_rate', 'agent', 'service', 'VARCHAR(255) DEFAULT NULL');
 		//ALTER TABLE `#__knowres_tax_rate` ADD COLUMN `reduced_rate` decimal(6,3) NOT NULL DEFAULT 0.000 AFTER `max_nights`;

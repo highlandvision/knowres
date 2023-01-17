@@ -82,7 +82,8 @@ class DiscountModel extends AdminModel
 					$item = parent::getItem($id);
 					if ($item)
 					{
-						KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updatePropertyRates', (int) $item->property_id);
+						KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updateLastMinute', $this->property_id, 0, 'ru');
+						KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updatePropertyRates', $this->property_id, 0, 'vrbo');
 					}
 
 					$first = false;

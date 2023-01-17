@@ -118,7 +118,7 @@ use HighlandVision\KR\Utility;
 		<br>
 
 		<div class="row">
-			<div class="col">
+			<div class="col-8">
 				<label id="jform_deposit-lbl" for="jform_deposit">
 					<span id="jform_deposit_date"></span>
 				</label>
@@ -131,7 +131,7 @@ use HighlandVision\KR\Utility;
 		</div>
 		<hr>
 		<div class="row">
-			<div class="col">
+			<div class="col-8">
 				<label id="jform_balance-lbl" for="jform_balance">
 					<span id="jform_balance_date"></span>
 				</label>

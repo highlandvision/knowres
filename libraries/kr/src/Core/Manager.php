@@ -131,7 +131,6 @@ class Manager
 	 *
 	 * @throws RuntimeException
 	 * @throws Exception
-	 * @throws Exception
 	 * @since  1.0.0
 	 * @return bool
 	 */

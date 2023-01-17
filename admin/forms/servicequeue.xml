@@ -18,6 +18,8 @@
 			label="COM_KNOWRES_SERVICEQUEUE_METHOD_LBL"
 			description="COM_KNOWRES_SERVICEQUEUE_METHOD_DSC">
 			<option value="updateListing">COM_KNOWRES_SERVICEQUEUE_METHOD_BEYOND</option>
+			<option value="updateLastMinute">COM_KNOWRES_SERVICEQUEUE_METHOD_LASTTMINUTE</option>
+			<option value="updateLongStay">COM_KNOWRES_SERVICEQUEUE_METHOD_LONGSTAY</option>
 			<option value="updateAvailability">COM_KNOWRES_SERVICEQUEUE_METHOD_AVAILABILITY</option>
 			<option value="updateProperty">COM_KNOWRES_SERVICEQUEUE_METHOD_PROPERTY</option>
 			<option value="updateLodging">COM_KNOWRES_SERVICEQUEUE_METHOD_LODGING</option>
@@ -71,8 +73,8 @@
 			default="0"
 			label="COM_KNOWRES_SERVICEQUEUE_ACTIONED_LBL"
 			description="COM_KNOWRES_SERVICEQUEUE_ACTIONED_DSC">
-			<option value="1">JYES</option>
 			<option value="0">JNO</option>
+			<option value="1">JYES</option>
 		</field>
 		<field name="contract_id"
 			default="0"

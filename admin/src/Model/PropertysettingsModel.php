@@ -278,7 +278,7 @@ class PropertysettingsModel extends ListModel
 	 *
 	 * @throws RuntimeException
 	 * @throws Exception
-	 * @since 3.3.0
+	 * @since  3.3.0
 	 */
 	public function saveSettings(array $settings, int $property_id)
 	{

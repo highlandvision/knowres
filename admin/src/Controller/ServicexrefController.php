@@ -12,6 +12,7 @@ namespace HighlandVision\Component\Knowres\Administrator\Controller;
 defined('_JEXEC') or die;
 
 use Exception;
+use HighlandVision\Component\Knowres\Administrator\Model\ServicexrefModel;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\FormController;
@@ -27,11 +28,11 @@ class ServicexrefController extends FormController
 	/**
 	 * Method to cancel an edit and return to dashboard.
 	 *
-	 * @param   string  $key  The name of the primary key of the URL variable.
-	 * @param   null    $urlVar
+	 * @param  string  $key  The name of the primary key of the URL variable.
+	 * @param  null    $urlVar
 	 *
 	 * @throws Exception
-	 * @since   3.0.0
+	 * @since  3.0.0
 	 */
 	public function save($key = null, $urlVar = null)
 	{
@@ -49,8 +50,8 @@ class ServicexrefController extends FormController
 	/**
 	 * Process additional requirements after save
 	 *
-	 * @param   BaseDatabaseModel  $model      The data model object.
-	 * @param   array              $validData  The validated data.
+	 * @param  BaseDatabaseModel  $model      The data model object.
+	 * @param  array              $validData  The validated data.
 	 *
 	 * @throws Exception
 	 * @since  3.1
@@ -59,8 +60,16 @@ class ServicexrefController extends FormController
 	{
 		if ((int) $validData['foreign_key'] == 0 && (int) $validData['property_id'] > 0)
 		{
-			KrFactory::getAdminModel('servicexref')::resetNewServiceProperty($model->getItem()->get('id'),
+			/** @var ServicexrefModel $model */
+			$model = KrFactory::getAdminModel('servicexref');
+			$mode::resetNewServiceProperty($model->getItem()->get('id'),
 				(int) $validData['service_id'], (int) $validData['property_id']);
+			KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updateProperty',
+				(int) $validData['property_id'], 0, 'ru');
+		}
+
+		if (KrMethods::inputInt('old_sell') <> $validData['sell'])
+		{
 			KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updateProperty',
 				(int) $validData['property_id'], 0, 'ru');
 		}

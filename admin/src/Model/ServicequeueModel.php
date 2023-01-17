@@ -48,11 +48,11 @@ class ServicequeueModel extends AdminModel
 	/**
 	 * Check if property is for cluster and thus to be updated
 	 *
-	 * @param   int    $cluster_id   |ID of cluster
-	 * @param   int    $property_id  ID of property
-	 * @param   array  $cluster      Cluster setttings
-	 * @param   array  $managed      Managed settings
-	 * @param   array  $beyond       Beyond settings
+	 * @param  int    $cluster_id   |ID of cluster
+	 * @param  int    $property_id  ID of property
+	 * @param  array  $cluster      Cluster setttings
+	 * @param  array  $managed      Managed settings
+	 * @param  array  $beyond       Beyond settings
 	 *
 	 * @since  3.3.0
 	 * @return bool
@@ -79,7 +79,7 @@ class ServicequeueModel extends AdminModel
 	/**
 	 * Delete old service queue rows
 	 *
-	 * @param   string  $date  Delete before this date
+	 * @param  string  $date  Delete before this date
 	 *
 	 * @throws RuntimeException
 	 * @since  3.3.0
@@ -102,8 +102,8 @@ class ServicequeueModel extends AdminModel
 	/**
 	 * Insert queue row
 	 *
-	 * @param   object  $xref    Service xref data
-	 * @param   string  $method  Queue method
+	 * @param  object  $xref    Service xref data
+	 * @param  string  $method  Queue method
 	 *
 	 * @throws Exception
 	 * @throws Exception
@@ -133,10 +133,10 @@ class ServicequeueModel extends AdminModel
 	/**
 	 * Get all the channels for property or all properties excluding any current unactioned queue record
 	 * and update queue
-	 * If cluster is set then have to get all proporties for cluster and update each
+	 * If cluster is set then have to get all properties for cluster and update each
 	 * NOTE: Combines all the previous update functions from earlier versions
 	 *
-	 * @param   string  $method       API method
+	 * @param  string   $method       API method
 	 * @param  ?int     $property_id  ID of updated property
 	 * @param  ?int     $cluster_id   ID of updated cluster
 	 * @param  ?string  $plugin       Service plugin to be updated or null for all
@@ -185,7 +185,7 @@ class ServicequeueModel extends AdminModel
 	/**
 	 * Resend selected queue records
 	 *
-	 * @param   array  $pks  IDs to be resent
+	 * @param  array  $pks  IDs to be resent
 	 *
 	 * @throws RuntimeException
 	 * @since  1.2.0
@@ -215,7 +215,7 @@ class ServicequeueModel extends AdminModel
 	/**
 	 * Method to test whether a record can be deleted.
 	 *
-	 * @param   object  $record  A record object.
+	 * @param  object  $record  A record object.
 	 *
 	 * @since  3.0.0
 	 * @return bool  True if allowed to delete the record. Defaults to the permission for the component.
@@ -248,7 +248,7 @@ class ServicequeueModel extends AdminModel
 	/**
 	 * Update queue records to actioned
 	 *
-	 * @param   array  $ids  Queue ids to update
+	 * @param  array  $ids  Queue ids to update
 	 *
 	 * @throws Exception
 	 * @since  3.1.0
@@ -272,7 +272,7 @@ class ServicequeueModel extends AdminModel
 	/**
 	 * Prepare and sanitise the table prior to saving.
 	 *
-	 * @param   Table  $table  Table instance
+	 * @param  Table  $table  Table instance
 	 *
 	 * @throws RuntimeException
 	 * @throws Exception

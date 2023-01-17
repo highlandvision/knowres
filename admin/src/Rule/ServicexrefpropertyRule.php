@@ -52,6 +52,10 @@ class ServicexrefpropertyRule extends FormRule
 	{
 		$service_id = ($input instanceof Registry) ? $input->get('service_id') : '';
 		$sell       = ($input instanceof Registry) ? $input->get('sell') : '0';
+		if (!$sell)
+		{
+			return true;
+		}
 		$id         = ($input instanceof Registry) ? $input->get('id') : 0;
 		$state      = ($input instanceof Registry) ? $input->get('state') : 1;
 

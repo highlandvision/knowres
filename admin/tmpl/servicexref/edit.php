@@ -36,7 +36,7 @@ $wa->useScript('keepalive')
 					&& !(int) $this->item->owner_id) : ?>
 					<?php $this->form->setFieldAttribute('property_id', 'required', true); ?>
 					<?php echo $this->form->renderField('property_id'); ?>
-					<?php if ($service->plugin == 'vrbo'): ?>
+					<?php if ($service->plugin == 'vrbo' || $service->plugin == 'ru'): ?>
 						<?php $this->form->setFieldAttribute('sell', 'required', true); ?>
 						<?php echo $this->form->renderField('sell'); ?>
 					<?php endif; ?>
@@ -67,5 +67,6 @@ $wa->useScript('keepalive')
 	</div>
 
 	<input type="hidden" name="task" value="">
+	<input type="hidden" name="old_sell" value="<?php echo $this->form->getValue('sell'); ?>">
 	<?php echo HTMLHelper::_('form.token'); ?>
 </form>

@@ -17,8 +17,13 @@ use HighlandVision\KR\Utility;
 use Joomla\CMS\Form\FormField;
 use SimpleXMLElement;
 
+use function htmlentities;
 use function is_string;
+use function libxml_use_internal_errors;
+use function str_replace;
 use function trim;
+
+use const LIBXML_NOERROR;
 
 /**
  * Formats xml text from api
@@ -48,10 +53,10 @@ class TextapiField extends FormField
 			libxml_use_internal_errors(true);
 			$xml                     = new SimpleXMLElement(trim($this->value, LIBXML_NOERROR));
 			$dom                     = new DOMDocument();
-			$dom->preserveWhiteSpace = false;
+			$dom->preserveWhiteSpace = true;
 			$dom->loadXML($xml->asXml());
-			$dom->formatOutput = true;
-			$output            = str_replace('<?xml version="1.0"?>', '', $dom->saveXML());
+			$dom->formatOutput       = true;
+			$output = str_replace('<?xml version="1.0"?>', '', $dom->saveXML());
 
 			return '<pre>' . htmlentities($output) . '</pre>';
 		}

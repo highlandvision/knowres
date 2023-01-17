@@ -232,7 +232,7 @@ class PropertysettingModel extends AdminModel
 
 					if ($bp_update && $property_id)
 					{
-						Service / Beyond::settingRateUpdate($property_id);
+						Beyond::settingRateUpdate($property_id);
 					}
 
 					if ($deposit_update)

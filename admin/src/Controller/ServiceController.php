@@ -72,7 +72,7 @@ class ServiceController extends FormController
 		// If adding xero then set all payments and fees to actioned
 		if (!(int) $validData['id'] && (string) $validData['plugin'] == 'xero')
 		{
-			KrFactory::getAdminModel('contractpayment')::updateForXero($validData['agency_id']);
+			KrFactory::getListModel('contractpayments')->updateForXero($validData['agency_id']);
 		}
 
 		// Check for changes to ha service parameters

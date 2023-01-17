@@ -120,8 +120,8 @@ class FDatabase
 	/**
 	 * Get a model class
 	 *
-	 * @param   string  $name  Model name.
-	 * @param   string  $area  administrator or site.
+	 * @param  string  $name  Model name.
+	 * @param  string  $area  administrator or site.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0

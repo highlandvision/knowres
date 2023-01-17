@@ -11,6 +11,7 @@ namespace HighlandVision\KR\Session;
 
 defined('_JEXEC') or die;
 
+use Exception;
 use HighlandVision\KR\Session;
 use JetBrains\PhpStorm\Pure;
 use stdClass;
@@ -28,6 +29,7 @@ class Contract extends Session
 	/**
 	 * Initialise
 	 *
+	 * @throws Exception
 	 * @since 3.3.0
 	 */
 	public function __construct()
@@ -171,7 +173,7 @@ class Contract extends Session
 		$data->room_total_gross_system         = 0;
 		$data->seasonsDb                       = [];
 		$data->seasonsRq                       = true;
-		$data->service_id                      = [];
+		$data->service_id                      = 0;
 		$data->shortbook                       = 0;
 		$data->shortbook_departure             = '';
 		$data->shortbook_nights                = '0';

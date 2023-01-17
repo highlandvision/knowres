@@ -27,7 +27,7 @@ class ServicequeuesModel extends ListModel
 	/**
 	 * Constructor.
 	 *
-	 * @param   array  $config  An optional associative array of configuration settings.
+	 * @param  array  $config  An optional associative array of configuration settings.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -63,12 +63,12 @@ class ServicequeuesModel extends ListModel
 	/**
 	 * Get any pending records waiting to be sent
 	 *
-	 * @param   int     $contract_id   ID of contract
-	 * @param   int     $service_id    ID of service
-	 * @param   int     $availability  Block (0) release(1) (reverse of current action)
-	 * @param   int     $property_id   ID of property
-	 * @param   string  $arrival       Arrrival date
-	 * @param   string  $departure     Departure date
+	 * @param  int     $contract_id   ID of contract
+	 * @param  int     $service_id    ID of service
+	 * @param  int     $availability  Block (0) release(1) (reverse of current action)
+	 * @param  int     $property_id   ID of property
+	 * @param  string  $arrival       Arrrival date
+	 * @param  string  $departure     Departure date
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
@@ -99,8 +99,8 @@ class ServicequeuesModel extends ListModel
 	/**
 	 * Get unactioned queue
 	 *
-	 * @param   int     $service_id  ID of service
-	 * @param   string  $method      APlI method
+	 * @param  int     $service_id  ID of service
+	 * @param  string  $method      APlI method
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
@@ -143,7 +143,7 @@ class ServicequeuesModel extends ListModel
 	/**
 	 * Update the xref contract record to actioned
 	 *
-	 * @param   int  $id  ID of service queue
+	 * @param  int  $id  ID of service queue
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
@@ -287,7 +287,7 @@ class ServicequeuesModel extends ListModel
 	 * different modules that might need different sets of data or different
 	 * ordering requirements.
 	 *
-	 * @param   string  $id  A prefix for the store id.
+	 * @param  string  $id  A prefix for the store id.
 	 *
 	 * @since  1.0.0
 	 * @return string        A store id.
@@ -309,8 +309,8 @@ class ServicequeuesModel extends ListModel
 	 * Method to autopopulate the model state.
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @param   null|string  $ordering   Sort order
-	 * @param   null|string  $direction  Sort direction
+	 * @param  null|string  $ordering   Sort order
+	 * @param  null|string  $direction  Sort direction
 	 *
 	 * @since 1.0.0
 	 */

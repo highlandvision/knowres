@@ -81,7 +81,7 @@ class ServicexrefModel extends AdminModel
 	}
 
 	/**
-	 * Reset new flag otherwise property will not update (Only for HA)
+	 * Reset new flag otherwise property will not update (Only for VRBO)
 	 *
 	 * @param   int  $id           ID of service xref
 	 * @param   int  $service_id   ID of service

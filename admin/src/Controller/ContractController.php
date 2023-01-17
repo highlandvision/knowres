@@ -50,7 +50,7 @@ class ContractController extends FormController
 	protected string $return = '';
 
 	/**
-	 * Returns the values for the agent booking
+	 * Returns the values for a manual agent booking
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -145,7 +145,7 @@ class ContractController extends FormController
 		$cid = KrMethods::inputArray('cid', [], 'get');
 		if (is_countable($cid))
 		{
-			if (!KrFactory::getAdminModel('contractpayment')::updateXeroBatch($cid))
+			if (!KrFactory::getListModel('contractpayments')->updateXeroBatch($cid))
 			{
 				KrMethods::message("An error occurred please reselect contracts", 'error');
 			}

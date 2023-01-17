@@ -250,14 +250,14 @@ class ServicexrefsModel extends ListModel
 		         ->where($db->qn('q.service_id') . '=' . $db->qn('x.service_id'))
 		         ->where($db->qn('q.method') . '=' . $db->q($method));
 
-		$query->select($db->qn(array(
+		$query->select($db->qn([
 			'x.property_id',
 			'x.foreign_key',
 			'x.service_id',
 			'x.new',
 			'i.plugin',
 			'i.parameters'
-		)));
+		]));
 		$query->from($db->qn('#__knowres_service_xref', 'x'))
 		      ->join('', $db->qn('#__knowres_service', 'i')
 			      . ' ON ' . $db->qn('i.id') . '=' . $db->qn('x.service_id')

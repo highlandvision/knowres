@@ -123,7 +123,7 @@ extract($displayData);
 
 			<div class="row infolist">
 				<div class="col-6 indent">
-					<label><?php echo $name; ?></label>
+					<?php echo $name; ?>
 				</div>
 				<div class="col-3 text-end">
 					<?php echo Utility::displayValue($value, $item->currency); ?>

@@ -13,7 +13,6 @@ defined('_JEXEC') or die;
 
 use Exception;
 use HighlandVision\Component\Knowres\Administrator\Model\ContractsModel;
-use HighlandVision\Component\Knowres\Administrator\Model\EmailtriggerModel;
 use HighlandVision\Component\Knowres\Administrator\Model\OwnerpaymentsModel;
 use HighlandVision\Component\Knowres\Administrator\Model\PropertyModel;
 use HighlandVision\Component\Knowres\Administrator\Model\PropertysettingsModel;

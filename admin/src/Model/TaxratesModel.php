@@ -43,7 +43,6 @@ class TaxratesModel extends ListModel
 				'tax_id', 'a.tax_id',
 				'tax_type', 'a.tax_type',
 				'code', 'a.code',
-				'service', 'a.service',
 				'a.agent', 'a.agent',
 				'rate', 'a.rate',
 				'fixed', 'a.fixed',
@@ -84,7 +83,7 @@ class TaxratesModel extends ListModel
 		$query = $db->getQuery(true);
 
 		$query->select($db->qn([
-			'a.id', 'a.tax_id', 'a.tax_type', 'a.code', 'a.service', 'a.agent', 'a.rate', 'a.fixed', 'a.basis',
+			'a.id', 'a.tax_id', 'a.tax_type', 'a.code', 'a.agent', 'a.rate', 'a.fixed', 'a.basis',
 			'a.max_nights', 'a.reduced_rate', 'a.gross', 'a.pay_arrival', 'a.applicable_age', 'a.per_night',
 			'a.valid_from', 'a.taxrate_id', 'a.state', 'a.created_by', 'a.created_at', 'a.updated_by', 'a.updated_at'
 		]));
@@ -128,7 +127,7 @@ class TaxratesModel extends ListModel
 		$query = $db->getQuery(true);
 
 		$query->select($db->qn([
-			'a.id', 'a.tax_id', 'a.tax_type', 'a.code', 'a.service', 'a.agent', 'a.rate', 'a.fixed', 'a.basis',
+			'a.id', 'a.tax_id', 'a.tax_type', 'a.code', 'a.agent', 'a.rate', 'a.fixed', 'a.basis',
 			'a.max_nights', 'a.reduced_rate', 'a.gross', 'a.pay_arrival', 'a.applicable_age', 'a.per_night',
 			'a.valid_from', 'a.taxrate_id', 'a.state', 'a.created_by', 'a.created_at', 'a.updated_by', 'a.updated_at'
 		]));

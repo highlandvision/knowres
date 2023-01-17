@@ -1202,7 +1202,6 @@ CREATE TABLE IF NOT EXISTS `#__knowres_tax_rate` (
 	`tax_id`           INT(11)          NOT NULL DEFAULT 0,
 	`tax_type`         VARCHAR(10)      DEFAULT NULL,
 	`code`             VARCHAR(30)      DEFAULT NULL,
-	`service`          VARCHAR(255)     DEFAULT NULL,
 	`agent`            VARCHAR(255)     DEFAULT NULL,
 	`rate`             DECIMAL(6,3)     NOT NULL DEFAULT 0.000,
 	`fixed`            TINYINT(1)       NOT NULL DEFAULT 0,

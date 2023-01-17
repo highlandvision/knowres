@@ -161,7 +161,7 @@ class ServiceModel extends AdminModel
 	/**
 	 * Method to get a knowres record.
 	 *
-	 * @param   int  $pk  The id of the primary key.
+	 * @param  int  $pk  The id of the primary key.
 	 *
 	 * @since  1.0.0
 	 * @return CMSObject|bool  Object on success, false on failure.

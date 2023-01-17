@@ -16,7 +16,7 @@ defined('_JEXEC') or die;
 	<p>1. If Agent confirmed is set to Yes then it is assumed that the guest will have paid a deposit to the agent
 	   and thus the reservation will be confirmed. The percentage of the deposit should be entered in Deposit paid to
 	   agent.
-	   A payment record will be added for information purposes only indicating the amount that the guest paid to the
+	   A payment will be created, for information purposes only, for the amount that the guest paid the
 	   agent.</p>
 	<p>2. If Agent confirmed is set to No then a provisional reservations wil be created for this agent.
 	   The deposit will be calculated using the standard deposit settings for the booked property unless a value is

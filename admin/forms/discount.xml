@@ -87,7 +87,6 @@
 			datepicker='{"minDate": "+1D", "maxDate": "+10Y", "altField": "#jform_date_to"}'
 			showon="model:1"
 			type="uicalendar"
-			validate="daterange"
 			label="COM_KNOWRES_DISCOUNT_DATE_TO_LBL"
 			description="COM_KNOWRES_DISCOUNT_DATE_TO_DSC"/>
 	</fieldset>

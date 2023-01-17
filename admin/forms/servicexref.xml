@@ -89,8 +89,8 @@
 			class="btn-group btn-group-yesno"
 			label="COM_KNOWRES_SERVICEXREF_SELL_LBL"
 			description="COM_KNOWRES_SERVICEXREF_SELL_DSC">
-			<option value="1">JYES</option>
 			<option value="0">JNO</option>
+			<option value="1">JYES</option>
 		</field>
 	</fieldset>
 	<fieldset name="krhidden">

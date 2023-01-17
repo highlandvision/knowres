@@ -286,8 +286,6 @@ class CronController extends BaseController
 	 * Delete unsuccessful over 56 days old
 	 *
 	 * @throws Exception
-	 * @throws Exception
-	 * @throws Exception
 	 * @since  3.1.0
 	 */
 	private function deleteServiceLog()

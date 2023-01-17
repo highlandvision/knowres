@@ -12,6 +12,7 @@ namespace HighlandVision\KR;
 defined('_JEXEC') or die;
 
 use Exception;
+use HighlandVision\Component\Knowres\Administrator\Model\ServiceModel;
 use HighlandVision\Component\Knowres\Administrator\Model\ServicequeueModel;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
@@ -107,8 +108,8 @@ abstract class Service
 	/**
 	 * Initialize
 	 *
-	 * @param   int  $service_id  ID of service
-	 * @param   int  $test        1 for testing
+	 * @param  int  $service_id  ID of service
+	 * @param  int  $test        1 for testing
 	 *
 	 * @throws Exception
 	 * @since   1.2.2
@@ -164,7 +165,7 @@ abstract class Service
 	/**
 	 * Get service type escription
 	 *
-	 * @param   string  $type
+	 * @param  string  $type
 	 *
 	 * @since  4.0.0
 	 * @return string
@@ -201,8 +202,8 @@ abstract class Service
 	/**
 	 * Logger service request and response
 	 *
-	 * @param   bool  $success  Logger success or failure
-	 * @param   bool  $email    Set true for email notification
+	 * @param  bool  $success  Logger success or failure
+	 * @param  bool  $email    Set true for email notification
 	 *
 	 * @throws Exception
 	 * @since 1.2.2
@@ -273,8 +274,8 @@ abstract class Service
 	/**
 	 * Display any errors found in xml string
 	 *
-	 * @param   object  $error  XML error data
-	 * @param   string  $xml    XML string
+	 * @param  object  $error  XML error data
+	 * @param  string  $xml    XML string
 	 *
 	 * @since  4.0.0
 	 * @return string
@@ -312,7 +313,7 @@ abstract class Service
 	 * Exception message if not success
 	 * Notification messages if success
 	 *
-	 * @param   bool  $success  True or false
+	 * @param  bool  $success  True or false
 	 *
 	 * @since   3.3.0
 	 * @return string
@@ -339,7 +340,7 @@ abstract class Service
 	/**
 	 * Get property settings
 	 *
-	 * @param   int  $property_id  ID of property
+	 * @param  int  $property_id  ID of property
 	 *
 	 * @throws InvalidArgumentException
 	 * @since 1.2.2
@@ -420,7 +421,7 @@ abstract class Service
 	/**
 	 * Read property
 	 *
-	 * @param   int  $property_id  ID of property
+	 * @param  int  $property_id  ID of property
 	 *
 	 * @throws RuntimeException
 	 * @throws InvalidArgumentException|Exception
@@ -444,12 +445,14 @@ abstract class Service
 	 * Read service and format service parameters
 	 *
 	 * @throws Exception
-	 * @since 1.2.2
+	 * @since  1.2.2
 	 */
 	protected function readService(): void
 	{
-		$this->service = KrFactory::getAdminModel('service')->getItem($this->service_id);
-		if (!$this->service->id)
+		/** @var ServiceModel $model */
+		$model         = KrFactory::getAdminModel('service');
+		$this->service = $model->getItem($this->service_id);
+		if (empty($this->service->id))
 		{
 			throw new RuntimeException('Service not found for id ' . $this->service_id);
 		}
@@ -461,7 +464,7 @@ abstract class Service
 	/**
 	 * Set contract ID
 	 *
-	 * @param   int  $contract_id  ID of contract
+	 * @param  int  $contract_id  ID of contract
 	 *
 	 * @throws InvalidArgumentException
 	 * @since 1.2.2
@@ -493,7 +496,7 @@ abstract class Service
 	/**
 	 * Set the service
 	 *
-	 * @param   int  $service_id  ID of service
+	 * @param  int  $service_id  ID of service
 	 *
 	 * @throws InvalidArgumentException
 	 * @throws Exception
@@ -513,8 +516,8 @@ abstract class Service
 	/**
 	 * Store cache for method
 	 *
-	 * @param   array   $data    The data to be stored
-	 * @param   string  $method  The method used to store / retrieve the data
+	 * @param  array   $data    The data to be stored
+	 * @param  string  $method  The method used to store / retrieve the data
 	 *
 	 * @since 2.2.0
 	 */

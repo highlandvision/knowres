@@ -82,9 +82,9 @@ class DiscountsModel extends ListModel
 		$subQuery = $db->getQuery(true);
 		$subQuery->select('sub.text')
 		         ->from($db->qn('#__knowres_translation', 'sub'))
-		         ->where($db->qn('sub.item') . ' = ' . $db->q($item))
-		         ->where($db->qn('sub.item_id') . ' = ' . $db->qn('a.id'))
-		         ->order('(CASE WHEN ' . $db->qn('sub.language') . ' = ' . $db->q($lang) . ' THEN 1 ELSE 2 END )')
+		         ->where($db->qn('sub.item') . '=' . $db->q($item))
+		         ->where($db->qn('sub.item_id') . '=' . $db->qn('a.id'))
+		         ->order('(CASE WHEN ' . $db->qn('sub.language') . '=' . $db->q($lang) . ' THEN 1 ELSE 2 END )')
 		         ->setLimit(1);
 
 		$query->select($this->getState('list.select', 'a.*'))
