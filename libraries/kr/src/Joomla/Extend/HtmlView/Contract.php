@@ -193,6 +193,10 @@ class Contract extends KrHtmlView
 			             ->text('JTOOLBAR_DELETE');
 		}
 
+		if ($this->access_level == 40)
+		{
+			$Toolbar = $this->addRelated($Toolbar, 'show');
+		}
 		$Toolbar = $this->addPdf($Toolbar);
 
 		$link = KrMethods::route('index.php?option=com_knowres&task=property.calendar&property_id='
