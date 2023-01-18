@@ -10,7 +10,7 @@
 namespace HighlandVision\KR\Email;
 
 use Exception;
-use HelpScout\Lib\HelpDesk\Email;
+use HighlandVision\Helpscout\HelpDesk\Email;
 
 /**
  * Send email to Helpscout

@@ -152,19 +152,20 @@ class ServicexrefpropertyRule extends FormRule
 
 		// Room spaces and bed types
 		$entered = false;
-
-		// At least one bed selected
-		foreach ($item->bed_types as $d)
+		if (!empty($item->bed_types) && is_countable($this->bed_types))
 		{
-			$bed_types = $d['bed_types'];
-			foreach ($bed_types as $b)
+			foreach ($item->bed_types as $d)
 			{
-				foreach ($b as $n)
+				$bed_types = $d['bed_types'];
+				foreach ($bed_types as $b)
 				{
-					if ($n > 0)
+					foreach ($b as $n)
 					{
-						$entered = true;
-						break 3;
+						if ($n > 0)
+						{
+							$entered = true;
+							break 3;
+						}
 					}
 				}
 			}
