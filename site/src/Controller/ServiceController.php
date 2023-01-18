@@ -741,7 +741,7 @@ class ServiceController extends BaseController
 			<SkypeID/>
 			<Address/>
 			<ZipCode/>
-			<CountryID>10</CountryID>
+			<CountryID>20</CountryID>
 			<MessagingContactId>9876543</MessagingContactId>
 		</CustomerInfo>
 		<Creator>bookingcom@rentalsunited.com</Creator>

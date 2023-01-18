@@ -35,6 +35,8 @@ class Channel extends Service
 	protected stdClass $contractData;
 	/** @var array DOW wfor date $range */
 	protected array $dow = [];
+	/** @var array Property7 features */
+	protected array $features = [];
 	/** @var string Final date to send */
 	protected string $final = '';
 	/** @var string First date to send */
