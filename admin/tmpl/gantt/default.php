@@ -39,17 +39,15 @@ $picker    = $departure;
 		<button aria-label="Forward" class="btn btn-secondary btn-sm ganttchange" data-direction="right" type="button">
 			<i class="fas fa-lg fa-hand-point-right"></i>
 		</button>
-		&nbsp;&nbsp;&nbsp;
-		<div class="input-group">
+		<div class="input-group mb-3">
 			<input aria-label="<?php echo KrMethods::plain('COM_KNOWRES_GANTT_SEARCH') ?>"
-			       class="form-control typeahead"
+			       class="form-control typeahead shadow-none"
 			       placeholder="<?php echo KrMethods::plain('COM_KNOWRES_GANTT_SEARCH') ?>"
 			       type="text">
-			<span class="input-group-text" style="padding:0 0.6rem;">
+			<span class="input-group-text" style="padding:0 0.5rem;height:40px;">
                 <i class="fas fa-search"></i>
 			</span>
 		</div>
-		&nbsp;&nbsp;&nbsp;
 		<div id="ganttselections"></div>
 	</div>
 	<br>
