@@ -280,7 +280,7 @@ if (typeof jQuery === 'undefined') jQuery.noConflict();
 							arrivebefore = 'arrivebefore';
 							leaveafter = 'leaveafter';
 						} else if (carrive < showFrom) {
-							dl = KrGantt.diffDays(showFrom, cdepart);
+							dl = KrGantt.diffDays(showFrom, cdepart) + 1;
 							carrive = showFrom;
 							arrivebefore = 'arrivebefore';
 						} else if (cdepart > showTo) {
