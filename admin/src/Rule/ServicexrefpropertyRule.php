@@ -233,53 +233,62 @@ class ServicexrefpropertyRule extends FormRule
 		}
 
 		// Check for rates
-		if ($sell)
+		$rates = KrFactory::getListModel('rates')->getRatesForProperty($value, TickTock::getDate());
+		if (!is_countable($rates) || !count($rates))
 		{
-			$rates = KrFactory::getListModel('rates')->getRatesForProperty($value, TickTock::getDate());
-			if (!is_countable($rates) || !count($rates))
+			KrMethods::message(KrMethods::plain('COM_KNOWRES_SERVICEXREF_ERROR5'), 'error');
+
+			$error = true;
+		}
+
+		//Check licence info for RU
+		if (empty($item->licence_id))
+		{
+			$country = KrFactory::getAdminModel('country')->getItem($item->country_id);
+			if ($country->property_licence)
 			{
-				KrMethods::message(KrMethods::plain('COM_KNOWRES_SERVICEXREF_ERROR5'), 'error');
+				KrMethods::message(KrMethods::plain('COM_KNOWRES_SERVICEXREF_ERROR7'), 'error');
 
 				$error = true;
 			}
+		}
 
-			// Check that guest count for HA does not exceed 10
-			if ($service->plugin == 'vrbo')
+		// Check that guest count for HA does not exceed 10
+		if ($service->plugin == 'vrbo')
+		{
+			foreach ($rates as $r)
 			{
-				foreach ($rates as $r)
+				if ($r->ignore_pppn)
 				{
-					if ($r->ignore_pppn)
-					{
-						$guests = 1;
-					}
-					else
-					{
-						$guests = $r->max_guests;
-					}
+					$guests = 1;
+				}
+				else
+				{
+					$guests = $r->max_guests;
+				}
 
-					$more_guests = Utility::decodeJson($r->more_guests);
-					if (is_countable($more_guests))
+				$more_guests = Utility::decodeJson($r->more_guests);
+				if (is_countable($more_guests))
+				{
+					foreach ($more_guests as $m)
 					{
-						foreach ($more_guests as $m)
+						if ($m->more_pppn)
 						{
-							if ($m->more_pppn)
-							{
-								$guests = $guests + 1;
-							}
-							else
-							{
-								$guests = $guests + $m->more_max + 1 - $m->more_min;
-							}
+							$guests = $guests + 1;
+						}
+						else
+						{
+							$guests = $guests + $m->more_max + 1 - $m->more_min;
 						}
 					}
+				}
 
-					if ($guests > 10)
-					{
-						$element->addAttribute('message',
-							KrMethods::plain('Guest numbers in Rates exceeds the limit of 10 imposed by HomeAway. Please consolidate some of the Rates entry lines or use Includes all guests'),
-							'error');
-						$error = true;
-					}
+				if ($guests > 10)
+				{
+					$element->addAttribute('message',
+						KrMethods::plain('Guest numbers in Rates exceeds the limit of 10 imposed by HomeAway. Please consolidate some of the Rates entry lines or use Includes all guests'),
+						'error');
+					$error = true;
 				}
 			}
 		}

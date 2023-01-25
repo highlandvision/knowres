@@ -285,6 +285,8 @@ class UpgradeDb
 		self::add($db, '#__knowres_contract', 'markup', 'commission', 'DECIMAL(11,2) NOT NULL DEFAULT 0.00');
 		//ALTER TABLE `#__knowres_contract` ADD COLUMN `child_ages` VARCHAR(255) DEFAULT NULL AFTER `children`;
 		self::add($db, '#__knowres_contract', 'child_ages', 'children', 'VARCHAR(255) DEFAULT NULL');
+		//ALTER TABLE `#__knowres_country` ADD COLUMN `property_licence` TINYINT(1) DEFAULT 0 AFTER `allow_property`;
+		self::add($db, '#__knowres_country', 'property_licence', 'allow_property', 'TINYINT(1) DEFAULT 0');
 		//ALTER TABLE `#__knowres_coupon` DROP COLUMN `ordering`;
 		self::drop($db, '#__knowres_coupon', 'ordering');
 		//ALTER TABLE `#__knowres_tax_rate` ADD COLUMN `tax_type` VARCHAR(10) DEFAULT NULL AFTER `tax_id`;
