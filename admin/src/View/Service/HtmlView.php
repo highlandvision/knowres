@@ -79,7 +79,10 @@ class HtmlView extends KrHtmlView
 		$this->getFormAriaLabel();
 		ToolbarHelper::title($this->form_name, 'fas fa-exchange-alt knowres');
 		$Toolbar = $this->addFormToolbar(strtolower($this->getName()));
-		$Toolbar = $this->addCustomToolbar($Toolbar);
+		if (!empty($this->adhoc->getFieldAttribute('apassword', 'type')))
+		{
+			$Toolbar = $this->addCustomToolbar($Toolbar);
+		}
 
 		parent::display($tpl);
 	}

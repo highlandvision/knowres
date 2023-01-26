@@ -15,7 +15,6 @@ namespace HighlandVision\Component\Knowres\Site\Controller;
 defined('_JEXEC') or die;
 
 use Exception;
-use HighlandVision\Factura;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Service\Beyond;
@@ -24,7 +23,6 @@ use HighlandVision\KR\Session as KrSession;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Utility;
 use HighlandVision\Ru\Manager as RuManager;
-use HighlandVision\VintageTravel;
 use HighlandVision\Vrbo\Manager as VrboManager;
 use JetBrains\PhpStorm\NoReturn;
 use Joomla\CMS\MVC\Controller\BaseController;
@@ -274,7 +272,7 @@ class CronserviceController extends BaseController
 				'ru' => 'HighlandVision\Ru\Manager\Sync',
 			};
 
-			if (class_exists($class) && method_exists($class, 'sync'))
+			if (class_exists($class) && method_exists($class, 'doSync'))
 			{
 				$Sync = match ($s->plugin)
 				{
@@ -339,6 +337,39 @@ class CronserviceController extends BaseController
 
 			$Ical = new Ical($s->id);
 			$Ical->processSchedule($schedule);
+		}
+
+		jexit();
+	}
+
+	/**
+	 * Process RU channel adhoc requests
+	 *
+	 * @throws RuntimeException
+	 * @throws Exception
+	 * @since  1.2.2
+	 */
+	#[NoReturn] public function rua()
+	{
+		$this->checkSecret();
+		$method = KrMethods::inputString('method', null, 'get');
+		if (!$method){
+			echo "Enter a method in the url";
+			jexit();
+		}
+
+		$services = $this->getServicesByType('c');
+		foreach ($services as $s)
+		{
+			if ($s->plugin == 'ru')
+			{
+				$class = 'HighlandVision\Ru\Manager';
+				if (class_exists($class) && method_exists($class, $method))
+				{
+					$Manager = new RuManager($this->test);
+					$data = $Manager->$method();
+				}
+			}
 		}
 
 		jexit();

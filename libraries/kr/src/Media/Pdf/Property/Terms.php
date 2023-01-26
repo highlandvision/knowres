@@ -34,9 +34,9 @@ class Terms extends Property
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	function __construct(string $action = 'download', int $property_id = 0)
+	public function __construct(string $action = 'download', int $property_id = 0)
 	{
-		parent::__construct($property_id, $action);
+		parent::__construct($action, $property_id);
 	}
 
 	/**

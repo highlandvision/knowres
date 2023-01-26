@@ -25,7 +25,7 @@ use function strtolower;
  *
  * @since 1.0.0
  */
-class HtmlView extends KrHtmlView\Property
+class HtmlView extends KrHtmlView
 {
 	/**
 	 * Display the view

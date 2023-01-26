@@ -31,6 +31,7 @@ use function count;
 use function implode;
 use function is_countable;
 use function is_null;
+use function trim;
 
 /**
  * Knowres Property model
@@ -254,8 +255,8 @@ class PropertyModel extends AdminModel
 					$name = KrFactory::getAdminModel('propertyfield')->propertyFieldSpecial($f->special, false);
 				}
 
-				$item->{$name} = $Translations->getText('property', $item->id, $field);
-				if ($f->format == 2)
+				$item->{$name} = trim($Translations->getText('property', $item->id, $field));
+				if ($f->format == 3)
 				{
 					$item->{$name} = nl2br($item->{$name});
 				}
@@ -401,9 +402,9 @@ class PropertyModel extends AdminModel
 				}
 
 				$fieldXml = new SimpleXMLElement('<field></field>');
-				$fieldXml->addAttribute('name', $name);
-				$fieldXml->addAttribute('label', $label);
-				$fieldXml->addAttribute('description', $description);
+				$fieldXml->addAttribute('name', htmlentities($name));
+				$fieldXml->addAttribute('label', htmlentities($label));
+				$fieldXml->addAttribute('description', htmlentities($description));
 				if ($name == 'tagline')
 				{
 					$fieldXml->addAttribute('maxlength', 100);

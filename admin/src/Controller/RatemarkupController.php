@@ -26,14 +26,15 @@ class RatemarkupController extends FormController
 	/**
 	 * Process additional requirements after save
 	 *
-	 * @param   BaseDatabaseModel  $model      The data model object.
-	 * @param   array              $validData  The validated data.
+	 * @param  BaseDatabaseModel  $model      The data model object.
+	 * @param  array              $validData  The validated data.
 	 *
 	 * @throws Exception
 	 * @since  3.1
 	 */
 	protected function postSaveHook(BaseDatabaseModel $model, $validData = [])
 	{
-		KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updatePropertyRates', (int) $validData['property_id']);
+		KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updatePropertyRates',
+			(int) $validData['property_id'], null, null, $validData['valid_from'], $validData['valid_to']);
 	}
 }

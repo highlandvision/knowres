@@ -102,15 +102,15 @@ class ServicequeueModel extends AdminModel
 	/**
 	 * Insert queue row
 	 *
-	 * @param  object  $xref    Service xref data
-	 * @param  string  $method  Queue method
+	 * @param  object   $xref       Service xref data
+	 * @param  string   $method     Queue method
+	 * @param  ?string  $arrival    Arrival for reervations or valid from date for rates
+	 * @param  ?string  $departure  Departure fo reservations or valid to date for rates
 	 *
-	 * @throws Exception
-	 * @throws Exception
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	public static function insertQueue(object $xref, string $method)
+	public static function insertQueue(object $xref, string $method, ?string $arrival = null, ?string $departure = null)
 	{
 		$queue               = new stdClass();
 		$queue->id           = 0;
@@ -119,8 +119,8 @@ class ServicequeueModel extends AdminModel
 		$queue->contract_id  = 0;
 		$queue->agent_id     = 0;
 		$queue->property_id  = $xref->property_id;
-		$queue->arrival      = null;
-		$queue->departure    = null;
+		$queue->arrival      = $arrival;
+		$queue->departure    = $departure;
 		$queue->availability = 0;
 		$queue->actioned     = 0;
 		$queue->method       = $method;
@@ -140,12 +140,14 @@ class ServicequeueModel extends AdminModel
 	 * @param  ?int     $property_id  ID of updated property
 	 * @param  ?int     $cluster_id   ID of updated cluster
 	 * @param  ?string  $plugin       Service plugin to be updated or null for all
+	 * @param  ?string  $arrival      Applicable arrival (valid from ) date for rates
+	 * @param  ?string  $departure    Applicable departure (valid to ) date for rates
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
 	public static function serviceQueueUpdate(string $method, ?int $property_id = 0, ?int $cluster_id = 0,
-		?string $plugin = null)
+		?string $plugin = null, ?string $arrival = null, ?string $departure = null)
 	{
 		$result = KrFactory::getListModel('servicexrefs')->getPropertiesForAllServices($property_id, $method, $plugin);
 		if (is_countable($result) && count($result))
@@ -177,7 +179,7 @@ class ServicequeueModel extends AdminModel
 					}
 				}
 
-				self::insertQueue($r, $method);
+				self::insertQueue($r, $method, $arrival, $departure);
 			}
 		}
 	}

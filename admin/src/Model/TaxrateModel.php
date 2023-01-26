@@ -54,7 +54,6 @@ class TaxrateModel extends AdminModel
 		if ($item)
 		{
 			$item->agent   = Utility::decodeJson($item->agent, true);
-			$item->service = Utility::decodeJson($item->service, true);
 			$Translations  = new Translations();
 			$item->name    = $Translations->getText('taxrate', $item->id);
 		}
@@ -95,10 +94,6 @@ class TaxrateModel extends AdminModel
 		if (empty($jform['agent']))
 		{
 			$table->agent = '';
-		}
-		if (empty($jform['service']))
-		{
-			$table->service = '';
 		}
 
 		parent::prepareTable($table);

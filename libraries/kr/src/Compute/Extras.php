@@ -42,12 +42,14 @@ class Extras
 		$extra_total = 0;
 		$extras      = [];
 
+		// Ignore extras for any channnel agent bookings set not to charge
 		if ($this->Hub->getValue('agent_id') && $this->Hub->getValue('service_id'))
 		{
 			if (!$this->Hub->agent->mandatory_extras_charge)
 			{
-				$this->Hub->setValue('extra_total', $extra_total);
-				$this->Hub->setValue('extras', $extras);
+				//TODO-v4 test this
+				$this->Hub->setValue('extra_total', 0);
+				$this->Hub->setValue('extras', []);
 
 				return;
 			}

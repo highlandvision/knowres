@@ -49,7 +49,7 @@ class RateController extends FormController
 
 		$Translations = new Translations();
 		$Translations->updateDefault('rate', $id, 'name', $name);
-
-		KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updatePropertyRates', (int) $validData['property_id']);
+		KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updatePropertyRates',
+			(int) $validData['property_id'], 0, null,  $validData['valid_from'],  $validData['valid_to']);
 	}
 }

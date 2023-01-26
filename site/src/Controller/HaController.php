@@ -21,6 +21,7 @@ use HighlandVision\KR\Utility;
 use HighlandVision\Vrbo\Manager;
 use JetBrains\PhpStorm\NoReturn;
 use Joomla\CMS\MVC\Controller\BaseController;
+
 use RuntimeException;
 
 use function jexit;
@@ -289,30 +290,6 @@ class HaController extends BaseController
 	}
 
 	/**
-	 * Display generic / property terms
-	 *
-	 * @throws RuntimeException
-	 * @throws Exception
-	 * @since        3.0
-	 * @noinspection PhpUnused
-	 */
-	#[NoReturn] public function termspdf()
-	{
-		try
-		{
-			$id    = KrMethods::inputInt('id', 0, 'get');
-			$Terms = new Terms('download', $id);
-			$Terms->getPdf();
-		}
-		catch (Exception)
-		{
-			throw new RuntimeException('Error creating PDF, please try again later');
-		}
-
-		jexit();
-	}
-
-	/**
 	 * Log error and exit
 	 *
 	 * @throws Exception
@@ -339,6 +316,30 @@ class HaController extends BaseController
 		jexit();
 	}
 
+	/**
+	 * Display generic / property terms
+	 *
+	 * @throws RuntimeException
+	 * @throws Exception
+	 * @since        3.0
+	 * @noinspection PhpUnused
+	 */
+	#[NoReturn] public function termspdf()
+	{
+		// TODO-v4.2 Remove as all calls to ServiceController
+		try
+		{
+			$id    = KrMethods::inputInt('id', 0, 'get');
+			$Terms = new Terms('download', $id);
+			$Terms->getPdf();
+		}
+		catch (Exception)
+		{
+			throw new RuntimeException('Error creating PDF, please try again later');
+		}
+
+		jexit();
+	}
 	/**
 	 * Test ha br service
 	 *

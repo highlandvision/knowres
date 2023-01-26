@@ -19,8 +19,8 @@
 			class="btn-group btn-group-yesno"
 			label="COM_KNOWRES_EXTRA_MANDATORY_LBL"
 			description="COM_KNOWRES_EXTRA_MANDATORY_DSC">
-			<option value="1">JYES</option>
 			<option value="0">JNO</option>
+			<option value="1">JYES</option>
 		</field>
 		<field name="cleaning"
 			class="btn-group btn-group-yesno"
@@ -30,8 +30,8 @@
 			type="radio"
 			label="COM_KNOWRES_EXTRA_CLEANING_LBL"
 			description="COM_KNOWRES_EXTRA_CLEANING_DSC">
-			<option value="1">JYES</option>
 			<option value="0">JNO</option>
+			<option value="1">JYES</option>
 		</field>
 		<field name="max_quantity"
 			type="integer"
@@ -88,13 +88,16 @@
 	</fieldset>
 	<fieldset name="krtax">
 		<field name="tax_id"
-			type="listforeignkey"
-			label="COM_KNOWRES_EXTRA_TAX_ID_LBL"
-			description="COM_KNOWRES_EXTRA_TAX_ID_DSC"
+			class="w-auto"
 			input_type="list"
-			table="#__knowres_tax_rate"
 			key_field="id"
-			value_field="code"/>
+			table="#__knowres_tax_rate"
+			type="listforeignkey"
+			value_field="code"
+			label="COM_KNOWRES_EXTRA_TAX_ID_LBL"
+			description="COM_KNOWRES_EXTRA_TAX_ID_DSC">
+			<option value="0">JNONE</option>
+		</field>
 	</fieldset>
 	<fieldset name="krcommon">
 		<field name="state"

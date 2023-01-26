@@ -55,8 +55,8 @@
 			default="0"
 			label="COM_KNOWRES_SERVICEQUEUE_AVAILABILITY_LBL"
 			description="COM_KNOWRES_SERVICEQUEUE_AVAILABILITY_DSC">
-			<option value="1">Block</option>
-			<option value="0">Release</option>
+			<option value="0">COM_KNOWRES_BLOCK</option>
+			<option value="1">COM_KNOWRES_RELEASE</option>
 		</field>
 		<field name="agent_id"
 			type="listforeignkey"

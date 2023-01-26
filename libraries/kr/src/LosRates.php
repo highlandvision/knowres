@@ -12,6 +12,7 @@ namespace HighlandVision\KR;
 defined('_JEXEC') or die;
 
 use Exception;
+use HighlandVision\KR\Calendar\Los;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Session as KnowresSession;
 
@@ -26,8 +27,8 @@ use function min;
  */
 class LosRates
 {
-	/** @var Calendar Calendar class */
-	protected Calendar $Calendar;
+	/** @var Los Calendar class */
+	protected Los $Los;
 	/** @var array Computations required for rate calculation */
 	protected array $computations = [];
 	/** @var array Discounts for property */
@@ -90,7 +91,7 @@ class LosRates
 			$this->discounts = KrFactory::getListModel('discounts')->getDiscounts($this->property_id);
 		}
 
-		$this->Calendar = new Calendar\Los($this->property_id, $first, $final, $this->rates);
+		$this->Los = new Los($this->property_id, $first, $final, $this->rates);
 
 		return $this->setPrices($first, $final, $max_nights);
 	}
@@ -112,7 +113,7 @@ class LosRates
 		int $max_nights): array
 	{
 		$base   = [];
-		$wcod = $this->Calendar->weeklyChangeOverDay($arrival);
+		$wcod = $this->Los->weeklyChangeOverDay($arrival);
 
 		for ($nights = 1; $nights <= $max_nights; $nights++)
 		{
@@ -187,7 +188,7 @@ class LosRates
 	{
 		for ($nights = 1; $nights <= $max_nights; $nights++)
 		{
-			$wcod = $this->Calendar->weeklyChangeOverDay(TickTock::modifyDays($arrival, $nights));
+			$wcod = $this->Los->weeklyChangeOverDay(TickTock::modifyDays($arrival, $nights));
 			if (!$wcod)
 			{
 				$prices[$arrival][$r->max_guests][$nights] = 0;
@@ -495,7 +496,7 @@ class LosRates
 					$qrates = [];
 				}
 
-				if (!$this->Calendar->weeklyChangeOverDay($arrival))
+				if (!$this->Los->weeklyChangeOverDay($arrival))
 				{
 					continue;
 				}

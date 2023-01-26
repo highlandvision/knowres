@@ -59,6 +59,8 @@ class HtmlView extends KrHtmlView\Site
 	public string $max_date = '';
 	/** @var string Earliest arrival date. */
 	public string $min_date = '';
+	/** @var string Modules text from loadposition. */
+	public string $modules = '';
 	/** @var bool True if more than list limit reviews. */
 	public bool $more_reviews = false;
 	/** @var array Net markup setting for all properties. */
@@ -82,7 +84,7 @@ class HtmlView extends KrHtmlView\Site
 	/** @var array Units linked to this property. */
 	public array $units = [];
 	/** @var array Weekly setting for all properties. */
-	public array $weekly = [];
+	public array $weekly = [];/**
 
 	/**
 	 * Display the view

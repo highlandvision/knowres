@@ -18,6 +18,7 @@ use Exception;
 use HighlandVision\Helpscout\Helpdesk;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Logger;
+use HighlandVision\KR\Media\Pdf\Property\Terms;
 use HighlandVision\KR\Payments\PostPayment;
 use HighlandVision\KR\Service\Gateway;
 use HighlandVision\KR\Service\Mailchimp;
@@ -364,6 +365,30 @@ class ServiceController extends BaseController
 	}
 
 	/**
+	 * Display generic / property terms
+	 *
+	 * @throws RuntimeException
+	 * @throws Exception
+	 * @since        3.0
+	 * @noinspection PhpUnused
+	 */
+	#[NoReturn] public function termspdf()
+	{
+		try
+		{
+			$id    = KrMethods::inputInt('id', 0, 'get');
+			$Terms = new Terms('download', $id);
+			$Terms->getPdf();
+		}
+		catch (Exception)
+		{
+			throw new RuntimeException('Error creating PDF, please try again later');
+		}
+
+		jexit();
+	}
+
+	/**
 	 * Process wire confirmation
 	 *
 	 * @throws Exception
@@ -668,68 +693,44 @@ class ServiceController extends BaseController
 		<UserName>hazel@highlandvision.com</UserName>
 		<Password>84859939FDC9C768AEB85DB430513BF6B88CD8A3</Password>
 	</Authentication>
-	<Reservation>
-		<ReservationID>138896693</ReservationID>
-		<LastMod>2022-08-03 12:35:30</LastMod>
+	<Reservation Currency="">
+		<ReservationID>139329799</ReservationID>
+		<CreatedDate>2023-01-09</CreatedDate>
+		<LastMod>2023-01-09 01:00:21</LastMod>
 		<StayInfos>
 			<StayInfo>
 				<PropertyID>253204</PropertyID>
-				<DateFrom>2022-09-07</DateFrom>
-				<DateTo>2022-09-12</DateTo>
+				<DateFrom>2023-02-14</DateFrom>
+				<DateTo>2023-02-17</DateTo>
 				<NumberOfGuests>4</NumberOfGuests>
 				<Costs>
-					<RUPrice>1962.35</RUPrice>
-					<ClientPrice>2291.00</ClientPrice>
-					<AlreadyPaid>2291.00</AlreadyPaid>
+					<RUPrice>646.03</RUPrice>
+					<ClientPrice>760.03</ClientPrice>
+					<AlreadyPaid>760.03</AlreadyPaid>
 					<PriceScale>0%</PriceScale>
 				</Costs>
-				<ResapaID>164982008</ResapaID>
-				<Comments>Rate name: Standard</Comments>
-				<Mapping>
-					<ReservationID>HM3RZKFA5E</ReservationID>
-					<StayID>351395</StayID>
-				</Mapping>
+				<ResapaID>165417209</ResapaID>
 				<Units>1</Units>
 				<ReservationBreakdown>
 					<RUBreakdown>
-						<DayPrices Date="2022-08-07">
-							<Rent>364.47</Rent>
-							<Price>364.47</Price>
+						<DayPrices Date="2023-02-14">
+							<Rent>168.68</Rent>
+							<Price>168.68</Price>
 						</DayPrices>
-						<DayPrices Date="2022-08-08">
-							<Rent>364.47</Rent>
-							<Price>364.47</Price>
+						<DayPrices Date="2023-02-15">
+							<Rent>168.68</Rent>
+							<Price>168.68</Price>
 						</DayPrices>
-						<DayPrices Date="2022-08-09">
-							<Rent>364.47</Rent>
-							<Price>364.47</Price>
-						</DayPrices>
-						<DayPrices Date="2022-08-10">
-							<Rent>364.47</Rent>
-							<Price>364.47</Price>
-						</DayPrices>
-						<DayPrices Date="2022-08-11">
-							<Rent>364.47</Rent>
-							<Price>364.47</Price>
+						<DayPrices Date="2023-02-16">
+							<Rent>168.67</Rent>
+							<Price>168.67</Price>
 						</DayPrices>
 						<TotalFeesTaxes>
 							<TotalFeeTax AlreadyIncluded="false" Amount="140" Name="CleaningFee" FeeTaxType="41"/>
-							<TotalFeeTax AlreadyIncluded="false" Amount="364.47" Name="VAT" FeeTaxType="2"/>
 						</TotalFeesTaxes>
-						<Total>2326.82</Total>
-						<Rent>1822.35</Rent>
+						<Total>646.03</Total>
+						<Rent>506.03</Rent>
 					</RUBreakdown>
-					<ChannelBreakdown>
-						<ChannelTotalFeesTaxes>
-							<ChannelTotalFeeTax IncludedInChannelTotal="true" Amount="80.00" Currency="EUR"
-								Name="Tourist Tax ()" ItemType="Tax"/>
-							<ChannelTotalFeeTax IncludedInChannelTotal="true" Amount="140.00" Currency="EUR"
-								Name="Cleaning Fee" ItemType="Fee"/>
-						</ChannelTotalFeesTaxes>
-						<ChannelTotal>2291.00</ChannelTotal>
-						<ChannelRent>2071.00</ChannelRent>
-					</ChannelBreakdown>
-					<ChannelCommission>328.65</ChannelCommission>
 				</ReservationBreakdown>
 			</StayInfo>
 		</StayInfos>
@@ -744,15 +745,9 @@ class ServiceController extends BaseController
 			<CountryID>20</CountryID>
 			<MessagingContactId>9876543</MessagingContactId>
 		</CustomerInfo>
-		<Creator>bookingcom@rentalsunited.com</Creator>
-		<Comments>Cancellation policy: flexible&#xD;
-			Price breakdown: 2051.00EUR stay + 140.00EUR cleaning - 328.65EUR Airbnb fee&#xD;
-			5 adults, 0 children, 0 infants&#xD;
-			Commission: 328.65EUR&#xD;
-			There is no credit card info.
-		</Comments>
+		<Creator>jason@travelstaytion.com</Creator>
 		<ReservationStatusID>1</ReservationStatusID>
-		<ReferenceID>HM3RZKFA5E</ReferenceID>
+		<ReferenceID>X3GWB0NO</ReferenceID>
 		<IsArchived>false</IsArchived>
 	</Reservation>
 </LNM_PutConfirmedReservation_RQ>';

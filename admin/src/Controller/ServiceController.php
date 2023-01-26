@@ -61,8 +61,8 @@ class ServiceController extends FormController
 	/**
 	 * Process additional requirements after save
 	 *
-	 * @param   BaseDatabaseModel  $model      The data model object.
-	 * @param   array              $validData  The validated data.
+	 * @param  BaseDatabaseModel  $model      The data model object.
+	 * @param  array              $validData  The validated data.
 	 *
 	 * @throws Exception
 	 * @since  3.1.0
@@ -93,7 +93,8 @@ class ServiceController extends FormController
 
 				if ($new['markup'] != $existing['markup'])
 				{
-					KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updatePropertyRates');
+					KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updatePropertyRates', null, null,
+						'vrbo');
 				}
 			}
 		}

@@ -9,7 +9,7 @@
 			table="#__knowres_service"
 			key_field="id"
 			value_field="name"
-			where="(type='e' OR `type` = 'c' OR `plugin` = 'beyond') AND agency_id > 0"
+			where="(type='e' OR `type`='c' OR `plugin`='beyond') AND agency_id > 0 AND state=1"
 			filter="integer"
 			label="COM_KNOWRES_SERVICEXREF_SERVICE_ID_LBL"
 			description="COM_KNOWRES_SERVICEXREF_SERVICE_ID_DSC"/>
@@ -84,9 +84,9 @@
 			label="COM_KNOWRES_SERVICEXREF_FOREIGN_KEY_LBL"
 			description="COM_KNOWRES_SERVICEXREF_FOREIGN_KEY_DSC"/>
 		<field name="sell"
-			type="radio"
-			default="0"
 			class="btn-group btn-group-yesno"
+			default="1"
+			type="radio"
 			label="COM_KNOWRES_SERVICEXREF_SELL_LBL"
 			description="COM_KNOWRES_SERVICEXREF_SELL_DSC">
 			<option value="0">JNO</option>

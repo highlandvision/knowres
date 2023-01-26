@@ -100,7 +100,7 @@ class ServicequeuesModel extends ListModel
 	 * Get unactioned queue
 	 *
 	 * @param  int     $service_id  ID of service
-	 * @param  string  $method      APlI method
+	 * @param  string  $method      Queue action method
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
