@@ -630,11 +630,11 @@ class ContractsModel extends ListModel
 		      ->from($db->qn('#__knowres_contract', 'c'));
 
 		$query->join('LEFT',
-			$db->qn('#__knowres_service_xref', 'i') . ' ON ' . $db->qn('i.contract_id') . ' = ' . $db->qn('c.id'));
+			$db->qn('#__knowres_service_xref', 'i') . ' ON ' . $db->qn('i.contract_id') . '=' . $db->qn('c.id'));
 
-		$query->where($db->qn('c.departure') . ' >= ' . $db->q($today))
+		$query->where($db->qn('c.departure') . '>=' . $db->q($today))
 		      ->where($db->qn('c.black_booking') . '=0')
-		      ->where($db->qn('c.state') . ' = 1');
+		      ->where($db->qn('c.state') . '=1');
 
 		if ($service_id)
 		{
