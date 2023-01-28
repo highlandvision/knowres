@@ -51,7 +51,7 @@ class ServicexrefpropertyRule extends FormRule
 		Form $form = null): bool
 	{
 		$service_id = ($input instanceof Registry) ? $input->get('service_id') : '';
-		$sell       = ($input instanceof Registry) ? $input->get('sell') : '0';
+		$sell       = ($input instanceof Registry) ? $input->get('sell', 1) : '0';
 		if (!$sell)
 		{
 			return true;
@@ -242,7 +242,7 @@ class ServicexrefpropertyRule extends FormRule
 		}
 
 		//Check licence info for RU
-		if (empty($item->licence_id))
+		if (!$item->licence_id)
 		{
 			$country = KrFactory::getAdminModel('country')->getItem($item->country_id);
 			if ($country->property_licence)

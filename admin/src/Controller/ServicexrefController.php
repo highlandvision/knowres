@@ -60,18 +60,19 @@ class ServicexrefController extends FormController
 	{
 		if ((int) $validData['foreign_key'] == 0 && (int) $validData['property_id'] > 0)
 		{
-			/** @var ServicexrefModel $model */
-			$model = KrFactory::getAdminModel('servicexref');
-			$mode::resetNewServiceProperty($model->getItem()->get('id'),
-				(int) $validData['service_id'], (int) $validData['property_id']);
+			$model::resetNewServiceProperty($model->getItem()->get('id'), (int) $validData['service_id'],
+				(int) $validData['property_id']);
 			KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updateProperty',
 				(int) $validData['property_id'], 0, 'ru');
 		}
 
-		if (KrMethods::inputInt('old_sell') <> $validData['sell'])
+		if (isset($validData['sell']))
 		{
-			KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updateProperty',
-				(int) $validData['property_id'], 0, 'ru');
+			if (KrMethods::inputInt('old_sell') <> $validData['sell'])
+			{
+				KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updateProperty',
+					(int) $validData['property_id'], 0, 'ru');
+			}
 		}
 	}
 }

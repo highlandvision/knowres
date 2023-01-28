@@ -14,17 +14,19 @@
 			label="COM_KNOWRES_SERVICEXREF_SERVICE_ID_LBL"
 			description="COM_KNOWRES_SERVICEXREF_SERVICE_ID_DSC"/>
 		<field name="property_id"
-			type="listforeignkey"
-			input_type="list"
-			table="#__knowres_property"
-			key_field="id"
-			value_field="property_name"
-			where="state IN(0,1) and approved=1"
-			validate="servicexrefproperty"
 			filter="integer"
+			input_type="list"
+			key_field="id"
+			layout="joomla.form.field.list-fancy-select"
+			required="true"
+			table="#__knowres_property"
+			type="listforeignkey"
+			value_field="property_name"
+			validate="servicexrefproperty"
+			where="state IN(0,1) and approved=1"
 			label="COM_KNOWRES_SERVICEXREF_PROPERTY_ID_LBL"
 			description="COM_KNOWRES_SERVICEXREF_PROPERTY_ID_DSC">
-			<option value="0">COM_KNOWRES_SELECT</option>
+			<option value="0">COM_KNOWRES_SELECT_REQUIRED</option>
 		</field>
 		<field name="contract_id"
 			type="listforeignkey"

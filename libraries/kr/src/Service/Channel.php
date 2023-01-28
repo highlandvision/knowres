@@ -21,6 +21,11 @@ use RuntimeException;
 use stdClass;
 
 use function count;
+use function htmlspecialchars;
+use function trim;
+
+use const ENT_QUOTES;
+use const ENT_XML1;
 
 /**
  * Service channel
@@ -57,12 +62,13 @@ class Channel extends Service
 	protected array $range = [];
 	/** @var array Service property xrefs */
 	protected array $xrefs;
-//TODO-v4 Check what is used and not used
+	//TODO-v4 Check what is used and not used
+
 	/**
 	 * Constructor
 	 *
-	 * @param   int  $service_id  ID of service
-	 * @param   int  $test        1 for testing
+	 * @param  int  $service_id  ID of service
+	 * @param  int  $test        1 for testing
 	 *
 	 * @throws Exception
 	 * @since  1.2.2
@@ -73,9 +79,34 @@ class Channel extends Service
 	}
 
 	/**
+	 * Read xref for property
+	 *
+	 * @param  int  $property_id  ID of property
+	 *
+	 * @throws RuntimeException
+	 * @since  3.3.0
+	 */
+	protected function getServiceXrefForProperty(int $property_id)
+	{
+		if (!$property_id)
+		{
+			throw new InvalidArgumentException('Property ID must be non zero');
+		}
+
+		$data = KrFactory::getListModel('servicexrefs')->getServiceProperty($this->service->id, $property_id);
+		if (!is_countable($data) || !count($data) || count($data) > 1)
+		{
+			throw new RuntimeException('Zero or multiple service xref records found for service ' . $this->service_id
+				. ' property ID ' . $property_id);
+		}
+
+		$this->property_xref = $data[0];
+	}
+
+	/**
 	 * Calculate channel commission (if any)
 	 *
-	 * @param   float  $service_value  Booking value
+	 * @param  float  $service_value  Booking value
 	 *
 	 * @since  2.3.0
 	 * @return float
@@ -115,7 +146,7 @@ class Channel extends Service
 	/**
 	 * Get property descriptions
 	 *
-	 * @param   string  $name  Name of field holding data to display
+	 * @param  string  $name  Name of field holding data to display
 	 *
 	 * @since  1.2.2
 	 * @return array
@@ -164,33 +195,22 @@ class Channel extends Service
 	}
 
 	/**
-	 * Read xref for property
+	 * Make safe
 	 *
-	 * @param  int  $property_id  ID of property
+	 * @param  string  $string  String to convert
 	 *
-	 * @throws RuntimeException
-	 * @throws RuntimeException
 	 * @since  3.3.0
+	 * @return string
 	 */
-	protected function readServiceXrefProperty(int $property_id)
+	protected function makeSafe(string $string): string
 	{
-		if (!$property_id)
-		{
-			throw new InvalidArgumentException('Property ID must be non zero');
-		}
-
-		$data = KrFactory::getListModel('servicexrefs')->getServiceProperty($this->service->id, $property_id);
-		if (!count($data) || count($data) > 1)
-		{
-			throw new RuntimeException('Zero or multiple service xref records found for service ' . $this->service_id
-				. ' property ID ' . $property_id);
-		}
-
-		$this->property_xref = $data[0];
+		return htmlspecialchars(trim($string), ENT_QUOTES | ENT_XML1);
 	}
 
 	/**
 	 * Save new or modified reservation
+	 * First run calulate base rate for setting owner commission etc.
+	 * Second run calulate agent / channel values based on channel data
 	 *
 	 * @throws Exception
 	 * @since  2.3.0
@@ -213,7 +233,6 @@ class Channel extends Service
 			'commission',
 			'agentownerdeposit'
 		];
-
 		$this->Hub->compute($computations);
 
 		$room_total = $this->Hub->getValue('room_total');
@@ -244,17 +263,26 @@ class Channel extends Service
 	 * Get the booking agent either from the foreign key or the agent ID
 	 * This will depend on the CM/channel being processed
 	 *
-	 * @param   string  $foreign_key  The agent foreign key
-	 * @param   int     $agent_id     The ID for the agent
-	 * @param   bool    $confirmed    Set to true to return confirmed agent info
+	 * @param  string  $foreign_key  The agent foreign key
+	 * @param  string  $comments     Set true to return confirmed agent info
+	 * @param  int     $agent_id     The ID for the agent
 	 *
 	 * @throws RuntimeException
 	 * @throws Exception
 	 * @since  3.1.0
 	 * @return void
 	 */
-	protected function setAgent(string $foreign_key, int $agent_id = 0, bool $confirmed = false): void
+	protected function setAgent(string $foreign_key, string $comments, int $agent_id = 0): void
 	{
+		$confirmed = false;
+		if (!empty($comments))
+		{
+			if (str_contains($comments, 'Expedia Virtual Card'))
+			{
+				$confirmed = true;
+			}
+		}
+
 		if ($agent_id)
 		{
 			$this->agent = KrFactory::getAdminModel('agent')->getItem($agent_id);
@@ -266,6 +294,11 @@ class Channel extends Service
 		else if ($foreign_key)
 		{
 			$agents = KrFactory::getListModel('agents')->getAgentByForeignKey($this->service_id, $foreign_key);
+			if (!is_countable($agents) || empty($agents))
+			{
+				throw new RuntimeException('Agent not found for RU reference ' . $foreign_key);
+			}
+
 			if (count($agents) == 1)
 			{
 				$this->agent = $agents[0];
@@ -309,8 +342,8 @@ class Channel extends Service
 	/**
 	 * Set the date range to process
 	 *
-	 * @param   string  $first  First date
-	 * @param   int     $cbl    Max advance bookings for channel
+	 * @param  string  $first  First date
+	 * @param  int     $cbl    Max advance bookings for channel
 	 * @param  int     $pbl    Max advance bookings for property
 	 *
 	 * @throws Exception

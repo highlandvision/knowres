@@ -74,7 +74,7 @@ class JsonbedtypesField extends FormField
 
 		foreach ($this->value as $v)
 		{
-			if (!empty($v->bed_types) && is_countable($v->bed_types))
+			if (isset($v->bed_types))
 			{
 				foreach ($v->bed_types as $bedtypes => $bed_number)
 				{

@@ -404,38 +404,42 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 			$ChildToolbar = $dropdown->getChildToolbar();
 
 			$ChildToolbar->linkButton('config-countries', 'COM_KNOWRES_COUNTRIES_TITLE')
-			             ->icon('fas fa-flag knowres')
+			             ->icon('fas fa-flag fa-fw knowres')
 			             ->url(KrMethods::route('index.php?option=com_knowres&view=countries'));
 
 			$ChildToolbar->linkButton('config-regions', 'COM_KNOWRES_REGIONS_TITLE')
-			             ->icon('fas fa-map-signs knowres')
+			             ->icon('fas fa-map-pin fa-fw knowres')
 			             ->url(KrMethods::route('index.php?option=com_knowres&view=regions'));
 
 			$ChildToolbar->linkButton('config-towns', 'COM_KNOWRES_TOWNS_TITLE')
-			             ->icon('fas fa-city knowres')
+			             ->icon('fas fa-city fa-fw knowres')
 			             ->url(KrMethods::route('index.php?option=com_knowres&view=towns'));
 
+			$ChildToolbar->linkButton('currencies', 'COM_KNOWRES_CURRENCIES_TITLE')
+			             ->icon('fas fa-euro-sign fa-fw knowres')
+			             ->url(KrMethods::route('index.php?option=com_knowres&view=currencies'));
+
 			$ChildToolbar->linkButton('config-mapcategories', 'COM_KNOWRES_MAPCATEGORIES_TITLE')
-			             ->icon('fas fa-map-marked knowres')
+			             ->icon('fas fa-map-marked fa-fw knowres')
 			             ->url(KrMethods::route('index.php?option=com_knowres&view=mapcategories'));
 
 			$ChildToolbar->linkButton('config-mapmarkers', 'COM_KNOWRES_MAPMARKERS_TITLE')
-			             ->icon('fas fa-map-marker knowres')
+			             ->icon('fas fa-map-marker fa-fw knowres')
 			             ->url(KrMethods::route('index.php?option=com_knowres&view=mapmarkers'));
 
 			if ($this->params->get('ignore_tax', 1))
 			{
 				$ChildToolbar->linkButton('config-taxes', 'COM_KNOWRES_TAXES_TITLE')
-				             ->icon('fas fa-map-marked knowres')
+				             ->icon('fas fa-map-marked fa-fw knowres')
 				             ->url(KrMethods::route('index.php?option=com_knowres&view=taxes'));
 
 				$ChildToolbar->linkButton('config-taxrates', 'COM_KNOWRES_TAXRATES_TITLE')
-				             ->icon('fas fa-percent knowres')
+				             ->icon('fas fa-percent fa-fw knowres')
 				             ->url(KrMethods::route('index.php?option=com_knowres&view=taxrates'));
 			}
 
 			$ChildToolbar->linkButton('quick-link-translations', 'COM_KNOWRES_TRANSLATIONS_TITLE')
-			             ->icon('fas fa-language knowres')
+			             ->icon('fas fa-globe fa-fw knowres')
 			             ->url(KrMethods::route('index.php?option=com_knowres&view=translations'));
 		}
 
