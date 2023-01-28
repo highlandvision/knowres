@@ -40,39 +40,10 @@ class Payments extends KrHtmlView
 	}
 
 	/**
-	 * Add payment data dropdown.
-	 *
-	 * @param   Toolbar  $Toolbar  Current toolbar.
-	 *
-	 * @throws Exception
-	 * @since  4.0.0
-	 * @return Toolbar
-	 */
-	protected function addRelated(Toolbar $Toolbar): Toolbar
-	{
-		$dropdown     = $Toolbar->dropdownButton('settings-payments-group')
-		                        ->text('COM_KNOWRES_TOOLBAR_PAYMENTS_DATA')
-		                        ->toggleSplit(false)
-		                        ->icon('fas fa-map knowres')
-		                        ->buttonClass('btn btn-action');
-		$ChildToolbar = $dropdown->getChildToolbar();
-
-		$ChildToolbar->linkButton('currencies', 'COM_KNOWRES_CURRENCIES_TITLE')
-		             ->icon('fas fa-euro-sign knowres')
-		             ->url(KrMethods::route('index.php?option=com_knowres&view=currencies'));
-
-		$ChildToolbar->linkButton('exchangerates', 'COM_KNOWRES_EXCHANGERATES_TITLE')
-		             ->icon('fas fa-exchange-alt knowres')
-		             ->url(KrMethods::route('index.php?option=com_knowres&view=exchangerates'));
-
-		return $Toolbar;
-	}
-
-	/**
 	 * Add the custom toolbar for payments
 	 *
-	 * @param   Toolbar  $Toolbar  Current toolbar
-	 * @param   string   $name     Name of view
+	 * @param  Toolbar  $Toolbar  Current toolbar
+	 * @param  string   $name     Name of view
 	 *
 	 * @throws Exception
 	 * @since  2.0.0
@@ -187,14 +158,20 @@ class Payments extends KrHtmlView
 	{
 		$Toolbar = Toolbar::getInstance();
 
-		$Toolbar = $this->addRelated($Toolbar);
-
 		if ($this->access_level > 10)
 		{
 			$link = KrMethods::route('index.php?option=com_knowres&view=ownerpayments');
 			$Toolbar->linkButton('owner-payments', 'COM_KNOWRES_OWNERPAYMENTS_TITLE')
 			        ->url($link)
 			        ->icon('fas fa-house-user knowres');
+
+			if ($this->access_level == 40)
+			{
+				$link = KrMethods::route('index.php?option=com_knowres&view=exchangerates');
+				$Toolbar->linkButton('exchangerates', 'COM_KNOWRES_EXCHANGERATES_TITLE')
+				        ->url($link)
+				        ->icon('fas fa-exchange-alt knowres');
+			}
 
 			$link = KrMethods::route('index.php?option=com_knowres&view=export&layout=payments');
 			$Toolbar->linkButton('export-payments-csv', 'COM_KNOWRES_EXPORT_TITLE_PAYMENTS')
