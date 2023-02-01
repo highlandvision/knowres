@@ -42,9 +42,9 @@ class FDatabase
 	 * @throws QueryTypeAlreadyDefinedException
 	 * @throws RuntimeException
 	 * @since  1.0.0
-	 * @return bool|int
+	 * @return mixed
 	 */
-	public static function checkUser(string $email): bool|int
+	public static function checkUser(string $email): mixed
 	{
 		if ($email)
 		{
@@ -56,7 +56,6 @@ class FDatabase
 			      ->where($db->qn('email') . '=' . $db->q($email))
 			      ->setLimit(1)
 			      ->order($db->qn('id') . 'DESC');
-
 			$db->setQuery($query);
 
 			return $db->loadResult();

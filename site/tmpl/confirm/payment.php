@@ -26,30 +26,30 @@ $wa->useScript('com_knowres.site')
    ->useScript('keepalive');
 ?>
 
-	<div class="row">
-		<div class="small-12 columns">
-			<?php if ($this->contractData->booking_type == 2) : ?>
-				<h1>
-					<?php echo KrMethods::plain('COM_KNOWRES_PAY_NOW'); ?>
-				</h1>
-				<?php $this->when = KrMethods::plain('COM_KNOWRES_CONFIRM_BOOK_WHEN'); ?>
-			<?php else: ?>
-				<h1>
-					<?php echo KrMethods::plain('COM_KNOWRES_CONFIRM_REQUEST_PAY_TITLE'); ?>
-				</h1>
-				<?php $this->when = KrMethods::plain('COM_KNOWRES_CONFIRM_REQUEST_WHEN'); ?>
-			<?php endif; ?>
-		</div>
+<div class="row">
+	<div class="small-12 columns">
+		<?php if ($this->contractData->booking_type == 2) : ?>
+			<h1>
+				<?php echo KrMethods::plain('COM_KNOWRES_PAY_NOW'); ?>
+			</h1>
+			<?php $this->when = KrMethods::plain('COM_KNOWRES_CONFIRM_BOOK_WHEN'); ?>
+		<?php else: ?>
+			<h1>
+				<?php echo KrMethods::plain('COM_KNOWRES_CONFIRM_REQUEST_PAY_TITLE'); ?>
+			</h1>
+			<?php $this->when = KrMethods::plain('COM_KNOWRES_CONFIRM_REQUEST_WHEN'); ?>
+		<?php endif; ?>
 	</div>
+</div>
 
-	<div class="row" id="kr-payment">
-		<div class="small-12 medium-7 large-8 columns">
-			<?php echo $this->loadTemplate('form'); ?>
-		</div>
-		<div class="small-12 medium-5 large-4 columns">
-			<?php echo $this->loadTemplate('sidebar'); ?>
-		</div>
+<div class="row" id="kr-payment">
+	<div class="small-12 medium-7 large-8 columns">
+		<?php echo $this->loadTemplate('form'); ?>
 	</div>
+	<div class="small-12 medium-5 large-4 columns">
+		<?php echo $this->loadTemplate('sidebar'); ?>
+	</div>
+</div>
 
 <?php echo $this->loadTemplate('modals'); ?>
 

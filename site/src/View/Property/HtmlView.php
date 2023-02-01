@@ -49,6 +49,8 @@ class HtmlView extends KrHtmlView\Site
 	public string $departure = '';
 	/** @var array Features for this property. */
 	public array $features = [];
+	/** @var int Guest count. */
+	public int $guests = 0;
 	/** @var array Images for this property. */
 	public array $images = [];
 	/** @var int Pagination limit. */
@@ -84,12 +86,12 @@ class HtmlView extends KrHtmlView\Site
 	/** @var array Units linked to this property. */
 	public array $units = [];
 	/** @var array Weekly setting for all properties. */
-	public array $weekly = [];/**
+	public array $weekly = [];
 
 	/**
 	 * Display the view
 	 *
-	 * @param   null  $tpl  Default template.
+	 * @param  null  $tpl  Default template.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -363,8 +365,8 @@ class HtmlView extends KrHtmlView\Site
 	/**
 	 * Set the pathway for the property
 	 *
-	 * @param   int     $region_id    ID of property / search region
-	 * @param   string  $region_name  Name of property / search region
+	 * @param  int     $region_id    ID of property / search region
+	 * @param  string  $region_name  Name of property / search region
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -385,7 +387,8 @@ class HtmlView extends KrHtmlView\Site
 
 		if (count($this->searchData->baseIds))
 		{
-			$Itemid = SiteHelper::getItemId('com_knowres', 'properties', ['layout' => 'search', 'region_id' => $region_id]);
+			$Itemid = SiteHelper::getItemId('com_knowres', 'properties',
+				['layout' => 'search', 'region_id' => $region_id]);
 
 			$pathway = self::searchPathway($pathway, $region_id, $Itemid);
 		}

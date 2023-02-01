@@ -11,8 +11,11 @@
 
 defined('_JEXEC') or die;
 
+use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use Joomla\CMS\HTML\HTMLHelper;
+
+$settings = KrFactory::getListModel('propertysettings')->getPropertysettings($this->property_id);
 
 $wa = $this->document->getWebAssetManager();
 $wa->useScript('com_knowres.site')
@@ -106,7 +109,7 @@ $wa->useScript('com_knowres.site')
 				<legend><?php echo KrMethods::plain('COM_KNOWRES_MAILING_ADDRESS'); ?></legend>
 				<div class="callout small gray">
 					<div class="row">
-						<?php if ((int) $this->settings['bookingform_requiredfields_address1'] == 1) : ?>
+						<?php if ((int) $settings['bookingform_requiredfields_address1'] == 1) : ?>
 							<?php $this->form->setFieldAttribute('address1', 'required', 'true'); ?>
 						<?php endif; ?>
 						<div class="small-12 medium-6 columns end">
@@ -117,14 +120,14 @@ $wa->useScript('com_knowres.site')
 						</div>
 					</div>
 					<div class="row">
-						<?php if ((int) $this->settings['bookingform_requiredfields_town'] == 1) : ?>
+						<?php if ((int) $settings['bookingform_requiredfields_town'] == 1) : ?>
 							<?php $this->form->setFieldAttribute('town', 'required', 'true'); ?>
 						<?php endif; ?>
 						<div class="small-12 medium-6 columns end">
 							<?php echo $this->form->renderField('town'); ?>
 						</div>
 
-						<?php if ((int) $this->settings['bookingform_requiredfields_postcode'] == 1) : ?>
+						<?php if ((int) $settings['bookingform_requiredfields_postcode'] == 1) : ?>
 							<?php $this->form->setFieldAttribute('postcode', 'required', 'true'); ?>
 						<?php endif; ?>
 						<div class="small-12 medium-6 columns end">
@@ -132,7 +135,7 @@ $wa->useScript('com_knowres.site')
 						</div>
 					</div>
 					<div class="row">
-						<?php if ((int) $this->settings['bookingform_requiredfields_region'] == 1) : ?>
+						<?php if ((int) $settings['bookingform_requiredfields_region'] == 1) : ?>
 							<?php $this->form->setFieldAttribute('region_id', 'required', 'true'); ?>
 							<?php $this->form->setFieldAttribute('country_id', 'required', 'true'); ?>
 						<?php endif; ?>

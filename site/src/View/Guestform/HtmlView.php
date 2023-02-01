@@ -32,13 +32,15 @@ class HtmlView extends KrHtmlView\Site
 	public int $contract_id = 0;
 	/** @var string GDPR text */
 	public string $gdpr = '';
+	/** @var int ID of property */
+	public int $property_id = 0;
 	/** @var bool Show referral input */
 	public bool $show_referral = true;
 
 	/**
 	 * Display the view
 	 *
-	 * @param   null  $tpl  Default template.
+	 * @param  null  $tpl  Default template.
 	 *
 	 * @throws Exception
 	 * @since  2.5.0
@@ -67,13 +69,12 @@ class HtmlView extends KrHtmlView\Site
 			SiteHelper::badUser();
 		}
 
+		$this->property_id = $contract->property_id;
 		if ($contract->agency_id)
 		{
 			$Translations = new Translations();
 			$this->gdpr   = $Translations->getText('agency', $contract->agency_id, 'gdpr_statement');
 		}
-
-		$this->settings = KrFactory::getListModel('propertysettings')->getPropertysettings($contract->property_id);
 
 		/** @var GuestModel $model */
 		$model      = KrFactory::getSiteModel('guest');
@@ -137,7 +138,7 @@ class HtmlView extends KrHtmlView\Site
 	 * Set the pathway for the guest update
 	 *
 	 * @throws Exception
-	 * @since   3.3.0
+	 * @since  3.3.0
 	 */
 	protected function setMyPathway()
 	{

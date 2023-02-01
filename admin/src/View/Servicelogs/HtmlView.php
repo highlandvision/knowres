@@ -52,14 +52,11 @@ class HtmlView extends KrHtmlView
 		$this->allow_new     = false;
 		$this->allow_edit    = false;
 
-		if (!$this->checkEmpty())
-		{
-			$this->checkErrors();
-			ToolbarHelper::title(KrMethods::plain('COM_KNOWRES_SERVICELOGS_TITLE'), 'tasks knowres');
-			$this->addListToolbar($this->get('name'));
+		$this->checkErrors();
+		ToolbarHelper::title(KrMethods::plain('COM_KNOWRES_SERVICELOGS_TITLE'), 'tasks knowres');
+		$this->addListToolbar($this->get('name'));
 
-			parent::display($tpl);
-		}
+		parent::display($tpl);
 	}
 
 	/**

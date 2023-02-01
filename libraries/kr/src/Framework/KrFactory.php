@@ -36,9 +36,9 @@ class KrFactory
 	 * @param   string  $email  Guest email
 	 *
 	 * @since  3.3.0
-	 * @return int
+	 * @return mixed
 	 */
-	public static function checkUser(string $email): int
+	public static function checkUser(string $email): mixed
 	{
 		return FNS::checkUser($email);
 	}

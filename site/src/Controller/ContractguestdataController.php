@@ -14,8 +14,6 @@ defined('_JEXEC') or die;
 use Exception;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\FormController;
-use HighlandVision\KR\Model\DisplayModel;
-use HighlandVision\KR\Model\SiteModel;
 use HighlandVision\KR\SiteHelper;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 
