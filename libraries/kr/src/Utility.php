@@ -446,6 +446,8 @@ class Utility
 			$url .= '?key=' . $key;
 		}
 
+		$url .= '&callback=Function.prototype';
+
 		return $url;
 	}
 
