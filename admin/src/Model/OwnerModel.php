@@ -45,9 +45,9 @@ class OwnerModel extends AdminModel
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return CMSObject|false  Object on success, false on failure.
+	 * @return object|false  Object on success, false on failure.
 	 */
-	public function getItem($pk = null): CMSObject|false
+	public function getItem($pk = null): object|false
 	{
 		$item = parent::getItem($pk);
 		if ($item)

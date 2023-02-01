@@ -19,6 +19,8 @@ use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Response\JsonResponse;
 
+use function jexit;
+
 /**
  * Guests controller list class.
  *
@@ -47,11 +49,11 @@ class GuestsController extends AdminController
 	/**
 	 * Proxy for getModel.
 	 *
-	 * @param   string  $name
-	 * @param   string  $prefix
-	 * @param   array   $config
+	 * @param  string  $name    Model name
+	 * @param  string  $prefix  Site or Administrator
+	 * @param  array   $config  Params
 	 *
-	 * @since 1.0.0
+	 * @since  1.0.0
 	 * @return bool|BaseDatabaseModel
 	 */
 	public function getModel($name = 'guest', $prefix = 'Administrator',

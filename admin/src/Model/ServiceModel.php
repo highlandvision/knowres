@@ -18,7 +18,6 @@ use HighlandVision\KR\Joomla\Extend\AdminModel;
 use HighlandVision\KR\Translations;
 use HighlandVision\KR\Utility;
 use Joomla\CMS\Form\Form;
-use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Versioning\VersionableControllerTrait;
 use SimpleXMLElement;
 
@@ -164,9 +163,9 @@ class ServiceModel extends AdminModel
 	 * @param  int  $pk  The id of the primary key.
 	 *
 	 * @since  1.0.0
-	 * @return CMSObject|bool  Object on success, false on failure.
+	 * @return object|bool  Object on success, false on failure.
 	 */
-	public function getItem($pk = null): CMSObject|bool
+	public function getItem($pk = null): object|bool
 	{
 		$item = parent::getItem($pk);
 		if ($item)
@@ -193,7 +192,7 @@ class ServiceModel extends AdminModel
 	 */
 	public function validate($form, $data, $group = null): bool|array
 	{
-		$data['parameters'] = Utility::encodeJson(KrMethods::inputArray('custom', []));
+		$data['parameters'] = Utility::encodeJson(KrMethods::inputArray('custom'));
 
 		return parent::validate($form, $data, $group);
 	}

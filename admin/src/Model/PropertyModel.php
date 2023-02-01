@@ -21,7 +21,6 @@ use HighlandVision\KR\Translations;
 use HighlandVision\KR\Utility;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
-use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Versioning\VersionableControllerTrait;
 use RuntimeException;
 use SimpleXMLElement;
@@ -52,7 +51,7 @@ class PropertyModel extends AdminModel
 	/**
 	 * Get the text relevant to the booking type
 	 *
-	 * @param   int  $booking_type  Property booking type
+	 * @param  int  $booking_type  Property booking type
 	 *
 	 * @throws Exception
 	 * @since  1.2.2
@@ -83,15 +82,14 @@ class PropertyModel extends AdminModel
 	/**
 	 * Get the property item.
 	 *
-	 * @param   int  $pk  The id of the primary key.
+	 * @param  int  $pk  The id of the primary key.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return CMSObject|bool  Object on success, false on failure.
+	 * @return object|false  Object on success, false on failure.
 	 */
-	public function getItem($pk = null): CMSObject|false
+	public function getItem($pk = null): object|false
 	{
-		/** @var PropertyModel $item */
 		$item = parent::getItem($pk);
 		if ($item)
 		{
@@ -132,7 +130,7 @@ class PropertyModel extends AdminModel
 	/**
 	 * Mark property for deletion
 	 *
-	 * @param   array  $cid  IDs of property to be actioned
+	 * @param  array  $cid  IDs of property to be actioned
 	 *
 	 * @throws RuntimeException
 	 * @since  3.0.0
@@ -162,7 +160,7 @@ class PropertyModel extends AdminModel
 	/**
 	 * Mark properties for trash
 	 *
-	 * @param   array  $cid  IDs of property to be actioned
+	 * @param  array  $cid  IDs of property to be actioned
 	 *
 	 * @throws RuntimeException
 	 * @since  3.0.0
@@ -186,8 +184,8 @@ class PropertyModel extends AdminModel
 	/**
 	 * Override publish function
 	 *
-	 * @param   array   &$pks    A list of the primary keys to change.
-	 * @param   int      $value  The value of the published state.
+	 * @param  array   &$pks    A list of the primary keys to change.
+	 * @param  int      $value  The value of the published state.
 	 *
 	 * @throws Exception
 	 * @since  3.1.0
@@ -208,7 +206,7 @@ class PropertyModel extends AdminModel
 	 * Method to save the form data
 	 * Override for coupon_code increment field
 	 *
-	 * @param   array  $data  The form data.
+	 * @param  array  $data  The form data.
 	 *
 	 * @throws Exception
 	 * @since  3.2
@@ -227,7 +225,7 @@ class PropertyModel extends AdminModel
 	/**
 	 * Add the property field text to $item
 	 *
-	 * @param   mixed  $item    Property item
+	 * @param  mixed   $item    Property item
 	 * @param  ?array  $fields  Property fields or null to read
 	 *
 	 * @throws Exception
@@ -272,9 +270,9 @@ class PropertyModel extends AdminModel
 	/**
 	 * Method to validate the form data.
 	 *
-	 * @param   Form    $form   The form to validate against.
-	 * @param   array   $data   The data to validate.
-	 * @param   string  $group  The name of the field group to validate.
+	 * @param  Form    $form   The form to validate against.
+	 * @param  array   $data   The data to validate.
+	 * @param  string  $group  The name of the field group to validate.
 	 *
 	 * @throws Exception
 	 * @since  4.0.0
@@ -282,14 +280,14 @@ class PropertyModel extends AdminModel
 	 */
 	public function validate($form, $data, $group = null): bool|array
 	{
-		$data['bed_types']            = Utility::encodeJson(KrMethods::inputArray('bed_types', []), true);
-		$data['cancellation_penalty'] = Utility::encodeJson(KrMethods::inputArray('cancellation_penalty', []));
-		$data['checkin_fees']         = Utility::encodeJson(KrMethods::inputArray('checkin_fees', []));
-		$data['checkout_fees']        = Utility::encodeJson(KrMethods::inputArray('checkout_fees', []));
-		$data['guest_types']          = Utility::encodeJson(KrMethods::inputArray('guest_types', []));
-		$data['rooms']                = Utility::encodeJson(KrMethods::inputArray('rooms', []));
+		$data['bed_types']            = Utility::encodeJson(KrMethods::inputArray('bed_types'), true);
+		$data['cancellation_penalty'] = Utility::encodeJson(KrMethods::inputArray('cancellation_penalty'));
+		$data['checkin_fees']         = Utility::encodeJson(KrMethods::inputArray('checkin_fees'));
+		$data['checkout_fees']        = Utility::encodeJson(KrMethods::inputArray('checkout_fees'));
+		$data['guest_types']          = Utility::encodeJson(KrMethods::inputArray('guest_types'));
+		$data['rooms']                = Utility::encodeJson(KrMethods::inputArray('rooms'));
 
-		$jform                         = KrMethods::inputArray('jform', []);
+		$jform                         = KrMethods::inputArray('jform');
 		$data['categories']            = !empty($jform['categories']) ? Utility::encodeJson($jform['categories']) : [];
 		$data['property_alternatives'] = !empty($jform['property_alternatives'])
 			? Utility::encodeJson($jform['property_alternatives']) : [];
@@ -304,7 +302,7 @@ class PropertyModel extends AdminModel
 	/**
 	 * Method to test whether a record can be deleted.
 	 *
-	 * @param   object  $record  A record object.
+	 * @param  object  $record  A record object.
 	 *
 	 * @since  3.0.0
 	 * @return bool  True if allowed to delete the record.
@@ -343,7 +341,7 @@ class PropertyModel extends AdminModel
 	/**
 	 * Prepare and sanitise the table prior to saving.
 	 *
-	 * @param   PropertyTable  $table  Table object
+	 * @param  PropertyTable  $table  Table object
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -372,9 +370,9 @@ class PropertyModel extends AdminModel
 	/**
 	 * Preprocess the form.
 	 *
-	 * @param   Form    $form   Form object.
-	 * @param   object  $data   Data object.
-	 * @param   string  $group  Group name.
+	 * @param  Form    $form   Form object.
+	 * @param  object  $data   Data object.
+	 * @param  string  $group  Group name.
 	 *
 	 * @throws Exception
 	 * @since  4.0.0

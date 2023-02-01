@@ -41,7 +41,7 @@ class ContractsModel extends ListModel
 	/**
 	 * Constructor.
 	 *
-	 * @param   array  $config  An optional associative array of configuration settings.
+	 * @param  array  $config  An optional associative array of configuration settings.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -79,7 +79,7 @@ class ContractsModel extends ListModel
 	/**
 	 * Check if generated contract tag already exists
 	 *
-	 * @param   string  $tag  Tag to check
+	 * @param  string  $tag  Tag to check
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
@@ -108,7 +108,7 @@ class ContractsModel extends ListModel
 	/**
 	 * Get last contract update
 	 *
-	 * @param   int  $service_id  ID of service
+	 * @param  int  $service_id  ID of service
 	 *
 	 * @throws RuntimeException
 	 * @since  3.3.0
@@ -135,7 +135,7 @@ class ContractsModel extends ListModel
 	/**
 	 * Get contract export data for csv
 	 *
-	 * @param   array  $data  Filtering data
+	 * @param  array  $data  Filtering data
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
@@ -391,7 +391,7 @@ class ContractsModel extends ListModel
 	/**
 	 * Get contract export data for guest registrations
 	 *
-	 * @param   string  $arrival  Date of arrival
+	 * @param  string  $arrival  Date of arrival
 	 *
 	 * @throws RuntimeException
 	 * @since  2.0.0
@@ -421,7 +421,7 @@ class ContractsModel extends ListModel
 	/**
 	 * Get the entered arrival info
 	 *
-	 * @param   string  $arrival  Arrival date
+	 * @param  string  $arrival  Arrival date
 	 *
 	 * @throws RuntimeException
 	 * @since 1.0.0
@@ -457,7 +457,7 @@ class ContractsModel extends ListModel
 	/**
 	 * Get the due balance for contract
 	 *
-	 * @param   string  $balance_date  Balance date
+	 * @param  string  $balance_date  Balance date
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
@@ -486,14 +486,14 @@ class ContractsModel extends ListModel
 	/**
 	 * Get all bookings and ical blocks for a property / properties after from date
 	 *
-	 * @param   mixed   $properties       ID, csv list or array of required properties to be returned
+	 * @param  mixed    $properties       ID, csv list or array of required properties to be returned
 	 * @param  ?string  $from             Earliest departure date, defaults to today of not set
-	 * @param   bool    $array            Format of output, set for associative array, default is array of objects
-	 * @param   int     $sort             Required sort
+	 * @param  bool     $array            Format of output, set for associative array, default is array of objects
+	 * @param  int      $sort             Required sort
 	 *                                    0 = property ID, arrival
 	 *                                    1 = property name, arrival
 	 *                                    2 = property ID, black booking, arrival
-	 * @param   bool    $published        TRUE to get bookings for published properties only
+	 * @param  bool     $published        TRUE to get bookings for published properties only
 	 *
 	 * @throws RuntimeException
 	 * @throws Exception
@@ -602,8 +602,8 @@ class ContractsModel extends ListModel
 	/**
 	 * Get contracts for property(ies) and optional service
 	 *
-	 * @param   mixed  $properties  One, csv string or array of properties
-	 * @param   int    $service_id  ID of service
+	 * @param  mixed  $properties  One, csv string or array of properties
+	 * @param  int    $service_id  ID of service
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -665,7 +665,7 @@ class ContractsModel extends ListModel
 	/**
 	 * Get number of contracts for guest
 	 *
-	 * @param   int  $guest_id  ID of guest
+	 * @param  int  $guest_id  ID of guest
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
@@ -687,9 +687,9 @@ class ContractsModel extends ListModel
 	/**
 	 * Get any cron triggers from emails
 	 *
-	 * @param   string  $trigger_date_field  The name of the trigger date field
-	 * @param   string  $date                The trigger date
-	 * @param   mixed   $booking_status      As int, string or array
+	 * @param  string  $trigger_date_field  The name of the trigger date field
+	 * @param  string  $date                The trigger date
+	 * @param  mixed   $booking_status      As int, string or array
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
@@ -731,7 +731,7 @@ class ContractsModel extends ListModel
 	/**
 	 * Get combined dashboard data
 	 *
-	 * @param   int  $guest_id  ID of guest
+	 * @param  int  $guest_id  ID of guest
 	 *
 	 * @throws RuntimeException
 	 * @throws Exception
@@ -791,8 +791,8 @@ class ContractsModel extends ListModel
 	/**
 	 * Get stats
 	 *
-	 * @param   int     $property_id    ID of property
-	 * @param   string  $created_after  Contracts created after date
+	 * @param  int     $property_id    ID of property
+	 * @param  string  $created_after  Contracts created after date
 	 *
 	 * @throws RuntimeException
 	 * @since  3.3.0
@@ -822,7 +822,7 @@ class ContractsModel extends ListModel
 	/**
 	 * Get contracts due to expire when no deposit received
 	 *
-	 * @param   string  $expiry_date  Expiry date
+	 * @param  string  $expiry_date  Expiry date
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
@@ -851,8 +851,8 @@ class ContractsModel extends ListModel
 	/**
 	 * Get contracts due a review
 	 *
-	 * @param   string  $departure  Departure date
-	 * @param   bool    $reminder   TRUE for reminder
+	 * @param  string  $departure  Departure date
+	 * @param  bool    $reminder   TRUE for reminder
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
@@ -917,10 +917,10 @@ class ContractsModel extends ListModel
 	/**
 	 * Find the latest n contracts for a property.
 	 *
-	 * @param   int     $property_id  ID of property
-	 * @param   string  $created_at   Earliest created at date
-	 * @param   string  $today        Today
-	 * @param   int     $limit        # to return
+	 * @param  int     $property_id  ID of property
+	 * @param  string  $created_at   Earliest created at date
+	 * @param  string  $today        Today
+	 * @param  int     $limit        # to return
 	 *
 	 * @throws RuntimeException
 	 * @since  3.3.0
@@ -1044,10 +1044,10 @@ class ContractsModel extends ListModel
 	/**
 	 * Check if property is available (contracts only no ics) between two dates
 	 *
-	 * @param   int     $property_id  ID of property
-	 * @param   string  $arrival      Arrival date
-	 * @param   string  $departure    Departure date
-	 * @param   int     $id           ID of contract
+	 * @param  int     $property_id  ID of property
+	 * @param  string  $arrival      Arrival date
+	 * @param  string  $departure    Departure date
+	 * @param  int     $id           ID of contract
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
@@ -1114,7 +1114,7 @@ class ContractsModel extends ListModel
 	/**
 	 * Get the data to be displayed on the tooltip
 	 *
-	 * @param   int  $id  ID of contract
+	 * @param  int  $id  ID of contract
 	 *
 	 * @throws RuntimeException
 	 * @since  3.3.0
@@ -1150,9 +1150,9 @@ class ContractsModel extends ListModel
 	/**
 	 * Find upcoming contracts for a property
 	 *
-	 * @param   int     $property_id  ID of property
-	 * @param   string  $arrival      Earliest arrival date
-	 * @param   int     $limit        # to return
+	 * @param  int     $property_id  ID of property
+	 * @param  string  $arrival      Earliest arrival date
+	 * @param  int     $limit        # to return
 	 *
 	 * @throws RuntimeException
 	 * @since  3.3.0
@@ -1191,10 +1191,10 @@ class ContractsModel extends ListModel
 	/**
 	 * Check if property is available between arrival and departure dates
 	 *
-	 * @param   int     $property_id  ID of property
-	 * @param   string  $arrival      Arrival date
-	 * @param   string  $departure    Departure date
-	 * @param   int     $edit_id      ID of contract being edited
+	 * @param  int     $property_id  ID of property
+	 * @param  string  $arrival      Arrival date
+	 * @param  string  $departure    Departure date
+	 * @param  int     $edit_id      ID of contract being edited
 	 *
 	 * @throws RuntimeException
 	 * @since  3.3.0
@@ -1450,7 +1450,7 @@ class ContractsModel extends ListModel
 	 * different modules that might need different sets of data or different
 	 * ordering requirements.
 	 *
-	 * @param   string  $id  A prefix for the store id.
+	 * @param  string  $id  A prefix for the store id.
 	 *
 	 * @since  1.0.0
 	 * @return string   A store id.
@@ -1480,8 +1480,8 @@ class ContractsModel extends ListModel
 	 * Method to autopopulate the model state.
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @param   string  $ordering   Default ordering
-	 * @param   string  $direction  Default ordering direction
+	 * @param  string  $ordering   Default ordering
+	 * @param  string  $direction  Default ordering direction
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -1529,10 +1529,10 @@ class ContractsModel extends ListModel
 	/**
 	 * Union query for combining blocks
 	 *
-	 * @param   object  $db          KrFactory instance
-	 * @param   mixed   $properties  ID, csv list or array of required properties to be returned
-	 * @param   string  $departure   Earliest departure date, defauls to today of not set
-	 * @param   bool    $published   TRUE to get bookings for published properties only
+	 * @param  object  $db          KrFactory instance
+	 * @param  mixed   $properties  ID, csv list or array of required properties to be returned
+	 * @param  string  $departure   Earliest departure date, defauls to today of not set
+	 * @param  bool    $published   TRUE to get bookings for published properties only
 	 *
 	 * @since  3.3.0
 	 * @return QueryInterface

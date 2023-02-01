@@ -21,7 +21,6 @@ use HighlandVision\KR\Utility;
 use InvalidArgumentException;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
-use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Table\Table;
 use RuntimeException;
 
@@ -46,9 +45,9 @@ class ContractModel extends AdminModel
 	/**
 	 * Get the currenct contract balance
 	 *
-	 * @param   float  $contract_total  Contract total
-	 * @param   mixed  $fees            Contract fees
-	 * @param   mixed  $payments        Contract payments
+	 * @param  float  $contract_total  Contract total
+	 * @param  mixed  $fees            Contract fees
+	 * @param  mixed  $payments        Contract payments
 	 *
 	 * @since  4.0.0
 	 * @return float
@@ -106,10 +105,10 @@ class ContractModel extends AdminModel
 	/**
 	 * Method to get the record form.
 	 *
-	 * @param   array   $data         An optional array of data for the form to interogate.
-	 * @param   bool    $loadData     True if the form is to load its own data (default case), false if not.
+	 * @param  array    $data         An optional array of data for the form to interogate.
+	 * @param  bool     $loadData     True if the form is to load its own data (default case), false if not.
 	 * @param  ?string  $source       The form name if required.
-	 * @param   int     $property_id  ID of property if required fields to be set.
+	 * @param  int      $property_id  ID of property if required fields to be set.
 	 *
 	 * @throws Exception
 	 * @since  1.0
@@ -136,8 +135,8 @@ class ContractModel extends AdminModel
 	 * Delete contract and associated data
 	 * Delete the guest if only for this contract
 	 *
-	 * @param   int  $id        ID of contract
-	 * @param   int  $guest_id  ID of guest
+	 * @param  int  $id        ID of contract
+	 * @param  int  $guest_id  ID of guest
 	 *
 	 * @throws Exception
 	 * @since  2.3.0
@@ -191,8 +190,8 @@ class ContractModel extends AdminModel
 	/**
 	 * Set the required fields for the manager guest form (from settings)
 	 *
-	 * @param   Form   $form      Guest form
-	 * @param   array  $settings  Property settings
+	 * @param  Form   $form      Guest form
+	 * @param  array  $settings  Property settings
 	 *
 	 * @since  1.0.0
 	 * @return Form
@@ -260,13 +259,13 @@ class ContractModel extends AdminModel
 	/**
 	 * Read and process the item.
 	 *
-	 * @param   int  $pk  The id of the primary key.
+	 * @param  int  $pk  The id of the primary key.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return CMSObject|false  Object on success, false on failure.
+	 * @return object|false  Object on success, false on failure.
 	 */
-	public function getItem($pk = null): CMSObject|false
+	public function getItem($pk = null): object|false
 	{
 		$item = parent::getItem($pk);
 		if ($item)
@@ -339,7 +338,6 @@ class ContractModel extends AdminModel
 				$item->created_by_name = KrMethods::getUser($item->created_by)->name;
 			}
 
-			/* @var ContractguestdatasModel $item */
 			$item->guestdata_id = KrFactory::getListModel('contractguestdatas')->getByContractId($item->id);
 		}
 
@@ -349,7 +347,7 @@ class ContractModel extends AdminModel
 	/**
 	 * Method to test whether a record can be deleted.
 	 *
-	 * @param   object  $record  A record object.
+	 * @param  object  $record  A record object.
 	 *
 	 * @since   3.0.0
 	 * @return  bool  True if allowed to delete the record. Defaults to the permission for the component.
@@ -388,7 +386,7 @@ class ContractModel extends AdminModel
 	/**
 	 * Prepare and sanitise the table prior to saving.
 	 *
-	 * @param   Table  $table  Table instance
+	 * @param  Table  $table  Table instance
 	 *
 	 * @throws Exception
 	 * @since  2.4.0
