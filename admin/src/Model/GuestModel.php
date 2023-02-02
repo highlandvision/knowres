@@ -124,7 +124,7 @@ class GuestModel extends AdminModel
 	}
 
 	/**
-	 * Method to get a knowres record.
+	 * Method to get a Guest item.
 	 *
 	 * @param  int  $pk  The id of the primary key.
 	 *
