@@ -30,6 +30,24 @@ use function jexit;
 class GuestController extends FormController
 {
 	/**
+	 * Method to run batch operations.
+	 *
+	 * @param  BaseDatabaseModel  $model  The model of the component being processed.
+	 *
+	 * @since   1.7
+	 * @return  bool  True if successful, false otherwise and internal error is set.
+	 */
+	public function batch($model = null): bool
+	{
+		$this->checkToken();
+
+		$model = $this->getModel('Guest', 'Administrator', []);
+		$this->setRedirect(Route::_('index.php?option=com_foos&view=foos' . $this->getRedirectToListAppend(), false));
+
+		return parent::batch($model);
+	}
+
+	/**
 	 * Method to cancel an edit.
 	 *
 	 * @param  null  $key  The name of the primary key of the URL variable.

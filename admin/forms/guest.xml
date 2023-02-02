@@ -188,6 +188,7 @@
 			class="chzn-color-state"
 			size="1"
 			default="1"
+			validate="guest"
 			label="JSTATUS"
 			description="JFIELD_PUBLISHED_DESC">
 			<option value="1">JPUBLISHED</option>
