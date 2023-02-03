@@ -35,7 +35,7 @@ class Utility
 	/**
 	 * Format ajax errors
 	 *
-	 * @param   mixed  $errors  Error messages
+	 * @param  mixed  $errors  Error messages
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -81,7 +81,7 @@ class Utility
 	/**
 	 * Convert array to object
 	 *
-	 * @param   array  $array  Data to be converted
+	 * @param  array  $array  Data to be converted
 	 *
 	 * @since  3.2.1
 	 * @return mixed
@@ -94,9 +94,9 @@ class Utility
 	/**
 	 * Compare two floats
 	 *
-	 * @param   float  $one      First float
-	 * @param   float  $two      Second float
-	 * @param   int    $decimal  Decimal points
+	 * @param  float  $one      First float
+	 * @param  float  $two      Second float
+	 * @param  int    $decimal  Decimal points
 	 *
 	 * @since  3.4.0
 	 * @return bool
@@ -109,8 +109,8 @@ class Utility
 	/**
 	 * Get part of string without cutting words
 	 *
-	 * @param   string  $string  Text for evaluation
-	 * @param   int     $length  Number of characters required
+	 * @param  string  $string  Text for evaluation
+	 * @param  int     $length  Number of characters required
 	 *
 	 * @since  1.0.0
 	 * @return string
@@ -131,7 +131,7 @@ class Utility
 	 * Decode json or return empty type
 	 *
 	 * @param  ?string  $data   Json data to be decoded
-	 * @param   bool    $array  Output format
+	 * @param  bool     $array  Output format
 	 *
 	 * @since  3.3.0
 	 * @return mixed
@@ -161,7 +161,7 @@ class Utility
 	/**
 	 * Display array of ages as 1, 2 ,3 and 4.
 	 *
-	 * @param   array  $ages  Array of ages
+	 * @param  array  $ages  Array of ages
 	 *
 	 * @since  4.0.0
 	 * @return string
@@ -176,9 +176,9 @@ class Utility
 	/**
 	 * Display monetary (floated) input fields
 	 *
-	 * @param  ?float   $value      Monetary value
-	 * @param   int     $dp         Decimal places
-	 * @param   string  $separator  Decimal character
+	 * @param  ?float  $value      Monetary value
+	 * @param  int     $dp         Decimal places
+	 * @param  string  $separator  Decimal character
 	 *
 	 * @since  3.5.0
 	 * @return string
@@ -199,10 +199,10 @@ class Utility
 	/**
 	 * Format a currency value for display using numberformatter
 	 *
-	 * @param   mixed   $value      Value to be converted or null
-	 * @param   string  $currency   ISO currency
-	 * @param   bool    $decimals   Falso to hide decimals
-	 * @param   string  $lang_code  Current language code
+	 * @param  mixed   $value      Value to be converted or null
+	 * @param  string  $currency   ISO currency
+	 * @param  bool    $decimals   Falso to hide decimals
+	 * @param  string  $lang_code  Current language code
 	 *
 	 * @since  3.5.0
 	 * @return string
@@ -234,8 +234,8 @@ class Utility
 	/**
 	 * Encode json for a non-empty array or object
 	 *
-	 * @param   mixed  $data     Data to be encoded
-	 * @param   bool   $numeric  Set true to remove quotes from numbers
+	 * @param  mixed  $data     Data to be encoded
+	 * @param  bool   $numeric  Set true to remove quotes from numbers
 	 *
 	 * @since  2.4.0
 	 * @return string
@@ -264,8 +264,8 @@ class Utility
 	 * @param  ?string   $address2  Address line 2
 	 * @param  ?string   $postcode  Postcode
 	 * @param  ?string   $town      Town
-	 * @param   mixed    $region    ID of region or name
-	 * @param   mixed    $country   ID of country or name
+	 * @param  mixed     $region    ID of region or name
+	 * @param  mixed     $country   ID of country or name
 	 * @param   ?string  $string    Value for implode
 	 *
 	 * @since  3.3.0
@@ -291,9 +291,9 @@ class Utility
 	/**
 	 * Format a phone number for display
 	 *
-	 * @param   string  $number      Telephone number
-	 * @param   int     $country_id  ID of country
-	 * @param   bool    $paypal      True for PayPal format
+	 * @param  string  $number      Telephone number
+	 * @param  int     $country_id  ID of country
+	 * @param  bool    $paypal      True for PayPal format
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -313,7 +313,7 @@ class Utility
 	/**
 	 * New name for Save&Copy
 	 *
-	 * @param   string  $name  Value to be incremented
+	 * @param  string  $name  Value to be incremented
 	 *
 	 * @since  1.7.1
 	 * @return string
@@ -326,7 +326,7 @@ class Utility
 	/**
 	 * Geocode latlng details
 	 *
-	 * @param   string  $latlng  LatLng details
+	 * @param  string  $latlng  LatLng details
 	 *
 	 * @since 3.3.0
 	 * @return array|bool
@@ -349,10 +349,10 @@ class Utility
 	/**
 	 * Get translations for address fields
 	 *
-	 * @param   Translations  $Translations  Translations object
-	 * @param   string        $item          Table name
-	 * @param   mixed         $value         Item value
-	 * @param   string        $field         Translation field name
+	 * @param  Translations  $Translations  Translations object
+	 * @param  string        $item          Table name
+	 * @param  mixed         $value         Item value
+	 * @param  string        $field         Translation field name
 	 *
 	 * @since  3.3.0
 	 * @return array|string
@@ -366,8 +366,8 @@ class Utility
 	/**
 	 * Output textual status of contract
 	 *
-	 * @param   int   $booking_status  Booking status
-	 * @param   bool  $short           True for short booking status value
+	 * @param  int   $booking_status  Booking status
+	 * @param  bool  $short           True for short booking status value
 	 *
 	 * @since  1.0.0
 	 * @return string
@@ -409,8 +409,8 @@ class Utility
 	/**
 	 * Get dialling code from country
 	 *
-	 * @param   int   $country_id  ID of country
-	 * @param   bool  $paypal      True for PayPAl format that requires 00 instead of plus
+	 * @param  int   $country_id  ID of country
+	 * @param  bool  $paypal      True for PayPAl format that requires 00 instead of plus
 	 *
 	 * @throws Exception
 	 * @since  3.7.0
@@ -479,7 +479,7 @@ class Utility
 	/**
 	 * Get path info
 	 *
-	 * @param   string  $type  Path type
+	 * @param  string  $type  Path type
 	 *
 	 * @since  1.0.0
 	 * @return false|string
@@ -509,7 +509,7 @@ class Utility
 	/**
 	 * Convert text to folder name
 	 *
-	 * @param   string  $name  Folder name to clean
+	 * @param  string  $name  Folder name to clean
 	 *
 	 * @since  2.2.0
 	 * @return string
@@ -527,8 +527,8 @@ class Utility
 	/**
 	 * Format errors for page
 	 *
-	 * @param   string|array  $errors  Error messages or Exception
-	 * @param   string        $type    Message type
+	 * @param  string|array  $errors  Error messages or Exception
+	 * @param  string        $type    Message type
 	 *
 	 * @throws Exception
 	 * @since   3.3.0
@@ -570,8 +570,8 @@ class Utility
 	/**
 	 * Queue message and redirect
 	 *
-	 * @param   string  $message   A language or literal text.
-	 * @param   string  $redirect  Redirect rpoute excluding index and option.
+	 * @param  string  $message   A language or literal text.
+	 * @param  string  $redirect  Redirect rpoute excluding index and option.
 	 *
 	 * @throws Exception
 	 * @since  4.0.0
@@ -585,9 +585,9 @@ class Utility
 	/**
 	 * Round currency values as per decimal places
 	 *
-	 * @param   float   $value     Value to be rounded
-	 * @param   string  $iso       ISO currency for rounding
-	 * @param   int     $decimals  Decimals for rounding
+	 * @param  float   $value     Value to be rounded
+	 * @param  string  $iso       ISO currency for rounding
+	 * @param  int     $decimals  Decimals for rounding
 	 *
 	 * @since  1.0.0
 	 * @return float
@@ -611,7 +611,7 @@ class Utility
 	/**
 	 * Validate input date
 	 *
-	 * @param   string  $date  Date to validate
+	 * @param  string  $date  Date to validate
 	 *
 	 * @since  3.3.1
 	 */

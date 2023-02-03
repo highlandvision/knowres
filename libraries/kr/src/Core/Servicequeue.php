@@ -150,7 +150,6 @@ class Servicequeue
 			$queue->actioned     = 0;
 			$queue->method       = 'updateAvailability';
 			$queue->state        = 1;
-			$queue->checked_out  = 0;
 			$queue->created_by   = 0;
 			$queue->created_at   = TickTock::getTS();
 			KrFactory::insert('service_queue', $queue);

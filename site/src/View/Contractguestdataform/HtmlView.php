@@ -18,20 +18,19 @@ use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\HtmlView as KrHtmlView;
 use HighlandVision\KR\SiteHelper;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Object\CMSObject;
 use RuntimeException;
 
 /**
- * Edit contract guest data (arrival details)
+ * Dashboard contract guest data form (arrival details)
  *
  * @since 2.5.0
  */
 class HtmlView extends KrHtmlView\Site
 {
-	/** @var CMSObject Contract item. */
-	public CMSObject $contract;
-	/** @var CMSObject Property item. */
-	public CMSObject $property;
+	/** @var object Contract item. */
+	public object $contract;
+	/** @var object Property item. */
+	public object $property;
 
 	/**
 	 * Display the view
@@ -45,6 +44,7 @@ class HtmlView extends KrHtmlView\Site
 	public function display($tpl = null): void
 	{
 		SiteHelper::checkUser();
+
 		try
 		{
 			list($guest_id, $contract_id) = SiteHelper::validateDashboardSession();

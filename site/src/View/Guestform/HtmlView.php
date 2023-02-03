@@ -22,7 +22,7 @@ use HighlandVision\KR\Translations;
 use Joomla\CMS\Factory;
 
 /**
- * Edit guest data
+ * Dashboard guest data form
  *
  * @since 2.5.0
  */

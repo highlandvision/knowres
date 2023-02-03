@@ -218,25 +218,27 @@ extract($displayData);
 		<div class="row">
 			<div class="small-4 large-3 columns">
 				<?php echo TickTock::displayDate($p->payment_date); ?>
+				<?php if (!$p->confirmed): ?>
+					<?php echo '*'; ?>
+				<?php endif; ?>
 			</div>
-			<?php if ($p->base_amount > 0): ?>
-				<?php if (!empty($fex)): ?>
-					<div class="small-5 large-6 columns text-right">
+			<div class="small-5 large-6 columns">
+				<?php if ($p->base_amount > 0): ?>
+					<?php if (!empty($fex)): ?>
 						<?php echo $fex . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . Utility::displayValue($p->base_amount,
 								$contract->currency); ?>
-					</div>
-				<?php endif; ?>
-			<?php else: ?>
-				<?php if (!empty($fex)): ?>
-					<div class="small-5 columns text-right">
+					<?php endif; ?>
+				<?php else: ?>
+					<?php if (!empty($fex)): ?>
 						<?php echo $fex . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . Utility::displayValue(abs($p->base_amount),
 								$contract->currency); ?>
-					</div>
+					<?php endif; ?>
 				<?php endif; ?>
-				<div class="small-12 columns text-right">
-					<?php echo Utility::displayValue(abs($p->base_amount), $contract->currency); ?>
-				</div>
-			<?php endif; ?>
+				&nbsp;
+			</div>
+			<div class="small-3 columns text-right">
+				<?php echo Utility::displayValue(abs($p->base_amount), $contract->currency); ?>
+			</div>
 		</div>
 	<?php endforeach; ?>
 
@@ -257,7 +259,7 @@ extract($displayData);
 
 	<?php if ($pending_total): ?>
 		<div class="small-12 columns">
-			<?php echo KrMethods::plain('COM_KNOWRES_PAYMENT_UNCONFIRMED'); ?>
+			<small><?php echo KrMethods::plain('COM_KNOWRES_PAYMENT_UNCONFIRMED'); ?></small>
 		</div>
 	<?php endif; ?>
 	<hr>

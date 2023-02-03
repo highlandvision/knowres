@@ -33,7 +33,7 @@ class GuestModel extends AdminGuestModel
 	/**
 	 * Override checkout for guestdata as checked_out set to 0.
 	 *
-	 * @param   int|null  $pk  The id of the row to check out.
+	 * @param  int|null  $pk  The id of the row to check out.
 	 *
 	 * @throws Exception
 	 * @since  4.0.0
@@ -56,10 +56,10 @@ class GuestModel extends AdminGuestModel
 	/**
 	 * Method to validate the form data.
 	 *
-	 * @param   Form    $form      The form to validate against.
-	 * @param   array   $data      The data to validate.
+	 * @param  Form     $form      The form to validate against.
+	 * @param  array    $data      The data to validate.
 	 * @param  ?string  $group     The name of the field group to validate.
-	 * @param   array   $settings  Property settings
+	 * @param  array    $settings  Property settings
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -98,8 +98,8 @@ class GuestModel extends AdminGuestModel
 	/**
 	 * Set the required fields for the manager guest form (from settings)
 	 *
-	 * @param   Form   $form      Guest form
-	 * @param   array  $settings  Property settings
+	 * @param  Form   $form      Guest form
+	 * @param  array  $settings  Property settings
 	 *
 	 * @throws UnexpectedValueException
 	 * @since  4.0.0

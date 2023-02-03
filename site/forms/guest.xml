@@ -130,11 +130,11 @@
 	<fieldset name="billing">
 		<field name="billing"
 			class="btn-group btn-group-yesno"
-			default="1"
+			default="0"
 			type="radio"
 			label="COM_KNOWRES_GUEST_BILLING_ADDRESS_CHECK">
-			<option value="1" onchange="fillBilling(1);">JYES</option>
 			<option value="0" onchange="fillBilling(0);">JNO</option>
+			<option value="1" onchange="fillBilling(1);">JYES</option>
 		</field>
 		<field name="b_address1"
 			filter="string"

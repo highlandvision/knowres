@@ -25,12 +25,12 @@ extract($displayData);
 $count = 0;
 ?>
 
-	<div class="row">
-		<div class="col-3 strong"><?php echo KrMethods::plain('COM_KNOWRES_DATE'); ?></div>
-		<div class="col-3 strong"><?php echo KrMethods::plain('COM_KNOWRES_STATUS'); ?></div>
-		<div class="col-3 strong text-end"><?php echo KrMethods::plain('COM_KNOWRES_CONTRACTPAYMENTS_AMOUNT'); ?></div>
-		<div class="col-3 strong text-end"><?php echo KrMethods::plain('COM_KNOWRES_CONTRACTPAYMENTS_BASE_AMOUNT'); ?></div>
-	</div>
+<div class="row">
+	<div class="col-2 strong"><?php echo KrMethods::plain('COM_KNOWRES_DATE'); ?></div>
+	<div class="col-4 strong"><?php echo KrMethods::plain('COM_KNOWRES_STATUS'); ?></div>
+	<div class="col-3 strong text-end"><?php echo KrMethods::plain('COM_KNOWRES_CONTRACTPAYMENTS_AMOUNT'); ?></div>
+	<div class="col-3 strong text-end"><?php echo KrMethods::plain('COM_KNOWRES_CONTRACTPAYMENTS_BASE_AMOUNT'); ?></div>
+</div>
 
 <?php foreach ($payments as $p): ?>
 	<?php if ($count): ?>
@@ -41,10 +41,10 @@ $count = 0;
 		</div>
 	<?php endif; ?>
 	<div class="row">
-		<div class="col-3">
+		<div class="col-2">
 			<?php echo TickTock::displayDate($p->payment_date, 'dMy'); ?>
 		</div>
-		<div class="col-3">
+		<div class="col-4">
 			<?php if ($p->confirmed) : ?>
 				<?php echo KrMethods::plain('COM_KNOWRES_CONFIRMED'); ?>
 			<?php else: ?>

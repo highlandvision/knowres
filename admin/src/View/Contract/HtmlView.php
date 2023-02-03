@@ -24,7 +24,6 @@ use HighlandVision\KR\Utility;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
-use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\Utilities\ArrayHelper;
@@ -51,14 +50,14 @@ class HtmlView extends KrHtmlView\Contract
 	public int $dp = 2;
 	/** @var ?string  Return view. */
 	public ?string $gobackto = '';
-	/** @var CMSObject Guest row. */
-	public CMSObject $guest;
+	/** @var object Guest row. */
+	public object $guest;
 	/** @var ?Form Guest form. */
 	public ?Form $guestForm = null;
 	/** @var string Nights. */
 	public string $nights = '';
-	/** @var CMSObject Property row. */
-	public CMSObject $property;
+	/** @var object Property row. */
+	public object $property;
 	/** @var array Property settings. */
 	public array $settings = [];
 	/** @var bool Show coupon input. */
@@ -67,7 +66,7 @@ class HtmlView extends KrHtmlView\Contract
 	/**
 	 * Display the view
 	 *
-	 * @param   string  $tpl  Template name
+	 * @param  string  $tpl  Template name
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -170,7 +169,7 @@ class HtmlView extends KrHtmlView\Contract
 	/**
 	 * Add the page title and default toolbar for form view.
 	 *
-	 * @param   string  $name  Name of the form
+	 * @param  string  $name  Name of the form
 	 *
 	 * @throws Exception
 	 * @since  4.0.0

@@ -140,7 +140,7 @@ class Gateway extends Service
 		{
 			if ($this->paymentData->payment_type == 'PBB')
 			{
-				$type = KrMethods::plain('COM_KNOWRES_PAYMENT_BALANCE');
+				$type = KrMethods::plain('COM_KNOWRES_PAYMENT_BALANCE_PAYMENT');
 			}
 			else
 			{
@@ -154,7 +154,7 @@ class Gateway extends Service
 				}
 			}
 
-			$this->paymentData->note = KrMethods::sprintf('COM_KNOWRES_SERVICE_DESCRIPTION', $type,
+			$this->paymentData->note = KrMethods::sprintf('COM_KNOWRES_PAYMENT_DESCRIPTION', $type,
 				Utility::displayValue($this->paymentData->amount, $this->paymentData->currency),
 				$this->contract->property_name, TickTock::displayDate($this->contract->arrival),
 				TickTock::displayDate($this->contract->departure));

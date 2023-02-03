@@ -29,7 +29,7 @@ class ContractguestdataModel extends AdminContractguestdataModel
 	/**
 	 * Override checkout for guestdata as checked_out set to 0.
 	 *
-	 * @param   int|null  $pk  The id of the row to check out.
+	 * @param  int|null  $pk  The id of the row to check out.
 	 *
 	 * @throws Exception
 	 * @since  4.0.0
@@ -52,8 +52,8 @@ class ContractguestdataModel extends AdminContractguestdataModel
 	/**
 	 * Method to get the record form.
 	 *
-	 * @param   array   $data      An optional array of data for the form to interogate.
-	 * @param   bool    $loadData  True if the form is to load its own data (default case), false if not.
+	 * @param  array    $data      An optional array of data for the form to interogate.
+	 * @param  bool     $loadData  True if the form is to load its own data (default case), false if not.
 	 * @param  ?string  $source    The form name if required.
 	 *
 	 * @throws Exception

@@ -37,7 +37,7 @@ use HighlandVision\KR\Framework\KrMethods;
 			</div>
 		<?php endif; ?>
 
-		<h4><?php echo KrMethods::plain('COM_KNOWRES_YOUR_STATEMENT'); ?></h4>
+		<h6><?php echo KrMethods::plain('COM_KNOWRES_YOUR_STATEMENT'); ?></h6>
 		<div class="callout formbg small financial">
 			<?php echo KrMethods::render('dashboard.summary', ['contract'    => $this->item,
 			                                                   'fees'        => $this->fees,

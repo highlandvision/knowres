@@ -35,7 +35,7 @@ $changerates = KrMethods::route('index.php?option=com_knowres&task=propertysetti
 	. '#rates');
 ?>
 
-<?php if (isset($this->item->checked_out) && $this->item->checked_out
+<?php if (!is_null($this->item->checked_out) && $this->item->checked_out
 	&& ($this->item->checked_out != KrMethods::getUser()->id)) : ?>
 	<div class="row">
 		<div class="col">

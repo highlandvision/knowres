@@ -341,7 +341,7 @@ class Stripe extends Gateway
 	//		$this->paymentData->customer_ref   = $this->guest->customer_ref;
 	//
 	//		$type = KrMethods::plain('COM_KNOWRES_PAYMENT_BALANCE_OF');
-	//		$this->paymentData->description = KrMethods::sprintf('COM_KNOWRES_SERVICE_DESCRIPTION', $type,
+	//		$this->paymentData->description = KrMethods::sprintf('COM_KNOWRES_PAYMENT_DESCRIPTION', $type,
 	//			Utility::displayValue($amount, $this->contract->currency), $this->contract->property_name,
 	//			TickTock::displayDate($this->contract->arrival), TickTock::displayDate($this->contract->departure));
 	//

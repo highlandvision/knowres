@@ -304,9 +304,9 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 		$this->getActions($name, !empty($this->item_id) ? $this->item_id : 0);
 
 		$checkedOut = false;
-		if (!empty($this->item->checked_out))
+		if (!is_null($this->item->checked_out))
 		{
-			$checkedOut = !($this->item->checked_out == 0 || $this->item->checked_out == KrMethods::getUser()->id);
+			$checkedOut = $this->item->checked_out != KrMethods::getUser()->id;
 		}
 
 		$toolbarButtons = [];

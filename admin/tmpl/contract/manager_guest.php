@@ -18,8 +18,6 @@ use HighlandVision\KR\Framework\KrMethods;
 		<div class="col">
 			<?php echo $this->guestForm->renderField('email'); ?>
 		</div>
-		<div class="col">
-		</div>
 	</div>
 
 	<?php if ($this->guestForm->getFieldAttribute('firstname', 'type', 'hidden') != 'hidden'

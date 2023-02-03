@@ -26,7 +26,7 @@ extract($displayData);
 
 <?php if ($contract->deposit > 0): ?>
 	<div class="row summary">
-		<div class="small-6 columns">
+		<div class="small-4 columns">
 			<?php if ($contract->deposit != $contract->contract_total): ?>
 				<?php echo KrMethods::plain('COM_KNOWRES_DEPOSIT'); ?>
 			<?php else: ?>

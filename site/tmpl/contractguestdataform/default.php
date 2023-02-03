@@ -20,7 +20,7 @@ $wa->useScript('com_knowres.site')
    ->useScript('keepalive');
 ?>
 
-<h3><?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATAFORM_TITLE'); ?></h3>
+<h1><?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATAFORM_TITLE'); ?></h1>
 
 <?php echo KrMethods::render('dashboard.header', ['contract' => $this->contract,
                                                   'times'    => false]);
