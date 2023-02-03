@@ -1176,18 +1176,7 @@ class ContractController extends FormController
 			$id = 0;
 		}
 
-		if ($gobackto)
-		{
-			if (str_contains($gobackto, 'task') || str_contains($gobackto, 'view'))
-			{
-				$url .= 'index.php?option=com_knowres&' . $gobackto;
-			}
-			else
-			{
-				$url .= 'index.php?option=com_knowres&view=' . $gobackto;
-			}
-		}
-		else if ($task === 'save' && $id > 0 && $action != 'block')
+		if ($task === 'save' && $id > 0 && $action != 'block')
 		{
 			$url .= 'index.php?option=com_knowres&task=contract.show&id=' . $id;
 		}
@@ -1197,6 +1186,17 @@ class ContractController extends FormController
 			if ($action)
 			{
 				$url .= '&layout=' . $action;
+			}
+		}
+		else if ($gobackto)
+		{
+			if (str_contains($gobackto, 'task') || str_contains($gobackto, 'view'))
+			{
+				$url .= 'index.php?option=com_knowres&' . $gobackto;
+			}
+			else
+			{
+				$url .= 'index.php?option=com_knowres&view=' . $gobackto;
 			}
 		}
 		else if (($task === 'trash' || $task === 'resurrect') && $id > 0)

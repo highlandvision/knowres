@@ -142,10 +142,13 @@ class GuestController extends FormController
 	 */
 	protected function postSaveHook(BaseDatabaseModel $model, $validData = [])
 	{
-		$gobackto = Utility::getGoBackTo();
-		if ($gobackto)
+		if ($this->getTask() != 'apply')
 		{
-			KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&' . $gobackto, false));
+			$gobackto = Utility::getGoBackTo();
+			if ($gobackto)
+			{
+				KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&' . $gobackto, false));
+			}
 		}
 	}
 }
