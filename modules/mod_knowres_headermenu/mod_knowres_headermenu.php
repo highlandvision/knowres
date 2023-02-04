@@ -9,9 +9,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Helper\ModuleHelper;
-use Knowres\Module\Headermenu\Administrator\Helper\KnowresHeadermenuHelper;
-
-//JLoader::registerNamespace('HighlandVision\\KR', JPATH_LIBRARIES . '/highlandvision/src', false, true);
+use Knowres\Module\Headermenu\Administrator\Helper\KnowresHeaderMenuHelper;
 
 $menu = KnowresHeaderMenuHelper::getMenu();
 if (is_countable($menu) && count($menu))
