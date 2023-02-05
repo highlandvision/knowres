@@ -11,16 +11,8 @@ namespace HighlandVision\Component\Knowres\Administrator\Controller;
 
 defined('_JEXEC') or die;
 
-use Exception;
-use HighlandVision\KR\Framework\KrFactory;
-use HighlandVision\KR\Framework\KrMethods;
 use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
-use Joomla\CMS\Response\JsonResponse;
-
-use function array_keys;
-use function array_values;
-use function jexit;
 
 /**
  * Towns controller list class.
@@ -29,48 +21,6 @@ use function jexit;
  */
 class TownsController extends AdminController
 {
-	/**
-	 * Return json data for remotechained
-	 *
-	 * @since 1.0.0
-	 */
-	public function chained()
-	{
-		try
-		{
-			$region_id     = $this->input->getInt('region_id', 0);
-			$allowProperty = $this->input->getBool('allow_property', false);
-			$required      = $this->input->getBool('required', true);
-
-			$data = [];
-			if (!$required)
-			{
-				$data[0] = KrMethods::plain('COM_KNOWRES_ALL');
-			}
-
-			if ($region_id)
-			{
-				$items = KrFactory::getListModel('towns')->getByRegion($region_id, $allowProperty);
-				foreach ($items as $i)
-				{
-					$data[$i->id] = $i->name;
-				}
-			}
-
-			$wrapper      = [];
-			$wrapper['k'] = array_keys($data);
-			$wrapper['v'] = array_values($data);
-
-			echo new JsonResponse($wrapper);
-			jexit();
-		}
-		catch (Exception)
-		{
-			echo new JsonResponse(null, KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN'), true);
-			jexit();
-		}
-	}
-
 	/**
 	 * Proxy for getModel.
 	 *

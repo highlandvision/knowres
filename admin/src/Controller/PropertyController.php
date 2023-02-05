@@ -13,6 +13,7 @@ defined('_JEXEC') or die;
 
 use Exception;
 use HighlandVision\Component\Knowres\Administrator\Model\ContractsModel;
+use HighlandVision\Component\Knowres\Administrator\Model\GuestModel;
 use HighlandVision\Component\Knowres\Administrator\Model\OwnerpaymentsModel;
 use HighlandVision\Component\Knowres\Administrator\Model\PropertyModel;
 use HighlandVision\Component\Knowres\Administrator\Model\PropertysettingsModel;
@@ -32,10 +33,12 @@ use HighlandVision\KR\Utility;
 use JetBrains\PhpStorm\NoReturn;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\MVC\View\ViewInterface;
+use Joomla\CMS\Response\JsonResponse;
 use RuntimeException;
 use stdClass;
 
 use function file_get_contents;
+use function jexit;
 use function trim;
 use function urlencode;
 
@@ -197,6 +200,35 @@ class PropertyController extends FormController
 			$Cloner->clonePropertyChild($newid, $type, $jform);
 		}
 
+		jexit();
+	}
+
+	/**
+	 * Return regions combo
+	 *
+	 * @throws Exception
+	 * @since  1.0.0
+	 */
+	#[NoReturn] public function combo()
+	{
+		$model     = new PropertyModel();
+		$form      = $model->getForm([], false);
+		$parent_id = KrMethods::inputInt('parent');
+		$target    = KrMethods::inputString('target');
+
+		if ($target == 'region_id')
+		{
+			$form->setValue('country_id', null, $parent_id);
+		}
+		else if ($target == 'town_id')
+		{
+			$form->setValue('region_id', null, $parent_id);
+		}
+
+		$wrapper         = [];
+		$wrapper['html'] = $form->getInput($target);
+
+		echo new JsonResponse($wrapper);
 		jexit();
 	}
 

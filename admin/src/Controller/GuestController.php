@@ -121,7 +121,7 @@ class GuestController extends FormController
 		}
 		else if ($target == 'b_town_id')
 		{
-			$form->setValue('region_id', null, $parent_id);
+			$form->setValue('b_region_id', null, $parent_id);
 		}
 
 		$wrapper         = [];

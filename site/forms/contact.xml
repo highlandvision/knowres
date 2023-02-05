@@ -31,7 +31,7 @@
 			addfieldprefix="HighlandVision\Component\Knowres\Administrator\Field"
 			filter="integer"
 			required="true"
-			type="listcombocountry"
+			type="listcountry"
 			hint="COM_KNOWRES_CONTACT_COUNTRY_DSC"
 			label="COM_KNOWRES_CONTACT_COUNTRY_LBL">
 			<option value="0">COM_KNOWRES_SELECT_COUNTRY</option>

@@ -12,11 +12,16 @@ namespace HighlandVision\Component\Knowres\Site\Controller;
 defined('_JEXEC') or die;
 
 use Exception;
+use HighlandVision\Component\Knowres\Site\Model\GuestModel;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\FormController;
 use HighlandVision\KR\Session as KrSession;
 use HighlandVision\KR\SiteHelper;
+use JetBrains\PhpStorm\NoReturn;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
+use Joomla\CMS\Response\JsonResponse;
+
+use function jexit;
 
 /**
  * Guest(form) controller class
@@ -26,12 +31,49 @@ use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 class GuestController extends FormController
 {
 	/**
+	 * Return regions combo
+	 *
+	 * @throws Exception
+	 * @since  1.0.0
+	 */
+	#[NoReturn] public function combo()
+	{
+		$model     = new GuestModel();
+		$form      = $model->getForm([], false);
+		$parent_id = KrMethods::inputInt('parent');
+		$target    = KrMethods::inputString('target');
+
+		if ($target == 'region_id')
+		{
+			$form->setValue('country_id', null, $parent_id);
+		}
+		else if ($target == 'b_region_id')
+		{
+			$form->setValue('b_country_id', null, $parent_id);
+		}
+		else if ($target == 'town_id')
+		{
+			$form->setValue('region_id', null, $parent_id);
+		}
+		else if ($target == 'b_town_id')
+		{
+			$form->setValue('b_region_id', null, $parent_id);
+		}
+
+		$wrapper         = [];
+		$wrapper['html'] = $form->getInput($target);
+
+		echo new JsonResponse($wrapper);
+		jexit();
+	}
+
+	/**
 	 * Proxy for getModel
 	 * Includes the admin model to save repetition and not a site model
 	 *
-	 * @param   string  $name
-	 * @param   string  $prefix
-	 * @param   array   $config
+	 * @param  string  $name
+	 * @param  string  $prefix
+	 * @param  array   $config
 	 *
 	 * @since  2.5.0
 	 * @return BaseDatabaseModel
@@ -45,8 +87,8 @@ class GuestController extends FormController
 	/**
 	 * Method to save a record.
 	 *
-	 * @param   string  $key     The name of the primary key of the URL variable.
-	 * @param   string  $urlVar  The name of the URL variable if different from the primary key (sometimes required to avoid router collisions).
+	 * @param  string  $key     The name of the primary key of the URL variable.
+	 * @param  string  $urlVar  The name of the URL variable if different from the primary key (sometimes required to avoid router collisions).
 	 *
 	 * @throws Exception
 	 * @since  4.0.0
@@ -81,8 +123,8 @@ class GuestController extends FormController
 	 * Method to check if you can save a new or existing record.
 	 * Override - All edit checks have been done so just return true
 	 *
-	 * @param   array   $data  An array of input data.
-	 * @param   string  $key   The name of the key for the primary key.
+	 * @param  array   $data  An array of input data.
+	 * @param  string  $key   The name of the key for the primary key.
 	 *
 	 * @since  1.0.0
 	 * @return bool

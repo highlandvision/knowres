@@ -112,20 +112,21 @@
 			description="COM_KNOWRES_POSTCODE"/>
 		<field name="country_id"
 			addfieldprefix="HighlandVision\Component\Knowres\Administrator\Field"
-			ajaxname="country_id"
 			class="countrychain"
 			filter="integer"
-			target="jform_region_id"
+			onchange="comboGeo(this.value, 'guest.combo', 'region');"
 			type="combocountry"
 			label="COM_KNOWRES_COUNTRY"
 			hint="COM_KNOWRES_COUNTRY_DSC"/>
 		<field name="region_id"
 			addfieldprefix="HighlandVision\Component\Knowres\Administrator\Field"
-			ajaxname="country_id"
+			class="regionchain"
 			filter="integer"
 			type="comboregion"
 			label="COM_KNOWRES_REGION"
-			hint="COM_KNOWRES_REGION_DSC"/>
+			hint="COM_KNOWRES_REGION_DSC">
+			<option value="0">COM_KNOWRES_SELECT_REGION</option>
+		</field>
 	</fieldset>
 	<fieldset name="billing">
 		<field name="billing"
@@ -158,20 +159,18 @@
 			description="COM_KNOWRES_POSTCODE_DSC"/>
 		<field name="b_country_id"
 			addfieldprefix="HighlandVision\Component\Knowres\Administrator\Field"
-			ajaxname="country_id"
 			class="bcountrychain"
 			filter="integer"
 			onchange="comboGeo(this.value, 'guest.combo', 'b_region');"
-			type="listcombocountry"
+			type="combocountry"
 			label="COM_KNOWRES_COUNTRY">
 			<option value="0">COM_KNOWRES_SELECT_COUNTRY</option>
 		</field>
 		<field name="b_region_id"
 			addfieldprefix="HighlandVision\Component\Knowres\Administrator\Field"
-			ajaxname="country_id"
 			class="b_regionchain"
 			filter="integer"
-			type="listcomboregion"
+			type="comboregion"
 			label="COM_KNOWRES_REGION">
 			<option value="0">COM_KNOWRES_SELECT_REGION</option>
 		</field>

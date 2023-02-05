@@ -27,7 +27,7 @@ use function array_merge;
 class ComboregionField extends ListField
 {
 	/** @var string The form field type. */
-	protected $type = 'ComboRegion';
+	protected $type = 'Comboregion';
 
 	/**
 	 * Get the field options.
@@ -40,19 +40,18 @@ class ComboregionField extends ListField
 	{
 		$options = [];
 
-		$country_id = $this->form->getValue('country_id');
+		$country_id = $this->fieldname == 'region_id' ? $this->form->getValue('country_id')
+			: $this->form->getValue('b_country_id');
 		if (!$country_id)
 		{
 			$country_id = KrMethods::getParams()->get('default_country');
 		}
-		if ($country_id)
+
+		$items = KrFactory::getListModel('regions')->getAllRegions($this->getAttribute('allowproperty', false),
+			null, $country_id);
+		foreach ($items as $i)
 		{
-			$items = KrFactory::getListModel('regions')->getAllRegions($this->getAttribute('allowproperty', false),
-				null, $country_id);
-			foreach ($items as $i)
-			{
-				$options[] = HTMLHelper::_('select.option', $i->id, $i->name);
-			}
+			$options[] = HTMLHelper::_('select.option', $i->id, $i->name);
 		}
 
 		return array_merge(parent::getOptions(), $options);
