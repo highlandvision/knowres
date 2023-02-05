@@ -15,7 +15,6 @@ use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Hub;
-use HighlandVision\KR\Utility;
 use InvalidArgumentException;
 use RuntimeException;
 
@@ -35,7 +34,7 @@ class Confirm
 	/**
 	 * Action manager
 	 *
-	 * @param   Hub  $hub  Hub data
+	 * @param  Hub  $hub  Hub data
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -83,15 +82,10 @@ class Confirm
 	{
 		try
 		{
-			$guestModel        = KrFactory::getSiteModel('guest');
-			$guestForm         = KrFactory::getAdhocForm('guest', 'guest.xml', 'site');
-			$data              = $guestForm->filter((array) $this->hub->getData('guestData'));
-			$data['telephone'] = Utility::encodeJson(KrMethods::inputArray('telephone', []));
-			if (is_countable($this->hub->settings) && count($this->hub->settings))
-			{
-				$guestForm = $guestModel->setFormRequired($guestForm, $this->hub->settings);
-			}
-			$data = $guestModel->validate($guestForm, $data, null, $this->hub->settings);
+			$guestModel = KrFactory::getSiteModel('guest');
+			$guestForm  = KrFactory::getAdhocForm('guest', 'guest.xml', 'site');
+			$data       = $guestForm->filter((array) $this->hub->getData('guestData'));
+			$data       = $guestModel->validate($guestForm, $data, null, $this->hub->settings);
 			if (!$data)
 			{
 				$this->hub->errors = $guestModel->getErrors();

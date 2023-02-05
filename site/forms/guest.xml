@@ -106,7 +106,6 @@
 		<field name="postcode"
 			filter="string"
 			hiddenDescription="true"
-			required="true"
 			type="text"
 			label="COM_KNOWRES_POSTCODE"
 			description="COM_KNOWRES_POSTCODE"/>

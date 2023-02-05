@@ -171,9 +171,8 @@ class ServiceController extends BaseController
 			}
 			else
 			{
-				$Itemid   = SiteHelper::getItemId('com_knowres', 'confirm', ['layout' => 'success']);
-				$redirect = KrMethods::route('index.php?option=com_knowres&task=confirm.success&Itemid=' . $Itemid,
-					false);
+				$Itemid   = SiteHelper::getItemId('com_knowres', 'success');
+				$redirect = KrMethods::route('index.php?option=com_knowres&view=success&Itemid=' . $Itemid, false);
 			}
 
 			echo json_encode(['success' => KrMethods::route($redirect, false)]);
@@ -332,20 +331,13 @@ class ServiceController extends BaseController
 				$redirect = KrMethods::route('index.php?option=com_knowres&task=dashboard.success&Itemid=' . $Itemid,
 					false);
 			}
-			else if ($payment_type == 'OBR')
-			{
-				$Itemid   = SiteHelper::getItemId('com_knowres', 'confirm', ['layout' => 'request']);
-				$redirect = KrMethods::route('index.php?option=com_knowres&task=confirm.request&Itemid=' . $Itemid,
-					false);
-			}
 			else
 			{
-				$Itemid   = SiteHelper::getItemId('com_knowres', 'confirm', ['layout' => 'success']);
-				$redirect = KrMethods::route('index.php?option=com_knowres&task=confirm.success&Itemid=' . $Itemid,
-					false);
+				$Itemid   = SiteHelper::getItemId('com_knowres', 'success');
+				$redirect = KrMethods::route('index.php?option=com_knowres&view=success&Itemid=' . $Itemid, false);
 			}
 
-			echo json_encode(['success' => KrMethods::route($redirect, false)]);
+			echo json_encode(['success' => $redirect]);
 			jexit();
 		}
 		catch (Exception)
@@ -468,7 +460,7 @@ class ServiceController extends BaseController
 	/**
 	 * Get contract ID
 	 *
-	 * @param   object  $session  Payment session data
+	 * @param  object  $session  Payment session data
 	 *
 	 * @throws RuntimeException
 	 * @throws RuntimeException
@@ -614,7 +606,7 @@ class ServiceController extends BaseController
 	/**
 	 * Set the redirect for errors
 	 *
-	 * @param   string  $payment_type  Payment type being processed
+	 * @param  string  $payment_type  Payment type being processed
 	 *
 	 * @throws Exception
 	 * @throws Exception
@@ -641,8 +633,8 @@ class ServiceController extends BaseController
 	/**
 	 * Set the redirect for successful payments
 	 *
-	 * @param   string  $payment_type  Payment type
-	 * @param   int     $contract_id   ID of contract
+	 * @param  string  $payment_type  Payment type
+	 * @param  int     $contract_id   ID of contract
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -656,18 +648,8 @@ class ServiceController extends BaseController
 			$userData->pr_contract_id = $contract_id;
 			$userSession->setData($userData);
 
-			if ($payment_type === 'OBD')
-			{
-				$Itemid = SiteHelper::getItemId('com_knowres', 'confirm', ['layout' => 'success']);
-				KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&task=confirm.success&Itemid='
-					. $Itemid, false));
-			}
-			else
-			{
-				$Itemid = SiteHelper::getItemId('com_knowres', 'confirm', ['layout' => 'request']);
-				KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&task=confirm.request&Itemid='
-					. $Itemid, false));
-			}
+			$Itemid = SiteHelper::getItemId('com_knowres', 'success');
+			KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&view=success&Itemid=' . $Itemid, false));
 		}
 		else if ($payment_type === 'PBD' || $payment_type === 'PBB')
 		{

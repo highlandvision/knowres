@@ -68,7 +68,10 @@ $address = Utility::formatAddress($this->guestData->address1, $this->guestData->
 			</span>
 		<?php endif; ?>
 	</p>
+</div>
+
+<div class="summary callout gray text-center">
 	<div class="show-for-medium">
-		<?php echo KrMethods::loadInternal('{loadposition propertyview}'); ?>
+		<?php echo KrMethods::loadInternal('{loadposition propertyview, html5}'); ?>
 	</div>
 </div>

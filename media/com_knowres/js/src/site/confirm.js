@@ -68,7 +68,7 @@
 		if ($element.length) {
 			myConfirm = new Krconfirm($element);
 		}
-		$element.on('change', '.kr-calculate', function (e) {
+		$element.on('change click', '.kr-calculate', function (e) {
 			e.preventDefault();
 			$element = $('#kr-form-confirm');
 			myConfirm.updateQuote($element);

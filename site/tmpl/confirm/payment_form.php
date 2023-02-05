@@ -12,6 +12,7 @@
 defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrMethods;
+use HighlandVision\KR\SiteHelper;
 use HighlandVision\KR\Utility;
 use Joomla\CMS\HTML\HTMLHelper;
 
@@ -29,7 +30,8 @@ foreach ($this->gateways as $gateway)
 	}
 }
 
-$action = "index.php?option=com_knowres&task=confirm.save";
+$Itemid = SiteHelper::getItemId('com_knowres', 'confirm', ['layout' => 'success']);
+$action = KrMethods::route('index.php?option=com_knowres&view=confirm&layout=success&Itemid=' . $Itemid);
 ?>
 
 <!--		V4 - TEST Do not change the action as per phpstorm bug causes js issues with SEF-->
@@ -70,6 +72,7 @@ $action = "index.php?option=com_knowres&task=confirm.save";
 			<fieldset class="fieldset">
 				<div class="callout alert">
 					<p>
+						<?php $params = KrMethods::getParams(); ?>
 						<?php echo nl2br($this->params->get('booking_request_text')); ?>
 					</p>
 				</div>
@@ -111,5 +114,6 @@ $action = "index.php?option=com_knowres&task=confirm.save";
 		<?php endif; ?>
 	</button>
 
+	<input type="hidden" name="task" value="confirm.save" />
 	<?php echo HTMLHelper::_('form.token'); ?>
 </form>

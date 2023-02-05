@@ -207,6 +207,18 @@ class Knowres extends Base
 				}
 
 				$platformUri->delvar('view');
+				break;
+
+			default:
+				if (!$view || !$alias)
+				{
+					$dosef = false;
+				}
+				else
+				{
+					$sefSegments[] = $alias;
+					$platformUri->delvar('view');
+				}
 		}
 
 		return $sefSegments;

@@ -24,7 +24,6 @@ use HighlandVision\KR\Translations;
 use JetBrains\PhpStorm\NoReturn;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
-use Joomla\CMS\Object\CMSObject;
 use stdClass;
 
 /**
@@ -38,12 +37,12 @@ class HtmlView extends KrHtmlView\Site
 	public Form $guestForm;
 	/** @var stdClass Contract session data */
 	public stdClass $contractData;
-	/** @var KrSession Contract session */
-	public KrSession $contractSession;
+	/** @var KrSession\Contract Contract session */
+	public KrSession\Contract $contractSession;
 	/** @var string Path to property image */
 	public string $pimage;
-	/** @var CMSObject|bool Property item */
-	public CMSObject|bool $property;
+	/** @var object|bool Property item */
+	public object|bool $property;
 	/** @var array Property settings */
 	public array $settings;
 	/** @var Translations Translations object */
@@ -52,7 +51,7 @@ class HtmlView extends KrHtmlView\Site
 	/**
 	 * Display the form
 	 *
-	 * @param   null  $tpl  Default template.
+	 * @param  null  $tpl  Default template.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0

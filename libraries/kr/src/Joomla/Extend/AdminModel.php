@@ -101,12 +101,12 @@ class AdminModel extends \Joomla\CMS\MVC\Model\AdminModel
 		if ($setting == 0 || $setting == 2)
 		{
 			$attr  = 'required';
-			$value = false;
+			$value = 'false';
 		}
 		else if ($setting == 1)
 		{
 			$attr  = 'required';
-			$value = true;
+			$value = 'true';
 		}
 
 		$form->setFieldAttribute($name, $attr, $value);
