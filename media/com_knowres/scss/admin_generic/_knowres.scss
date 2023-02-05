@@ -140,19 +140,15 @@ span.divider {
 .white {
 	color: #fefefe;
 }
-span.kr-editinplace {
-	width: 100%;
-	span {
-		border-bottom: 1px dashed blue;
-	}
-	button {
-		margin-right: 5px;
-	}
-	textarea:focus,
-	input[type="text"]:focus,
-	textarea:not(:focus),
-	input[type="text"]:not(:focus) {
-		outline: none !important;
-		border: none !important;
-	}
-}
+//TODO-v4.1 Revisit
+//#toolbar-settings-property-group {
+//	.dropdown-menu {
+//		width: 660px;
+//		joomla-toolbar-button {
+//			float: left;
+//			width: 25%;
+//			max-width: 160px;
+//			border-right: 2px solid #e5e5e5;
+//		}
+//	}
+//}
