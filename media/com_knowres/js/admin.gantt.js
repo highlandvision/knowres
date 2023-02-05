@@ -149,7 +149,7 @@ if (typeof jQuery === 'undefined') jQuery.noConflict();
 					},
 					error:    function () {
 						KrGantt.waitToggle(false);
-						$('#ganttselections').html('Sorry we cannot process your request at the moment. Please try again later!');
+						document.getElementById("ganttselections").innerHTML = 'Sorry we are unable to process your request at the moment. Please try again later!';
 					},
 				});
 			});
@@ -316,8 +316,7 @@ if (typeof jQuery === 'undefined') jQuery.noConflict();
 					properties = KrGantt.toArray(localStorage.getItem('ganttProperties'));
 				}
 				scrollTo = localStorage.getItem('ganttScrollTo');
-				$('#ganttselections').html(localStorage.getItem('ganttSelections'));
-
+				document.getElementById("ganttselections").innerHTML = localStorage.getItem('ganttSelections');
 				const $picker1 = $('#ganttpicker1');
 				const tmp = KrGantt.getShowFrom(from);
 				const altDate = $.datepicker.formatDate('yy-mm-dd', tmp);
@@ -482,12 +481,12 @@ if (typeof jQuery === 'undefined') jQuery.noConflict();
 						self.searchOptions();
 					} else {
 						KrGantt.waitToggle(false);
-						$('#ganttselections').html(result.message);
+						document.getElementById("ganttselections").innerHTML = result.message;
 					}
 				},
 				error:    function () {
 					KrGantt.waitToggle(false);
-					$('#ganttselections').html('Sorry we cannot process your request at the moment. Please try again later!');
+					document.getElementById("ganttselections").innerHTML = 'Sorry we are unable to process your request at the moment. Please try again later!';
 				},
 			});
 		}
@@ -507,7 +506,7 @@ if (typeof jQuery === 'undefined') jQuery.noConflict();
 				},
 				error:    function () {
 					KrGantt.waitToggle(false);
-					$('#ganttselections').html('Sorry we cannot process your request at the moment. Please try again later!');
+					document.getElementById("ganttselections").innerHTML = 'Sorry we are unable to process your request at the moment. Please try again later!';
 				},
 			});
 		}
@@ -646,7 +645,7 @@ if (typeof jQuery === 'undefined') jQuery.noConflict();
 				},
 				error:       function () {
 					KrGantt.waitToggle(false);
-					$('#ganttselections').html('Sorry we cannot process your request at the moment. Please try again later!');
+					document.getElementById("ganttselections").innerHTML = 'Sorry we are unable to process your request at the moment. Please try again later!';
 				},
 			});
 		}).on('click', '#newreservation', function (e) {
@@ -661,6 +660,7 @@ if (typeof jQuery === 'undefined') jQuery.noConflict();
 			localStorage.setItem('ganttProperties', myGantt.settings.properties);
 			localStorage.setItem('ganttFrom', myGantt.settings.from);
 			localStorage.setItem('ganttScrollTo', $('.rightPanel').scrollTop());
+			localStorage.setItem('ganttSelections', $('#ganttselections').html());
 			$.ajax({
 				type:     'POST',
 				dataType: 'json',
