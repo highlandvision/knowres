@@ -56,10 +56,10 @@ class HtmlView extends KrHtmlView\Site
 	/**
 	 * Display the view
 	 *
-	 * @param   null  $tpl  Default template.
+	 * @param  null  $tpl  Default template.
 	 *
 	 * @throws Exception
-	 * @since        1.0.0
+	 * @since  1.0.0
 	 * @return void
 	 * @noinspection PhpLoopNeverIteratesInspection
 	 */
@@ -76,6 +76,7 @@ class HtmlView extends KrHtmlView\Site
 			$this->category_id = KrMethods::inputInt('category_id', 0, 'get');
 			if ($this->category_id)
 			{
+				/** @var CategoryModel $category */
 				$category = KrFactory::getAdminModel('category')->getItem($this->category_id);
 				if (!$category->id)
 				{
@@ -227,7 +228,7 @@ class HtmlView extends KrHtmlView\Site
 	/**
 	 * Get request search data and store in session
 	 *
-	 * @param   stdClass  $searchData  Session search data
+	 * @param  stdClass  $searchData  Session search data
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -251,6 +252,7 @@ class HtmlView extends KrHtmlView\Site
 		$searchData->adults      = KrMethods::inputInt('adults', 2, 'get');
 		$searchData->children    = KrMethods::inputInt('children', 0, 'get');
 		$searchData->child_ages  = KrMethods::inputArray('child_ages', [], 'get');
+		$searchData->limitstart  = KrMethods::inputint('limitstart', 0, 'get');
 
 		return $searchData;
 	}

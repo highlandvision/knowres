@@ -90,25 +90,25 @@ class Knowres extends Base
 
 		switch ($view)
 		{
-			case 'guestform':
-				$sefSegments[] = KrMethods::plain('COM_KNOWRES_TITLE_DASHBOARD_GUEST');
-				$platformUri->delvar('view');
-				break;
-
-			case 'contractguestdataform':
-				$sefSegments[] = KrMethods::plain('COM_KNOWRES_DASHBOARD_ADD_CONTRACTGUESTDATA_SEF');
-				$platformUri->delvar('view');
-				break;
-
-			case 'reviewform':
-				$sefSegments[] = KrMethods::plain('COM_KNOWRES_TITLE_REVIEWFORM');
-				$platformUri->delvar('view');
-				break;
-
-			case 'dashboard':
-				$sefSegments[] = KrMethods::plain('COM_KNOWRES_TITLE_DASHBOARD');
-				$platformUri->delvar('view');
-				break;
+//			case 'guestform':
+//				$sefSegments[] = KrMethods::plain('COM_KNOWRES_TITLE_DASHBOARD_GUEST');
+//				$platformUri->delvar('view');
+//				break;
+//
+//			case 'contractguestdataform':
+//				$sefSegments[] = KrMethods::plain('COM_KNOWRES_DASHBOARD_ADD_CONTRACTGUESTDATA_SEF');
+//				$platformUri->delvar('view');
+//				break;
+//
+//			case 'reviewform':
+//				$sefSegments[] = KrMethods::plain('COM_KNOWRES_TITLE_REVIEWFORM');
+//				$platformUri->delvar('view');
+//				break;
+//
+//			case 'dashboard':
+//				$sefSegments[] = KrMethods::plain('COM_KNOWRES_TITLE_DASHBOARD');
+//				$platformUri->delvar('view');
+//				break;
 
 			case 'property':
 				if ($id)

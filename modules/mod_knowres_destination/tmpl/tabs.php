@@ -12,7 +12,6 @@ defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\SiteHelper;
-use Joomla\CMS\HTML\HTMLHelper;
 
 $Itemid = SiteHelper::getItemId('com_knowres', 'properties', ['region_id' => $params->get('region_id')]);
 $link   = KrMethods::route('index.php?option=com_knowres&view=properties&Itemid=' . $Itemid . '&region_id='

@@ -62,7 +62,7 @@ class HtmlView extends KrHtmlView\Site
 		$this->params     = KrMethods::getParams();
 		$this->list_limit = $this->params->get('list_limit', 10);
 
-		$this->state = $this->get('State');
+		$this->state = $this->get('state');
 		$this->state->set('filter.property_id', $property_id);
 		$this->state->set('filter.state', 1);
 		$this->state->set('filter.held', 0);

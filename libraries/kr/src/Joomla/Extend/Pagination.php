@@ -15,7 +15,9 @@ defined('_JEXEC') or die;
 
 use Exception;
 use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Pagination\Pagination as JoomlaPagination;
+use Joomla\CMS\Pagination\PaginationObject;
 
 use function defined;
 use function is_file;
@@ -27,6 +29,9 @@ use function is_file;
  */
 class Pagination extends JoomlaPagination
 {
+	/* @var bool True for search ajax request */
+	private bool $ajax;
+
 	/**
 	 * Constructor.
 	 *
@@ -81,19 +86,15 @@ class Pagination extends JoomlaPagination
 	 */
 	public function getPagesLinks(bool $ajax = false): string
 	{
+		$this->ajax = $ajax;
+
+		// Build the page navigation list.
 		$data = $this->_buildDataObject();
 
 		$list           = [];
 		$list['prefix'] = $this->prefix;
 
-		if ($ajax)
-		{
-			$chromePath = JPATH_THEMES . '/' . $this->app->getTemplate() . '/html/paginationajax.php';
-		}
-		else
-		{
-			$chromePath = JPATH_THEMES . '/' . $this->app->getTemplate() . '/html/pagination.php';
-		}
+		$chromePath = JPATH_THEMES . '/' . $this->app->getTemplate() . '/html/pagination.php';
 
 		if (is_file($chromePath))
 		{
@@ -104,34 +105,34 @@ class Pagination extends JoomlaPagination
 		if ($data->all->base !== null)
 		{
 			$list['all']['active'] = true;
-			$list['all']['data']   = item_active($data->all);
+			$list['all']['data']   = $this->_item_active($data->all);
 		}
 		else
 		{
 			$list['all']['active'] = false;
-			$list['all']['data']   = item_inactive($data->all);
+			$list['all']['data']   = $this->_item_inactive($data->all);
 		}
 
 		if ($data->start->base !== null)
 		{
 			$list['start']['active'] = true;
-			$list['start']['data']   = item_active($data->start);
+			$list['start']['data']   = $this->_item_active($data->start);
 		}
 		else
 		{
 			$list['start']['active'] = false;
-			$list['start']['data']   = item_inactive($data->start);
+			$list['start']['data']   = $this->_item_inactive($data->start);
 		}
 
 		if ($data->previous->base !== null)
 		{
 			$list['previous']['active'] = true;
-			$list['previous']['data']   = item_active($data->previous);
+			$list['previous']['data']   = $this->_item_active($data->previous);
 		}
 		else
 		{
 			$list['previous']['active'] = false;
-			$list['previous']['data']   = item_inactive($data->previous);
+			$list['previous']['data']   = $this->_item_inactive($data->previous);
 		}
 
 		// Make sure it exists
@@ -142,44 +143,58 @@ class Pagination extends JoomlaPagination
 			if ($page->base !== null)
 			{
 				$list['pages'][$i]['active'] = true;
-				$list['pages'][$i]['data']   = item_active($page);
+				$list['pages'][$i]['data']   = $this->_item_active($page);
 			}
 			else
 			{
 				$list['pages'][$i]['active'] = false;
-				$list['pages'][$i]['data']   = item_inactive($page);
+				$list['pages'][$i]['data']   = $this->_item_inactive($page);
 			}
 		}
 
 		if ($data->next->base !== null)
 		{
 			$list['next']['active'] = true;
-			$list['next']['data']   = item_active($data->next);
+			$list['next']['data']   = $this->_item_active($data->next);
 		}
 		else
 		{
 			$list['next']['active'] = false;
-			$list['next']['data']   = item_inactive($data->next);
+			$list['next']['data']   = $this->_item_inactive($data->next);
 		}
 
 		if ($data->end->base !== null)
 		{
 			$list['end']['active'] = true;
-			$list['end']['data']   = item_active($data->end);
+			$list['end']['data']   = $this->_item_active($data->end);
 		}
 		else
 		{
 			$list['end']['active'] = false;
-			$list['end']['data']   = item_inactive($data->end);
+			$list['end']['data']   = $this->_item_inactive($data->end);
 		}
 
 		if ($this->total > $this->limit)
 		{
-			return list_render($list);
+			return $this->_list_render($list);
 		}
 		else
 		{
 			return '';
 		}
+	}
+
+	/**
+	 * Method to create an active pagination link to the item
+	 *
+	 * @param  PaginationObject  $item  The object with which to make an active link.
+	 *
+	 * @since   1.5
+	 * @return  string  HTML link
+	 */
+	protected function _item_active(PaginationObject $item)
+	{
+		return LayoutHelper::render('joomla.pagination.link',
+			['data' => $item, 'active' => true, 'ajax' => $this->ajax]);
 	}
 }

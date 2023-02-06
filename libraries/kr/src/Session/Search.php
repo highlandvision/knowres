@@ -126,6 +126,7 @@ class Search extends Session
 		$data->filterTown     = [];
 		$data->filterArea     = [];
 		$data->guests         = 2;
+		$data->limitstart     = 0;
 		$data->map_modal      = 0;
 		$data->map_zoom       = 20;
 		$data->map_zoom_max   = 20;
