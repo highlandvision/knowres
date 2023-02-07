@@ -69,7 +69,6 @@ class AgentsModel extends ListModel
 	 * @param  string  $foreign_key  Agent foreign key
 	 *
 	 * @throws RuntimeException
-	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return mixed
 	 */

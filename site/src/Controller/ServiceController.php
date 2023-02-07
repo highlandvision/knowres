@@ -682,8 +682,8 @@ class ServiceController extends BaseController
 		<StayInfos>
 			<StayInfo>
 				<PropertyID>253204</PropertyID>
-				<DateFrom>2023-02-14</DateFrom>
-				<DateTo>2023-02-17</DateTo>
+				<DateFrom>2023-05-14</DateFrom>
+				<DateTo>2023-05-17</DateTo>
 				<NumberOfGuests>4</NumberOfGuests>
 				<Costs>
 					<RUPrice>646.03</RUPrice>
@@ -727,7 +727,7 @@ class ServiceController extends BaseController
 			<CountryID>20</CountryID>
 			<MessagingContactId>9876543</MessagingContactId>
 		</CustomerInfo>
-		<Creator>jason@travelstaytion.com</Creator>
+		<Creator>test@test.com</Creator>
 		<ReservationStatusID>1</ReservationStatusID>
 		<ReferenceID>X3GWB0NO</ReferenceID>
 		<IsArchived>false</IsArchived>
@@ -739,7 +739,7 @@ class ServiceController extends BaseController
 	 * Test that secret is valid
 	 *
 	 * @throws Exception
-	 * @since       1.0.0
+	 * @since  1.0.0
 	 */
 	private function checkSecret()
 	{

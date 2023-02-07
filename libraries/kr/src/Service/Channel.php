@@ -264,15 +264,15 @@ class Channel extends Service
 	 * This will depend on the CM/channel being processed
 	 *
 	 * @param  string  $foreign_key  The agent foreign key
-	 * @param  string  $comments     Set true to return confirmed agent info
+	 * @param  string  $comments     Reservation comments for VRBO Expedia bookings
 	 * @param  int     $agent_id     The ID for the agent
+	 * @param  bool    $offline      Set TRUE to check for an offline agent
 	 *
-	 * @throws RuntimeException
 	 * @throws Exception
 	 * @since  3.1.0
 	 * @return void
 	 */
-	protected function setAgent(string $foreign_key, string $comments, int $agent_id = 0): void
+	protected function setAgent(string $foreign_key, string $comments, int $agent_id = 0, bool $offline = false): void
 	{
 		$confirmed = false;
 		if (!empty($comments))
@@ -296,7 +296,16 @@ class Channel extends Service
 			$agents = KrFactory::getListModel('agents')->getAgentByForeignKey($this->service_id, $foreign_key);
 			if (!is_countable($agents) || empty($agents))
 			{
-				throw new RuntimeException('Agent not found for RU reference ' . $foreign_key);
+				if (!$offline)
+				{
+					throw new RuntimeException('Agent not found for reference ' . $foreign_key);
+				}
+
+				$agents = KrFactory::getListModel('agents')->getAgentByForeignKey($this->service_id, 'offline');
+				if (!is_countable($agents) || empty($agents))
+				{
+					throw new RuntimeException('Offline agent not found for RU, please Add');
+				}
 			}
 
 			if (count($agents) == 1)
