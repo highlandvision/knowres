@@ -16,18 +16,14 @@ use HighlandVision\KR\Email\HelpScoutEmailService;
 use HighlandVision\KR\Email\JoomlaEmailService;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
-use HighlandVision\KR\Media\Pdf;
 use InvalidArgumentException;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Object\CMSObject;
 use Joomla\Registry\Registry;
 use RuntimeException;
 
-use function array_unique;
 use function count;
 use function is_dir;
 use function str_replace;
-use function strtolower;
 
 /**
  * Class KnowresEmailHelper
@@ -36,8 +32,12 @@ use function strtolower;
  */
 abstract class Email
 {
-	/** @var ?CMSObject Agency data */
-	protected ?CMSObject $agency;
+	/** @var ?object Agency data */
+	protected ?object $agency;
+	/** @var string Agency email */
+	protected string $agency_email = '';
+	/** @var string Agency name */
+	protected string $agency_name = '';
 	/** @var array|null Email attachments */
 	protected ?array $attachments = [];
 	/** @var array|null Blind carbon copy */
@@ -62,6 +62,8 @@ abstract class Email
 	protected mixed $font_size = '16';
 	/** @var string Mail from name |(config) */
 	protected string $fromname = '';
+	/** @var string The guest email */
+	protected string $guest_email = '';
 	/** @var bool TRUE for Helpscout email */
 	protected bool $helpscout = false;
 	/** @var string Mail from (config) */
@@ -76,8 +78,8 @@ abstract class Email
 	protected string $output_subject = '';
 	/** @var Registry KR params */
 	protected Registry $params;
-	/** @var ?CMSObject Property data */
-	protected ?CMSObject $property;
+	/** @var object|false Property data */
+	protected object|false $property;
 	/** @var int ID of property */
 	protected int $property_id = 0;
 	/** @var string|null Reply to name */
@@ -94,11 +96,13 @@ abstract class Email
 	protected Translations $Translations;
 	/** @var string The email trigger */
 	protected string $trigger = '';
+	/** @var int ID of trigger */
+	protected int $trigger_id = 0;
 
 	/**
 	 * Constructor initialise
 	 *
-	 * @param   string  $trigger  Email trigger
+	 * @param  string  $trigger  Email trigger
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -171,77 +175,28 @@ abstract class Email
 	}
 
 	/**
-	 * Check for and add any auto generated email pdf attachments
+	 * Get email template
 	 *
-	 * @param   array  $pdfs  Array of auto attachments
+	 * @param  int  $template_id  ID of template
 	 *
 	 * @throws Exception
-	 * @since  1.0.0
+	 * @since  4.0.0
+	 * @return object
 	 */
-	protected function addAutoAttachment(array $pdfs): void
+	protected function getTemplate(int $template_id): object
 	{
-		foreach ($pdfs as $t)
+		if (!$template_id)
 		{
-			if ($t == 'voucher')
-			{
-				$voucher             = new Pdf\Contract\Voucher('email', $this->contract_id);
-				$this->attachments[] = $voucher->getPdf();
-			}
-			else if ($t == 'guestdata' && $this->contract->guestdata_id)
-			{
-				$guestdata           = new Pdf\Contract\Guestdata('email', $this->contract_id);
-				$this->attachments[] = $guestdata->getPdf();
-			}
-		}
-	}
-
-	/**
-	 * Check for and add any uploaded email attachments
-	 *
-	 * @param   array  $pdfs  Uploaded attachments
-	 *
-	 * @since 1.0.0
-	 */
-	protected function addUploadedAttachment(array $pdfs): void
-	{
-		$matches = [];
-
-		foreach ($pdfs as $t)
-		{
-			if ($t == 'propertys')
-			{
-				$matches['propertys'] = $this->contract->property_id;
-			}
-			else if ($t == 'regions')
-			{
-				$matches['regions'] = $this->property->region_id;
-			}
-			else if ($t == 'towns')
-			{
-				$matches['towns'] = strtolower(str_replace(' ', '-', $this->property->town_name));
-			}
-			else if ($t == 'types')
-			{
-				$matches['types'] = $this->property->type_id;
-			}
-			else if ($t == 'contracts')
-			{
-				$matches['contracts'] = $this->contract->tag;
-			}
+			throw new RuntimeException('Email template_id is not set');
 		}
 
-		$matches = array_unique($matches);
-		foreach ($matches as $type => $id)
+		$template = KrFactory::getAdminModel('emailtemplate')->getItem($template_id);
+		if (!$template)
 		{
-			$pdfs = Media\Pdf::listPdfs($type, $id);
-			if (count($pdfs) > 0)
-			{
-				foreach ($pdfs as $pdf)
-				{
-					$this->attachments[] = $pdf;
-				}
-			}
+			throw new RuntimeException('Email template not found for ID ' . $template_id);
 		}
+
+		return $template;
 	}
 
 	/**
@@ -263,31 +218,7 @@ abstract class Email
 				}
 
 				$due_date = TickTock::modifyDays($this->today, $e->days);
-
-				if ($e->trigger_cron == 'arrival')
-				{
-					$actual_date = $this->contract->arrival;
-				}
-				else if ($e->trigger_cron == 'departure')
-				{
-					$actual_date = $this->contract->departure;
-				}
-				else if ($e->trigger_cron == 'expiry_date')
-				{
-					$actual_date = $this->contract->expiry_date;
-				}
-				else if ($e->trigger_cron == 'balance_date')
-				{
-					$actual_date = $this->contract->balance_date;
-				}
-
 				if ($due_date < $actual_date)
-				{
-					continue;
-				}
-
-				$values = Utility::decodeJson($e->booking_status, true);
-				if (!in_array($this->contract->booking_status, $values))
 				{
 					continue;
 				}
@@ -300,56 +231,35 @@ abstract class Email
 	/**
 	 * Build email body and subject
 	 *
-	 * @param   int   $template_id        ID of template to be used
-	 * @param   bool  $check_attachments  Check for template attachments
-	 * @param   bool  $send_guest         Indicates a guest email
+	 * @param  int   $template_id  ID of template to be used
+	 * @param  bool  $send_guest   Indicates a guest email
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected function constructEmail(int $template_id, bool $check_attachments = false, bool $send_guest = false): void
+	protected function constructEmail(int $template_id, bool $send_guest = false): void
 	{
-		if (!$template_id)
-		{
-			throw new RuntimeException('Email Template ID has no value');
-		}
-
-		$template = KrFactory::getAdminModel('emailtemplate')->getItem($template_id);
-		if (!$template)
-		{
-			throw new RuntimeException('Email Template not found for ID ' . $template_id);
-		}
+		$template = $this->getTemplate($template_id);
 
 		$this->output_message = $template->blurb;
 		$this->output_subject = $template->subject;
-
 		foreach ($this->data as $k => $v)
 		{
-			$this->output_message = str_replace(
-				"[$k]", $v, $this->output_message
-			);
-			$this->output_subject = str_replace(
-				"[$k]", $v, $this->output_subject
-			);
+			$this->output_message = str_replace("[$k]", $v, $this->output_message);
+			$this->output_subject = str_replace("[$k]", $v, $this->output_subject);
 		}
 
-		$this->attachments = null;
-		if ($check_attachments)
-		{
-			$this->addUploadedAttachment($template->pdf_uploaded);
-			$this->addAutoAttachment($template->pdf_auto);
-		}
-
+		$this->attachments    = null;
 		$this->output_message = $this->makePretty($send_guest);
 	}
 
 	/**
 	 * Send via normal email or helpscout
 	 *
-	 * @param   string  $email_to   Recipient email
+	 * @param  string   $email_to   Recipient email
 	 * @param  ?string  $firstname  Name of recipient
 	 * @param  ?string  $surname    Surname of recipient
-	 * @param   array   $tags       Email related tags
+	 * @param  array    $tags       Email related tags
 	 *
 	 * @throws Exception
 	 * @since  3.2.0
@@ -448,7 +358,7 @@ abstract class Email
 	/**
 	 * Add headers and footers to the email text
 	 *
-	 * @param   bool  $send_guest  Send guest email
+	 * @param  bool  $send_guest  Send guest email
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -468,6 +378,28 @@ abstract class Email
 			'affiliates'   => $send_guest,
 			'message'      => $this->__toString(),
 		]);
+	}
+
+	/**
+	 * Set the agency
+	 *
+	 * @param  ?int  $agency_id  ID of agency or empty to use default
+	 *
+	 * @throws Exception
+	 * @since  4.0.0
+	 */
+	protected function setAgency(?int $agency_id = 0): void
+	{
+		if (empty($agency_id))
+		{
+			$agency_id = KrMethods::getParams()->get('default_agency');
+			if (!$agency_id)
+			{
+				throw new RunTimeException('Please set Default agency in KR Options');
+			}
+		}
+
+		$this->agency = KrFactory::getAdminModel('agency')->getItem($agency_id);
 	}
 
 	/**

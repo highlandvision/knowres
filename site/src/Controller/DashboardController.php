@@ -172,22 +172,7 @@ class DashboardController extends BaseController
 	 */
 	public function login()
 	{
-		SiteHelper::checkUser();
-
-		$guest_id = KrFactory::getListModel('guests')->getGuestForUser(KrMethods::getUser()->id);
-		if (!$guest_id)
-		{
-			SiteHelper::redirectLogin();
-		}
-
-		$userSession              = new KrSession\User();
-		$userData                 = $userSession->getData();
-		$userData->user_id        = KrMethods::getUser()->id;
-		$userData->db_guest_id    = (int) $guest_id;
-		$userData->db_contracts   = [];
-		$userData->db_contract_id = 0;
-		$userSession->setData($userData);
-
+		SiteHelper::loginUser();
 		SiteHelper::redirectDashboard();
 	}
 
@@ -200,15 +185,22 @@ class DashboardController extends BaseController
 	 */
 	public function request()
 	{
-		$userSession       = new KrSession\User();
-		$userData          = $userSession->getData();
-		$userData->user_id = 0;
+		SiteHelper::checkUser();
+
+		$userSession = new KrSession\User();
+		$userData    = $userSession->getData();
 
 		$key = KrMethods::inputString('key', '', 'get');
 		list($contract_id, $guest_id, $qkey, $view) = Cryptor::decrypt($key);
 		if (!$guest_id || !$qkey)
 		{
 			SiteHelper::badUser();
+		}
+
+		//TODO-v4.1 Can be deleted after 1 year
+		if ($view == 'guestdataform')
+		{
+			$view = 'contractguestdataform';
 		}
 
 		if ($view == 'reviewform')
@@ -243,12 +235,8 @@ class DashboardController extends BaseController
 				$userData->db_guest_update = true;
 				$view                      = 'guestform';
 			}
-			else
+			else if ($view == 'contractguestdataform')
 			{
-				if ($view == 'guestdataform')
-				{
-					$view = 'contractguestdataform';
-				}
 				$userData->db_guest_update = false;
 			}
 

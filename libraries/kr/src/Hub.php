@@ -187,7 +187,6 @@ class Hub
 	 */
 	public function checkGuestUser(): void
 	{
-		//TODO-v4.1 Test for cv
 		$email = $this->getValue('email', 'guestData');
 		$item  = KrFactory::getListModel('guests')->checkGuestEmail($email);
 		if (!empty($item->id))
@@ -550,15 +549,15 @@ class Hub
 		$surname   = $this->getValue('surname', 'guestData');
 
 		$user_id = KrFactory::checkUser($email);
-		if (!$user_id)
+		if (empty($user_id))
 		{
 			$username = $this->getUsername($firstname, $surname);
 			$password = Cryptor::generateRandomString();
 			$user_id  = KrMethods::registerUser($firstname . ' ' . $surname, $username, $email, $password);
 			if ($user_id)
 			{
-				$registration = new RegistrationEmail('USERREGISTRATION');
-				$registration->sendTheEmails($username, $password, $firstname . ' ' . $surname, $email);
+				$Registration = new RegistrationEmail('USERREGISTRATION');
+				$Registration->sendTheEmails($username, $password, $firstname . ' ' . $surname, $email);
 			}
 		}
 

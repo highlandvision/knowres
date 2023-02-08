@@ -20,13 +20,8 @@ use Joomla\CMS\Plugin\CMSPlugin;
  */
 class plgSystemKnowresmega extends CMSPlugin
 {
-	/**
-	 * Load the language file on instantiation.
-	 *
-	 * @since  3.1
-	 * @var    boolean
-	 */
-	protected $autoloadLanguage = true;
+	/** @var bool Load the language file on instantiation. */
+	protected bool $autoloadLanguage = true;
 
 	/**
 	 * @param $subject
@@ -44,13 +39,13 @@ class plgSystemKnowresmega extends CMSPlugin
 	/**
 	 * Display the additional form in a tab
 	 *
-	 * @param $form
-	 * @param $data
+	 * @param  Form          $form  The form to manipulate
+	 * @param  array|object  $data  The data of the form
 	 *
-	 * @since 1.0.0
+	 * @since  .0.0
 	 * @return void
 	 */
-	function onContentPrepareForm($form, $data): void
+	function onContentPrepareForm(Form $form, array|object $data): void
 	{
 		if ($form->getName() == 'com_menus.item')
 		{

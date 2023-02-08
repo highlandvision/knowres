@@ -34,7 +34,6 @@ $Itemid = SiteHelper::getItemId('com_knowres', 'confirm', ['layout' => 'success'
 $action = KrMethods::route('index.php?option=com_knowres&view=confirm&layout=success&Itemid=' . $Itemid);
 ?>
 
-<!--		V4 - TEST Do not change the action as per phpstorm bug causes js issues with SEF-->
 <form action="<?php echo $action; ?>" class="ajaxform formbg form-validate" id="kr-form-payment" method="post">
 	<fieldset class="fieldset">
 		<div class="callout formbg">

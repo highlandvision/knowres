@@ -30,12 +30,15 @@ class TemplateEmail
 	 */
 	public static function getRegistrationTags(): array
 	{
-		$tags                = [];
-		$tags['REGUSERNAME'] = 'Username';
-		$tags['REGPASSWORD'] = 'Password';
-		$tags['REGNAME']     = 'Registration Name';
-		$tags['TODAY']       = 'Date Today';
-		$tags['SITENAME']    = 'Site Name';
+		$tags                    = [];
+		$tags['AGENCYEMAIL']     = 'Agency Email';
+		$tags['AGENCYNAME']      = 'Agency Name';
+		$tags['AGENCYTELEPHONE'] = 'Agency Telephone';
+		$tags['TODAY']           = 'Date Today';
+		$tags['REGPASSWORD']     = 'Password';
+		$tags['REGNAME']         = 'Registration Name';
+		$tags['SITENAME']        = 'Site Name';
+		$tags['REGUSERNAME']     = 'Username';
 
 		asort($tags);
 

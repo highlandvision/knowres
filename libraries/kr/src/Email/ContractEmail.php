@@ -790,13 +790,12 @@ class ContractEmail extends Email
 		if ((int) $this->params->get('link_login', '0'))
 		{
 			$query                   = [
-				'option' => 'com_knowres',
 				'Itemid' => (int) $this->params->get('link_login', '0'),
 			];
 			$this->data['LINKLOGIN'] = KrMethods::render('html.link',
 				['query'    => $query,
 				 'external' => true,
-				 'text'     => KrMethods::plain('COM_KNOWRES_EMAIL_TERMS'),
+				 'text'     => KrMethods::plain('COM_KNOWRES_HERE'),
 				 'title'    => ''
 				]);
 		}

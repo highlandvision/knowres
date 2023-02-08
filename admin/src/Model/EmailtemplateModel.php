@@ -17,7 +17,6 @@ use HighlandVision\KR\Joomla\Extend\AdminModel;
 use HighlandVision\KR\Translations;
 use HighlandVision\KR\Utility;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Versioning\VersionableControllerTrait;
 use RuntimeException;
 
@@ -38,16 +37,15 @@ class EmailtemplateModel extends AdminModel
 	protected $text_prefix = 'EMAILTEMPLATE';
 
 	/**
-	 * Method to get a knowres record.
+	 * Method to get an email template item.
 	 *
-	 * @param   int  $pk  The id of the primary key.
+	 * @param  int  $pk  The id of the primary key.
 	 *
 	 * @since  1.0.0
-	 * @return CMSObject|false  Object on success, false on failure.
+	 * @return object|false  Object on success, false on failure.
 	 */
-	public function getItem($pk = null): CMSObject|false
+	public function getItem($pk = null): object|false
 	{
-		/* @var EmailtemplateModel $item */
 		$item = parent::getItem($pk);
 		if ($item)
 		{

@@ -25,8 +25,6 @@ use RuntimeException;
  */
 class EnquiryEmail extends Email
 {
-	/** @var string Guest (enquirer) email */
-	protected string $guest_email = '';
 	/** @var string Guest (enquirer) name */
 	protected string $guest_name = '';
 	/** @var string Owner email */
@@ -37,8 +35,8 @@ class EnquiryEmail extends Email
 	/**
 	 * Constructor
 	 *
-	 * @param   string  $trigger     The email trigger
-	 * @param   int     $trigger_id  ID of required trigger
+	 * @param  string  $trigger     The email trigger
+	 * @param  int     $trigger_id  ID of required trigger
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -53,8 +51,8 @@ class EnquiryEmail extends Email
 	/**
 	 * Send email for form enquiry
 	 *
-	 * @param   int    $property_id  ID of property
-	 * @param   array  $input        Input from form data
+	 * @param  int    $property_id  ID of property
+	 * @param  array  $input        Input from form data
 	 *
 	 * @throws InvalidArgumentException|Exception
 	 * @since  3.3.0
@@ -96,7 +94,7 @@ class EnquiryEmail extends Email
 	/**
 	 * Send email
 	 *
-	 * @param   object  $trigger  Email trigger
+	 * @param  object  $trigger  Email trigger
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -146,26 +144,6 @@ class EnquiryEmail extends Email
 		{
 			$this->dispatchEmail(KrMethods::getCfg('mailfrom'), $this->guest_name);
 		}
-	}
-
-	/**
-	 * Set the agency
-	 *
-	 * @throws Exception
-	 * @since  4.0.0
-	 */
-	protected function setAgency(?int $agency_id)
-	{
-		if (empty($agency_id))
-		{
-			$agency_id = KrMethods::getParams()->get('default_agency');
-			if (!$agency_id)
-			{
-				throw new RunTimeException('Set Default agency in KR Options');
-			}
-		}
-
-		$this->agency = KrFactory::getAdminModel('agency')->getItem($agency_id);
 	}
 
 	/**
