@@ -14,7 +14,7 @@ use Joomla\CMS\Helper\ModuleHelper;
 
 $wa = $app->getDocument()->getWebAssetManager();
 $wa->getRegistry()->addExtensionRegistryFile('com_knowres');
-$wa->useScript('com_knowres.modules');
+$wa->useScript('com_knowres.site-modules');
 
 $filepath = dirname(__FILE__) . '/form/form.xml';
 $form     = new Form('mod_knowres_mailchimp');

@@ -16,7 +16,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 $wa = $this->document->getWebAssetManager();
 $wa->getRegistry()->addExtensionRegistryFile('com_knowres');
 $wa->useScript('com_knowres.site')
-   ->useScript('com_knowres.modules')
+   ->useScript('com_knowres.site-modules')
    ->useScript('form.validate')
    ->useScript('keepalive');
 

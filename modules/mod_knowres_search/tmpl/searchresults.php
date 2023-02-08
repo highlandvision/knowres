@@ -14,7 +14,7 @@ use HighlandVision\KR\TickTock;
 
 $wa = $app->getDocument()->getWebAssetManager();
 $wa->getRegistry()->addExtensionRegistryFile('com_knowres');
-$wa->useScript('com_knowres.modules');
+$wa->useScript('com_knowres.site-modules');
 
 $action = KrMethods::getRoot() . 'index.php?option=com_knowres&task=properties.search';
 ?>

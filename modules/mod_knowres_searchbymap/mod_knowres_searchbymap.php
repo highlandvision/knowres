@@ -15,7 +15,7 @@ use Joomla\CMS\Helper\ModuleHelper;
 
 $wa = $app->getDocument()->getWebAssetManager();
 $wa->getRegistry()->addExtensionRegistryFile('com_knowres');
-$wa->useScript('com_knowres.modules');
+$wa->useScript('com_knowres.site-modules');
 
 $layout    = $params->get('layout', 'default');
 $KRparams  = KrMethods::getParams();

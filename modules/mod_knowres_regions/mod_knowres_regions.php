@@ -16,7 +16,7 @@ defined('_JEXEC') or die;
 
 $wa = $app->getDocument()->getWebAssetManager();
 $wa->getRegistry()->addExtensionRegistryFile('com_knowres');
-$wa->useScript('com_knowres.modules');
+$wa->useScript('com_knowres.site-modules');
 
 $Translations = new Translations();
 $regions      = [];

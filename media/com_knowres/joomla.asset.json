@@ -323,7 +323,7 @@
       }
     },
     {
-      "name": "com_knowres.modules",
+      "name": "com_knowres.site-modules",
       "description": "Template js modules",
       "type": "script",
       "uri": "com_knowres/modules.min.js",
