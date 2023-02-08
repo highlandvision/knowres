@@ -316,7 +316,7 @@ class ServiceController extends BaseController
 
 			$stripe = new Gateway\Stripe($paymentData->service_id, $paymentData, $action);
 			$stripe->processIncoming();
-			if (empty($paymentData->payment_ref))
+			if (empty($paymentData->payment_ref) && $action != 'payment_setup_id')
 			{
 				$stripe = false;
 				throw new RuntimeException('Stripe did not return a payment reference');
@@ -340,7 +340,7 @@ class ServiceController extends BaseController
 			echo json_encode(['success' => $redirect]);
 			jexit();
 		}
-		catch (Exception)
+		catch (Exception $e)
 		{
 			if (!empty($stripe))
 			{

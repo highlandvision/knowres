@@ -364,7 +364,7 @@ class ConfirmController extends FormController
 		$output->discount      = '';
 		if ((float) $Hub->getValue('discount') > 0)
 		{
-			$output->discount_text = KrMethods::plain('COM_KNOWRES_CONTRACT_DISCOUNT_LBL');
+			$output->discount_text = KrMethods::plain('COM_KNOWRES_CONFIRM_DISCOUNT_LBL');
 			$output->discount      = '-' . $Hub->currencyDisplay($Hub->getValue('discount'));
 		}
 

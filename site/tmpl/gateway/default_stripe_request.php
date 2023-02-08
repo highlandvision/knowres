@@ -17,16 +17,13 @@ use Stripe\Stripe as StripeLib;
 StripeLib::setApiKey($this->paymentData->secret_key);
 ?>
 
-<button class="close-button" data-close aria-label="Close modal" type="button">
-	<span aria-hidden="true">&times;</span>
-</button>
-<br>
 <form action="<?php echo KrMethods::route('index.php?option=com_knowres&task=service.stripe'); ?>"
-      class="stripe" id="kr-form-gateway" method="post">
+      method="POST" id="kr-form-gateway" class="stripe">
 
 	<div class="row">
 		<div class="small-12 medium-10 medium-offset-1 columns">
 			<div class="text-center">
+				<br>
 				<h3><?php echo $this->paymentData->note; ?></h3>
 				<p class="smaller">
 					<?php echo KrMethods::plain('COM_KNOWRES_CONFIRM_REQUEST_NOTE'); ?>
@@ -41,7 +38,7 @@ StripeLib::setApiKey($this->paymentData->secret_key);
 			</div>
 
 			<label for="card-element">
-				Credit or debit card
+				<?php echo KrMethods::plain('COM_KNOWRES_PAYMENT_CARD'); ?>
 			</label>
 			<div id="card-element">
 				<!-- a Stripe Element will be inserted here. -->
@@ -51,13 +48,16 @@ StripeLib::setApiKey($this->paymentData->secret_key);
 			<div id="card-errors" role="alert"></div>
 			<br><br>
 
-			<button id="card-button" class="button large expanded" data-secret="<?php echo $this->paymentData->client_secret; ?>">
+			<button id="card-button" class="button expanded" data-secret="<?php echo $this->paymentData->client_secret; ?>">
 				<?php $payment_amount = Utility::displayValue($this->paymentData->amount, $this->paymentData->currency); ?>
 				<?php echo KrMethods::sprintf('COM_KNOWRES_PAYMENT_CARD_SUBMIT', $payment_amount); ?>
 			</button>
 		</div>
 	</div>
 </form>
+<button class="close-button" data-close aria-label="Close modal" type="button">
+	<span aria-hidden="true">&times;</span>
+</button><br>
 
 <script>
 	(function () {
@@ -83,8 +83,8 @@ StripeLib::setApiKey($this->paymentData->secret_key);
 
 		// Create an instance of the card Element
 		// and add an instance of the card UI component into the `card-element` <div>
-		let cardElement = elements.create('card', {style: style});
-		cardElement.mount('#card-element');
+		let card = elements.create('card', {style: style});
+		card.mount('#card-element');
 
 		// let cardholderName = document.getElementById('cardholder-name');
 		let cardButton = document.getElementById('card-button');
@@ -95,7 +95,7 @@ StripeLib::setApiKey($this->paymentData->secret_key);
 			event.preventDefault();
 			document.getElementById('card-errors').innerHTML = '<div id="disabled-overlay"><div class="ajaxloader"></div></div>';
 			stripe.handleCardSetup(
-				clientSecret, cardElement, {
+				clientSecret, card, {
 					payment_method_data: {
 						billing_details: {name: 'Baldy Bain'}
 					}

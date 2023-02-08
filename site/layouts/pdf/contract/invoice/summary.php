@@ -41,7 +41,7 @@ extract($displayData);
 	<?php if ($contract->discount > 0): ?>
 		<tr>
 			<td style="width:40%;color:#cc0000;">
-				<?php echo KrMethods::plain('COM_KNOWRES_CONTRACT_DISCOUNT_LBL'); ?>
+				<?php echo KrMethods::plain('COM_KNOWRES_CONFIRM_DISCOUNT_LBL'); ?>
 			</td>
 			<td style="width:30%;color:#cc0000;text-align:right;">
 				<?php echo '-' . Utility::displayValue($contract->discount, $contract->currency); ?>
@@ -54,7 +54,7 @@ extract($displayData);
 	<?php if ($contract->coupon_discount > 0): ?>
 		<tr>
 			<td style="width:40%;color:#cc0000;">
-				<?php echo KrMethods::plain('COM_KNOWRES_CONTRACT_COUPON_DISCOUNT_LBL'); ?>
+				<?php echo KrMethods::plain('COM_KNOWRES_CONFIRM_COUPON_DISCOUNT_LBL'); ?>
 			</td>
 			<td style="width:30%;color:#cc0000;text-align:right;">
 				<?php echo '-' . Utility::displayValue($contract->coupon_discount, $contract->currency); ?>
@@ -66,7 +66,7 @@ extract($displayData);
 
 	<tr>
 		<td style="width:40%;">
-			<?php echo KrMethods::plain('COM_KNOWRES_CONTRACT_ROOM_TOTAL_LBL'); ?>
+			<?php echo KrMethods::plain('COM_KNOWRES_CONFIRM_ROOM_TOTAL_LBL'); ?>
 		</td>
 		<td style="width:30%;">
 		</td>
