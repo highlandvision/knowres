@@ -676,14 +676,14 @@ class ServiceController extends BaseController
 		<Password>84859939FDC9C768AEB85DB430513BF6B88CD8A3</Password>
 	</Authentication>
 	<Reservation Currency="">
-		<ReservationID>139329799</ReservationID>
+		<ReservationID>149329799</ReservationID>
 		<CreatedDate>2023-01-09</CreatedDate>
 		<LastMod>2023-01-09 01:00:21</LastMod>
 		<StayInfos>
 			<StayInfo>
 				<PropertyID>253204</PropertyID>
-				<DateFrom>2023-05-14</DateFrom>
-				<DateTo>2023-05-17</DateTo>
+				<DateFrom>2023-06-06</DateFrom>
+				<DateTo>2023-06-09</DateTo>
 				<NumberOfGuests>4</NumberOfGuests>
 				<Costs>
 					<RUPrice>646.03</RUPrice>
@@ -731,6 +731,7 @@ class ServiceController extends BaseController
 		<ReservationStatusID>1</ReservationStatusID>
 		<ReferenceID>X3GWB0NO</ReferenceID>
 		<IsArchived>false</IsArchived>
+		<Comments>These are my comments</Comments>
 	</Reservation>
 </LNM_PutConfirmedReservation_RQ>';
 	}
