@@ -708,7 +708,8 @@ class SiteHelper
 	public static function redirectView(string $view): void
 	{
 		$Itemid = self::getItemId('com_knowres', $view);
-		KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&view=' . $view . '&Itemid=' . $Itemid, false));
+		KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&view=' . $view . '&Itemid=' . $Itemid,
+			false));
 	}
 
 	/**

@@ -43,10 +43,10 @@ class Gateway extends Service
 	/**
 	 * Initialize
 	 *
-	 * @param   int       $service_id     ID of service
-	 * @param   stdClass  $paymentData    Session payment data
-	 * @param   bool      $manual         True for manual gateway
-	 * @param   array     $payment_types  Valid payment types
+	 * @param  int       $service_id     ID of service
+	 * @param  stdClass  $paymentData    Session payment data
+	 * @param  bool      $manual         True for manual gateway
+	 * @param  array     $payment_types  Valid payment types
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -66,7 +66,7 @@ class Gateway extends Service
 	/**
 	 * Set gateway class for payment
 	 *
-	 * @param   string  $gateway_name  Name of selected gateway
+	 * @param  string  $gateway_name  Name of selected gateway
 	 *
 	 * @since  3.3.1
 	 * @return string
@@ -264,7 +264,7 @@ class Gateway extends Service
 	/**
 	 * Set the fex rate
 	 *
-	 * @param   string  $rate  FEX rate
+	 * @param  string  $rate  FEX rate
 	 *
 	 * @since 1.0.0
 	 */
@@ -276,8 +276,8 @@ class Gateway extends Service
 	/**
 	 * Validate payment type
 	 *
-	 * @param   stdClass  $paymentData    Payment data
-	 * @param   array     $payment_types  Valid payment types
+	 * @param  stdClass  $paymentData    Payment data
+	 * @param  array     $payment_types  Valid payment types
 	 *
 	 * @since   3.3.1
 	 */

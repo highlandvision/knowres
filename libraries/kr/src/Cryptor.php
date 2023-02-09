@@ -39,9 +39,9 @@ class Cryptor
 	/**
 	 * Construct a Cryptor, using aes256 encryption, sha256 key hashing and base64 encoding.
 	 *
-	 * @param   string  $cipher_algo  The cipher algorithm.
-	 * @param   string  $hash_algo    Key hashing algorithm.
-	 * @param   int     $fmt
+	 * @param  string  $cipher_algo  The cipher algorithm.
+	 * @param  string  $hash_algo    Key hashing algorithm.
+	 * @param  int     $fmt
 	 *
 	 * @throws Exception
 	 * @since    2.5.0
@@ -70,9 +70,9 @@ class Cryptor
 	/**
 	 * Decrypting.
 	 *
-	 * @param   string  $in   String to decrypt.
-	 * @param   mixed   $key  Optional Decryption key. Will be replaced by constant if null
-	 * @param   mixed   $fmt  Optional override for the input encoding. One of FORMAT_RAW, FORMAT_B64 or FORMAT_HEX.
+	 * @param  string  $in   String to decrypt.
+	 * @param  mixed   $key  Optional Decryption key. Will be replaced by constant if null
+	 * @param  mixed   $fmt  Optional override for the input encoding. One of FORMAT_RAW, FORMAT_B64 or FORMAT_HEX.
 	 *
 	 * @throws Exception
 	 * @since  2.5.0
@@ -95,9 +95,9 @@ class Cryptor
 	/**
 	 * Static convenience method for encrypting.
 	 *
-	 * @param   string  $in   String to encrypt.
-	 * @param   mixed   $key  Optional Decryption key. Will be replaced by constant if null
-	 * @param   mixed   $fmt  Optional override for the output encoding. One of FORMAT_RAW, FORMAT_B64 or FORMAT_HEX.
+	 * @param  string  $in   String to encrypt.
+	 * @param  mixed   $key  Optional Decryption key. Will be replaced by constant if null
+	 * @param  mixed   $fmt  Optional override for the output encoding. One of FORMAT_RAW, FORMAT_B64 or FORMAT_HEX.
 	 *
 	 * @throws Exception
 	 * @since  2.5.0
@@ -113,7 +113,7 @@ class Cryptor
 	/**
 	 * Generate a random sring
 	 *
-	 * @param   int  $length  Length of string
+	 * @param  int  $length  Length of string
 	 *
 	 * @since   1.0.0
 	 * @return string
@@ -134,10 +134,10 @@ class Cryptor
 	/**
 	 * Create the hash string.
 	 *
-	 * @param   mixed  $key1  Hash key 1.
-	 * @param   mixed  $key2  Hash key 2.
-	 * @param   mixed  $key3  Hash key 3.
-	 * @param   mixed  $key4  Hash key 4.
+	 * @param  mixed  $key1  Hash key 1.
+	 * @param  mixed  $key2  Hash key 2.
+	 * @param  mixed  $key3  Hash key 3.
+	 * @param  mixed  $key4  Hash key 4.
 	 *
 	 * @since  4.0.0
 	 * @return string
@@ -150,9 +150,9 @@ class Cryptor
 	/**
 	 * Decrypt a string.
 	 *
-	 * @param   string  $in   String to decrypt.
-	 * @param   mixed   $key  Decryption key.
-	 * @param   mixed   $fmt  Optional override for the input encoding. One of FORMAT_RAW, FORMAT_B64 or FORMAT_HEX.
+	 * @param  string  $in   String to decrypt.
+	 * @param  mixed   $key  Decryption key.
+	 * @param  mixed   $fmt  Optional override for the input encoding. One of FORMAT_RAW, FORMAT_B64 or FORMAT_HEX.
 	 *
 	 * @throws Exception
 	 * @since  2.5.0
@@ -210,9 +210,9 @@ class Cryptor
 	/**
 	 * Encrypt a string.
 	 *
-	 * @param   string  $in   String to encrypt.
-	 * @param   mixed   $key  Encryption key.
-	 * @param   mixed   $fmt  Optional override for the output encoding. One of FORMAT_RAW, FORMAT_B64 or FORMAT_HEX.
+	 * @param  string  $in   String to encrypt.
+	 * @param  mixed   $key  Encryption key.
+	 * @param  mixed   $fmt  Optional override for the output encoding. One of FORMAT_RAW, FORMAT_B64 or FORMAT_HEX.
 	 *
 	 * @throws Exception
 	 * @since  2.5.0

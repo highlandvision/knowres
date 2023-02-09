@@ -30,8 +30,8 @@ class Balance extends Payments
 	/**
 	 * Initialize
 	 *
-	 * @param   object  $payment  Contract payment data
-	 * @param   string  $type     Payment type
+	 * @param  object  $payment  Contract payment data
+	 * @param  string  $type     Payment type
 	 *
 	 * @throws Exception
 	 * @since  3.3.1

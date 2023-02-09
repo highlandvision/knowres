@@ -42,9 +42,9 @@ class Gateway
 	/**
 	 * Constructor
 	 *
-	 * @param   string  $payment_type   Type of payment, deposit, balance etc
-	 * @param   string  $base_currency  Base (contract) currency
-	 * @param   float   $base_amount    Payment amount in base currency
+	 * @param  string  $payment_type   Type of payment, deposit, balance etc
+	 * @param  string  $base_currency  Base (contract) currency
+	 * @param  float   $base_amount    Payment amount in base currency
 	 *
 	 * @throws Exception
 	 * @since  3.3.1
@@ -59,8 +59,8 @@ class Gateway
 	/**
 	 * Set data for one gateway
 	 *
-	 * @param   object  $gateway  Gateway service row
-	 * @param   object  $params   Gateway parameters
+	 * @param  object  $gateway   Gateway service row
+	 * @param  object  $params    Gateway parameters
 	 *                            <code>
 	 *                            $amount         - Payment amount in FEX currency
 	 *                            $base_amount    - Payment amount in base currency
@@ -95,10 +95,10 @@ class Gateway
 	/**
 	 * Add gateway data
 	 *
-	 * @param   object  $gateway  Gateway
-	 * @param   object  $params   Gateway parameters
-	 * @param   float   $amount   Fex payment amount
-	 * @param   float   $rate     Fex rate
+	 * @param  object  $gateway  Gateway
+	 * @param  object  $params   Gateway parameters
+	 * @param  float   $amount   Fex payment amount
+	 * @param  float   $rate     Fex rate
 	 *
 	 * @throws Exception
 	 * @since  3.3.1
@@ -123,8 +123,8 @@ class Gateway
 	/**
 	 * Set client ID value for PayPal
 	 *
-	 * @param   string  $plugin  Gateway plugin
-	 * @param   object  $params  Service parameters
+	 * @param  string  $plugin  Gateway plugin
+	 * @param  object  $params  Service parameters
 	 *
 	 * @since  3.3.1
 	 * @return string
@@ -149,9 +149,9 @@ class Gateway
 	/**
 	 * Calculate surchange values
 	 *
-	 * @param   object  $params  Service parameters
-	 * @param   float   $amount  Fex payment amount
-	 * @param   float   $rate    Fex rate
+	 * @param  object  $params  Service parameters
+	 * @param  float   $amount  Fex payment amount
+	 * @param  float   $rate    Fex rate
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -182,7 +182,7 @@ class Gateway
 	/**
 	 * Set value for any surcharge
 	 *
-	 * @param   object  $params  Service parameters
+	 * @param  object  $params  Service parameters
 	 *
 	 * @since   3.3.0
 	 * @return array

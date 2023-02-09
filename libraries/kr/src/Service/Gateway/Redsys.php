@@ -43,8 +43,8 @@ class Redsys extends Gateway
 	/**
 	 * Initialize
 	 *
-	 * @param   int       $service_id   ID of service
-	 * @param   stdClass  $paymentData  Session payment data
+	 * @param  int       $service_id   ID of service
+	 * @param  stdClass  $paymentData  Session payment data
 	 *
 	 * @throws Exception
 	 * @since  3.3.1
@@ -175,8 +175,8 @@ class Redsys extends Gateway
 	/**
 	 * Adds a field and value to the 'fields' variable
 	 *
-	 * @param   string  $field  Field name
-	 * @param   string  $value  Field value
+	 * @param  string  $field  Field name
+	 * @param  string  $value  Field value
 	 *
 	 * @since 3.3.1
 	 */
@@ -188,7 +188,7 @@ class Redsys extends Gateway
 	/**
 	 * Base64 url decode
 	 *
-	 * @param   string  $input  Text to decode
+	 * @param  string  $input  Text to decode
 	 *
 	 * @since  3.3.1
 	 * @return string
@@ -201,7 +201,7 @@ class Redsys extends Gateway
 	/**
 	 * Base64 url encode
 	 *
-	 * @param   string  $input  Text to encode
+	 * @param  string  $input  Text to encode
 	 *
 	 * @since  3.3.1
 	 * @return string
@@ -234,7 +234,7 @@ class Redsys extends Gateway
 	/**
 	 * Base 64 decode
 	 *
-	 * @param   string  $data  Text to decode
+	 * @param  string  $data  Text to decode
 	 *
 	 * @since  3.3.1
 	 * @return string
@@ -247,7 +247,7 @@ class Redsys extends Gateway
 	/**
 	 * Decode JSON string
 	 *
-	 * @param   string  $data  Json string
+	 * @param  string  $data  Json string
 	 *
 	 * @since 3.3.1
 	 * @return string
@@ -260,7 +260,7 @@ class Redsys extends Gateway
 	/**
 	 * Base 64 encode
 	 *
-	 * @param   string  $data  Text to encode
+	 * @param  string  $data  Text to encode
 	 *
 	 * @since 3.3.1
 	 * @return string
@@ -286,8 +286,8 @@ class Redsys extends Gateway
 	/**
 	 * 3DES Encryption
 	 *
-	 * @param   string  $data  Text to encrypt
-	 * @param   string  $key   Encryption key
+	 * @param  string  $data  Text to encrypt
+	 * @param  string  $key   Encryption key
 	 *
 	 * @since  3.3.1
 	 * @return string
@@ -330,7 +330,7 @@ class Redsys extends Gateway
 	/**
 	 * Set locale
 	 *
-	 * @param   string  $country_iso  ISO country code
+	 * @param  string  $country_iso  ISO country code
 	 *
 	 * @since 3.3.1
 	 * @return string
@@ -395,8 +395,8 @@ class Redsys extends Gateway
 	/**
 	 * SHA256 encryption
 	 *
-	 * @param   string  $data  Text to decode
-	 * @param   string  $key   Encryption key
+	 * @param  string  $data  Text to decode
+	 * @param  string  $key   Encryption key
 	 *
 	 * @since 3.3.1
 	 * @return string
@@ -409,7 +409,7 @@ class Redsys extends Gateway
 	/**
 	 * Decode JSON string to array
 	 *
-	 * @param   string  $data  Json string
+	 * @param  string  $data  Json string
 	 *
 	 * @since  3.3.1
 	 * @return array

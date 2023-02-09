@@ -55,10 +55,10 @@ class LosRates
 	/**
 	 * Constructor
 	 *
-	 * @param   int    $property_id   ID of property
-	 * @param   array  $settings      Property settings
-	 * @param   int    $markup        Markup to be applied to rate
-	 * @param   bool   $do_discounts  True to deduct discount from rate
+	 * @param  int    $property_id   ID of property
+	 * @param  array  $settings      Property settings
+	 * @param  int    $markup        Markup to be applied to rate
+	 * @param  bool   $do_discounts  True to deduct discount from rate
 	 *
 	 * @since  3.4.0
 	 */
@@ -73,9 +73,9 @@ class LosRates
 	/**
 	 * Get LOS rates content
 	 *
-	 * @param   string  $first       First date for rates
-	 * @param   string  $final       Final date for rates
-	 * @param   int     $max_nights  Maximum length of stay to be calculated. Defaults to max_nights in rates
+	 * @param  string  $first        First date for rates
+	 * @param  string  $final        Final date for rates
+	 * @param  int     $max_nights   Maximum length of stay to be calculated. Defaults to max_nights in rates
 	 *                               but can be overridden for channel requirements if necessary
 	 *                               e.g. VRBO only allows 31 nights per date
 	 *
@@ -99,11 +99,11 @@ class LosRates
 	/**
 	 * Generate the base rate for the first date
 	 *
-	 * @param   object  $r            Rate row
-	 * @param   string  $arrival      Arrival date
-	 * @param   array   $more_guests  Additional guests
-	 * @param   int     $min_nights   Minimum stay for date
-	 * @param   int     $max_nights   Maximum stay for date
+	 * @param  object  $r            Rate row
+	 * @param  string  $arrival      Arrival date
+	 * @param  array   $more_guests  Additional guests
+	 * @param  int     $min_nights   Minimum stay for date
+	 * @param  int     $max_nights   Maximum stay for date
 	 *
 	 * @throws Exception
 	 * @since  3.4
@@ -112,7 +112,7 @@ class LosRates
 	private function calcLosBaseRate(object $r, string $arrival, array $more_guests, int $min_nights,
 		int $max_nights): array
 	{
-		$base   = [];
+		$base = [];
 		$wcod = $this->Los->weeklyChangeOverDay($arrival);
 
 		for ($nights = 1; $nights <= $max_nights; $nights++)
@@ -172,12 +172,12 @@ class LosRates
 	/**
 	 * Get los rates for a date
 	 *
-	 * @param   array   $prices       Existing array of prices
-	 * @param   object  $r            Rate row being prcoessed
-	 * @param   string  $arrival      Arrival date
-	 * @param   array   $more_guests  Additional guests
-	 * @param   array   $qrates       Base rates for today
-	 * @param   int     $max_nights   Maximum nioghts stay
+	 * @param  array   $prices       Existing array of prices
+	 * @param  object  $r            Rate row being prcoessed
+	 * @param  string  $arrival      Arrival date
+	 * @param  array   $more_guests  Additional guests
+	 * @param  array   $qrates       Base rates for today
+	 * @param  int     $max_nights   Maximum nioghts stay
 	 *
 	 * @throws Exception
 	 * @since  3.4.0
@@ -319,11 +319,11 @@ class LosRates
 	/**
 	 * Set LOS rate for a single date, nights and guests
 	 *
-	 * @param   string  $arrival     Arrival date yyyy-mm-dd
-	 * @param   string  $departure   Departure date yyyy-mm-dd
-	 * @param   int     $guests      #Guests
-	 * @param   int     $nights      #Nights
-	 * @param   array   $date_range  Date range
+	 * @param  string  $arrival     Arrival date yyyy-mm-dd
+	 * @param  string  $departure   Departure date yyyy-mm-dd
+	 * @param  int     $guests      #Guests
+	 * @param  int     $nights      #Nights
+	 * @param  array   $date_range  Date range
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -372,9 +372,9 @@ class LosRates
 	/**
 	 * Initiate Hub for calculations
 	 *
-	 * @param   string  $arrival    Arrival date
-	 * @param   string  $departure  Departure date
-	 * @param   int     $guests     #Guests
+	 * @param  string  $arrival    Arrival date
+	 * @param  string  $departure  Departure date
+	 * @param  int     $guests     #Guests
 	 *
 	 * @throws Exception
 	 * @since  3.4.0
@@ -407,7 +407,7 @@ class LosRates
 	 * Set the required computations. Some of these are tested in compute but
 	 * done here to save some time
 	 *
-	 * @param   int  $nights  #Nights stay
+	 * @param  int  $nights  #Nights stay
 	 *
 	 * @since  3.4.0
 	 */
@@ -456,9 +456,9 @@ class LosRates
 	/**
 	 * Set LOS rates content
 	 *
-	 * @param   string  $first       First date
-	 * @param   string  $final       Final date
-	 * @param   int     $max_nights  Maximum stay to be calculated, defaults to max nights in rates if not set
+	 * @param  string  $first       First date
+	 * @param  string  $final       Final date
+	 * @param  int     $max_nights  Maximum stay to be calculated, defaults to max nights in rates if not set
 	 *
 	 * @throws Exception
 	 * @since  3.4.0

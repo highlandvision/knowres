@@ -30,7 +30,7 @@ class Deposit
 	/**
 	 * Calculate deposit payment
 	 *
-	 * @param   Hub  $Hub  Hub base class
+	 * @param  Hub  $Hub  Hub base class
 	 *
 	 * @throws Exception
 	 * @since 1.0.0
@@ -81,9 +81,9 @@ class Deposit
 	/**
 	 * Calculates the deposit to be charged
 	 *
-	 * @param   float  $total          Value to base calculation on
-	 * @param   bool   $nonrefundable  TRUE if non-refundable rate (agents only)
-	 * @param   int    $deposit_pc     Override deposit percentage (agents only)
+	 * @param  float  $total          Value to base calculation on
+	 * @param  bool   $nonrefundable  TRUE if non-refundable rate (agents only)
+	 * @param  int    $deposit_pc     Override deposit percentage (agents only)
 	 *
 	 * @throws Exception
 	 * @since  1.0.0

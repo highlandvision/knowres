@@ -5,6 +5,7 @@
  * @copyright  (C) 2013 Open Source Matters, Inc. <https://www.joomla.org>
  * @license        GNU General Public License version 2 or later; see LICENSE.txt
  */
+
 /** @noinspection PhpMissingParamTypeInspection */
 
 namespace HighlandVision\KR\Joomla\Extend;
@@ -32,9 +33,9 @@ class ContentHelper extends \Joomla\CMS\Helper\ContentHelper
 	/**
 	 * Gets a list of the actions that can be performed.
 	 *
-	 * @param   string   $component  The component name.
-	 * @param   string   $section    The access section name.
-	 * @param   integer  $id         The item ID.
+	 * @param  string   $component  The component name.
+	 * @param  string   $section    The access section name.
+	 * @param  integer  $id         The item ID.
 	 *
 	 * @since   3.2
 	 * @return  CMSObject

@@ -36,7 +36,7 @@ class FDatabase
 	/**
 	 * Validate if user email exists
 	 *
-	 * @param   string  $email  Email string
+	 * @param  string  $email  Email string
 	 *
 	 * @throws InvalidArgumentException
 	 * @throws QueryTypeAlreadyDefinedException
@@ -67,7 +67,7 @@ class FDatabase
 	/**
 	 * Validate if user name exists
 	 *
-	 * @param   string  $username  Name of user
+	 * @param  string  $username  Name of user
 	 *
 	 * @throws InvalidArgumentException
 	 * @throws QueryTypeAlreadyDefinedException
@@ -98,8 +98,8 @@ class FDatabase
 	/**
 	 * Delete data from table
 	 *
-	 * @param   string  $table       Table name
-	 * @param   array   $conditions  Deletion conditions
+	 * @param  string  $table       Table name
+	 * @param  array   $conditions  Deletion conditions
 	 *
 	 * @throws InvalidArgumentException
 	 * @throws QueryTypeAlreadyDefinedException
@@ -147,8 +147,8 @@ class FDatabase
 	/**
 	 * Get list model
 	 *
-	 * @param   string  $name  Model name
-	 * @param   string  $area  Administrator or Site
+	 * @param  string  $name  Model name
+	 * @param  string  $area  Administrator or Site
 	 *
 	 * @since  3.0.0
 	 * @return mixed
@@ -171,8 +171,8 @@ class FDatabase
 	/**
 	 * Get the admin path to the model
 	 *
-	 * @param   string  $name  Model name
-	 * @param   string  $area  Site or Admin
+	 * @param  string  $name  Model name
+	 * @param  string  $area  Site or Admin
 	 *
 	 * @since  3.3.0
 	 * @return string
@@ -192,9 +192,9 @@ class FDatabase
 	/**
 	 * Insert object into database
 	 *
-	 * @param   string    $table  Table name
-	 * @param   stdClass  $data   Data to be inserted
-	 * @param   string    $key    Primary key
+	 * @param  string    $table  Table name
+	 * @param  stdClass  $data   Data to be inserted
+	 * @param  string    $key    Primary key
 	 *
 	 * @throws RuntimeException
 	 * @since  3.3.0
@@ -211,7 +211,7 @@ class FDatabase
 	/**
 	 * Truncate a table
 	 *
-	 * @param   string  $table  Name of table
+	 * @param  string  $table  Name of table
 	 *
 	 * @throws RuntimeException
 	 * @since  3.3.0
@@ -224,9 +224,9 @@ class FDatabase
 	/**
 	 * Update object into database
 	 *
-	 * @param   string    $table  Table name
-	 * @param   stdClass  $data   Data to be inserted
-	 * @param   string    $key    Name of primary key
+	 * @param  string    $table  Table name
+	 * @param  stdClass  $data   Data to be inserted
+	 * @param  string    $key    Name of primary key
 	 *
 	 * @throws RuntimeException
 	 * @since  3.3.0

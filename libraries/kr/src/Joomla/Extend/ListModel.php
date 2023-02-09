@@ -65,10 +65,10 @@ abstract class ListModel extends \Joomla\CMS\MVC\Model\ListModel
 	/**
 	 * Generate query for multipurpose Int, Array, String
 	 *
-	 * @param   DatabaseInterface  $db      Database instance
-	 * @param   QueryInterface     $query   Existing query
-	 * @param   string             $column  Name of column
-	 * @param   mixed              $value   Value for field
+	 * @param  DatabaseInterface  $db      Database instance
+	 * @param  QueryInterface     $query   Existing query
+	 * @param  string             $column  Name of column
+	 * @param  mixed              $value   Value for field
 	 *
 	 * @since  3.3.0
 	 * @return QueryInterface
@@ -99,10 +99,10 @@ abstract class ListModel extends \Joomla\CMS\MVC\Model\ListModel
 	/**
 	 * Generate query for string Filter
 	 *
-	 * @param   DatabaseInterface  $db      Database instance
-	 * @param   QueryInterface     $query   Existing query
-	 * @param   string             $column  Name of column
-	 * @param   mixed              $filter  Filter value
+	 * @param  DatabaseInterface  $db      Database instance
+	 * @param  QueryInterface     $query   Existing query
+	 * @param  string             $column  Name of column
+	 * @param  mixed              $filter  Filter value
 	 *
 	 * @since  3.3.0
 	 * @return QueryInterface
@@ -129,8 +129,8 @@ abstract class ListModel extends \Joomla\CMS\MVC\Model\ListModel
 	/**
 	 * Generate query for common list query joins
 	 *
-	 * @param   DatabaseInterface  $db     Database instance
-	 * @param   QueryInterface     $query  Existing query
+	 * @param  DatabaseInterface  $db     Database instance
+	 * @param  QueryInterface     $query  Existing query
 	 *
 	 * @since  4.0.0
 	 * @return QueryInterface
@@ -152,10 +152,10 @@ abstract class ListModel extends \Joomla\CMS\MVC\Model\ListModel
 	/**
 	 * Generate query for integer Filter
 	 *
-	 * @param   DatabaseInterface  $db      Database instance
-	 * @param   QueryInterface     $query   Existing query
-	 * @param   string             $column  Name of column
-	 * @param   mixed              $filter  Filter value
+	 * @param  DatabaseInterface  $db      Database instance
+	 * @param  QueryInterface     $query   Existing query
+	 * @param  string             $column  Name of column
+	 * @param  mixed              $filter  Filter value
 	 *
 	 * @since  3.3.0
 	 * @return QueryInterface
@@ -181,9 +181,9 @@ abstract class ListModel extends \Joomla\CMS\MVC\Model\ListModel
 	/**
 	 * Generate query for integer Filter
 	 *
-	 * @param   DatabaseInterface  $db      Database instance
-	 * @param   QueryInterface     $query   Existing query
-	 * @param   mixed              $filter  Filter value
+	 * @param  DatabaseInterface  $db      Database instance
+	 * @param  QueryInterface     $query   Existing query
+	 * @param  mixed              $filter  Filter value
 	 *
 	 * @since  3.3.0
 	 * @return QueryInterface
@@ -214,10 +214,10 @@ abstract class ListModel extends \Joomla\CMS\MVC\Model\ListModel
 	/**
 	 * Set query for json string find in set
 	 *
-	 * @param   DatabaseInterface  $db      Database instance
-	 * @param   QueryInterface     $query   Existing query
-	 * @param   mixed              $filter  Current filter values
-	 * @param   string             $column  Database column
+	 * @param  DatabaseInterface  $db      Database instance
+	 * @param  QueryInterface     $query   Existing query
+	 * @param  mixed              $filter  Current filter values
+	 * @param  string             $column  Database column
 	 *
 	 * @since  1.0.0
 	 * @return QueryInterface
@@ -253,10 +253,10 @@ abstract class ListModel extends \Joomla\CMS\MVC\Model\ListModel
 	/**
 	 * Generic search code for list query
 	 *
-	 * @param   DatabaseInterface  $db         Database instance
-	 * @param   QueryInterface     $query      Existing query
-	 * @param   string             $column     Order column
-	 * @param   string             $direction  Order direction
+	 * @param  DatabaseInterface  $db         Database instance
+	 * @param  QueryInterface     $query      Existing query
+	 * @param  string             $column     Order column
+	 * @param  string             $direction  Order direction
 	 *
 	 * @since   3.3.0
 	 * @return QueryInterface
@@ -275,10 +275,10 @@ abstract class ListModel extends \Joomla\CMS\MVC\Model\ListModel
 	/**
 	 * Generic search code for list query
 	 *
-	 * @param   DatabaseInterface  $db      Database instance
-	 * @param   QueryInterface     $query   Existing query
-	 * @param   string             $search  Search string
-	 * @param   string             $field   Name of fiueld to search
+	 * @param  DatabaseInterface  $db      Database instance
+	 * @param  QueryInterface     $query   Existing query
+	 * @param  string             $search  Search string
+	 * @param  string             $field   Name of fiueld to search
 	 *
 	 * @since   3.3.0
 	 * @return  QueryInterface
@@ -305,10 +305,10 @@ abstract class ListModel extends \Joomla\CMS\MVC\Model\ListModel
 	/**
 	 * Build translation subquery
 	 *
-	 * @param   DatabaseInterface  $db     Database interface
-	 * @param   string             $item   Item being translated
-	 * @param   string             $key    Key for item
-	 * @param   string             $field  Optional field name for multiple translations per table
+	 * @param  DatabaseInterface  $db     Database interface
+	 * @param  string             $item   Item being translated
+	 * @param  string             $key    Key for item
+	 * @param  string             $field  Optional field name for multiple translations per table
 	 *
 	 * @throws RuntimeException
 	 * @since  3.3.0

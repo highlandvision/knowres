@@ -36,7 +36,7 @@ class PaymentDates
 	/**
 	 * Calculate payment dates
 	 *
-	 * @param   Hub  $Hub  Hub base class
+	 * @param  Hub  $Hub  Hub base class
 	 *
 	 * @throws Exception
 	 * @since 1.0.0
@@ -103,7 +103,7 @@ class PaymentDates
 	/**
 	 * Calculate balance date
 	 *
-	 * @param   string  $expiry_date  Calculated expiry date
+	 * @param  string  $expiry_date  Calculated expiry date
 	 *
 	 * @throws Exception
 	 * @since 1.0.0
@@ -122,7 +122,8 @@ class PaymentDates
 			return $balance_date;
 		}
 
-		$balance_date = TickTock::modifyDays($this->Hub->getValue('arrival'), $this->Hub->getValue('balance_days'), '-');
+		$balance_date = TickTock::modifyDays($this->Hub->getValue('arrival'), $this->Hub->getValue('balance_days'),
+			'-');
 		if ($balance_date < $expiry_date)
 		{
 			$balance_date = $expiry_date;

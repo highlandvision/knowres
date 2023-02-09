@@ -28,7 +28,7 @@ class Commission
 	/**
 	 * Calculate commission
 	 *
-	 * @param   Hub  $Hub  Hub base class
+	 * @param  Hub  $Hub  Hub base class
 	 *
 	 * @throws Exception
 	 * @since  1.0.0

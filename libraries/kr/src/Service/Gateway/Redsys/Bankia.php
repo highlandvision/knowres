@@ -25,8 +25,8 @@ class Bankia extends Redsys
 	/**
 	 * Initialize
 	 *
-	 * @param   int       $service_id   OD of service
-	 * @param   stdClass  $paymentData  Session payment data
+	 * @param  int       $service_id   OD of service
+	 * @param  stdClass  $paymentData  Session payment data
 	 *
 	 * @throws Exception
 	 * @since  1.0.0

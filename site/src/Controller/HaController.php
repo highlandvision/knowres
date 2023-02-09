@@ -21,7 +21,6 @@ use HighlandVision\KR\Utility;
 use HighlandVision\Vrbo\Manager;
 use JetBrains\PhpStorm\NoReturn;
 use Joomla\CMS\MVC\Controller\BaseController;
-
 use RuntimeException;
 
 use function jexit;
@@ -340,6 +339,7 @@ class HaController extends BaseController
 
 		jexit();
 	}
+
 	/**
 	 * Test ha br service
 	 *

@@ -30,7 +30,7 @@ class PushRates extends Beyond
 	/**
 	 * Initialize
 	 *
-	 * @param   int  $test  1 for testing
+	 * @param  int  $test  1 for testing
 	 *
 	 * @throws Exception
 	 * @since  2.4.0
@@ -43,7 +43,7 @@ class PushRates extends Beyond
 	/**
 	 * Update the changed property min and base price rates to beyond
 	 *
-	 * @param   object  $queue  The queue database record
+	 * @param  object  $queue  The queue database record
 	 *
 	 * @throws RuntimeException
 	 * @throws Exception

@@ -31,7 +31,7 @@ class Currency
 	/**
 	 * Manage currencies with symbols and decimals
 	 *
-	 * @param   string  $currency_code
+	 * @param  string  $currency_code
 	 *
 	 * @since 1.0.0
 	 */
@@ -59,7 +59,7 @@ class Currency
 	/**
 	 * Format simple value display
 	 *
-	 * @param   string  $text           Currency value
+	 * @param  string   $text           Currency value
 	 * @param  ?string  $currency_code  Currency
 	 *
 	 * @since  1.0.0

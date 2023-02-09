@@ -37,7 +37,7 @@ class Translations
 	/**
 	 * Manage translations
 	 *
-	 * @param   string  $language  Language string
+	 * @param  string  $language  Language string
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -96,12 +96,12 @@ class Translations
 	/**
 	 * Get value of translation string for an array of objects
 	 *
-	 * @param   array   $items  Array of objects
-	 * @param   string  $item   Translation table name
-	 * @param   string  $key    Object variable to be used as translation item_id
-	 * @param   string  $field  Object variable to be used as translation field
-	 * @param   string  $new    Name of variable to be added to object
-	 * @param   bool    $sort   Sort $field by alpha
+	 * @param  array   $items  Array of objects
+	 * @param  string  $item   Translation table name
+	 * @param  string  $key    Object variable to be used as translation item_id
+	 * @param  string  $field  Object variable to be used as translation field
+	 * @param  string  $new    Name of variable to be added to object
+	 * @param  bool    $sort   Sort $field by alpha
 	 *
 	 * @since  1.0.0
 	 * @return array
@@ -135,7 +135,7 @@ class Translations
 	/**
 	 * Clear cache for item
 	 *
-	 * @param   string  $item  Name of item
+	 * @param  string  $item  Name of item
 	 *
 	 * @since  2.4.0
 	 */
@@ -154,8 +154,8 @@ class Translations
 	/**
 	 * Delete multiple translation strings
 	 *
-	 * @param   string  $item  Table name
-	 * @param   array   $pks   Array of item ids for item
+	 * @param  string  $item  Table name
+	 * @param  array   $pks   Array of item ids for item
 	 *
 	 * @since  3.0.0
 	 */
@@ -167,8 +167,8 @@ class Translations
 	/**
 	 * Delete any existing translation string
 	 *
-	 * @param   string  $item     Table name
-	 * @param   int     $item_id  ID of the base item
+	 * @param  string  $item     Table name
+	 * @param  int     $item_id  ID of the base item
 	 *
 	 * @throws UnexpectedValueException
 	 * @since  1.0.0
@@ -182,10 +182,10 @@ class Translations
 	 * Get value of translation strings for an item / language
 	 * Used when translation strings need to be sorted
 	 *
-	 * @param   array   $items  Database items list
-	 * @param   string  $item   Table name
-	 * @param   string  $field  Field name
-	 * @param   bool    $sort   Sort by alpha
+	 * @param  array   $items  Database items list
+	 * @param  string  $item   Table name
+	 * @param  string  $field  Field name
+	 * @param  bool    $sort   Sort by alpha
 	 *
 	 * @since  1.0.0
 	 * @return array
@@ -223,7 +223,7 @@ class Translations
 	/**
 	 * Get property name
 	 *
-	 * @param   int  $property_id  ID of property
+	 * @param  int  $property_id  ID of property
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -247,9 +247,9 @@ class Translations
 	/**
 	 * Get translation string
 	 *
-	 * @param   string  $item     Table name
-	 * @param  ?int     $item_id  ID of the base item
-	 * @param   string  $field    Name of the field (column)
+	 * @param  string  $item     Table name
+	 * @param  ?int    $item_id  ID of the base item
+	 * @param  string  $field    Name of the field (column)
 	 *
 	 * @since        1.0.0
 	 * @return string
@@ -270,12 +270,12 @@ class Translations
 	/**
 	 * Add or update default language string
 	 *
-	 * @param   string  $item          Table name
-	 * @param   int     $item_id       ID of the base item
-	 * @param   string  $field         Name of the field (column)
-	 * @param   string  $text          The text
-	 * @param   bool    $remove_cache  True to remove cache
-	 * @param   string  $language      Language string
+	 * @param  string  $item          Table name
+	 * @param  int     $item_id       ID of the base item
+	 * @param  string  $field         Name of the field (column)
+	 * @param  string  $text          The text
+	 * @param  bool    $remove_cache  True to remove cache
+	 * @param  string  $language      Language string
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -343,7 +343,7 @@ class Translations
 	/**
 	 * Check if cache exists for table
 	 *
-	 * @param   string  $item  Item name to return
+	 * @param  string  $item  Item name to return
 	 *
 	 * @since  1.0.0
 	 */
@@ -369,7 +369,7 @@ class Translations
 	/**
 	 * Set translation language
 	 *
-	 * @param   string  $language  Language code
+	 * @param  string  $language  Language code
 	 *
 	 * @since  1.0.0
 	 */
@@ -388,9 +388,9 @@ class Translations
 	/**
 	 * Set translation text
 	 *
-	 * @param   string  $item     Table name
-	 * @param  ?int     $item_id  ID of the base item
-	 * @param   string  $field    Name of the field (column)
+	 * @param  string  $item     Table name
+	 * @param  ?int    $item_id  ID of the base item
+	 * @param  string  $field    Name of the field (column)
 	 *
 	 * @since  1.0.0
 	 * @return string
@@ -443,7 +443,7 @@ class Translations
 	/**
 	 * Create translations array for $item
 	 *
-	 * @param   string  $item  Table name
+	 * @param  string  $item  Table name
 	 *
 	 * @since 1.0.0
 	 */

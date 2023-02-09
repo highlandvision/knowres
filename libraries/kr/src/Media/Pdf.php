@@ -35,7 +35,7 @@ class Pdf extends Media
 	/**
 	 * Initialize
 	 *
-	 * @param   string  $action  Destination output
+	 * @param  string  $action  Destination output
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
@@ -58,7 +58,7 @@ class Pdf extends Media
 	/**
 	 * Action pdf, download, email etc
 	 *
-	 * @param   string  $file  PDF File name
+	 * @param  string  $file  PDF File name
 	 *
 	 * @since  1.0.0
 	 * @return bool|string
@@ -83,9 +83,9 @@ class Pdf extends Media
 	/**
 	 * Generate an HTML pdf
 	 *
-	 * @param   string  $title    PDF title
-	 * @param   string  $subject  PDF subject
-	 * @param   int     $margin   Margin size
+	 * @param  string  $title    PDF title
+	 * @param  string  $subject  PDF subject
+	 * @param  int     $margin   Margin size
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -114,7 +114,7 @@ class Pdf extends Media
 	/**
 	 * Set PDF content
 	 *
-	 * @param   string  $content  Content for output
+	 * @param  string  $content  Content for output
 	 *
 	 * @since 1.0.0
 	 */

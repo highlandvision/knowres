@@ -21,10 +21,10 @@ interface InterfaceEmailService
 	/**
 	 * Dispatch the email
 	 *
-	 * @param   string  $email    Recipient Email
-	 * @param   string  $subject  Email subject
-	 * @param   string  $body     Email body
-	 * @param   array   $options  {firstname: string, surname: string, tags: array, cc: array, bcc: array, attachments: array}
+	 * @param  string  $email    Recipient Email
+	 * @param  string  $subject  Email subject
+	 * @param  string  $body     Email body
+	 * @param  array   $options  {firstname: string, surname: string, tags: array, cc: array, bcc: array, attachments: array}
 	 *
 	 * @since  4.0.0
 	 */

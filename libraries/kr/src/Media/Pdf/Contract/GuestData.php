@@ -29,8 +29,8 @@ class GuestData extends Contract
 	/**
 	 * Initialize
 	 *
-	 * @param   string  $action       Destination output
-	 * @param   int     $contract_id  Contract id
+	 * @param  string  $action       Destination output
+	 * @param  int     $contract_id  Contract id
 	 *
 	 * @throws Exception
 	 * @since  1.0.0

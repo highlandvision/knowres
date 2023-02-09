@@ -38,7 +38,7 @@ class Resurrect
 	/**
 	 * Action resurrrect
 	 *
-	 * @param   Hub  $hub  Hub data
+	 * @param  Hub  $hub  Hub data
 	 *
 	 * @throws Exception
 	 * @since 1.0.0

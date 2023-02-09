@@ -61,7 +61,7 @@ class Hub
 	/**
 	 * Constructor initialise
 	 *
-	 * @param   stdClass  $contractData  Contract session data
+	 * @param  stdClass  $contractData  Contract session data
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -101,8 +101,8 @@ class Hub
 	/**
 	 * Adjust nightly rates for all dates
 	 *
-	 * @param   float  $value     Discount value
-	 * @param   bool   $increase  False to decrease nightly rate
+	 * @param  float  $value     Discount value
+	 * @param  bool   $increase  False to decrease nightly rate
 	 *
 	 * @throws RuntimeException
 	 * @throws InvalidArgumentException
@@ -140,7 +140,7 @@ class Hub
 	/**
 	 * Process the core database updates and changes
 	 *
-	 * @param   array  $actions  Actions for contracts
+	 * @param  array  $actions  Actions for contracts
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -215,8 +215,8 @@ class Hub
 	/**
 	 * Get the contract values
 	 *
-	 * @param   array  $computations  Computations to perform for contract
-	 * @param   bool   $set_total     True to set the contract total
+	 * @param  array  $computations   Computations to perform for contract
+	 * @param  bool   $set_total      True to set the contract total
 	 *                                normally when deposit is not required
 	 *
 	 * @throws RuntimeException
@@ -273,7 +273,7 @@ class Hub
 	/**
 	 * Money display
 	 *
-	 * @param   float  $value  Value to be displayed
+	 * @param  float  $value  Value to be displayed
 	 *
 	 * @throws InvalidArgumentException
 	 * @throws RuntimeException
@@ -324,7 +324,7 @@ class Hub
 	/**
 	 * Return data
 	 *
-	 * @param   string  $session  Session data type to return
+	 * @param  string  $session  Session data type to return
 	 *
 	 * @throws InvalidArgumentException
 	 * @throws RuntimeException
@@ -352,8 +352,8 @@ class Hub
 	/**
 	 * Get individual session value
 	 *
-	 * @param   string  $key      Session key
-	 * @param   string  $session  Session type
+	 * @param  string  $key      Session key
+	 * @param  string  $session  Session type
 	 *
 	 * @throws RuntimeException
 	 * @throws InvalidArgumentException
@@ -370,7 +370,7 @@ class Hub
 	/**
 	 * Round currency values as per decimal places
 	 *
-	 * @param   float  $value  Value to be rounded
+	 * @param  float  $value  Value to be rounded
 	 *
 	 * @throws InvalidArgumentException
 	 * @throws RuntimeException
@@ -391,10 +391,10 @@ class Hub
 	/**
 	 * Set rate adjustment values
 	 *
-	 * @param   string  $type   Type of adjustment
-	 * @param   string  $value  Adjustment calculation
-	 * @param   string  $pc     Value used for calculation
-	 * @param   string  $calc   Base calculation value
+	 * @param  string  $type   Type of adjustment
+	 * @param  string  $value  Adjustment calculation
+	 * @param  string  $pc     Value used for calculation
+	 * @param  string  $calc   Base calculation value
 	 *
 	 * @throws InvalidArgumentException
 	 * @throws RuntimeException
@@ -414,7 +414,7 @@ class Hub
 	/**
 	 * Set agent object
 	 *
-	 * @param   object  $agent  Agent row
+	 * @param  object  $agent  Agent row
 	 *
 	 * @throws RuntimeException
 	 * @since  3.3.0
@@ -432,8 +432,8 @@ class Hub
 	/**
 	 * Set session data
 	 *
-	 * @param   stdClass  $data     Data
-	 * @param   string    $session  Session type
+	 * @param  stdClass  $data     Data
+	 * @param  string    $session  Session type
 	 *
 	 * @throws InvalidArgumentException
 	 * @throws RuntimeException
@@ -448,11 +448,11 @@ class Hub
 	/**
 	 * Set rate discount values
 	 *
-	 * @param   string  $type   Type of adiscount
-	 * @param   float   $value  Discount calculation
-	 * @param   string  $pc     Value used for calculation
-	 * @param   string  $calc   Base calculation value
-	 * @param   float   $base   Base calculation
+	 * @param  string  $type   Type of adiscount
+	 * @param  float   $value  Discount calculation
+	 * @param  string  $pc     Value used for calculation
+	 * @param  string  $calc   Base calculation value
+	 * @param  float   $base   Base calculation
 	 *
 	 * @since  3.3.0
 	 */
@@ -493,7 +493,7 @@ class Hub
 	/**
 	 * Set original contract data for comparison
 	 *
-	 * @param   stdClass  $data  Original data
+	 * @param  stdClass  $data  Original data
 	 *
 	 * @since 3.3.0
 	 */
@@ -505,9 +505,9 @@ class Hub
 	/**
 	 * Set individual session value
 	 *
-	 * @param   string  $key      Session key
-	 * @param   mixed   $value    Value
-	 * @param   string  $session  Session type
+	 * @param  string  $key      Session key
+	 * @param  mixed   $value    Value
+	 * @param  string  $session  Session type
 	 *
 	 * @throws InvalidArgumentException
 	 * @throws RuntimeException
@@ -523,7 +523,7 @@ class Hub
 	/**
 	 * Money display for form field
 	 *
-	 * @param   float|string  $value  Value to be displayed
+	 * @param  float|string  $value  Value to be displayed
 	 *
 	 * @throws InvalidArgumentException
 	 * @throws RuntimeException
@@ -567,8 +567,8 @@ class Hub
 	/**
 	 * Generate a username from guest input
 	 *
-	 * @param   string  $firstname  Guest first anme
-	 * @param   string  $surname    Guest surname
+	 * @param  string  $firstname  Guest first anme
+	 * @param  string  $surname    Guest surname
 	 *
 	 * @since  3.3.1
 	 * @return string
@@ -767,7 +767,7 @@ class Hub
 	/**
 	 * Validate session
 	 *
-	 * @param   string  $session  Session name
+	 * @param  string   $session  Session name
 	 * @param  ?string  $key      Session key
 	 *
 	 * @throws InvalidArgumentException

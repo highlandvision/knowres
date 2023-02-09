@@ -46,8 +46,8 @@ class Property extends Images
 	/**
 	 * Constructor
 	 *
-	 * @param   int     $property_id  ID of property
-	 * @param   string  $type         slideshow or solo
+	 * @param  int     $property_id  ID of property
+	 * @param  string  $type         slideshow or solo
 	 *
 	 * @throws InvalidArgumentException|Exception
 	 * @since  1.0.0
@@ -65,7 +65,7 @@ class Property extends Images
 	/**
 	 * Delete image from folders
 	 *
-	 * @param   string  $name  Name of file
+	 * @param  string  $name  Name of file
 	 *
 	 * @since 1.0.0
 	 */

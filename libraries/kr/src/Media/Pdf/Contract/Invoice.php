@@ -29,8 +29,8 @@ class Invoice extends Contract
 	/**
 	 * Initialize
 	 *
-	 * @param   string  $action       Destination output
-	 * @param   int     $contract_id  Contract id
+	 * @param  string  $action       Destination output
+	 * @param  int     $contract_id  Contract id
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -43,7 +43,7 @@ class Invoice extends Contract
 	/**
 	 * Create the pdf file and either download or return path name
 	 *
-	 * @param   bool  $dashboard  Set to true for guest dashbaord download
+	 * @param  bool  $dashboard  Set to true for guest dashbaord download
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -63,7 +63,7 @@ class Invoice extends Contract
 	/**
 	 * Get the pdf text
 	 *
-	 * @param   bool  $dashboard  Set to true for guest dashboard download
+	 * @param  bool  $dashboard  Set to true for guest dashboard download
 	 *
 	 * @throws Exception
 	 * @since 1.0.0

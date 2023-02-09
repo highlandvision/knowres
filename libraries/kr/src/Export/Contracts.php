@@ -44,7 +44,7 @@ class Contracts
 	/**
 	 * Initialize
 	 *
-	 * @param   array  $data  Array containing the export paramters
+	 * @param  array  $data   Array containing the export paramters
 	 *                        $data = [
 	 *                        'valid_from'    =>    (string) From date
 	 *                        'valid_to'      =>    (string) To date
@@ -173,7 +173,7 @@ class Contracts
 	/**
 	 * Set data for contract export
 	 *
-	 * @param   stdClass  $row  Contract row
+	 * @param  stdClass  $row  Contract row
 	 *
 	 * @throws Exception
 	 * @since  1.0.0

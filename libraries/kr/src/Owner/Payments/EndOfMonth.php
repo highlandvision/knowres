@@ -30,7 +30,7 @@ class EndOfMonth extends Payments
 	/**
 	 * Initialize
 	 *
-	 * @param   object  $payment  Contract payment data
+	 * @param  object  $payment  Contract payment data
 	 *
 	 * @throws Exception
 	 * @since  3.3.1

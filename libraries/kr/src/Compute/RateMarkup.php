@@ -30,7 +30,7 @@ class RateMarkup
 	/**
 	 * Calculate any rate markup adjustments
 	 *
-	 * @param   Hub  $Hub  Hub details class
+	 * @param  Hub  $Hub  Hub details class
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -62,7 +62,7 @@ class RateMarkup
 	/**
 	 * Calculates the selling price for net rates
 	 *
-	 * @param   array  $ratemarkupsDb  Database markups
+	 * @param  array  $ratemarkupsDb  Database markups
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -127,9 +127,9 @@ class RateMarkup
 	/**
 	 * Get rate mark-ups for calculations
 	 *
-	 * @param   array   $ratemarkupsDb  Rate markups from DB
-	 * @param   array   $date_range     Booking date range
-	 * @param   string  $final          Final date
+	 * @param  array   $ratemarkupsDb  Rate markups from DB
+	 * @param  array   $date_range     Booking date range
+	 * @param  string  $final          Final date
 	 *
 	 * @throws Exception
 	 * @since  3.4.0

@@ -31,10 +31,10 @@ class Delete
 	/**
 	 * Process delete
 	 *
-	 * @param   Hub  $hub  Hub data
+	 * @param  Hub  $hub  Hub data
 	 *
 	 * @throws Exception
-	 * @since 1.0.0
+	 * @since  1.0.0
 	 * @return bool
 	 */
 	public function action(Hub $hub): bool

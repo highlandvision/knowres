@@ -37,7 +37,7 @@ class Requestapprove
 	/**
 	 * Process request approval
 	 *
-	 * @param   Hub  $Hub  Hub data
+	 * @param  Hub  $Hub  Hub data
 	 *
 	 * @throws Exception
 	 * @since  1.0.0

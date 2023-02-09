@@ -12,16 +12,11 @@ namespace HighlandVision\KR\Session;
 defined('_JEXEC') or die;
 
 use Exception;
-use HighlandVision\KR\Framework\KrFactory;
-use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Session;
-use HighlandVision\KR\Utility;
 use JetBrains\PhpStorm\Pure;
 use stdClass;
 
-use function count;
 use function defined;
-use function implode;
 use function is_null;
 use function property_exists;
 
@@ -172,9 +167,9 @@ class User extends Session
 		$data->cr_country_id    = 0;
 		$data->cr_region_id     = 0;
 		$data->cr_town_id       = 0;
+		$data->pr_contract_id   = 0;
 		$data->pr_guest_id      = 0;
 		$data->pr_property_id   = 0;
-		$data->pr_contract_id   = 0;
 		$data->db_contract_id   = 0;
 		$data->db_contracts     = [];
 		$data->db_guest_id      = 0;

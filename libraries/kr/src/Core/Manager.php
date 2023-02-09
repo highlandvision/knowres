@@ -37,10 +37,10 @@ class Manager
 	/**
 	 * Action manager
 	 *
-	 * @param   Hub  $hub  Hub data
+	 * @param  Hub  $hub  Hub data
 	 *
 	 * @throws Exception
-	 * @since 1.0.0
+	 * @since  1.0.0
 	 * @return bool
 	 */
 	public function action(Hub $hub): bool
@@ -117,11 +117,13 @@ class Manager
 		{
 			if (!$this->hub->getValue('fixrate'))
 			{
-				KrFactory::getAdminModel('contractnote')::createContractNote($this->id, KrMethods::plain('COM_KNOWRES_CONTRACTNOTE_TEXT_EDIT'));
+				KrFactory::getAdminModel('contractnote')::createContractNote($this->id,
+					KrMethods::plain('COM_KNOWRES_CONTRACTNOTE_TEXT_EDIT'));
 			}
 			else
 			{
-				KrFactory::getAdminModel('contractnote')::createContractNote($this->id, KrMethods::plain('COM_KNOWRES_CONTRACTNOTE_TEXT_FIXRATE'));
+				KrFactory::getAdminModel('contractnote')::createContractNote($this->id,
+					KrMethods::plain('COM_KNOWRES_CONTRACTNOTE_TEXT_FIXRATE'));
 			}
 		}
 	}

@@ -28,8 +28,8 @@ class Terms extends Property
 	/**
 	 * Initialize
 	 *
-	 * @param   string  $action       Destination output
-	 * @param   int     $property_id  ID of Property
+	 * @param  string  $action       Destination output
+	 * @param  int     $property_id  ID of Property
 	 *
 	 * @throws Exception
 	 * @since  3.3.0

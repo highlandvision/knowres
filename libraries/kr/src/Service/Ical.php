@@ -43,7 +43,7 @@ class Ical extends Service
 	/**
 	 * Initialize
 	 *
-	 * @param   int  $service_id  ID of service
+	 * @param  int  $service_id  ID of service
 	 *
 	 * @throws Exception
 	 * @since 1.0.0
@@ -60,9 +60,9 @@ class Ical extends Service
 	/**
 	 * Import manual request from ical page
 	 *
-	 * @param   int     $ical_id      ID of property ical row
-	 * @param   int     $property_id  ID of property
-	 * @param   string  $link         Link to ical file to import
+	 * @param  int      $ical_id      ID of property ical row
+	 * @param  int      $property_id  ID of property
+	 * @param  string   $link         Link to ical file to import
 	 * @param  ?string  $icsdata      Previous run ical data
 	 *
 	 * @throws Exception
@@ -96,7 +96,7 @@ class Ical extends Service
 	/**
 	 * Import icals as per schedule
 	 *
-	 * @param   int  $hours  Import schedule e.g. every 1,2 4 ..... 24 hours
+	 * @param  int  $hours  Import schedule e.g. every 1,2 4 ..... 24 hours
 	 *
 	 * @throws Exception
 	 * @since  1.0.0

@@ -105,7 +105,7 @@ class UpgradeDb
 	 * @since   4.0.0
 	 * @return  void
 	 */
-	public static function forV330()
+	public static function forV330(): void
 	{
 		$db      = KrFactory::getDatabase();
 		$results = $db->setQuery('SHOW TABLES')->loadColumn();
@@ -134,7 +134,8 @@ class UpgradeDb
 			$db->setQuery($query);
 			$db->execute();
 			// RENAME TABLE `#__knowres_interface_xref` TO `#__knowres_service_xref`;
-			$query = 'RENAME TABLE ' . $db->qn('#__knowres_interface_xref') . ' TO ' . $db->qn('#__knowres_service_xref');
+			$query = 'RENAME TABLE ' . $db->qn('#__knowres_interface_xref') . ' TO '
+				. $db->qn('#__knowres_service_xref');
 			$db->setQuery($query);
 			$db->execute();
 		}
@@ -205,7 +206,7 @@ class UpgradeDb
 	 * @since   4.0.0
 	 * @return  void
 	 */
-	public static function forV331()
+	public static function forV331(): void
 	{
 		$db = KrFactory::getDatabase();
 
@@ -327,23 +328,48 @@ class UpgradeDb
 		$db->setQuery($query);
 		$db->execute();
 		// UPDATE `#__knowres_service` SET `plugin` = 'vrbo' WHERE `plugin` = 'ha';
-		$query = 'UPDATE ' . $db->qn('#__knowres_service') . ' SET ' . $db->qn('plugin') . '=' . $db->q('vrbo') . ' WHERE ' . $db->qn('plugin') . '=' . $db->q('ha');
+		$query = 'UPDATE ' . $db->qn('#__knowres_service') . ' SET ' . $db->qn('plugin') . '=' . $db->q('vrbo')
+			. ' WHERE ' . $db->qn('plugin') . '=' . $db->q('ha');
 		$db->setQuery($query);
 		$db->execute();
 	}
 
-	protected static function add(DatabaseDriver $db, string $table, string $field, string $after, mixed $default)
+	/**
+	 * Add database column.
+	 *
+	 * @param  DatabaseDriver  $db       Database instance
+	 * @param  string          $table    Table name
+	 * @param  string          $field    Column name
+	 * @param  string          $after    Column name after
+	 * @param  mixed           $default  Default value
+	 *
+	 * @since  4.0.0
+	 * @return void
+	 */
+	protected static function add(DatabaseDriver $db, string $table, string $field, string $after, mixed $default): void
 	{
 		$columns = $db->getTableColumns($table);
 		if (!array_key_exists($field, $columns))
 		{
-			$query = 'ALTER TABLE ' . $db->qn($table) . ' ADD COLUMN ' . $db->qn($field) . ' ' . $default . ' AFTER ' . $db->qn($after);
+			$query = 'ALTER TABLE ' . $db->qn($table) . ' ADD COLUMN ' . $db->qn($field) . ' ' . $default . ' AFTER '
+				. $db->qn($after);
 			$db->setQuery($query);
 			$db->execute();
 		}
 	}
 
-	protected static function addIndex(DatabaseDriver $db, string $table, string $index, string $keys)
+	/**
+	 * Add table index.
+	 *
+	 * @param  DatabaseDriver  $db     Database instance
+	 * @param  string          $table  Table name
+	 * @param  string          $index  Index name
+	 * @param  string          $keys   Index keys
+	 *
+	 * @since  4.0.0
+	 * @return void
+	 */
+	protected static function addIndex(DatabaseDriver $db, string $table, string $index, string $keys): void
 	{
 		try
 		{
@@ -357,6 +383,17 @@ class UpgradeDb
 		}
 	}
 
+	/**
+	 * Add property setting.
+	 *
+	 * @param  DatabaseDriver  $db       Database instance
+	 * @param  string          $akey     Name
+	 * @param  string          $default  Default value
+	 *
+	 * @throws Exception
+	 * @since  4.0.0
+	 * @return void
+	 */
 	protected static function addPS(DatabaseDriver $db, string $akey, mixed $default)
 	{
 		$query = $db->getQuery(true);

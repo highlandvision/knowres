@@ -41,7 +41,7 @@ class PullRates extends Beyond
 	protected array $seasons = [];
 
 	/**
-	 * @param   int  $test  1 for live
+	 * @param  int  $test  1 for live
 	 *
 	 * @throws Exception
 	 * @since  2.4.0
@@ -83,7 +83,7 @@ class PullRates extends Beyond
 	/**
 	 * Process calendar and rates from beyond
 	 *
-	 * @param   array  $calendar  Calendar returned from listings method
+	 * @param  array  $calendar  Calendar returned from listings method
 	 *
 	 * @throws Exception
 	 * @since  2.4.0
@@ -287,7 +287,7 @@ class PullRates extends Beyond
 	 * Set Beyond rate based on calendar settings
 	 * posting_state is not set or active use price_modeled; if user, price_user
 	 *
-	 * @param   object  $listing  Calendar object from Beyond
+	 * @param  object  $listing  Calendar object from Beyond
 	 *
 	 * @since  2.4.0
 	 * @return float
@@ -309,7 +309,7 @@ class PullRates extends Beyond
 	/**
 	 * Return rate ID for a date or 0 if not exists
 	 *
-	 * @param   string  $date  Set rate for a date
+	 * @param  string  $date  Set rate for a date
 	 *
 	 * @since  2.4.0
 	 * @return int
@@ -331,7 +331,7 @@ class PullRates extends Beyond
 	/**
 	 * Set minimum stay night for rate date
 	 *
-	 * @param   string  $date  Rate date
+	 * @param  string  $date  Rate date
 	 *
 	 * @since  2.4.0
 	 * @return int
@@ -353,7 +353,7 @@ class PullRates extends Beyond
 	 * Set the master listing ref by reading through the channels and
 	 * save those that have a matching entry on service xref
 	 *
-	 * @param   string  $channel_id  Channel identifier
+	 * @param  string  $channel_id  Channel identifier
 	 *
 	 * @since  2.4.0
 	 */

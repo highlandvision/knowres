@@ -31,7 +31,7 @@ class Beyond extends Service
 	protected array $xrefs = [];
 
 	/**
-	 * @param   int  $test  1 for testing
+	 * @param  int  $test  1 for testing
 	 *
 	 * @throws Exception
 	 * @since  2.4.0
@@ -46,7 +46,7 @@ class Beyond extends Service
 	/**
 	 * Update beyond for min / base rate update
 	 *
-	 * @param   int  $property_id  ID of property
+	 * @param  int  $property_id  ID of property
 	 *
 	 * @throws Exception
 	 * @since  2.4.0
@@ -70,7 +70,7 @@ class Beyond extends Service
 	/**
 	 * Push data to Beyond via Curl
 	 *
-	 * @param   mixed  $request  API data
+	 * @param  mixed   $request  API data
 	 * @param ?string  $param    Parameter for method
 	 *
 	 * @throws InvalidArgumentException

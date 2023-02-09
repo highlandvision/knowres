@@ -35,8 +35,8 @@ class Property extends Pdf
 	/**
 	 * Initialize
 	 *
-	 * @param   string  $action       Destination output
-	 * @param   int     $property_id  ID of Property
+	 * @param  string  $action       Destination output
+	 * @param  int     $property_id  ID of Property
 	 *
 	 * @throws Exception
 	 * @since  1.0.0

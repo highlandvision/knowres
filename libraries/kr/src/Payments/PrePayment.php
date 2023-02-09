@@ -34,8 +34,8 @@ class PrePayment
 	/**
 	 * Set payment data for Existing reservations
 	 *
-	 * @param   object  $contract  Database contract row
-	 * @param   float   $balance   Balance due
+	 * @param  object  $contract  Database contract row
+	 * @param  float   $balance   Balance due
 	 *
 	 * @throws Exception
 	 * @since  3.3.1
@@ -68,7 +68,7 @@ class PrePayment
 	/**
 	 * Set payment data for New reservations
 	 *
-	 * @param   stdClass  $contractData  Contract session data
+	 * @param  stdClass  $contractData  Contract session data
 	 *
 	 * @throws Exception
 	 * @since  3.3.1
@@ -101,7 +101,7 @@ class PrePayment
 	/**
 	 * Set the payment data for a gateway
 	 *
-	 * @param   string  $currency  Currency of contract
+	 * @param  string  $currency  Currency of contract
 	 *
 	 * @throws Exception
 	 * @since  3.3.1
@@ -146,7 +146,7 @@ class PrePayment
 	/**
 	 * Read and check for any property specific gateways
 	 *
-	 * @param   array  $currencies  Payment currencies
+	 * @param  array  $currencies  Payment currencies
 	 *
 	 * @since  3.3.1
 	 * @return array
@@ -177,7 +177,7 @@ class PrePayment
 	/**
 	 * Set the available currencies for a payment
 	 *
-	 * @param   string  $currency  Contract currency
+	 * @param  string  $currency  Contract currency
 	 *
 	 * @since 3.3.1
 	 * @return array
@@ -202,8 +202,8 @@ class PrePayment
 	/**
 	 * Set payment amount
 	 *
-	 * @param   object  $contract  Contract row
-	 * @param   float   $balance   Balance due
+	 * @param  object  $contract  Contract row
+	 * @param  float   $balance   Balance due
 	 *
 	 * @throws RuntimeException
 	 * @since  3.3.1
@@ -232,7 +232,7 @@ class PrePayment
 	/**
 	 * Set payment amount
 	 *
-	 * @param   float  $amount  Payment amount
+	 * @param  float  $amount  Payment amount
 	 *
 	 * @throws InvalidArgumentException
 	 * @since  3.3.1
@@ -273,7 +273,7 @@ class PrePayment
 	/**
 	 * Set payment type for Existing
 	 *
-	 * @param   int  $booking_status  Booking status
+	 * @param  int  $booking_status  Booking status
 	 *
 	 * @since  3.3.1
 	 * @return string
@@ -293,7 +293,7 @@ class PrePayment
 	/**
 	 * Set payment type for New
 	 *
-	 * @param   int  $booking_type  Property booking type
+	 * @param  int  $booking_type  Property booking type
 	 *
 	 * @since  3.3.1
 	 * @return string

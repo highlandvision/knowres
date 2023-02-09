@@ -28,7 +28,7 @@ class Agent
 	/**
 	 * Reverse calculate contract totals from agent value
 	 *
-	 * @param   Hub  $Hub  Hub base class
+	 * @param  Hub  $Hub  Hub base class
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -107,7 +107,7 @@ class Agent
 	/**
 	 * Add tax to working value if it is included in agent totals
 	 *
-	 * @param   float  $working  Working value
+	 * @param  float  $working  Working value
 	 *
 	 * @since  3.2.0
 	 * @return float
@@ -143,14 +143,13 @@ class Agent
 	/**
 	 * Check if a tax is included
 	 *
-	 * @param   array  $tax  Tax values from tax calculation
+	 * @param  array  $tax  Tax values from tax calculation
 	 *
 	 * @since  4.0.0
 	 * @return bool
 	 */
 	private function isTaxIncluded(array $tax): bool
 	{
-//		if (!empty($tax['agent']) && in_array($this->Hub->agent->id, Utility::decodeJson($tax['agent'], true)))
 		if (!empty($tax['agent']) && $tax['type'] == 1)
 		{
 			return true;

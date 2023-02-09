@@ -37,7 +37,7 @@ class ExceptionHandling
 	/**
 	 * Set override exception handler.
 	 *
-	 * @param   Throwable  $error  Thrown exception
+	 * @param  Throwable  $error  Thrown exception
 	 *
 	 * @throws ExceptionHandling
 	 * @throws Exception
@@ -74,7 +74,7 @@ class ExceptionHandling
 	/**
 	 * Render the error page based on an exception.
 	 *
-	 * @param   Throwable  $error  An Exception or Throwable (PHP 7+) object for which to render the error page.
+	 * @param  Throwable  $error  An Exception or Throwable (PHP 7+) object for which to render the error page.
 	 *
 	 * @throws Throwable
 	 * @since   3.0
@@ -182,7 +182,7 @@ class ExceptionHandling
 	/**
 	 * Set level for log file
 	 *
-	 * @param   int  $code  Exception code
+	 * @param  int  $code  Exception code
 	 *
 	 * @since 3.5.0
 	 * @return string

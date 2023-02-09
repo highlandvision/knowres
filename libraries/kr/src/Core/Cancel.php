@@ -34,7 +34,7 @@ class Cancel
 	/**
 	 * Process cancel
 	 *
-	 * @param   Hub  $hub  Hub data
+	 * @param  Hub  $hub  Hub data
 	 *
 	 * @throws Exception
 	 * @since  3.3.0

@@ -31,7 +31,7 @@ class Extras
 	/**
 	 * Calculate extras
 	 *
-	 * @param   Hub  $Hub  Hub base class
+	 * @param  Hub  $Hub  Hub base class
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -76,7 +76,7 @@ class Extras
 	/**
 	 * Calculate the value of extras
 	 *
-	 * @param   array  $extrasDb  Extras for property
+	 * @param  array  $extrasDb  Extras for property
 	 *
 	 * @since 1.0.0
 	 * @return array

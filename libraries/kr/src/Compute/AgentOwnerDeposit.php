@@ -31,10 +31,10 @@ class AgentOwnerDeposit
 	/**
 	 * Calculate agent owner deposit payment
 	 *
-	 * @param   Hub  $Hub  Hub base class
+	 * @param  Hub  $Hub  Hub base class
 	 *
 	 * @throws Exception
-	 * @since        3.3.3
+	 * @since  3.3.3
 	 * @noinspection PhpLoopNeverIteratesInspection
 	 */
 	public function calculate(Hub $Hub): void
@@ -88,7 +88,7 @@ class AgentOwnerDeposit
 	/**
 	 * Set the owner deposit
 	 *
-	 * @param   object  $owner  Owner row
+	 * @param  object  $owner  Owner row
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -135,7 +135,7 @@ class AgentOwnerDeposit
 	/**
 	 * Calculates the guest deposit that would be charged
 	 *
-	 * @param   float  $total  Value to base calculation
+	 * @param  float  $total  Value to base calculation
 	 *
 	 * @throws Exception
 	 * @since  3.3.3

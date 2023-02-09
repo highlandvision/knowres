@@ -43,7 +43,7 @@ class Discount
 	/**
 	 * Calculate discounts
 	 *
-	 * @param   Hub  $Hub  Hub base class
+	 * @param  Hub  $Hub  Hub base class
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -69,7 +69,7 @@ class Discount
 	/**
 	 * Applies the largest discount and adjusts the gross
 	 *
-	 * @param   float  $room_total  Calculated rate
+	 * @param  float  $room_total  Calculated rate
 	 *
 	 * @throws RuntimeException|InvalidArgumentException
 	 * @since  1.0.0
@@ -112,8 +112,8 @@ class Discount
 	/**
 	 * Calculate arrival range discount
 	 *
-	 * @param   object  $d           Discount row
-	 * @param   float   $room_total  Calculated rate
+	 * @param  object  $d           Discount row
+	 * @param  float   $room_total  Calculated rate
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -155,9 +155,9 @@ class Discount
 	/**
 	 * Calulate days b4 arrival discount
 	 *
-	 * @param   object  $d           Discount row
-	 * @param   string  $date        Discount date
-	 * @param   float   $room_total  Calculated rate
+	 * @param  object  $d           Discount row
+	 * @param  string  $date        Discount date
+	 * @param  float   $room_total  Calculated rate
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -210,8 +210,8 @@ class Discount
 	/**
 	 * Calculates the managed Last Minute Discount
 	 *
-	 * @param   float  $room_total  Room total value
-	 * @param   int    $nights      #Nights
+	 * @param  float  $room_total  Room total value
+	 * @param  int    $nights      #Nights
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -245,8 +245,8 @@ class Discount
 	/**
 	 * Calculates general discounts
 	 *
-	 * @param   float  $room_total  Gross rate
-	 * @param   int    $nights      #Nights
+	 * @param  float  $room_total  Gross rate
+	 * @param  int    $nights      #Nights
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -337,8 +337,8 @@ class Discount
 	/**
 	 * Adjust nightly rates
 	 *
-	 * @param   string  $type            Discount type
-	 * @param   float   $total_discount  Discount value
+	 * @param  string  $type            Discount type
+	 * @param  float   $total_discount  Discount value
 	 *
 	 * @throws InvalidArgumentException
 	 * @throws RuntimeException

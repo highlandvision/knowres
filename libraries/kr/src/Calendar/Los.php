@@ -27,10 +27,10 @@ class Los extends Calendar
 	/**
 	 * Initialise
 	 *
-	 * @param   int     $property_id  ID of property
-	 * @param   string  $first        From date Y-m-d
-	 * @param   string  $final        End date Y-m-d
-	 * @param   array   $rates        Rates for property, Will be read if not supplied
+	 * @param  int     $property_id  ID of property
+	 * @param  string  $first        From date Y-m-d
+	 * @param  string  $final        End date Y-m-d
+	 * @param  array   $rates        Rates for property, Will be read if not supplied
 	 *
 	 * @throws Exception
 	 * @since  3.4.0
@@ -47,7 +47,7 @@ class Los extends Calendar
 	/**
 	 * Check if date is not a valid changeover date for weekly rates
 	 *
-	 * @param   string  $date  Date to check
+	 * @param  string  $date  Date to check
 	 *
 	 * @throws Exception
 	 * @since  4.0.0
@@ -103,8 +103,8 @@ class Los extends Calendar
 	/**
 	 * Set minimum and maximum actual stay days for a date
 	 *
-	 * @param   string  $date        Required date
-	 * @param   int     $max_nights  Maximum allowed stay
+	 * @param  string  $date        Required date
+	 * @param  int     $max_nights  Maximum allowed stay
 	 *
 	 * @since  3.4.0
 	 * @return array
@@ -157,7 +157,7 @@ class Los extends Calendar
 	/**
 	 * Check if date is available for check out
 	 *
-	 * @param   string  $date  Date to check
+	 * @param  string  $date  Date to check
 	 *
 	 * @since  3.4.0
 	 * @return bool
@@ -183,9 +183,9 @@ class Los extends Calendar
 	/**
 	 * Check if date is available for check in
 	 *
-	 * @param   string  $date     Date to check
-	 * @param   string  $first    Arrival date
-	 * @param   string  $mindate  Earliest departure date
+	 * @param  string  $date     Date to check
+	 * @param  string  $first    Arrival date
+	 * @param  string  $mindate  Earliest departure date
 	 *
 	 * @since  3.4.0
 	 * @return bool

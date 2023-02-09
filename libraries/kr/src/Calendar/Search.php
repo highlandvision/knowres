@@ -28,10 +28,10 @@ class Search extends Calendar
 	/**
 	 * Initialise
 	 *
-	 * @param   int     $property_id  ID of property
-	 * @param   string  $arrive       Arrival date Y-m-d
-	 * @param   string  $depart       Departure date Y-m-d
-	 * @param   array   $rates        Property rates
+	 * @param  int     $property_id  ID of property
+	 * @param  string  $arrive       Arrival date Y-m-d
+	 * @param  string  $depart       Departure date Y-m-d
+	 * @param  array   $rates        Property rates
 	 *
 	 * @throws Exception
 	 * @since  3.4.0

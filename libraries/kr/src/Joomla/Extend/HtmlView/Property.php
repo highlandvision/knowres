@@ -97,7 +97,7 @@ class Property extends KrHtmlView
 	/**
 	 * Add dashboard link.
 	 *
-	 * @param   Toolbar  $Toolbar  Current toolbar.
+	 * @param  Toolbar  $Toolbar  Current toolbar.
 	 *
 	 * @throws Exception
 	 * @since  4.0.0
@@ -116,7 +116,7 @@ class Property extends KrHtmlView
 	/**
 	 * Add properties link.
 	 *
-	 * @param   Toolbar  $Toolbar  Current toolbar.
+	 * @param  Toolbar  $Toolbar  Current toolbar.
 	 *
 	 * @throws Exception
 	 * @since  4.0.0
@@ -135,8 +135,8 @@ class Property extends KrHtmlView
 	/**
 	 * Add related property data.
 	 *
-	 * @param   Toolbar  $Toolbar  Current toolbar.
-	 * @param   string   $name     Name of view.
+	 * @param  Toolbar  $Toolbar  Current toolbar.
+	 * @param  string   $name     Name of view.
 	 *
 	 * @throws Exception
 	 * @since  4.0.0
@@ -266,8 +266,8 @@ class Property extends KrHtmlView
 	/**
 	 * Add the custom toolbar for the property.
 	 *
-	 * @param   Toolbar  $Toolbar  Current toolbar
-	 * @param   string   $name     Name of view
+	 * @param  Toolbar  $Toolbar  Current toolbar
+	 * @param  string   $name     Name of view
 	 *
 	 * @throws Exception
 	 * @since  2.0.0
@@ -349,7 +349,7 @@ class Property extends KrHtmlView
 	 * Add the default toolbar for list view.
 	 *
 	 * @param  ?string  $list_name  Name of list model
-	 * @param   bool    $multiple   True for multiple forms
+	 * @param  bool     $multiple   True for multiple forms
 	 *
 	 * @throws Exception
 	 * @since  4.0.0
@@ -408,8 +408,8 @@ class Property extends KrHtmlView
 	/**
 	 * Add properties dropdown (global property data).
 	 *
-	 * @param   Toolbar  $Toolbar    Current toolbar.
-	 * @param  ?string   $list_name  Current view
+	 * @param  Toolbar  $Toolbar    Current toolbar.
+	 * @param  ?string  $list_name  Current view
 	 *
 	 * @throws Exception
 	 * @since  4.0.0

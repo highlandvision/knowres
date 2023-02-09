@@ -30,8 +30,8 @@ class Contract extends Pdf
 	/**
 	 * Initialize
 	 *
-	 * @param   string  $action       Destination output
-	 * @param   int     $contract_id  ID of Contract
+	 * @param  string  $action       Destination output
+	 * @param  int     $contract_id  ID of Contract
 	 *
 	 * @throws Exception
 	 * @since  1.0.0

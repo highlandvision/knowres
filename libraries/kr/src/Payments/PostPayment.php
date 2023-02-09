@@ -50,8 +50,8 @@ class PostPayment
 	/**
 	 * Initialize
 	 *
-	 * @param   int       $service_id   ID of service
-	 * @param   stdClass  $paymentData  Session payment data
+	 * @param  int       $service_id   ID of service
+	 * @param  stdClass  $paymentData  Session payment data
 	 *
 	 * @throws Exception
 	 * @since  3.3.1
@@ -145,7 +145,7 @@ class PostPayment
 	/**
 	 * Set the service
 	 *
-	 * @param   int  $service_id  ID of service
+	 * @param  int  $service_id  ID of service
 	 *
 	 * @throws Exception
 	 * @since  1.2.2
@@ -244,7 +244,7 @@ class PostPayment
 	/**
 	 * Save the surcharge fee
 	 *
-	 * @param   int  $payment_id  The payment ID related to the fee
+	 * @param  int  $payment_id  The payment ID related to the fee
 	 *
 	 * @throws Exception
 	 * @since  3.3.1
@@ -316,7 +316,7 @@ class PostPayment
 	/**
 	 * Set contract ID
 	 *
-	 * @param   int  $contract_id  ID of contract
+	 * @param  int  $contract_id  ID of contract
 	 *
 	 * @throws InvalidArgumentException
 	 * @since  3.3.1
@@ -368,7 +368,7 @@ class PostPayment
 	/**
 	 * Update contract data for an online payment
 	 *
-	 * @param   stdClass  $update  Update data
+	 * @param  stdClass  $update  Update data
 	 *
 	 * @throws Exception
 	 * @since  3.3.1
@@ -467,7 +467,7 @@ class PostPayment
 	 * Update the payment ID for any fees included
 	 * with this payment
 	 *
-	 * @param   int  $payment_id  ID of payment
+	 * @param  int  $payment_id  ID of payment
 	 *
 	 * @since  1.0.0
 	 */

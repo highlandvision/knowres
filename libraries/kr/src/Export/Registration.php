@@ -35,7 +35,7 @@ class Registration
 	/**
 	 * Initialize
 	 *
-	 * @param   array  $data  Array containing the export paramters
+	 * @param  array  $data   Array containing the export paramters
 	 *                        $data = ['arrival' => (string) Arrival date].
 	 *
 	 * @throws Exception
@@ -89,7 +89,7 @@ class Registration
 	/**
 	 * Return the document type for the file
 	 *
-	 * @param   int  $type  Document type
+	 * @param  int  $type   Document type
 	 *                      1: DNI (Spanish citizens only)
 	 *                      2: Passport
 	 *                      3: Driving Licence (Spanish citizens only)
@@ -128,8 +128,8 @@ class Registration
 	 * Time of preparation File Format HHMM 4
 	 * Number of records of type 1 releases 5 Each record must correspond to type 1
 	 *
-	 * @param   string  $property_name  Name of property
-	 * @param   int     $count          Line type 2 count
+	 * @param  string  $property_name  Name of property
+	 * @param  int     $count          Line type 2 count
 	 *
 	 * @since  2.5.0
 	 * @return string $line Text line to be added to file
@@ -162,9 +162,9 @@ class Registration
 	 * 21 Country of nationality
 	 * Check-In 8 YYYYMMDD format
 	 *
-	 * @param   object  $row      Database row
-	 * @param   int     $es_id    Country ID for Spain
-	 * @param   string  $arrival  Arrival date yyyy-mm-dd
+	 * @param  object  $row      Database row
+	 * @param  int     $es_id    Country ID for Spain
+	 * @param  string  $arrival  Arrival date yyyy-mm-dd
 	 *
 	 * @throws Exception
 	 * @since  2.5.0

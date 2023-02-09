@@ -33,9 +33,9 @@ class TickTock
 	/**
 	 * Returns an array with all dates between and including the two entered dates
 	 *
-	 * @param   string  $first       Start date
-	 * @param   string  $last        End date
-	 * @param   bool    $ignoreLast  TRUE ignore the end date
+	 * @param  string  $first       Start date
+	 * @param  string  $last        End date
+	 * @param  bool    $ignoreLast  TRUE ignore the end date
 	 *
 	 * @since   3.3.0
 	 * @return  array
@@ -69,9 +69,9 @@ class TickTock
 	/**
 	 * Returns an array with all dates and day numbers between two entered dates
 	 *
-	 * @param   string  $first       Start date
-	 * @param   string  $last        End date
-	 * @param   bool    $ignoreLast  TRUE Ignore the end date
+	 * @param  string  $first       Start date
+	 * @param  string  $last        End date
+	 * @param  bool    $ignoreLast  TRUE Ignore the end date
 	 *
 	 * @since  3.3.0
 	 * @return array
@@ -104,8 +104,8 @@ class TickTock
 	/**
 	 * Returns the difference in days between two dates
 	 *
-	 * @param   string  $date1  First date
-	 * @param   string  $date2  End date
+	 * @param  string  $date1  First date
+	 * @param  string  $date2  End date
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -132,7 +132,7 @@ class TickTock
 	 * Only use for fields with dates already set
 	 *
 	 * @param  ?string  $date    Date for conversion yyyy-mm-dd
-	 * @param   string  $format  Required date format
+	 * @param  string   $format  Required date format
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -170,7 +170,7 @@ class TickTock
 	 * Convert timestamp for output display
 	 *
 	 * @param  ?string  $ts      Timestamp
-	 * @param   string  $format  Format required
+	 * @param  string   $format  Format required
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -192,9 +192,9 @@ class TickTock
 	/**
 	 * Get date
 	 *
-	 * @param   string  $string  Date required or empty for current date
-	 * @param   string  $format  Return format Date format required
-	 * @param   string  $tz      Timezone
+	 * @param  string  $string  Date required or empty for current date
+	 * @param  string  $format  Return format Date format required
+	 * @param  string  $tz      Timezone
 	 *
 	 * @throws InvalidFormatException
 	 * @since  3.3.0
@@ -211,8 +211,8 @@ class TickTock
 	/**
 	 * Get date for a different timezone
 	 *
-	 * @param   string  $format  Return format Date format required
-	 * @param   string  $tz      Timezone
+	 * @param  string  $format  Return format Date format required
+	 * @param  string  $tz      Timezone
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -236,7 +236,7 @@ class TickTock
 	/**
 	 * Return day name from day of week
 	 *
-	 * @param   int  $dow  Day of week
+	 * @param  int  $dow  Day of week
 	 *
 	 * @since  3.3.0
 	 * @return string
@@ -278,7 +278,7 @@ class TickTock
 	/**
 	 * Get the dow for a date
 	 *
-	 * @param   string  $date  Date to manipulate
+	 * @param  string  $date  Date to manipulate
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -294,9 +294,9 @@ class TickTock
 	/**
 	 * Calculate new expiry or balance date
 	 *
-	 * @param   string  $weekendDays  Comma separated string of days
-	 * @param   int     $days         Number of days to push the date forward
-	 * @param   string  $date         Start date Y-m-d format, today will be used if not given
+	 * @param  string  $weekendDays  Comma separated string of days
+	 * @param  int     $days         Number of days to push the date forward
+	 * @param  string  $date         Start date Y-m-d format, today will be used if not given
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -359,7 +359,7 @@ class TickTock
 	/**
 	 * Validate for a valid date
 	 *
-	 * @param   string  $date  Date as yyyy-mm-dd
+	 * @param  string  $date  Date as yyyy-mm-dd
 	 *
 	 * @since  3.3.0
 	 * @return bool
@@ -378,10 +378,10 @@ class TickTock
 	/**
 	 * Add number of days to date
 	 *
-	 * @param   string  $date    Date to be used as base yyyy-mm-dd
-	 * @param   int     $days    Number of days to add or subtract
-	 * @param   string  $sign    + or - to date
-	 * @param   string  $format  Output format
+	 * @param  string  $date    Date to be used as base yyyy-mm-dd
+	 * @param  int     $days    Number of days to add or subtract
+	 * @param  string  $sign    + or - to date
+	 * @param  string  $format  Output format
 	 *
 	 * @throws InvalidFormatException
 	 * @since  3.3.0
@@ -406,10 +406,10 @@ class TickTock
 	/**
 	 * Add or subtract number of hours to or from timestamp
 	 *
-	 * @param   string  $ts      Timestamp to be used as base Y-m-d H:i:s
-	 * @param   int     $hours   Hours to add or subtract
-	 * @param   string  $sign    + to add or - to subtract from date
-	 * @param   string  $format  Output format
+	 * @param  string  $ts      Timestamp to be used as base Y-m-d H:i:s
+	 * @param  int     $hours   Hours to add or subtract
+	 * @param  string  $sign    + to add or - to subtract from date
+	 * @param  string  $format  Output format
 	 *
 	 * @throws InvalidFormatException
 	 * @since  3.3.0
@@ -434,10 +434,10 @@ class TickTock
 	/**
 	 * Add number of months to date
 	 *
-	 * @param   string  $date    Date to be used as base yyyy-mm-dd
-	 * @param   int     $months  Months to increment or subtract
-	 * @param   string  $sign    + or - to date
-	 * @param   string  $format  Output format
+	 * @param  string  $date    Date to be used as base yyyy-mm-dd
+	 * @param  int     $months  Months to increment or subtract
+	 * @param  string  $sign    + or - to date
+	 * @param  string  $format  Output format
 	 *
 	 * @throws InvalidFormatException
 	 * @since  3.3.0
@@ -462,9 +462,9 @@ class TickTock
 	/**
 	 * Add or subtract number of years to or from date
 	 *
-	 * @param   string  $date   Date to be used as base yyyy-mm-dd
-	 * @param   int     $years  Years to add or subtract
-	 * @param   string  $sign   + to add or - to subtract from date
+	 * @param  string  $date   Date to be used as base yyyy-mm-dd
+	 * @param  int     $years  Years to add or subtract
+	 * @param  string  $sign   + to add or - to subtract from date
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -503,8 +503,8 @@ class TickTock
 	/**
 	 * Change the date format
 	 *
-	 * @param   string  $string  Date string to parse
-	 * @param   string  $format  Return format Date format required
+	 * @param  string  $string  Date string to parse
+	 * @param  string  $format  Return format Date format required
 	 *
 	 * @throws InvalidFormatException
 	 * @since  3.3.0

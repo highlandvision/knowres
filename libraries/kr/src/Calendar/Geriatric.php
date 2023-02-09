@@ -31,9 +31,9 @@ class Geriatric extends Calendar
 	/**
 	 * Initialise
 	 *
-	 * @param   int     $property_id  ID of property
-	 * @param   string  $first        First display date
-	 * @param   string  $final        Final display date
+	 * @param  int     $property_id  ID of property
+	 * @param  string  $first        First display date
+	 * @param  string  $final        Final display date
 	 *
 	 * @throws Exception
 	 * @since  3.4.0
@@ -112,11 +112,11 @@ class Geriatric extends Calendar
 	/**
 	 * Update blocked dates
 	 *
-	 * @param   string  $d             Blocked date being processed
-	 * @param   string  $first         Date of first block
-	 * @param   string  $last          Date of last block
-	 * @param   bool    $check_frozen  Set false to ignore frozen
-	 * @param   bool    $paid          Set true for paid reservationsn
+	 * @param  string  $d             Blocked date being processed
+	 * @param  string  $first         Date of first block
+	 * @param  string  $last          Date of last block
+	 * @param  bool    $check_frozen  Set false to ignore frozen
+	 * @param  bool    $paid          Set true for paid reservationsn
 	 *
 	 * @since  3.4.0
 	 */

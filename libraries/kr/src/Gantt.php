@@ -26,9 +26,9 @@ class Gantt
 	/**
 	 * Prepare data for the gantt calendar from properties and bookings
 	 *
-	 * @param   array  $properties  Property data
-	 * @param   array  $booked      Booked dates
-	 * @param   bool   $allow       User can make a booking
+	 * @param  array  $properties  Property data
+	 * @param  array  $booked      Booked dates
+	 * @param  bool   $allow       User can make a booking
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -95,8 +95,8 @@ class Gantt
 	/**
 	 * Prepare the properties for gantt data
 	 *
-	 * @param   array         $properties    Properties for display
-	 * @param   Translations  $Translations  Translations object
+	 * @param  array         $properties    Properties for display
+	 * @param  Translations  $Translations  Translations object
 	 *
 	 * @since  3.3.0
 	 * @return array Formatted property options
@@ -133,7 +133,7 @@ class Gantt
 	/**
 	 * Set data for one block
 	 *
-	 * @param   array  $r  Contract data
+	 * @param  array  $r  Contract data
 	 *
 	 * @throws Exception
 	 * @since 3.3.0

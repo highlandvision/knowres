@@ -79,7 +79,7 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 	/**
 	 * Constructor
 	 *
-	 * @param   array  $config  A named configuration array for object construction.
+	 * @param  array  $config   A named configuration array for object construction.
 	 *                          name: the name (optional) of the view (defaults to the view class name suffix).
 	 *                          charset: the character set to use for display
 	 *                          escape: the name (optional) of the function to use for escaping strings
@@ -104,8 +104,8 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 	/**
 	 * Set a list of the actions that can be performed by user access level
 	 *
-	 * @param   string  $view  View to be accessed
-	 * @param   int     $id    ID of view
+	 * @param  string  $view  View to be accessed
+	 * @param  int     $id    ID of view
 	 *
 	 * @since  4.0.0
 	 */
@@ -117,7 +117,7 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 	/**
 	 * Add the back to link if required
 	 *
-	 * @param   Toolbar  $Toolbar
+	 * @param  Toolbar  $Toolbar
 	 *
 	 * @throws Exception
 	 * @since  4.0.0
@@ -143,7 +143,7 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 	/**
 	 * Check for access to edit action
 	 *
-	 * @param   string  $action  Action being taken
+	 * @param  string  $action  Action being taken
 	 *
 	 * @since  4.0.0
 	 * @return bool
@@ -191,8 +191,8 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 	/**
 	 * Add actions toolbar for list
 	 *
-	 * @param   Toolbar  $Toolbar  Toolbar instance
-	 * @param   string   $name     List name
+	 * @param  Toolbar  $Toolbar  Toolbar instance
+	 * @param  string   $name     List name
 	 *
 	 * @since  4.0.0
 	 * @return Toolbar
@@ -276,7 +276,7 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 	/**
 	 * Add any custom toolbar links
 	 *
-	 * @param   Toolbar  $Toolbar  Current toolbar instance
+	 * @param  Toolbar  $Toolbar  Current toolbar instance
 	 *
 	 * @since  4.0.0
 	 * @return Toolbar
@@ -386,7 +386,7 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 	/**
 	 * Add the quick links menu
 	 *
-	 * @param   Toolbar  $Toolbar
+	 * @param  Toolbar  $Toolbar
 	 *
 	 * @throws Exception
 	 * @since  4.0.0
@@ -449,7 +449,7 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 	/**
 	 * Add the quick links menu
 	 *
-	 * @param   Toolbar  $Toolbar
+	 * @param  Toolbar  $Toolbar
 	 *
 	 * @throws Exception
 	 * @since  4.0.0
@@ -500,7 +500,7 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 	/**
 	 * Add services dropdown.
 	 *
-	 * @param   Toolbar  $Toolbar  Current toolbar.
+	 * @param  Toolbar  $Toolbar  Current toolbar.
 	 *
 	 * @throws Exception
 	 * @since  4.0.0
@@ -569,7 +569,7 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 	/**
 	 * Set the user session data.
 	 *
-	 * @param   bool  $property_required  Set to false if property not required
+	 * @param  bool  $property_required  Set to false if property not required
 	 *
 	 * @throws Exception
 	 * @since  4.0.0

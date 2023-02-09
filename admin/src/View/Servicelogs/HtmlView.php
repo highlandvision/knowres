@@ -63,7 +63,7 @@ class HtmlView extends KrHtmlView
 	 * Add the default toolbar for list view.
 	 *
 	 * @param  ?string  $list_name  Name of list model
-	 * @param   bool    $new        Fasle to suppress New button
+	 * @param  bool     $new        Fasle to suppress New button
 	 *
 	 * @throws Exception
 	 * @since  4.0.0

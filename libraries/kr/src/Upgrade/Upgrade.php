@@ -585,7 +585,6 @@ class Upgrade
 		      ->setLimit(1);
 		$db->setQuery($query);
 		$rows = $db->loadObjectList();
-
 		if (is_countable($rows) && !count($rows))
 		{
 			$query = $db->getQuery(true);
@@ -767,10 +766,10 @@ class Upgrade
 	 * Check if a history content type exists for a table and
 	 * create / edit as required
 	 *
-	 * @param   object  $table  The table object
-	 * @param   string  $name   The table name
-	 * @param   string  $title  The table title
-	 * @param   string  $alias  The table alias
+	 * @param  object  $table  The table object
+	 * @param  string  $name   The table name
+	 * @param  string  $title  The table title
+	 * @param  string  $alias  The table alias
 	 *
 	 * @throws InvalidArgumentException
 	 * @throws RuntimeException
@@ -1322,7 +1321,7 @@ class Upgrade
 	/**
 	 * Update guest and owner service xrefs from client and owner tables (V4.0)
 	 *
-	 * @param   string  $table  Table namee
+	 * @param  string  $table  Table namee
 	 *
 	 * @throws Exception
 	 * @since  4.0.0

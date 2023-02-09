@@ -241,8 +241,8 @@ class Search
 	/**
 	 * Get ajax request data
 	 *
-	 * @param  string  $field       Input type field
-	 * @param  string  $value       Input value field
+	 * @param  string  $field  Input type field
+	 * @param  string  $value  Input value field
 	 *
 	 * @throws Exception
 	 * @since        1.0.0

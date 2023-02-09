@@ -16,8 +16,6 @@ use HighlandVision\KR\Framework\KrMethods;
 use Joomla\Session\SessionInterface;
 use stdClass;
 
-use function property_exists;
-
 /**
  * Knowres Session helper
  *
@@ -29,7 +27,7 @@ class Session
 	protected SessionInterface $session;
 	/**  @var string Session type */
 	protected string $type = '';
-	/** @var string Name space for session. */
+	/** @var string Namespace for session. */
 	protected string $session_name = 'comknowres';
 
 	/**

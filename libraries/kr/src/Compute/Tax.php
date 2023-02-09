@@ -101,7 +101,7 @@ class Tax
 		{
 			$agents = [];
 		}
-		$type       = $this->setType($this->trow, $agents);
+		$type = $this->setType($this->trow, $agents);
 		if ($gross && in_array($this->agent_id, $agents))
 		{
 			$this->trow->gross = true;

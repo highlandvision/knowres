@@ -38,8 +38,8 @@ class PropertyIcs
 	/**
 	 * Initialise
 	 *
-	 * @param   int     $property_id    Property ID
-	 * @param   string  $property_name  Name of property
+	 * @param  int     $property_id    Property ID
+	 * @param  string  $property_name  Name of property
 	 *
 	 * @since 3.3.0
 	 */
@@ -52,7 +52,7 @@ class PropertyIcs
 	/**
 	 * Create the calendar ics and dispatch
 	 *
-	 * @param   string  $action  Despatch action 'dl to download or echo
+	 * @param  string  $action  Despatch action 'dl to download or echo
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -87,7 +87,7 @@ class PropertyIcs
 	/**
 	 * Add booked dates to calendar
 	 *
-	 * @param   array  $booked  Booked dates
+	 * @param  array  $booked  Booked dates
 	 *
 	 * @throws Exception
 	 * @since  3.3.0

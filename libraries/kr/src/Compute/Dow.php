@@ -30,7 +30,7 @@ class Dow
 	/**
 	 * Get the total rate value for the stay
 	 *
-	 * @param   Hub  $Hub  Hub data
+	 * @param  Hub  $Hub  Hub data
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -66,7 +66,7 @@ class Dow
 	/**
 	 * Calculate day of week adjustments
 	 *
-	 * @param   array  $dow_pc  Day of week percentage adjustments
+	 * @param  array  $dow_pc  Day of week percentage adjustments
 	 *
 	 * @throws Exception
 	 * @since  3.3.4

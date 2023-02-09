@@ -15,6 +15,7 @@ namespace HighlandVision\Component\Knowres\Site\Controller;
 defined('_JEXEC') or die;
 
 use Exception;
+use HighlandVision\Factura\Factura;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Service\Beyond;
@@ -23,6 +24,7 @@ use HighlandVision\KR\Session as KrSession;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Utility;
 use HighlandVision\Ru\Manager as RuManager;
+use HighlandVision\VintageTravel\VintageTravel;
 use HighlandVision\Vrbo\Manager as VrboManager;
 use JetBrains\PhpStorm\NoReturn;
 use Joomla\CMS\MVC\Controller\BaseController;
