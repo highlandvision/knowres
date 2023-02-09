@@ -178,8 +178,8 @@ class ConfirmController extends FormController
 
 		/** @var PaymentView $view */
 		$view               = $this->getView('confirm', 'payment');
-		$view->contractData = $contractData;
-		$view->guestData    = $guestData;
+		$view->contractData = $Hub->getData();
+		$view->guestData    = $Hub->getData('guestData');
 		$view->property     = KrFactory::getAdminModel('property')->getItem($contractData->property_id);
 
 		try

@@ -12,6 +12,7 @@ namespace HighlandVision\Component\Knowres\Site\Controller;
 defined('_JEXEC') or die;
 
 use Exception;
+use HighlandVision\Component\Knowres\Site\View\Property\QuoteView;
 use HighlandVision\KR\Calendar;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
@@ -164,6 +165,7 @@ class PropertyController extends BaseController
 	 */
 	public function quote()
 	{
+		/** @var QuoteView $view */
 		$view        = $this->getView('property', 'quote');
 		$property_id = KrMethods::inputInt('property_id');
 		$arrival     = KrMethods::inputString('arrival');

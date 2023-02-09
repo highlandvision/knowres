@@ -52,6 +52,8 @@ class Hub
 	public object $property;
 	/** @var array Property settings */
 	public array $settings = [];
+	/* @var string Today's date yyyy-mm-dd */
+	public string $today;
 	/** @var array Valid sessions */
 	public array $valid_sessions
 		= ['contractData',
