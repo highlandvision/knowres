@@ -11,14 +11,13 @@ defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Utility;
-use Joomla\CMS\Object\CMSObject;
 
 extract($displayData);
 /**
  * Layout variables
  *
- * @var CMSObject $contract    The contract item.
- * @var string    $foreign_key The service reference.
+ * @var false|object $contract    The contract item.
+ * @var string       $foreign_key The service reference.
  */
 ?>
 
@@ -80,14 +79,14 @@ extract($displayData);
 <?php endif; ?>
 
 <?php if ($foreign_key): ?>
-<div class="row">
-	<div class="col-4">
-		<?php echo KrMethods::plain('COM_KNOWRES_CONTRACTS_SERVICE_REFERENCE'); ?>
+	<div class="row">
+		<div class="col-4">
+			<?php echo KrMethods::plain('COM_KNOWRES_CONTRACTS_SERVICE_REFERENCE'); ?>
+		</div>
+		<div class="col-8">
+			<?php echo $foreign_key; ?>
+		</div>
 	</div>
-	<div class="col-8">
-		<?php echo $foreign_key; ?>
-	</div>
-</div>
 <?php endif; ?>
 
 <?php if ((float) $contract->channel_commission > 0): ?>

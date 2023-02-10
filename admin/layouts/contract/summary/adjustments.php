@@ -10,13 +10,12 @@
 defined('_JEXEC') or die;
 
 use HighlandVision\KR\Utility;
-use Joomla\CMS\Object\CMSObject;
 
 extract($displayData);
 /**
  * Layout variables
  *
- * @var CMSObject $quote The quote data.
+ * @var false|object $quote The quote data.
  */
 ?>
 

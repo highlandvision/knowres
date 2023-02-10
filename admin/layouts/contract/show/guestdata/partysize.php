@@ -6,20 +6,20 @@
  * @license    See the file "LICENSE.txt" for the full license governing this code.
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
+
 /** @noinspection PhpUnhandledExceptionInspection */
 
 defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
-use Joomla\CMS\Object\CMSObject;
 
 extract($displayData);
 /**
  * Layout variables
  *
- * @var CMSObject $guestdata Guestdata row.
- * @var CMSObject $property  Property row.
+ * @var false|object $guestdata Guestdata row.
+ * @var false|object $property  Property row.
  */
 
 if (!$guestdata->adults)
@@ -55,7 +55,8 @@ if ((int) $guestdata->children)
 		<?php if ($property->sleeps_infant_age): ?>
 			<div class="row">
 				<div class="col-4">
-					<?php echo KrMethods::sprintf('COM_KNOWRES_CONTRACTGUESTDATA_INFANTS_LBL', $property->sleeps_infant_age); ?>
+					<?php echo KrMethods::sprintf('COM_KNOWRES_CONTRACTGUESTDATA_INFANTS_LBL',
+						$property->sleeps_infant_age); ?>
 				</div>
 				<div class="col-2">
 					<?php echo $guestdata->infants; ?>

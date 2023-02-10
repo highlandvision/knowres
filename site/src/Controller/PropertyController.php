@@ -12,7 +12,10 @@ namespace HighlandVision\Component\Knowres\Site\Controller;
 defined('_JEXEC') or die;
 
 use Exception;
+use HighlandVision\Component\Knowres\Site\View\Property\GeriatricView;
+use HighlandVision\Component\Knowres\Site\View\Property\MapInfoWindowView;
 use HighlandVision\Component\Knowres\Site\View\Property\QuoteView;
+use HighlandVision\Component\Knowres\Site\View\Property\TermsView;
 use HighlandVision\KR\Calendar;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
@@ -41,9 +44,11 @@ class PropertyController extends BaseController
 	 * @throws Exception
 	 * @since  3.3.0
 	 * @return void
+	 * @noinspection PhpUnused
 	 */
 	#[NoReturn] public function geriatric(): void
 	{
+		/** @var GeriatricView $view */
 		$view     = $this->getView('property', 'geriatric');
 		$id       = KrMethods::inputInt('pid');
 		$params   = KrMethods::getParams();
@@ -107,6 +112,7 @@ class PropertyController extends BaseController
 		$searchSession = new KrSession\Search();
 		$searchData    = $searchSession->getData();
 
+		/** @var MapInfoWindowView $view */
 		$view                 = $this->getView('property', 'mapinfowindow');
 		$id                   = KrMethods::inputInt('id');
 		$view->item           = KrFactory::getAdminModel('property')->getItem($id);
@@ -258,6 +264,7 @@ class PropertyController extends BaseController
 		$id = KrMethods::inputInt('id', 0, 'get');
 		if ($id)
 		{
+			/** @var TermsView $view */
 			$view             = $this->getView('property', 'terms');
 			$view->item       = KrFactory::getAdminModel('property')->getItem($id);
 			$view->article_id = 0;
@@ -290,6 +297,7 @@ class PropertyController extends BaseController
 	 * @throws Exception
 	 * @since  3.3.0
 	 * @return bool
+	 * @noinspection PhpUnused
 	 */
 	public function termspdf(): bool
 	{

@@ -20,7 +20,6 @@ use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Utility;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
-use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\Registry\Registry;
@@ -37,8 +36,8 @@ class ShowView extends KrHtmlView\Contract
 	public string $audience;
 	/** @var mixed Fees list */
 	public array $fees;
-	/** @var CMSObject|bool Guest row */
-	public CMSObject|bool $guest;
+	/** @var false|object Guest row */
+	public false|object $guest;
 	/** @var Form Email trigger form */
 	public Form $formtrigger;
 	/** @var ContractModel Model contract */

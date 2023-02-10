@@ -261,7 +261,7 @@ class HtmlView extends KrHtmlView\Site
 	 * Set the pathway for the search
 	 *
 	 * @throws Exception
-	 * @since 1.0.0
+	 * @since  1.0.0
 	 */
 	protected function setPathway()
 	{

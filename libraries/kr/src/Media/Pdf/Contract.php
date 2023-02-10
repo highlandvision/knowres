@@ -14,7 +14,6 @@ defined('_JEXEC') or die;
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Media\Pdf;
-use Joomla\CMS\Object\CMSObject;
 use RuntimeException;
 
 /**
@@ -24,8 +23,8 @@ use RuntimeException;
  */
 class Contract extends Pdf
 {
-	/** @var  CMSObject Contract details */
-	public CMSObject $contract;
+	/** @var false|object Contract item */
+	public false|object $contract;
 
 	/**
 	 * Initialize
@@ -60,24 +59,6 @@ class Contract extends Pdf
 		if (!empty($this->contract->agency_id))
 		{
 			$this->agency = KrFactory::getAdminModel('agency')->getItem($this->contract->agency_id);
-		}
-	}
-
-	/**
-	 * Set Agent
-	 *
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
-	protected function setAgent()
-	{
-		if ($this->contract->agent_id)
-		{
-			$this->agent = KrFactory::getAdminModel('agent')->getItem($this->contract->agent_id);
-			if (!$this->agent->id)
-			{
-				throw new RuntimeException('Agent not found for ID ' . $this->contract->agent_id);
-			}
 		}
 	}
 }

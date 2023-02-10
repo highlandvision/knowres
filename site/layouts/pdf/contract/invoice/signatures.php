@@ -8,7 +8,6 @@
  */
 
 use HighlandVision\KR\Framework\KrMethods;
-use Joomla\CMS\Object\CMSObject;
 
 defined('_JEXEC') or die;
 
@@ -16,7 +15,7 @@ extract($displayData);
 /**
  * Layout variables
  *
- * @var CMSObject $contract Contract Item.
+ * @var false|object $contract Contract Item.
  */
 
 ?>

@@ -80,7 +80,7 @@ class PropertiesModel extends ListModel
 	/**
 	 * Get base items for search
 	 *
-	 * @param   object  $data  Search parameters
+	 * @param  object  $data  Search parameters
 	 *
 	 * @throws RuntimeException|Exception
 	 * @since  1.0.0
@@ -173,7 +173,7 @@ class PropertiesModel extends ListModel
 	/**
 	 * Get properties for a category
 	 *
-	 * @param   int  $category_id  ID of category
+	 * @param  int  $category_id  ID of category
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
@@ -230,7 +230,7 @@ class PropertiesModel extends ListModel
 	/**
 	 * Get discounted properties for search
 	 *
-	 * @param   int  $property_id  ID of property
+	 * @param  int  $property_id  ID of property
 	 *
 	 * @since  1.0.0
 	 * @return mixed
@@ -310,7 +310,7 @@ class PropertiesModel extends ListModel
 	/**
 	 * Get max values for guests and bedrooms per region
 	 *
-	 * @param   int  $region_id  The property region for the select
+	 * @param  int  $region_id  The property region for the select
 	 *
 	 * @throws RuntimeException
 	 * @return mixed
@@ -337,7 +337,7 @@ class PropertiesModel extends ListModel
 	/**
 	 * Get the minimum and maximum rate for one or more properties
 	 *
-	 * @param   mixed  $properties  Single, string or array of property IDs
+	 * @param  mixed  $properties  Single, string or array of property IDs
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
@@ -388,7 +388,7 @@ class PropertiesModel extends ListModel
 	/**
 	 * Query to get published and approved properties
 	 *
-	 * @param   mixed  $properties  IDs to get names for
+	 * @param  mixed  $properties  IDs to get names for
 	 *
 	 * @throws RuntimeException
 	 * @since  3.2.0
@@ -490,7 +490,7 @@ class PropertiesModel extends ListModel
 	 * Get the data required for the map markers
 	 * for the current search
 	 *
-	 * @param   array  $ids  Property Ids
+	 * @param  array  $ids  Property Ids
 	 *
 	 * @throws RuntimeException
 	 * @since  3.3.0
@@ -522,8 +522,8 @@ class PropertiesModel extends ListModel
 	/**
 	 * Perform the filtering for selected filters
 	 *
-	 * @param   DatabaseInterface  $db     Database instance
-	 * @param   QueryInterface     $query  Current query
+	 * @param  DatabaseInterface  $db     Database instance
+	 * @param  QueryInterface     $query  Current query
 	 *
 	 * @since  3.3.0
 	 * @return QueryInterface
@@ -543,15 +543,11 @@ class PropertiesModel extends ListModel
 	/**
 	 * Additional processing for flexible date search
 	 *
-	 * @param   DatabaseInterface  $db       Database instance
-	 * @param   object             $data     Search data
-	 * @param   array              $results  Results from base search
+	 * @param  DatabaseInterface  $db       Database instance
+	 * @param  object             $data     Search data
+	 * @param  array              $results  Results from base search
 	 *
 	 * @throws RuntimeException
-	 * @throws RuntimeException
-	 * @throws RuntimeException
-	 * @throws Exception
-	 * @throws Exception
 	 * @throws Exception
 	 * @since  3.3.0
 	 * @return array
@@ -640,8 +636,6 @@ class PropertiesModel extends ListModel
 	 * Get the category totals
 	 *
 	 * @throws RuntimeException
-	 * @throws RuntimeException
-	 * @throws RuntimeException
 	 * @since  3.2.0
 	 * @return array
 	 */
@@ -688,8 +682,6 @@ class PropertiesModel extends ListModel
 	 * Get the feature totals
 	 *
 	 * @throws RuntimeException
-	 * @throws RuntimeException
-	 * @throws RuntimeException
 	 * @since  3.2.0
 	 * @return array
 	 */
@@ -734,10 +726,8 @@ class PropertiesModel extends ListModel
 	/**
 	 * Get the filter totals
 	 *
-	 * @param   string  $name  The field being totalled
+	 * @param  string  $name  The field being totalled
 	 *
-	 * @throws RuntimeException
-	 * @throws RuntimeException
 	 * @throws RuntimeException
 	 * @since  3.2.0
 	 * @return array
@@ -861,7 +851,7 @@ class PropertiesModel extends ListModel
 	 * different modules that might need different sets of data or different
 	 * ordering requirements.
 	 *
-	 * @param   string  $id  A prefix for the store id.
+	 * @param  string  $id  A prefix for the store id.
 	 *
 	 * @since  1.0.0
 	 * @return string
@@ -886,8 +876,8 @@ class PropertiesModel extends ListModel
 	 * Method to autopopulate the model state.
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @param   string  $ordering
-	 * @param   string  $direction
+	 * @param  string  $ordering
+	 * @param  string  $direction
 	 *
 	 * @throws Exception
 	 * @since  1.0.0

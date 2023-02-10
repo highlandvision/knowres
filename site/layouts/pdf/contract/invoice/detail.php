@@ -6,20 +6,20 @@
  * @license     See the file "LICENSE.txt" for the full license governing this code.
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
+
 /** @noinspection PhpUnhandledExceptionInspection */
 
 defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\TickTock;
-use Joomla\CMS\Object\CMSObject;
 
 extract($displayData);
 /**
  * Layout variables
  *
- * @var CMSObject $contract Contract Item.
- * @var CMSObject $agency   Agency Item.
+ * @var false|object $contract Contract Item.
+ * @var false|object $agency   Agency Item.
  */
 ?>
 

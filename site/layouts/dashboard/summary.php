@@ -15,18 +15,17 @@ use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Utility;
-use Joomla\CMS\Object\CMSObject;
 
 extract($displayData);
 /**
  * Layout variables
  *
- * @var CMSObject $contract    The contract item.
- * @var mixed     $fees        Contract fees
- * @var mixed     $payments    Contract payments
- * @var string    $audience    The type of viewee
- * @var float     $balance     Current confirmed balance.
- * @var float     $balance_all Current balance less unconfirmed payments.
+ * @var false|object $contract    The contract item.
+ * @var mixed        $fees        Contract fees
+ * @var mixed        $payments    Contract payments
+ * @var string       $audience    The type of viewee
+ * @var float        $balance     Current confirmed balance.
+ * @var float        $balance_all Current balance less unconfirmed payments.
  */
 ?>
 

@@ -6,21 +6,21 @@
  * @license     See the file "LICENSE.txt" for the full license governing this code.
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
+
 /** @noinspection PhpUnhandledExceptionInspection */
 
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Utility;
-use Joomla\CMS\Object\CMSObject;
 
 extract($displayData);
 /**
  * Layout variables
  *
- * @var CMSObject $contract Contract item.
- * @var array     $fees     Contract fees.
- * @var array     $payments Contract payments.
+ * @var false|object $contract Contract item.
+ * @var array        $fees     Contract fees.
+ * @var array        $payments Contract payments.
  */
 ?>
 
@@ -66,7 +66,7 @@ extract($displayData);
 
 	<tr>
 		<td style="width:40%;">
-			<?php echo KrMethods::plain('COM_KNOWRES_CONFIRM_ROOM_TOTAL_LBL'); ?>
+			<?php echo KrMethods::plain('COM_KNOWRES_CONFIRM_ROOM_TOTAL'); ?>
 		</td>
 		<td style="width:30%;">
 		</td>
@@ -319,8 +319,10 @@ extract($displayData);
 			</tr>
 		<?php endif; ?>
 
-		<?php $balance = Utility::roundValue($contract->contract_total + $fee_total - $payment_total, $contract->currency); ?>
-		<?php $balance_all = Utility::roundValue($contract->contract_total + $fee_total - $payment_total - $pending_total, $contract->currency); ?>
+		<?php $balance = Utility::roundValue($contract->contract_total + $fee_total - $payment_total,
+			$contract->currency); ?>
+		<?php $balance_all = Utility::roundValue($contract->contract_total + $fee_total - $payment_total
+			- $pending_total, $contract->currency); ?>
 
 		<?php $due = ''; ?>
 		<?php $left = ''; ?>
@@ -328,7 +330,8 @@ extract($displayData);
 			<?php if (!$contract->balance_days && $payment_total): ?>
 				<?php $left = KrMethods::plain('COM_KNOWRES_CONTRACTPAYMENTS_PAYMENT_ON_ARRIVAL'); ?>
 			<?php elseif ($contract->balance_date > TickTock::getDate() && $contract->booking_status >= 10): ?>
-				<?php $due = KrMethods::sprintf('COM_KNOWRES_DUE_BY', TickTock::displayDate($contract->balance_date)); ?>
+				<?php $due = KrMethods::sprintf('COM_KNOWRES_DUE_BY',
+					TickTock::displayDate($contract->balance_date)); ?>
 				<?php $due = '(' . $due . ')'; ?>
 				<?php $left = KrMethods::plain('COM_KNOWRES_BALANCE') . ' ' . $due; ?>
 			<?php elseif ($contract->balance_date <= TickTock::getDate()): ?>

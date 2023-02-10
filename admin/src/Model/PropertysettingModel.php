@@ -18,7 +18,6 @@ use HighlandVision\KR\Joomla\Extend\AdminModel;
 use HighlandVision\KR\Service\Beyond;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Utility;
-use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Versioning\VersionableControllerTrait;
 use RuntimeException;
 use stdClass;
@@ -46,12 +45,11 @@ class PropertysettingModel extends AdminModel
 	/**
 	 * Update akey setting for service
 	 *
-	 * @param   string  $akey         Name of setting
-	 * @param   int     $property_id  ID of property or 0 for all
-	 * @param   string  $plugin       Value of setting
+	 * @param  string  $akey         Name of setting
+	 * @param  int     $property_id  ID of property or 0 for all
+	 * @param  string  $plugin       Value of setting
 	 *
 	 * @throws RuntimeException
-	 * @throws Exception
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
@@ -82,7 +80,7 @@ class PropertysettingModel extends AdminModel
 			$db    = KrFactory::getDatabase();
 			$query = $db->getQuery(true);
 
-			$fields = [
+			$fields     = [
 				$db->qn('updated_at') . '=' . $db->q(TickTock::getTS()),
 				$db->qn('updated_by') . '=' . (int) KrMethods::getUser()->id
 			];
@@ -103,9 +101,9 @@ class PropertysettingModel extends AdminModel
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return CMSObject|false  Object on success, false on failure.
+	 * @return false|object  Object on success, false on failure.
 	 */
-	public function getItem($pk = null): CMSObject|false
+	public function getItem($pk = null): false|object
 	{
 		$data = KrMethods::getUserState('com_knowres.edit.propertysetting.data', []);
 		if (empty($data))
@@ -119,7 +117,7 @@ class PropertysettingModel extends AdminModel
 	/**
 	 * Save settings
 	 *
-	 * @param   int  $property_id  ID of property or 0 for global
+	 * @param  int  $property_id  ID of property or 0 for global
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -150,8 +148,8 @@ class PropertysettingModel extends AdminModel
 	/**
 	 * Save the property settings to the database.
 	 *
-	 * @param   array  $settings     Changed settings
-	 * @param   int    $property_id  ID of specific property or 0 for all
+	 * @param  array  $settings     Changed settings
+	 * @param  int    $property_id  ID of specific property or 0 for all
 	 *
 	 * @throws RuntimeException
 	 * @throws Exception

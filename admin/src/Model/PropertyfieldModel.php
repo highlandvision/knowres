@@ -17,7 +17,6 @@ use Exception;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\AdminModel;
 use HighlandVision\KR\Translations;
-use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Versioning\VersionableControllerTrait;
 
 use function uasort;
@@ -41,8 +40,8 @@ class PropertyfieldModel extends AdminModel
 	/**
 	 * Compare values
 	 *
-	 * @param   string  $a  Value 1
-	 * @param   string  $b  Value 2
+	 * @param  string  $a  Value 1
+	 * @param  string  $b  Value 2
 	 *
 	 * @since  1.0.0
 	 * @return int
@@ -60,14 +59,13 @@ class PropertyfieldModel extends AdminModel
 	/**
 	 * Method to get a knowres record.
 	 *
-	 * @param   int  $pk  The id of the primary key.
+	 * @param  int  $pk  The id of the primary key.
 	 *
 	 * @since  1.0.0
-	 * @return CMSObject|false  Object on success, false on failure.
+	 * @return false|object  Object on success, false on failure.
 	 */
-	public function getItem($pk = null): CMSObject|false
+	public function getItem($pk = null): false|object
 	{
-		/** @var PropertyfieldModel $item */
 		$item = parent::getItem($pk);
 		if ($item)
 		{
@@ -130,7 +128,7 @@ class PropertyfieldModel extends AdminModel
 	/**
 	 * Get the tab name for a special property field
 	 *
-	 * @param   int  $special  The special field ID
+	 * @param  int  $special  The special field ID
 	 *
 	 * @since  4.0.0
 	 * @return string
@@ -161,8 +159,8 @@ class PropertyfieldModel extends AdminModel
 	/**
 	 * Return name for special property field
 	 *
-	 * @param   string  $special   Special name
-	 * @param   bool    $external  External or internal display required
+	 * @param  string  $special   Special name
+	 * @param  bool    $external  External or internal display required
 	 *
 	 * @since  1.2.2
 	 * @return string

@@ -17,7 +17,6 @@ use Exception;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\AdminModel;
 use HighlandVision\KR\TickTock;
-use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Versioning\VersionableControllerTrait;
 use RuntimeException;
 
@@ -40,13 +39,13 @@ class ReviewModel extends AdminModel
 	/**
 	 * Method to get a knowres record.
 	 *
-	 * @param   null  $pk  The id of the primary key.
+	 * @param  null  $pk  The id of the primary key.
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
-	 * @return CMSObject|false  Object on success, false on failure.
+	 * @return false|object  Object on success, false on failure.
 	 */
-	public function getItem($pk = null): CMSObject|false
+	public function getItem($pk = null): false|object
 	{
 		$item = parent::getItem($pk);
 		if ($item)

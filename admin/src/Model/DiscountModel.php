@@ -18,7 +18,6 @@ use HighlandVision\KR\Joomla\Extend\AdminModel;
 use HighlandVision\KR\Session as KrSession;
 use HighlandVision\KR\Translations;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Versioning\VersionableControllerTrait;
 
@@ -41,14 +40,13 @@ class DiscountModel extends AdminModel
 	/**
 	 * Method to get a knowres record.
 	 *
-	 * @param   int  $pk  The id of the primary key.
+	 * @param  int  $pk  The id of the primary key.
 	 *
 	 * @since  1.0.0
-	 * @return CMSObject|false  Object on success, false on failure.
+	 * @return false|object  Object on success, false on failure.
 	 */
-	public function getItem($pk = null): CMSObject|false
+	public function getItem($pk = null): false|object
 	{
-		/* @var DiscountModel $item */
 		$item = parent::getItem($pk);
 		if ($item)
 		{
@@ -62,8 +60,8 @@ class DiscountModel extends AdminModel
 	/**
 	 * Override publish function
 	 *
-	 * @param   array   &$pks    A list of the primary keys to change.
-	 * @param   int      $value  The value of the published state.
+	 * @param  array   &$pks    A list of the primary keys to change.
+	 * @param  int      $value  The value of the published state.
 	 *
 	 * @throws Exception
 	 * @since  3.1.0
@@ -82,8 +80,10 @@ class DiscountModel extends AdminModel
 					$item = parent::getItem($id);
 					if ($item)
 					{
-						KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updateLastMinute', $this->property_id, 0, 'ru');
-						KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updatePropertyRates', $this->property_id, 0, 'vrbo');
+						KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updateLastMinute',
+							$this->property_id, 0, 'ru');
+						KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updatePropertyRates',
+							$this->property_id, 0, 'vrbo');
 					}
 
 					$first = false;
@@ -101,7 +101,7 @@ class DiscountModel extends AdminModel
 	/**
 	 * Method to test whether a record can be deleted.
 	 *
-	 * @param   object  $record  A record object.
+	 * @param  object  $record  A record object.
 	 *
 	 * @since   3.0.0
 	 * @return  bool  True if allowed to delete the record. Defaults to the permission for the component.
@@ -134,14 +134,14 @@ class DiscountModel extends AdminModel
 	/**
 	 * Prepare and sanitise the table prior to saving.
 	 *
-	 * @param   Table  $table  Table data
+	 * @param  Table  $table  Table data
 	 *
 	 * @throws Exception
 	 * @since  2.4.0
 	 */
 	protected function prepareTable($table)
 	{
-		$data = KrMethods::inputArray('jform', []);
+		$data = KrMethods::inputArray('jform');
 
 		if (!$table->model)
 		{

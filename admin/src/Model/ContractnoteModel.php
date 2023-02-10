@@ -19,7 +19,6 @@ use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\AdminModel;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Utility;
-use Joomla\CMS\Object\CMSObject;
 use stdClass;
 
 use function explode;
@@ -43,7 +42,7 @@ class ContractnoteModel extends AdminModel
 	/**
 	 * Generate text for contract note types.
 	 *
-	 * @param   mixed  $note_type  Contract note types
+	 * @param  mixed  $note_type  Contract note types
 	 *
 	 * @since  2.5.0
 	 * @return string
@@ -82,10 +81,10 @@ class ContractnoteModel extends AdminModel
 	/**
 	 * Create a contract note for system / staff processes
 	 *
-	 * @param   int     $contract_id  ID of contract
-	 * @param   string  $text         Note text
-	 * @param   string  $note_type    Csv string with values 0,1,2 or 3
-	 * @param   bool    $created_by   Set created by to user value
+	 * @param  int     $contract_id  ID of contract
+	 * @param  string  $text         Note text
+	 * @param  string  $note_type    Csv string with values 0,1,2 or 3
+	 * @param  bool    $created_by   Set created by to user value
 	 *
 	 * @throws Exception
 	 * @since  2.3.0
@@ -113,12 +112,12 @@ class ContractnoteModel extends AdminModel
 	/**
 	 * Method to get a knowres record.
 	 *
-	 * @param   int  $pk  The id of the primary key.
+	 * @param  int  $pk  The id of the primary key.
 	 *
 	 * @since  1.0.0
-	 * @return CMSObject|false  Object on success, false on failure.
+	 * @return object|false  Object on success, false on failure.
 	 */
-	public function getItem($pk = null): CMSObject|false
+	public function getItem($pk = null): object|false
 	{
 		$item = parent::getItem($pk);
 		if ($item)

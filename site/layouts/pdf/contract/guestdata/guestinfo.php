@@ -15,13 +15,12 @@ use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Translations;
 use HighlandVision\KR\Utility;
-use Joomla\CMS\Object\CMSObject;
 
 extract($displayData);
 /**
  * Layout variables
  *
- * @var CMSObject $guestinfo Guest info.
+ * @var false|object $guestinfo Guest info.
  */
 
 if (is_array($guestinfo))

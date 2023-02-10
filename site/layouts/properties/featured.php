@@ -17,17 +17,16 @@ use HighlandVision\KR\Media;
 use HighlandVision\KR\SiteHelper;
 use HighlandVision\KR\Utility;
 use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Object\CMSObject;
 use Joomla\Registry\Registry;
 
 extract($displayData);
 /**
  * Layout variables
  *
- * @var CMSObject $item     Property Item.
- * @var string    $currency Property currency.
- * @var array     $saved    Saved favourites.
- * @var Registry  $params   KR params.
+ * @var false|object $item     Property Item.
+ * @var string       $currency Property currency.
+ * @var array        $saved    Saved favourites.
+ * @var Registry     $params   KR params.
  */
 
 $property_currency = $currency;

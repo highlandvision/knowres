@@ -6,8 +6,6 @@
  * @license        GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-/** @noinspection PhpMissingParamTypeInspection */
-
 namespace HighlandVision\KR\Joomla\Extend;
 
 defined('_JEXEC') or die;
@@ -38,9 +36,9 @@ class ContentHelper extends \Joomla\CMS\Helper\ContentHelper
 	 * @param  integer  $id         The item ID.
 	 *
 	 * @since   3.2
-	 * @return  CMSObject
+	 * @return  object
 	 */
-	public static function getActions($component = 'com_knowres', $section = '', $id = 0): CMSObject
+	public static function getActions($component = 'com_knowres', $section = '', $id = 0): object
 	{
 		$assetName = $component;
 

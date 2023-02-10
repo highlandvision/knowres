@@ -18,8 +18,10 @@ use HighlandVision\KR\Utility;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
-use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Pagination\Pagination;
+use Joomla\CMS\Toolbar\Button\ConfirmButton;
+use Joomla\CMS\Toolbar\Button\DropdownButton;
+use Joomla\CMS\Toolbar\Button\LinkButton;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\Registry\Registry;
@@ -41,8 +43,8 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 	public int $access_level = 0;
 	/** @var ?array The active search filters */
 	public ?array $activeFilters = [];
-	/** @var CMSObject Allowed actions */
-	public CMSObject $canDo;
+	/** @var object Allowed actions */
+	public object $canDo;
 	/** @var ?Form Search tools form */
 	public ?Form $filterForm;
 	/** @var Form|bool Form model */
@@ -129,8 +131,9 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 		if (!empty($gobackto))
 		{
 			KrMethods::setUserState('com_knowres.gobackto', null);
-
 			$link = KrMethods::route('index.php?option=com_knowres&' . $gobackto);
+
+			/** @var LinkButton $Toolbar */
 			$Toolbar->linkButton('back', 'JTOOLBAR_BACK')
 			        ->buttonClass('btn btn-danger')
 			        ->icon('fas fa-fast-backward knowres')
@@ -199,6 +202,7 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 	 */
 	protected function addChildActionsToolbar(Toolbar $Toolbar, string $name): Toolbar
 	{
+		/** @var DropdownButton $Toolbar */
 		$dropdown = $Toolbar->dropdownButton('status-group')
 		                    ->text('JTOOLBAR_CHANGE_STATUS')
 		                    ->toggleSplit(false)
@@ -242,6 +246,7 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 			}
 			else if (isset($this->items[0]) && $this->canDo->get('core.delete'))
 			{
+				/** @var ConfirmButton $Toolbar */
 				$Toolbar->delete($name . '.delete')
 				        ->listCheck(true)
 				        ->message('JGLOBAL_CONFIRM_DELETE')
@@ -253,6 +258,7 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 		{
 			if ($name != 'properties')
 			{
+				/** @var ConfirmButton $Toolbar */
 				$Toolbar->delete($name . '.delete')
 				        ->icon('fas fa-trash red')
 				        ->listCheck(true)
@@ -262,6 +268,7 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 			else
 			{
 				$text = KrMethods::plain('COM_KNOWRES_PROPERTY_DELETE_MESSAGE');
+				/** @var ConfirmButton $Toolbar */
 				$Toolbar->delete($name . '.markfordeletion')
 				        ->icon('fas fa-trash red')
 				        ->listCheck(true)
@@ -396,6 +403,7 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 	{
 		if ($this->access_level == 40)
 		{
+			/** @var DropdownButton $Toolbar */
 			$dropdown     = $Toolbar->dropdownButton('config-links-group')
 			                        ->text('COM_KNOWRES_TOOLBAR_CONFIG')
 			                        ->toggleSplit(false)
@@ -457,6 +465,7 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 	 */
 	protected function addQuickLinksToolbar(Toolbar $Toolbar): Toolbar
 	{
+		/** @var DropdownButton $Toolbar */
 		$dropdown     = $Toolbar->dropdownButton('quick-links-group')
 		                        ->text('COM_KNOWRES_TOOLBAR_QUICKLINKS')
 		                        ->toggleSplit(false)
@@ -508,6 +517,7 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 	 */
 	protected function addServicesDropdown(Toolbar $Toolbar): Toolbar
 	{
+		/** @var DropdownButton $Toolbar */
 		$dropdown     = $Toolbar->dropdownButton('services-group')
 		                        ->text('COM_KNOWRES_TOOLBAR_SERVICE_DATA')
 		                        ->toggleSplit(false)

@@ -17,7 +17,6 @@ use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\AdminModel;
 use HighlandVision\KR\Utility;
 use Joomla\CMS\Form\Form;
-use Joomla\CMS\Object\CMSObject;
 
 /**
  * Knowres contract payment model.
@@ -36,14 +35,14 @@ class ContractpaymentModel extends AdminModel
 	/**
 	 * Calculate full balance (includes unconfirmed payments) and confirmed balances
 	 *
-	 * @param   CMSObject  $contract  Contract row
-	 * @param   array      $payments  Contract payments
-	 * @param   array      $fees      Contract fees
+	 * @param  object  $contract  Contract row
+	 * @param  array   $payments  Contract payments
+	 * @param  array   $fees      Contract fees
 	 *
 	 * @since  4.0.0
 	 * @return array [Confirmed balance, Full balance].
 	 */
-	public static function setBalances(CMSObject $contract, array $payments = [], array $fees = []): array
+	public static function setBalances(object $contract, array $payments = [], array $fees = []): array
 	{
 		$balance = $contract->contract_total;
 		foreach ($fees as $f)
@@ -69,15 +68,14 @@ class ContractpaymentModel extends AdminModel
 	/**
 	 * Method to get a knowres record.
 	 *
-	 * @param   int  $pk  The id of the primary key.
+	 * @param  int  $pk  The id of the primary key.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return CMSObject|false  Object on success, false on failure.
+	 * @return false|object  Object on success, false on failure.
 	 */
-	public function getItem($pk = null): CMSObject|false
+	public function getItem($pk = null): false|object
 	{
-		/* @var ContractpaymentModel $item */
 		$item = parent::getItem($pk);
 		if ($item)
 		{
@@ -96,9 +94,9 @@ class ContractpaymentModel extends AdminModel
 	/**
 	 * Add additional validation to form data
 	 *
-	 * @param   Form   $form  The form to validate against.
-	 * @param   array  $data  The data to validate.
-	 * @param   null   $group
+	 * @param  Form   $form  The form to validate against.
+	 * @param  array  $data  The data to validate.
+	 * @param  null   $group
 	 *
 	 * @since  1.0.0
 	 * @return bool|array

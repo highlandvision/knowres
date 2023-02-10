@@ -214,7 +214,8 @@ class Search
 			$this->data->baseIds = array_column($baseItems, 'id');
 			$this->setCurrency();
 
-			$this->checkGuestData($baseItems);
+			//TODO-v4.1 Reinstate
+			//			$this->checkGuestData($baseItems);
 			if (!count($this->data->baseIds))
 			{
 				return;
@@ -447,43 +448,47 @@ class Search
 		$this->data->baseIds = $valid;
 	}
 
-	/**
-	 * Check that the number of guests does not exceed the max for a property
-	 *
-	 * @param  array  $items  Base properties data for search
-	 *
-	 * @since  4.0.0
-	 */
-	private function checkGuestData(array $items): void
-	{
-		$valid = [];
-
-		foreach ($items as $item)
-		{
-			if (!in_array($item->id, $this->data->baseIds))
-			{
-				continue;
-			}
-
-			$free = $this->setFreeGuests($item);
-			if ($this->data->guests > $item->sleeps + $item->sleeps_extra + $free)
-			{
-				continue;
-			}
-
-			if ($this->data->children > 0 && is_countable($this->data->child_ages))
-			{
-				if (count($this->data->child_ages) > 0 && count($this->data->child_ages) < $this->data->children)
-				{
-					continue;
-				}
-			}
-
-			$valid[] = $item->id;
-		}
-
-		$this->data->baseIds = $valid;
-	}
+//	/**
+//	 * Check that the number of guests does not exceed the max for a property
+//	 *
+//	 * @param  array  $items  Base properties data for search
+//	 *
+//	 * @since  4.0.0
+//	 */
+//	private function checkGuestData(array $items): void
+//	{
+//		//TODO-v4.1 to be sorted
+//		$valid = [];
+//
+//		foreach ($items as $item)
+//		{
+//			if (!in_array($item->id, $this->data->baseIds))
+//			{
+//				continue;
+//			}
+//
+//			$free = $this->setFreeGuests($item);
+//			if ($this->data->guests > $item->sleeps + $item->sleeps_extra + $free)
+//			{
+//				if ($this->data->guests > $item->sleeps + $item->sleeps_extra)
+//				{
+//					continue;
+//				}
+//			}
+//
+//			if ($this->data->children > 0 && is_countable($this->data->child_ages))
+//			{
+//				if (count($this->data->child_ages) > 0 && count($this->data->child_ages) < $this->data->children)
+//				{
+//					continue;
+//				}
+//			}
+//
+//			$valid[] = $item->id;
+//		}
+//
+//		$this->data->baseIds = $valid;
+//	}
 
 	/**
 	 * Set number of free guests - children under free infants age
@@ -1195,9 +1200,8 @@ class Search
 				$net = array_key_exists($r->property_id, $net_rates) ? $net_rates[$r->property_id] : $net_rates[0];
 				if ($net)
 				{
-					$markup = $net_markup[$r->property_id] ?? $net_markup[0];
-					$prices[$r->property_id]
-					        = KrFactory::getAdminModel('ratemarkup')::getGrossRate((float) $r->minrate,
+					$markup                  = $net_markup[$r->property_id] ?? $net_markup[0];
+					$prices[$r->property_id] = KrFactory::getAdminModel('ratemarkup')::getGrossRate((float) $r->minrate,
 						$markup);
 				}
 				else
@@ -1243,11 +1247,11 @@ class Search
 		}
 
 		$region = KrFactory::getAdminModel('region')->getItem($this->data->region_id);
-		if (!$region->id || $region->state != 1)
+		if (empty($region->id) || $region->state != 1)
 		{
 			$this->data->region_id = $this->params->get('default_region');
 			$region                = KrFactory::getAdminModel('region')->getItem($this->data->region_id);
-			if (!$region->id)
+			if (empty($region->id))
 			{
 				throw new RuntimeException('Region not found for Region ID ' . $this->data->region_id);
 			}

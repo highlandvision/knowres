@@ -6,21 +6,21 @@
  * @license     See the file "LICENSE.txt" for the full license governing this code.
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
+
 /** @noinspection PhpUnhandledExceptionInspection */
 
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\TickTock;
-use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Session\Session;
 
 extract($displayData);
 /**
  * Layout variables
  *
- * @var CMSObject $contract   The contract item.
- * @var array     $notes      The contract notes.
- * @var bool      $allow_edit User allowed an edit.
+ * @var false|object $contract   The contract item.
+ * @var array        $notes      The contract notes.
+ * @var bool         $allow_edit User allowed an edit.
  */
 
 $confirm = KrMethods::plain('COM_KNOWRES_JS_CONFIRM');

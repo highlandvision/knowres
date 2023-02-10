@@ -10,15 +10,14 @@
 defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrMethods;
-use Joomla\CMS\Object\CMSObject;
 
 extract($displayData);
 /**
  * Layout variables
  *
- * @var CMSObject $item  Property Item.
- * @var array     $saved Saved favourites.
- * @var mixed     $view  Current view.
+ * @var false|object $item  Property Item.
+ * @var array        $saved Saved favourites.
+ * @var mixed        $view  Current view.
  */
 ?>
 

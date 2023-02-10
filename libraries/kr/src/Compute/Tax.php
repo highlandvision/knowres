@@ -145,7 +145,7 @@ class Tax
 	/**
 	 * Set the tax type
 	 *
-	 * @param  mixed  $trow    CMSObject or stdClass.
+	 * @param  mixed  $trow    Object or stdClass.
 	 * @param  array  $agents  Agents who already include this tax.
 	 *
 	 * @since  4.0.0

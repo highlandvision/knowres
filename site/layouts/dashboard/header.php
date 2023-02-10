@@ -6,6 +6,7 @@
  * @license     See the file "LICENSE.txt" for the full license governing this code.
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
+
 /** @noinspection PhpUnhandledExceptionInspection */
 
 defined('_JEXEC') or die;
@@ -14,14 +15,13 @@ use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Media;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Utility;
-use Joomla\CMS\Object\CMSObject;
 
 extract($displayData);
 /**
  * Layout variables
  *
- * @var CMSObject $contract Contract Item.
- * @var bool      $times    Truw to display times.
+ * @var false|object $contract Contract Item.
+ * @var bool         $times    Truw to display times.
  */
 
 if (!isset($times))
@@ -105,7 +105,8 @@ $image  = Media\Images::getPropertyImageName($contract->property_id);
 			<!--			</div>-->
 			<!--			<div>-->
 			<!--				<dt>--><?php //echo KrMethods::plain('COM_KNOWRES_CHILD_AGES'); ?><!--</dt>-->
-<!--				            <dd>--><?php //echo implode(',', Utility::decodeJson($contract->child_ages, true)); ?><!--</dd>-->
+			<!--				            <dd>-->
+			<?php //echo implode(',', Utility::decodeJson($contract->child_ages, true)); ?><!--</dd>-->
 			<!--			</div>-->
 			<!--			--><?php //endif; ?>
 			<?php if ($contract->agent_id) : ?>

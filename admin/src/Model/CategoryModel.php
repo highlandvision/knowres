@@ -17,7 +17,6 @@ use Exception;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\AdminModel;
 use HighlandVision\KR\Translations;
-use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Versioning\VersionableModelTrait;
 
 /**
@@ -42,11 +41,10 @@ class CategoryModel extends AdminModel
 	 * @param   int  $pk  The id of the primary key.
 	 *
 	 * @since   1.0.0
-	 * @return CMSObject|false  Object on success, false on failure.
+	 * @return object|false  Object on success, false on failure.
 	 */
-	public function getItem($pk = null): CMSObject|false
+	public function getItem($pk = null): object|false
 	{
-		/* @var CategoryModel $item */
 		$item = parent::getItem($pk);
 		if ($item)
 		{

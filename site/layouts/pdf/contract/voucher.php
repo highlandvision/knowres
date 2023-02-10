@@ -14,18 +14,17 @@ defined('_JEXEC') or die;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Utility;
-use Joomla\CMS\Object\CMSObject;
 
 extract($displayData);
 /**
  * Layout variables
  *
- * @var CMSObject $contract  Contract item.
- * @var CMSObject $agency    Agency item.
- * @var CMSObject $property  Property item;
- * @var CMSObject $guestdata Guestdata item.
- * @var array     $notes     Contract notes.
- * @var float     $balance   Contract balance.
+ * @var false|object $contract  Contract item.
+ * @var false|object $agency    Agency item.
+ * @var false|object $property  Property item;
+ * @var false|object $guestdata Guestdata item.
+ * @var array        $notes     Contract notes.
+ * @var float        $balance   Contract balance.
  */
 
 $checkintime = strtolower(KrMethods::plain('COM_KNOWRES_FROM')) . ' ' . $property->checkin_time;
@@ -88,11 +87,19 @@ $lng = floatval(trim($property->lng_actual)) ? trim($property->lng_actual) : tri
 	</tr>
 </table>
 
-<?php echo KrMethods::render('pdf.contract.voucher.partysize', [
-	'property' => $property,
-	'contract' => $contract
-]);
+<?php
+echo KrMethods::render('pdf.contract.guestdata.partysize',
+	['guestdata' => $guestdata,
+	 'property'  => $property,
+	 'contract'  => $contract]
+);
 ?>
+<!--TODO-v4.1 FIX GUEST NUMBERS FOR GOOD-->
+<?php //echo KrMethods::render('pdf.contract.voucher.partysize', [
+//	'property' => $property,
+//	'contract' => $contract
+//]);
+//?>
 
 <table style="width:100%;border:none;border-collapse:collapse;">
 	<tr style="font-size:92%;color:#999;">

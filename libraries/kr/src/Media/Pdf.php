@@ -27,8 +27,8 @@ class Pdf extends Media
 {
 	/** @var  string $action 'download' or 'email' */
 	protected string $action;
-	/** @var  mixed Agency details */
-	protected mixed $agency;
+	/** @var  false|object Agency details */
+	protected false|object $agency;
 	/** @var  KrTcpdf $pdf PDF content */
 	protected KrTcpdf $pdf;
 

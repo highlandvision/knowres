@@ -22,7 +22,6 @@ use HighlandVision\KR\Translations;
 use HighlandVision\KR\Utility;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
-use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Versioning\VersionableControllerTrait;
 
 use function implode;
@@ -46,7 +45,7 @@ class RateModel extends AdminModel
 	/**
 	 * Insert / update rate changes into database currently only Beyond
 	 *
-	 * @param   array  $updates  Rate updates to be changed / inserted
+	 * @param  array  $updates  Rate updates to be changed / inserted
 	 *
 	 * @throws Exception
 	 * @since  2.4.0
@@ -108,14 +107,13 @@ class RateModel extends AdminModel
 	/**
 	 * Method to get a knowres record.
 	 *
-	 * @param   int  $pk  The id of the primary key.
+	 * @param  int  $pk  The id of the primary key.
 	 *
 	 * @since  1.0.0
-	 * @return CMSObject|false  Object on success, false on failure.
+	 * @return false|object  Object on success, false on failure.
 	 */
-	public function getItem($pk = null): CMSObject|false
+	public function getItem($pk = null): false|object
 	{
-		/** @var RateModel $item */
 		$item = parent::getItem($pk);
 		if ($item)
 		{
@@ -131,8 +129,8 @@ class RateModel extends AdminModel
 	/**
 	 * Override publish function
 	 *
-	 * @param   array    &$pks    A list of the primary keys to change.
-	 * @param   int       $value  The value of the published state.
+	 * @param  array    &$pks    A list of the primary keys to change.
+	 * @param  int       $value  The value of the published state.
 	 *
 	 * @throws Exception
 	 * @since  3.1.0
@@ -170,7 +168,7 @@ class RateModel extends AdminModel
 	/**
 	 * Method to test whether a record can be deleted.
 	 *
-	 * @param   object  $record  A record object.
+	 * @param  object  $record  A record object.
 	 *
 	 * @since   3.0.0
 	 * @return  bool  True if allowed to delete the record. Defaults to the permission for the component.
@@ -203,9 +201,9 @@ class RateModel extends AdminModel
 	/**
 	 * Method to validate the form data.
 	 *
-	 * @param   Form    $form   The form to validate against.
-	 * @param   array   $data   The data to validate.
-	 * @param   string  $group  The name of the field group to validate.
+	 * @param  Form    $form   The form to validate against.
+	 * @param  array   $data   The data to validate.
+	 * @param  string  $group  The name of the field group to validate.
 	 *
 	 * @throws Exception
 	 * @since  1.6
@@ -213,7 +211,7 @@ class RateModel extends AdminModel
 	 */
 	public function validate($form, $data, $group = null): bool|array
 	{
-		$more_guests         = KrMethods::inputArray('more_guests', []);
+		$more_guests         = KrMethods::inputArray('more_guests');
 		$data['more_guests'] = Utility::encodeJson($more_guests);
 
 		return parent::validate($form, $data, $group);

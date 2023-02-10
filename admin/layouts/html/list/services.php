@@ -9,13 +9,12 @@
 /** @noinspection PhpUnhandledExceptionInspection */
 
 use HighlandVision\KR\Framework\KrMethods;
-use Joomla\CMS\Object\CMSObject;
 
 extract($displayData);
 /**
  * Layout variables
  *
- * @var  CMSObject $data Services row.
+ * @var false|object $data Service row.
  */
 
 $url = KrMethods::route('index.php?option=com_knowres&task=service.select&service_id=' . $data->id);

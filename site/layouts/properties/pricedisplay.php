@@ -15,19 +15,18 @@ use HighlandVision\KR\Currency;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Utility;
-use Joomla\CMS\Object\CMSObject;
 
 extract($displayData);
 /**
  * Layout variables
  *
- * @var CMSObject $item           Property Item.
- * @var string    $currency       Rates / property currency.
- * @var bool      $byAvailability Search by availabbility.
- * @var float     $net            Net rates.
- * @var float     $discount       Discount value.
- * @var bool      $weekly         True for weekly rates.
- * @var string    $plink          Property link.
+ * @var false|object $item           Property Item.
+ * @var string       $currency       Rates / property currency.
+ * @var bool         $byAvailability Search by availabbility.
+ * @var float        $net            Net rates.
+ * @var float        $discount       Discount value.
+ * @var bool         $weekly         True for weekly rates.
+ * @var string       $plink          Property link.
  */
 
 $booking_type = $net == 9999999 ? 0 : $item->booking_type;
@@ -56,7 +55,8 @@ $params       = KrMethods::getParams();
 	<a class="button rate" href="<?php echo $plink; ?>">
 		<?php if ($booking_type): ?>
 			<?php if ($byAvailability): ?>
-				<?php echo KrMethods::sprintf('COM_KNOWRES_SEARCH_PRICE', Utility::displayValue($net, $currency, false)); ?>
+				<?php echo KrMethods::sprintf('COM_KNOWRES_SEARCH_PRICE',
+					Utility::displayValue($net, $currency, false)); ?>
 			<?php elseif ($weekly) : ?>
 				<?php echo KrMethods::plain('COM_KNOWRES_SEARCH_PRICE_FROM'); ?>
 				<?php echo Utility::displayValue($net, $currency, false); ?>
@@ -88,6 +88,7 @@ $params       = KrMethods::getParams();
 		<?php endif; ?>
 	</a>
 	<a class="button viewproperty" href="<?php echo $plink; ?>">
-		<?php echo KrFactory::getAdminModel('property')::bookingTypeText($booking_type); ?> <i class="fas fa-chevron-right"></i>
+		<?php echo KrFactory::getAdminModel('property')::bookingTypeText($booking_type); ?> <i
+			class="fas fa-chevron-right"></i>
 	</a>
 </div>

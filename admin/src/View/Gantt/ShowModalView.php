@@ -18,7 +18,6 @@ use HighlandVision\KR\Joomla\Extend\HtmlView as KrHtmlView;
 use HighlandVision\KR\Session as KrSession;
 use HighlandVision\KR\Utility;
 use JetBrains\PhpStorm\NoReturn;
-use Joomla\CMS\Object\CMSObject;
 
 /**
  * Show contract details in modal.
@@ -37,10 +36,10 @@ class ShowModalView extends KrHtmlView\Contract
 	public array|bool $contract_notes;
 	/** @var mixed Fees list */
 	public array $fees;
-	/** @var CMSObject Guest data. */
-	public CMSObject $guest;
-	/** @var CMSObject|false Contract guest data. */
-	public CMSObject|false $guestdata;
+	/** @var false|object Guest data. */
+	public false|object $guest;
+	/** @var false|object Contract guest data. */
+	public false|object $guestdata;
 	/** @var int ID of contract. */
 	public int $id = 0;
 	/** @var float Value of payments. */
