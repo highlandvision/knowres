@@ -93,7 +93,7 @@ class ServiceController extends FormController
 
 				if ($new['markup'] != $existing['markup'])
 				{
-					KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updatePropertyRates', null, null,
+					KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updatePropertyRates', 0, 0,
 						'vrbo');
 				}
 			}

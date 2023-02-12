@@ -56,7 +56,7 @@ class NewView extends KrHtmlView
 	/**
 	 * Add the toolbar.
 	 *
-	 * @param   Toolbar  $Toolbar  Current toolbar
+	 * @param  Toolbar  $Toolbar  Current toolbar
 	 *
 	 * @throws Exception
 	 * @since  4.0.0

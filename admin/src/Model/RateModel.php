@@ -150,7 +150,7 @@ class RateModel extends AdminModel
 					if ($item)
 					{
 						KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updatePropertyRates',
-							(int) $item->property_id, null, null, $item->valid_from, $item->valid_to);
+							(int) $item->property_id, 0, null, $item->valid_from, $item->valid_to);
 						KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updateAvailability',
 							(int) $item->property_id, 0, 'vrbo');
 					}

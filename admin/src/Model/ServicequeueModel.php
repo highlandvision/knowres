@@ -132,13 +132,13 @@ class ServicequeueModel extends AdminModel
 
 	/**
 	 * Get all the channels for property or all properties excluding any current unactioned queue record
-	 * and update queue
+	 * and update queue.
 	 * If cluster is set then have to get all properties for cluster and update each
 	 * NOTE: Combines all the previous update functions from earlier versions
 	 *
 	 * @param  string   $method       API method
-	 * @param  ?int     $property_id  ID of updated property
-	 * @param  ?int     $cluster_id   ID of updated cluster
+	 * @param  int      $property_id  ID of updated property
+	 * @param  int      $cluster_id   ID of updated cluster
 	 * @param  ?string  $plugin       Service plugin to be updated or null for all
 	 * @param  ?string  $arrival      Applicable arrival (valid from ) date for rates
 	 * @param  ?string  $departure    Applicable departure (valid to ) date for rates
@@ -146,7 +146,7 @@ class ServicequeueModel extends AdminModel
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	public static function serviceQueueUpdate(string $method, ?int $property_id = 0, ?int $cluster_id = 0,
+	public static function serviceQueueUpdate(string $method, int $property_id = 0, int $cluster_id = 0,
 		?string $plugin = null, ?string $arrival = null, ?string $departure = null)
 	{
 		$result = KrFactory::getListModel('servicexrefs')->getPropertiesForAllServices($property_id, $method, $plugin);

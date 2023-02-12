@@ -152,19 +152,22 @@ class ServicexrefpropertyRule extends FormRule
 
 		// Room spaces and bed types
 		$entered = false;
-		if (!empty($item->bed_types) && is_countable($this->bed_types))
+		if (!empty($item->bed_types) && is_countable($item->bed_types))
 		{
 			foreach ($item->bed_types as $d)
 			{
-				$bed_types = $d['bed_types'];
-				foreach ($bed_types as $b)
+				if ((int)$d['room_id'] > 0)
 				{
-					foreach ($b as $n)
+					$bed_types = (int)$d['bed_types'];
+					foreach ($bed_types as $b)
 					{
-						if ($n > 0)
+						foreach ($b as $n)
 						{
-							$entered = true;
-							break 3;
+							if ($n > 0)
+							{
+								$entered = true;
+								break 3;
+							}
 						}
 					}
 				}
@@ -278,7 +281,7 @@ class ServicexrefpropertyRule extends FormRule
 						}
 						else
 						{
-							$guests = $guests + $m->more_max + 1 - $m->more_min;
+							$guests = $guests + (int)$m->more_max + 1 - (int)$m->more_min;
 						}
 					}
 				}

@@ -29,8 +29,8 @@ class ImageController extends FormController
 	/**
 	 * Process additional requirements after save image
 	 *
-	 * @param   BaseDatabaseModel  $model      The data model object.
-	 * @param   array              $validData  The validated data.
+	 * @param  BaseDatabaseModel  $model      The data model object.
+	 * @param  array              $validData  The validated data.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -52,6 +52,7 @@ class ImageController extends FormController
 		$translation->updateDefault('image', $id, 'description', $description);
 		$translation->updateDefault('image', $id, 'alt_text', $alt_text);
 
-		KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updateProperty', (int) $validData['property_id'], 0, 'ru');
+		KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updateProperty', (int) $validData['property_id'],
+			0, 'ru');
 	}
 }

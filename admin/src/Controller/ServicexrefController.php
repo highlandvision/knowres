@@ -12,6 +12,7 @@ namespace HighlandVision\Component\Knowres\Administrator\Controller;
 defined('_JEXEC') or die;
 
 use Exception;
+use HighlandVision\Component\Knowres\Administrator\Model\ServicexrefModel;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\FormController;
@@ -59,6 +60,7 @@ class ServicexrefController extends FormController
 	{
 		if ((int) $validData['foreign_key'] == 0 && (int) $validData['property_id'] > 0)
 		{
+			/* @var ServicexrefModel $model **/
 			$model::resetNewServiceProperty($model->getItem()->get('id'), (int) $validData['service_id'],
 				(int) $validData['property_id']);
 			KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updateProperty',

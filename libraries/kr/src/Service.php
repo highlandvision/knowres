@@ -136,18 +136,18 @@ abstract class Service
 		// 2 - 0 not installed, 1 installed
 		// TODO-v4.1 Reinstate Xero
 		$services = [
-			'ical'          => ['i', 0, 0],
-			'ru'            => ['c', 1, 0],
-			'vrbo'          => ['c', 2, 0],
-			'wire'          => ['g', 0, 0],
-			'check'         => ['g', 0, 0],
-			'paypal'        => ['g', 0, 0],
-			'stripe'        => ['g', 0, 0],
-			'exchange'      => ['s', 0, 0],
-			'factura'       => ['s', 2, 0],
-			'helpscout'     => ['s', 1, 0],
-			'vintagetravel' => ['s', 2, 0],
-			'mailchimp'     => ['s', 0, 0]
+			'iCal'          => ['i', 0, 0],
+			'RU'            => ['c', 1, 0],
+			'VRBO'          => ['c', 2, 0],
+			'Wire'          => ['g', 0, 0],
+			'Check'         => ['g', 0, 0],
+			'PayPal'        => ['g', 0, 0],
+			'Stripe'        => ['g', 0, 0],
+			'Exchange'      => ['s', 0, 0],
+			'Factura'       => ['s', 2, 0],
+			'HelpScout'     => ['s', 1, 0],
+			'VintageTravel' => ['s', 2, 0],
+			'MailChimp'     => ['s', 0, 0]
 		];
 
 		foreach ($services as $plugin => $data)
@@ -163,7 +163,7 @@ abstract class Service
 	}
 
 	/**
-	 * Get service type escription
+	 * Get service type description
 	 *
 	 * @param  string  $type
 	 *

@@ -15,12 +15,13 @@ use HighlandVision\KR\Service;
 ?>
 
 <div class="row row-cols-1 row-cols-md-4 g-4">
-	<?php foreach ($this->installed as $plugin => $type): ?>
+	<?php foreach ($this->installed as $name => $type): ?>
+		<?php $plugin = strtolower($name); ?>
 		<div class="col">
 			<div class="card h-100">
 				<div class="card-header" style="background-color:#f5f5f5;border-bottom:1px solid #e1e1e1;">
 					<h3>
-						<?php echo ucfirst($plugin); ?> - <?php echo Service::getType($type[0]); ?>
+						<?php echo $name; ?> - <?php echo Service::getType($type[0]); ?>
 					</h3>
 				</div>
 				<div class="card-body d-flex flex-column text-center">
