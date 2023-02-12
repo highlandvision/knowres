@@ -1,0 +1,18 @@
+/* Error: Can't find stylesheet to import.
+ *   ,
+ * 2 | @use '../../ProjectKR/node_modules/foundation-sites/scss/util/_util' as mixin;
+ *   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ *   '
+ *   krmodules\_mobi.scss 2:1  @import
+ *   krmodules.scss 5:9        root stylesheet */
+
+body::before {
+  font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono",
+      "Droid Sans Mono", monospace, monospace;
+  white-space: pre;
+  display: block;
+  padding: 1em;
+  margin-bottom: 1em;
+  border-bottom: 2px solid black;
+  content: "Error: Can't find stylesheet to import.\a   \2577 \a 2 \2502  @use '../../ProjectKR/node_modules/foundation-sites/scss/util/_util' as mixin;\a   \2502  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\a   \2575 \a   krmodules\\_mobi.scss 2:1  @import\a   krmodules.scss 5:9        root stylesheet";
+}
