@@ -163,7 +163,7 @@ abstract class Service
 	}
 
 	/**
-	 * Get service type escription
+	 * Get service type description
 	 *
 	 * @param  string  $type
 	 *

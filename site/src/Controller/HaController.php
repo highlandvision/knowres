@@ -23,7 +23,10 @@ use JetBrains\PhpStorm\NoReturn;
 use Joomla\CMS\MVC\Controller\BaseController;
 use RuntimeException;
 
+use function count;
+use function implode;
 use function jexit;
+use function serialize;
 
 /**
  * Expedia / Vrbo API Service
@@ -104,7 +107,7 @@ class HaController extends BaseController
 	 * Request for booking update service
 	 *
 	 * @throws Exception
-	 * @since        3.3.0
+	 * @since  3.3.0
 	 * @noinspection PhpUnused
 	 */
 	#[NoReturn] public function bus()
@@ -229,7 +232,7 @@ class HaController extends BaseController
 	 * Returns a lodging request
 	 *
 	 * @throws Exception
-	 * @since        3.3.0
+	 * @since  3.3.0
 	 * @noinspection PhpUnused
 	 */
 	#[NoReturn] public function lodging()
@@ -289,6 +292,31 @@ class HaController extends BaseController
 	}
 
 	/**
+	 * Display generic / property terms
+	 *
+	 * @throws RuntimeException
+	 * @throws Exception
+	 * @since  3.0
+	 * @noinspection PhpUnused
+	 */
+	#[NoReturn] public function termspdf()
+	{
+		// TODO-v4.2 Remove as all calls to ServiceController
+		try
+		{
+			$id    = KrMethods::inputInt('id', 0, 'get');
+			$Terms = new Terms('download', $id);
+			$Terms->getPdf();
+		}
+		catch (Exception)
+		{
+			throw new RuntimeException('Error creating PDF, please try again later');
+		}
+
+		jexit();
+	}
+
+	/**
 	 * Log error and exit
 	 *
 	 * @throws Exception
@@ -312,31 +340,6 @@ class HaController extends BaseController
 		}
 
 		Logger::logMe($message);
-		jexit();
-	}
-
-	/**
-	 * Display generic / property terms
-	 *
-	 * @throws RuntimeException
-	 * @throws Exception
-	 * @since        3.0
-	 * @noinspection PhpUnused
-	 */
-	#[NoReturn] public function termspdf()
-	{
-		// TODO-v4.2 Remove as all calls to ServiceController
-		try
-		{
-			$id    = KrMethods::inputInt('id', 0, 'get');
-			$Terms = new Terms('download', $id);
-			$Terms->getPdf();
-		}
-		catch (Exception)
-		{
-			throw new RuntimeException('Error creating PDF, please try again later');
-		}
-
 		jexit();
 	}
 
@@ -388,8 +391,8 @@ XML;
 <document>
 			<bookingRequestDetails>
 				<advertiserAssignedId>1931</advertiserAssignedId>
-				<listingExternalId>805</listingExternalId>
-				<unitExternalId>805a</unitExternalId>
+				<listingExternalId>151</listingExternalId>
+				<unitExternalId>151a</unitExternalId>
 				<propertyUrl>https://stage.homeaway.com/vacation-rental/p3173184</propertyUrl>
 				<listingChannel>HOMEAWAY_US</listingChannel>
 				<masterListingChannel>HOMEAWAY_US</masterListingChannel>
@@ -422,7 +425,7 @@ XML;
 						<beginDate>2023-05-19</beginDate>
 						<endDate>2023-05-22</endDate>
 					</reservationDates>
-					<reservationOriginationDate>2022-10-21T17:43:43Z</reservationOriginationDate>
+					<reservationOriginationDate>2023-02-12T14:43:43Z</reservationOriginationDate>
 				</reservation>
 				<orderItemList>
 					<orderItem>
@@ -488,8 +491,8 @@ XML;
             "advertiserExternalId": "AdvertiserUniqueId",
             "listingExternalId": "151",
             "dateRange": {
-				"arrivalDate": "2023-02-25",
-                "departureDate": "2023-03-31"
+				"arrivalDate": "2023-03-01",
+                "departureDate": "2023-03-07"
             },
             "adults": 3,
             "children": 1,
