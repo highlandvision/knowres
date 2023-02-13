@@ -12,6 +12,7 @@ namespace HighlandVision\Component\Knowres\Administrator\Model;
 defined('_JEXEC') or die;
 
 use Exception;
+use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\ListModel;
 use HighlandVision\KR\TickTock;
@@ -53,6 +54,68 @@ class RatesModel extends ListModel
 		}
 
 		parent::__construct($config);
+	}
+
+	/**
+	 * Insert / update rate changes into database currently only Beyond
+	 *
+	 * @param  array  $updates  Rate updates to be changed / inserted
+	 *
+	 * @throws Exception
+	 * @since  2.4.0
+	 */
+	public static function insertUpdateRates(array $updates)
+	{
+		$db  = KrFactory::getDatabase();
+		$sql = [];
+
+		foreach ($updates as $row)
+		{
+			$sql[] = '( 
+							' . (int) $row->id . ',
+				            ' . (int) $row->property_id . ',
+				            ' . $db->q($row->valid_from) . ',
+				            ' . $db->q($row->valid_to) . ',
+							' . (float) $row->rate . ',
+				            ' . (int) $row->min_nights . ',
+				            ' . (int) $row->max_nights . ',
+				            ' . (int) $row->min_guests . ',
+				            ' . (int) $row->max_guests . ',
+				            ' . (int) $row->ignore_pppn . ',
+				            ' . (int) $row->start_day . ',
+				            ' . $db->q($row->more_guests) . ',
+				            ' . (int) $row->state . ',
+				            ' . $db->q($row->created_at) . '
+				           )';
+		}
+
+		try
+		{
+			$db->transactionStart();
+
+			$query = "INSERT INTO " . $db->qn('#__knowres_rate');
+			$query .= " (`id`, `property_id`, `valid_from`, `valid_to`, `rate`,";
+			$query .= " `min_nights`, `max_nights`, `min_guests`, `max_guests`,";
+			$query .= " `ignore_pppn`, `start_day`, `more_guests`, `state`, `created_at`)";
+			$query .= " VALUES " . implode(',', $sql);
+			$query .= " ON DUPLICATE KEY UPDATE ";
+			$query .= " `valid_from` = VALUES(valid_from), `valid_to` = VALUES(valid_to), `rate` = VALUES(rate),";
+			$query .= " `min_nights` = VALUES(min_nights), `max_nights` = VALUES(max_nights),";
+			$query .= " `min_guests` = VALUES(min_guests), `max_guests` = VALUES(max_guests),";
+			$query .= " `ignore_pppn` = VALUES(ignore_pppn), `start_day` = VALUES(start_day),";
+			$query .= " `more_guests` = VALUES(more_guests),";
+			$query .= " `updated_at` = VALUES(created_at), `updated_by` = 0";
+
+			$db->setQuery($query);
+			$db->execute();
+			$db->transactionCommit();
+		}
+		catch (Exception $e)
+		{
+			$db->transactionRollback();
+
+			throw new Exception($e);
+		}
 	}
 
 	/**

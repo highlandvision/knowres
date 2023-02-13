@@ -12,6 +12,7 @@ namespace HighlandVision\Component\Knowres\Administrator\Model;
 defined('_JEXEC') or die;
 
 use Exception;
+use HighlandVision\Beyond;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\ListModel;
@@ -354,7 +355,7 @@ class PropertysettingsModel extends ListModel
 					// Update beyond if min / base rates have changed and solo property
 					if ($bp_update && $property_id)
 					{
-						KrFactory::getAdminModel('service')::beyondSettingRateUpdate($property_id);
+						Beyond\Rates::settingRateUpdate($property_id);
 					}
 
 					if ($deposit_update)

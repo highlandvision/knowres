@@ -12,10 +12,10 @@ namespace HighlandVision\Component\Knowres\Administrator\Model;
 defined('_JEXEC') or die;
 
 use Exception;
+use HighlandVision\Beyond\Rates;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\AdminModel;
-use HighlandVision\KR\Service\Beyond;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Utility;
 use Joomla\CMS\Versioning\VersionableControllerTrait;
@@ -230,7 +230,7 @@ class PropertysettingModel extends AdminModel
 
 					if ($bp_update && $property_id)
 					{
-						Beyond::settingRateUpdate($property_id);
+						Rates::settingRateUpdate($property_id);
 					}
 
 					if ($deposit_update)

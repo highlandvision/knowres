@@ -40,37 +40,12 @@ class ServiceModel extends AdminModel
 	protected $text_prefix = 'COM_KNOWRES_SERVICE';
 
 	/**
-	 * Update beyond for min / base rate update
-	 *
-	 * @param   int  $property_id  ID of property
-	 *
-	 * @throws Exception
-	 * @since  2.4.0
-	 */
-	public static function beyondSettingRateUpdate(int $property_id)
-	{
-		//TODO-v4.1 test this
-		$services = KrFactory::getListModel('services')->getServicesByPlugin('beyond');
-		foreach ($services as $i)
-		{
-			$result = KrFactory::getListModel('servicexrefs')->getServiceProperty($i->id, $property_id);
-			if (is_countable($result))
-			{
-				foreach ($result as $r)
-				{
-					KrFactory::getAdminModel('servicequeue')::insertQueue($r, 'updateListing');
-				}
-			}
-		}
-	}
-
-	/**
 	 * Method to get the model form.
 	 *
-	 * @param   array   $data         An optional array of data for the form to interogate.
-	 * @param   bool    $loadData     True if the form is to load its own data (default case), false if not.
+	 * @param  array    $data         An optional array of data for the form to interogate.
+	 * @param  bool     $loadData     True if the form is to load its own data (default case), false if not.
 	 * @param  ?string  $source       The form name if required.
-	 * @param   int     $property_id  ID of property if required fields to be set.
+	 * @param  int      $property_id  ID of property if required fields to be set.
 	 *
 	 * @throws Exception
 	 * @since  1.0
@@ -182,9 +157,9 @@ class ServiceModel extends AdminModel
 	/**
 	 * Add additional validation to form data
 	 *
-	 * @param   Form   $form   The form to validate against.
-	 * @param   array  $data   The data to validate.
-	 * @param   null   $group  From group
+	 * @param  Form   $form   The form to validate against.
+	 * @param  array  $data   The data to validate.
+	 * @param  null   $group  From group
 	 *
 	 * @throws Exception
 	 * @since  4.0.0
@@ -218,9 +193,9 @@ class ServiceModel extends AdminModel
 	/**
 	 * Method to allow derived classes to preprocess the form.
 	 *
-	 * @param   Form    $form   A Form object.
-	 * @param   mixed   $data   The data expected for the form.
-	 * @param   string  $group  The name of the plugin group to import (defaults to "content").
+	 * @param  Form    $form   A Form object.
+	 * @param  mixed   $data   The data expected for the form.
+	 * @param  string  $group  The name of the plugin group to import (defaults to "content").
 	 *
 	 * @throws  Exception if there is an error in the form event.
 	 * @since   1.0.0

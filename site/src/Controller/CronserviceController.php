@@ -18,11 +18,11 @@ use Exception;
 use HighlandVision\Factura\Factura;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
-use HighlandVision\KR\Service\Beyond;
 use HighlandVision\KR\Service\Ical;
 use HighlandVision\KR\Session as KrSession;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Utility;
+use HighlandVision\Beyond\Rates;
 use HighlandVision\Ru\Manager as RuManager;
 use HighlandVision\VintageTravel\VintageTravel;
 use HighlandVision\Vrbo\Manager as VrboManager;
@@ -62,7 +62,7 @@ class CronserviceController extends BaseController
 	{
 		$this->checkSecret();
 
-		$PullRates = new Beyond\PullRates($this->test);
+		$PullRates = new Rates\PullRates($this->test);
 		$PullRates->pullRates();
 
 		jexit();
@@ -79,7 +79,7 @@ class CronserviceController extends BaseController
 	{
 		$this->checkSecret();
 
-		$PushRates = new Beyond\PushRates($this->test);
+		$PushRates = new Rates\PushRates($this->test);
 		if (method_exists($PushRates, 'processQueue'))
 		{
 			$queue = KrFactory::getListModel('servicequeues')->getQueueByServiceMethod($i->id, 'updateListing');
@@ -88,16 +88,13 @@ class CronserviceController extends BaseController
 				foreach ($queue as $q)
 				{
 					//TODO-v4.1 Pass all queues to class
-					if (method_exists($PushRates, 'processQueue'))
-					{
-						$PushRates->processQueue($q);
+					$PushRates->processQueue($q);
 
-						$actioned             = new stdClass();
-						$actioned->id         = $q->id;
-						$actioned->actioned   = 1;
-						$actioned->updated_at = TickTock::getTS();
-						KrFactory::update('service_queue', $actioned);
-					}
+					$actioned             = new stdClass();
+					$actioned->id         = $q->id;
+					$actioned->actioned   = 1;
+					$actioned->updated_at = TickTock::getTS();
+					KrFactory::update('service_queue', $actioned);
 				}
 			}
 		}
