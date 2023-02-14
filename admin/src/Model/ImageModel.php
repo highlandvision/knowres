@@ -47,7 +47,7 @@ class ImageModel extends AdminModel
 	/**
 	 * Delete Images
 	 *
-	 * @param  array  $pks
+	 * @param  array  $pks Image IDs for deletion
 	 *
 	 * @throws Exception
 	 * @throws RuntimeException
@@ -71,9 +71,12 @@ class ImageModel extends AdminModel
 			$db->setQuery($query);
 			$result = $db->loadObject();
 
-			$property_id = $result->property_id;
-			$property    = new Property($result->property_id);
-			$property->deleteImage($result->filename);
+			if (!empty($result->property_id) && !empty($result->filename))
+			{
+				$property_id = $result->property_id;
+				$property    = new Property($property_id);
+				$property->deleteImage($result->filename);
+			}
 		}
 
 		parent::delete($pks);
