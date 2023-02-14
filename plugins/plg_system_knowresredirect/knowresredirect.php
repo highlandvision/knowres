@@ -10,6 +10,7 @@
 defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrMethods;
+use HighlandVision\KR\Session as KrSession;
 use Joomla\CMS\Plugin\CMSPlugin;
 
 /**
@@ -31,6 +32,9 @@ class plgSystemKnowresredirect extends CMSPlugin
 	{
 		if (KrMethods::isAdmin())
 		{
+			$user = new KrSession\User();
+			$user->setLogin();
+
 			$return = base64_decode(KrMethods::inputString('return', null, 'get'));
 			if (empty($return) || $return == 'index.php')
 			{

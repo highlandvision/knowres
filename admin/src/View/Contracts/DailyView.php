@@ -116,6 +116,7 @@ class DailyView extends KrHtmlView
 			        ->html($html);
 		}
 
+		/* @var Toolbar\LinkButton $Toolbar **/
 		$Toolbar->linkButton('refresh')
 		        ->icon('fas fa-redo knowres')
 		        ->text('COM_KNOWRES_REFRESH')
@@ -125,6 +126,7 @@ class DailyView extends KrHtmlView
 		$Toolbar = $this->addQuickLinksToolbar($Toolbar);
 		$Toolbar = $this->addBackLink($Toolbar);
 
+		/* @var Toolbar\LinkButton $Toolbar **/
 		$Toolbar->linkButton('close')
 		        ->icon('fas fa-times knowres')
 		        ->text('JTOOLBAR_CLOSE')

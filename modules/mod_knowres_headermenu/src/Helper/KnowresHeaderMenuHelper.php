@@ -41,7 +41,7 @@ abstract class KnowresHeaderMenuHelper
 
 		$menu   = [];
 		$menu[] = ['MOD_KNOWRES_HEADERMENU_GANTT_TITLE', 'view=gantt', $view == 'gantt', 'fas fa-calendar-alt'];
-		$menu[] = ['MOD_KNOWRES_HEADERMENU_CONTRACTS_DAILY_TITLE', 'task=contracts.daily;', $view == 'daily',
+		$menu[] = ['MOD_KNOWRES_HEADERMENU_CONTRACTS_DAILY_TITLE', 'task=contracts.daily', $view == 'daily',
 		           'fas fa-calendar-day'];
 		$menu[] = ['MOD_KNOWRES_HEADERMENU_PROPERTIES_TITLE', 'view=properties', $view == 'properties', 'fas fa-home'];
 		$menu[] = ['MOD_KNOWRES_HEADERMENU_CONTRACTS_TITLE', 'view=contracts', $view == 'contracts', 'fas fa-calendar'];

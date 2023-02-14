@@ -12,6 +12,8 @@ namespace HighlandVision\KR\Session;
 defined('_JEXEC') or die;
 
 use Exception;
+use HighlandVision\KR\Framework\KrFactory;
+use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Session;
 use JetBrains\PhpStorm\Pure;
 use stdClass;
@@ -180,73 +182,73 @@ class User extends Session
 	}
 
 	//TODO-v4 Delete if no consequences
-//	/**
-//	 * Set user session data after admin login
-//	 *
-//	 * @throws Exception
-//	 * @since  1.0.0
-//	 */
-//	public function setLogin()
-//	{
-//		$data = $this->getData();
-//		if (!isset($data->access_level) || $data->access_level == 0)
-//		{
-//			$user = KrMethods::getUser();
-//			if ($user->id)
-//			{
-//				$item = KrFactory::getAdminModel('manager')->getManagerbyUserId($user->id);
-//				if ($item)
-//				{
-//					$data->access_level = $item->access_level;
-//					$data->agency_id    = $item->agency_id;
-//					$data->manager_id   = $item->id;
-//
-//					if ($item->properties)
-//					{
-//						$tmp              = Utility::decodeJson($item->properties, true);
-//						$data->properties = implode(',', $tmp);
-//					}
-//					else
-//					{
-//						$data->properties = '';
-//					}
-//
-//					// If owner access and no properties and property add is allowed then redirect to property add page
-//					if ($item->access_level == 10 && !count(Utility::decodeJson($item->properties, true)))
-//					{
-//						$params = KrMethods::getParams();
-//						if ($params->get('property_add', 0))
-//						{
-//							KrMethods::message(KrMethods::plain('Please start entering your property details below'));
-//							KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&view=property&layout=edit&id=0',
-//								false));
-//						}
-//						else
-//						{
-//							KrMethods::message(KrMethods::plain('You are not authorised to access this system. Please contact your system administrator.'),
-//								'error');
-//							KrMethods::redirect(KrMethods::route('index.php', false));
-//						}
-//
-//						return;
-//					}
-//				}
-//			}
-//			else
-//			{
-//				KrMethods::message(KrMethods::plain('You are not authorised to access the requested page. Please contact your system administrator.'),
-//					'error');
-//				KrMethods::redirect(KrMethods::route('index.php'));
-//			}
-//		}
-//		else
-//		{
-//			$data->access_level = 1;
-//			$data->properties   = '';
-//			$data->agency_id    = 0;
-//			$data->manager_id   = 0;
-//		}
-//
-//		$this->setData($data);
-//	}
+	/**
+	 * Set user session data after admin login
+	 *
+	 * @throws Exception
+	 * @since  1.0.0
+	 */
+	public function setLogin()
+	{
+		$data = $this->getData();
+		if (!isset($data->access_level) || $data->access_level == 0)
+		{
+			$user = KrMethods::getUser();
+			if ($user->id)
+			{
+				$item = KrFactory::getAdminModel('manager')->getManagerbyUserId($user->id);
+				if ($item)
+				{
+					$data->access_level = $item->access_level;
+					$data->agency_id    = $item->agency_id;
+					$data->manager_id   = $item->id;
+
+					if ($item->properties)
+					{
+						$tmp              = Utility::decodeJson($item->properties, true);
+						$data->properties = implode(',', $tmp);
+					}
+					else
+					{
+						$data->properties = '';
+					}
+
+					// If owner access and no properties and property add is allowed then redirect to property add page
+					if ($item->access_level == 10 && !count(Utility::decodeJson($item->properties, true)))
+					{
+						$params = KrMethods::getParams();
+						if ($params->get('property_add', 0))
+						{
+							KrMethods::message(KrMethods::plain('Please start entering your property details below'));
+							KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&view=property&layout=edit&id=0',
+								false));
+						}
+						else
+						{
+							KrMethods::message(KrMethods::plain('You are not authorised to access this system. Please contact your system administrator.'),
+								'error');
+							KrMethods::redirect(KrMethods::route('index.php', false));
+						}
+
+						return;
+					}
+				}
+			}
+			else
+			{
+				KrMethods::message(KrMethods::plain('You are not authorised to access the requested page. Please contact your system administrator.'),
+					'error');
+				KrMethods::redirect(KrMethods::route('index.php'));
+			}
+		}
+		else
+		{
+			$data->access_level = 1;
+			$data->properties   = '';
+			$data->agency_id    = 0;
+			$data->manager_id   = 0;
+		}
+
+		$this->setData($data);
+	}
 }
