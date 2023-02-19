@@ -67,8 +67,9 @@ class Cancel
 			$db->transactionStart();
 
 			$modelContract = KrFactory::getAdminModel('contract');
-			$form          = $modelContract->getForm([], false);
-			if (!$modelContract->validate($form, (array) $this->hub->getData()))
+			$form          = KrFactory::getAdhocForm('contract', 'contract.xml');
+			$data          = $modelContract->validate($form, (array) $this->hub->getData());
+			if (!$data)
 			{
 				$this->hub->errors = $modelContract->getErrors();
 				throw new RuntimeException('Validation errors found in Contract');

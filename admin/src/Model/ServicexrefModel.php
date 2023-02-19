@@ -42,10 +42,10 @@ class ServicexrefModel extends AdminModel
 	/**
 	 * Insert new service xref
 	 *
-	 * @param   int     $service_id   ID of service
-	 * @param   string  $table_name   Field to update guest, owner
-	 * @param   int     $table_id     ID of guest or owner
-	 * @param   string  $foreign_key  Foreign key from channel
+	 * @param  int     $service_id   ID of service
+	 * @param  string  $table_name   Field to update guest, owner
+	 * @param  int     $table_id     ID of guest or owner
+	 * @param  string  $foreign_key  Foreign key from channel
 	 *
 	 * @throws Exception
 	 * @throws Exception
@@ -83,9 +83,9 @@ class ServicexrefModel extends AdminModel
 	/**
 	 * Reset new flag otherwise property will not update (Only for VRBO)
 	 *
-	 * @param   int  $id           ID of service xref
-	 * @param   int  $service_id   ID of service
-	 * @param   int  $property_id  ID of property
+	 * @param  int  $id           ID of service xref
+	 * @param  int  $service_id   ID of service
+	 * @param  int  $property_id  ID of property
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -107,7 +107,7 @@ class ServicexrefModel extends AdminModel
 	/**
 	 * Method to test whether a record can be deleted.
 	 *
-	 * @param   object  $record  A record object.
+	 * @param  object  $record  A record object.
 	 *
 	 * @since   3.0.0
 	 * @return  bool  True if allowed to delete the record. Defaults to the permission for the component.
@@ -140,7 +140,7 @@ class ServicexrefModel extends AdminModel
 	/**
 	 * Prepare and sanitise the table prior to saving.
 	 *
-	 * @param   Table  $table  Table object
+	 * @param  Table  $table  Table object
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
