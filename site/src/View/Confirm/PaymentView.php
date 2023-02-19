@@ -12,11 +12,8 @@ namespace HighlandVision\Component\Knowres\Site\View\Confirm;
 defined('_JEXEC') or die;
 
 use Exception;
-use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\HtmlView as KrHtmlView;
-use HighlandVision\KR\Logger;
-use HighlandVision\KR\Payments\PrePayment;
 use HighlandVision\KR\Session as KrSession;
 use HighlandVision\KR\SiteHelper;
 use HighlandVision\KR\Translations;

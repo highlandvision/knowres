@@ -337,7 +337,10 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 
 			if ($this->canDo->get('core.create'))
 			{
-				$toolbarButtons[] = ['save2new', $name . '.save2new'];
+				if ($name != strtolower(KrMethods::plain('COM_KNOWRES_SERVICE_TITLE')))
+				{
+					$toolbarButtons[] = ['save2new', $name . '.save2new'];
+				}
 				$toolbarButtons[] = ['save2copy', $name . '.save2copy'];
 			}
 

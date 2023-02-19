@@ -23,7 +23,11 @@ extract($displayData);
 			<?php echo ucfirst($k) . ' (' . $v['calc'] . ')'; ?>
 		</div>
 		<div class="col aligner text-end">
-			<?php echo Utility::displayValue($v['value'], $contract->currency); ?>
+			<?php if (is_numeric($v['value'])): ?>
+				<?php echo Utility::displayValue($v['value'], $contract->currency); ?>
+			<?php else: ?>
+				<?php echo $v['value']; ?>
+			<?php endif; ?>
 		</div>
 	</div>
 <?php endforeach; ?>

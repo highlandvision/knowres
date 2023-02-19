@@ -148,6 +148,7 @@ class PrePayment
 	 *
 	 * @param  array  $currencies  Payment currencies
 	 *
+	 * @throws RuntimeException
 	 * @since  3.3.1
 	 * @return array
 	 */
@@ -179,7 +180,8 @@ class PrePayment
 	 *
 	 * @param  string  $currency  Contract currency
 	 *
-	 * @since 3.3.1
+	 * @throws RuntimeException
+	 * @since  3.3.1
 	 * @return array
 	 */
 	protected function getCurrencies(string $currency): array

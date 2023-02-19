@@ -48,7 +48,6 @@ class ServicexrefModel extends AdminModel
 	 * @param  string  $foreign_key  Foreign key from channel
 	 *
 	 * @throws Exception
-	 * @throws Exception
 	 * @since  3.1.0
 	 */
 	public static function insertServiceXref(int $service_id, string $table_name, int $table_id, string $foreign_key)

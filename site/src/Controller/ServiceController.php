@@ -6,6 +6,7 @@
  * @license     See the file "LICENSE.txt" for the full license governing this code.
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
+
 /** @noinspection PhpUnused */
 
 namespace HighlandVision\Component\Knowres\Site\Controller;
@@ -23,15 +24,17 @@ use HighlandVision\KR\Service\Gateway;
 use HighlandVision\KR\Service\Mailchimp;
 use HighlandVision\KR\Session as KrSession;
 use HighlandVision\KR\SiteHelper;
+use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Utility;
 use HighlandVision\Ru\Manager\Bookings;
 use InvalidArgumentException;
 use JetBrains\PhpStorm\NoReturn;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Response\JsonResponse;
-use Joomla\CMS\Session\Session;
 use RuntimeException;
 
+use function base64_decode;
+use function explode;
 use function file_get_contents;
 use function is_bool;
 use function jexit;
@@ -68,8 +71,7 @@ class ServiceController extends BaseController
 	 */
 	public function check()
 	{
-		Session::checkToken() or jexit(KrMethods::plain('JINVALID_TOKEN'));
-
+		$this->checkToken();
 		$this->manual();
 	}
 
@@ -97,7 +99,7 @@ class ServiceController extends BaseController
 	 */
 	public function mailchimpsubscribe()
 	{
-		Session::checkToken() or jexit(KrMethods::plain('JINVALID_TOKEN'));
+		$this->checkToken();
 
 		$service_id = KrMethods::inputInt('id');
 		$name       = KrMethods::inputString('name', '');
@@ -388,8 +390,7 @@ class ServiceController extends BaseController
 	 */
 	public function wire()
 	{
-		Session::checkToken() or jexit(KrMethods::plain('JINVALID_TOKEN'));
-
+		$this->checkToken();
 		$this->manual();
 	}
 
@@ -451,8 +452,7 @@ class ServiceController extends BaseController
 	 */
 	public function wireint()
 	{
-		Session::checkToken() or jexit(KrMethods::plain('JINVALID_TOKEN'));
-
+		$this->checkToken();
 		$this->manual();
 	}
 
@@ -461,7 +461,6 @@ class ServiceController extends BaseController
 	 *
 	 * @param  object  $session  Payment session data
 	 *
-	 * @throws RuntimeException
 	 * @throws RuntimeException
 	 * @since  3.3.0
 	 * @return int
@@ -504,8 +503,6 @@ class ServiceController extends BaseController
 	 */
 	protected function manual()
 	{
-		Session::checkToken() or jexit(KrMethods::plain('JINVALID_TOKEN'));
-
 		$service_id     = $this->getServiceId();
 		$paymentSession = new KrSession\Payment();
 		$paymentData    = $paymentSession->getData();
@@ -536,69 +533,100 @@ class ServiceController extends BaseController
 	 */
 	protected function processRedsys()
 	{
-		$action = $this->input->getString('action', '');
+		$action = KrMethods::inputString('action', '', 'get');
 		if (!$action)
 		{
 			throw new RuntimeException('Action field is empty');
 		}
-
 		if ($action != 'ipn' && $action != 'success' && $action != 'cancel')
 		{
 			throw new RuntimeException('Action field is invalid ' . $action);
 		}
 
-		$signature    = $this->input->getString('Ds_Signature', '');
-		$parameters   = $this->input->getString('Ds_MerchantParameters', '');
-		$fields       = base64_decode(strtr($parameters, '-_', '+/'));
-		$fields       = Utility::decodeJson($fields, true);
-		$custom       = (string) $fields['Ds_MerchantData'];
-		$split        = explode('-', $custom);
-		$service_id   = isset($split[0]) ? (int) $split[0] : 0;
-		$contract_id  = isset($split[1]) ? (int) $split[1] : 0;
-		$payment_type = $split[2] ?? '';
-
-		if ($action === 'ipn')
+		$parameters = KrMethods::inputString('Ds_MerchantParameters', '');
+		$signature  = KrMethods::inputString('Ds_Signature', '');
+		if (empty($parameters))
 		{
-			if (!$service_id || !$contract_id || !$payment_type)
-			{
-				throw new RuntimeException('Invalid Custom field returned in IPN message' . $custom . ' for action '
-					. $action);
-			}
+			// Try GET
+			$parameters = KrMethods::inputString('Ds_MerchantParameters', '', 'get');
+			$signature  = KrMethods::inputString('Ds_Signature', '', 'get');
+		}
 
-			$paymentSession                  = new KrSession\Payment();
-			$paymentData                     = $paymentSession->getData();
-			$paymentData->service_id         = $service_id;
-			$paymentData->contract_id        = $contract_id;
-			$paymentData->payment_type       = $payment_type;
-			$paymentData->merchantParameters = $parameters;
-			$paymentData->merchantSignature  = $signature;
+		if (empty($parameters) || empty($signature))
+		{
+			throw new RuntimeException('Payment response fields not received from Redsys');
+		}
 
+		$fields         = base64_decode(strtr($parameters, '-_', '+/'));
+		$fields         = Utility::decodeJson($fields, true);
+		$custom         = (string) $fields['Ds_MerchantData'];
+		$split          = explode('-', $custom);
+		$service_id     = isset($split[0]) ? (int) $split[0] : 0;
+		$contract_id    = isset($split[1]) ? (int) $split[1] : 0;
+		$payment_type   = $split[2] ?? '';
+		$base_amount    = (float) $split[3];
+		$rate           = (float) $split[4];
+		$base_surcharge = (float) $split[5];
+
+		if (!$service_id || !$contract_id || !$payment_type)
+		{
+			throw new RuntimeException('Invalid Custom field returned in Success message' . $custom
+				. ' for action '
+				. $action);
+		}
+
+		if ($action == 'ipn')
+		{
 			try
 			{
-				$redsys = new Gateway\Redsys($service_id, $paymentData);
-				$redsys->setResponseData();
+				if (!$base_amount || !$rate)
+				{
+					throw new RuntimeException("Redsys Base amount $base_amount or rate $rate or both are zero");
+				}
+
+				$paymentSession                  = new KrSession\Payment();
+				$paymentData                     = $paymentSession->getData();
+				$paymentData->base_amount        = $base_amount;
+				$paymentData->base_surcharge     = $base_surcharge;
+				$paymentData->confirmed          = true;
+				$paymentData->contract_id        = $contract_id;
+				$paymentData->payment_date       = TickTock::getDate();
+				$paymentData->payment_type       = $payment_type;
+				$paymentData->manual             = false;
+				$paymentData->merchantParameters = $parameters;
+				$paymentData->merchantSignature  = $signature;
+				$paymentData->rate               = $rate;
+				$paymentData->service_id         = $service_id;
+
+				$Redsys = new Gateway\Redsys($service_id, $paymentData);
+				$paymentData = $Redsys->setResponseData();
 
 				$postPayment = new PostPayment($service_id, $paymentData);
 				$postPayment->processPayment();
 
 				KrMethods::message(KrMethods::plain('COM_KNOWRES_PAYMENT_MANUAL'));
-				$this->redirectSuccess($payment_type, $contract_id);
+				$this->redirectSuccess($paymentData->payment_type, $paymentData->contract_id);
 			}
 			catch (Exception)
 			{
 				KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_FATAL'));
 				$this->redirectError($payment_type);
 			}
-		}
-		else if ($action == 'success')
-		{
-			KrMethods::message(KrMethods::plain('COM_KNOWRES_PAYMENT_SUCCESS'));
-			$this->redirectSuccess($payment_type, $contract_id);
+
+			jexit();
 		}
 		else
 		{
-			KrMethods::message(KrMethods::plain('COM_KNOWRES_PAYMENT_CANCEL'));
-			$this->redirectError($payment_type);
+			if ($action == 'success')
+			{
+				KrMethods::message(KrMethods::plain('COM_KNOWRES_PAYMENT_SUCCESS'));
+				$this->redirectSuccess($payment_type, $contract_id);
+			}
+			else
+			{
+				KrMethods::message(KrMethods::plain('COM_KNOWRES_PAYMENT_CANCEL'));
+				$this->redirectError($payment_type);
+			}
 		}
 	}
 
@@ -608,16 +636,14 @@ class ServiceController extends BaseController
 	 * @param  string  $payment_type  Payment type being processed
 	 *
 	 * @throws Exception
-	 * @throws Exception
 	 * @since  1.0.0
 	 */
 	protected function redirectError(string $payment_type)
 	{
 		if ($payment_type == 'OBD')
 		{
-			$Itemid = SiteHelper::getItemId('com_knowres', 'confirm', ['layout' => 'payment']);
-			KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&task=confirm.payment&Itemid=' . $Itemid,
-				false));
+			$Itemid = SiteHelper::getItemId('com_knowres', 'confirm');
+			KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&view=confirm&Itemid=' . $Itemid, false));
 		}
 		else if ($payment_type == 'PBD' || $payment_type == 'PBB')
 		{
@@ -660,6 +686,18 @@ class ServiceController extends BaseController
 		}
 	}
 
+	protected function zzTestLNMCancel(): string
+	{
+		return
+			'<LNM_CancelReservation_RQ>
+  <Authentication>
+    <UserName>hazel@highlandvision.com</UserName>
+    <Password>0B84CCD175624184565DC9A2677E8C2D2E8AAED5</Password>
+  </Authentication>
+  <ReservationID>149329799</ReservationID>
+</LNM_CancelReservation_RQ>';
+	}
+
 	/**
 	 * Generate test LNM string
 	 *
@@ -672,17 +710,17 @@ class ServiceController extends BaseController
 			'<LNM_PutConfirmedReservation_RQ>
 	<Authentication>
 		<UserName>hazel@highlandvision.com</UserName>
-		<Password>84859939FDC9C768AEB85DB430513BF6B88CD8A3</Password>
+		<Password>0B84CCD175624184565DC9A2677E8C2D2E8AAED5</Password>
 	</Authentication>
 	<Reservation Currency="">
-		<ReservationID>149329799</ReservationID>
-		<CreatedDate>2023-01-09</CreatedDate>
-		<LastMod>2023-01-09 01:00:21</LastMod>
+		<ReservationID>100000000</ReservationID>
+		<CreatedDate>2023-02-17</CreatedDate>
+		<LastMod>2023-02-17 07:30:21</LastMod>
 		<StayInfos>
 			<StayInfo>
-				<PropertyID>253204</PropertyID>
-				<DateFrom>2023-06-06</DateFrom>
-				<DateTo>2023-06-09</DateTo>
+				<PropertyID>3372950</PropertyID>
+				<DateFrom>2023-05-15</DateFrom>
+				<DateTo>2023-05-18</DateTo>
 				<NumberOfGuests>4</NumberOfGuests>
 				<Costs>
 					<RUPrice>646.03</RUPrice>
@@ -716,15 +754,15 @@ class ServiceController extends BaseController
 			</StayInfo>
 		</StayInfos>
 		<CustomerInfo>
-			<Name>Baldy</Name>
+			<Name>Hairy</Name>
 			<SurName>Bain</SurName>
-			<Email>info@highlandgigs.co.uk</Email>
-			<Phone>08001234</Phone>
+			<Email>john@northendnairn.co.uk</Email>
+			<Phone>08001235</Phone>
 			<SkypeID/>
 			<Address/>
 			<ZipCode/>
 			<CountryID>20</CountryID>
-			<MessagingContactId>9876543</MessagingContactId>
+			<MessagingContactId>1234567</MessagingContactId>
 		</CustomerInfo>
 		<Creator>test@test.com</Creator>
 		<ReservationStatusID>1</ReservationStatusID>
