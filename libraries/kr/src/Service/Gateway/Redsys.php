@@ -24,8 +24,16 @@ use function base64_encode;
 use function explode;
 use function hash_hmac;
 use function implode;
+use function json_decode;
+use function json_encode;
 use function mt_rand;
 use function number_format;
+use function openssl_encrypt;
+use function str_pad;
+use function strlen;
+
+use const OPENSSL_NO_PADDING;
+use const OPENSSL_RAW_DATA;
 
 /**
  * Parent class for multiple redsys gateways
@@ -34,11 +42,10 @@ use function number_format;
  */
 class Redsys extends Gateway
 {
-	/** @var array Form fields */
-	protected array $fields = [];
-
 	const REDSYSLIVEURL = 'https://sis.redsys.es/sis/realizarPago';
 	const REDSYSTESTURL = 'https://sis-t.redsys.es:25443/sis/realizarPago';
+	/** @var array Form fields */
+	protected array $fields = [];
 
 	/**
 	 * Initialize
@@ -51,7 +58,6 @@ class Redsys extends Gateway
 	 */
 	public function __construct(int $service_id, stdClass $paymentData)
 	{
-		//TODO-v4 Test on live server for CV
 		parent::__construct($service_id, $paymentData);
 	}
 
@@ -59,15 +65,16 @@ class Redsys extends Gateway
 	 * Set the gateway data
 	 *
 	 * @throws Exception
-	 * @since  3.3.1
+	 * @since        3.3.1
 	 * @return stdClass
+	 * @noinspection PhpUnused
 	 */
 	public function setOutputData(): stdClass
 	{
 		$this->readTables();
 		$this->setOutputForPaymentType();
 
-		$returnUrl      = KrMethods::getBase() . 'index.php?option=com_knowres&task=service.' . $this->service->plugin;
+		$return_url     = KrMethods::getBase() . 'index.php?option=com_knowres&task=service.' . $this->service->plugin;
 		$rand           = mt_rand(1, 9999);
 		$merchant_order = $this->contract->tag . $rand;
 
@@ -83,9 +90,9 @@ class Redsys extends Gateway
 		$this->addField('Ds_Merchant_Order', $merchant_order);
 		$this->addField('Ds_Merchant_ProductDescription', $this->paymentData->note);
 		$this->addField('Ds_Merchant_MerchantCode', $this->parameters->merchant_code);
-		$this->addField('Ds_Merchant_MerchantURL', $returnUrl . '&action=ipn');
-		$this->addField('Ds_Merchant_UrlOK', $returnUrl . '&action=success');
-		$this->addField('Ds_Merchant_UrlKO', $returnUrl . '&action=cancel');
+		$this->addField('Ds_Merchant_MerchantURL', $return_url . '&action=ipn');
+		$this->addField('Ds_Merchant_UrlOK', $return_url . '&action=success');
+		$this->addField('Ds_Merchant_UrlKO', $return_url . '&action=cancel');
 		$this->addField('Ds_Merchant_MerchantName', $this->parameters->merchant_name);
 		$this->addField('Ds_Merchant_ConsumerLanguage', $this->getLanguage($this->guest->country_iso));
 		$this->addField('Ds_Merchant_Terminal', $this->parameters->terminal);
@@ -102,12 +109,13 @@ class Redsys extends Gateway
 
 	/**
 	 * Set payment data from Redsys response
-	 * Can't reply on session for this so have to set all
+	 * Can't rely on session for this so have to set all
 	 *
+	 * @throws Exception
 	 * @since  3.3.1
-	 * @return void
+	 * @return stdClass
 	 */
-	public function setResponseData(): void
+	public function setResponseData(): stdClass
 	{
 		$signature = $this->getReplySignature();
 		if ($signature != $this->paymentData->merchantSignature)
@@ -116,60 +124,8 @@ class Redsys extends Gateway
 		}
 
 		$this->validateResponseData();
-	}
 
-	/**
-	 * Validate response data
-	 *
-	 * @since 3.3.1
-	 */
-	protected function validateResponseData()
-	{
-		$response    = (string) $this->fields['Ds_Response'];
-		$amount      = (int) $this->fields['Ds_Amount'] / 100;
-		$currency    = (int) $this->fields['Ds_Currency'];
-		$payment_ref = (string) $this->fields['Ds_Order'];
-		$custom      = (string) $this->fields['Ds_MerchantData'];
-		$split       = explode('-', $custom);
-
-		$base_amount    = (float) $split[3];
-		$rate           = (float) $split[4];
-		$base_surcharge = (float) $split[5];
-
-		if ($response != '0000' && $response != '0099')
-		{
-			throw new RuntimeException("Unsuccessful Ds_Response received: $response");
-		}
-
-		if (!$base_amount || !$rate)
-		{
-			throw new RuntimeException("Base amount $base_amount or rate $rate is zero");
-		}
-
-		if ($currency != '978')
-		{
-			throw new RuntimeException("Redsys currency is not 978 (EUR)");
-		}
-
-		if ($this->payment_type == 'OBD')
-		{
-			if ($amount * 100 != $this->contract->deposit * 100)
-			{
-				throw new RuntimeException("Redsys amount $amount does not match with expected amount $this->contract->deposit");
-			}
-		}
-
-		$this->paymentData->amount         = $amount;
-		$this->paymentData->base_amount    = $base_amount;
-		$this->paymentData->base_surcharge = $base_surcharge;
-		$this->paymentData->confirmed      = true;
-		$this->paymentData->currency       = $this->contract->currency;
-		$this->paymentData->date           = $this->today;
-		$this->paymentData->expiry_date    = $this->contract->expiry_date;
-		$this->paymentData->manual         = false;
-		$this->paymentData->payment_ref    = $payment_ref;
-		$this->paymentData->rate           = $rate;
-		$this->setNote();
+		return $this->paymentData;
 	}
 
 	/**
@@ -219,7 +175,7 @@ class Redsys extends Gateway
 	 */
 	protected function createMerchantSignature(): string
 	{
-		// Decode  key base64
+		// Decode key base64
 		$key = $this->decodeBase64($this->parameters->secret_key);
 		// Encrypt POST fields
 		$field = $this->encryptMerchantParameters();
@@ -249,7 +205,7 @@ class Redsys extends Gateway
 	 *
 	 * @param  string  $data  Json string
 	 *
-	 * @since 3.3.1
+	 * @since  3.3.1
 	 * @return string
 	 */
 	#[Pure] protected function decodeMerchantParameters(string $data): string
@@ -278,7 +234,7 @@ class Redsys extends Gateway
 	 */
 	protected function encryptMerchantParameters(): string
 	{
-		$json = Utility::encodeJson($this->fields);
+		$json = json_encode($this->fields);
 
 		return $this->encodeBase64($json);
 	}
@@ -302,29 +258,6 @@ class Redsys extends Gateway
 		}
 
 		return openssl_encrypt($data_padded, "DES-EDE3-CBC", $key, OPENSSL_RAW_DATA | OPENSSL_NO_PADDING, $iv);
-	}
-
-	/**
-	 * Create signature from reply fields and secret key
-	 *
-	 * @since  3.3.1
-	 * @return string
-	 */
-	protected function getReplySignature(): string
-	{
-		// Base64 decode key
-		$key = $this->decodeBase64($this->parameters->secret_key);
-		// Base64 url decode params string
-		$fields = $this->decodeMerchantParameters($this->paymentData->parameters);
-		// Convert params to array
-		$this->fields = $this->stringToArray($fields);
-		// Get the order number
-		$key = $this->encrypt_3DES($this->getReplyOrder(), $key);
-		// SHA256 encrypt
-		$res = $this->mac256($fields, $key);
-
-		// And finally base64 url encode
-		return $this->base64_url_encode($res);
 	}
 
 	/**
@@ -375,6 +308,7 @@ class Redsys extends Gateway
 	/**
 	 * Retrieve order number from returned fields
 	 *
+	 * @throws Exception
 	 * @since 3.3.1
 	 * @return string
 	 */
@@ -390,6 +324,32 @@ class Redsys extends Gateway
 		}
 
 		return $order;
+	}
+
+	/**
+	 * Create signature from reply fields and secret key
+	 *
+	 * @throws Exception
+	 * @since  3.3.1
+	 * @return string
+	 */
+	protected function getReplySignature(): string
+	{
+		// Base64 decode key
+		$key = $this->decodeBase64($this->parameters->secret_key);
+		// Base64 url decode params string
+		$fields = $this->decodeMerchantParameters($this->paymentData->merchantParameters);
+		// Convert params to array
+		$this->fields = $this->stringToArray($fields);
+
+		// Get the order number
+		$key = $this->encrypt_3DES($this->getReplyOrder(), $key);
+
+		// SHA256 encrypt
+		$res = $this->mac256($this->paymentData->merchantParameters, $key);
+
+		// And finally base64 url encode
+		return $this->base64_url_encode($res);
 	}
 
 	/**
@@ -416,6 +376,46 @@ class Redsys extends Gateway
 	 */
 	protected function stringToArray(string $data): array
 	{
-		return Utility::decodeJson($data, true);
+		return json_decode($data, true);
+	}
+
+	/**
+	 * Validate response data
+	 *
+	 * @throws Exception
+	 * @since  3.3.1
+	 */
+	protected function validateResponseData()
+	{
+		$this->readContract();
+		$response    = (string) $this->fields['Ds_Response'];
+		$amount      = (int) $this->fields['Ds_Amount'] / 100;
+		$currency    = (int) $this->fields['Ds_Currency'];
+		$payment_ref = $this->fields['Ds_Order'];
+
+		if ($response != '0000' && $response != '0099')
+		{
+			throw new RuntimeException("Unsuccessful Ds_Response received: $response");
+		}
+
+		if ($currency != '978')
+		{
+			throw new RuntimeException("Redsys currency is not 978 (EUR)");
+		}
+
+		if ($this->paymentData->payment_type == 'OBD')
+		{
+			if ($amount * 100 != $this->contract->deposit * 100)
+			{
+				throw new RuntimeException("Redsys amount $amount does not match with expected amount $this->contract->deposit");
+			}
+		}
+
+		$this->paymentData->amount      = $amount;
+		$this->paymentData->payment_ref = $payment_ref;
+		$this->paymentData->currency    = $this->contract->currency;
+		$this->paymentData->expiry_date = $this->contract->expiry_date;
+
+		$this->setNote();
 	}
 }

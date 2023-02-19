@@ -64,10 +64,11 @@ class PaymentController extends FormController
 			}
 
 			$class       = Gateway::setGatewayClass($gateway_name);
-			$gateway     = new $class($service_id, $paymentData);
-			$paymentData = $gateway->setOutputData();
+			$Gateway     = new $class($service_id, $paymentData);
+			$paymentData = $Gateway->setOutputData();
 			$paymentSession->setData($paymentData);
 
+			/* @var HighlandVision\Component\Knowres\Site\View\Gateway\HtmlView $view **/
 			$view               = $this->getView('gateway', 'html', 'site');
 			$view->gateway_name = $gateway_name;
 			$view->payment_type = $paymentData->payment_type;

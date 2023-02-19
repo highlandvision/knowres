@@ -6,6 +6,7 @@
  * @license     See the file "LICENSE.txt" for the full license governing this code.
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
+
 /** @noinspection PhpUnhandledExceptionInspection */
 
 defined('_JEXEC') or die;
@@ -51,16 +52,10 @@ if ($this->item->type == 'g')
 	</div>
 
 	<?php echo HTMLHelper::_('form.token'); ?>
+
 	<input type="hidden" name="jform[id]" value="<?php echo $this->item->id; ?>">
-
-	<?php if ($this->item->id): ?>
-		<input type="hidden" name="jform[plugin]" value="<?php echo $this->item->plugin; ?>">
-		<input type="hidden" name="jform[type]" value="<?php echo $this->item->type; ?>">
-	<?php else: ?>
-		<input type="hidden" name="jform[plugin]" value="<?php echo $this->adhoc->getFieldAttribute('plugin', 'default'); ?>">
-		<input type="hidden" name="jform[type]" value="<?php echo $this->adhoc->getFieldAttribute('type', 'default'); ?>">
-	<?php endif; ?>
-
+	<input type="hidden" name="jform[plugin]" value="<?php echo $this->plugin; ?>">
+	<input type="hidden" name="jform[type]" value="<?php echo $this->type; ?>">
 	<input type="hidden" name="jform[parameters]"
 	       value="<?php echo Utility::encodeJson($this->item->parameters); ?>">
 	<input type="hidden" name="existing"

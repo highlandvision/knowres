@@ -41,6 +41,10 @@ class HtmlView extends KrHtmlView
 		   'vrbo',
 		   'xero'
 		];
+	/** @var string Internal name of service. */
+	public string $plugin = '';
+	/** @var string Type of plugin. */
+	public string $type = '';
 
 	/**
 	 * Display the view
@@ -59,15 +63,26 @@ class HtmlView extends KrHtmlView
 		$this->item  = $model->getItem();
 		$this->form  = $model->getForm();
 
-		if (in_array($this->item->plugin, $this->external))
+		if (!empty($this->item->plugin))
 		{
-			$source      = $this->item->plugin . '.xml';
-			$this->adhoc = KrFactory::getAdhocForm($this->item->plugin, $source, 'library', 'custom');
+			$this->plugin = $this->item->plugin;
+			$this->type   = $this->item->type;
 		}
 		else
 		{
-			$source      = 'service_' . $this->item->plugin . '.xml';
-			$this->adhoc = KrFactory::getAdhocForm($this->item->plugin, $source, 'administrator', 'custom');
+			$this->plugin = KrMethods::inputString('plugin', null, 'get');
+			$this->type   = $this->plugin == 'ical' ? 'i' : 'g';
+		}
+
+		if (in_array($this->plugin, $this->external))
+		{
+			$source      = $this->plugin . '.xml';
+			$this->adhoc = KrFactory::getAdhocForm($this->plugin, $source, 'library', 'custom');
+		}
+		else
+		{
+			$source      = 'service_' . $this->plugin . '.xml';
+			$this->adhoc = KrFactory::getAdhocForm($this->plugin, $source, 'administrator', 'custom');
 		}
 
 		$this->adhoc->bind($this->item->parameters);
@@ -75,9 +90,9 @@ class HtmlView extends KrHtmlView
 		$this->checkVersions();
 		$this->checkErrors();
 
-		$this->form_name = KrMethods::plain('COM_KNOWRES_SERVICE_TITLE');
+		$form_name = KrMethods::plain('COM_KNOWRES_SERVICE_TITLE');
 		$this->getFormAriaLabel();
-		ToolbarHelper::title($this->form_name, 'fas fa-exchange-alt knowres');
+		ToolbarHelper::title($form_name, 'fas fa-exchange-alt knowres');
 		$Toolbar = $this->addFormToolbar(strtolower($this->getName()));
 		if (!empty($this->adhoc->getFieldAttribute('apassword', 'type')))
 		{
@@ -92,9 +107,9 @@ class HtmlView extends KrHtmlView
 	 *
 	 * @param  Toolbar  $Toolbar  Current toolbar
 	 *
-	 * @throws  Exception
-	 * @since   4.0.0
-	 * @return  Toolbar
+	 * @throws Exception
+	 * @since  4.0.0
+	 * @return Toolbar
 	 */
 	protected function addCustomToolbar(Toolbar $Toolbar): Toolbar
 	{

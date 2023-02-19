@@ -37,6 +37,8 @@ use function nl2br;
  */
 class Gateway extends Service
 {
+	/** @var false|object Contractpayment item */
+	protected false|object $payment;
 	/** @var stdClass Payment session data */
 	protected stdClass $paymentData;
 
@@ -279,7 +281,8 @@ class Gateway extends Service
 	 * @param  stdClass  $paymentData    Payment data
 	 * @param  array     $payment_types  Valid payment types
 	 *
-	 * @since   3.3.1
+	 * @throws InvalidArgumentException
+	 * @since  3.3.1
 	 */
 	protected function validatePaymentType(stdClass $paymentData, array $payment_types)
 	{
