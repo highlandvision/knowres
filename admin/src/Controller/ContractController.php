@@ -352,6 +352,7 @@ class ContractController extends FormController
 		catch (Exception $e)
 		{
 			echo new JsonResponse(null, $e->getMessage(), true);
+			Logger::logMe($e->getMessage());
 			jexit();
 		}
 

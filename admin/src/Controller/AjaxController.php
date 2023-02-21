@@ -22,7 +22,6 @@ use Joomla\CMS\Response\JsonResponse;
 use stdClass;
 
 use function jexit;
-use function json_encode;
 
 /**
  * Reporting list controller class.
@@ -45,9 +44,7 @@ class AjaxController extends BaseController
 
 		if (empty($column) || empty($table))
 		{
-			$wrapper         = [];
-			$wrapper['text'] = "No";
-			echo json_encode($wrapper);
+			echo new JsonResponse(null, KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN'), true);
 			jexit();
 		}
 
@@ -65,25 +62,25 @@ class AjaxController extends BaseController
 				$data->updated_by = (int) KrMethods::getUser()->id;
 				KrFactory::update($translate[1], $data);
 			}
-			catch (Exception)
+			catch (Exception $e)
 			{
-				echo new JsonResponse(null, KrMethods::plain('Please try again or edit the image'), true);
+				echo new JsonResponse(null, KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN'), true);
 				jexit();
 			}
 		}
 
 		$wrapper         = [];
-		$wrapper['text'] = $text;
-		echo json_encode($wrapper);
+		$wrapper['html'] = $text;
+		echo new JsonResponse($wrapper);
 		jexit();
 	}
 
 	/**
 	 * Proxy for getModel.
 	 *
-	 * @param   string  $name    Name of model
-	 * @param   string  $prefix  Model prefix
-	 * @param   array   $config
+	 * @param  string  $name    Name of model
+	 * @param  string  $prefix  Model prefix
+	 * @param  array   $config
 	 *
 	 * @since  2.0.0
 	 * @return bool|BaseDatabaseModel

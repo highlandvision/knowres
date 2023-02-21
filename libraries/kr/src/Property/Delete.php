@@ -13,6 +13,7 @@ defined('_JEXEC') or die;
 
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
+use HighlandVision\KR\Logger;
 use HighlandVision\KR\Media;
 use InvalidArgumentException;
 use Joomla\Database\DatabaseDriver;
@@ -81,9 +82,10 @@ class Delete
 
 			$this->db->transactionCommit();
 		}
-		catch (Exception)
+		catch (Exception $e)
 		{
 			$this->db->transactionRollback();
+			Logger::logMe($e->getMessage());
 		}
 	}
 
@@ -91,8 +93,6 @@ class Delete
 	 * Create tmp table based on actual table
 	 * loading all rows with matching id
 	 *
-	 * @throws Exception
-	 * @throws Exception
 	 * @throws Exception
 	 * @since  3.0.0
 	 */

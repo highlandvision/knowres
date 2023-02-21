@@ -112,9 +112,10 @@ class ConfirmController extends FormController
 			echo new JsonResponse($wrapper);
 			jexit();
 		}
-		catch (Exception)
+		catch (Exception $e)
 		{
 			echo new JsonResponse(null, KrMethods::plain('COM_KNOWRES_ERROR_FATAL'), true);
+			Logger::logMe($e->getMessage());
 			jexit();
 		}
 	}
@@ -260,6 +261,7 @@ class ConfirmController extends FormController
 		}
 		catch (Exception $e)
 		{
+			Logger::logMe($e->getMessage(), 'info');
 			Utility::ajaxErrors($e);
 		}
 	}

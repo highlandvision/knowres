@@ -84,7 +84,7 @@ class Knowres extends Base
 			}
 			catch (Exception $e)
 			{
-				Logger::logMe($e->getMessage);
+				Logger::logMe($e->getMessage());
 			}
 		}
 

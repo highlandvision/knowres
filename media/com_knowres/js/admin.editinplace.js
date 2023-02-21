@@ -39,12 +39,10 @@ async function updateField(column, table, text) {
 	}
 
 	const response = await fetch('index.php?option=com_knowres&task=ajax.editinplace', options);
-	if (!response.ok) {
-		alert('Sorry we have enountered a problem please try again or contact us');
+	let result = await response.json();
+	if (result.success) {
+		return result.data.html;
 	} else {
-		let result = await response.json();
-		if (result.success) {
-			return result.data;
-		}
+		alert(result.message);
 	}
 }

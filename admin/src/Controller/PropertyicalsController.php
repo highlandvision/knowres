@@ -14,6 +14,7 @@ defined('_JEXEC') or die;
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
+use HighlandVision\KR\Logger;
 use HighlandVision\KR\Service\Ical;
 use HighlandVision\KR\Session as KnowresSession;
 use Joomla\CMS\MVC\Controller\AdminController;
@@ -80,8 +81,9 @@ class PropertyicalsController extends AdminController
 				KrMethods::message(KrMethods::plain('COM_KNOWRES_ACTION_SUCCESS'));
 			}
 		}
-		catch (Exception)
+		catch (Exception $e)
 		{
+			Logger::logMe($e->getMessage());
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN'));
 		}
 
@@ -124,8 +126,9 @@ class PropertyicalsController extends AdminController
 				KrMethods::message(KrMethods::plain('COM_KNOWRES_ACTION_SUCCESS'));
 			}
 		}
-		catch (Exception)
+		catch (Exception $e)
 		{
+			Logger::logMe($e->getMessage());
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN'));
 		}
 

@@ -21,7 +21,7 @@ $wa->useScript('com_knowres.site')
    ->useScript('keepalive');
 ?>
 
-<div class="row" id="kr-dashboard-reservations">
+<div id="kr-dashboard-reservations">
 	<?php echo $this->loadTemplate('head'); ?>
 
 	<?php for ($i = 0; $i < 2; $i++): ?>

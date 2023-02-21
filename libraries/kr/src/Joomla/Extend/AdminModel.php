@@ -14,6 +14,7 @@ defined('_JEXEC') or die;
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
+use HighlandVision\KR\Logger;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Utility;
 use Joomla\CMS\Form\Form;
@@ -136,10 +137,10 @@ class AdminModel extends \Joomla\CMS\MVC\Model\AdminModel
 
 			return $this->loadForm($this->typeAlias, $source, ['control' => 'jform', 'load_data' => $loadData]);
 		}
-		catch (Exception)
+		catch (Exception $e)
 		{
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_FATAL'));
-
+			Logger::logMe($e->getMessage());
 			return false;
 		}
 	}

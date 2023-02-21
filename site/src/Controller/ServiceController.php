@@ -116,7 +116,7 @@ class ServiceController extends BaseController
 		}
 		catch (Exception $e)
 		{
-			Logger::logMe($e->getMessage());
+			Logger::logMe($e->getMessage(), 'error');
 			echo new JsonResponse(null, KrMethods::plain('COM_KNOWRES_MAILCHIMP_FAIL'), true);
 			jexit();
 		}
@@ -179,8 +179,9 @@ class ServiceController extends BaseController
 			echo json_encode(['success' => KrMethods::route($redirect, false)]);
 			jexit();
 		}
-		catch (Exception)
+		catch (Exception $e)
 		{
+			Logger::logMe($e->getMessage(), 'error');
 			echo json_encode(['error' => KrMethods::plain('COM_KNOWRES_ERROR_FATAL')]);
 			jexit();
 		}
@@ -517,8 +518,9 @@ class ServiceController extends BaseController
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_PAYMENT_MANUAL'));
 			$this->redirectSuccess($payment_type, $contract_id);
 		}
-		catch (Exception)
+		catch (Exception $e)
 		{
+			Logger::logMe($e->getMessage(), 'error');
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_FATAL'));
 			$this->redirectError($payment_type);
 		}
@@ -607,8 +609,9 @@ class ServiceController extends BaseController
 				KrMethods::message(KrMethods::plain('COM_KNOWRES_PAYMENT_MANUAL'));
 				$this->redirectSuccess($paymentData->payment_type, $paymentData->contract_id);
 			}
-			catch (Exception)
+			catch (Exception $e)
 			{
+				Logger::logMe($e->getMessage(), 'error');
 				KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_FATAL'));
 				$this->redirectError($payment_type);
 			}

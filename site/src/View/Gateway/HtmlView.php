@@ -55,7 +55,7 @@ class HtmlView extends KrHtmlView\Site
 		}
 		catch (Exception)
 		{
-			echo new JsonResponse(null, KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN'), true);
+			echo new JsonResponse(null, KrMethods::plain('COM_KNOWRES_TRY_LATER'), true);
 		}
 
 		jexit();

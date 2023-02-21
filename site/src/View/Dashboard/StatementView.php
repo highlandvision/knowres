@@ -14,6 +14,7 @@ defined('_JEXEC') or die;
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Joomla\Extend\HtmlView as KrHtmlView;
+use HighlandVision\KR\Logger;
 use HighlandVision\KR\SiteHelper;
 
 /**
@@ -50,8 +51,9 @@ class StatementView extends KrHtmlView\Site
 			$this->setLayout('statement');
 			parent::display($tpl);
 		}
-		catch (Exception)
+		catch (Exception $e)
 		{
+			Logger::logMe($e->getMessage(), 'error');
 			$this->setLayout('error');
 			parent::display($tpl);
 		}

@@ -16,6 +16,7 @@ use HighlandVision\Component\Knowres\Site\Model\ContractguestdataModel;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\HtmlView as KrHtmlView;
+use HighlandVision\KR\Logger;
 use HighlandVision\KR\SiteHelper;
 use Joomla\CMS\Factory;
 use RuntimeException;
@@ -49,8 +50,9 @@ class HtmlView extends KrHtmlView\Site
 		{
 			list($guest_id, $contract_id) = SiteHelper::validateDashboardSession();
 		}
-		catch (Exception)
+		catch (Exception $e)
 		{
+			Logger::logMe($e->getMessage(), 'error');
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_FATAL'));
 			SiteHelper::redirectDashboard();
 		}
@@ -64,8 +66,9 @@ class HtmlView extends KrHtmlView\Site
 			}
 			$this->property = KrFactory::getAdminModel('property')->getItem($this->contract->property_id);
 		}
-		catch (Exception)
+		catch (Exception $e)
 		{
+			Logger::logMe($e->getMessage(), 'error');
 			SiteHelper::redirectDashboard();
 		}
 
