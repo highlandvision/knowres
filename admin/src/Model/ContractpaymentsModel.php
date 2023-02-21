@@ -448,7 +448,6 @@ class ContractpaymentsModel extends ListModel
 		catch (ExecutionFailureException $e)
 		{
 			$db->transactionRollback();
-
 			throw $e;
 		}
 	}
@@ -491,7 +490,6 @@ class ContractpaymentsModel extends ListModel
 		catch (ExecutionFailureException $e)
 		{
 			$db->transactionRollback();
-
 			throw $e;
 		}
 	}

@@ -208,7 +208,7 @@ abstract class Service
 	 * @param  bool  $email    Set true for email notification
 	 *
 	 * @throws Exception
-	 * @since 1.2.2
+	 * @since  1.2.2
 	 */
 	protected function addLog(bool $success, bool $email = false): void
 	{

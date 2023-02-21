@@ -110,31 +110,6 @@ class CronController extends BaseController
 	}
 
 	/**
-	 * Cancel expired booking requests
-	 *
-	 * @throws Exception
-	 * @throws RuntimeException
-	 * @since  1.0.0
-	 */
-	private function cancelExpiredRequests()
-	{
-		$this->checkSecret();
-
-		$contracts = KrFactory::getListModel('contracts')->getExpiredRequests();
-		if (is_countable($contracts))
-		{
-			foreach ($contracts as $c)
-			{
-				$expiry = TickTock::modifyHours($c->created_at, $c->on_request);
-				if (TickTock::getTS() > $expiry)
-				{
-					self::cancelContract($c, 'BOOKREQUESTCANCELEXPIRED');
-				}
-			}
-		}
-	}
-
-	/**
 	 * Cancel a contract
 	 *
 	 * @param   object  $contract  Contract row
@@ -165,14 +140,34 @@ class CronController extends BaseController
 	}
 
 	/**
+	 * Cancel expired booking requests
+	 *
+	 * @throws Exception
+	 * @throws RuntimeException
+	 * @since  1.0.0
+	 */
+	private function cancelExpiredRequests()
+	{
+		$this->checkSecret();
+
+		$contracts = KrFactory::getListModel('contracts')->getExpiredRequests();
+		if (is_countable($contracts))
+		{
+			foreach ($contracts as $c)
+			{
+				$expiry = TickTock::modifyHours($c->created_at, $c->on_request);
+				if (TickTock::getTS() > $expiry)
+				{
+					self::cancelContract($c, 'BOOKREQUESTCANCELEXPIRED');
+				}
+			}
+		}
+	}
+
+	/**
 	 * Cancel contracts where deposit has not been received
 	 * by 1 day after expiry date
 	 *
-	 * @throws Exception
-	 * @throws Exception
-	 * @throws Exception
-	 * @throws Exception
-	 * @throws Exception
 	 * @throws Exception
 	 * @since  1.0.0
 	 */

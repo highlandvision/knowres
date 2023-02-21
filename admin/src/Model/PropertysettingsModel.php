@@ -378,8 +378,7 @@ class PropertysettingsModel extends ListModel
 				catch (Exception $e)
 				{
 					$db->transactionRollback();
-
-					throw new $e;
+					throw $e;
 				}
 			}
 		}

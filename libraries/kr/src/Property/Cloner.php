@@ -225,9 +225,10 @@ class Cloner
 
 			return true;
 		}
-		catch (RuntimeException)
+		catch (RuntimeException $re)
 		{
 			$this->db->transactionRollback();
+			Logger::logMe($re->getMessage(), 'info');
 
 			return false;
 		}
@@ -403,9 +404,10 @@ class Cloner
 
 			return true;
 		}
-		catch (RuntimeException)
+		catch (RuntimeException $re)
 		{
 			$this->db->transactionRollback();
+			Logger::logMe($re->getMessage());
 
 			return false;
 		}

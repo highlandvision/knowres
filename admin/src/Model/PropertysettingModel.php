@@ -248,7 +248,6 @@ class PropertysettingModel extends AdminModel
 				catch (Exception $e)
 				{
 					$db->transactionRollback();
-
 					throw new $e;
 				}
 			}

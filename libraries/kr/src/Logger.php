@@ -1,4 +1,5 @@
-<?php
+<?php /** @noinspection ALL */
+
 /**
  * @package     Know Reservations (Knowres)
  * @subpackage  Exception Handling
@@ -71,7 +72,6 @@ class Logger
 	 * @param  string  $message  Error message
 	 * @param  string  $level    Error level
 	 *
-	 * @throws Exception
 	 * @since  3.3.0
 	 */
 	public static function logMe(string $message, string $level = 'notice'): void
@@ -89,9 +89,8 @@ class Logger
 	/**
 	 * Log error to file
 	 *
-	 * @param  array  $params  Data for log
+	 * @param array  $params  Data for log
 	 *
-	 * @throws Exception
 	 * @since 3.4.0
 	 */
 	protected static function logToFile(array $params): void
