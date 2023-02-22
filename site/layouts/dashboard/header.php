@@ -73,7 +73,7 @@ $image  = Media\Images::getPropertyImageName($contract->property_id);
 				<dt><?php echo KrMethods::plain('COM_KNOWRES_ARRIVAL'); ?></dt>
 				<dd><?php echo TickTock::displayDate($contract->arrival, 'D j M Y'); ?>
 					<?php if ($times): ?>
-						<?php echo ' ' . KrMethods::sprintf('COM_KNOWRES_ARRIVAL_TIME', $contract->checkin_time); ?>
+						<?php echo ' ' . KrMethods::sprintf('COM_KNOWRES_ARRIVAL_FROM', $contract->checkin_time); ?>
 					<?php endif; ?>
 				</dd>
 			</div>
@@ -81,7 +81,7 @@ $image  = Media\Images::getPropertyImageName($contract->property_id);
 				<dt><?php echo KrMethods::plain('COM_KNOWRES_DEPARTURE'); ?></dt>
 				<dd><?php echo TickTock::displayDate($contract->departure, 'D j M Y'); ?>
 					<?php if ($times): ?>
-						<?php echo ' ' . KrMethods::sprintf('COM_KNOWRES_DEPARTURE_TIME', $contract->checkout_time); ?>
+						<?php echo ' ' . KrMethods::sprintf('COM_KNOWRES_DEPARTURE_BY', $contract->checkout_time); ?>
 					<?php endif; ?>
 				</dd>
 			</div>

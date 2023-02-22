@@ -27,12 +27,12 @@ extract($displayData);
  * @var float        $balance   Contract balance.
  */
 
-$checkintime = strtolower(KrMethods::plain('COM_KNOWRES_FROM')) . ' ' . $property->checkin_time;
+$checkintime = strtolower(KrMethods::sprintf('COM_KNOWRES_ARRIVAL_FROM', $property->checkin_time));
 if ($property->checkin_time_to)
 {
 	$checkintime .= ' - ' . $property->checkin_time_to;
 }
-$checkouttime = strtolower(KrMethods::plain('COM_KNOWRES_BY')) . ' ' . $property->checkout_time;
+$checkouttime = strtolower(KrMethods::sprintf('COM_KNOWRES_DEPARTURE_BY', $property->checkout_time));
 
 $address = Utility::formatAddress($property->property_street, '', $property->property_postcode, $property->town_name,
 	$property->region_name, $property->country_name, '<br>');
@@ -107,11 +107,11 @@ echo KrMethods::render('pdf.contract.guestdata.partysize',
 	</tr>
 
 	<tr>
-		<td style="width:25%;"><?php echo KrMethods::plain('COM_KNOWRES_PDF_ACCOMMODATION_VOUCHER_ARRIVAL'); ?></td>
+		<td style="width:25%;"><?php echo KrMethods::plain('COM_KNOWRES_ARRIVAL'); ?></td>
 		<td style="width:75%;"><?php echo TickTock::displayDate($contract->arrival) . ' ' . $checkintime; ?></td>
 	</tr>
 	<tr>
-		<td><?php echo KrMethods::plain('COM_KNOWRES_PDF_ACCOMMODATION_VOUCHER_DEPARTURE'); ?></td>
+		<td><?php echo KrMethods::plain('COM_KNOWRES_DEPARTURE'); ?></td>
 		<td><?php echo TickTock::displayDate($contract->departure) . ' ' . $checkouttime; ?></td>
 	</tr>
 	<tr>

@@ -92,7 +92,7 @@ class HtmlView extends KrHtmlView\Site
 		$this->form_aria_label = KrMethods::plain('COM_KNOWRES_DASHBOARD_EDIT_CONTRACTGUESTDATA');
 
 		$this->meta_title       = KrMethods::plain('COM_KNOWRES_DASHBOARD_EDIT_CONTRACTGUESTDATA');
-		$this->meta_description = KrMethods::plain('COM_KNOWRES_TITLE_DASHBOARD_CONTRACTGUESTDATA');
+		$this->meta_description = KrMethods::plain('COM_KNOWRES_DASHBOARD_CONTRACTGUESTDATA');
 		$this->prepareDocument();
 
 		parent::display($tpl);
@@ -122,6 +122,6 @@ class HtmlView extends KrHtmlView\Site
 		$pathway->setPathway([]);
 
 		$pathway = HtmlView::dashboardPathway($pathway);
-		$pathway->addItem(KrMethods::plain('COM_KNOWRES_TITLE_DASHBOARD_CONTRACTGUESTDATA'));
+		$pathway->addItem(KrMethods::plain('COM_KNOWRES_DASHBOARD_CONTRACTGUESTDATA'));
 	}
 }
