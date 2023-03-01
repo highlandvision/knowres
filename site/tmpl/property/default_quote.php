@@ -14,15 +14,16 @@ use HighlandVision\KR\TickTock;
 use Joomla\CMS\HTML\HTMLHelper;
 ?>
 
+<h3 class="h2 kr-quote-heading no-margin-bottom">
+	<?php echo KrMethods::plain('COM_KNOWRES_QUOTE_GET'); ?>
+</h3>
 <div class="kr-quote no-margin-bottom" style="margin-top:0;">
-	<h3 class="h2 kr-quote-heading">
-		<?php echo KrMethods::plain('COM_KNOWRES_QUOTE_GET'); ?>
-	</h3>
-	<p class="help">
-		<?php echo KrMethods::plain('COM_KNOWRES_QUOTE_INSTRUCTIONS'); ?>
-	</p>
-
 	<form action="#" method="post" id="kr-quote-form">
+		<div class="small-12 columns text-center">
+			<p class="smaller">
+				<?php echo KrMethods::plain('COM_KNOWRES_QUOTE_INSTRUCTIONS'); ?>
+			</p>
+		</div>
 		<div class="row">
 			<div class="small-12 columns">
 				<?php echo $this->form->renderField('qarrivaldsp', null,

@@ -29,13 +29,13 @@ $action = KrMethods::route('index.php?option=com_knowres&view=confirm&layout=pay
 	<div class="row">
 		<div class="small-12 columns">
 			<?php if ($this->property->booking_type == 2) : ?>
-				<h1 class="h2"><?php echo KrMethods::sprintf('COM_KNOWRES_CONFIRM_BOOK_YOUR_RESERVATION',
+				<h1><?php echo KrMethods::sprintf('COM_KNOWRES_CONFIRM_BOOK_YOUR_RESERVATION',
 						$this->property->property_name); ?></h1>
 			<?php else: ?>
-				<h1 class="h2"><?php echo KrMethods::sprintf('COM_KNOWRES_CONFIRM_REQUEST_YOUR_RESERVATION',
+				<h1><?php echo KrMethods::sprintf('COM_KNOWRES_CONFIRM_REQUEST_YOUR_RESERVATION',
 						$this->property->property_name); ?></h1>
 			<?php endif; ?>
-			<h6><?php echo KrMethods::plain('COM_KNOWRES_CONFIRM_BOOK_ENTER'); ?></h6>
+			<h5><?php echo KrMethods::plain('COM_KNOWRES_CONFIRM_BOOK_ENTER'); ?></h5>
 			<br>
 		</div>
 	</div>

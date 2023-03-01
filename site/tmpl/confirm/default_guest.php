@@ -16,7 +16,7 @@ $this->form->setFieldAttribute('guest_note', 'hiddenLabel', false);
 
 <fieldset class="fieldset">
 	<legend><?php echo KrMethods::plain('COM_KNOWRES_CONFIRM_CONTACT_DETAILS'); ?></legend>
-	<div class="callout small gray">
+	<div class="callout small formbg">
 		<div class="row">
 			<div class="small-12 medium-6 columns">
 				<?php echo $this->guestForm->renderField('email'); ?>
@@ -83,7 +83,7 @@ $this->form->setFieldAttribute('guest_note', 'hiddenLabel', false);
 
 <fieldset class="fieldset">
 	<legend><?php echo KrMethods::plain('COM_KNOWRES_CONFIRM_ADDITIONAL_INFO'); ?></legend>
-	<div class="callout small gray">
+	<div class="callout small formbg">
 		<div class="row">
 			<div class="small-12 columns">
 				<?php echo $this->form->renderField('guest_note'); ?>

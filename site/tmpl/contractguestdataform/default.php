@@ -39,7 +39,7 @@ $wa->useScript('com_knowres.site')
 		<legend><?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATAFORM_PARTYSIZE_HELP'); ?></legend>
 		<div class="row">
 			<div class="small-12 columns">
-				<div class="callout small gray">
+				<div class="callout small formbg">
 					<?php echo $this->loadTemplate('partyinfo'); ?>
 				</div>
 			</div>
@@ -50,7 +50,7 @@ $wa->useScript('com_knowres.site')
 		<legend><?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATAFORM_LEGEND_GUESTINFO'); ?></legend>
 		<div class="row">
 			<div class="small-12 columns">
-				<div class="callout small gray">
+				<div class="callout small formbg">
 					<?php echo $this->form->renderField('guestinfo'); ?>
 				</div>
 			</div>

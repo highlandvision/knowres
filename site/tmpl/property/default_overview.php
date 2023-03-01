@@ -12,7 +12,6 @@
 defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrMethods;
-
 ?>
 
 <h2><?php echo $this->item->property_name; ?></h2>

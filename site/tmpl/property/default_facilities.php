@@ -87,4 +87,3 @@ use Joomla\CMS\HTML\HTMLHelper;
 	<h4><?php echo $this->item->hp8; ?></h4>
 	<p><?php echo $this->item->p8; ?></p>
 <?php endif; ?>
-
