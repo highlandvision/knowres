@@ -25,10 +25,10 @@ if (!is_countable($this->alternatives) || !count($this->alternatives))
 
 <div id="kr-alternatives" class="moduletable">
 	<div class="row">
-		<div class="small-8 columns">
+		<div class="small-9 columns">
 			<h3><?php echo KrMethods::plain('COM_KNOWRES_PROPERTY_HEADER_ALTERNATIVES'); ?></h3>
 		</div>
-		<div class="small-4 pull-right columns">
+		<div class="small-3 pull-right columns">
 			<div class="kr-double-arrows"></div>
 		</div>
 	</div>
@@ -77,10 +77,8 @@ if (!is_countable($this->alternatives) || !count($this->alternatives))
 					</div>
 
 					<div class="content">
-						<h4 class="h3">
-							<?php echo $item->property_name; ?>
-						</h4>
-						<p><?php echo Utility::cutString($item->p1, 180); ?></p>
+						<h3 class="h4"><?php echo $item->property_name; ?></h3>
+						<p><?php echo Utility::cutString($item->p1, 140); ?></p>
 						<i class="fas fa-female fa-lg color-accent"></i>
 						<i class="fas fa-male fa-lg color-accent"></i> &nbsp;
 						<?php echo ' ' . ($item->sleeps + $item->sleeps_extra) . ' '
