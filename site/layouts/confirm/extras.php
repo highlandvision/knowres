@@ -31,6 +31,11 @@ $Translations     = new Translations();
 
 foreach ($extras as $extra)
 {
+	if ($extra->mandatory)
+	{
+		continue;
+	}
+
 	switch ($extra->model)
 	{
 		case '1': // Per week
@@ -78,15 +83,8 @@ foreach ($extras as $extra)
 		}
 		else
 		{
-			$price = Utility::displayValue($extra->price, $currency) . ' ' . $text;
-			if ($extra->mandatory)
-			{
-				$one['price'] = KrMethods::plain('COM_KNOWRES_MANDATORY') . ' ' . $price;
-			}
-			else
-			{
-				$one['price'] = $price;
-			}
+			$price        = Utility::displayValue($extra->price, $currency) . ' ' . $text;
+			$one['price'] = $price;
 		}
 	}
 	else
@@ -94,13 +92,10 @@ foreach ($extras as $extra)
 		$one['price'] = $extra->percentage . $text;
 	}
 
-	$values  = [];
-	$default = 1;
-	if (!$extra->mandatory)
-	{
-		$values[0] = KrMethods::plain('JSELECT');
-		$default   = 0;
-	}
+	$values    = [];
+	$default   = 1;
+	$values[0] = KrMethods::plain('JSELECT');
+	$default   = 0;
 
 	if (is_array($data) && array_key_exists($extra->id, $data))
 	{
@@ -134,7 +129,7 @@ if (is_countable($all) && !count($all))
 
 <fieldset class="fieldset">
 	<legend><?php echo KrMethods::plain('COM_KNOWRES_CONFIRM_EXTRAS_LBL'); ?></legend>
-	<div class="callout small gray">
+	<div class="callout small formbg">
 		<?php foreach ($all as $a) : ?>
 			<div class="row extras">
 				<div class="small-12 medium-3 columns">
