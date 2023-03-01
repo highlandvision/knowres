@@ -39,7 +39,8 @@ $params       = KrMethods::getParams();
 	<?php if ($item->discount_id > 0 && $params->get('search_discounts', 0)): ?>
 		<?php $discounts = KrFactory::getListSiteModel('properties')->getDiscount($item->id); ?>
 		<?php if (is_countable($discounts) && count($discounts)): ?>
-			<?php echo KrMethods::render('properties.discountsearch', ['discounts' => $discounts,
+			<?php echo KrMethods::render('properties.discountsearch', ['property_id' => $item->id,
+																	   'discounts' => $discounts,
 			                                                           'currency'  => $currency]); ?>
 		<?php else: ?>
 			<button aria-label="No discounts available" class="button secondary discounts-none"
@@ -68,7 +69,7 @@ $params       = KrMethods::getParams();
 			<?php if ($full): ?>
 				<span class="center">
 			           &nbsp;&nbsp;<i class="fas fa-cut fa-1x red"></i>
-			           <del><?php echo Utility::displayValue($full, $currency); ?></del>
+			           <del><?php echo Utility::displayValue($full, $currency, false); ?></del>
 			        </span>
 			<?php endif; ?>
 		<?php else: ?>
@@ -88,7 +89,7 @@ $params       = KrMethods::getParams();
 		<?php endif; ?>
 	</a>
 	<a class="button viewproperty" href="<?php echo $plink; ?>">
-		<?php echo KrFactory::getAdminModel('property')::bookingTypeText($booking_type); ?> <i
-			class="fas fa-chevron-right"></i>
+		<?php echo KrFactory::getAdminModel('property')::bookingTypeText($booking_type); ?>
+		<i class="fas fa-chevron-right"></i>
 	</a>
 </div>

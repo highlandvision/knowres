@@ -803,8 +803,8 @@ class Search
 				'seasons',
 				'shortstay',
 				'longstay',
-				'discount',
 				'ratemarkup',
+				'discount',
 				'tax',
 				'extras',
 			];
