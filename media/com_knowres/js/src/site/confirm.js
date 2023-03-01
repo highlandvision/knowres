@@ -74,30 +74,7 @@
 			myConfirm.updateQuote($element);
 		});
 
-		$(document).on('submit', '.jsonform', function (e) {
-			//e.preventDefault();
-			// const $form = $(this);
-			// $.ajax({
-			// 	type:     'POST',
-			// 	url:      $form.attr('action') + '&lang=' + lang,
-			// 	data:     $form.serialize(),
-			// 	dataType: 'json',
-			// 	success:  function (result) {
-			// 		if (result.success) {
-			// 			window.location.href = result.data.redirect;
-			// 		} else {
-			// 			$('.kr-ajax-modal-error-message').html(result.message);
-			// 			const $modal = new Foundation.Reveal($('#KrAjaxModalError'));
-			// 			$modal.open();
-			// 		}
-			// 	},
-			// 	error:    function () {
-			// 		$('.kr-ajax-modal-error-message').html('Sorry an error has occurred, please try again');
-			// 		const $modal = new Foundation.Reveal($('#KrAjaxModalError'));
-			// 		$modal.open();
-			// 	}
-			// });
-		}).on('click', '#checkterms', function (e) {
+		$(document).on('click', '#checkterms', function (e) {
 			e.preventDefault();
 			if (checkTerms()) {
 				$('#checkterms').trigger('submit');

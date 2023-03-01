@@ -139,22 +139,29 @@ const livesite = window.location.origin + '/';
 		}).on('click', '.toggleother', function (e) {
 			e.preventDefault();
 			$(this).data('other').toggle();
+		}).on('click', '#kr-property-tabs a[href="#calendar"]', function(e) {
+			e.preventDefault();
+			if (!calendarLoaded) {
+				const pid = $(this).data('pid');
+				loadCalendar(pid);
+				calendarLoaded = true;
+			}
 		});
 
 		if ($('.kr-properties').length && !searchDone) {
 			getProperties('view', $(this).data('view'));
 		}
 
-		let $tabs = $('.tabs');
-		if ($('#kr-property-tabs').length && !calendarLoaded) {
-			$tabs.find('a').each(function () {
-				if ($(this).attr('href') === "#calendar") {
-					const pid = $(this).data('pid');
-					loadCalendar(pid);
-					calendarLoaded = true;
-				}
-			});
-		}
+		// let $tabs = $('.tabs');
+		// if ($('#kr-property-tabs').length && !calendarLoaded) {
+		// 	$tabs.find('a').each(function () {
+		// 		if ($(this).attr('href') === "#calendar") {
+		// 			const pid = $(this).data('pid');
+		// 			loadCalendar(pid);
+		// 			calendarLoaded = true;
+		// 		}
+		// 	});
+		// }
 	});
 
 	$.event.special.touchstart = {
