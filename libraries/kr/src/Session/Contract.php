@@ -176,7 +176,7 @@ class Contract extends Session
 		$data->isEdit                          = false;
 		$data->manager_id                      = 0;
 		$data->markup                          = 0;
-		$data->markup_pc                       = 0;
+		$data->markup_pc                       = [];
 		$data->manual                          = 0;
 		$data->net_price                       = 0;
 		$data->net_price_system                = 0;
