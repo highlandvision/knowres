@@ -2,7 +2,7 @@
 <extension type="plugin" group="osmap" method="upgrade">
 	<name>KR - Osmap</name>
 	<author>Hazel Wilson</author>
-	<creationDate>December 2020</creationDate>
+	<creationDate>December 2022</creationDate>
 	<authorUrl>https://www.highlandvision.com</authorUrl>
 	<authorEmail>hazel@highlandvision.com</authorEmail>
 	<copyright>2022 Highland Vision. All rights reserved.</copyright>

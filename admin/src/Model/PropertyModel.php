@@ -254,7 +254,7 @@ class PropertyModel extends AdminModel
 				}
 
 				$item->{$name} = trim($Translations->getText('property', $item->id, $field));
-				if ($f->format == 3)
+				if ($f->format == 2)
 				{
 					$item->{$name} = nl2br($item->{$name});
 				}

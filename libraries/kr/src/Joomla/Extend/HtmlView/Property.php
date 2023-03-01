@@ -278,7 +278,7 @@ class Property extends KrHtmlView
 			&& $this->checkAccess('property_edit'))
 		{
 			$link = KrMethods::route('index.php?option=com_knowres&task=property.edit&id=' . $this->property_id);
-			$Toolbar->linkButton('property', 'COM_KNOWRES_EDIT_PROPERTY')
+			$Toolbar->linkButton('property', 'JTOOLBAR_EDIT')
 			        ->icon('fas fa-edit knowres')
 			        ->url($link);
 		}
@@ -327,7 +327,7 @@ class Property extends KrHtmlView
 			        ->url($this->preview_link);
 		}
 
-		$Toolbar = $this->addConfigToolbar($Toolbar);
+//		$Toolbar = $this->addConfigToolbar($Toolbar);
 		$Toolbar = $this->addQuickLinksToolbar($Toolbar);
 		$Toolbar = $this->addBackLink($Toolbar);
 

@@ -36,10 +36,11 @@ class UpgradeDb
 	/**
 	 * Changes for V320.
 	 *
+	 * @throws Exception
 	 * @since   4.0.0
 	 * @return  void
 	 */
-	public static function forV320()
+	public static function forV320(): void
 	{
 		$db = KrFactory::getDatabase();
 
@@ -72,7 +73,7 @@ class UpgradeDb
 		//INSERT INTO `#__knowres_property_setting`name - 'multiple_bookings', default - 0;
 		self::addPS($db, 'multiple_bookings', 0);
 		//ALTER TABLE `#__knowres_owner` ADD COLUMN `deposit_pc` TINYINT(1) NOT NULL DEFAULT 0 AFTER `pay_deposit`;
-		self::change($db, '#__knowres_owner', 'deposit_pc', 'pay_deposit', 'TINYINT(1) DEFAULT 0');
+		self::add($db, '#__knowres_owner', 'deposit_pc', 'pay_deposit', 'TINYINT(1) DEFAULT 0');
 	}
 
 	/**
@@ -81,7 +82,7 @@ class UpgradeDb
 	 * @since   4.0.0
 	 * @return  void
 	 */
-	public static function forV321()
+	public static function forV321(): void
 	{
 		$db = KrFactory::getDatabase();
 
@@ -102,6 +103,7 @@ class UpgradeDb
 	/**
 	 * Changes for V330.
 	 *
+	 * @throws Exception
 	 * @since   4.0.0
 	 * @return  void
 	 */
@@ -240,7 +242,7 @@ class UpgradeDb
 	 * @since  4.0.0
 	 * @return void
 	 */
-	public static function forV333()
+	public static function forV333(): void
 	{
 		$db = KrFactory::getDatabase();
 
@@ -267,10 +269,11 @@ class UpgradeDb
 	/**
 	 * Changes for V400.
 	 *
+	 * @throws Exception
 	 * @since  4.0.0
 	 * @return void
 	 */
-	public static function forV400()
+	public static function forV400(): void
 	{
 		$db = KrFactory::getDatabase();
 
@@ -292,8 +295,8 @@ class UpgradeDb
 		self::drop($db, '#__knowres_coupon', 'ordering');
 		//ALTER TABLE `#__knowres_tax_rate` ADD COLUMN `tax_type` VARCHAR(10) DEFAULT NULL AFTER `tax_id`;
 		self::add($db, '#__knowres_tax_rate', 'tax_type', 'tax_id', 'VARCHAR(10) DEFAULT NULL');
-		//ALTER TABLE `#__knowres_tax_rate` ADD COLUMN `agent` VARCHAR(255) DEFAULT NULL AFTER `service`;
-		self::add($db, '#__knowres_tax_rate', 'agent', 'service', 'VARCHAR(255) DEFAULT NULL');
+		//ALTER TABLE `#__knowres_tax_rate` ADD COLUMN `agent` VARCHAR(255) DEFAULT NULL AFTER `code`;
+		self::add($db, '#__knowres_tax_rate', 'agent', 'code', 'VARCHAR(255) DEFAULT NULL');
 		//ALTER TABLE `#__knowres_tax_rate` ADD COLUMN `reduced_rate` decimal(6,3) NOT NULL DEFAULT 0.000 AFTER `max_nights`;
 		self::add($db, '#__knowres_tax_rate', 'reduced_rate', 'max_nights', 'DECIMAL(6,3) NOT NULL DEFAULT 0.000');
 		//ALTER TABLE `#__knowres_tax_rate` ADD COLUMN `gross` TINYINT(1) NOT NULL DEFAULT 0 AFTER `tax_type`;
@@ -394,7 +397,7 @@ class UpgradeDb
 	 * @since  4.0.0
 	 * @return void
 	 */
-	protected static function addPS(DatabaseDriver $db, string $akey, mixed $default)
+	protected static function addPS(DatabaseDriver $db, string $akey, mixed $default): void
 	{
 		$query = $db->getQuery(true);
 		$query->select($db->qn('a.id'))
@@ -418,7 +421,19 @@ class UpgradeDb
 		}
 	}
 
-	protected static function change(DatabaseDriver $db, string $table, string $field, string $new, mixed $default)
+	/**
+	 * Change the database
+	 *
+	 * @param  DatabaseDriver  $db       Database instance
+	 * @param  string          $table    Table name
+	 * @param  string          $field    Row name
+	 * @param  string          $new      New name
+	 * @param  mixed           $default  Default value
+	 *
+	 * @since  4.0.0
+	 */
+	protected static function change(DatabaseDriver $db, string $table, string $field, string $new,
+		mixed $default): void
 	{
 		$columns = $db->getTableColumns($table);
 		if (array_key_exists($field, $columns))
@@ -430,7 +445,17 @@ class UpgradeDb
 		}
 	}
 
-	protected static function drop(DatabaseDriver $db, string $table, string $field)
+	/**
+	 * Drop the database
+	 *
+	 * @param  DatabaseDriver  $db       Database instance
+	 * @param  string          $table    Table name
+	 * @param  string          $field    Row name
+	 *
+	 * @since  4.0.0
+	 * @return void
+	 */
+	protected static function drop(DatabaseDriver $db, string $table, string $field): void
 	{
 		$columns = $db->getTableColumns($table);
 		if (array_key_exists($field, $columns))
@@ -441,7 +466,16 @@ class UpgradeDb
 		}
 	}
 
-	protected static function dropTable(DatabaseDriver $db, string $table)
+	/**
+	 * Drop table
+	 *
+	 * @param  DatabaseDriver  $db       Database instance
+	 * @param  string          $table    Table name
+	 *
+	 * @since  4.0.0
+	 * @return void
+	 */
+	protected static function dropTable(DatabaseDriver $db, string $table): void
 	{
 		try
 		{
@@ -455,7 +489,17 @@ class UpgradeDb
 		}
 	}
 
-	protected static function dropIndex(DatabaseDriver $db, string $table, string $index)
+	/**
+	 * Drop index
+	 *
+	 * @param  DatabaseDriver  $db       Database instance
+	 * @param  string          $table    Table name
+	 * @param  string          $index    Index name
+	 *
+	 * @since  4.0.0
+	 * @return void
+	 */
+	protected static function dropIndex(DatabaseDriver $db, string $table, string $index): void
 	{
 		try
 		{

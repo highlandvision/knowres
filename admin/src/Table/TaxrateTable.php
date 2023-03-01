@@ -29,7 +29,7 @@ use UnexpectedValueException;
 class TaxrateTable extends Table implements VersionableTableInterface
 {
 	/** @var array An array of key names to be json encoded in the bind function */
-	protected $_jsonEncode = ['agent', 'service'];
+	protected $_jsonEncode = ['agent'];
 	/** $var bool Indicates that columns fully support the NULL value in the database */
 	protected $_supportNullValue = true;
 
