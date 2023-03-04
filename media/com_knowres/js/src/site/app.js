@@ -152,16 +152,16 @@ const livesite = window.location.origin + '/';
 			getProperties('view', $(this).data('view'));
 		}
 
-		// let $tabs = $('.tabs');
-		// if ($('#kr-property-tabs').length && !calendarLoaded) {
-		// 	$tabs.find('a').each(function () {
-		// 		if ($(this).attr('href') === "#calendar") {
-		// 			const pid = $(this).data('pid');
-		// 			loadCalendar(pid);
-		// 			calendarLoaded = true;
-		// 		}
-		// 	});
-		// }
+		let $tabs = $('.tabs');
+		if ($('#kr-property-tabs').length && !calendarLoaded) {
+			$tabs.find('a').each(function () {
+				if ($(this).attr('href') === "#calendar") {
+					const pid = $(this).data('pid');
+					loadCalendar(pid);
+					calendarLoaded = true;
+				}
+			});
+		}
 	});
 
 	$.event.special.touchstart = {

@@ -36,8 +36,8 @@ $action = KrMethods::route('index.php?option=com_knowres&view=confirm&layout=pay
 
 <form action="<?php echo $action; ?>" class="ajaxform formbg form-validate" id="kr-form-payment" method="post">
 	<fieldset class="fieldset">
-		<div class="callout formbg">
-			<h3>
+		<div class="callout">
+			<h3 class="color-primary">
 				<?php if ($this->contractData->contract_total == $this->contractData->deposit): ?>
 					<?php echo KrMethods::sprintf('COM_KNOWRES_CONFIRM_AMOUNT_DUE_FULL',
 						Utility::displayValue($this->contractData->deposit, $this->contractData->currency),
@@ -55,7 +55,6 @@ $action = KrMethods::route('index.php?option=com_knowres&view=confirm&layout=pay
 					<?php echo KrMethods::plain('COM_KNOWRES_PAYMENT_METHOD_CURRENCY'); ?>
 				<?php endif; ?>
 			</h6>
-			<br>
 			<?php foreach ($this->gateways as $this->gateway) : ?>
 				<?php if ($this->gateway->plugin === 'paypal'): ?>
 					<?php $this->paypal_found = true; ?>

@@ -228,7 +228,7 @@ class Utility
 			$fmt->setAttribute(NumberFormatter::FRACTION_DIGITS, 0);
 		}
 
-		return $fmt->format($value);
+		return $fmt->formatCurrency($value, $currency);
 	}
 
 	/**

@@ -36,7 +36,6 @@ $action = KrMethods::route('index.php?option=com_knowres&view=confirm&layout=pay
 						$this->property->property_name); ?></h1>
 			<?php endif; ?>
 			<h5><?php echo KrMethods::plain('COM_KNOWRES_CONFIRM_BOOK_ENTER'); ?></h5>
-			<br>
 		</div>
 	</div>
 
@@ -51,7 +50,7 @@ $action = KrMethods::route('index.php?option=com_knowres&view=confirm&layout=pay
 					'gdpr_statement'); ?>
 				<?php if (!empty($gdpr)): ?>
 					<div class="callout small success">
-						<p><?php echo $gdpr; ?></p>
+						<small><?php echo $gdpr; ?></small>
 					</div>
 				<?php endif; ?>
 

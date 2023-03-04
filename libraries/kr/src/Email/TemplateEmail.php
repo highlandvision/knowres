@@ -147,6 +147,7 @@ class TemplateEmail
 		$tags['PROPERTYNAME']        = 'Property Name';
 		$tags['PROPERTYPOSTCODE']    = 'Property Post/Zip Code';
 		$tags['PROPERTYREGION']      = 'Property Region';
+		$tags['PROPERTYSTREET']      = 'Property Street';
 		$tags['PROPERTYTOWN']        = 'Property Town';
 		$tags['PROPERTYUID']         = 'Property Id';
 		$tags['SECURITYAMOUNT']      = 'Property Security Amount';

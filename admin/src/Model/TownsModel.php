@@ -27,7 +27,7 @@ class TownsModel extends ListModel
 	/**
 	 * Constructor.
 	 *
-	 * @param   array  $config  An optional associative array of configuration settings.
+	 * @param  array  $config  An optional associative array of configuration settings.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -70,8 +70,8 @@ class TownsModel extends ListModel
 	/**
 	 * Get all published properties for region
 	 *
-	 * @param   int   $region_id       ID of region
-	 * @param   bool  $allow_property  True to allow property towns only
+	 * @param  int   $region_id       ID of region
+	 * @param  bool  $allow_property  True to allow property towns only
 	 *
 	 * @throws RuntimeException
 	 * @since  3.3.0
@@ -147,7 +147,9 @@ class TownsModel extends ListModel
 			                . ' THEN 1 ELSE 2 END )')
 		                ->setLimit(1);
 
-		$query->select($this->getState('list.select', 'a.*'));
+		$query->select($this->getState('list.select',
+			'a.id, a.country_id, a.region_id, a.lat, a.lng, a.allow_property, a.timezone, a.currency, a.state, 
+			a.checked_out, a.checked_out_time, a.created_by, a.created_at, a.updated_by, a.updated_at, a.version'));
 		$query->from($db->qn('#__knowres_town', 'a'));
 		$query->select('(' . $subQuery->__toString() . ') ' . $db->q('name'));
 		$query->select('(' . $subQueryRegion->__toString() . ') ' . $db->q('region_name'));
@@ -218,10 +220,10 @@ class TownsModel extends ListModel
 	 * different modules that might need different sets of data or different
 	 * ordering requirements.
 	 *
-	 * @param   string  $id  A prefix for the store id.
+	 * @param  string  $id  A prefix for the store id.
 	 *
 	 * @since  1.0.0
-	 * @return    string        A store id.
+	 * @return string        A store id.
 	 */
 	protected function getStoreId($id = ''): string
 	{
@@ -238,8 +240,8 @@ class TownsModel extends ListModel
 	 * Method to autopopulate the model state.
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @param   string  $ordering
-	 * @param   string  $direction
+	 * @param  string  $ordering
+	 * @param  string  $direction
 	 *
 	 * @since 1.0.0
 	 */

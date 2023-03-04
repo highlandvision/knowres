@@ -20,7 +20,7 @@ $address = Utility::formatAddress($this->guestData->address1, $this->guestData->
 ?>
 
 <div class="summary callout neutral text-center">
-	<h2 class="h3">
+	<h2 class="color-primary">
 		<?php if ($this->property->booking_type == 2) : ?>
 			<?php echo KrMethods::plain('COM_KNOWRES_CONFIRM_BOOK_PAYABLE_NOW'); ?>
 			<br>
@@ -36,17 +36,17 @@ $address = Utility::formatAddress($this->guestData->address1, $this->guestData->
 		<?php endif; ?>
 	</h2>
 
-	<h4 style="margin-bottom:0;">
+	<h3 style="margin-bottom:0;">
 		<?php echo $this->property->property_name; ?>
-	</h4>
+	</h3>
 
 	<div class="total-summary">
 		<?php echo KrMethods::render('confirm.summary', ['data' => $this->contractData]); ?>
 	</div>
 	<br>
-	<h4 class="no-margin-bottom">
+	<h3 class="no-margin-bottom">
 		<?php echo KrMethods::plain('COM_KNOWRES_YOUR_DETAILS'); ?>
-	</h4>
+	</h3>
 
 	<p>
 		<?php echo $this->guestData->firstname . ' ' . $this->guestData->surname; ?>
