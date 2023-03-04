@@ -1,260 +1,273 @@
 #ganttselections a {
-	font-size:   15px;
-	line-height: 3;
-	background:  #d5d5d5;
-	padding:     5px;
+  font-size: 15px;
+  line-height: 3;
+  background: #d5d5d5;
+  padding: 5px;
 }
 #ganttselections .remove {
-	margin-right: 10px;
+  margin-right: 10px;
 }
+
 .fn-gantt-loader {
-	width:  300px;
-	height: 50px;
+  width: 300px;
+  height: 50px;
 }
+
 .fn-gantt-loader-spinner {
-	background-image:  url(../images/ajax-loader.gif);
-	background-repeat: no-repeat;
-	height:            32px;
-	color:             #aaaaaa;
-	padding-left:      40px;
-	line-height:       30px;
-	font-size:         18px;
+  background-image: url(../images/ajax-loader.gif);
+  background-repeat: no-repeat;
+  height: 32px;
+  color: #aaaaaa;
+  padding-left: 40px;
+  line-height: 30px;
+  font-size: 18px;
 }
+
 .btn-toolbar.kr-gantt-toolbar button:not(.ui-datepicker-trigger) {
-	margin: 1px 5px 0 10px;
-	height: 38px;
+  margin: 1px 5px 0 10px;
+  height: 38px;
 }
+
 .kr-gantt {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size:   12px;
-	width:       100%;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  width: 100%;
 }
 .kr-gantt:after {
-	content:    ".";
-	visibility: hidden;
-	display:    block;
-	height:     0;
-	clear:      both;
+  content: ".";
+  visibility: hidden;
+  display: block;
+  height: 0;
+  clear: both;
 }
 .kr-gantt .fn-gantt .fn-content {
-	position: relative;
+  position: relative;
 }
 .kr-gantt .fn-gantt .fn-content .grow {
-	line-height: 30px;
-	height:      30px;
-	float:       left;
-	margin-left: 0;
-	width:       100%;
+  line-height: 30px;
+  height: 30px;
+  float: left;
+  margin-left: 0;
+  width: 100%;
 }
 .kr-gantt .fn-gantt .fn-content .grow .cell {
-	float:  left;
-	height: 30px;
+  float: left;
+  height: 30px;
 }
 .kr-gantt .fn-gantt .fn-content .grow .cell.day {
-	width:       30px;
-	border-left: 1px solid #ddd;
+  width: 30px;
+  border-left: 1px solid #ddd;
 }
 .kr-gantt .fn-gantt .fn-content .grow .cell.day.head {
-	line-height: 15px;
+  line-height: 15px;
 }
 .kr-gantt .fn-gantt .fn-content .grow .cell.gheader.month {
-	border-left: 1px solid #ddd;
-	background:  #0088cc;
-	color:       #fff;
-	float:       left;
+  border-left: 1px solid #ddd;
+  background: #0088cc;
+  color: #fff;
+  float: left;
 }
 .kr-gantt .fn-gantt .fn-content .grow .cell .gantt-label {
-	text-align: center;
+  text-align: center;
 }
 .kr-gantt .fn-gantt .fn-content .grow.name {
-	height:        28px;
-	line-height:   36px;
-	background:    #f9f9f9;
-	color:         #212121;
-	border-top:    1px solid #ccc;
-	border-bottom: 1px solid #fff;
+  height: 28px;
+  line-height: 36px;
+  background: #f9f9f9;
+  color: #212121;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #fff;
 }
 .kr-gantt .fn-gantt .fn-content .grow.name .cell {
-	height: 24px;
+  height: 24px;
 }
 .kr-gantt .fn-gantt .fn-content .grow.name .cell a {
-	color:        #212121;
-	padding-left: 5px;
-	font-size:    13px;
+  color: #212121;
+  padding-left: 5px;
+  font-size: 13px;
 }
 .kr-gantt .fn-gantt .fn-content .dataPanel {
-	width:      100%;
-	overflow-x: hidden;
-	height:     60px;
+  width: 100%;
+  overflow-x: hidden;
+  height: 60px;
 }
 .kr-gantt .fn-gantt .fn-content .rightPanel {
-	width:      100%;
-	height:     600px;
-	overflow-y: auto;
-	overflow-x: hidden;
+  width: 100%;
+  height: 600px;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 .kr-gantt .fn-gantt .fn-content .propertyPanel {
-	position: relative;
-	overflow: hidden;
+  position: relative;
+  overflow: hidden;
 }
 .kr-gantt .fn-gantt .fn-content .propertyPanel:after {
-	content:    ".";
-	visibility: hidden;
-	display:    block;
-	height:     0;
-	clear:      both;
+  content: ".";
+  visibility: hidden;
+  display: block;
+  height: 0;
+  clear: both;
 }
 .kr-gantt .fn-gantt .fn-content .propertyPanel .grow:last-child {
-	border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
 }
 .kr-gantt .fn-gantt .fn-content .today {
-	background-color: #e2ebff !important;
+  background-color: #e2ebff !important;
 }
 .kr-gantt .fn-gantt .fn-content .sa {
-	background-color: #eeeeee;
+  background-color: #eeeeee;
 }
 .kr-gantt .fn-gantt .fn-content .sn {
-	background-color: #eeeeee;
+  background-color: #eeeeee;
 }
 .kr-gantt .fn-gantt .fn-content .wd {
-	background-color: #ffffff;
+  background-color: #ffffff;
 }
 .kr-gantt .fn-gantt .fn-content .bar {
-	position: relative;
-	z-index:  0;
-	height:   29px;
+  position: relative;
+  z-index: 0;
+  height: 29px;
 }
 .kr-gantt .fn-gantt .fn-content .bar.arrivebefore {
-	float: left;
+  float: left;
 }
 .kr-gantt .fn-gantt .fn-content .bar:after,
 .kr-gantt .fn-gantt .fn-content .bar.leaveafter:after,
 .kr-gantt .fn-gantt .fn-content .bar.arrivebefore:after {
-	content:  " ";
-	position: absolute;
-	display:  block;
-	width:    100%;
-	height:   100%;
-	top:      1px;
-	z-index:  -1;
+  content: " ";
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 100%;
+  top: 1px;
+  z-index: -1;
 }
 .kr-gantt .fn-gantt .fn-content .bar:not(.leaveafter):not(.arrivebefore):after {
-	-ms-transform: skew(-45deg);
-	transform:     skew(-45deg);
-	margin-left:   15px;
+  -ms-transform: skew(-45deg);
+  transform: skew(-45deg);
+  margin-left: 15px;
 }
 .kr-gantt .fn-gantt .fn-content .bar.leaveafter.arrivebefore:after {
-	-ms-transform: skew(0deg);
-	transform:     skew(0deg);
-	margin-left:   0;
+  -ms-transform: skew(0deg);
+  transform: skew(0deg);
+  margin-left: 0;
 }
 .kr-gantt .fn-gantt .fn-content .bar.leaveafter:after {
-	transform-origin: top right;
-	-ms-transform:    skew(-45deg, 0deg);
-	transform:        skew(-45deg, 0deg);
-	margin-left:      30px;
+  transform-origin: top right;
+  -ms-transform: skew(-45deg, 0deg);
+  transform: skew(-45deg, 0deg);
+  margin-left: 30px;
 }
 .kr-gantt .fn-gantt .fn-content .bar.arrivebefore:after {
-	transform-origin: bottom left;
-	-ms-transform:    skew(-45deg, 0deg);
-	transform:        skew(-45deg, 0deg);
-	margin-left:      -30px;
-	padding-right:    30px;
+  transform-origin: bottom left;
+  -ms-transform: skew(-45deg, 0deg);
+  transform: skew(-45deg, 0deg);
+  margin-left: -30px;
+  padding-right: 30px;
 }
 .kr-gantt .fn-gantt .fn-content .bar.ganttBlack:not(.leaveafter):not(.arrivebefore):after,
 .kr-gantt .fn-gantt .fn-content .bar.ganttBlack.leaveafter:after,
 .kr-gantt .fn-gantt .fn-content .bar.ganttBlack.arrivebefore:after {
-	background: #000000;
+  background: #000000;
 }
 .kr-gantt .fn-gantt .fn-content .bar.ganttBook:not(.leaveafter):not(.arrivebefore):after,
 .kr-gantt .fn-gantt .fn-content .bar.ganttBook.leaveafter:after,
 .kr-gantt .fn-gantt .fn-content .bar.ganttBook.arrivebefore:after {
-	background: #c60f13;
+  background: #c60f13;
 }
 .kr-gantt .fn-gantt .fn-content .bar.ganttProv:not(.leaveafter):not(.arrivebefore):after,
 .kr-gantt .fn-gantt .fn-content .bar.ganttProv.leaveafter:after,
 .kr-gantt .fn-gantt .fn-content .bar.ganttProv.arrivebefore:after {
-	background: #808000;
+  background: #808000;
 }
 .kr-gantt .fn-gantt .fn-content .bar.ganttGrey:not(.leaveafter):not(.arrivebefore):after,
 .kr-gantt .fn-gantt .fn-content .bar.ganttGrey.leaveafter:after,
 .kr-gantt .fn-gantt .fn-content .bar.ganttGrey.arrivebefore:after {
-	background: #999999;
+  background: #999999;
 }
 .kr-gantt .fn-gantt .fn-content .bar p {
-	overflow:      hidden;
-	white-space:   nowrap;
-	text-overflow: clip;
-	color:         #fff;
-	padding-left:  23px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: clip;
+  color: #fff;
+  padding-left: 23px;
 }
 .kr-gantt .fn-gantt .fn-content .bar.arrivebefore p {
-	padding-left: 6px;
+  padding-left: 6px;
 }
 .kr-gantt .fn-gantt .fn-content .bar:hover {
-	cursor: pointer;
+  cursor: pointer;
 }
+
 #kr-gantt-show-modal .modal-header,
 #kr-gantt-book-modal .modal-header {
-	cursor: move;
+  cursor: move;
 }
+
 #ganttsearch .typeahead {
-	z-index: 1;
+  z-index: 1;
 }
+
 .tt-input.typeahead::placeholder {
-	color:     #c9c9c9;
-	font-size: 1rem;
+  color: #c9c9c9;
+  font-size: 1rem;
 }
+
 .tt-menu {
-	width:              350px;
-	margin:             0;
-	padding:            8px 7px;
-	background-color:   #fff;
-	font-size:          15px;
-	text-align:         left;
-	border:             1px solid #ccc;
-	-webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-	-moz-box-shadow:    0 5px 10px rgba(0, 0, 0, 0.2);
-	box-shadow:         0 5px 10px rgba(0, 0, 0, 0.2);
+  width: 350px;
+  margin: 0;
+  padding: 8px 7px;
+  background-color: #fff;
+  font-size: 15px;
+  text-align: left;
+  border: 1px solid #ccc;
+  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
+
 .tt-suggestion {
-	font-size:      16px;
-	line-height:    20px;
-	padding-bottom: 5px;
+  font-size: 16px;
+  line-height: 20px;
+  padding-bottom: 5px;
 }
 .tt-suggestion:hover {
-	background: #f1f1f1;
+  background: #f1f1f1;
 }
 .tt-suggestion a {
-	padding: 0 5px;
+  padding: 0 5px;
 }
 .tt-suggestion a:hover {
-	text-decoration: none;
+  text-decoration: none;
 }
 .tt-suggestion a span {
-	font-size: 15px;
-	color:     #999;
-	padding:   0 5px;
+  font-size: 15px;
+  color: #999;
+  padding: 0 5px;
 }
+
 div.tooltip {
-	width:      300px;
-	height:     auto;
-	background: #fff;
-	opacity:    1;
-	border:     1px outset #08c;
+  width: 300px;
+  height: auto;
+  background: #fff;
+  opacity: 1;
+  border: 1px outset #08c;
 }
 div.tooltip i.fa {
-	color: #08c;
+  color: #08c;
 }
+
 div.tooltip-inner {
-	background:  #fff;
-	color:       initial;
-	padding:     5px 10px;
-	line-height: 24px;
-	font-size:   14px;
-	opacity:     1;
+  background: #fff;
+  color: initial;
+  padding: 5px 10px;
+  line-height: 24px;
+  font-size: 14px;
+  opacity: 1;
 }
+
 div.tooltip.in {
-	opacity: 1;
+  opacity: 1;
 }
+
 /*# sourceMappingURL=admin.gantt.css.map */

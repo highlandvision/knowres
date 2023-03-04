@@ -1,262 +1,305 @@
 @charset "UTF-8";
 .big {
-	font-size: 120%;
+  font-size: 120%;
 }
+
 .bookme {
-	cursor: pointer;
+  cursor: pointer;
 }
 .bookme:hover {
-	background-color: lightgreen !important;
+  background-color: lightgreen !important;
 }
+
 .child-ages {
-	margin-right:  5px;
-	margin-bottom: 5px;
+  margin-right: 5px;
+  margin-bottom: 5px;
 }
+
 div.divider hr, div.row-fluid hr {
-	border:        0;
-	height:        0;
-	border-top:    1px solid rgba(0, 0, 0, 0.1);
-	border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-	padding:       0;
-	margin:        10px 0;
+  border: 0;
+  height: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 0;
+  margin: 10px 0;
 }
+
 .hasDatepicker {
-	display: inline-block !important;
+  display: inline-block !important;
 }
+
 .header-items .dropdown-toggle .kr {
-	background-color: initial;
+  background-color: initial;
 }
+
 .hideme, .hideinitial {
-	display: none;
+  display: none;
 }
+
 .icon-back:before {
-	content: "";
+  content: "";
 }
+
 img.ordering {
-	padding: 5px;
-	cursor:  move;
+  padding: 5px;
+  cursor: move;
 }
+
 .indent {
-	text-indent: 1rem;
+  text-indent: 1rem;
 }
+
 input[readonly].hasDatepicker {
-	cursor:     pointer;
-	background: inherit;
+  cursor: pointer;
+  background: inherit;
 }
+
 .input-mini {
-	min-width: 9rem !important;
-	max-width: 9rem !important;
-	width:     100% !important;
+  min-width: 9rem !important;
+  max-width: 9rem !important;
+  width: 100% !important;
 }
+
 .italic {
-	font-style: italic;
+  font-style: italic;
 }
+
 #jform_ajax_warning {
-	background: rgba(235, 171, 173, 0.6);
-	padding:    10px;
-	border:     1px solid #999;
-	width:      100%;
-	font-size:  14px;
+  background: rgba(235, 171, 173, 0.6);
+  padding: 10px;
+  border: 1px solid #999;
+  width: 100%;
+  font-size: 14px;
 }
+
 #kr-media-images div {
-	float:      left;
-	text-align: center;
+  float: left;
+  text-align: center;
 }
+
 .label-right label {
-	float:      right;
-	text-align: right;
+  float: right;
+  text-align: right;
 }
+
 .manager-totals {
-	padding:       0 0.5rem 0.5rem;
-	background:    #ededed;
-	border-bottom: 2px solid #ccc;
-	border-right:  2px solid #ccc;
+  padding: 0 0.5rem 0.5rem;
+  background: #ededed;
+  border-bottom: 2px solid #ccc;
+  border-right: 2px solid #ccc;
 }
 .manager-totals .infolist {
-	clear:       both;
-	font-size:   14px;
-	font-style:  normal;
-	line-height: 18px;
-	margin:      5px 0 5px 5px;
+  clear: both;
+  font-size: 14px;
+  font-style: normal;
+  line-height: 18px;
+  margin: 5px 0 5px 5px;
 }
 .manager-totals .infolist label {
-	font-size: 14px;
+  font-size: 14px;
 }
 .manager-totals .infolist.red, .manager-totals .infolist label {
-	color: #a94442;
+  color: #a94442;
 }
 .manager-totals .infolist span {
-	min-height: 20px !important;
+  min-height: 20px !important;
 }
 .manager-totals .text-end {
-	margin-right: 1rem;
+  margin-right: 1rem;
 }
 .manager-totals input.text-end {
-	margin-left: 1rem;
+  margin-left: 1rem;
 }
+
 #mapdrag {
-	width:         100%;
-	height:        45rem;
-	margin-bottom: 2rem;
+  width: 100%;
+  height: 45rem;
+  margin-bottom: 2rem;
 }
+
 .nav-header {
-	padding:   3px 2px !important;
-	font-size: 12px !important;
+  padding: 3px 2px !important;
+  font-size: 12px !important;
 }
+
 .nav-list {
-	padding-left: 20px !important;
+  padding-left: 20px !important;
 }
+
 #piechart_year, #piechart_month, #piechart_week, #piechart_day {
-	width:  auto;
-	margin: 0 auto !important;
+  width: auto;
+  margin: 0 auto !important;
 }
+
 .red {
-	color: #cc0000;
+  color: #cc0000;
 }
+
 .row.inline input {
-	margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 .row.inline label {
-	margin-bottom: 0;
+  margin-bottom: 0;
 }
+
 .row.multi label {
-	font-size: 14px;
+  font-size: 14px;
 }
+
 small, .small {
-	line-height: 20px !important;
-	display:     block !important;
-	font-size:   14px !important;
+  line-height: 20px !important;
+  display: block !important;
+  font-size: 14px !important;
 }
+
 span.divider {
-	padding-left: 20px;
+  padding-left: 20px;
 }
+
 .strong, strong {
-	font-weight: 700;
+  font-weight: 700;
 }
+
 .fw500 {
-	font-weight: 500;
+  font-weight: 500;
 }
+
 .white {
-	color: #fefefe;
+  color: #fefefe;
 }
+
 span.kr-editinplace {
-	width: 100%;
+  width: 100%;
 }
 span.kr-editinplace span {
-	border-bottom: 1px dashed blue;
+  border-bottom: 1px dashed blue;
 }
 span.kr-editinplace button {
-	margin-right: 5px;
+  margin-right: 5px;
 }
 span.kr-editinplace textarea:focus,
 span.kr-editinplace input[type=text]:focus,
 span.kr-editinplace textarea:not(:focus),
 span.kr-editinplace input[type=text]:not(:focus) {
-	outline: none !important;
-	border:  none !important;
+  outline: none !important;
+  border: none !important;
 }
+
 .choices__input::placeholder {
-	opacity:    1 !important;
-	font-style: normal !important;
+  opacity: 1 !important;
+  font-style: normal !important;
 }
+
 .content .card.kr-card {
-	margin-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 .content .card.kr-card .card-header {
-	background:    #f9f9f9 !important;
-	border-bottom: 1px solid #ccc;
-	padding:       0.4rem 1rem !important;
-	font-size:     1rem !important;
-	font-weight:   400;
+  background: #f9f9f9 !important;
+  border-bottom: 1px solid #ccc;
+  padding: 0.4rem 1rem !important;
+  font-size: 1rem !important;
+  font-weight: 400;
 }
 .content .card.kr-card .card-header a.showbefore:before {
-	float:         left !important;
-	font-family:   "Font Awesome 5 Free";
-	font-size:     1.2rem;
-	font-weight:   900;
-	content:       "";
-	padding-right: 10px;
+  float: left !important;
+  font-family: "Font Awesome 5 Free";
+  font-size: 1.2rem;
+  font-weight: 900;
+  content: "";
+  padding-right: 10px;
 }
 .content .card.kr-card .card-header a.showbefore.collapsed:before {
-	color:   #cc0000;
-	content: "";
+  color: #cc0000;
+  content: "";
 }
 .content .card.kr-card .card-body {
-	line-height: 1.6;
+  line-height: 1.6;
 }
 .content .card.kr-daily {
-	margin-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 .content .card.kr-daily .card-header {
-	background:    #f9f9f9 !important;
-	border-bottom: 1px solid #ccc;
-	padding:       0.5rem !important;
-	font-size:     1rem !important;
-	font-weight:   400;
+  background: #f9f9f9 !important;
+  border-bottom: 1px solid #ccc;
+  padding: 0.5rem !important;
+  font-size: 1rem !important;
+  font-weight: 400;
 }
 .content .card.kr-daily .card-header a.showbefore:before {
-	float:         left !important;
-	font-family:   "Font Awesome 5 Free", sans-serif;
-	font-size:     1rem;
-	font-weight:   900;
-	content:       "";
-	padding-right: 10px;
+  float: left !important;
+  font-family: "Font Awesome 5 Free", sans-serif;
+  font-size: 1rem;
+  font-weight: 900;
+  content: "";
+  padding-right: 10px;
 }
 .content .card.kr-daily .card-header a.showbefore.collapsed:before {
-	color:   #cc0000;
-	content: "";
+  color: #cc0000;
+  content: "";
 }
 .content .card.kr-daily .card-body {
-	padding: 0 1rem !important;
+  padding: 0 1rem !important;
 }
+
 .control-group .controls {
-	min-width: 150px !important;
+  min-width: 150px !important;
 }
+
 .control-label span.spacer label {
-	width: 800px !important;
+  width: 800px !important;
 }
+
 input[type=file] {
-	line-height: normal !important;
+  line-height: normal !important;
 }
+
 input[type=number], .input-tiny {
-	min-width:     5rem !important;
-	max-width:     5rem !important;
-	width:         100% !important;
-	padding-left:  0.8rem !important;
-	padding-right: 0.8rem !important;
+  min-width: 5rem !important;
+  max-width: 5rem !important;
+  width: 100% !important;
+  padding-left: 0.8rem !important;
+  padding-right: 0.8rem !important;
 }
+
 .modal-batch.modal-body {
-	overflow-y: visible !important;
-	max-height: 100% !important;
+  overflow-y: visible !important;
+  max-height: 100% !important;
 }
+
 legend {
-	font-size:     18px !important;
-	color:         #999 !important;
-	border-bottom: 1px solid #ccc !important;
-	padding-top:   15px !important;
-	margin-bottom: 15px !important;
+  font-size: 18px !important;
+  color: #999 !important;
+  border-bottom: 1px solid #ccc !important;
+  padding-top: 15px !important;
+  margin-bottom: 15px !important;
 }
+
 .main-card {
-	padding: 2rem;
+  padding: 2rem;
 }
 .main-card.property-dashboard .alert-heading {
-	font-size: 1.1rem;
+  font-size: 1.1rem;
 }
+
 .modal-header {
-	padding: 1rem !important;
+  padding: 1rem !important;
 }
+
 .modal-body {
-	padding: 1rem !important;
+  padding: 1rem !important;
 }
+
 .modal-body pre {
-	word-break: break-all;
-	font-size:  14px;
-	border:     1px solid #ccc;
-	background: #efefef;
-	padding:    5px;
+  word-break: break-all;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  background: #efefef;
+  padding: 5px;
 }
+
 .table th.right,
 .table td.right {
-	text-align: right;
+  text-align: right;
 }
+
 /*# sourceMappingURL=admin.generic.css.map */
