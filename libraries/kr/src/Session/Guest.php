@@ -11,12 +11,14 @@ namespace HighlandVision\KR\Session;
 
 defined('_JEXEC') or die;
 
+use Exception;
 use HighlandVision\KR\Session;
 use JetBrains\PhpStorm\Pure;
 use stdClass;
 
 use function defined;
 use function is_null;
+use function property_exists;
 
 /**
  * Knowres Session helper
@@ -28,7 +30,8 @@ class Guest extends Session
 	/**
 	 * Initialise
 	 *
-	 * @since 3.3.0
+	 * @throws Exception
+	 * @since  3.3.0
 	 */
 	public function __construct()
 	{
@@ -55,12 +58,36 @@ class Guest extends Session
 	/**
 	 * Reset data and session
 	 *
-	 * @since 3.3.0
+	 * @since  3.3.0
 	 * @return stdClass
 	 */
 	public function resetData(): stdClass
 	{
 		$data = $this->init();
+		$this->saveSession($data);
+
+		return $data;
+	}
+
+	/**
+	 * Update session data from array (db item or jform)
+	 *
+	 * @param  array|object  $item  Update data
+	 *
+	 * @since  3.2.0
+	 * @return stdClass
+	 */
+	public function updateData(array|object $item): stdClass
+	{
+		$data = $this->getData();
+		foreach ($item as $key => $value)
+		{
+			if (property_exists($data, $key))
+			{
+				$data->$key = $value;
+			}
+		}
+
 		$this->saveSession($data);
 
 		return $data;

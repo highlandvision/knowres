@@ -17,7 +17,6 @@ use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\HtmlView as KrHtmlView;
 use HighlandVision\KR\Utility;
-use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 
 use function strtolower;
@@ -29,8 +28,8 @@ use function strtolower;
  */
 class HtmlView extends KrHtmlView
 {
-	/** @var CMSObject Contract row. */
-	public CMSObject $contract;
+	/** @var false|object Contract row. */
+	public false|object $contract;
 
 	/**
 	 * Display the view

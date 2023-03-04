@@ -31,7 +31,7 @@ class Extras
 	/**
 	 * Calculate extras
 	 *
-	 * @param   Hub  $Hub  Hub base class
+	 * @param  Hub  $Hub  Hub base class
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -42,12 +42,14 @@ class Extras
 		$extra_total = 0;
 		$extras      = [];
 
+		// Ignore extras for any channnel agent bookings set not to charge
 		if ($this->Hub->getValue('agent_id') && $this->Hub->getValue('service_id'))
 		{
 			if (!$this->Hub->agent->mandatory_extras_charge)
 			{
-				$this->Hub->setValue('extra_total', $extra_total);
-				$this->Hub->setValue('extras', $extras);
+				//TODO-v4 test this
+				$this->Hub->setValue('extra_total', 0);
+				$this->Hub->setValue('extras', []);
 
 				return;
 			}
@@ -74,7 +76,7 @@ class Extras
 	/**
 	 * Calculate the value of extras
 	 *
-	 * @param   array  $extrasDb  Extras for property
+	 * @param  array  $extrasDb  Extras for property
 	 *
 	 * @since 1.0.0
 	 * @return array

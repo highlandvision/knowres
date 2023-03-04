@@ -29,8 +29,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 		<?php echo HTMLHelper::_('searchtools.sort', 'COM_KNOWRES_TAG', 'a.tag', $this->listDirn, $this->listOrder); ?>
 	</th>
 	<th scope="col" class='w-3'>
-		<?php echo HTMLHelper::_('searchtools.sort', 'COM_KNOWRES_ARRIVAL', 'a.arrival', $this->listDirn,
-			$this->listOrder); ?>
+		<?php echo HTMLHelper::_('searchtools.sort', 'COM_KNOWRES_ARRIVAL', 'a.arrival', $this->listDirn, $this->listOrder); ?>
 	</th>
 	<th scope="col" class='w-3'>
 		<?php echo HTMLHelper::_('searchtools.sort', 'COM_KNOWRES_DEPARTURE', 'a.departure', $this->listDirn,

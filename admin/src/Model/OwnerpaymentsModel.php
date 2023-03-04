@@ -209,8 +209,7 @@ class OwnerpaymentsModel extends ListModel
 			      $db->qn('#__knowres_contract', 'c') . ' ON ' . $db->qn('c.id') . '=' . $db->qn('a.contract_id'))
 		      ->select($db->qn('p.id', 'property_id'))
 		      ->select($db->qn('p.property_name', 'property_name'))
-		      ->join('LEFT',
-			      $db->qn('#__knowres_property', 'p') . ' ON ' . $db->qn('c.property_id') . '=' . $db->qn('p.id'))
+		      ->join('LEFT', $db->qn('#__knowres_property', 'p') . ' ON ' . $db->qn('c.property_id') . '=' . $db->qn('p.id'))
 		      ->select($db->qn('o.name', 'owner_name'))
 		      ->join('LEFT', $db->qn('#__knowres_owner', 'o') . 'ON' . $db->qn('o.id') . '=' . $db->qn('a.owner_id'));
 

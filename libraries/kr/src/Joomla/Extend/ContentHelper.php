@@ -6,13 +6,11 @@
  * @license        GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-/** @noinspection PhpMissingParamTypeInspection */
-
 namespace HighlandVision\KR\Joomla\Extend;
 
 defined('_JEXEC') or die;
 
-use Highlandvision\KR\Framework\KrMethods;
+use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Session as KrSession;
 use Joomla\CMS\Access\Access;
 use Joomla\CMS\Factory;
@@ -33,14 +31,14 @@ class ContentHelper extends \Joomla\CMS\Helper\ContentHelper
 	/**
 	 * Gets a list of the actions that can be performed.
 	 *
-	 * @param   string   $component  The component name.
-	 * @param   string   $section    The access section name.
-	 * @param   integer  $id         The item ID.
+	 * @param  string   $component  The component name.
+	 * @param  string   $section    The access section name.
+	 * @param  integer  $id         The item ID.
 	 *
 	 * @since   3.2
-	 * @return  CMSObject
+	 * @return  object
 	 */
-	public static function getActions($component = 'com_knowres', $section = '', $id = 0): CMSObject
+	public static function getActions($component = 'com_knowres', $section = '', $id = 0): object
 	{
 		$assetName = $component;
 

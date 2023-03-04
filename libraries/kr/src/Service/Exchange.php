@@ -52,8 +52,8 @@ class Exchange extends Service
 	/**
 	 * Initialize
 	 *
-	 * @param   string  $from  ISO currency From
-	 * @param   string  $to    ISO currency To
+	 * @param  string  $from  ISO currency From
+	 * @param  string  $to    ISO currency To
 	 *
 	 * @throws Exception
 	 * @since  3.1.0
@@ -69,7 +69,7 @@ class Exchange extends Service
 	/**
 	 * Get rate for online conversion
 	 *
-	 * @param   bool  $inverse  Indicates if invese rate is required
+	 * @param  bool  $inverse  Indicates if invese rate is required
 	 *
 	 * @throws Exception
 	 * @since  3.4.0.
@@ -241,7 +241,7 @@ class Exchange extends Service
 	/**
 	 * Set from currency
 	 *
-	 * @param   string  $from  ISO currency code
+	 * @param  string  $from  ISO currency code
 	 *
 	 * @throws RuntimeException
 	 * @throws RuntimeException
@@ -260,7 +260,7 @@ class Exchange extends Service
 	/**
 	 * Set to currency
 	 *
-	 * @param   string  $to  ISO currency code
+	 * @param  string  $to  ISO currency code
 	 *
 	 * @throws RuntimeException
 	 * @throws RuntimeException

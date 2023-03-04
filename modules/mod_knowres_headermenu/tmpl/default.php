@@ -16,8 +16,7 @@ $icon  = 'fas fa-link';
 
 <div class="header-item-content dropdown header-profile">
 	<button class="btn-secondary dropdown-toggle kr d-flex align-items-center ps-0 py-0" data-bs-toggle="dropdown"
-	        type="button"
-	        title="<?php echo KrMethods::plain($title); ?>">
+	        type="button" title="<?php echo KrMethods::plain($title); ?>">
 		<span class="header-item-icon">
 			<span class="<?php echo $icon; ?>" aria-hidden="true"></span>
 		</span>

@@ -50,11 +50,9 @@ $Currency = new Currency();
 				<?php $min = $minrate; ?>
 			<?php endif; ?>
 
-			<?php echo KrMethods::sprintf('MOD_KNOWRES_FEATURED_FROM_PRICE',
-				$Currency->getSimpleValue($min, $currency)); ?>
+			<?php echo KrMethods::sprintf('MOD_KNOWRES_FEATURED_FROM_PRICE', $Currency->getSimpleValue($min, $currency)); ?>
 		<?php endif; ?>
 	<?php elseif ($summary): ?>
-		<?php echo KrMethods::sprintf('MOD_KNOWRES_FEATURED_FROM_PRICE',
-			$Currency->getSimpleValue($summary, $currency)); ?>
+		<?php echo KrMethods::sprintf('MOD_KNOWRES_FEATURED_FROM_PRICE', $Currency->getSimpleValue($summary, $currency)); ?>
 	<?php endif; ?>
 </div>

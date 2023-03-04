@@ -11,6 +11,7 @@ namespace HighlandVision\KR;
 
 defined('_JEXEC') or die;
 
+use Carbon\Exceptions\InvalidFormatException;
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
@@ -37,10 +38,14 @@ class Calendar
 	protected bool $blocked_done = false;
 	/** @var array Bookings */
 	protected array $bookings;
+	/** @var int Property booking type */
+	protected int $booking_type = 0;
 	/** @var array Changeover values */
 	protected array $changeovers = [];
 	/** @var int Contract ID if editing */
 	protected int $edit_id;
+	/** @var string Final rate date */
+	protected string $final;
 	/** @var string First date */
 	protected string $first;
 	/** @var array Copy of blocked Dates */
@@ -65,12 +70,12 @@ class Calendar
 	/**
 	 * Initialise
 	 *
-	 * @param   int     $property_id  ID of property
+	 * @param  int      $property_id  ID of property
 	 * @param  ?string  $first        From date Y-m-d
 	 * @param  ?string  $final        End date Y-m-d
-	 * @param   int     $nights       # Nights
-	 * @param   int     $edit_id      ID of contract being edited
-	 * @param   array   $rates        Rates for property, Will be read if not supplied
+	 * @param  int      $nights       # Nights
+	 * @param  int      $edit_id      ID of contract being edited
+	 * @param  array    $rates        Rates for property, Will be read if not supplied
 	 *
 	 * @throws Exception
 	 * @since  3.4.0
@@ -91,8 +96,8 @@ class Calendar
 	/**
 	 * Check booked dates to determine if we can reduce the stay nights
 	 *
-	 * @param   string  $date    To be checked
-	 * @param   int     $nights  Stay nights for date
+	 * @param  string  $date    To be checked
+	 * @param  int     $nights  Stay nights for date
 	 *
 	 * @throws Exception
 	 * @since  3.4.0
@@ -182,7 +187,7 @@ class Calendar
 	/**
 	 * Get changeover values
 	 *
-	 * @param   bool  $check_weekly  Set true to set all weekly none start days to X
+	 * @param  bool  $check_weekly  Set true to set all weekly none start days to X
 	 *
 	 * @throws Exception
 	 * @since  3.4.0
@@ -307,8 +312,8 @@ class Calendar
 	/**
 	 * Check if property is available for the required nights
 	 *
-	 * @param   string  $first   First date
-	 * @param   int     $nights  Stay nights
+	 * @param  string  $first   First date
+	 * @param  int     $nights  Stay nights
 	 *
 	 * @throws Exception
 	 * @since  3.3.4
@@ -351,7 +356,7 @@ class Calendar
 	/**
 	 * Read data for processing
 	 *
-	 * @param   array  $rates  Property rates
+	 * @param  array  $rates  Property rates
 	 *
 	 * @throws Exception
 	 * @since  3.4.0
@@ -365,8 +370,8 @@ class Calendar
 	/**
 	 * Increment blocked date value
 	 *
-	 * @param   string  $date       Booked date
-	 * @param   int     $increment  Increment value
+	 * @param  string  $date       Booked date
+	 * @param  int     $increment  Increment value
 	 *
 	 * @since  3.4.0
 	 */
@@ -383,14 +388,19 @@ class Calendar
 	}
 
 	/**
-	 * Update blocked dates
+	 * Increment blocked dates count
+	 * 0 - booked (can allow nothing )
+	 * 1 - booked and arrival ( can allow departure )
+	 * 2 - booked and departure ( can allow arrival )
+	 * 3 - booked and arrival and departure (can allow nothing )
 	 *
-	 * @param   string  $d             Blocked date being processed
-	 * @param   string  $first         Date of first block
-	 * @param   string  $last          Date of last block
-	 * @param   bool    $check_frozen  Set false to ignore frozen
-	 * @param   bool    $paid          Set true for paid reservationsn
+	 * @param  string  $d             Blocked date being processed
+	 * @param  string  $first         Date of first block
+	 * @param  string  $last          Date of last block
+	 * @param  bool    $check_frozen  Set false to ignore frozen
+	 * @param  bool    $paid          Set true for paid reservationsn
 	 *
+	 * @throws InvalidFormatException
 	 * @since  3.4.0
 	 */
 	protected function incrementBlockedDate(string $d, string $first, string $last, bool $check_frozen = true,
@@ -401,18 +411,15 @@ class Calendar
 			return;
 		}
 
-		//TODO-v4 Try to remember what this fixed
-		//		if ($check_frozen && isset($this->frozen[$d]))
-		//		{
-		//			if ($this->frozen[$d] == 0 || $this->frozen[$d] == 3)
-		//			{
-		//				return;
-		//			}
-		//		}
-
-		if ($d == $this->first)
+		if ($d == $this->first && $first == TickTock::getDate())
 		{
 			$this->incrementBlocked($d, 2);
+			if ($d == $first)
+			{
+				$this->incrementBlocked($d, 1);
+			}
+
+			return;
 		}
 
 		if ($d === $first)
@@ -456,7 +463,7 @@ class Calendar
 	/**
 	 * Read the rates to get base minimum nights
 	 *
-	 * @param   string  $date  Date to process
+	 * @param  string  $date  Date to process
 	 *
 	 * @throws Exception
 	 * @since  3.4.0
@@ -527,8 +534,8 @@ class Calendar
 	/**
 	 * Get minimum nights from season / cluster
 	 *
-	 * @param   string  $date        Required date
-	 * @param   int     $min_nights  Minimum nights
+	 * @param  string  $date        Required date
+	 * @param  int     $min_nights  Minimum nights
 	 *
 	 * @since  3.3.4
 	 * @return int
@@ -589,7 +596,7 @@ class Calendar
 	 * X - None
 	 * C - Both
 	 *
-	 * @param   bool  $check_weekly  Set true to set all none day of week start days to X
+	 * @param  bool  $check_weekly  Set true to set all none day of week start days to X
 	 *
 	 * @throws Exception
 	 * @since  3.4.0
@@ -627,9 +634,9 @@ class Calendar
 	/**
 	 * Set and validate dates
 	 *
-	 * @param   string  $first  From date Y-m-d
+	 * @param  string   $first  From date Y-m-d
 	 * @param  ?string  $final  End date Y-m-d
-	 * @param   int     $days   # Days
+	 * @param  int      $days   # Days
 	 *
 	 * @throws Exception
 	 * @since  3.4.0
@@ -754,7 +761,7 @@ class Calendar
 	/**
 	 * Validate property ID
 	 *
-	 * @param   int  $property_id  ID of property
+	 * @param  int  $property_id  ID of property
 	 *
 	 * @throws Exception
 	 * @since  3.4.0
@@ -772,7 +779,8 @@ class Calendar
 			throw new RuntimeException('Property ID is not valid');
 		}
 
-		$this->property_id = $property_id;
+		$this->property_id  = $property_id;
+		$this->booking_type = $item->booking_type;
 	}
 
 	/**
@@ -834,7 +842,7 @@ class Calendar
 	/**
 	 * Set rates for property
 	 *
-	 * @param   array  $rates  Rates array
+	 * @param  array  $rates  Rates array
 	 *
 	 * @throws Exception
 	 * @since  3.4.0
@@ -853,7 +861,7 @@ class Calendar
 	}
 
 	/**
-	 * Get array of weekly dates outwith specified changeover day
+	 * Get array of all non changeover dates for weekly rates
 	 *
 	 * @throws Exception
 	 * @since  3.4.0
@@ -864,7 +872,7 @@ class Calendar
 		{
 			if ($r->min_guests == 1)
 			{
-				$dates = TickTock::allDatesBetween($r->valid_from, $r->valid_to);
+				$dates = TickTock::allDatesBetween($r->valid_from, TickTock::modifyDays($r->valid_to));
 				foreach ($dates as $date)
 				{
 					if ($date >= $this->first && $date <= $this->final)

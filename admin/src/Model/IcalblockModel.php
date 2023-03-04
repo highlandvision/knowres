@@ -17,7 +17,6 @@ use HighlandVision\KR\Joomla\Extend\AdminModel;
 use HighlandVision\KR\Session as KrSession;
 use HighlandVision\KR\TickTock;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Object\CMSObject;
 use Joomla\Database\DatabaseInterface;
 use RuntimeException;
 
@@ -60,9 +59,9 @@ class IcalblockModel extends AdminModel
 	/**
 	 * Delete blocks for a property
 	 *
-	 * @param   int                     $property_id  ID of property
-	 * @param   int                     $service_id   ID of service
-	 * @param   DatabaseInterface|null  $db           Database instance
+	 * @param  int                     $property_id  ID of property
+	 * @param  int                     $service_id   ID of service
+	 * @param  DatabaseInterface|null  $db           Database instance
 	 *
 	 * @since  3.3.0
 	 */
@@ -90,13 +89,13 @@ class IcalblockModel extends AdminModel
 	/**
 	 * Method to get a knowres record.
 	 *
-	 * @param   int  $pk  The id of the primary key.
+	 * @param  int  $pk  The id of the primary key.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return CMSObject|false  Object on success, false on failure.
+	 * @return false|object  Object on success, false on failure.
 	 */
-	public function getItem($pk = null): CMSObject|false
+	public function getItem($pk = null): false|object
 	{
 		$item = parent::getItem($pk);
 		if ($item)
@@ -125,9 +124,9 @@ class IcalblockModel extends AdminModel
 	/**
 	 * Refresh ical data for a property
 	 *
-	 * @param   int    $property_id  ID of property
-	 * @param   array  $blocks       New blocks to import
-	 * @param   int    $service_id   Ical Service ID
+	 * @param  int    $property_id  ID of property
+	 * @param  array  $blocks       New blocks to import
+	 * @param  int    $service_id   Ical Service ID
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -154,7 +153,7 @@ class IcalblockModel extends AdminModel
 	/**
 	 * Method to test whether a record can be deleted.
 	 *
-	 * @param   object  $record  A record object.
+	 * @param  object  $record  A record object.
 	 *
 	 * @since   3.0.0
 	 * @return  bool  True if allowed to delete the record. Defaults to the permission for the component.
@@ -170,8 +169,8 @@ class IcalblockModel extends AdminModel
 	 * Delete old ical data introduced V3.3.0
 	 * Should only be needed after first successful run of new code
 	 *
-	 * @param   int                $property_id  ID of property
-	 * @param   DatabaseInterface  $db           DB Instance
+	 * @param  int                $property_id  ID of property
+	 * @param  DatabaseInterface  $db           DB Instance
 	 *
 	 * @since  3.3.0
 	 */
@@ -192,8 +191,8 @@ class IcalblockModel extends AdminModel
 	/**
 	 * Insert new ical blocks
 	 *
-	 * @param   array              $blocks  New blocks
-	 * @param   DatabaseInterface  $db      Database instance
+	 * @param  array              $blocks  New blocks
+	 * @param  DatabaseInterface  $db      Database instance
 	 *
 	 * @since  3.3.0
 	 */

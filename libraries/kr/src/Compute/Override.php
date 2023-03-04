@@ -28,7 +28,7 @@ class Override
 	/**
 	 * Calculate the manager override values
 	 *
-	 * @param   Hub  $Hub  Hub data
+	 * @param  Hub  $Hub  Hub data
 	 *
 	 * @throws RuntimeException
 	 * @throws InvalidArgumentException

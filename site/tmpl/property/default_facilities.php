@@ -57,3 +57,33 @@ use Joomla\CMS\HTML\HTMLHelper;
 		<div style="clear:both;"></div>
 	<?php endif; ?>
 <?php endif; ?>
+
+<!--  Layout & Floorplan -->
+<?php if ($this->item->p5): ?>
+	<h4><?php echo $this->item->hp5 ?></h4>
+	<p><?php echo $this->item->p5; ?></p>
+<?php endif; ?>
+
+<!--  Exterior -->
+<?php if ($this->item->p6): ?>
+	<h4><?php echo $this->item->hp6 ?></h4>
+	<p><?php echo $this->item->p6; ?></p>
+<?php endif; ?>
+
+<!--  Sports & Activities -->
+<?php if ($this->item->p9): ?>
+	<h4><?php echo $this->item->hp9; ?></h4>
+	<p><?php echo $this->item->p9 ?></p>
+<?php endif; ?>
+
+<!--  Suitability -->
+<?php if ($this->item->p7): ?>
+	<h4><?php echo $this->item->hp7; ?></h4>
+	<p><?php echo $this->item->p7; ?></p>
+<?php endif; ?>
+
+<!--  Notes & Extras -->
+<?php if ($this->item->p8): ?>
+	<h4><?php echo $this->item->hp8; ?></h4>
+	<p><?php echo $this->item->p8; ?></p>
+<?php endif; ?>

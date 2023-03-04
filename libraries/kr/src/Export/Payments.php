@@ -43,7 +43,7 @@ class Payments
 	/**
 	 * Initialize
 	 *
-	 * @param   array  $data  Array containing the export paramters
+	 * @param  array  $data   Array containing the export paramters
 	 *                        $data = [
 	 *                        'valid_from'    =>    (string) Start date.
 	 *                        'valid_to'      =>    (string) End date.
@@ -130,7 +130,7 @@ class Payments
 	/**
 	 * Set data for payments export
 	 *
-	 * @param   stdClass  $row  Contract row
+	 * @param  stdClass  $row  Contract row
 	 *
 	 * @since  2.4.0
 	 * @return array

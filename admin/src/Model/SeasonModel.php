@@ -15,7 +15,6 @@ use Exception;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\AdminModel;
 use HighlandVision\KR\Translations;
-use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Versioning\VersionableControllerTrait;
 
 /**
@@ -37,12 +36,12 @@ class SeasonModel extends AdminModel
 	/**
 	 * Method to get a knowres record.
 	 *
-	 * @param   int  $pk  The id of the primary key.
+	 * @param  int  $pk  The id of the primary key.
 	 *
 	 * @since  1.0.0
-	 * @return CMSObject|false  Object on success, false on failure.
+	 * @return false|object  Object on success, false on failure.
 	 */
-	public function getItem($pk = null): CMSObject|false
+	public function getItem($pk = null): false|object
 	{
 		$item = parent::getItem($pk);
 		if ($item)

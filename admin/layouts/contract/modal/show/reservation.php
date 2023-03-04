@@ -6,27 +6,27 @@
  * @license     See the file "LICENSE.txt" for the full license governing this code.
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
+
 /** @noinspection PhpUnhandledExceptionInspection */
 
 defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrMethods;
-use Joomla\CMS\Object\CMSObject;
 
 extract($displayData);
 /**
  * Layout variables
  *
- * @var CMSObject  $item        Contract row.
- * @var array|bool $notes       Contract notes.
- * @var CMSObject  $guest       Guest row.
- * @var CMSObject  $guestdata   Guestdata row.
- * @var CMSObject  $payments    Payment rows.
- * @var float      $payment     Payments total.
- * @var array|bool $fees        Contractfee rows.
- * @var string     $audience    'manager' or 'owner'.
- * @var float      $balance     Confirmed balance.
- * @var float      $balance_all Balance.
+ * @var false|object $item        Contract row.
+ * @var array|bool   $notes       Contract notes.
+ * @var false|object $guest       Guest row.
+ * @var false|object $guestdata   Guestdata row.
+ * @var object       $payments    Payment rows.
+ * @var float        $payment     Payments total.
+ * @var array|bool   $fees        Contractfee rows.
+ * @var string       $audience    'manager' or 'owner'.
+ * @var float        $balance     Confirmed balance.
+ * @var float        $balance_all Balance.
  */
 ?>
 

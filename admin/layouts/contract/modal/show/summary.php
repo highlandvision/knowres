@@ -12,13 +12,12 @@ defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\TickTock;
-use Joomla\CMS\Object\CMSObject;
 
 extract($displayData);
 /**
  * Layout variables
  *
- * @var CMSObject $item The contract row.
+ * @var false|object $item Contract item.
  */
 ?>
 

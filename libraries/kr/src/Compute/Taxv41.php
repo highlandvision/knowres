@@ -41,7 +41,7 @@ class Taxv41
 	/**
 	 * Process tax rates
 	 *
-	 * @param   Hub  $Hub  Hub base class
+	 * @param  Hub  $Hub  Hub base class
 	 *
 	 * @throws RuntimeException|Exception
 	 * @since  3.3.0
@@ -69,7 +69,7 @@ class Taxv41
 	/**
 	 * Calculate taxes
 	 *
-	 * @param   string  $code  Tax ID
+	 * @param  string  $code  Tax ID
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -93,7 +93,6 @@ class Taxv41
 				'type'        => $this->trow->pay_arrival ? 3 : 1,
 				'id'          => $this->trow->id,
 				'agent'       => $this->trow->agent,
-				'service'     => $this->trow->service,
 				'gross'       => $this->trow->gross,
 				'pay_arrival' => $this->trow->pay_arrival,
 				'taxrate_id'  => $this->trow->taxrate_id,
@@ -112,7 +111,6 @@ class Taxv41
 					'type'        => $this->trow->pay_arrival ? 3 : 1,
 					'id'          => $this->trow->id,
 					'agent'       => $this->trow->agent,
-					'service'     => $this->trow->service,
 					'gross'       => $this->trow->gross,
 					'pay_arrival' => $this->trow->pay_arrival,
 					'taxrate_id'  => $this->trow->taxrate_id,
@@ -125,8 +123,8 @@ class Taxv41
 	/**
 	 * Calculate tax value for specific tax
 	 *
-	 * @param   float  $base     Base value
-	 * @param   int    $base_id  ID of base rate for supplments
+	 * @param  float  $base     Base value
+	 * @param  int    $base_id  ID of base rate for supplments
 	 *
 	 * @throws InvalidArgumentException
 	 * @throws RuntimeException

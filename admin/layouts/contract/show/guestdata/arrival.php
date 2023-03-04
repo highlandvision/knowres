@@ -6,10 +6,10 @@
  * @license     See the file "LICENSE.txt" for the full license governing this code.
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
+
 /** @noinspection PhpUnhandledExceptionInspection */
 
 use HighlandVision\KR\Framework\KrMethods;
-use Joomla\CMS\Object\CMSObject;
 
 defined('_JEXEC') or die;
 
@@ -17,21 +17,21 @@ extract($displayData);
 /**
  * Layout variables
  *
- * @var CMSObject $guestdata Guestdata row.
+ * @var false|object $guestdata Guestdata row.
  */
 ?>
 
-	<div class="row mt-3">
-		<div class="col-12 fw500">
-			<?php echo KrMethods::plain('COM_KNOWRES_ARRIVAL'); ?>
-		</div>
-		<div class="col-4">
-			<?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATAS_ARRIVAL_BY'); ?>
-		</div>
-		<div class="col-8">
-			<?php echo ucfirst($guestdata->arrival_means); ?>
-		</div>
+<div class="row mt-3">
+	<div class="col-12 fw500">
+		<?php echo KrMethods::plain('COM_KNOWRES_ARRIVAL'); ?>
 	</div>
+	<div class="col-4">
+		<?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATAS_ARRIVAL_BY'); ?>
+	</div>
+	<div class="col-8">
+		<?php echo ucfirst($guestdata->arrival_means); ?>
+	</div>
+</div>
 
 <?php if ($guestdata->arrival_means == 'air'): ?>
 	<?php if (is_countable($guestdata->arrival_air) && count($guestdata->arrival_air)): ?>

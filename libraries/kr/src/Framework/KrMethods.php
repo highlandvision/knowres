@@ -40,11 +40,11 @@ class KrMethods
 	/**`
 	 * Create log entry
 	 *
-	 * @param   mixed    $entry
-	 * @param   integer  $priority
-	 * @param   string   $category
-	 * @param  ?string   $date
-	 * @param   array    $context
+	 * @param  mixed    $entry
+	 * @param  integer  $priority
+	 * @param  string   $category
+	 * @param  ?string  $date
+	 * @param  array    $context
 	 *
 	 * @since 3.7.0
 	 */
@@ -57,8 +57,8 @@ class KrMethods
 	/**
 	 * Create logging options
 	 *
-	 * @param   array  $options     Options
-	 * @param   array  $categories  Categories
+	 * @param  array  $options     Options
+	 * @param  array  $categories  Categories
 	 *
 	 * @since 3.7.0
 	 */
@@ -95,14 +95,14 @@ class KrMethods
 	/**
 	 * Build select list
 	 *
-	 * @param   array   $data       Options array with key / value
-	 * @param   string  $name       Name of select
-	 * @param   mixed   $attribs    See genericlist
-	 * @param   string  $optKey     See genericlist
-	 * @param   string  $optText    See genericlist
-	 * @param   null    $selected   See genericlist
-	 * @param   string  $idtag      See genericlist
-	 * @param   bool    $translate  See genericlist
+	 * @param  array   $data       Options array with key / value
+	 * @param  string  $name       Name of select
+	 * @param  mixed   $attribs    See genericlist
+	 * @param  string  $optKey     See genericlist
+	 * @param  string  $optText    See genericlist
+	 * @param  null    $selected   See genericlist
+	 * @param  string  $idtag      See genericlist
+	 * @param  bool    $translate  See genericlist
 	 *
 	 * @since  3.3.0
 	 * @return mixed
@@ -116,7 +116,7 @@ class KrMethods
 	/**
 	 * Remoce cached data
 	 *
-	 * @param   string  $name  Name of cache
+	 * @param  string  $name  Name of cache
 	 *
 	 * @since  3.2.0
 	 */
@@ -135,7 +135,7 @@ class KrMethods
 	/**
 	 * Convert email to punycode
 	 *
-	 * @param   string  $email  Email to convert
+	 * @param  string  $email  Email to convert
 	 *
 	 * @since  3.3.0
 	 * @return string
@@ -148,7 +148,7 @@ class KrMethods
 	/**
 	 * Get article
 	 *
-	 * @param   int  $article_id  ID of article
+	 * @param  int  $article_id  ID of article
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -173,7 +173,7 @@ class KrMethods
 	/**
 	 * Get cache instance
 	 *
-	 * @param   array  $options  Cache options
+	 * @param  array  $options  Cache options
 	 *
 	 * @since  3.2.0
 	 * @return Cache
@@ -186,8 +186,8 @@ class KrMethods
 	/**
 	 * Get a configuration value
 	 *
-	 * @param   string  $value    Config value to return
-	 * @param   null    $default  The default return value
+	 * @param  string  $value    Config value to return
+	 * @param  null    $default  The default return value
 	 *
 	 * @throws Exception
 	 * @since  3.5.0
@@ -201,7 +201,7 @@ class KrMethods
 	/**
 	 * Returns cookie with the given name.
 	 *
-	 * @param   string  $name  Cookie name
+	 * @param  string  $name  Cookie name
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -215,7 +215,7 @@ class KrMethods
 	/**
 	 * Get default language
 	 *
-	 * @param   string  $area  'site' or 'administrator'
+	 * @param  string  $area  'site' or 'administrator'
 	 *
 	 * @since  3.5.0
 	 * @return mixed
@@ -286,7 +286,7 @@ class KrMethods
 	 * Admin checks for admin layouts, site template layouts and finally site layouts
 	 * Site checks for site template and site layouts
 	 *
-	 * @param   string  $name  Name of layout
+	 * @param  string  $name  Name of layout
 	 *
 	 * @throws Exception
 	 * @since  3.2.0
@@ -321,7 +321,7 @@ class KrMethods
 	/**
 	 * Get menu item
 	 *
-	 * @param   string  $link  Menu link to search for
+	 * @param  string  $link  Menu link to search for
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -335,7 +335,7 @@ class KrMethods
 	/**
 	 * Get component params
 	 *
-	 * @param   string  $component  Component name
+	 * @param  string  $component  Component name
 	 *
 	 * @since  3.2.0
 	 * @return Registry
@@ -385,8 +385,8 @@ class KrMethods
 	/**
 	 * Get state
 	 *
-	 * @param   string  $key      State key
-	 * @param   mixed   $default  Default value
+	 * @param  string  $key      State key
+	 * @param  mixed   $default  Default value
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -400,9 +400,9 @@ class KrMethods
 	/**
 	 * Get user input
 	 *
-	 * @param   string  $name     Name of input
-	 * @param   array   $default  Default value
-	 * @param   string  $method   Input type
+	 * @param  string  $name     Name of input
+	 * @param  array   $default  Default value
+	 * @param  string  $method   Input type
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -416,9 +416,9 @@ class KrMethods
 	/**
 	 * Get user input
 	 *
-	 * @param   string  $name     Name of input
-	 * @param   bool    $default  Default value
-	 * @param   string  $method   Input type   True for POST o/w GET
+	 * @param  string  $name     Name of input
+	 * @param  bool    $default  Default value
+	 * @param  string  $method   Input type   True for POST o/w GET
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -432,8 +432,8 @@ class KrMethods
 	/**
 	 * Get user input
 	 *
-	 * @param   string  $name     Name of input
-	 * @param   array   $default  Default value
+	 * @param  string  $name     Name of input
+	 * @param  array   $default  Default value
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -447,9 +447,9 @@ class KrMethods
 	/**
 	 * Get user input
 	 *
-	 * @param   string  $name     Name of input
-	 * @param   float   $default  Default value
-	 * @param   string  $method   Input type
+	 * @param  string  $name     Name of input
+	 * @param  float   $default  Default value
+	 * @param  string  $method   Input type
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -463,9 +463,9 @@ class KrMethods
 	/**
 	 * Get user input
 	 *
-	 * @param   string  $name     Name of input
-	 * @param   int     $default  Default value
-	 * @param   string  $method   Input type
+	 * @param  string  $name     Name of input
+	 * @param  int     $default  Default value
+	 * @param  string  $method   Input type
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -479,9 +479,9 @@ class KrMethods
 	/**
 	 * Get user input
 	 *
-	 * @param   string  $name     Name of input
+	 * @param  string   $name     Name of input
 	 * @param  ?string  $default  Default value
-	 * @param   string  $method   Input type
+	 * @param  string   $method   Input type
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -507,7 +507,7 @@ class KrMethods
 	/**
 	 * Return a json response
 	 *
-	 * @param   array  $wrapper  Json wrapper
+	 * @param  array  $wrapper  Json wrapper
 	 *
 	 * @since  3.3.0
 	 * @return JsonResponse
@@ -520,7 +520,7 @@ class KrMethods
 	/**
 	 * Loads a plugin or module position
 	 *
-	 * @param   string  $position  Position to load
+	 * @param  string  $position  Position to load
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -534,7 +534,7 @@ class KrMethods
 	/**
 	 * Logger out a user.
 	 *
-	 * @param   int  $user_id  ID of user
+	 * @param  int  $user_id  ID of user
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -548,8 +548,8 @@ class KrMethods
 	/**
 	 * Add message to queue
 	 *
-	 * @param   string  $message  Message text
-	 * @param   string  $type     Message type, error, alert etc
+	 * @param  string  $message  Message text
+	 * @param  string  $type     Message type, error, alert etc
 	 *
 	 * @throws Exception
 	 * @since  3.2.0
@@ -562,7 +562,7 @@ class KrMethods
 	/**
 	 * Translate language constant
 	 *
-	 * @param   string  $string  String to translate
+	 * @param  string  $string  String to translate
 	 *
 	 * @since  3.2.0
 	 * @return string
@@ -575,7 +575,7 @@ class KrMethods
 	/**
 	 * Translate language plural
 	 *
-	 * @param   mixed  ...$string  String to pluralise
+	 * @param  mixed  ...$string  String to pluralise
 	 *
 	 * @since  3.3.0
 	 * @return string
@@ -588,8 +588,8 @@ class KrMethods
 	/**
 	 * Redirect
 	 *
-	 * @param   string  $link    URL
-	 * @param   int     $status  HTTP status code
+	 * @param  string  $link    URL
+	 * @param  int     $status  HTTP status code
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -602,10 +602,10 @@ class KrMethods
 	/**
 	 * Register a new user
 	 *
-	 * @param   string  $name      Name of user
-	 * @param   string  $username  Username of user
-	 * @param   string  $email     Email of user
-	 * @param   string  $password  Generated password
+	 * @param  string  $name      Name of user
+	 * @param  string  $username  Username of user
+	 * @param  string  $email     Email of user
+	 * @param  string  $password  Generated password
 	 *
 	 * @throws RuntimeException
 	 * @since  3.9.0
@@ -619,8 +619,8 @@ class KrMethods
 	/**
 	 * Method to render the layout.
 	 *
-	 * @param   string             $name  Dot separated path to the layout file, relative to base path
-	 * @param   object|array|null  $data  Display fields in array
+	 * @param  string             $name  Dot separated path to the layout file, relative to base path
+	 * @param  object|array|null  $data  Display fields in array
 	 *
 	 * @throws Exception
 	 * @since  3.1.0
@@ -636,9 +636,9 @@ class KrMethods
 	/**
 	 * Get router url
 	 *
-	 * @param   string  $url    URL
-	 * @param   bool    $xhtml  Replace & by &amp; for XML compliance.
-	 * @param   int     $ssl    Secure state for the resolved URI.
+	 * @param  string  $url    URL
+	 * @param  bool    $xhtml  Replace & by &amp; for XML compliance.
+	 * @param  int     $ssl    Secure state for the resolved URI.
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -652,17 +652,17 @@ class KrMethods
 	/**
 	 * Send email
 	 *
-	 * @param   mixed       $from        From email
-	 * @param   mixed       $fromName    From name
-	 * @param   mixed       $to          To email
-	 * @param   mixed       $subject     Subject
-	 * @param   mixed       $body        Body
-	 * @param   bool        $html        TRUE for html, FALSO for plain text
-	 * @param   mixed|null  $cc          Carbon copy emaiols
-	 * @param   mixed|null  $bcc         Blind carbon copy emails
-	 * @param   mixed|null  $reply       Reply email
-	 * @param   mixed|null  $replyName   Reply name
-	 * @param   mixed|null  $attachment  Attachments
+	 * @param  mixed       $from        From email
+	 * @param  mixed       $fromName    From name
+	 * @param  mixed       $to          To email
+	 * @param  mixed       $subject     Subject
+	 * @param  mixed       $body        Body
+	 * @param  bool        $html        TRUE for html, FALSO for plain text
+	 * @param  mixed|null  $cc          Carbon copy emaiols
+	 * @param  mixed|null  $bcc         Blind carbon copy emails
+	 * @param  mixed|null  $reply       Reply email
+	 * @param  mixed|null  $replyName   Reply name
+	 * @param  mixed|null  $attachment  Attachments
 	 *
 	 * @throws Exception
 	 * @since  2.3.0
@@ -678,8 +678,8 @@ class KrMethods
 	/**
 	 * Set state
 	 *
-	 * @param   string  $key    State key
-	 * @param   mixed   $value  State default value
+	 * @param  string  $key    State key
+	 * @param  mixed   $value  State default value
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -692,7 +692,7 @@ class KrMethods
 	/**
 	 * Translate language variable
 	 *
-	 * @param   mixed  ...$string  $string String to translate
+	 * @param  mixed  ...$string  $string String to translate
 	 *
 	 * @since  3.2.0
 	 * @return string

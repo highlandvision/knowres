@@ -37,8 +37,7 @@ include(JPATH_ADMINISTRATOR . '/components/com_knowres/layouts/html/list/include
 </table>
 <?php include(JPATH_ADMINISTRATOR . '/components/com_knowres/layouts/html/list/includes/list-form-end.php'); ?>
 
-<div aria-labelledby="kr-ownerpayment-modal-title" class="modal draggable fade" id="kr-ownerpayment-modal"
-     tabindex="-1">
+<div aria-labelledby="kr-ownerpayment-modal-title" class="modal draggable fade" id="kr-ownerpayment-modal" tabindex="-1">
 	<div class="modal-dialog modal-lg ">
 		<div class="modal-content">
 		</div>

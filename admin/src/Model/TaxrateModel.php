@@ -20,7 +20,6 @@ use HighlandVision\KR\Joomla\Extend\AdminModel;
 use HighlandVision\KR\Translations;
 use HighlandVision\KR\Utility;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Versioning\VersionableControllerTrait;
 
 /**
@@ -42,21 +41,19 @@ class TaxrateModel extends AdminModel
 	/**
 	 * Method to get a knowres record.
 	 *
-	 * @param   int  $pk  The id of the primary key.
+	 * @param  int  $pk  The id of the primary key.
 	 *
 	 * @since  1.0.0
-	 * @return CMSObject|false  Object on success, false on failure.
+	 * @return false|object  Object on success, false on failure.
 	 */
-	public function getItem($pk = null): CMSObject|false
+	public function getItem($pk = null): false|object
 	{
-		/** @var TaxrateModel $item */
 		$item = parent::getItem($pk);
 		if ($item)
 		{
-			$item->agent   = Utility::decodeJson($item->agent, true);
-			$item->service = Utility::decodeJson($item->service, true);
-			$Translations  = new Translations();
-			$item->name    = $Translations->getText('taxrate', $item->id);
+			$item->agent  = Utility::decodeJson($item->agent, true);
+			$Translations = new Translations();
+			$item->name   = $Translations->getText('taxrate', $item->id);
 		}
 
 		return $item;
@@ -83,7 +80,7 @@ class TaxrateModel extends AdminModel
 	/**
 	 * Prepare and sanitise the table prior to saving.
 	 *
-	 * @param   TaxrateTable  $table  Table object
+	 * @param  TaxrateTable  $table  Table object
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -95,10 +92,6 @@ class TaxrateModel extends AdminModel
 		if (empty($jform['agent']))
 		{
 			$table->agent = '';
-		}
-		if (empty($jform['service']))
-		{
-			$table->service = '';
 		}
 
 		parent::prepareTable($table);

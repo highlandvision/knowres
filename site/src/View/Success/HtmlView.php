@@ -7,7 +7,7 @@
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
 
-namespace HighlandVision\Component\Knowres\Site\View\Confirm;
+namespace HighlandVision\Component\Knowres\Site\View\Success;
 
 defined('_JEXEC') or die;
 
@@ -15,6 +15,7 @@ use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\HtmlView as KrHtmlView;
+use HighlandVision\KR\Session as KrSession;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
 
@@ -23,42 +24,44 @@ use Joomla\CMS\Uri\Uri;
  *
  * @since 1.0.0
  */
-class SuccessView extends KrHtmlView\Site
+class HtmlView extends KrHtmlView\Site
 {
+	/* @var object Contract item */
+	public object $contract;
 	/** @var bool True for request booking */
 	public bool $request;
 
 	/**
-	 * Display the form
+	 * Display the reservation success page
 	 *
-	 * @param   null  $tpl  Default template.
+	 * @param  null  $tpl  Default template.
 	 *
 	 * @throws Exception
-	 * @since  1.0.0
+	 * @since  4.0.0
 	 * @return void
 	 */
 	public function display($tpl = null): void
 	{
-		$this->setLayout('success');
-		$this->params = KrMethods::getParams();
+		$userSession = new KrSession\User();
+		$userData    = $userSession->getData();
 
-		if (!$this->contract_id)
+		if (!$userData->pr_contract_id)
 		{
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_FATAL_CONFIRM'));
 			KrMethods::redirect(KrMethods::route(Uri::base()));
 		}
 
-		$this->request  = $this->get('request', 'confirm');
-		$this->contract = KrFactory::getAdminModel('contract')->getItem($this->contract_id);
+		$this->contract = KrFactory::getAdminModel('contract')->getItem($userData->pr_contract_id);
 		if (empty($this->contract->id))
 		{
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_FATAL_CONFIRM'));
 			KrMethods::redirect(KrMethods::route(KrMethods::getRoot()));
 		}
 
-		$this->modules          = KrMethods::loadInternal('{loadposition carhireform}');
-		$this->modules          .= KrMethods::loadInternal('{loadposition propertyview}');
-		$this->meta_title       = KrMethods::plain('COM_KNOWRES_TITLE_SUCCESS');
+		KrMethods::cleanCache('com_knowres_contracts');
+
+		$this->request          = (bool)$this->contract->on_request;
+		$this->meta_title       = KrMethods::plain('COM_KNOWRES_TITLE_CONFIRM_SUCCESS');
 		$this->meta_description = KrMethods::plain('COM_KNOWRES_PAGE_TITLE');
 
 		$this->prepareDocument();
@@ -70,7 +73,7 @@ class SuccessView extends KrHtmlView\Site
 	 * Prepares the document
 	 *
 	 * @throws Exception
-	 * @since 1.0.0
+	 * @since  1.0.0
 	 */
 	protected function prepareDocument()
 	{

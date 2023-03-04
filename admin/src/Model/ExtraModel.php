@@ -20,7 +20,6 @@ use HighlandVision\KR\Joomla\Extend\AdminModel;
 use HighlandVision\KR\Session as KrSession;
 use HighlandVision\KR\Translations;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Versioning\VersionableControllerTrait;
 
 /**
@@ -42,7 +41,7 @@ class ExtraModel extends AdminModel
 	/**
 	 * Display textual extra model
 	 *
-	 * @param   int  $extra_model  Extra model
+	 * @param  int  $extra_model  Extra model
 	 *
 	 * @since  1.0.0
 	 * @return string
@@ -64,14 +63,13 @@ class ExtraModel extends AdminModel
 	/**
 	 * Method to get an extra row.
 	 *
-	 * @param   int  $pk  The id of the primary key.
+	 * @param  int  $pk  The id of the primary key.
 	 *
 	 * @since  1.0.0
-	 * @return CMSObject|false  Object on success, false on failure.
+	 * @return object|false  Object on success, false on failure.
 	 */
-	public function getItem($pk = null): CMSObject|false
+	public function getItem($pk = null): object|false
 	{
-		/* @var ExtraModel $item */
 		$item = parent::getItem($pk);
 		if ($item)
 		{
@@ -86,8 +84,8 @@ class ExtraModel extends AdminModel
 	/**
 	 * Override publish function
 	 *
-	 * @param   array  $pks    A list of the primary keys to change.
-	 * @param   int    $value  The value of the published state.
+	 * @param  array  $pks    A list of the primary keys to change.
+	 * @param  int    $value  The value of the published state.
 	 *
 	 * @throws Exception
 	 * @since  3.1.0
@@ -127,7 +125,7 @@ class ExtraModel extends AdminModel
 	/**
 	 * Method to test whether a record can be deleted.
 	 *
-	 * @param   object  $record  A record object.
+	 * @param  object  $record  A record object.
 	 *
 	 * @since  3.0.0
 	 * @return bool True if allowed to delete the record. Defaults to the permission for the component.

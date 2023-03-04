@@ -16,7 +16,7 @@ $this->form->setFieldAttribute('guest_note', 'hiddenLabel', false);
 
 <fieldset class="fieldset">
 	<legend><?php echo KrMethods::plain('COM_KNOWRES_CONFIRM_CONTACT_DETAILS'); ?></legend>
-	<div class="callout small gray">
+	<div class="callout small formbg">
 		<div class="row">
 			<div class="small-12 medium-6 columns">
 				<?php echo $this->guestForm->renderField('email'); ?>
@@ -83,7 +83,7 @@ $this->form->setFieldAttribute('guest_note', 'hiddenLabel', false);
 
 <fieldset class="fieldset">
 	<legend><?php echo KrMethods::plain('COM_KNOWRES_CONFIRM_ADDITIONAL_INFO'); ?></legend>
-	<div class="callout small gray">
+	<div class="callout small formbg">
 		<div class="row">
 			<div class="small-12 columns">
 				<?php echo $this->form->renderField('guest_note'); ?>
@@ -91,3 +91,24 @@ $this->form->setFieldAttribute('guest_note', 'hiddenLabel', false);
 		</div>
 	</div>
 </fieldset>
+
+<script>
+	async function comboGeo(parentvalue, task, target, childvalue = '0') {
+		let formData = new FormData();
+		formData.append('parent', parentvalue);
+		formData.append('target', target + '_id');
+		formData.append('child', childvalue);
+		let response = await fetch('index.php?option=com_knowres&task=' + task, {
+			method: 'post',
+			body:   formData
+		});
+		let result = await response.json();
+		if (result.success) {
+			let current = document.querySelector('.' + target + 'chain');
+			current.outerHTML = result.data.html;
+		} else {
+			alert(result.message);
+		}
+		return false;
+	}
+</script>

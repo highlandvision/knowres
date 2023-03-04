@@ -7,7 +7,7 @@
  */
 
 "use strict";
-
+//TODO-v4.1 Include in webpack.build.modules.js and remove setRegion from hero layout
 // noinspection JSUnusedGlobalSymbols
 function guestIncrement(updown, target, atext, ctext) {
 	let cac = document.getElementById('child-ages-container');

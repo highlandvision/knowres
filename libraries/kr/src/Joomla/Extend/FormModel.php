@@ -29,7 +29,7 @@ abstract class FormModel extends \Joomla\CMS\MVC\Model\FormModel
 	/**
 	 * Constructor.
 	 *
-	 * @param   array  $config  An optional associative array of configuration settings.
+	 * @param  array  $config  An optional associative array of configuration settings.
 	 *
 	 * @throws Exception
 	 * @since  1.6
@@ -42,8 +42,8 @@ abstract class FormModel extends \Joomla\CMS\MVC\Model\FormModel
 	/**
 	 * Abstract method for getting the form from the model.
 	 *
-	 * @param   array    $data      Data for the form.
-	 * @param   boolean  $loadData  True if the form is to load its own data (default case), false if not.
+	 * @param  array    $data      Data for the form.
+	 * @param  boolean  $loadData  True if the form is to load its own data (default case), false if not.
 	 *
 	 * @since   1.6
 	 * @return  Form|false  A Form object on success, false on failure

@@ -36,7 +36,7 @@ class PaymentDates
 	/**
 	 * Calculate payment dates
 	 *
-	 * @param   Hub  $Hub  Hub base class
+	 * @param  Hub  $Hub  Hub base class
 	 *
 	 * @throws Exception
 	 * @since 1.0.0
@@ -103,7 +103,7 @@ class PaymentDates
 	/**
 	 * Calculate balance date
 	 *
-	 * @param   string  $expiry_date  Calculated expiry date
+	 * @param  string  $expiry_date  Calculated expiry date
 	 *
 	 * @throws Exception
 	 * @since 1.0.0

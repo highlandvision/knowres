@@ -14,7 +14,7 @@
 			a.showbefore {
 				&:before {
 					float: left !important;
-					font-family: "Font Awesome 5 Free";
+					font-family: "Font Awesome 5 Free", sans-serif;
 					font-size: 1.2rem;
 					font-weight: 900;
 					content: "\f146";
@@ -25,9 +25,6 @@
 					content: "\f0fe";
 				}
 			}
-		}
-		.card-body {
-			line-height: 1.6;
 		}
 	}
 	.card.kr-daily {

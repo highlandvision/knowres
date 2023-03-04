@@ -24,7 +24,7 @@ use Joomla\CMS\Factory;
 			   aria-expanded="false" aria-controls="panel-collapse-guest">
 				<?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATA_TITLE'); ?>
 			</a>
-			<?php if (isset($guestdata->checked_out_time) && $guestdata->checked_out != KrMethods::getUser()->id): ?>
+			<?php if (!is_null($guestdata->checked_out_time) && $guestdata->checked_out != KrMethods::getUser()->id): ?>
 				<?php
 				$name = Factory::getUser($guestdata->checked_out)->name ?: KrMethods::plain('COM_KNOWRES_GUEST');
 				$when = TickTock::displayTS($guestdata->checked_out_time);

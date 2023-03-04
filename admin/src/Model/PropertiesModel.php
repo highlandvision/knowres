@@ -31,7 +31,7 @@ class PropertiesModel extends ListModel
 	/**
 	 * Constructor.
 	 *
-	 * @param   array  $config  An optional associative array of configuration settings.
+	 * @param  array  $config  An optional associative array of configuration settings.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -76,7 +76,7 @@ class PropertiesModel extends ListModel
 	/**
 	 * Get last property update on sub tables
 	 *
-	 * @param   string  $table  Name of table
+	 * @param  string  $table  Name of table
 	 *
 	 * @throws RuntimeException
 	 * @since  3.3.0
@@ -101,7 +101,7 @@ class PropertiesModel extends ListModel
 	/**
 	 * Get property areas for typeahead
 	 *
-	 * @param   int     $region_id  ID of region
+	 * @param  int      $region_id  ID of region
 	 * @param  ?string  $search     Search value
 	 *
 	 * @throws RuntimeException
@@ -147,7 +147,7 @@ class PropertiesModel extends ListModel
 	/**
 	 * Get property autosearch data
 	 *
-	 * @param   string  $name  Property name string
+	 * @param  string  $name  Property name string
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
@@ -196,7 +196,7 @@ class PropertiesModel extends ListModel
 	/**
 	 * Method to get all the data for the property dashboard.
 	 *
-	 * @param   int  $id  The id of the primary key.
+	 * @param  int  $id  The id of the primary key.
 	 *
 	 * @throws RuntimeException
 	 * @throws Exception
@@ -273,7 +273,7 @@ class PropertiesModel extends ListModel
 	/**
 	 * Get properties for change list
 	 *
-	 * @param   int  $id  ID of property
+	 * @param  int  $id  ID of property
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
@@ -380,7 +380,7 @@ class PropertiesModel extends ListModel
 	/**
 	 * Get property IDs for a specific state
 	 *
-	 * @param   int  $state  Required state or 0 for all
+	 * @param  int  $state  Required state or 0 for all
 	 *
 	 * @throws RuntimeException
 	 * @since  3.0.0
@@ -409,8 +409,8 @@ class PropertiesModel extends ListModel
 	/**
 	 * Get rates for annual update of property
 	 *
-	 * @param   int     $id    ID of property
-	 * @param   string  $date  From date
+	 * @param  int     $id    ID of property
+	 * @param  string  $date  From date
 	 *
 	 * @since   3.3.0
 	 * @return mixed
@@ -614,7 +614,7 @@ class PropertiesModel extends ListModel
 	 * different modules that might need different sets of data or different
 	 * ordering requirements.
 	 *
-	 * @param   string  $id  A prefix for the store id.
+	 * @param  string  $id  A prefix for the store id.
 	 *
 	 * @since  1.0.0
 	 * @return string
@@ -635,8 +635,8 @@ class PropertiesModel extends ListModel
 	 * Method to autopopulate the model state.
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @param   string  $ordering
-	 * @param   string  $direction
+	 * @param  string  $ordering
+	 * @param  string  $direction
 	 *
 	 * @throws Exception
 	 * @since  1.0.0

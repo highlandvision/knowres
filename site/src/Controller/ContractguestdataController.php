@@ -11,7 +11,10 @@ namespace HighlandVision\Component\Knowres\Site\Controller;
 
 defined('_JEXEC') or die;
 
+use Exception;
+use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\FormController;
+use HighlandVision\KR\SiteHelper;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 
 /**
@@ -36,6 +39,30 @@ class ContractguestdataController extends FormController
 		$config = ['ignore_request' => true]): BaseDatabaseModel
 	{
 		return parent::getModel($name, $prefix, $config);
+	}
+
+	/**
+	 * Method to save a record.
+	 *
+	 * @param ?string  $key     The name of the primary key of the URL variable.
+	 * @param ?string  $urlVar  The name of the URL variable if different from the primary key (sometimes required to avoid router collisions).
+	 *
+	 * @throws Exception
+	 * @since  4.0.0
+	 */
+	public function save($key = null, $urlVar = null): bool
+	{
+		$this->checkToken();
+
+		if (parent::save($key, $urlVar))
+		{
+			KrMethods::message(KrMethods::plain('COM_KNOWRES_ITEM_UPDATED_SUCCESSFULLY'));
+			SiteHelper::redirectDashboard();
+
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

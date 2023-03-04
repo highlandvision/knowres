@@ -51,7 +51,7 @@ class ListgenericfeatureField extends ListField
 		$values[] = "beach chairs";
 		$values[] = "beach view";
 		$values[] = "bed linen included";
-		$values[] = "bed linen & towels";
+		$values[] = "bed linen and towels";
 		$values[] = "bidet";
 		$values[] = "bicycles";
 		$values[] = "billiard table";
@@ -122,6 +122,7 @@ class ListgenericfeatureField extends ListField
 		$values[] = "fridge";
 		$values[] = "fridge freezer";
 		$values[] = "garage";
+		$values[] = "garden";
 		$values[] = "garden private";
 		$values[] = "games room";
 		$values[] = "garden shared";
@@ -132,6 +133,7 @@ class ListgenericfeatureField extends ListField
 		$values[] = "hair dryer";
 		$values[] = "health club";
 		$values[] = "heated towel bar";
+		$values[] = "heating";
 		$values[] = "help desk";
 		$values[] = "high chair";
 		$values[] = "hot tub private";
@@ -157,6 +159,7 @@ class ListgenericfeatureField extends ListField
 		$values[] = "king size bed";
 		$values[] = "kitchen dining area";
 		$values[] = "kitchen island";
+		$values[] = "kitchenware";
 		$values[] = "lamp";
 		$values[] = "laundry private";
 		$values[] = "laundry service";
@@ -171,7 +174,7 @@ class ListgenericfeatureField extends ListField
 		$values[] = "mosquito net";
 		$values[] = "near the beach";
 		$values[] = "night table";
-		$values[] = "no smoking rooms/facilities";
+		$values[] = "no smoking";
 		$values[] = "ocean view";
 		$values[] = "office";
 		$values[] = "on the beach";
@@ -185,7 +188,7 @@ class ListgenericfeatureField extends ListField
 		$values[] = "parking on street";
 		$values[] = "parking private";
 		$values[] = "patio";
-		$values[] = "pets considred";
+		$values[] = "pets considered";
 		$values[] = "pets not allowed";
 		$values[] = "pets welcome";
 		$values[] = "pool for children";
@@ -215,12 +218,14 @@ class ListgenericfeatureField extends ListField
 		$values[] = "stereo";
 		$values[] = "sunbeds";
 		$values[] = "sun umbrellas";
+		$values[] = "swimming pool";
 		$values[] = "swimming pool communal";
 		$values[] = "swimming pool heated";
 		$values[] = "swimming pool indoor";
 		$values[] = "swimming pool infinity";
 		$values[] = "swimming pool private";
 		$values[] = "swimming pool salt water";
+		$values[] = "swimming pool shallow end";
 		$values[] = "table";
 		$values[] = "table and chairs";
 		$values[] = "table tennis";

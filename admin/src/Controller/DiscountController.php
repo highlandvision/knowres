@@ -29,8 +29,8 @@ class DiscountController extends FormController
 	/**
 	 * Process additional requirements after save payment
 	 *
-	 * @param   BaseDatabaseModel  $model      The data model object.
-	 * @param   array              $validData  The validated data.
+	 * @param  BaseDatabaseModel  $model      The data model object.
+	 * @param  array              $validData  The validated data.
 	 *
 	 * @throws Exception
 	 * @since  3.1
@@ -47,10 +47,12 @@ class DiscountController extends FormController
 			$name = StringHelper::increment($name);
 		}
 
-		$translation = new Translations();
-		$translation->updateDefault('discount', $id, 'name', $name);
+		$Translations = new Translations();
+		$Translations->updateDefault('discount', $id, 'name', $name);
 
+		KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updateLastMinute',
+			(int) $validData['property_id'], 0, 'ru');
 		KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updatePropertyRates',
-			(int) $validData['property_id']);
+			(int) $validData['property_id'], 0, 'vrbo');
 	}
 }

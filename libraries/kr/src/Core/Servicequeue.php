@@ -33,7 +33,7 @@ class Servicequeue
 	/**
 	 * Check for any channel updates required
 	 *
-	 * @param   Hub  $hub  Hub data
+	 * @param  Hub  $hub  Hub data
 	 *
 	 * @throws Exception
 	 * @since  1.2.2
@@ -81,10 +81,10 @@ class Servicequeue
 	 * cancelled using the old foreign reference and new details added that
 	 * will then give a new foreign reference.
 	 *
-	 * @param   array   $services     DB Channel services
-	 * @param   int     $property_id  Property ID
-	 * @param   string  $arrival      Arrival date
-	 * @param   string  $departure    Departure date
+	 * @param  array   $services     DB Channel services
+	 * @param  int     $property_id  Property ID
+	 * @param  string  $arrival      Arrival date
+	 * @param  string  $departure    Departure date
 	 *
 	 * @throws Exception
 	 * @since  1.2.2
@@ -150,7 +150,6 @@ class Servicequeue
 			$queue->actioned     = 0;
 			$queue->method       = 'updateAvailability';
 			$queue->state        = 1;
-			$queue->checked_out  = 0;
 			$queue->created_by   = 0;
 			$queue->created_at   = TickTock::getTS();
 			KrFactory::insert('service_queue', $queue);

@@ -32,18 +32,22 @@ class PaymentView extends KrHtmlView\Site
 	/* @var stdClass Session contract data. */
 	public stdClass $contractData;
 	/* @var array Available payment gateways. */
-	public array $gateways;
+	public array $gateways = [];
 	/* @var stdClass Gateway data */
 	public stdClass $gateway;
-	/* @var mixed True for multi currency payment options */
-	public mixed $multi;
+	/* @var stdClass Session guest data. */
+	public stdClass $guestData;
+	/* @var stdClass Session payment data. */
+	public stdClass $paymentData;
 	/* @var Translations Translations object */
 	protected Translations $Translations;
+	/** @var object Property item */
+	public object $property;
 
 	/**
 	 * Display the form
 	 *
-	 * @param   null  $tpl  Default template.
+	 * @param  null  $tpl  Default template.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -51,15 +55,11 @@ class PaymentView extends KrHtmlView\Site
 	 */
 	public function display($tpl = null): void
 	{
-		$this->setLayout('payment');
 		$this->Translations = new Translations();
-		$this->params       = KrMethods::getParams();
-		//		$this->state        = $this->get('state');
-		//		$this->modules          = KrMethods::loadInternal('{loadposition propertyview}');
-		//		$this->priceText        = KrMethods::plain('COM_KNOWRES_QUOTE_TOTAL');
 
 		$this->prepareDocument();
 
+		$this->setLayout('payment');
 		parent::display($tpl);
 	}
 
@@ -67,7 +67,7 @@ class PaymentView extends KrHtmlView\Site
 	 * Prepares the document
 	 *
 	 * @throws Exception
-	 * @since   1.0.0
+	 * @since  1.0.0
 	 */
 	protected function prepareDocument()
 	{
@@ -81,7 +81,7 @@ class PaymentView extends KrHtmlView\Site
 	 * Set the pathway for the payment
 	 *
 	 * @throws Exception
-	 * @since   3.3.0
+	 * @since  3.3.0
 	 */
 	protected function setMyPathway()
 	{

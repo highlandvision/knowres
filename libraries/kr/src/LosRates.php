@@ -12,6 +12,7 @@ namespace HighlandVision\KR;
 defined('_JEXEC') or die;
 
 use Exception;
+use HighlandVision\KR\Calendar\Los;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Session as KnowresSession;
 
@@ -26,8 +27,8 @@ use function min;
  */
 class LosRates
 {
-	/** @var Calendar Calendar class */
-	protected Calendar $Calendar;
+	/** @var Los Calendar class */
+	protected Los $Los;
 	/** @var array Computations required for rate calculation */
 	protected array $computations = [];
 	/** @var array Discounts for property */
@@ -54,10 +55,10 @@ class LosRates
 	/**
 	 * Constructor
 	 *
-	 * @param   int    $property_id   ID of property
-	 * @param   array  $settings      Property settings
-	 * @param   int    $markup        Markup to be applied to rate
-	 * @param   bool   $do_discounts  True to deduct discount from rate
+	 * @param  int    $property_id   ID of property
+	 * @param  array  $settings      Property settings
+	 * @param  int    $markup        Markup to be applied to rate
+	 * @param  bool   $do_discounts  True to deduct discount from rate
 	 *
 	 * @since  3.4.0
 	 */
@@ -72,9 +73,9 @@ class LosRates
 	/**
 	 * Get LOS rates content
 	 *
-	 * @param   string  $first       First date for rates
-	 * @param   string  $final       Final date for rates
-	 * @param   int     $max_nights  Maximum length of stay to be calculated. Defaults to max_nights in rates
+	 * @param  string  $first        First date for rates
+	 * @param  string  $final        Final date for rates
+	 * @param  int     $max_nights   Maximum length of stay to be calculated. Defaults to max_nights in rates
 	 *                               but can be overridden for channel requirements if necessary
 	 *                               e.g. VRBO only allows 31 nights per date
 	 *
@@ -90,7 +91,7 @@ class LosRates
 			$this->discounts = KrFactory::getListModel('discounts')->getDiscounts($this->property_id);
 		}
 
-		$this->Calendar = new Calendar\Los($this->property_id, $first, $final, $this->rates);
+		$this->Los = new Los($this->property_id, $first, $final, $this->rates);
 
 		return $this->setPrices($first, $final, $max_nights);
 	}
@@ -98,11 +99,11 @@ class LosRates
 	/**
 	 * Generate the base rate for the first date
 	 *
-	 * @param   object  $r            Rate row
-	 * @param   string  $arrival      Arrival date
-	 * @param   array   $more_guests  Additional guests
-	 * @param   int     $min_nights   Minimum stay for date
-	 * @param   int     $max_nights   Maximum stay for date
+	 * @param  object  $r            Rate row
+	 * @param  string  $arrival      Arrival date
+	 * @param  array   $more_guests  Additional guests
+	 * @param  int     $min_nights   Minimum stay for date
+	 * @param  int     $max_nights   Maximum stay for date
 	 *
 	 * @throws Exception
 	 * @since  3.4
@@ -111,12 +112,12 @@ class LosRates
 	private function calcLosBaseRate(object $r, string $arrival, array $more_guests, int $min_nights,
 		int $max_nights): array
 	{
-		$base   = [];
-		$weekly = $this->Calendar->checkWeekly($arrival);
+		$base = [];
+		$wcod = $this->Los->weeklyChangeOverDay($arrival);
 
 		for ($nights = 1; $nights <= $max_nights; $nights++)
 		{
-			if ($nights < $min_nights || $weekly)
+			if ($nights < $min_nights || !$wcod)
 			{
 				$base[$r->max_guests][$nights] = 0;
 			}
@@ -132,7 +133,7 @@ class LosRates
 			{
 				if (!empty($m->more_pppn))
 				{
-					if ($nights < $min_nights || $weekly)
+					if ($nights < $min_nights || !$wcod)
 					{
 						$base[(int) $m->more_max][$nights] = 0;
 					}
@@ -144,9 +145,9 @@ class LosRates
 				}
 				else if (!empty($m->more_min) && !empty($m->more_max))
 				{
-					for ($g = (int) $m->more_min; $g >= (int) $m->more_max; $g++)
+					for ($g = (int) $m->more_min; $g <= (int) $m->more_max; $g++)
 					{
-						if ($nights < $min_nights || $weekly)
+						if ($nights < $min_nights || !$wcod)
 						{
 							$base[$g][$nights] = 0;
 						}
@@ -171,12 +172,12 @@ class LosRates
 	/**
 	 * Get los rates for a date
 	 *
-	 * @param   array   $prices       Existing array of prices
-	 * @param   object  $r            Rate row being prcoessed
-	 * @param   string  $arrival      Arrival date
-	 * @param   array   $more_guests  Additional guests
-	 * @param   array   $qrates       Base rates for today
-	 * @param   int     $max_nights   Maximum nioghts stay
+	 * @param  array   $prices       Existing array of prices
+	 * @param  object  $r            Rate row being prcoessed
+	 * @param  string  $arrival      Arrival date
+	 * @param  array   $more_guests  Additional guests
+	 * @param  array   $qrates       Base rates for today
+	 * @param  int     $max_nights   Maximum nioghts stay
 	 *
 	 * @throws Exception
 	 * @since  3.4.0
@@ -187,8 +188,8 @@ class LosRates
 	{
 		for ($nights = 1; $nights <= $max_nights; $nights++)
 		{
-			$weekly = $this->Calendar->checkWeekly(TickTock::modifyDays($arrival, $nights));
-			if ($weekly)
+			$wcod = $this->Los->weeklyChangeOverDay(TickTock::modifyDays($arrival, $nights));
+			if (!$wcod)
 			{
 				$prices[$arrival][$r->max_guests][$nights] = 0;
 			}
@@ -214,7 +215,7 @@ class LosRates
 
 				if ((int) $m->more_pppn)
 				{
-					if ($weekly)
+					if (!$wcod)
 					{
 						$prices[$arrival][$m->more_max][$nights] = 0;
 					}
@@ -232,7 +233,7 @@ class LosRates
 				{
 					for ($g = (int) $m->more_min; $g <= (int) $m->more_max; $g++)
 					{
-						if ($weekly)
+						if (!$wcod)
 						{
 							$prices[$arrival][$g][$nights] = 0;
 						}
@@ -267,17 +268,14 @@ class LosRates
 		{
 			return false;
 		}
-
 		if ($this->do_discounts && count($this->discounts))
 		{
 			return false;
 		}
-
 		if (!empty($this->settings['canwebook']))
 		{
 			return false;
 		}
-
 		if (!empty($this->settings['shortbook']))
 		{
 			return false;
@@ -321,11 +319,11 @@ class LosRates
 	/**
 	 * Set LOS rate for a single date, nights and guests
 	 *
-	 * @param   string  $arrival     Arrival date yyyy-mm-dd
-	 * @param   string  $departure   Departure date yyyy-mm-dd
-	 * @param   int     $guests      #Guests
-	 * @param   int     $nights      #Nights
-	 * @param   array   $date_range  Date range
+	 * @param  string  $arrival     Arrival date yyyy-mm-dd
+	 * @param  string  $departure   Departure date yyyy-mm-dd
+	 * @param  int     $guests      #Guests
+	 * @param  int     $nights      #Nights
+	 * @param  array   $date_range  Date range
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -352,6 +350,10 @@ class LosRates
 			$this->Hub->setValue('contract_total', 0);
 			$this->Hub->setValue('room_total', 0);
 			$this->Hub->setValue('room_total_gross', 0);
+
+			$this->Hub->settings['canwebook'] = $this->settings['canwebook'];
+			$this->Hub->settings['shortbook'] = $this->settings['shortbook'];
+
 			$this->Hub->setValue('tax_total', 0);
 		}
 
@@ -370,9 +372,9 @@ class LosRates
 	/**
 	 * Initiate Hub for calculations
 	 *
-	 * @param   string  $arrival    Arrival date
-	 * @param   string  $departure  Departure date
-	 * @param   int     $guests     #Guests
+	 * @param  string  $arrival    Arrival date
+	 * @param  string  $departure  Departure date
+	 * @param  int     $guests     #Guests
 	 *
 	 * @throws Exception
 	 * @since  3.4.0
@@ -405,7 +407,7 @@ class LosRates
 	 * Set the required computations. Some of these are tested in compute but
 	 * done here to save some time
 	 *
-	 * @param   int  $nights  #Nights stay
+	 * @param  int  $nights  #Nights stay
 	 *
 	 * @since  3.4.0
 	 */
@@ -436,7 +438,7 @@ class LosRates
 		{
 			$this->computations[] = 'shortstay';
 		}
-		if ($nights >= (int) $this->settings['longstay_days1'])
+		if ((int) $this->settings['longstay_days1'] > 0 && $nights >= (int) $this->settings['longstay_days1'])
 		{
 			$this->computations[] = 'longstay';
 		}
@@ -454,9 +456,9 @@ class LosRates
 	/**
 	 * Set LOS rates content
 	 *
-	 * @param   string  $first       First date
-	 * @param   string  $final       Final date
-	 * @param   int     $max_nights  Maximum stay to be calculated, defaults to max nights in rates if not set
+	 * @param  string  $first       First date
+	 * @param  string  $final       Final date
+	 * @param  int     $max_nights  Maximum stay to be calculated, defaults to max nights in rates if not set
 	 *
 	 * @throws Exception
 	 * @since  3.4.0
@@ -481,7 +483,7 @@ class LosRates
 			}
 
 			$qrates = [];
-			if ($quickie && $cutoff > $start)
+			if ($quickie && $cutoff > $start && $r->start_day == 7)
 			{
 				$qrates = $this->calcLosBaseRate($r, $start, $more_guests, $min_nights, $max_nights);
 			}
@@ -494,7 +496,7 @@ class LosRates
 					$qrates = [];
 				}
 
-				if ($this->Calendar->checkWeekly($arrival))
+				if (!$this->Los->weeklyChangeOverDay($arrival))
 				{
 					continue;
 				}

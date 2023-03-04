@@ -68,10 +68,10 @@ class IcalBlock
 	/**
 	 * Constructor.
 	 *
-	 * @param   int     $property_id  ID of property
-	 * @param   string  $directory    The directory location of the ical file
-	 * @param   string  $filename     The ical file name
-	 * @param   int     $service_id   ID of Service
+	 * @param  int      $property_id  ID of property
+	 * @param  string   $directory    The directory location of the ical file
+	 * @param  string   $filename     The ical file name
+	 * @param  int      $service_id   ID of Service
 	 * @param  ?string  $icsdata      ics data from previous run
 	 *
 	 * @throws Exception
@@ -140,7 +140,7 @@ class IcalBlock
 	/**
 	 * Prepare a new ical block
 	 *
-	 * @param   object  $data  Block data object
+	 * @param  object  $data  Block data object
 	 *
 	 * @throws Exception
 	 * @since 1.0.0
@@ -178,8 +178,8 @@ class IcalBlock
 	 * Check for interlaced bookings and blocks
 	 * i.e. a string of separate bookings that are concatenated into one vEvent
 	 *
-	 * @param   object  $data    Ical event data
-	 * @param   array   $booked  Booked dates
+	 * @param  object  $data    Ical event data
+	 * @param  array   $booked  Booked dates
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -230,7 +230,7 @@ class IcalBlock
 	/**
 	 * Generate Y-m-d from ical date
 	 *
-	 * @param   DateTime  $date  Date timestamp
+	 * @param  DateTime  $date  Date timestamp
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -244,7 +244,7 @@ class IcalBlock
 	/**
 	 * Format vevent into data for a block
 	 *
-	 * @param   Vevent  $vevent  Ical event
+	 * @param  Vevent  $vevent  Ical event
 	 *
 	 * @throws Exception
 	 * @since   3.3.0
@@ -347,7 +347,7 @@ class IcalBlock
 	/**
 	 * Set the block note text
 	 *
-	 * @param   object  $event  Block data
+	 * @param  object  $event  Block data
 	 *
 	 * @since  3.3.0
 	 * @return string
@@ -371,9 +371,9 @@ class IcalBlock
 	/**
 	 * Prepare the new block
 	 *
-	 * @param   object       $data       Block data
-	 * @param   string|null  $arrival    Override ical arrival date
-	 * @param   string|null  $departure  Override ical departure date
+	 * @param  object       $data       Block data
+	 * @param  string|null  $arrival    Override ical arrival date
+	 * @param  string|null  $departure  Override ical departure date
 	 *
 	 * @throws Exception
 	 * @since  3.0.0
@@ -395,7 +395,7 @@ class IcalBlock
 	/**
 	 * Validate an ical vevent
 	 *
-	 * @param   bool|Vevent  $vevent  Event data
+	 * @param  bool|Vevent  $vevent  Event data
 	 *
 	 * @throws RuntimeException
 	 * @throws Exception

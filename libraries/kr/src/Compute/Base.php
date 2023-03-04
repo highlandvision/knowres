@@ -37,7 +37,7 @@ class Base
 	/**
 	 * Get the total rate value for the stay
 	 *
-	 * @param   Hub  $Hub  Hub data
+	 * @param  Hub  $Hub  Hub data
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -66,9 +66,9 @@ class Base
 	/**
 	 * Calculate the gross nightly and total rate for the stay
 	 *
-	 * @param   array   $ratesDb    Rates from db
-	 * @param   string  $arrival    Arrival date
-	 * @param   string  $departure  Departure date
+	 * @param  array   $ratesDb    Rates from db
+	 * @param  string  $arrival    Arrival date
+	 * @param  string  $departure  Departure date
 	 *
 	 * @throws Exception
 	 * @since  3.4.0
@@ -250,8 +250,8 @@ class Base
 	/**
 	 * Get minimum nights from cluster
 	 *
-	 * @param   int     $min_nights  Minimum nights
-	 * @param   string  $arrival     Arrival date
+	 * @param  int     $min_nights  Minimum nights
+	 * @param  string  $arrival     Arrival date
 	 *
 	 * @since  3.3.4
 	 * @return int
@@ -274,9 +274,9 @@ class Base
 	/**
 	 * Overrides the entered dates with shortbook settings
 	 *
-	 * @param   array   $ratesDb    Rates from db
-	 * @param   string  $arrival    Arrival date
-	 * @param   string  $departure  Departure date
+	 * @param  array   $ratesDb    Rates from db
+	 * @param  string  $arrival    Arrival date
+	 * @param  string  $departure  Departure date
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -337,9 +337,9 @@ class Base
 	/**
 	 * Filter the rates for current dates only
 	 *
-	 * @param   array   $rates      Property rates
-	 * @param   string  $arrival    Arrival date
-	 * @param   string  $departure  Departure date
+	 * @param  array   $rates      Property rates
+	 * @param  string  $arrival    Arrival date
+	 * @param  string  $departure  Departure date
 	 *
 	 * @since  3.3.0
 	 * @return array
@@ -361,9 +361,9 @@ class Base
 	/**
 	 * Get rates from database or Hub
 	 *
-	 * @param   int     $property_id  ID of property
-	 * @param   string  $arrival      Arrival date
-	 * @param   string  $departure    Departure date
+	 * @param  int     $property_id  ID of property
+	 * @param  string  $arrival      Arrival date
+	 * @param  string  $departure    Departure date
 	 *
 	 * @throws Exception
 	 * @since  3.3.4
@@ -387,7 +387,7 @@ class Base
 	/**
 	 * Set rate value for calculation
 	 *
-	 * @param   object  $rate  Rate row
+	 * @param  object  $rate  Rate row
 	 *
 	 * @since  3.3.0
 	 * @return array
@@ -414,8 +414,8 @@ class Base
 	/**
 	 * Get minimum nights from cluster
 	 *
-	 * @param   array  $nightly  Nightly rates
-	 * @param   float  $total    Total rate
+	 * @param  array  $nightly  Nightly rates
+	 * @param  float  $total    Total rate
 	 *
 	 * @throws InvalidArgumentException
 	 * @throws RuntimeException
@@ -443,7 +443,7 @@ class Base
 	/**
 	 * Check if canwebook is valid
 	 *
-	 * @param   int  $nights  #Nights from rates
+	 * @param  int  $nights  #Nights from rates
 	 *
 	 * @since  3.4.0
 	 * @throws Exception

@@ -12,17 +12,19 @@ namespace HighlandVision\KR;
 defined('_JEXEC') or die;
 
 use Exception;
+use HighlandVision\Component\Knowres\Administrator\Model\ServiceModel;
 use HighlandVision\Component\Knowres\Administrator\Model\ServicequeueModel;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use InvalidArgumentException;
 use JetBrains\PhpStorm\Pure;
 use Joomla\CMS\Cache\Cache;
-use Joomla\CMS\Object\CMSObject;
 use Joomla\Registry\Registry;
 use RuntimeException;
 use stdClass;
 
+use function count;
+use function implode;
 use function str_repeat;
 use function trim;
 
@@ -44,11 +46,11 @@ abstract class Service
 	protected bool $cache_json = true;
 	/** @var  array Override cache options */
 	protected array $cache_options = [];
-	/** @var  CMSObject Existing contract item */
-	public CMSObject $contract;
+	/** @var  object Existing contract item */
+	protected object $contract;
 	/** @var  int ID of current contract */
 	protected int $contract_id = 0;
-	/** @var object|null Contract guest data */
+	/** @var ?object Contract guest data */
 	protected ?object $contractguestdata = null;
 	/** @var  string Path to cookie file */
 	protected string $cookie_file = JPATH_ROOT . '/cookie.txt';
@@ -56,23 +58,23 @@ abstract class Service
 	protected string $currency = '';
 	/** @var  string Error display message */
 	protected string $error_to_display = '';
-	/** @var object|null Exception to be logged */
+	/** @var ?object Exception to be logged */
 	protected ?object $exception = null;
-	/** @var  string Queue foreign key */
+	/** @var  string Foreign key */
 	protected string $foreign_key = '';
 	/** @var string Foreign key guest */
 	protected string $foreign_key_guest = '';
 	/** @var string Foreign key owner */
 	protected string $foreign_key_owner = '';
-	/** @var ?object|null Guest item */
+	/** @var ?object Guest item */
 	protected ?object $guest = null;
 	/** @var  array Logging messages */
 	protected array $messages = [];
 	/** @var  string API method */
 	protected string $method = '';
-	/** @var object|null Owner item */
+	/** @var ?object Owner item */
 	protected ?object $owner = null;
-	/** @var object|null Service parameters */
+	/** @var ?object Service parameters */
 	protected ?object $parameters = null;
 	/** @var  Registry KR parameters */
 	protected Registry $params;
@@ -98,16 +100,16 @@ abstract class Service
 	protected array $settings = [];
 	/** @var  string Email subject */
 	protected string $subject = '';
-	/** @var  bool Testing indicator */
-	protected bool $test = false;
+	/** @var  int Testing indicator */
+	protected int $test = 0;
 	/** @var  string Today Y-m-d */
 	protected string $today = '';
 
 	/**
 	 * Initialize
 	 *
-	 * @param   int  $service_id  ID of service
-	 * @param   int  $test        1 for testing
+	 * @param  int  $service_id  ID of service
+	 * @param  int  $test        1 for testing
 	 *
 	 * @throws Exception
 	 * @since   1.2.2
@@ -134,18 +136,20 @@ abstract class Service
 		// 2 - 0 not installed, 1 installed
 		// TODO-v4.1 Reinstate Xero
 		$services = [
-			'ical'          => ['i', 0, 0],
-			'ru'            => ['c', 1, 0],
-			'vrbo'          => ['c', 2, 0],
-			'wire'          => ['g', 0, 0],
-			'check'         => ['g', 0, 0],
-			'paypal'        => ['g', 0, 0],
-			'stripe'        => ['g', 0, 0],
-			'exchange'      => ['s', 0, 0],
-			'factura'       => ['s', 2, 0],
-			'helpscout'     => ['s', 1, 0],
-			'vintagetravel' => ['s', 2, 0],
-			'mailchimp'     => ['s', 0, 0]
+			'iCal'          => ['i', 0, 0],
+			'RU'            => ['c', 1, 0],
+			'VRBO'          => ['c', 2, 0],
+			'Wire'          => ['g', 0, 0],
+			'Bankia'        => ['g', 0, 0],
+			'Check'         => ['g', 0, 0],
+			'PayPal'        => ['g', 0, 0],
+			'Redsys'        => ['g', 0, 0],
+			'Stripe'        => ['g', 0, 0],
+			'Exchange'      => ['s', 0, 0],
+			'Factura'       => ['s', 2, 0],
+			'HelpScout'     => ['s', 1, 0],
+			'VintageTravel' => ['s', 2, 0],
+			'MailChimp'     => ['s', 0, 0]
 		];
 
 		foreach ($services as $plugin => $data)
@@ -161,9 +165,9 @@ abstract class Service
 	}
 
 	/**
-	 * Get service type escription
+	 * Get service type description
 	 *
-	 * @param   string  $type
+	 * @param  string  $type
 	 *
 	 * @since  4.0.0
 	 * @return string
@@ -200,11 +204,11 @@ abstract class Service
 	/**
 	 * Logger service request and response
 	 *
-	 * @param   bool  $success  Logger success or failure
-	 * @param   bool  $email    Set true for email notification
+	 * @param  bool  $success  Logger success or failure
+	 * @param  bool  $email    Set true for email notification
 	 *
 	 * @throws Exception
-	 * @since 1.2.2
+	 * @since  1.2.2
 	 */
 	protected function addLog(bool $success, bool $email = false): void
 	{
@@ -232,17 +236,15 @@ abstract class Service
 			$subject = "Attention: Alert from " . KrMethods::getCfg('sitename');
 			$body    = 'An exception has occurred. Please see the details below.';
 			$body    .= ' Full details of the error can be found in Service Logs for ID ' . $log_id;
-			$body    .= "\r\n\r\n";
+			$body    .= "<br>";
 			$body    .= $error;
 
 			$to = KrMethods::getParams()->get('alert_email', '');
-			if (!$to)
+			if (empty($to))
 			{
 				$to = KrMethods::getCfg('mailfrom');
 			}
-
-			KrMethods::sendEmail(KrMethods::getCfg('mailfrom'), KrMethods::getCfg('fromname'), $to, $subject, $body,
-				false);
+			KrMethods::sendEmail(KrMethods::getCfg('mailfrom'), KrMethods::getCfg('fromname'), $to, $subject, $body);
 		}
 
 		$this->messages  = [];
@@ -274,8 +276,8 @@ abstract class Service
 	/**
 	 * Display any errors found in xml string
 	 *
-	 * @param   object  $error  XML error data
-	 * @param   string  $xml    XML string
+	 * @param  object  $error  XML error data
+	 * @param  string  $xml    XML string
 	 *
 	 * @since  4.0.0
 	 * @return string
@@ -313,7 +315,7 @@ abstract class Service
 	 * Exception message if not success
 	 * Notification messages if success
 	 *
-	 * @param   bool  $success  True or false
+	 * @param  bool  $success  True or false
 	 *
 	 * @since   3.3.0
 	 * @return string
@@ -322,24 +324,25 @@ abstract class Service
 	{
 		if (is_a($this->exception, 'Exception') || is_subclass_of($this->exception, 'Exception'))
 		{
-			return 'ERROR:' . "\r\n\r\n" . $this->exception->getMessage();
-		}
-		else if (is_countable($this->messages) && count($this->messages))
-		{
-			$text = $success ? '' : 'ERROR:<br>';
-
-			return $text . implode('<br>', $this->messages);
+			$text = 'ERROR:' . $this->exception->getMessage() . '<br>';
 		}
 		else
 		{
-			return '';
+			$text = $success ? '' : 'ERROR:<br>';
 		}
+
+		if (is_countable($this->messages) && count($this->messages))
+		{
+			$text .= implode('<br>', $this->messages);
+		}
+
+		return $text;
 	}
 
 	/**
 	 * Get property settings
 	 *
-	 * @param   int  $property_id  ID of property
+	 * @param  int  $property_id  ID of property
 	 *
 	 * @throws InvalidArgumentException
 	 * @since 1.2.2
@@ -420,7 +423,7 @@ abstract class Service
 	/**
 	 * Read property
 	 *
-	 * @param   int  $property_id  ID of property
+	 * @param  int  $property_id  ID of property
 	 *
 	 * @throws RuntimeException
 	 * @throws InvalidArgumentException|Exception
@@ -444,12 +447,14 @@ abstract class Service
 	 * Read service and format service parameters
 	 *
 	 * @throws Exception
-	 * @since 1.2.2
+	 * @since  1.2.2
 	 */
 	protected function readService(): void
 	{
-		$this->service = KrFactory::getAdminModel('service')->getItem($this->service_id);
-		if (!$this->service->id)
+		/** @var ServiceModel $model */
+		$model         = KrFactory::getAdminModel('service');
+		$this->service = $model->getItem($this->service_id);
+		if (empty($this->service->id))
 		{
 			throw new RuntimeException('Service not found for id ' . $this->service_id);
 		}
@@ -461,7 +466,7 @@ abstract class Service
 	/**
 	 * Set contract ID
 	 *
-	 * @param   int  $contract_id  ID of contract
+	 * @param  int  $contract_id  ID of contract
 	 *
 	 * @throws InvalidArgumentException
 	 * @since 1.2.2
@@ -493,7 +498,7 @@ abstract class Service
 	/**
 	 * Set the service
 	 *
-	 * @param   int  $service_id  ID of service
+	 * @param  int  $service_id  ID of service
 	 *
 	 * @throws InvalidArgumentException
 	 * @throws Exception
@@ -513,8 +518,8 @@ abstract class Service
 	/**
 	 * Store cache for method
 	 *
-	 * @param   array   $data    The data to be stored
-	 * @param   string  $method  The method used to store / retrieve the data
+	 * @param  array   $data    The data to be stored
+	 * @param  string  $method  The method used to store / retrieve the data
 	 *
 	 * @since 2.2.0
 	 */

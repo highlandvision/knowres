@@ -44,9 +44,9 @@ class Media
 	/**
 	 * Delete pdfs
 	 *
-	 * @param   string  $type   PDF type, property, region etc
-	 * @param   int     $id     ID of type
-	 * @param   array   $names  PDF names
+	 * @param  string  $type   PDF type, property, region etc
+	 * @param  int     $id     ID of type
+	 * @param  array   $names  PDF names
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -88,7 +88,7 @@ class Media
 	/**
 	 * Get file extension
 	 *
-	 * @param   string  $path  Path
+	 * @param  string  $path  Path
 	 *
 	 * @since  1.0.0
 	 * @return mixed
@@ -103,7 +103,7 @@ class Media
 	/**
 	 * Get file name
 	 *
-	 * @param   string  $path  Path
+	 * @param  string  $path  Path
 	 *
 	 * @since 1.0.0
 	 * @return array|string
@@ -133,8 +133,8 @@ class Media
 	/**
 	 * List pdfs  folder
 	 *
-	 * @param   string  $type  e.g. "property" or "region" etc
-	 * @param   int     $id    ID of type
+	 * @param  string  $type  e.g. "property" or "region" etc
+	 * @param  int     $id    ID of type
 	 *
 	 * @since  1.0.0
 	 * @return array
@@ -155,11 +155,11 @@ class Media
 	/**
 	 * Upload pdf
 	 *
-	 * @param   string  $type      e.g. "solo" or "slideshow".
-	 * @param   int     $id        ID of item.
-	 * @param   string  $pdf       Name of pdf.
-	 * @param   string  $filetype  File type.
-	 * @param   string  $tmpName   Temporary name.
+	 * @param  string  $type      e.g. "solo" or "slideshow".
+	 * @param  int     $id        ID of item.
+	 * @param  string  $pdf       Name of pdf.
+	 * @param  string  $filetype  File type.
+	 * @param  string  $tmpName   Temporary name.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0

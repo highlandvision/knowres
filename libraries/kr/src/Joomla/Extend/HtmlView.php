@@ -18,8 +18,10 @@ use HighlandVision\KR\Utility;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
-use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Pagination\Pagination;
+use Joomla\CMS\Toolbar\Button\ConfirmButton;
+use Joomla\CMS\Toolbar\Button\DropdownButton;
+use Joomla\CMS\Toolbar\Button\LinkButton;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\Registry\Registry;
@@ -37,14 +39,12 @@ use function is_null;
  */
 class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 {
-	//TODO-v4 Check that pagination still works
-
 	/** @var int User access level */
 	public int $access_level = 0;
 	/** @var ?array The active search filters */
 	public ?array $activeFilters = [];
-	/** @var CMSObject Allowed actions */
-	public CMSObject $canDo;
+	/** @var object Allowed actions */
+	public object $canDo;
 	/** @var ?Form Search tools form */
 	public ?Form $filterForm;
 	/** @var Form|bool Form model */
@@ -61,7 +61,7 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 	public string $name = '';
 	/** @var bool True if ordering required. */
 	protected bool $ordering = true;
-	/** @var Pagination object */
+	/** @var Pagination Pagination object */
 	public Pagination $pagination;
 	/** @var Registry KR params */
 	public Registry $params;
@@ -69,6 +69,8 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 	public string $properties = '';
 	/** @var int ID of property */
 	public int $property_id = 0;
+	/** @var string Property name */
+	public string $property_name = '';
 	/** @var bool Show state columns */
 	public bool $show_state;
 	/** @var mixed The model state seems to be mixed */
@@ -79,7 +81,7 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 	/**
 	 * Constructor
 	 *
-	 * @param   array  $config  A named configuration array for object construction.
+	 * @param  array  $config   A named configuration array for object construction.
 	 *                          name: the name (optional) of the view (defaults to the view class name suffix).
 	 *                          charset: the character set to use for display
 	 *                          escape: the name (optional) of the function to use for escaping strings
@@ -104,8 +106,8 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 	/**
 	 * Set a list of the actions that can be performed by user access level
 	 *
-	 * @param   string  $view  View to be accessed
-	 * @param   int     $id    ID of view
+	 * @param  string  $view  View to be accessed
+	 * @param  int     $id    ID of view
 	 *
 	 * @since  4.0.0
 	 */
@@ -117,7 +119,7 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 	/**
 	 * Add the back to link if required
 	 *
-	 * @param   Toolbar  $Toolbar
+	 * @param  Toolbar  $Toolbar
 	 *
 	 * @throws Exception
 	 * @since  4.0.0
@@ -129,8 +131,9 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 		if (!empty($gobackto))
 		{
 			KrMethods::setUserState('com_knowres.gobackto', null);
-
 			$link = KrMethods::route('index.php?option=com_knowres&' . $gobackto);
+
+			/** @var LinkButton $Toolbar */
 			$Toolbar->linkButton('back', 'JTOOLBAR_BACK')
 			        ->buttonClass('btn btn-danger')
 			        ->icon('fas fa-fast-backward knowres')
@@ -143,7 +146,7 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 	/**
 	 * Check for access to edit action
 	 *
-	 * @param   string  $action  Action being taken
+	 * @param  string  $action  Action being taken
 	 *
 	 * @since  4.0.0
 	 * @return bool
@@ -191,14 +194,15 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 	/**
 	 * Add actions toolbar for list
 	 *
-	 * @param   Toolbar  $Toolbar  Toolbar instance
-	 * @param   string   $name     List name
+	 * @param  Toolbar  $Toolbar  Toolbar instance
+	 * @param  string   $name     List name
 	 *
 	 * @since  4.0.0
 	 * @return Toolbar
 	 */
 	protected function addChildActionsToolbar(Toolbar $Toolbar, string $name): Toolbar
 	{
+		/** @var DropdownButton $Toolbar */
 		$dropdown = $Toolbar->dropdownButton('status-group')
 		                    ->text('JTOOLBAR_CHANGE_STATUS')
 		                    ->toggleSplit(false)
@@ -242,6 +246,7 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 			}
 			else if (isset($this->items[0]) && $this->canDo->get('core.delete'))
 			{
+				/** @var ConfirmButton $Toolbar */
 				$Toolbar->delete($name . '.delete')
 				        ->listCheck(true)
 				        ->message('JGLOBAL_CONFIRM_DELETE')
@@ -253,6 +258,7 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 		{
 			if ($name != 'properties')
 			{
+				/** @var ConfirmButton $Toolbar */
 				$Toolbar->delete($name . '.delete')
 				        ->icon('fas fa-trash red')
 				        ->listCheck(true)
@@ -262,6 +268,7 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 			else
 			{
 				$text = KrMethods::plain('COM_KNOWRES_PROPERTY_DELETE_MESSAGE');
+				/** @var ConfirmButton $Toolbar */
 				$Toolbar->delete($name . '.markfordeletion')
 				        ->icon('fas fa-trash red')
 				        ->listCheck(true)
@@ -276,7 +283,7 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 	/**
 	 * Add any custom toolbar links
 	 *
-	 * @param   Toolbar  $Toolbar  Current toolbar instance
+	 * @param  Toolbar  $Toolbar  Current toolbar instance
 	 *
 	 * @since  4.0.0
 	 * @return Toolbar
@@ -289,7 +296,7 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 	/**
 	 * Add the page title and default toolbar for form view.
 	 *
-	 * @param   string  $name  Name of the form
+	 * @param  string  $name  Name of the form
 	 *
 	 * @throws Exception
 	 * @since  4.0.0
@@ -304,9 +311,9 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 		$this->getActions($name, !empty($this->item_id) ? $this->item_id : 0);
 
 		$checkedOut = false;
-		if (!empty($this->item->checked_out))
+		if (!is_null($this->item->checked_out))
 		{
-			$checkedOut = !($this->item->checked_out == 0 || $this->item->checked_out == KrMethods::getUser()->id);
+			$checkedOut = $this->item->checked_out != KrMethods::getUser()->id;
 		}
 
 		$toolbarButtons = [];
@@ -330,7 +337,10 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 
 			if ($this->canDo->get('core.create'))
 			{
-				$toolbarButtons[] = ['save2new', $name . '.save2new'];
+				if ($name != strtolower(KrMethods::plain('COM_KNOWRES_SERVICE_TITLE')))
+				{
+					$toolbarButtons[] = ['save2new', $name . '.save2new'];
+				}
 				$toolbarButtons[] = ['save2copy', $name . '.save2copy'];
 			}
 
@@ -386,7 +396,7 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 	/**
 	 * Add the quick links menu
 	 *
-	 * @param   Toolbar  $Toolbar
+	 * @param  Toolbar  $Toolbar
 	 *
 	 * @throws Exception
 	 * @since  4.0.0
@@ -396,6 +406,7 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 	{
 		if ($this->access_level == 40)
 		{
+			/** @var DropdownButton $Toolbar */
 			$dropdown     = $Toolbar->dropdownButton('config-links-group')
 			                        ->text('COM_KNOWRES_TOOLBAR_CONFIG')
 			                        ->toggleSplit(false)
@@ -404,38 +415,42 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 			$ChildToolbar = $dropdown->getChildToolbar();
 
 			$ChildToolbar->linkButton('config-countries', 'COM_KNOWRES_COUNTRIES_TITLE')
-			             ->icon('fas fa-flag knowres')
+			             ->icon('fas fa-flag fa-fw knowres')
 			             ->url(KrMethods::route('index.php?option=com_knowres&view=countries'));
 
 			$ChildToolbar->linkButton('config-regions', 'COM_KNOWRES_REGIONS_TITLE')
-			             ->icon('fas fa-map-signs knowres')
+			             ->icon('fas fa-map-pin fa-fw knowres')
 			             ->url(KrMethods::route('index.php?option=com_knowres&view=regions'));
 
 			$ChildToolbar->linkButton('config-towns', 'COM_KNOWRES_TOWNS_TITLE')
-			             ->icon('fas fa-city knowres')
+			             ->icon('fas fa-city fa-fw knowres')
 			             ->url(KrMethods::route('index.php?option=com_knowres&view=towns'));
 
+			$ChildToolbar->linkButton('currencies', 'COM_KNOWRES_CURRENCIES_TITLE')
+			             ->icon('fas fa-euro-sign fa-fw knowres')
+			             ->url(KrMethods::route('index.php?option=com_knowres&view=currencies'));
+
 			$ChildToolbar->linkButton('config-mapcategories', 'COM_KNOWRES_MAPCATEGORIES_TITLE')
-			             ->icon('fas fa-map-marked knowres')
+			             ->icon('fas fa-map-marked fa-fw knowres')
 			             ->url(KrMethods::route('index.php?option=com_knowres&view=mapcategories'));
 
 			$ChildToolbar->linkButton('config-mapmarkers', 'COM_KNOWRES_MAPMARKERS_TITLE')
-			             ->icon('fas fa-map-marker knowres')
+			             ->icon('fas fa-map-marker fa-fw knowres')
 			             ->url(KrMethods::route('index.php?option=com_knowres&view=mapmarkers'));
 
 			if ($this->params->get('ignore_tax', 1))
 			{
 				$ChildToolbar->linkButton('config-taxes', 'COM_KNOWRES_TAXES_TITLE')
-				             ->icon('fas fa-map-marked knowres')
+				             ->icon('fas fa-map-marked fa-fw knowres')
 				             ->url(KrMethods::route('index.php?option=com_knowres&view=taxes'));
 
 				$ChildToolbar->linkButton('config-taxrates', 'COM_KNOWRES_TAXRATES_TITLE')
-				             ->icon('fas fa-percent knowres')
+				             ->icon('fas fa-percent fa-fw knowres')
 				             ->url(KrMethods::route('index.php?option=com_knowres&view=taxrates'));
 			}
 
 			$ChildToolbar->linkButton('quick-link-translations', 'COM_KNOWRES_TRANSLATIONS_TITLE')
-			             ->icon('fas fa-language knowres')
+			             ->icon('fas fa-globe fa-fw knowres')
 			             ->url(KrMethods::route('index.php?option=com_knowres&view=translations'));
 		}
 
@@ -445,7 +460,7 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 	/**
 	 * Add the quick links menu
 	 *
-	 * @param   Toolbar  $Toolbar
+	 * @param  Toolbar  $Toolbar
 	 *
 	 * @throws Exception
 	 * @since  4.0.0
@@ -453,6 +468,7 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 	 */
 	protected function addQuickLinksToolbar(Toolbar $Toolbar): Toolbar
 	{
+		/** @var DropdownButton $Toolbar */
 		$dropdown     = $Toolbar->dropdownButton('quick-links-group')
 		                        ->text('COM_KNOWRES_TOOLBAR_QUICKLINKS')
 		                        ->toggleSplit(false)
@@ -496,7 +512,7 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 	/**
 	 * Add services dropdown.
 	 *
-	 * @param   Toolbar  $Toolbar  Current toolbar.
+	 * @param  Toolbar  $Toolbar  Current toolbar.
 	 *
 	 * @throws Exception
 	 * @since  4.0.0
@@ -504,6 +520,7 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 	 */
 	protected function addServicesDropdown(Toolbar $Toolbar): Toolbar
 	{
+		/** @var DropdownButton $Toolbar */
 		$dropdown     = $Toolbar->dropdownButton('services-group')
 		                        ->text('COM_KNOWRES_TOOLBAR_SERVICE_DATA')
 		                        ->toggleSplit(false)
@@ -565,7 +582,7 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 	/**
 	 * Set the user session data.
 	 *
-	 * @param   bool  $property_required  Set to false if property not required
+	 * @param  bool  $property_required  Set to false if property not required
 	 *
 	 * @throws Exception
 	 * @since  4.0.0

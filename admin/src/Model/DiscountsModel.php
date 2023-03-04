@@ -82,9 +82,9 @@ class DiscountsModel extends ListModel
 		$subQuery = $db->getQuery(true);
 		$subQuery->select('sub.text')
 		         ->from($db->qn('#__knowres_translation', 'sub'))
-		         ->where($db->qn('sub.item') . ' = ' . $db->q($item))
-		         ->where($db->qn('sub.item_id') . ' = ' . $db->qn('a.id'))
-		         ->order('(CASE WHEN ' . $db->qn('sub.language') . ' = ' . $db->q($lang) . ' THEN 1 ELSE 2 END )')
+		         ->where($db->qn('sub.item') . '=' . $db->q($item))
+		         ->where($db->qn('sub.item_id') . '=' . $db->qn('a.id'))
+		         ->order('(CASE WHEN ' . $db->qn('sub.language') . '=' . $db->q($lang) . ' THEN 1 ELSE 2 END )')
 		         ->setLimit(1);
 
 		$query->select($this->getState('list.select', 'a.*'))
@@ -135,7 +135,7 @@ class DiscountsModel extends ListModel
 		         ->setLimit(1);
 
 		$query->select($this->getState('list.select', 'a.*'));
-		$query->from('`#__knowres_discount` AS a');
+		$query->from($db->qn('#__knowres_discount', 'a'));
 		$query->select('(' . $subQuery->__toString() . ') ' . $db->q('name'));
 
 		$query->select("uc.name AS editor");
@@ -155,7 +155,7 @@ class DiscountsModel extends ListModel
 		}
 		else if ($state === '')
 		{
-			$query->where($db->qn('a.state') . '= 1');
+			$query->where($db->qn('a.state') . ' IN (0,1)');
 		}
 
 		$filter_property_id = $this->state->get("filter.property_id");

@@ -34,7 +34,7 @@ class MapMarkers extends Images
 	/**
 	 * Constructor
 	 *
-	 * @param   int  $marker_id  ID of marker
+	 * @param  int  $marker_id  ID of marker
 	 *
 	 * @throws InvalidArgumentException
 	 * @since  1.0.0

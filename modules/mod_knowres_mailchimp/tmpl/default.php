@@ -10,15 +10,19 @@
 defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrMethods;
+use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
+
+$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+$wa->useScript('com_knowres.site')
+   ->useScript('form.validate');
 ?>
 
 <form action="<?php echo KrMethods::route('index.php?option=com_knowres&task=service.mailchimpsubscribe'); ?>"
       class="mailchimp ajaxform" id="kr-form-mailchimp" method="post">
 
 	<div class="row">
-		<div
-			class="signup small-10 small-offset-1 text-center medium-offset-0 medium-12 medium-text-left large-3 large-text-right columns">
+		<div class="signup small-10 small-offset-1 text-center medium-offset-0 medium-12 medium-text-left large-3 large-text-right columns">
 			<h3>
 				<b><?php echo KrMethods::plain('MOD_KNOWRES_MAILCHIMP_SIGNUP'); ?></b>
 				<span>

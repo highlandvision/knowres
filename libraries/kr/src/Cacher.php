@@ -31,8 +31,8 @@ class Cacher
 	/**
 	 * Get and store cache
 	 *
-	 * @param   string  $group     Cache group
-	 * @param   int     $lifetime  Expiry in minuites
+	 * @param  string  $group     Cache group
+	 * @param  int     $lifetime  Expiry in minuites
 	 *
 	 * @since 3.3.0
 	 */
@@ -52,7 +52,7 @@ class Cacher
 	/**
 	 * Check if cache exists
 	 *
-	 * @param   string  $name  Cache name
+	 * @param  string  $name  Cache name
 	 *
 	 * @since 3.3.0
 	 * @return bool|string
@@ -75,8 +75,8 @@ class Cacher
 	/**
 	 * Store cache
 	 *
-	 * @param   mixed   $data  The data to be stored
-	 * @param   string  $name  Cache name
+	 * @param  mixed   $data  The data to be stored
+	 * @param  string  $name  Cache name
 	 *
 	 * @since 3.3.0
 	 */

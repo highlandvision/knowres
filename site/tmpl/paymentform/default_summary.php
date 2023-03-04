@@ -27,7 +27,7 @@ if ($this->contract->room_total_gross != $this->contract->room_total)
 	if ($this->contract->discount > 0)
 	{
 		$this->data[] = [
-			'left'  => KrMethods::plain('COM_KNOWRES_CONTRACT_DISCOUNT_LBL'),
+			'left'  => KrMethods::plain('COM_KNOWRES_CONFIRM_DISCOUNT_LBL'),
 			'mid'   => '',
 			'right' => Utility::displayValue($this->contract->discount, $this->contract->currency),
 		];
@@ -36,7 +36,7 @@ if ($this->contract->room_total_gross != $this->contract->room_total)
 	if ($this->contract->coupon_discount > 0)
 	{
 		$this->data[] = [
-			'left'  => KrMethods::plain('COM_KNOWRES_CONTRACT_COUPON_DISCOUNT_LBL'),
+			'left'  => KrMethods::plain('COM_KNOWRES_CONFIRM_COUPON_DISCOUNT_LBL'),
 			'mid'   => '',
 			'right' => Utility::displayValue($this->contract->coupon_discount, $this->contract->currency),
 		];

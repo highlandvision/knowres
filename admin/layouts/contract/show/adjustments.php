@@ -9,13 +9,12 @@
 
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Utility;
-use Joomla\CMS\Object\CMSObject;
 
 extract($displayData);
 /**
  * Layout variables
  *
- * @var CMSObject $contract The contract item.
+ * @var false|object $contract The contract item.
  */
 ?>
 <?php foreach ($contract->adjustments as $k => $v): ?>
@@ -24,7 +23,11 @@ extract($displayData);
 			<?php echo ucfirst($k) . ' (' . $v['calc'] . ')'; ?>
 		</div>
 		<div class="col aligner text-end">
-			<?php echo Utility::displayValue($v['value'], $contract->currency); ?>
+			<?php if (is_numeric($v['value'])): ?>
+				<?php echo Utility::displayValue($v['value'], $contract->currency); ?>
+			<?php else: ?>
+				<?php echo $v['value']; ?>
+			<?php endif; ?>
 		</div>
 	</div>
 <?php endforeach; ?>

@@ -19,7 +19,6 @@ use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\AdminModel;
 use HighlandVision\KR\Session as KrSession;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Versioning\VersionableControllerTrait;
 
 /**
@@ -41,15 +40,14 @@ class PropertyicalModel extends AdminModel
 	/**
 	 * Method to get a knowres record.
 	 *
-	 * @param   int  $pk  The id of the primary key.
+	 * @param  int  $pk  The id of the primary key.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return CMSObject|false  Object on success, false on failure.
+	 * @return false|object  Object on success, false on failure.
 	 */
-	public function getItem($pk = null): CMSObject|false
+	public function getItem($pk = null): false|object
 	{
-		/** @var PropertyicalModel $item */
 		$item = parent::getItem($pk);
 		if ($item)
 		{
@@ -67,7 +65,7 @@ class PropertyicalModel extends AdminModel
 	/**
 	 * Method to test whether a record can be deleted.
 	 *
-	 * @param   object  $record  A record object.
+	 * @param  object  $record  A record object.
 	 *
 	 * @since   3.0.0
 	 * @return  bool  True if allowed to delete the record. Defaults to the permission for the component.

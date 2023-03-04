@@ -23,13 +23,22 @@
 			label="COM_KNOWRES_COUNTRY_DIAL_CODE_LBL"
 			description="COM_KNOWRES_COUNTRY_DIAL_CODE_DSC"/>
 		<field name="allow_property"
-			type="radio"
-			default="0"
 			class="btn-group btn-group-yesno"
+			default="0"
+			type="radio"
 			label="COM_KNOWRES_COUNTRY_ALLOW_PROPERTY_LBL"
 			description="COM_KNOWRES_COUNTRY_ALLOW_PROPERTY_DSC">
-			<option value="1">JYES</option>
 			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+		<field name="property_licence"
+			class="btn-group btn-group-yesno"
+			default="0"
+			type="radio"
+			label="COM_KNOWRES_COUNTRY_PROPERTY_LICENCE_LBL"
+			description="COM_KNOWRES_COUNTRY_PROPERTY_LICENCE_DSC">
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
 		</field>
 	</fieldset>
 	<fieldset name="krcommon">

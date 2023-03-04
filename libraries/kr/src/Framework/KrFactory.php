@@ -33,12 +33,12 @@ class KrFactory
 	/**
 	 * Check for existing guest email on User.
 	 *
-	 * @param   string  $email  Guest email
+	 * @param  string  $email  Guest email
 	 *
 	 * @since  3.3.0
-	 * @return int
+	 * @return mixed
 	 */
-	public static function checkUser(string $email): int
+	public static function checkUser(string $email): mixed
 	{
 		return FNS::checkUser($email);
 	}
@@ -46,7 +46,7 @@ class KrFactory
 	/**
 	 * Check for existing username on User.
 	 *
-	 * @param   string  $name  Proposed username
+	 * @param  string  $name  Proposed username
 	 *
 	 * @since  3.3.0
 	 * @return mixed
@@ -59,8 +59,8 @@ class KrFactory
 	/**
 	 * Delete data from table
 	 *
-	 * @param   string  $table       Table name
-	 * @param   array   $conditions  Deletion conditions
+	 * @param  string  $table       Table name
+	 * @param  array   $conditions  Deletion conditions
 	 *
 	 * @since  3.3.0
 	 */
@@ -72,9 +72,9 @@ class KrFactory
 	/**
 	 * Get a new empty Form for adhic uses
 	 *
-	 * @param   string  $name     Form name
-	 * @param   string  $source   Name of XML file
-	 * @param   string  $area     Set to 'site' for Site or 'module' for Module or 'libraries' for Library
+	 * @param  string   $name     Form name
+	 * @param  string   $source   Name of XML file
+	 * @param  string   $area     Set to 'site' for Site or 'module' for Module or 'libraries' for Library
 	 * @param  ?string  $control  Form control name
 	 *
 	 * @since  3.3.0
@@ -93,7 +93,7 @@ class KrFactory
 		}
 		else if ($area == 'library')
 		{
-			$filepath = JPATH_LIBRARIES . '/' . $name . '/forms/' . $source . '.xml';
+			$filepath = JPATH_LIBRARIES . '/highlandvision/' . $name . '/forms/' . $source;
 		}
 		else
 		{
@@ -110,7 +110,7 @@ class KrFactory
 	/**
 	 * Get admin model
 	 *
-	 * @param   string  $name  Model name
+	 * @param  string  $name  Model name
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -124,7 +124,7 @@ class KrFactory
 	/**
 	 * Get admin model
 	 *
-	 * @param   string  $name  Model name
+	 * @param  string  $name  Model name
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -149,7 +149,7 @@ class KrFactory
 	/**
 	 * Get list model
 	 *
-	 * @param   string  $name  Model name
+	 * @param  string  $name  Model name
 	 *
 	 * @throws RuntimeException
 	 * @since  3.3.0
@@ -163,7 +163,7 @@ class KrFactory
 	/**
 	 * Get list model
 	 *
-	 * @param   string  $name  Model name
+	 * @param  string  $name  Model name
 	 *
 	 * @throws RuntimeException
 	 * @since  3.3.0
@@ -177,9 +177,9 @@ class KrFactory
 	/**
 	 * Insert object into database
 	 *
-	 * @param   string    $table  Table name
-	 * @param   stdClass  $data   Data to be inserted
-	 * @param   string    $key    Primary key
+	 * @param  string    $table  Table name
+	 * @param  stdClass  $data   Data to be inserted
+	 * @param  string    $key    Primary key
 	 *
 	 * @throws RuntimeException
 	 * @since  3.3.0
@@ -193,7 +193,7 @@ class KrFactory
 	/**
 	 * Truncate a table
 	 *
-	 * @param   string  $table  Name of table
+	 * @param  string  $table  Name of table
 	 *
 	 * @throws RuntimeException
 	 * @since  3.3.0
@@ -206,9 +206,9 @@ class KrFactory
 	/**
 	 * Update database
 	 *
-	 * @param   string    $table  Table name
-	 * @param   stdClass  $data   Data to be inserted
-	 * @param   string    $key    Name of primary key
+	 * @param  string    $table  Table name
+	 * @param  stdClass  $data   Data to be inserted
+	 * @param  string    $key    Name of primary key
 	 *
 	 * @throws RuntimeException
 	 * @since  3.3.0

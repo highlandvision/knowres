@@ -79,9 +79,9 @@ use HighlandVision\KR\Utility;
 					<?php echo Utility::displayValue($this->property->security_amount,
 						$this->contractData->currency); ?>
 				</div>
-				<div style="padding:0 0.5rem;">
+				<small style="padding:0 0.5rem;">
 					<?php echo $this->property->security_text; ?>
-				</div>
+				</small>
 			<?php endif; ?>
 		</div>
 	</div>

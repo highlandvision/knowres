@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrMethods;
 
-if (empty($this->lines['approvals']))
+if (empty($this->approvals))
 {
 	return;
 }
@@ -22,12 +22,12 @@ if (empty($this->lines['approvals']))
 	<div class="card-header">
 		<a class="showbefore" data-bs-toggle="collapse" href="#panel-approvals" role="button"
 		   aria-expanded="true" aria-controls="panel-approvals">
-			<?php echo KrMethods::plain('COM_KNOWRES_CONTRACTS_APPROVALS'); ?>
+			<?php echo KrMethods::plain('COM_KNOWRES_CONTRACTS_DAILY_APPROVALS'); ?>
 		</a>
 	</div>
 	<div class="collapse show" id="panel-approvals">
 		<div class="card-body">
-			<?php echo KrMethods::render('contract.daily.approvals', ['lines' => $this->lines['approvals']]); ?>
+			<?php echo KrMethods::render('contract.daily.approvals', ['lines' => $this->approvals]); ?>
 		</div>
 	</div>
 </div>

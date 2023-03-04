@@ -8,14 +8,6 @@
 			type="text"
 			label="COM_KNOWRES_AGENT_NAME_LBL"
 			description="COM_KNOWRES_AGENT_NAME_DSC"/>
-		<field name="commission"
-			addonAfter="%"
-			class="input-mini"
-			default="15"
-			filter="string"
-			type="text"
-			label="COM_KNOWRES_AGENT_COMMISSION_LBL"
-			description="COM_KNOWRES_AGENT_COMMISSION_DSC"/>
 		<field name="service_id"
 			class="w-auto"
 			input_type="list"
@@ -23,7 +15,7 @@
 			value_field="name"
 			table="#__knowres_service"
 			type="listforeignkey"
-			where="agency_id > 0 AND state=1 AND type='c'"
+			where="agency_id>0 AND state=1 AND type='c'"
 			label="COM_KNOWRES_AGENT_SERVICE_ID_LBL"
 			description="COM_KNOWRES_AGENT_SERVICE_ID_DSC">
 			<option value="0">COM_KNOWRES_SELECT</option>
@@ -34,7 +26,9 @@
 			showon="service_id!:0"
 			type="listruagent"
 			label="COM_KNOWRES_AGENT_FOREIGN_KEY_LBL"
-			description="COM_KNOWRES_AGENT_FOREIGN_KEY_DSC"/>
+			description="COM_KNOWRES_AGENT_FOREIGN_KEY_DSC">
+			<option value="offline">Offline Bookings</option>
+		</field>
 		<field name="foreign_key_reqd"
 			class="btn-group btn-group-yesno"
 			default="0"
@@ -42,8 +36,8 @@
 			type="radio"
 			label="COM_KNOWRES_AGENT_FOREIGN_KEY_REQD_LBL"
 			description="COM_KNOWRES_AGENT_FOREIGN_KEY_REQD_DSC">
-			<option value="1">JYES</option>
 			<option value="0">JNO</option>
+			<option value="1">JYES</option>
 		</field>
 	</fieldset>
 	<fieldset name="krdata-extras">
@@ -53,17 +47,18 @@
 			class="btn-group btn-group-yesno"
 			label="COM_KNOWRES_AGENT_MANDATORY_EXTRAS_CHARGE_LBL"
 			description="COM_KNOWRES_AGENT_MANDATORY_EXTRAS_CHARGE_DSC">
-			<option value="1">JYES</option>
 			<option value="0">JNO</option>
+			<option value="1">JYES</option>
 		</field>
 		<field name="mandatory_extras_excluded"
-			type="radio"
-			default="0"
 			class="btn-group btn-group-yesno"
+			default="0"
+			showon="mandatory_extras_charge:1"
+			type="radio"
 			label="COM_KNOWRES_AGENT_MANDATORY_EXTRAS_EXCLUDED_LBL"
 			description="COM_KNOWRES_AGENT_MANDATORY_EXTRAS_EXCLUDED_DSC">
-			<option value="1">JYES</option>
 			<option value="0">JNO</option>
+			<option value="1">JYES</option>
 		</field>
 	</fieldset>
 	<fieldset name="krdata-reservation">
@@ -73,15 +68,23 @@
 			type="radio"
 			label="COM_KNOWRES_AGENT_DEPOSIT_PAID_LBL"
 			description="COM_KNOWRES_AGENT_DEPOSIT_PAID_DSC">
-			<option value="1">JYES</option>
 			<option value="0">JNO</option>
+			<option value="1">JYES</option>
 		</field>
-		<field name="deposit"
+		<field name="commission"
+			addonAfter="%"
+			class="input-mini"
+			default="15"
+			filter="string"
 			type="text"
+			label="COM_KNOWRES_AGENT_COMMISSION_LBL"
+			description="COM_KNOWRES_AGENT_COMMISSION_DSC"/>
+		<field name="deposit"
 			addonAfter="%"
 			class="input-mini"
 			default="30"
 			filter="string"
+			type="text"
 			label="COM_KNOWRES_AGENT_DEPOSIT_LBL"
 			description="COM_KNOWRES_AGENT_DEPOSIT_DSC"/>
 		<field name="deposit_unconfirmed"
@@ -100,8 +103,8 @@
 			type="radio"
 			label="COM_KNOWRES_AGENT_DEPOSIT_UNCONFIRMED_AGENT_LBL"
 			description="COM_KNOWRES_AGENT_DEPOSIT_UNCONFIRMED_AGENT_DSC">
-			<option value="1">JYES</option>
 			<option value="0">JNO</option>
+			<option value="1">JYES</option>
 		</field>
 		<field name="owner_deposit_payment"
 			class="btn-group btn-group-yesno"
@@ -109,8 +112,8 @@
 			type="radio"
 			label="COM_KNOWRES_AGENT_OWNER_DEPOSIT_PAYMENT_LBL"
 			description="COM_KNOWRES_AGENT_OWNER_DEPOSIT_PAYMENT_DSC">
-			<option value="1">JYES</option>
 			<option value="0">JNO</option>
+			<option value="1">JYES</option>
 		</field>
 		<field name="expiry_days"
 			class="input-mini"

@@ -44,7 +44,7 @@ class ContractBalances
 	/**
 	 * Initialize
 	 *
-	 * @param   array  $data  Array containing the export paramters
+	 * @param  array  $data   Array containing the export paramters
 	 *                        $data = [
 	 *                        'agent_id'      =>    (int) Optional ID of agent
 	 *                        'property_id'   =>    (mixed) Empty for all, int for one property, array for multiple.
@@ -147,7 +147,7 @@ class ContractBalances
 	/**
 	 * Set data for contract balances export
 	 *
-	 * @param   stdClass  $row  Contract row
+	 * @param  stdClass  $row  Contract row
 	 *
 	 * @throws Exception
 	 * @since  2.4.0

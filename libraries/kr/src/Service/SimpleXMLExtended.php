@@ -31,8 +31,8 @@ class SimpleXMLExtended extends SimpleXMLElement
 	/**
 	 * Create a child with CDATA value
 	 *
-	 * @param   string  $name        The name of the child element to add.
-	 * @param   string  $cdata_text  The CDATA value of the child element.
+	 * @param  string  $name        The name of the child element to add.
+	 * @param  string  $cdata_text  The CDATA value of the child element.
 	 *
 	 * @since 3.3.0
 	 */

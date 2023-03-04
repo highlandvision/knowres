@@ -15,19 +15,18 @@ use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Utility;
-use Joomla\CMS\Object\CMSObject;
 
 extract($displayData);
 /**
  * Layout variables
  *
- * @var CMSObject $item        The contract item.
- * @var mixed     $fees        Contract fees
- * @var mixed     $payments    Contract payments
- * @var string    $audience    The type of viewee
- * @var float     $balance     Current confirmed balance.
- * @var float     $balance_all Current balance less unconfirmed payments.
- * @var array     $notes       Contract notes.
+ * @var false|object $item        The contract item.
+ * @var mixed        $fees        Contract fees
+ * @var mixed        $payments    Contract payments
+ * @var string       $audience    The type of viewee
+ * @var float        $balance     Current confirmed balance.
+ * @var float        $balance_all Current balance less unconfirmed payments.
+ * @var array        $notes       Contract notes.
  */
 ?>
 
@@ -123,7 +122,7 @@ extract($displayData);
 
 			<div class="row infolist">
 				<div class="col-6 indent">
-					<label><?php echo $name; ?></label>
+					<?php echo $name; ?>
 				</div>
 				<div class="col-3 text-end">
 					<?php echo Utility::displayValue($value, $item->currency); ?>

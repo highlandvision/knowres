@@ -33,8 +33,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 				['data' => $this, 'item' => $this->item, 'i' => $i]); ?>
 		</th>
 		<td class="text-center">
-			<?php echo KrMethods::render('joomla.html.image',
-				['src' => '/' . $this->item->mapicon, 'alt' => $this->item->name]); ?>
+			<?php echo KrMethods::render('joomla.html.image', ['src' => '/' . $this->item->mapicon, 'alt' => $this->item->name]); ?>
 		</td>
 		<td class="d-none d-md-table-cell">
 			<?php echo (int) $this->item->id; ?>

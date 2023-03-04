@@ -28,11 +28,11 @@ class Manager extends Calendar
 	/**
 	 * Initialise
 	 *
-	 * @param   int     $property_id  ID of property
-	 * @param   int     $edit_id      ID of contract being edited
+	 * @param  int      $property_id  ID of property
+	 * @param  int      $edit_id      ID of contract being edited
 	 * @param  ?string  $first        From date Y-m-d
 	 * @param  ?string  $final        End date Y-m-d
-	 * @param   int     $days         # Days
+	 * @param  int      $days         # Days
 	 *
 	 * @throws Exception
 	 * @since  3.4.0
@@ -65,7 +65,7 @@ class Manager extends Calendar
 	/**
 	 * Read data for processing
 	 *
-	 * @param   array  $rates  Rates array
+	 * @param  array  $rates  Rates array
 	 *
 	 * @throws Exception
 	 * @since  3.4.0

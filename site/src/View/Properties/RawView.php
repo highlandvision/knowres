@@ -27,6 +27,8 @@ class RawView extends KrHtmlView
 {
 	/** @var bool True if favourites selected */
 	protected bool $favs = false;
+	/** @var string Modules output */
+	protected string $modules;
 	/** @var bool True if favourites requested but none saved */
 	protected bool $nofavs = false;
 	/** @var array Saved favourites */
@@ -37,7 +39,7 @@ class RawView extends KrHtmlView
 	/**
 	 * Display the view
 	 *
-	 * @param   null  $tpl  Default template.
+	 * @param  null  $tpl  Default template.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -56,15 +58,16 @@ class RawView extends KrHtmlView
 			$this->items      = [];
 			$this->modules    = KrMethods::loadInternal('{loadposition propertiesview}');
 			$this->pagination = $this->get('pagination');
-			$this->Itemid     = SiteHelper::getItemId('com_knowres', 'property', array('id' => 0));
+			$this->Itemid     = SiteHelper::getItemId('com_knowres', 'property', ['id' => 0]);
 
 			parent::display($tpl);
 		}
 
 		$this->Search = new Search($searchData);
 
-		$field = KrMethods::inputString('field', '');
-		$value = KrMethods::inputString('value', '');
+		$field      = KrMethods::inputString('field', '');
+		$value      = KrMethods::inputString('value', '');
+
 		if ($value == 'favs' && !count($this->saved))
 		{
 			$this->nofavs = true;
@@ -84,7 +87,7 @@ class RawView extends KrHtmlView
 
 			// Get the properties for the favourites
 			$this->state->set('filter.id', $fids);
-			//TODO-v4.1 display only favourites on map when displayed in list
+			//TODO-v4.1 display favourites on map only when displayed in list
 			$this->items              = $this->get('items');
 			$this->Search->data->view = 'favs';
 		}
@@ -241,7 +244,7 @@ class RawView extends KrHtmlView
 		$this->order      = $this->Search->data->order != '' ? $this->Search->data->order
 			: $this->params->get('order_default');
 		$this->pagination = $this->get('pagination');
-		$this->Itemid     = SiteHelper::getItemId('com_knowres', 'property', array('id' => 0));
+		$this->Itemid     = SiteHelper::getItemId('com_knowres', 'property', ['id' => 0]);
 
 		parent::display($tpl);
 	}

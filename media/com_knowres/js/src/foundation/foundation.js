@@ -2,37 +2,37 @@
 //import 'what-input';
 //for all
 //import { Foundation } from ('./node_modules/foundation-sites');
-import {Foundation}     from '../../../../../node_modules/foundation-sites/js/foundation.core';
-import * as CoreUtils   from '../../../../../node_modules/foundation-sites/js/foundation.core.utils';
-import {Box}            from '../../../../../node_modules/foundation-sites/js/foundation.util.box'
-import {onImagesLoaded} from '../../../../../node_modules/foundation-sites/js/foundation.util.imageLoader';
-import {Keyboard}       from '../../../../../node_modules/foundation-sites/js/foundation.util.keyboard';
-import {MediaQuery}     from '../../../../../node_modules/foundation-sites/js/foundation.util.mediaQuery';
-import {Motion, Move}   from '../../../../../node_modules/foundation-sites/js/foundation.util.motion';
-import {Nest}           from '../../../../../node_modules/foundation-sites/js/foundation.util.nest';
-import {Timer}          from '../../../../../node_modules/foundation-sites/js/foundation.util.timer';
-import {Touch}          from '../../../../../node_modules/foundation-sites/js/foundation.util.touch';
-import {Triggers}       from '../../../../../node_modules/foundation-sites/js/foundation.util.triggers';
+import {Foundation}     from '../../../../../../node_modules/foundation-sites/js/foundation.core';
+import * as CoreUtils   from '../../../../../../node_modules/foundation-sites/js/foundation.core.utils';
+import {Box}            from '../../../../../../node_modules/foundation-sites/js/foundation.util.box'
+import {onImagesLoaded} from '../../../../../../node_modules/foundation-sites/js/foundation.util.imageLoader';
+import {Keyboard}       from '../../../../../../node_modules/foundation-sites/js/foundation.util.keyboard';
+import {MediaQuery}     from '../../../../../../node_modules/foundation-sites/js/foundation.util.mediaQuery';
+import {Motion, Move}   from '../../../../../../node_modules/foundation-sites/js/foundation.util.motion';
+import {Nest}           from '../../../../../../node_modules/foundation-sites/js/foundation.util.nest';
+import {Timer}          from '../../../../../../node_modules/foundation-sites/js/foundation.util.timer';
+import {Touch}          from '../../../../../../node_modules/foundation-sites/js/foundation.util.touch';
+import {Triggers}       from '../../../../../../node_modules/foundation-sites/js/foundation.util.triggers';
 //import { Abide } from '../../../../../node_modules/foundation-sites/js/foundation.abide';
 //import { Accordion } from '../../../../../node_modules/foundation-sites/js/foundation.accordion';
 //import { AccordionMenu } from '../../../../../node_modules/foundation-sites/js/foundation.accordionMenu';
 //import { Drilldown } from 'foundation.drilldown';
-import {Dropdown}       from '../../../../../node_modules/foundation-sites/js/foundation.dropdown';
-import {DropdownMenu}   from '../../../../../node_modules/foundation-sites/js/foundation.dropdownMenu';
-import {Equalizer}      from '../../../../../node_modules/foundation-sites/js/foundation.equalizer';
+import {Dropdown}       from '../../../../../../node_modules/foundation-sites/js/foundation.dropdown';
+import {DropdownMenu}   from '../../../../../../node_modules/foundation-sites/js/foundation.dropdownMenu';
+import {Equalizer}      from '../../../../../../node_modules/foundation-sites/js/foundation.equalizer';
 //import { Interchange } from 'foundation.interchange';
-import {Magellan}       from '../../../../../node_modules/foundation-sites/js/foundation.magellan';
-import {OffCanvas}      from '../../../../../node_modules/foundation-sites/js/foundation.offcanvas';
+import {Magellan}       from '../../../../../../node_modules/foundation-sites/js/foundation.magellan';
+import {OffCanvas}      from '../../../../../../node_modules/foundation-sites/js/foundation.offcanvas';
 //import { Orbit } from 'foundation.orbit';
-import {ResponsiveMenu} from '../../../../../node_modules/foundation-sites/js/foundation.responsiveMenu';
+import {ResponsiveMenu} from '../../../../../../node_modules/foundation-sites/js/foundation.responsiveMenu';
 //import { ResponsiveToggle } from 'foundation.responsiveToggle';
-import {Reveal}         from '../../../../../node_modules/foundation-sites/js/foundation.reveal';
+import {Reveal}         from '../../../../../../node_modules/foundation-sites/js/foundation.reveal';
 //import { Slider } from 'foundation.slider';
 //import { SmoothScroll } from 'foundation.smoothScroll';
 //import { Sticky } from 'foundation.sticky';
-import {Tabs}           from '../../../../../node_modules/foundation-sites/js/foundation.tabs';
-import {Toggler}        from '../../../../../node_modules/foundation-sites/js/foundation.toggler';
-import {Tooltip}        from '../../../../../node_modules/foundation-sites/js/foundation.tooltip';
+import {Tabs}           from '../../../../../../node_modules/foundation-sites/js/foundation.tabs';
+import {Toggler}        from '../../../../../../node_modules/foundation-sites/js/foundation.toggler';
+import {Tooltip}        from '../../../../../../node_modules/foundation-sites/js/foundation.tooltip';
 //import { ResponsiveAccordionTabs } from 'foundation.responsiveAccordionTabs';
 
 Foundation.addToJquery($);

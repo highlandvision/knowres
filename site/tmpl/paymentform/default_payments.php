@@ -24,7 +24,7 @@ $balance_date    = max($this->contract->balance_date, $this->today);
 
 <div class="callout">
 	<?php if ($this->contract->booking_status < 10): ?>
-		<?php $lang = !$balance_payable ? 'COM_KNOWRES_FULL_PAYMENT_OF' : 'COM_KNOWRES_DEPOSIT_OF'; ?>
+		<?php $lang = !$balance_payable ? 'COM_KNOWRES_PAYMENT_FULL_OF' : 'COM_KNOWRES_PAYMENT_DEPOSIT_OF'; ?>
 		<?php $text = KrMethods::plain($lang); ?>
 
 		<?php if ($this->contract->booking_status < 5): ?>
@@ -61,7 +61,7 @@ $balance_date    = max($this->contract->balance_date, $this->today);
 					]); ?>
 			<?php else: ?>
 				<?php echo KrMethods::render('dashboard.payment.payments',
-					['text'     => KrMethods::plain('COM_KNOWRES_BALANCE_OF'),
+					['text'     => KrMethods::plain('COM_KNOWRES_PAYMENT_BALANCE'),
 					 'value'    => $balance_payable,
 					 'currency' => $this->contract->currency,
 					 'date'     => KrMethods::sprintf('COM_KNOWRES_PAYMENT_DUE_BY',
@@ -85,7 +85,7 @@ $balance_date    = max($this->contract->balance_date, $this->today);
 			<?php endif; ?>
 		<?php else: ?>
 			<?php echo KrMethods::render('dashboard.payment.payments',
-				['text'     => KrMethods::plain('COM_KNOWRES_DEPOSIT_OF'),
+				['text'     => KrMethods::plain('COM_KNOWRES_PAYMENT_DEPOSIT_OF'),
 				 'value'    => $this->contract->deposit,
 				 'currency' => $this->contract->currency,
 				 'date'     => '',
@@ -102,7 +102,7 @@ $balance_date    = max($this->contract->balance_date, $this->today);
 			<?php endif; ?>
 
 			<?php echo KrMethods::render('dashboard.payment.payments',
-				['text'     => KrMethods::plain('COM_KNOWRES_BALANCE_OF'),
+				['text'     => KrMethods::plain('COM_KNOWRES_PAYMENT_BALANCE'),
 				 'value'    => $this->balance,
 				 'currency' => $this->contract->currency,
 				 'date'     => '',
@@ -111,7 +111,7 @@ $balance_date    = max($this->contract->balance_date, $this->today);
 				]); ?>
 		<?php elseif ($this->payment_total !== $this->payment_confirmed): ?>
 			<?php echo KrMethods::render('dashboard.payment.payments',
-				['text'     => KrMethods::plain('COM_KNOWRES_BALANCE_OF'),
+				['text'     => KrMethods::plain('COM_KNOWRES_PAYMENT_BALANCE'),
 				 'value'    => $this->payment_total - $this->payment_confirmed,
 				 'currency' => $this->contract->currency,
 				 'date'     => KrMethods::sprintf('COM_KNOWRES_PAYMENT_DUE_BY', TickTock::displayDate($balance_date)),
@@ -121,7 +121,7 @@ $balance_date    = max($this->contract->balance_date, $this->today);
 		<?php else: ?>
 			<?php $due = $this->balance; ?>
 			<?php echo KrMethods::render('dashboard.payment.payments',
-				['text'     => KrMethods::plain('COM_KNOWRES_BALANCE_OF'),
+				['text'     => KrMethods::plain('COM_KNOWRES_PAYMENT_BALANCE'),
 				 'value'    => $this->balance,
 				 'currency' => $this->contract->currency,
 				 'date'     => KrMethods::sprintf('COM_KNOWRES_PAYMENT_DUE_BY', TickTock::displayDate($balance_date)),

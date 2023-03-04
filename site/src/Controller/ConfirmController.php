@@ -25,8 +25,10 @@ use HighlandVision\KR\SiteHelper;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Translations;
 use HighlandVision\KR\Utility;
+use InvalidArgumentException;
 use JetBrains\PhpStorm\NoReturn;
 use Joomla\CMS\Response\JsonResponse;
+use RuntimeException;
 use stdClass;
 
 use function implode;
@@ -72,11 +74,11 @@ class ConfirmController extends FormController
 
 		try
 		{
-			$jform                          = KrMethods::inputArray('jform', []);
+			$jform                          = KrMethods::inputArray('jform');
 			$contractData                   = $contractSession->updateData($jform);
 			$contractData->deposit          = 0;
-			$contractData->extra_quantities = KrMethods::inputArray('extra_quantities', []);
-			$contractData->extra_ids        = KrMethods::inputArray('extra_ids', []);
+			$contractData->extra_quantities = KrMethods::inputArray('extra_quantities');
+			$contractData->extra_ids        = KrMethods::inputArray('extra_ids');
 			$contractData                   = $this->validateCoupon($contractData);
 
 			$Hub = new Hub($contractData);
@@ -110,9 +112,10 @@ class ConfirmController extends FormController
 			echo new JsonResponse($wrapper);
 			jexit();
 		}
-		catch (Exception)
+		catch (Exception $e)
 		{
 			echo new JsonResponse(null, KrMethods::plain('COM_KNOWRES_ERROR_FATAL'), true);
+			Logger::logMe($e->getMessage());
 			jexit();
 		}
 	}
@@ -123,27 +126,67 @@ class ConfirmController extends FormController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function payment()
+	#[NoReturn] public function payment()
 	{
-		$view = $this->getView('confirm', 'payment');
+		$this->checkToken();
 
-		$contractSession    = new KrSession\Contract();
-		$view->contractData = $contractSession->getData();
-		$guestSession       = new KrSession\Guest();
-		$view->guestData    = $guestSession->getData();
-
-		if (!$view->contractData->contract_total || !$view->guestData->email)
+		$contractSession = new KrSession\Contract();
+		$contractData    = $contractSession->getData();
+		if (!$contractData->contract_total)
 		{
 			$contractSession->resetData();
-			SiteHelper::expiredSession($view->contractData->property_id);
+			SiteHelper::expiredSession(0, true);
 		}
 
-		$view->property = KrFactory::getAdminModel('property')->getItem($view->contractData->property_id);
+		$jform = KrMethods::inputArray('jform');
+		if ($jform['property_id'] != $contractData->property_id || $jform['arrival'] != $contractData->arrival
+			|| $jform['room_total'] != $contractData->room_total)
+		{
+			$contractSession->resetData();
+			SiteHelper::expiredSession($jform['property_id'], true);
+		}
+
+		if (!KrFactory::getListModel('contracts')
+		              ->isPropertyAvailable($contractData->property_id, $contractData->arrival,
+			              $contractData->departure))
+		{
+			$contractSession->resetData();
+			SiteHelper::expiredSession($jform['property_id'], true);
+		}
+
+		$guestSession = new KrSession\Guest();
+		$guestData    = $guestSession->getData();
+
+		$contractData = $contractSession->updateData($jform);
+		KrMethods::setUserState('com_knowres.edit.contract.data', $jform);
+		$guestData = $guestSession->updateData($jform);
+		KrMethods::setUserState('com_knowres.edit.guest.data', $jform);
+
+		$Hub = new Hub($contractData);
+		$Hub->setData($guestData, 'guestData');
+		$actions = ['confirm'];
+		$success = $this->core($Hub, $actions);
+		if (!$success)
+		{
+			Utility::pageErrors($Hub->errors);
+			$Itemid = SiteHelper::getItemId('com_knowres', 'confirm');
+			$link   = KrMethods::route('index.php?option=com_knowres&view=confirm&Itemid=' . $Itemid, false);
+			KrMethods::redirect($link);
+		}
+
+		$contractSession->setData($Hub->getData());
+		$guestSession->setData($Hub->getData('guestData'));
+
+		/** @var PaymentView $view */
+		$view               = $this->getView('confirm', 'payment');
+		$view->contractData = $Hub->getData();
+		$view->guestData    = $Hub->getData('guestData');
+		$view->property     = KrFactory::getAdminModel('property')->getItem($contractData->property_id);
 
 		try
 		{
 			$prePayment        = new PrePayment();
-			$view->paymentData = $prePayment->constructNew($view->contractData);
+			$view->paymentData = $prePayment->constructNew($contractData);
 			$view->gateways    = $view->paymentData->gateways;
 		}
 		catch (Exception $e)
@@ -157,27 +200,10 @@ class ConfirmController extends FormController
 	}
 
 	/**
-	 * Display for successful requests
-	 *
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
-	#[NoReturn] public function request()
-	{
-		$userSession = new KrSession\User();
-		$userData    = $userSession->getData();
-
-		$view              = $this->getView('confirm', 'success');
-		$view->contract_id = $userData->pr_contract_id;
-		$view->request     = true;
-		$view->display();
-	}
-
-	/**
 	 * Saves the contract and guest data before displaying gateway payment choices
 	 *
-	 * @param   null  $key     The name of the primary key of the URL variable.
-	 * @param   null  $urlVar  The name of the URL variable if different from the primary key (sometimes required to avoid router collisions).
+	 * @param  null  $key     The name of the primary key of the URL variable.
+	 * @param  null  $urlVar  The name of the URL variable if different from the primary key (sometimes required to avoid router collisions).
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -235,96 +261,16 @@ class ConfirmController extends FormController
 		}
 		catch (Exception $e)
 		{
+			Logger::logMe($e->getMessage(), 'info');
 			Utility::ajaxErrors($e);
 		}
 	}
 
 	/**
-	 * Display for successful payments
-	 *
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
-	#[NoReturn] public function success()
-	{
-		KrMethods::cleanCache('com_knowres_contracts');
-
-		$userSession = new KrSession\User();
-		$userData    = $userSession->getData();
-
-		$view              = $this->getView('confirm', 'success');
-		$view->contract_id = $userData->pr_contract_id;
-		$view->request     = false;
-		$view->display();
-	}
-
-	/**
-	 * Validate contract and guest data before payment
-	 *
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
-	#[NoReturn] public function validate()
-	{
-		$this->checkToken();
-
-		$contractSession = new KrSession\Contract();
-		$contractData    = $contractSession->getData();
-		if (!$contractData->contract_total)
-		{
-			$contractSession->resetData();
-			SiteHelper::expiredSession(0, true);
-		}
-
-		$jform = KrMethods::inputArray('jform', []);
-		if ($jform['property_id'] != $contractData->property_id || $jform['arrival'] != $contractData->arrival
-			|| !Utility::compareFloat($jform['room_total'], $contractData->room_total))
-		{
-			$contractSession->resetData();
-			SiteHelper::expiredSession($jform['property_id'], true);
-		}
-
-		if (!KrFactory::getListModel('contracts')->isPropertyAvailable($contractData->property_id,
-			$contractData->arrival, $contractData->departure))
-		{
-			$contractSession->resetData();
-			SiteHelper::expiredSession($jform['property_id'], true);
-		}
-
-		$guestSession = new KrSession\Guest();
-		$contractData = $contractSession->updateData($jform);
-		KrMethods::setUserState('com_knowres.edit.contract.data', $jform);
-		$guestData = $guestSession->updateData($jform);
-		KrMethods::setUserState('com_knowres.edit.guest.data', $jform);
-
-		$Hub = new Hub($contractData);
-		$Hub->setData($guestData, 'guestData');
-		$actions = ['confirm'];
-		if (!$this->core($Hub, $actions))
-		{
-			$errors = Utility::ajaxErrors($Hub->errors);
-			echo new JsonResponse(null, implode('<br>', $errors), true);
-			jexit();
-		}
-
-		$contractSession->setData($Hub->getData());
-		$guestSession->setData($Hub->getData('guestData'));
-
-		$Itemid = SiteHelper::getItemId('com_knowres', 'confirm', ['layout' => 'payment']);
-		$return = KrMethods::route('index.php?option=com_knowres&task=confirm.payment&Itemid=' . $Itemid,
-			false);
-
-		$wrapper             = [];
-		$wrapper['redirect'] = $return;
-		echo new JsonResponse($wrapper);
-		jexit();
-	}
-
-	/**
 	 * Process the core updates and actions.
 	 *
-	 * @param   Hub    $Hub      Hub
-	 * @param   array  $actions  Core processes to be actioned
+	 * @param  Hub    $Hub      Hub
+	 * @param  array  $actions  Core processes to be actioned
 	 *
 	 * @throws Exception
 	 * @since  3.2.0
@@ -347,8 +293,10 @@ class ConfirmController extends FormController
 	/**
 	 * Breaks the extras into rows for the contract form totals
 	 *
-	 * @param   Hub  $Hub  Hub data
+	 * @param  Hub  $Hub  Hub data
 	 *
+	 * @throws InvalidArgumentException
+	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return string
 	 */
@@ -384,7 +332,7 @@ class ConfirmController extends FormController
 	/**
 	 * Format the json output
 	 *
-	 * @param   Hub  $Hub  Quote data
+	 * @param  Hub  $Hub  Quote data
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -418,7 +366,7 @@ class ConfirmController extends FormController
 		$output->discount      = '';
 		if ((float) $Hub->getValue('discount') > 0)
 		{
-			$output->discount_text = KrMethods::plain('COM_KNOWRES_CONTRACT_DISCOUNT_LBL');
+			$output->discount_text = KrMethods::plain('COM_KNOWRES_CONFIRM_DISCOUNT_LBL');
 			$output->discount      = '-' . $Hub->currencyDisplay($Hub->getValue('discount'));
 		}
 
@@ -495,8 +443,8 @@ class ConfirmController extends FormController
 	/**
 	 * Breaks the tax into rows for the contract form totals
 	 *
-	 * @param   Hub  $Hub       Hub data.
-	 * @param   int  $tax_type  Calculation type of tax for breakdown.
+	 * @param  Hub  $Hub       Hub data.
+	 * @param  int  $tax_type  Calculation type of tax for breakdown.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -550,7 +498,7 @@ class ConfirmController extends FormController
 	/**
 	 * Validate coupon code
 	 *
-	 * @param   stdClass  $data  Form data
+	 * @param  stdClass  $data  Form data
 	 *
 	 * @throws Exception
 	 * @since  3.3.0

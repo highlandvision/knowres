@@ -16,7 +16,9 @@ use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\FormController;
 use HighlandVision\KR\Utility;
+use HighlandVision\Ru\Manager\Bookings;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
+use RuntimeException;
 
 /**
  * Service controller form class.
@@ -40,10 +42,27 @@ class ServiceController extends FormController
 	}
 
 	/**
+	 * Refresh LNM password
+	 *
+	 * @throws Exception
+	 * @throws RuntimeException
+	 * @since  4.0.0
+	 */
+	public function lnm()
+	{
+		$service_id = KrFactory::getListModel('services')::checkForSingleService(true, 'ru');
+		$Bookings   = new Bookings();
+		$Bookings->enableLNM();
+
+		KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&task=service.edit&id=' . $service_id,
+			false));
+	}
+
+	/**
 	 * Process additional requirements after save
 	 *
-	 * @param   BaseDatabaseModel  $model      The data model object.
-	 * @param   array              $validData  The validated data.
+	 * @param  BaseDatabaseModel  $model      The data model object.
+	 * @param  array              $validData  The validated data.
 	 *
 	 * @throws Exception
 	 * @since  3.1.0
@@ -53,7 +72,7 @@ class ServiceController extends FormController
 		// If adding xero then set all payments and fees to actioned
 		if (!(int) $validData['id'] && (string) $validData['plugin'] == 'xero')
 		{
-			KrFactory::getAdminModel('contractpayment')::updateForXero($validData['agency_id']);
+			KrFactory::getListModel('contractpayments')->updateForXero($validData['agency_id']);
 		}
 
 		// Check for changes to ha service parameters
@@ -74,7 +93,8 @@ class ServiceController extends FormController
 
 				if ($new['markup'] != $existing['markup'])
 				{
-					KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updatePropertyRates');
+					KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updatePropertyRates', 0, 0,
+						'vrbo');
 				}
 			}
 		}

@@ -56,7 +56,7 @@ class ListField extends \Joomla\CMS\Form\Field\ListField
 	/**
 	 * Filter service method
 	 *
-	 * @param   string  $table  Filter table
+	 * @param  string  $table  Filter table
 	 *
 	 * @throws RuntimeException
 	 * @since  3.3.0
@@ -106,10 +106,10 @@ class ListField extends \Joomla\CMS\Form\Field\ListField
 	/**
 	 * Get filters for listing pages
 	 *
-	 * @param   string  $table  Table name
-	 * @param   string  $id     Name of ID field
-	 * @param   string  $name   Name of description field
-	 * @param   mixed   $state  Comma separated list of state options or one state
+	 * @param  string  $table  Table name
+	 * @param  string  $id     Name of ID field
+	 * @param  string  $name   Name of description field
+	 * @param  mixed   $state  Comma separated list of state options or one state
 	 *
 	 * @throws Exception
 	 * @throws RuntimeException
@@ -149,12 +149,12 @@ class ListField extends \Joomla\CMS\Form\Field\ListField
 	/**
 	 * Get filters for listing pages that require a join
 	 *
-	 * @param   string  $table          Table name
-	 * @param   string  $foreign_table  Foreign table name
-	 * @param   string  $foreign_field  Foreign column name
-	 * @param   string  $id             Name of ID field
+	 * @param  string   $table          Table name
+	 * @param  string   $foreign_table  Foreign table name
+	 * @param  string   $foreign_field  Foreign column name
+	 * @param  string   $id             Name of ID field
 	 * @param  ?string  $name           Name of description field
-	 * @param   mixed   $state          Comma separated list of state options or null
+	 * @param  mixed    $state          Comma separated list of state options or null
 	 *
 	 * @throws Exception
 	 * @throws RuntimeException
@@ -215,7 +215,7 @@ class ListField extends \Joomla\CMS\Form\Field\ListField
 	/**
 	 * Get value for state
 	 *
-	 * @param   Form  $form  The form object
+	 * @param  Form  $form  The form object
 	 *
 	 * @since  3.3.0
 	 * @return mixed

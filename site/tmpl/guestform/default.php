@@ -11,8 +11,11 @@
 
 defined('_JEXEC') or die;
 
+use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use Joomla\CMS\HTML\HTMLHelper;
+
+$settings = KrFactory::getListModel('propertysettings')->getPropertysettings($this->property_id);
 
 $wa = $this->document->getWebAssetManager();
 $wa->useScript('com_knowres.site')
@@ -31,14 +34,14 @@ $wa->useScript('com_knowres.site')
 			<h1 class="h3"><?php echo KrMethods::plain('COM_KNOWRES_DASHBOARD_PAYMENT_GUEST'); ?></h1>
 		<?php endif; ?>
 
-		<form action="<?php echo KrMethods::route('index.php?option=com_knowres&id=' . (int) $this->item->id); ?>"
+		<form action="<?php echo 'index.php?option=com_knowres'; ?>"
 		      aria-label="<?php echo $this->form_aria_label; ?>" class="formbg form-validate" id="kr-guest-form"
 		      method="post" name="adminForm">
 
 			<fieldset class="fieldset">
 				<legend><?php echo KrMethods::plain('COM_KNOWRES_LEAD_GUEST'); ?></legend>
 
-				<div class="callout small gray">
+				<div class="callout small formbg">
 					<div class="row">
 						<div class="small-12 medium-6 columns">
 							<?php echo $this->form->renderField('firstname'); ?>
@@ -84,7 +87,7 @@ $wa->useScript('com_knowres.site')
 
 			<fieldset class="fieldset">
 				<legend><?php echo KrMethods::plain('COM_KNOWRES_GUEST_ADDITIONAL_CONTACT_DETAILS'); ?></legend>
-				<div class="callout small gray">
+				<div class="callout small formbg">
 					<div class="callout success small">
 						<p class="vsmall"><?php echo KrMethods::plain('COM_KNOWRES_ARRIVAL_EMAIL_CHANGE'); ?></p>
 					</div>
@@ -104,9 +107,9 @@ $wa->useScript('com_knowres.site')
 
 			<fieldset class="fieldset">
 				<legend><?php echo KrMethods::plain('COM_KNOWRES_MAILING_ADDRESS'); ?></legend>
-				<div class="callout small gray">
+				<div class="callout small formbg">
 					<div class="row">
-						<?php if ((int) $this->settings['bookingform_requiredfields_address1'] == 1) : ?>
+						<?php if ((int) $settings['bookingform_requiredfields_address1'] == 1) : ?>
 							<?php $this->form->setFieldAttribute('address1', 'required', 'true'); ?>
 						<?php endif; ?>
 						<div class="small-12 medium-6 columns end">
@@ -117,14 +120,14 @@ $wa->useScript('com_knowres.site')
 						</div>
 					</div>
 					<div class="row">
-						<?php if ((int) $this->settings['bookingform_requiredfields_town'] == 1) : ?>
+						<?php if ((int) $settings['bookingform_requiredfields_town'] == 1) : ?>
 							<?php $this->form->setFieldAttribute('town', 'required', 'true'); ?>
 						<?php endif; ?>
 						<div class="small-12 medium-6 columns end">
 							<?php echo $this->form->renderField('town'); ?>
 						</div>
 
-						<?php if ((int) $this->settings['bookingform_requiredfields_postcode'] == 1) : ?>
+						<?php if ((int) $settings['bookingform_requiredfields_postcode'] == 1) : ?>
 							<?php $this->form->setFieldAttribute('postcode', 'required', 'true'); ?>
 						<?php endif; ?>
 						<div class="small-12 medium-6 columns end">
@@ -132,7 +135,7 @@ $wa->useScript('com_knowres.site')
 						</div>
 					</div>
 					<div class="row">
-						<?php if ((int) $this->settings['bookingform_requiredfields_region'] == 1) : ?>
+						<?php if ((int) $settings['bookingform_requiredfields_region'] == 1) : ?>
 							<?php $this->form->setFieldAttribute('region_id', 'required', 'true'); ?>
 							<?php $this->form->setFieldAttribute('country_id', 'required', 'true'); ?>
 						<?php endif; ?>
@@ -151,7 +154,7 @@ $wa->useScript('com_knowres.site')
 					<?php echo KrMethods::plain('COM_KNOWRES_BILLING_ADDRESS'); ?>
 				</legend>
 
-				<div class="callout small gray">
+				<div class="callout small formbg">
 					<div class="row">
 						<div class="small-12 medium-6 columns" style="margin-bottom:10px;">
 							<?php echo $this->form->renderField('billing'); ?>
@@ -208,6 +211,7 @@ $wa->useScript('com_knowres.site')
 			</div>
 
 			<?php echo HTMLHelper::_('form.token'); ?>
+			<input type="hidden" name="id" value="<?php echo $this->item->id; ?>">
 			<input type="hidden" name="jform[id]" value="<?php echo $this->item->id; ?>">
 			<input type="hidden" name="jform[email]" value="<?php echo $this->item->email; ?>">
 			<input type="hidden" name="task" value="guest.save">
@@ -217,23 +221,24 @@ $wa->useScript('com_knowres.site')
 
 <script>
 	function fillBilling(checked) {
-		let select1, select2;
-
 		if (checked) {
 			document.getElementById('jform_b_address1').value = document.getElementById('jform_address1').value;
 			document.getElementById('jform_b_address2').value = document.getElementById('jform_address2').value;
 			document.getElementById('jform_b_town').value = document.getElementById('jform_town').value;
 			document.getElementById('jform_b_postcode').value = document.getElementById('jform_postcode').value;
+
+			let first = document.getElementById('jform_country_id');
+			let data = first.innerHTML;
+			let second = document.getElementById('jform_b_country_id');
+			second.innerHTML = second.innerHTML + data;
+
+			first = document.getElementById('jform_region_id');
+			data = first.innerHTML;
+			second = document.getElementById('jform_b_region_id');
+			second.innerHTML = second.innerHTML + data;
+
 			document.getElementById('jform_b_country_id').value = document.getElementById('jform_country_id').value;
 			document.getElementById('jform_b_region_id').value = document.getElementById('jform_region_id').value;
-
-			select1 = document.getElementById('jform_country_id');
-			select2 = document.getElementById('jform_b_country_id');
-			select2.innerHTML = select2.innerHTML + select1.innerHTML;
-
-			select1 = document.getElementById('jform_region_id');
-			select2 = document.getElementById('jform_b_region_id');
-			select2.innerHTML = select2.innerHTML + select1.innerHTML;
 		} else {
 			document.getElementById('jform_b_address1').value = '';
 			document.getElementById('jform_b_address2').value = '';
@@ -242,5 +247,23 @@ $wa->useScript('com_knowres.site')
 			document.getElementById('jform_b_country_id').value = 0;
 			document.getElementById('jform_b_region_id').value = 0;
 		}
+	}
+	async function comboGeo(parentvalue, task, target, childvalue = '0') {
+		let formData = new FormData();
+		formData.append('parent', parentvalue);
+		formData.append('target', target + '_id');
+		formData.append('child', childvalue);
+		let response = await fetch('index.php?option=com_knowres&task=' + task, {
+			method: 'post',
+			body:   formData
+		});
+		let result = await response.json();
+		if (result.success) {
+			let current = document.querySelector('.' + target + 'chain');
+			current.outerHTML = result.data.html;
+		} else {
+			alert(result.message);
+		}
+		return false;
 	}
 </script>

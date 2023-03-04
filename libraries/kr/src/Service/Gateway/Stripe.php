@@ -53,9 +53,9 @@ class Stripe extends Gateway
 	/**
 	 * Initialize
 	 *
-	 * @param   int       $service_id   ID of service
-	 * @param   stdClass  $paymentData  Session payment data
-	 * @param   string    $action       Action from Stripe
+	 * @param  int       $service_id   ID of service
+	 * @param  stdClass  $paymentData  Session payment data
+	 * @param  string    $action       Action from Stripe
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -177,8 +177,8 @@ class Stripe extends Gateway
 	/**
 	 * Do the Stripe call
 	 *
-	 * @param   array   $params  Stripe parameters
-	 * @param   string  $method  Stripe method
+	 * @param  array   $params  Stripe parameters
+	 * @param  string  $method  Stripe method
 	 *
 	 * @throws Exception|ApiErrorException
 	 * @since  2.3.0
@@ -263,7 +263,7 @@ class Stripe extends Gateway
 	/**
 	 * Process response from payment intent
 	 *
-	 * @param   object  $response  Response from request
+	 * @param  object  $response  Response from request
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -341,7 +341,7 @@ class Stripe extends Gateway
 	//		$this->paymentData->customer_ref   = $this->guest->customer_ref;
 	//
 	//		$type = KrMethods::plain('COM_KNOWRES_PAYMENT_BALANCE_OF');
-	//		$this->paymentData->description = KrMethods::sprintf('COM_KNOWRES_SERVICE_DESCRIPTION', $type,
+	//		$this->paymentData->description = KrMethods::sprintf('COM_KNOWRES_PAYMENT_DESCRIPTION', $type,
 	//			Utility::displayValue($amount, $this->contract->currency), $this->contract->property_name,
 	//			TickTock::displayDate($this->contract->arrival), TickTock::displayDate($this->contract->departure));
 	//
@@ -578,8 +578,8 @@ class Stripe extends Gateway
 	/**
 	 * Add exception errors to $this->messages
 	 *
-	 * @param   object  $e        Exception
-	 * @param   mixed   $message  Error message
+	 * @param  object  $e        Exception
+	 * @param  mixed   $message  Error message
 	 *
 	 * @since 1.0.0
 	 */

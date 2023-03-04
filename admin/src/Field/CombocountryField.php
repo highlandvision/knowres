@@ -17,6 +17,8 @@ use InvalidArgumentException;
 use Joomla\CMS\Form\Field\ListField;
 use Joomla\CMS\HTML\HTMLHelper;
 
+use RuntimeException;
+
 use function array_merge;
 
 /**
@@ -32,7 +34,6 @@ class CombocountryField extends ListField
 	/**
 	 * Get the field options.
 	 *
-	 * @throws InvalidArgumentException
 	 * @since  1.6
 	 * @return string The field input markup.
 	 */
@@ -51,6 +52,7 @@ class CombocountryField extends ListField
 	/**
 	 * Get the field options.
 	 *
+	 * @throws RuntimeException|InvalidArgumentException
 	 * @since  4.0.0
 	 * @return array    The field input markup.
 	 */

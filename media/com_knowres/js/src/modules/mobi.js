@@ -174,7 +174,6 @@
 				}
 			});
 		}
-
 		getQuoteCalendar($element, options) {
 			if (options) {
 				$.extend(this.quoteoptions, options);

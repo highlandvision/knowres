@@ -14,10 +14,9 @@ namespace HighlandVision\Component\Knowres\Administrator\Rule;
 defined('_JEXEC') or die;
 
 use Exception;
-use HighlandVision\Component\Knowres\Administrator\Model\PropertyModel;
+use HighlandVision\Component\Knowres\Administrator\Model\AgentModel;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
-use HighlandVision\KR\TickTock;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Form\FormRule;
 use Joomla\Registry\Registry;
@@ -28,7 +27,7 @@ use SimpleXMLElement;
  *
  * @since         1.0.0
  */
-class ContractRule extends FormRule
+class AgentRule extends FormRule
 {
 	/**
 	 * Method to test the value.
@@ -48,43 +47,36 @@ class ContractRule extends FormRule
 	public function test(SimpleXMLElement $element, $value, $group = null, Registry $input = null,
 		Form $form = null): bool
 	{
-		/* @var PropertyModel $property */
-		$property = KrFactory::getAdminModel('property')->getItem($value);
-		if (!$property->id || !$property->state == 1)
+		if (!$value)
 		{
-			KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_NO_PROPERTY'));
+			return true;
+		}
+
+		/* @var AgentModel $agent */
+		$agent = KrFactory::getAdminModel('agent')->getItem($value);
+		if (empty($agent->id))
+		{
+			KrMethods::message(KrMethods::plain('COM_KNOWRES_RULES_NO_AGENT'));
 
 			return false;
 		}
 
-		$arrival = ($input instanceof Registry) ? $input->get('arrival') : '';
-		if (!TickTock::isValidDate($arrival))
+		if (!$agent->state == 1)
 		{
-			KrMethods::message(KrMethods::plain('Arrival date is invalid'));
+			KrMethods::message(KrMethods::plain('COM_KNOWRES_RULES_NO_AGENT_PUBLISHED'));
 
 			return false;
 		}
 
-		$departure = ($input instanceof Registry) ? $input->get('departure') : '';
-		if (!TickTock::isValidDate($departure))
+		if ($agent->service_id || !$agent->foreign_key_reqd)
 		{
-			KrMethods::message(KrMethods::plain('Departure date is invalid'));
-
-			return false;
+			return true;
 		}
 
-		if ($departure <= $arrival)
+		$agent_reference = ($input instanceof Registry) ? $input->get('agent_reference') : '';
+		if (!$agent_reference)
 		{
-			KrMethods::message(KrMethods::plain('Departure is on or before arrival'));
-
-			return false;
-		}
-
-		$id        = ($input instanceof Registry) ? $input->get('id') : '0';
-		$available = KrFactory::getListModel('contracts')->isPropertyAvailable($value, $arrival, $departure, $id);
-		if (!$available)
-		{
-			KrMethods::message(KrMethods::plain('COM_KNOWRES_RULES_QUOTE_NOT_AVAILABLE'));
+			KrMethods::message(KrMethods::plain('COM_KNOWRES_RULES_NO_AGENT_REFERENCE'));
 
 			return false;
 		}

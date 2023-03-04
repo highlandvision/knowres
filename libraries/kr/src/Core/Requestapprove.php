@@ -37,7 +37,7 @@ class Requestapprove
 	/**
 	 * Process request approval
 	 *
-	 * @param   Hub  $Hub  Hub data
+	 * @param  Hub  $Hub  Hub data
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -109,9 +109,9 @@ class Requestapprove
 				$db->transactionStart();
 
 				$class   = Gateway::setGatewayClass('stripe');
-				$gateway = new $class($this->service_id, $this->Hub->getData('paymentData'));
-				$gateway->setOutputData();
-				$gateway->processIncoming();
+				$Gateway = new $class($this->service_id, $this->Hub->getData('paymentData'));
+				$Gateway->setOutputData();
+				$Gateway->processIncoming();
 
 				$postPayment = new PostPayment($this->service_id, $this->Hub->getData('paymentData'));
 				$postPayment->processPayment();

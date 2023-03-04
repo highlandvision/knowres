@@ -17,7 +17,7 @@ $app->bootComponent('com_knowres')->getMVCFactory()->createModel('Slideshow', 'S
 
 $wa = $app->getDocument()->getWebAssetManager();
 $wa->getRegistry()->addExtensionRegistryFile('com_knowres');
-$wa->useScript('com_knowres.modules');
+$wa->useScript('com_knowres.site-modules');
 
 $properties = [];
 for ($i = 1; $i <= 6; $i++)

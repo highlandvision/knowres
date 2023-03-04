@@ -9,22 +9,24 @@
 			table="#__knowres_service"
 			key_field="id"
 			value_field="name"
-			where="(type='e' OR `type` = 'c' OR `plugin` = 'beyond') AND agency_id > 0"
+			where="(type='e' OR `type`='c' OR `plugin`='beyond') AND agency_id > 0 AND state=1"
 			filter="integer"
 			label="COM_KNOWRES_SERVICEXREF_SERVICE_ID_LBL"
 			description="COM_KNOWRES_SERVICEXREF_SERVICE_ID_DSC"/>
 		<field name="property_id"
-			type="listforeignkey"
-			input_type="list"
-			table="#__knowres_property"
-			key_field="id"
-			value_field="property_name"
-			where="state IN(0,1) and approved=1"
-			validate="servicexrefproperty"
 			filter="integer"
+			input_type="list"
+			key_field="id"
+			layout="joomla.form.field.list-fancy-select"
+			required="true"
+			table="#__knowres_property"
+			type="listforeignkey"
+			value_field="property_name"
+			validate="servicexrefproperty"
+			where="state IN(0,1) and approved=1"
 			label="COM_KNOWRES_SERVICEXREF_PROPERTY_ID_LBL"
 			description="COM_KNOWRES_SERVICEXREF_PROPERTY_ID_DSC">
-			<option value="0">COM_KNOWRES_SELECT</option>
+			<option value="0">COM_KNOWRES_SELECT_REQUIRED</option>
 		</field>
 		<field name="contract_id"
 			type="listforeignkey"
@@ -84,13 +86,13 @@
 			label="COM_KNOWRES_SERVICEXREF_FOREIGN_KEY_LBL"
 			description="COM_KNOWRES_SERVICEXREF_FOREIGN_KEY_DSC"/>
 		<field name="sell"
-			type="radio"
-			default="0"
 			class="btn-group btn-group-yesno"
+			default="1"
+			type="radio"
 			label="COM_KNOWRES_SERVICEXREF_SELL_LBL"
 			description="COM_KNOWRES_SERVICEXREF_SELL_DSC">
-			<option value="1">JYES</option>
 			<option value="0">JNO</option>
+			<option value="1">JYES</option>
 		</field>
 	</fieldset>
 	<fieldset name="krhidden">

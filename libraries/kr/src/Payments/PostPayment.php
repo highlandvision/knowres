@@ -15,6 +15,7 @@ use Exception;
 use HighlandVision\KR\Email\ContractEmail;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
+use HighlandVision\KR\Logger;
 use HighlandVision\KR\Session as KnowresSession;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Utility;
@@ -38,20 +39,26 @@ use function is_numeric;
  */
 class PostPayment
 {
+	/* @var false|object Contract item */
+	private false|object $contract;
+	/* @var int ID of contract */
+	private int $contract_id;
 	/** @var array Form fields */
 	protected array $fields = [];
-	/** @var object|null Service parameters */
+	/* @var false|object Guest item */
+	private false|object $guest;
+	/* @var object|null Service parameters */
 	protected ?object $parameters = null;
-	/** @var stdClass Payment session data */
+	/* @var stdClass Payment session data */
 	protected stdClass $paymentData;
-	/** @var int Service ID */
+	/* @var int Service ID */
 	protected int $service_id = 0;
 
 	/**
 	 * Initialize
 	 *
-	 * @param   int       $service_id   ID of service
-	 * @param   stdClass  $paymentData  Session payment data
+	 * @param  int       $service_id   ID of service
+	 * @param  stdClass  $paymentData  Session payment data
 	 *
 	 * @throws Exception
 	 * @since  3.3.1
@@ -145,7 +152,7 @@ class PostPayment
 	/**
 	 * Set the service
 	 *
-	 * @param   int  $service_id  ID of service
+	 * @param  int  $service_id  ID of service
 	 *
 	 * @throws Exception
 	 * @since  1.2.2
@@ -236,7 +243,7 @@ class PostPayment
 		catch (Exception $e)
 		{
 			$db->transactionRollback();
-
+			Logger::logMe($e->getMessage());
 			throw $e;
 		}
 	}
@@ -244,7 +251,7 @@ class PostPayment
 	/**
 	 * Save the surcharge fee
 	 *
-	 * @param   int  $payment_id  The payment ID related to the fee
+	 * @param  int  $payment_id  The payment ID related to the fee
 	 *
 	 * @throws Exception
 	 * @since  3.3.1
@@ -316,7 +323,7 @@ class PostPayment
 	/**
 	 * Set contract ID
 	 *
-	 * @param   int  $contract_id  ID of contract
+	 * @param  int  $contract_id  ID of contract
 	 *
 	 * @throws InvalidArgumentException
 	 * @since  3.3.1
@@ -368,7 +375,7 @@ class PostPayment
 	/**
 	 * Update contract data for an online payment
 	 *
-	 * @param   stdClass  $update  Update data
+	 * @param  stdClass  $update  Update data
 	 *
 	 * @throws Exception
 	 * @since  3.3.1
@@ -467,8 +474,9 @@ class PostPayment
 	 * Update the payment ID for any fees included
 	 * with this payment
 	 *
-	 * @param   int  $payment_id  ID of payment
+	 * @param  int  $payment_id  ID of payment
 	 *
+	 * @throws RuntimeException
 	 * @since  1.0.0
 	 */
 	protected function updateIncludedFees(int $payment_id): void

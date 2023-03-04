@@ -29,7 +29,7 @@ class Longstay
 	/**
 	 * Calculate any long stay adjustments
 	 *
-	 * @param   Hub  $Hub  Hub details class
+	 * @param  Hub  $Hub  Hub details class
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -56,7 +56,7 @@ class Longstay
 	/**
 	 * Calculates the long stay discount
 	 *
-	 * @param   int  $pc  Percentage decrease for long stay
+	 * @param  int  $pc  Percentage decrease for long stay
 	 *
 	 * @throws InvalidArgumentException
 	 * @throws RuntimeException
@@ -92,7 +92,7 @@ class Longstay
 	/**
 	 * Set the percentage decrease for a longstay
 	 *
-	 * @param   int  $nights  #Nights
+	 * @param  int  $nights  #Nights
 	 *
 	 * @since  3.4.0
 	 * @return int

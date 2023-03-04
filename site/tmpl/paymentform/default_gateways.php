@@ -49,7 +49,7 @@ $surcharge_displayed = false;
 		<?php echo KrMethods::render('payment.terms', [
 			'title' => KrMethods::plain('COM_KNOWRES_CANCELLATION_TERMS'),
 			'text'  => $this->Translations->getText('agency', $this->contract->agency_id, 'cancellation_terms'),
-			'label' => KrMethods::plain('COM_KNOWRES_PAYMENT_CANCELLATION_TERMS'),
+			'label' => KrMethods::plain('COM_KNOWRES_PAYMENT_TERMS_CANCELLATION'),
 			'name'  => "agreecheckc"
 		]);
 		?>
@@ -57,7 +57,7 @@ $surcharge_displayed = false;
 		<?php echo KrMethods::render('payment.terms', [
 			'title' => KrMethods::plain('COM_KNOWRES_TRAVEL_INSURANCE'),
 			'text'  => $this->Translations->getText('agency', $this->contract->agency_id, 'insurance_disclaimer'),
-			'label' => KrMethods::plain('COM_KNOWRES_PAYMENT_INSURANCE_TERMS'),
+			'label' => KrMethods::plain('COM_KNOWRES_PAYMENT_TERMS_INSURANCE'),
 			'name'  => "agreecheckt"
 		]);
 		?>
@@ -65,9 +65,9 @@ $surcharge_displayed = false;
 		<div class="callout formbg small">
 			<input type="checkbox" class="checkover" name="agreecheck" id="agreecheck">
 			<label class="checklabel" for="agreecheck">
-				<?php echo KrMethods::plain('COM_KNOWRES_PAYMENT_PRETERMS'); ?>
+				<?php echo KrMethods::plain('COM_KNOWRES_PAYMENT_TERMS1'); ?>
 				<a data-open="kr-terms-modal" style="text-decoration:underline;">
-					<?php echo KrMethods::sprintf('COM_KNOWRES_PAYMENT_TERMS', KrMethods::getCfg('sitename')); ?>
+					<?php echo KrMethods::sprintf('COM_KNOWRES_PAYMENT_TERMS2', KrMethods::getCfg('sitename')); ?>
 				</a>
 			</label>
 		</div>

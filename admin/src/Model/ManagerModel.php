@@ -16,7 +16,6 @@ use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\AdminModel;
 use HighlandVision\KR\Utility;
-use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Versioning\VersionableModelTrait;
 use RuntimeException;
@@ -40,15 +39,14 @@ class ManagerModel extends AdminModel
 	/**
 	 * Method to get a manager row.
 	 *
-	 * @param   int  $pk  The id of the primary key.
+	 * @param  int  $pk  The id of the primary key.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return CMSObject|false  Object on success, false on failure.
+	 * @return object|false  Object on success, false on failure.
 	 */
-	public function getItem($pk = null): CMSObject|false
+	public function getItem($pk = null): object|false
 	{
-		/** @var ManagerModel $item */
 		$item = parent::getItem($pk);
 		if ($item)
 		{
@@ -71,7 +69,7 @@ class ManagerModel extends AdminModel
 	/**
 	 * Get KR access level for user
 	 *
-	 * @param   int  $user_id  ID of user
+	 * @param  int  $user_id  ID of user
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
@@ -119,7 +117,7 @@ class ManagerModel extends AdminModel
 	/**
 	 * Prepare and sanitise the table prior to saving.
 	 *
-	 * @param   Table  $table  Table instance.
+	 * @param  Table  $table  Table instance.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0

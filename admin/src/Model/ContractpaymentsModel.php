@@ -15,9 +15,12 @@ use Exception;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\ListModel;
 use HighlandVision\KR\TickTock;
+use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\Database\QueryInterface;
 use RuntimeException;
 
+use function array_map;
+use function count;
 use function implode;
 use function is_numeric;
 
@@ -31,7 +34,7 @@ class ContractpaymentsModel extends ListModel
 	/**
 	 * Constructor.
 	 *
-	 * @param   array  $config  An optional associative array of configuration settings.
+	 * @param  array  $config  An optional associative array of configuration settings.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -69,8 +72,8 @@ class ContractpaymentsModel extends ListModel
 	/**
 	 * Check for any pending payments from PayPal
 	 *
-	 * @param   int     $contract_id  ID of contract
-	 * @param   string  $payment_ref  Payment reference
+	 * @param  int     $contract_id  ID of contract
+	 * @param  string  $payment_ref  Payment reference
 	 *
 	 * @throws RuntimeException
 	 * @since  3.3.0
@@ -81,11 +84,10 @@ class ContractpaymentsModel extends ListModel
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
-		//TOOO v4 check that zero date is OK or if it requires null
 		$query->select($db->qn('id'))
 		      ->from($db->qn('#__knowres_contract_payment'))
 		      ->where($db->qn('contract_id') . '=' . $contract_id)
-		      ->where($db->qn('payment_date') . '=' . $db->q('0000-00-00'))
+		      ->where($db->qn('payment_date') . ' IS NULL')
 		      ->where($db->qn('payment_ref') . '=' . $db->q($payment_ref))
 		      ->where($db->qn('state') . '=1')
 		      ->where($db->qn('confirmed') . '=0')
@@ -99,7 +101,7 @@ class ContractpaymentsModel extends ListModel
 	/**
 	 * Get payment export data for csv
 	 *
-	 * @param   array  $data  Filter values
+	 * @param  array  $data  Filter values
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
@@ -242,9 +244,8 @@ class ContractpaymentsModel extends ListModel
 	/**
 	 * Get unprocessed payment rows
 	 *
-	 * @param   int  $agency_id  ID of agency
+	 * @param  int  $agency_id  ID of agency
 	 *
-	 * @throws RuntimeException
 	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return mixed
@@ -298,7 +299,7 @@ class ContractpaymentsModel extends ListModel
 	/**
 	 * Get total of all payments for contract
 	 *
-	 * @param   int  $contract_id  ID of contract
+	 * @param  int  $contract_id  ID of contract
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
@@ -328,7 +329,7 @@ class ContractpaymentsModel extends ListModel
 	/**
 	 * Get payments for contract
 	 *
-	 * @param   int  $contract_id  ID of contract
+	 * @param  int  $contract_id  ID of contract
 	 *
 	 * @throws RuntimeException
 	 * @throws RuntimeException
@@ -361,8 +362,8 @@ class ContractpaymentsModel extends ListModel
 	/**
 	 * Get any pending payments
 	 *
-	 * @param   int  $contract_id  ID of contract
-	 * @param   int  $service_id   ID of service
+	 * @param  int  $contract_id  ID of contract
+	 * @param  int  $service_id   ID of service
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
@@ -390,9 +391,8 @@ class ContractpaymentsModel extends ListModel
 	/**
 	 * Get payment totals
 	 *
-	 * @param   int  $contract_id  ID of contract
+	 * @param  int  $contract_id  ID of contract
 	 *
-	 * @throws RuntimeException
 	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return ?object
@@ -416,7 +416,7 @@ class ContractpaymentsModel extends ListModel
 	/**
 	 * Update actioned payments
 	 *
-	 * @param   array  $ids  Array of IDs to be updated
+	 * @param  array  $ids  Array of IDs to be updated
 	 *
 	 * @throws RuntimeException
 	 * @throws Exception
@@ -445,12 +445,188 @@ class ContractpaymentsModel extends ListModel
 
 			$db->transactionCommit();
 		}
-		catch (RuntimeException $e)
+		catch (ExecutionFailureException $e)
 		{
 			$db->transactionRollback();
-
 			throw $e;
 		}
+	}
+
+	/**
+	 * Unset agent payments that have been amended
+	 *
+	 * @param  int  $contract_id  ID of contract
+	 *
+	 * @throws RuntimeException
+	 * @since  1.0.0
+	 */
+	public function unsetPseudoPayments(int $contract_id)
+	{
+		$db    = $this->getDatabase();
+		$query = $db->getQuery(true);
+
+		try
+		{
+			$db->transactionStart();
+			$query = $db->getQuery(true);
+
+			$fields     = [
+				$db->qn('state') . '=0',
+				$db->qn('confirmed') . '=0'
+			];
+			$conditions = [
+				$db->qn('contract_id') . '=' . $contract_id
+			];
+
+			$query->update($db->qn('#__knowres_contract_payment'))
+			      ->set($fields)
+			      ->where($conditions);
+
+			$db->setQuery($query);
+			$db->execute();
+
+			$db->transactionCommit();
+		}
+		catch (ExecutionFailureException $e)
+		{
+			$db->transactionRollback();
+			throw $e;
+		}
+	}
+
+	/**
+	 * Update existing payment and fee records to actioned for new Xero service
+	 *
+	 * @param  int  $agency_id  ID of agency
+	 *
+	 * @throws Exception
+	 * @throws RuntimeException
+	 * @since  3.1.0
+	 */
+	public function updateForXero(int $agency_id)
+	{
+		$db    = $this->getDatabase();
+		$query = $db->getQuery(true);
+
+		$fieldlist = $db->qn(array('p.contract_id'));
+		$query->select($fieldlist)
+		      ->from($db->qn('#__knowres_contract_payment', 'p'))
+		      ->join('LEFT',
+			      $db->qn('#__knowres_contract', 'c') . ' ON ' . $db->qn('c.id') . '=' . $db->qn('p.contract_id'))
+		      ->where($db->qn('p.actioned') . '=1')
+		      ->where($db->qn('c.agency_id') . '=' . $agency_id)
+		      ->where($db->qn('p.actioned_at') . '=' . $db->q('0000-00-00 00:00:00'))
+		      ->where($db->qn('p.state') . '=1')
+		      ->where($db->qn('p.confirmed') . '=1');
+
+		$db->setQuery($query);
+		$cids = $db->loadColumn();
+		if (is_countable($cids) && count($cids))
+		{
+			try
+			{
+				$db->transactionStart();
+
+				$query = $db->getQuery(true)
+				            ->update($db->qn('#__knowres_contract_payment'))
+				            ->set($db->qn('actioned') . '=1')
+				            ->where($db->qn('contract_id') . ' IN (' . implode(',', array_map('intval', $cids)) . ')');
+				$db->setQuery($query);
+				$db->execute();
+
+				$query = $db->getQuery(true)
+				            ->update($db->qn('#__knowres_contract_fee'))
+				            ->set($db->qn('actioned') . ' = 1')
+				            ->where($db->qn('contract_id') . ' IN (' . implode(',', array_map('intval', $cids)) . ')');
+
+				$db->setQuery($query);
+				$db->execute();
+			}
+			catch (ExecutionFailureException $e)
+			{
+				KrMethods::message(KrMethods::plain('Payment and Fee records could not be set to actioned for Xero initialise. Please contact support'),
+					'error');
+			}
+		}
+	}
+
+	/**
+	 * Reset actioned flag on payments and fess for selected contracts
+	 *
+	 * @param  array  $ids  Contract ids for update
+	 *
+	 * @throws RuntimeException
+	 * @throws Exception
+	 * @since  3.1.0
+	 * @return bool
+	 */
+	public function updateXeroBatch(array $ids): bool
+	{
+		$db    = $this->getDatabase();
+		$query = $db->getQuery(true);
+
+		$fieldlist    = $db->qn(array('contract_id'));
+		$fieldlist[0] = 'DISTINCT ' . $fieldlist[0];
+
+		$query->select($fieldlist)
+		      ->from($db->qn('#__knowres_contract_payment'))
+		      ->where($db->qn('actioned') . '  = 1')
+		      ->where($db->qn('actioned_at') . ' = ' . $db->q('0000-00-00 00:00:00'))
+		      ->where($db->qn('state') . ' = 1')
+		      ->where($db->qn('confirmed') . ' = 1')
+		      ->where($db->qn('contract_id') . ' IN (' . implode(',', array_map('intval', $ids)) . ')');
+
+		$db->setQuery($query);
+		$contracts = $db->loadColumn();
+
+		if (!count($contracts))
+		{
+			KrMethods::message(KrMethods::plain('COM_KNOWRES_ACTION_SUCCESS'), 'info');
+
+			return true;
+		}
+
+		try
+		{
+			$db->transactionStart();
+			$query = $db->getQuery(true);
+
+			$fields     = array(
+				$db->qn('actioned') . ' = 0'
+			);
+			$conditions = array(
+				$db->qn('contract_id') . ' IN (' . implode(',', array_map('intval', $contracts)) . ')',
+			);
+
+			$query->update($db->qn('#__knowres_contract_payment'))
+			      ->set($fields)
+			      ->where($conditions);
+
+			$db->setQuery($query);
+			$db->execute();
+
+			$query = $db->getQuery(true);
+
+			$query->update($db->qn('#__knowres_contract_fee'))
+			      ->set($fields)
+			      ->where($conditions);
+
+			$db->setQuery($query);
+			$db->execute();
+
+			$db->transactionCommit();
+		}
+		catch (ExecutionFailureException $e)
+		{
+			KrMethods::message(KrMethods::plain($e->getMessage()), 'error');
+			KrMethods::message(KrMethods::plain('KrFactory error, please try again or contact support'), 'error');
+
+			return false;
+		}
+
+		KrMethods::message(KrMethods::plain('COM_KNOWRES_ACTION_SUCCESS'), 'info');
+
+		return true;
 	}
 
 	/**
@@ -458,10 +634,9 @@ class ContractpaymentsModel extends ListModel
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
-	 * @return    QueryInterface
+	 * @return QueryInterface
 	 */
 	protected function getListQuery(): QueryInterface
-
 	{
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
@@ -562,10 +737,10 @@ class ContractpaymentsModel extends ListModel
 	 * different modules that might need different sets of data or different
 	 * ordering requirements.
 	 *
-	 * @param   string  $id  A prefix for the store id.
+	 * @param  string  $id  A prefix for the store id.
 	 *
 	 * @since  1.0.0
-	 * @return    string        A store id.
+	 * @return string   A store id.
 	 */
 	protected function getStoreId($id = ''): string
 	{
@@ -586,8 +761,8 @@ class ContractpaymentsModel extends ListModel
 	 * Method to autopopulate the model state.
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @param   string  $ordering   Field to order by
-	 * @param   string  $direction  Direction to order
+	 * @param  string  $ordering   Field to order by
+	 * @param  string  $direction  Direction to order
 	 *
 	 * @throws Exception
 	 * @since 1.0.0

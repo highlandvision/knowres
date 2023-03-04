@@ -15,7 +15,6 @@ use Exception;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\ListModel;
 use Joomla\Database\QueryInterface;
-
 use RuntimeException;
 
 use function defined;
@@ -31,7 +30,7 @@ class OwnersModel extends ListModel
 	/**
 	 * Constructor.
 	 *
-	 * @param   array  $config  An optional associative array of configuration settings.
+	 * @param  array  $config  An optional associative array of configuration settings.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -40,54 +39,31 @@ class OwnersModel extends ListModel
 	{
 		if (empty($config['filter_fields']))
 		{
-			$config['filter_fields'] = array(
-				'id',
-				'a.id',
-				'name',
-				'a.name',
-				'address1',
-				'a.address1',
-				'address2',
-				'a.address2',
-				'town',
-				'a.town',
-				'postcode',
-				'a.postcode',
-				'region_id',
-				'a.region_id',
-				'country_id',
-				'a.country_id',
-				'email',
-				'a.email',
-				'mobile',
-				'a.mobile',
-				'mobile_country_id',
-				'a.mobile_country_id',
-				'document_id',
-				'a.document_id',
-				'commission',
-				'a.commission',
-				'payment_schedule',
-				'a.payment_schedule',
-				'prorate',
-				'a.prorate',
-				'days',
-				'a.days',
-				'invoice',
-				'a.invoice',
-				'foreign_key',
-				'a.foreign_key',
-				'state',
-				'a.state',
-				'created_by',
-				'a.created_by',
-				'created_at',
-				'a.created_at',
-				'updated_by',
-				'a.updated_by',
-				'updated_at',
-				'a.updated_at',
-			);
+			$config['filter_fields'] = [
+				'id', 'a.id',
+				'name', 'a.name',
+				'address1', 'a.address1',
+				'address2', 'a.address2',
+				'town', 'a.town',
+				'postcode', 'a.postcode',
+				'region_id', 'a.region_id',
+				'country_id', 'a.country_id',
+				'email', 'a.email',
+				'mobile', 'a.mobile',
+				'mobile_country_id', 'a.mobile_country_id',
+				'document_id', 'a.document_id',
+				'commission', 'a.commission',
+				'payment_schedule', 'a.payment_schedule',
+				'prorate', 'a.prorate',
+				'days', 'a.days',
+				'invoice', 'a.invoice',
+				'foreign_key', 'a.foreign_key',
+				'state', 'a.state',
+				'created_by', 'a.created_by',
+				'created_at', 'a.created_at',
+				'updated_by', 'a.updated_by',
+				'updated_at', 'a.updated_at',
+			];
 		}
 
 		parent::__construct($config);
@@ -101,7 +77,6 @@ class OwnersModel extends ListModel
 	 * @return QueryInterface
 	 */
 	protected function getListQuery(): QueryInterface
-
 	{
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
@@ -156,10 +131,10 @@ class OwnersModel extends ListModel
 	 * different modules that might need different sets of data or different
 	 * ordering requirements.
 	 *
-	 * @param   string  $id  A prefix for the store id.
+	 * @param  string  $id  A prefix for the store id.
 	 *
 	 * @since  1.0.0
-	 * @return    string        A store id.
+	 * @return string        A store id.
 	 */
 	protected function getStoreId($id = ''): string
 	{
@@ -173,8 +148,8 @@ class OwnersModel extends ListModel
 	 * Method to autopopulate the model state.
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @param   null|string  $ordering
-	 * @param   null|string  $direction
+	 * @param  null|string  $ordering
+	 * @param  null|string  $direction
 	 *
 	 * @since 1.0.0
 	 */

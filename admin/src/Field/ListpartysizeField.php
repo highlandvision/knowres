@@ -59,8 +59,7 @@ class ListpartysizeField extends ListField
 
 		for ($i = 1; $i <= $maxguests; $i++)
 		{
-			$options[] = HTMLHelper::_('select.option', $i,
-				KrMethods::sprintf('COM_KNOWRES_CONTRACT_GUESTS_OPTIONS', $i, 0));
+			$options[] = HTMLHelper::_('select.option', $i, KrMethods::sprintf('COM_KNOWRES_CONTRACT_GUESTS_OPTIONS', $i, 0));
 		}
 
 		$key           = $this->adults + $this->children - 1;

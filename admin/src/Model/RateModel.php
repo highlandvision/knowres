@@ -22,10 +22,7 @@ use HighlandVision\KR\Translations;
 use HighlandVision\KR\Utility;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
-use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Versioning\VersionableControllerTrait;
-
-use function implode;
 
 /**
  * Knowres rate model
@@ -44,78 +41,15 @@ class RateModel extends AdminModel
 	protected $text_prefix = 'COM_KNOWRES_RATE';
 
 	/**
-	 * Insert / update rate changes into database currently only Beyond
-	 *
-	 * @param   array  $updates  Rate updates to be changed / inserted
-	 *
-	 * @throws Exception
-	 * @since  2.4.0
-	 */
-	public static function insertUpdateRates(array $updates)
-	{
-		$db  = KrFactory::getDatabase();
-		$sql = [];
-
-		foreach ($updates as $row)
-		{
-			$sql[] = '( 
-							' . (int) $row->id . ',
-				            ' . (int) $row->property_id . ',
-				            ' . $db->q($row->valid_from) . ',
-				            ' . $db->q($row->valid_to) . ',
-							' . (float) $row->rate . ',
-				            ' . (int) $row->min_nights . ',
-				            ' . (int) $row->max_nights . ',
-				            ' . (int) $row->min_guests . ',
-				            ' . (int) $row->max_guests . ',
-				            ' . (int) $row->ignore_pppn . ',
-				            ' . (int) $row->start_day . ',
-				            ' . $db->q($row->more_guests) . ',
-				            ' . (int) $row->state . ',
-				            ' . $db->q($row->created_at) . '
-				           )';
-		}
-
-		try
-		{
-			$db->transactionStart();
-
-			$query = "INSERT INTO " . $db->qn('#__knowres_rate');
-			$query .= " (`id`, `property_id`, `valid_from`, `valid_to`, `rate`,";
-			$query .= " `min_nights`, `max_nights`, `min_guests`, `max_guests`,";
-			$query .= " `ignore_pppn`, `start_day`, `more_guests`, `state`, `created_at`)";
-			$query .= " VALUES " . implode(',', $sql);
-			$query .= " ON DUPLICATE KEY UPDATE ";
-			$query .= " `valid_from` = VALUES(valid_from), `valid_to` = VALUES(valid_to), `rate` = VALUES(rate),";
-			$query .= " `min_nights` = VALUES(min_nights), `max_nights` = VALUES(max_nights),";
-			$query .= " `min_guests` = VALUES(min_guests), `max_guests` = VALUES(max_guests),";
-			$query .= " `ignore_pppn` = VALUES(ignore_pppn), `start_day` = VALUES(start_day),";
-			$query .= " `more_guests` = VALUES(more_guests),";
-			$query .= " `updated_at` = VALUES(created_at), `updated_by` = 0";
-
-			$db->setQuery($query);
-			$db->execute();
-			$db->transactionCommit();
-		}
-		catch (Exception $e)
-		{
-			$db->transactionRollback();
-
-			throw new Exception($e);
-		}
-	}
-
-	/**
 	 * Method to get a knowres record.
 	 *
-	 * @param   int  $pk  The id of the primary key.
+	 * @param  int  $pk  The id of the primary key.
 	 *
 	 * @since  1.0.0
-	 * @return CMSObject|false  Object on success, false on failure.
+	 * @return false|object  Object on success, false on failure.
 	 */
-	public function getItem($pk = null): CMSObject|false
+	public function getItem($pk = null): false|object
 	{
-		/** @var RateModel $item */
 		$item = parent::getItem($pk);
 		if ($item)
 		{
@@ -131,8 +65,8 @@ class RateModel extends AdminModel
 	/**
 	 * Override publish function
 	 *
-	 * @param   array    &$pks    A list of the primary keys to change.
-	 * @param   int       $value  The value of the published state.
+	 * @param  array    &$pks    A list of the primary keys to change.
+	 * @param  int       $value  The value of the published state.
 	 *
 	 * @throws Exception
 	 * @since  3.1.0
@@ -152,7 +86,7 @@ class RateModel extends AdminModel
 					if ($item)
 					{
 						KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updatePropertyRates',
-							(int) $item->property_id);
+							(int) $item->property_id, 0, null, $item->valid_from, $item->valid_to);
 						KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updateAvailability',
 							(int) $item->property_id, 0, 'vrbo');
 					}
@@ -170,7 +104,7 @@ class RateModel extends AdminModel
 	/**
 	 * Method to test whether a record can be deleted.
 	 *
-	 * @param   object  $record  A record object.
+	 * @param  object  $record  A record object.
 	 *
 	 * @since   3.0.0
 	 * @return  bool  True if allowed to delete the record. Defaults to the permission for the component.
@@ -203,9 +137,9 @@ class RateModel extends AdminModel
 	/**
 	 * Method to validate the form data.
 	 *
-	 * @param   Form    $form   The form to validate against.
-	 * @param   array   $data   The data to validate.
-	 * @param   string  $group  The name of the field group to validate.
+	 * @param  Form    $form   The form to validate against.
+	 * @param  array   $data   The data to validate.
+	 * @param  string  $group  The name of the field group to validate.
 	 *
 	 * @throws Exception
 	 * @since  1.6
@@ -213,7 +147,7 @@ class RateModel extends AdminModel
 	 */
 	public function validate($form, $data, $group = null): bool|array
 	{
-		$more_guests         = KrMethods::inputArray('more_guests', []);
+		$more_guests         = KrMethods::inputArray('more_guests');
 		$data['more_guests'] = Utility::encodeJson($more_guests);
 
 		return parent::validate($form, $data, $group);

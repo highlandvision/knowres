@@ -6,6 +6,7 @@
  * @license     See the file "LICENSE.txt" for the full license governing this code.
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
+
 /** @noinspection PhpUnhandledExceptionInspection */
 
 defined('_JEXEC') or die;
@@ -14,14 +15,13 @@ use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Media;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Utility;
-use Joomla\CMS\Object\CMSObject;
 
 extract($displayData);
 /**
  * Layout variables
  *
- * @var CMSObject $contract Contract Item.
- * @var bool      $times    Truw to display times.
+ * @var false|object $contract Contract Item.
+ * @var bool         $times    Truw to display times.
  */
 
 if (!isset($times))
@@ -73,7 +73,7 @@ $image  = Media\Images::getPropertyImageName($contract->property_id);
 				<dt><?php echo KrMethods::plain('COM_KNOWRES_ARRIVAL'); ?></dt>
 				<dd><?php echo TickTock::displayDate($contract->arrival, 'D j M Y'); ?>
 					<?php if ($times): ?>
-						<?php echo ' ' . KrMethods::sprintf('COM_KNOWRES_ARRIVAL_TIME', $contract->checkin_time); ?>
+						<?php echo ' ' . KrMethods::sprintf('COM_KNOWRES_ARRIVAL_FROM', $contract->checkin_time); ?>
 					<?php endif; ?>
 				</dd>
 			</div>
@@ -81,7 +81,7 @@ $image  = Media\Images::getPropertyImageName($contract->property_id);
 				<dt><?php echo KrMethods::plain('COM_KNOWRES_DEPARTURE'); ?></dt>
 				<dd><?php echo TickTock::displayDate($contract->departure, 'D j M Y'); ?>
 					<?php if ($times): ?>
-						<?php echo ' ' . KrMethods::sprintf('COM_KNOWRES_DEPARTURE_TIME', $contract->checkout_time); ?>
+						<?php echo ' ' . KrMethods::sprintf('COM_KNOWRES_DEPARTURE_BY', $contract->checkout_time); ?>
 					<?php endif; ?>
 				</dd>
 			</div>
@@ -105,7 +105,7 @@ $image  = Media\Images::getPropertyImageName($contract->property_id);
 			<!--			</div>-->
 			<!--			<div>-->
 			<!--				<dt>--><?php //echo KrMethods::plain('COM_KNOWRES_CHILD_AGES'); ?><!--</dt>-->
-			<!--				<dd>-->
+			<!--				            <dd>-->
 			<?php //echo implode(',', Utility::decodeJson($contract->child_ages, true)); ?><!--</dd>-->
 			<!--			</div>-->
 			<!--			--><?php //endif; ?>

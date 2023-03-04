@@ -44,7 +44,7 @@ class OwnerPayments
 	/**
 	 * Initialize
 	 *
-	 * @param   array  $data  Array containing the export paramters
+	 * @param  array  $data   Array containing the export paramters
 	 *                        $data = [
 	 *                        'valid_from'    =>    (string) Start date.
 	 *                        'valid_to'      =>    (string) End date.
@@ -124,9 +124,9 @@ class OwnerPayments
 	/**
 	 * Set data for owner payments
 	 *
-	 * @param   stdClass  $row      Contract row.
-	 * @param   array     $snet     Property settings net rates.
-	 * @param   array     $smarkup  Property settings net markup.
+	 * @param  stdClass  $row      Contract row.
+	 * @param  array     $snet     Property settings net rates.
+	 * @param  array     $smarkup  Property settings net markup.
 	 *
 	 * @since  2.4.0
 	 * @return array

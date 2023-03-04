@@ -28,9 +28,7 @@ $date = KrFactory::getListModel('rates')->getLastRateDate($this->item->id);
 				<?php echo KrMethods::plain('COM_KNOWRES_RATES_LAST_DATE_NONE'); ?>
 			<?php endif; ?>
 		</div>
-		<?php if ($this->access_level > 10
-			|| ($this->access_level == 10
-				&& $this->params->get('rate_manage', false))): ?>
+		<?php if ($this->access_level > 10 || ($this->access_level == 10 && $this->params->get('rate_manage', false))): ?>
 			<div class="col-md-2">
 				<a href="<?php echo KrMethods::route("index.php?option=com_knowres&task=rate.edit"); ?>">
 					<i class="fas fa-plus-square"></i> <?php echo KrMethods::plain('COM_KNOWRES_ADD'); ?>
@@ -105,9 +103,7 @@ $date = KrFactory::getListModel('rates')->getLastRateDate($this->item->id);
 		<div class="col-md-5">
 			<?php echo KrMethods::sprintf('COM_KNOWRES_CURRENT', $this->item->discounts); ?>
 		</div>
-		<?php if ($this->access_level > 10
-			|| ($this->access_level == 10
-				&& $this->params->get('discount_manage', false))): ?>
+		<?php if ($this->access_level > 10 || ($this->access_level == 10 && $this->params->get('discount_manage', false))): ?>
 			<div class="col-md-2">
 				<a href="<?php echo KrMethods::route("index.php?option=com_knowres&task=discount.edit"); ?>">
 					<i class="fas fa-plus-square"></i>
@@ -132,9 +128,7 @@ $date = KrFactory::getListModel('rates')->getLastRateDate($this->item->id);
 		<div class="col-md-5">
 			<?php echo KrMethods::sprintf('COM_KNOWRES_CURRENT', $this->item->extras); ?>
 		</div>
-		<?php if ($this->access_level > 10
-			|| ($this->access_level == 10
-				&& $this->params->get('extra_manage', false))): ?>
+		<?php if ($this->access_level > 10 || ($this->access_level == 10 && $this->params->get('extra_manage', false))): ?>
 			<div class="col-md-2">
 				<a href="<?php echo KrMethods::route("index.php?option=com_knowres&task=extra.edit"); ?>">
 					<i class="fas fa-plus-square"></i>

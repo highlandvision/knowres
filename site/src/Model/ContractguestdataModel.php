@@ -15,7 +15,6 @@ use Exception;
 use HighlandVision\Component\Knowres\Administrator\Model\ContractguestdataModel as AdminContractguestdataModel;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
-use HighlandVision\KR\SiteHelper;
 use HighlandVision\KR\TickTock;
 use Joomla\CMS\Form\Form;
 use stdClass;
@@ -30,7 +29,7 @@ class ContractguestdataModel extends AdminContractguestdataModel
 	/**
 	 * Override checkout for guestdata as checked_out set to 0.
 	 *
-	 * @param   int|null  $pk  The id of the row to check out.
+	 * @param  int|null  $pk  The id of the row to check out.
 	 *
 	 * @throws Exception
 	 * @since  4.0.0
@@ -53,8 +52,8 @@ class ContractguestdataModel extends AdminContractguestdataModel
 	/**
 	 * Method to get the record form.
 	 *
-	 * @param   array   $data      An optional array of data for the form to interogate.
-	 * @param   bool    $loadData  True if the form is to load its own data (default case), false if not.
+	 * @param  array    $data      An optional array of data for the form to interogate.
+	 * @param  bool     $loadData  True if the form is to load its own data (default case), false if not.
 	 * @param  ?string  $source    The form name if required.
 	 *
 	 * @throws Exception
@@ -64,26 +63,6 @@ class ContractguestdataModel extends AdminContractguestdataModel
 	public function getForm($data = [], $loadData = true, ?string $source = 'contractguestdata'): Form|false
 	{
 		return parent::getForm();
-	}
-
-	/**
-	 * Method to save the form data.
-	 *
-	 * @param   array  $data  The existing form data.
-	 *
-	 * @throws Exception
-	 * @since  4.0.0
-	 * @return bool  True on success.
-	 */
-	public function save($data): bool
-	{
-		if (parent::save($data))
-		{
-			KrMethods::message(KrMethods::plain('COM_KNOWRES_ITEM_UPDATED_SUCCESSFULLY'));
-			SiteHelper::redirectDashboard();
-		}
-
-		return true;
 	}
 
 	/**

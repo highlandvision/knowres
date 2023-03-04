@@ -55,6 +55,7 @@ class HtmlView extends KrHtmlView\Contract
 			$this->checkErrors();
 			ToolbarHelper::title(KrMethods::plain('COM_KNOWRES_GUESTS_TITLE'), 'tasks knowres');
 			$this->addListToolbar($this->get('name'));
+			KrMethods::setUserState('com_knowres.gobackto', 'view=guests');
 
 			parent::display($tpl);
 		}

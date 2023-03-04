@@ -12,6 +12,7 @@
 defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrMethods;
+use HighlandVision\KR\SiteHelper;
 use HighlandVision\KR\Utility;
 use Joomla\CMS\HTML\HTMLHelper;
 
@@ -29,14 +30,14 @@ foreach ($this->gateways as $gateway)
 	}
 }
 
-$action = "index.php?option=com_knowres&task=confirm.save";
+$Itemid = SiteHelper::getItemId('com_knowres', 'confirm', ['layout' => 'payment']);
+$action = KrMethods::route('index.php?option=com_knowres&view=confirm&layout=payment&Itemid=' . $Itemid);
 ?>
 
-<!--		V4 - TEST Do not change the action as per phpstorm bug causes js issues with SEF-->
 <form action="<?php echo $action; ?>" class="ajaxform formbg form-validate" id="kr-form-payment" method="post">
 	<fieldset class="fieldset">
-		<div class="callout formbg">
-			<h3>
+		<div class="callout">
+			<h3 class="color-primary">
 				<?php if ($this->contractData->contract_total == $this->contractData->deposit): ?>
 					<?php echo KrMethods::sprintf('COM_KNOWRES_CONFIRM_AMOUNT_DUE_FULL',
 						Utility::displayValue($this->contractData->deposit, $this->contractData->currency),
@@ -54,7 +55,6 @@ $action = "index.php?option=com_knowres&task=confirm.save";
 					<?php echo KrMethods::plain('COM_KNOWRES_PAYMENT_METHOD_CURRENCY'); ?>
 				<?php endif; ?>
 			</h6>
-			<br>
 			<?php foreach ($this->gateways as $this->gateway) : ?>
 				<?php if ($this->gateway->plugin === 'paypal'): ?>
 					<?php $this->paypal_found = true; ?>
@@ -70,6 +70,7 @@ $action = "index.php?option=com_knowres&task=confirm.save";
 			<fieldset class="fieldset">
 				<div class="callout alert">
 					<p>
+						<?php $params = KrMethods::getParams(); ?>
 						<?php echo nl2br($this->params->get('booking_request_text')); ?>
 					</p>
 				</div>
@@ -79,7 +80,7 @@ $action = "index.php?option=com_knowres&task=confirm.save";
 		<?php echo KrMethods::render('payment.terms', [
 			'title' => KrMethods::plain('COM_KNOWRES_CANCELLATION_TERMS'),
 			'text'  => $this->Translations->getText('agency', $this->contractData->agency_id, 'cancellation_terms'),
-			'label' => KrMethods::plain('COM_KNOWRES_PAYMENT_CANCELLATION_TERMS'),
+			'label' => KrMethods::plain('COM_KNOWRES_PAYMENT_TERMS_CANCELLATION'),
 			'name'  => "agreecheckc"
 		]);
 		?>
@@ -87,7 +88,7 @@ $action = "index.php?option=com_knowres&task=confirm.save";
 		<?php echo KrMethods::render('payment.terms', [
 			'title' => KrMethods::plain('COM_KNOWRES_TRAVEL_INSURANCE'),
 			'text'  => $this->Translations->getText('agency', $this->contractData->agency_id, 'insurance_disclaimer'),
-			'label' => KrMethods::plain('COM_KNOWRES_PAYMENT_INSURANCE_TERMS'),
+			'label' => KrMethods::plain('COM_KNOWRES_PAYMENT_TERMS_INSURANCE'),
 			'name'  => "agreecheckt"
 		]);
 		?>
@@ -95,9 +96,9 @@ $action = "index.php?option=com_knowres&task=confirm.save";
 		<div class="callout formbg">
 			<input type="checkbox" class="checkover" name="agreecheck" id="agreecheck">
 			<label class="checklabel" for="agreecheck">
-				<?php echo KrMethods::plain('COM_KNOWRES_PAYMENT_PRETERMS'); ?>
+				<?php echo KrMethods::plain('COM_KNOWRES_PAYMENT_TERMS1'); ?>
 				<a data-open="kr-terms-modal" style="text-decoration:underline;">
-					<?php echo KrMethods::sprintf('COM_KNOWRES_PAYMENT_TERMS', KrMethods::getCfg('sitename')); ?>
+					<?php echo KrMethods::sprintf('COM_KNOWRES_PAYMENT_TERMS2', KrMethods::getCfg('sitename')); ?>
 				</a>
 			</label>
 		</div>
@@ -111,5 +112,6 @@ $action = "index.php?option=com_knowres&task=confirm.save";
 		<?php endif; ?>
 	</button>
 
+	<input type="hidden" name="task" value="confirm.save" />
 	<?php echo HTMLHelper::_('form.token'); ?>
 </form>

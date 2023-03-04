@@ -12,6 +12,7 @@ namespace HighlandVision\Component\Knowres\Administrator\Model;
 defined('_JEXEC') or die;
 
 use Exception;
+use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\ListModel;
 use HighlandVision\KR\TickTock;
@@ -28,7 +29,7 @@ class RatesModel extends ListModel
 	/**
 	 * Constructor.
 	 *
-	 * @param   array  $config  An optional associative array of configuration settings.
+	 * @param  array  $config  An optional associative array of configuration settings.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -56,23 +57,84 @@ class RatesModel extends ListModel
 	}
 
 	/**
+	 * Insert / update rate changes into database currently only Beyond
+	 *
+	 * @param  array  $updates  Rate updates to be changed / inserted
+	 *
+	 * @throws Exception
+	 * @since  2.4.0
+	 */
+	public static function insertUpdateRates(array $updates)
+	{
+		$db  = KrFactory::getDatabase();
+		$sql = [];
+
+		foreach ($updates as $row)
+		{
+			$sql[] = '( 
+							' . (int) $row->id . ',
+				            ' . (int) $row->property_id . ',
+				            ' . $db->q($row->valid_from) . ',
+				            ' . $db->q($row->valid_to) . ',
+							' . (float) $row->rate . ',
+				            ' . (int) $row->min_nights . ',
+				            ' . (int) $row->max_nights . ',
+				            ' . (int) $row->min_guests . ',
+				            ' . (int) $row->max_guests . ',
+				            ' . (int) $row->ignore_pppn . ',
+				            ' . (int) $row->start_day . ',
+				            ' . $db->q($row->more_guests) . ',
+				            ' . (int) $row->state . ',
+				            ' . $db->q($row->created_at) . '
+				           )';
+		}
+
+		try
+		{
+			$db->transactionStart();
+
+			$query = "INSERT INTO " . $db->qn('#__knowres_rate');
+			$query .= " (`id`, `property_id`, `valid_from`, `valid_to`, `rate`,";
+			$query .= " `min_nights`, `max_nights`, `min_guests`, `max_guests`,";
+			$query .= " `ignore_pppn`, `start_day`, `more_guests`, `state`, `created_at`)";
+			$query .= " VALUES " . implode(',', $sql);
+			$query .= " ON DUPLICATE KEY UPDATE ";
+			$query .= " `valid_from` = VALUES(valid_from), `valid_to` = VALUES(valid_to), `rate` = VALUES(rate),";
+			$query .= " `min_nights` = VALUES(min_nights), `max_nights` = VALUES(max_nights),";
+			$query .= " `min_guests` = VALUES(min_guests), `max_guests` = VALUES(max_guests),";
+			$query .= " `ignore_pppn` = VALUES(ignore_pppn), `start_day` = VALUES(start_day),";
+			$query .= " `more_guests` = VALUES(more_guests),";
+			$query .= " `updated_at` = VALUES(created_at), `updated_by` = 0";
+
+			$db->setQuery($query);
+			$db->execute();
+			$db->transactionCommit();
+		}
+		catch (Exception $e)
+		{
+			$db->transactionRollback();
+
+			throw new Exception($e);
+		}
+	}
+
+	/**
 	 * Check for current rates for a property
 	 *
-	 * @param   int  $property_id  ID of property
+	 * @param  int  $property_id  ID of property
 	 *
-	 * @throws RuntimeException
 	 * @throws RuntimeException
 	 * @since 1.0.0
 	 * @return ?int
 	 */
 	public function getCurrent(int $property_id): ?int
 	{
-		$date = date('Y-m-d');
+		$date = TickTock::getDate();
 
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
-		$query->select($db->qn('a.id'));
+		$query->select($this->getState('list.select', $db->qn('a.id')));
 		$query->from($db->qn('#__knowres_rate', 'a'))
 		      ->where($db->qn('a.state') . '=1')
 		      ->where($db->qn('a.property_id') . '=' . $property_id)
@@ -87,11 +149,10 @@ class RatesModel extends ListModel
 	/**
 	 * Check for current rates for a property
 	 *
-	 * @param   int  $property_id  ID of property
+	 * @param  int  $property_id  ID of property
 	 *
 	 * @throws RuntimeException
-	 * @throws RuntimeException
-	 * @since 3.0.0
+	 * @since  3.0.0
 	 * @return ?string
 	 */
 	public function getLastRateDate(int $property_id): ?string
@@ -99,9 +160,9 @@ class RatesModel extends ListModel
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
-		$query->select($db->qn('a.valid_to'));
+		$query->select($this->getState('list.select', $db->qn('a.valid_to')));
 		$query->from($db->qn('#__knowres_rate', 'a'))
-		      ->where($db->qn('a.state') . ' = 1')
+		      ->where($db->qn('a.state') . '=1')
 		      ->where($db->qn('a.property_id') . '=' . $property_id)
 		      ->order($db->qn('a.valid_to') . 'DESC')
 		      ->setLimit(1);
@@ -114,9 +175,8 @@ class RatesModel extends ListModel
 	/**
 	 * Get maximum standard guests
 	 *
-	 * @param   int  $property_id  ID of property
+	 * @param  int  $property_id  ID of property
 	 *
-	 * @throws RuntimeException
 	 * @throws RuntimeException
 	 * @throws Exception
 	 * @since  1.0.0
@@ -129,7 +189,7 @@ class RatesModel extends ListModel
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
-		$query->select($db->qn('a.max_guests'));
+		$query->select($this->getState('list.select', $db->qn('a.max_guests')));
 		$query->from($db->qn('#__knowres_rate', 'a'))
 		      ->where($db->qn('a.state') . '=1')
 		      ->where($db->qn('a.property_id') . '=' . $property_id)
@@ -146,11 +206,10 @@ class RatesModel extends ListModel
 	/**
 	 * Get minimum rates value
 	 *
-	 * @param   mixed   $properties  Properties to search
-	 * @param   string  $date        require date
-	 * @param   int     $guests      #Guests
+	 * @param  mixed   $properties  Properties to search
+	 * @param  string  $date        require date
+	 * @param  int     $guests      #Guests
 	 *
-	 * @throws RuntimeException
 	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return mixed
@@ -160,16 +219,16 @@ class RatesModel extends ListModel
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
-		$query->select('a.property_id, MIN(a.rate) as minrate');
+		$query->select($this->getState('list.select', $db->qn('a.property_id')));
+		$query->select('MIN(a.rate) as minrate');
 		$query->from($db->qn('#__knowres_rate', 'a'));
-
 		if (is_numeric($properties))
 		{
 			$query->where($db->qn('a.property_id') . '=' . (int) $properties);
 		}
 		else if (is_string($properties) && strlen($properties) > 0)
 		{
-			$ids = explode(",", $properties);
+			$ids = explode(',', $properties);
 			$query->where($db->qn('a.property_id') . ' IN (' . implode(',', array_map('intval', $ids)) . ')');
 		}
 		else if (is_array($properties))
@@ -198,7 +257,7 @@ class RatesModel extends ListModel
 	/**
 	 * Get rates with no paraphenalia
 	 *
-	 * @param   mixed   $properties  Either a single property, csv of properties or array of properties
+	 * @param  mixed    $properties  Either a single property, csv of properties or array of properties
 	 * @param  ?string  $from        From date
 	 * @param  ?string  $to          To date
 	 *
@@ -221,8 +280,29 @@ class RatesModel extends ListModel
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
-		$query->select($this->getState('list.select'))
-		      ->from($db->qn('#__knowres_rate', 'a'))
+		$query->select($this->getState('list.select',
+			[$db->qn('a.id'),
+			 $db->qn('a.property_id'),
+			 $db->qn('a.valid_from'),
+			 $db->qn('a.valid_to'),
+			 $db->qn('a.rate'),
+			 $db->qn('a.min_nights'),
+			 $db->qn('a.max_nights'),
+			 $db->qn('a.min_guests'),
+			 $db->qn('a.max_guests'),
+			 $db->qn('a.ignore_pppn'),
+			 $db->qn('a.start_day'),
+			 $db->qn('a.more_guests'),
+			 $db->qn('a.state'),
+			 $db->qn('a.checked_out'),
+			 $db->qn('a.checked_out_time'),
+			 $db->qn('a.created_by'),
+			 $db->qn('a.created_at'),
+			 $db->qn('a.updated_by'),
+			 $db->qn('a.updated_at')
+			]));
+
+		$query->from($db->qn('#__knowres_rate', 'a'))
 		      ->where($db->qn('a.state') . '=1')
 		      ->where($db->qn('a.valid_to') . '>=' . $db->q($from))
 		      ->where($db->qn('a.valid_from') . '<=' . $db->q($to));
@@ -244,7 +324,6 @@ class RatesModel extends ListModel
 		$query->order($db->qn('property_id'))
 		      ->order($db->qn('valid_from'))
 		      ->order($db->qn('min_guests'));
-
 		$db->setQuery($query);
 
 		return $db->loadObjectList();
@@ -253,10 +332,10 @@ class RatesModel extends ListModel
 	/**
 	 * Validate dates entered for a rate do not overlap with an existing rate
 	 *
-	 * @param   int     $id           ID of rate being edited
-	 * @param   int     $property_id  ID of property
-	 * @param   string  $valid_from   Entered valid from date
-	 * @param   string  $valid_to     Entered valid to date
+	 * @param  int     $id           ID of rate being edited
+	 * @param  int     $property_id  ID of property
+	 * @param  string  $valid_from   Entered valid from date
+	 * @param  string  $valid_to     Entered valid to date
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
@@ -267,15 +346,14 @@ class RatesModel extends ListModel
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
-		$query->select($db->qn(['valid_from', 'valid_to']));
+		$query->select($this->getState('list.select', $db->qn(['valid_from', 'valid_to'])));
 		$query->from($db->qn('#__knowres_rate'))
 		      ->where($db->qn('id') . '<>' . $id)
 		      ->where($db->qn('property_id') . '=' . $property_id)
-		      ->where($db->qn('valid_from') . '<=' . $db->q($valid_to))
-		      ->where($db->qn('valid_to') . '>=' . $db->q($valid_from))
+		      ->where($db->qn('valid_from') . '<=' . $db->q($valid_from))
+		      ->where($db->qn('valid_to') . '>=' . $db->q($valid_to))
 		      ->where($db->qn('state') . '=1')
 		      ->order($db->qn('valid_from') . ' ASC');
-
 		$db->setQuery($query);
 
 		return $db->loadObjectList();
@@ -304,8 +382,29 @@ class RatesModel extends ListModel
 		         ->order('(CASE WHEN ' . $db->qn('sub.language') . ' = ' . $db->q($lang) . ' THEN 1 ELSE 2 END )')
 		         ->setLimit(1);
 
-		$query->select($this->getState('list.select'));
-		$query->from($db->qn('#__knowres_rate') . ' AS a');
+		$query->select($this->getState('list.select',
+			[$db->qn('a.id'),
+			 $db->qn('a.property_id'),
+			 $db->qn('a.valid_from'),
+			 $db->qn('a.valid_to'),
+			 $db->qn('a.rate'),
+			 $db->qn('a.min_nights'),
+			 $db->qn('a.max_nights'),
+			 $db->qn('a.min_guests'),
+			 $db->qn('a.max_guests'),
+			 $db->qn('a.ignore_pppn'),
+			 $db->qn('a.start_day'),
+			 $db->qn('a.more_guests'),
+			 $db->qn('a.state'),
+			 $db->qn('a.checked_out'),
+			 $db->qn('a.checked_out_time'),
+			 $db->qn('a.created_by'),
+			 $db->qn('a.created_at'),
+			 $db->qn('a.updated_by'),
+			 $db->qn('a.updated_at')
+			]));
+
+		$query->from($db->qn('#__knowres_rate', 'a'));
 		$query->select('(' . $subQuery->__toString() . ') ' . $db->q('name'));
 
 		$query->select("uc.name AS editor");
@@ -382,7 +481,7 @@ class RatesModel extends ListModel
 	 * different modules that might need different sets of data or different
 	 * ordering requirements.
 	 *
-	 * @param   string  $id  A prefix for the store id.
+	 * @param  string  $id  A prefix for the store id.
 	 *
 	 * @since  1.0.0
 	 * @return string
@@ -403,8 +502,8 @@ class RatesModel extends ListModel
 	 * Method to autopopulate the model state.
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @param   string  $ordering   Field
-	 * @param   string  $direction  Direction
+	 * @param  string  $ordering   Field
+	 * @param  string  $direction  Direction
 	 *
 	 * @throws Exception
 	 * @since 1.0.0
@@ -425,9 +524,6 @@ class RatesModel extends ListModel
 			$this->getUserStateFromRequest($this->context . '.filter.min_guests', 'filter_min_guests', 0, 'integer'));
 
 		$this->setState('params', KrMethods::getParams());
-		$this->setState('list.select', 'a.id, a.property_id, a.valid_from, a.valid_to, a.rate, a.min_nights, 
-						a.max_nights, a.min_guests, a.max_guests, a.ignore_pppn, a.start_day, a.more_guests, a.state, 
-						a.checked_out, a.checked_out_time, a.created_by, a.created_at, a.updated_by, a.updated_at');
 
 		parent::populateState($ordering, $direction);
 	}

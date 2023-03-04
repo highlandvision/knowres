@@ -17,8 +17,6 @@ use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\AdminModel;
 use HighlandVision\KR\Utility;
 use Joomla\CMS\Form\Form;
-use Joomla\CMS\Object\CMSObject;
-use RuntimeException;
 
 /**
  * Knowres contract payment model.
@@ -37,14 +35,14 @@ class ContractpaymentModel extends AdminModel
 	/**
 	 * Calculate full balance (includes unconfirmed payments) and confirmed balances
 	 *
-	 * @param   CMSObject  $contract  Contract row
-	 * @param   array      $payments  Contract payments
-	 * @param   array      $fees      Contract fees
+	 * @param  object  $contract  Contract row
+	 * @param  array   $payments  Contract payments
+	 * @param  array   $fees      Contract fees
 	 *
 	 * @since  4.0.0
 	 * @return array [Confirmed balance, Full balance].
 	 */
-	public static function setBalances(CMSObject $contract, array $payments = [], array $fees = []): array
+	public static function setBalances(object $contract, array $payments = [], array $fees = []): array
 	{
 		$balance = $contract->contract_total;
 		foreach ($fees as $f)
@@ -68,152 +66,16 @@ class ContractpaymentModel extends AdminModel
 	}
 
 	/**
-	 * Update existing payment and fee records to actioned for new Xero service
-	 *
-	 * @param   int  $agency_id  ID of agency
-	 *
-	 * @throws Exception
-	 * @throws RuntimeException
-	 * @since  3.1.0
-	 */
-	public static function updateForXero(int $agency_id)
-	{
-		$db    = KrFactory::getDatabase();
-		$query = $db->getQuery(true);
-
-		$fieldlist = $db->qn(array('p.contract_id'));
-		$query->select($fieldlist)
-		      ->from($db->qn('#__knowres_contract_payment', 'p'))
-		      ->join('LEFT',
-			      $db->qn('#__knowres_contract', 'c') . ' ON ' . $db->qn('c.id') . '=' . $db->qn('p.contract_id'))
-		      ->where($db->qn('p.actioned') . '=1')
-		      ->where($db->qn('c.agency_id') . '=' . $agency_id)
-		      ->where($db->qn('p.actioned_at') . '=' . $db->q('0000-00-00 00:00:00'))
-		      ->where($db->qn('p.state') . '=1')
-		      ->where($db->qn('p.confirmed') . '=1');
-
-		$db->setQuery($query);
-		$cids = $db->loadColumn();
-		if (is_countable($cids) && count($cids))
-		{
-			try
-			{
-				$db->transactionStart();
-
-				$query = $db->getQuery(true)
-				            ->update($db->qn('#__knowres_contract_payment'))
-				            ->set($db->qn('actioned') . '=1')
-				            ->where($db->qn('contract_id') . ' IN (' . implode(',', array_map('intval', $cids)) . ')');
-				$db->setQuery($query);
-				$db->execute();
-
-				$query = $db->getQuery(true)
-				            ->update($db->qn('#__knowres_contract_fee'))
-				            ->set($db->qn('actioned') . ' = 1')
-				            ->where($db->qn('contract_id') . ' IN (' . implode(',', array_map('intval', $cids)) . ')');
-
-				$db->setQuery($query);
-				$db->execute();
-			}
-			catch (RuntimeException)
-			{
-				KrMethods::message(KrMethods::plain('Payment and Fee records could not be set to actioned for Xero initialise. Please contact support'),
-					'error');
-			}
-		}
-	}
-
-	/**
-	 * Reset actioned flag on payments and fess for selected contracts
-	 *
-	 * @param   array  $ids  Contract ids for update
-	 *
-	 * @throws RuntimeException
-	 * @throws Exception
-	 * @since  3.1.0
-	 * @return bool
-	 */
-	public static function updateXeroBatch(array $ids): bool
-	{
-		$db    = KrFactory::getDatabase();
-		$query = $db->getQuery(true);
-
-		$fieldlist    = $db->qn(array('contract_id'));
-		$fieldlist[0] = 'DISTINCT ' . $fieldlist[0];
-
-		$query->select($fieldlist)
-		      ->from($db->qn('#__knowres_contract_payment'))
-		      ->where($db->qn('actioned') . '  = 1')
-		      ->where($db->qn('actioned_at') . ' = ' . $db->q('0000-00-00 00:00:00'))
-		      ->where($db->qn('state') . ' = 1')
-		      ->where($db->qn('confirmed') . ' = 1')
-		      ->where($db->qn('contract_id') . ' IN (' . implode(',', array_map('intval', $ids)) . ')');
-
-		$db->setQuery($query);
-		$contracts = $db->loadColumn();
-
-		if (!count($contracts))
-		{
-			KrMethods::message(KrMethods::plain('COM_KNOWRES_ACTION_SUCCESS'), 'info');
-
-			return true;
-		}
-
-		try
-		{
-			$db->transactionStart();
-			$query = $db->getQuery(true);
-
-			$fields     = array(
-				$db->qn('actioned') . ' = 0'
-			);
-			$conditions = array(
-				$db->qn('contract_id') . ' IN (' . implode(',', array_map('intval', $contracts)) . ')',
-			);
-
-			$query->update($db->qn('#__knowres_contract_payment'))
-			      ->set($fields)
-			      ->where($conditions);
-
-			$db->setQuery($query);
-			$db->execute();
-
-			$query = $db->getQuery(true);
-
-			$query->update($db->qn('#__knowres_contract_fee'))
-			      ->set($fields)
-			      ->where($conditions);
-
-			$db->setQuery($query);
-			$db->execute();
-
-			$db->transactionCommit();
-		}
-		catch (RuntimeException $e)
-		{
-			KrMethods::message(KrMethods::plain($e->getMessage()), 'error');
-			KrMethods::message(KrMethods::plain('KrFactory error, please try again or contact support'), 'error');
-
-			return false;
-		}
-
-		KrMethods::message(KrMethods::plain('COM_KNOWRES_ACTION_SUCCESS'), 'info');
-
-		return true;
-	}
-
-	/**
 	 * Method to get a knowres record.
 	 *
-	 * @param   int  $pk  The id of the primary key.
+	 * @param  int  $pk  The id of the primary key.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return CMSObject|false  Object on success, false on failure.
+	 * @return false|object  Object on success, false on failure.
 	 */
-	public function getItem($pk = null): CMSObject|false
+	public function getItem($pk = null): false|object
 	{
-		/* @var ContractpaymentModel $item */
 		$item = parent::getItem($pk);
 		if ($item)
 		{
@@ -232,9 +94,9 @@ class ContractpaymentModel extends AdminModel
 	/**
 	 * Add additional validation to form data
 	 *
-	 * @param   Form   $form  The form to validate against.
-	 * @param   array  $data  The data to validate.
-	 * @param   null   $group
+	 * @param  Form   $form  The form to validate against.
+	 * @param  array  $data  The data to validate.
+	 * @param  null   $group
 	 *
 	 * @since  1.0.0
 	 * @return bool|array

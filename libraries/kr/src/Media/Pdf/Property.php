@@ -15,7 +15,6 @@ use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Media\Pdf;
-use Joomla\CMS\Object\CMSObject;
 use RuntimeException;
 
 use function nl2br;
@@ -27,16 +26,16 @@ use function nl2br;
  */
 class Property extends Pdf
 {
-	/** @var CMSObject Property details */
-	public CMSObject $property;
+	/** @var false|object Property details */
+	public false|object $property;
 	/** @var  int ID of property */
 	protected int $property_id;
 
 	/**
 	 * Initialize
 	 *
-	 * @param   string  $action       Destination output
-	 * @param   int     $property_id  ID of Property
+	 * @param  string  $action       Destination output
+	 * @param  int     $property_id  ID of Property
 	 *
 	 * @throws Exception
 	 * @since  1.0.0

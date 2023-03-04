@@ -13,6 +13,7 @@ defined('_JEXEC') or die;
 
 use Exception;
 use HighlandVision\KR\Framework\KrMethods;
+use HighlandVision\KR\Logger;
 use HighlandVision\KR\Service\Gateway;
 use HighlandVision\KR\Session as KrSession;
 use Joomla\CMS\MVC\Controller\FormController;
@@ -64,10 +65,11 @@ class PaymentController extends FormController
 			}
 
 			$class       = Gateway::setGatewayClass($gateway_name);
-			$gateway     = new $class($service_id, $paymentData);
-			$paymentData = $gateway->setOutputData();
+			$Gateway     = new $class($service_id, $paymentData);
+			$paymentData = $Gateway->setOutputData();
 			$paymentSession->setData($paymentData);
 
+			/* @var HighlandVision\Component\Knowres\Site\View\Gateway\HtmlView $view **/
 			$view               = $this->getView('gateway', 'html', 'site');
 			$view->gateway_name = $gateway_name;
 			$view->payment_type = $paymentData->payment_type;
@@ -75,8 +77,9 @@ class PaymentController extends FormController
 			$view->paymentData  = $paymentData;
 			$view->display();
 		}
-		catch (Exception)
+		catch (Exception $e)
 		{
+			Logger::logMe($e->getMessage(), 'error');
 			echo new JsonResponse(null, KrMethods::plain('COM_KNOWRES_ERROR_FATAL'), true);
 			jexit();
 		}

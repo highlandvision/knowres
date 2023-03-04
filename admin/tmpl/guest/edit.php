@@ -62,9 +62,7 @@ $wa->useScript('keepalive')
 
 				<fieldset>
 					<legend><?php echo KrMethods::plain('COM_KNOWRES_BILLING_ADDRESS'); ?></legend>
-					<?php if (empty($this->item->b_address1)): ?>
-						<?php echo $this->form->renderField('billing'); ?>
-					<?php endif; ?>
+					<?php echo $this->form->renderField('billing'); ?>
 					<?php echo $this->form->renderField('b_address1'); ?>
 					<?php echo $this->form->renderField('b_address2'); ?>
 					<?php echo $this->form->renderField('b_town'); ?>

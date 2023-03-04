@@ -19,7 +19,6 @@ use HighlandVision\KR\Session as KrSession;
 use HighlandVision\KR\SiteHelper;
 use HighlandVision\KR\Utility;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Object\CMSObject;
 
 use function count;
 use function defined;
@@ -33,13 +32,13 @@ class HtmlView extends KrHtmlView\Site
 {
 	/** @var int List limit for pagination. */
 	protected int $list_limit = 0;
-	/** @var CMSObject Property item. */
-	protected CMSObject $property;
+	/** @var false|object Property item. */
+	protected false|object $property;
 
 	/**
 	 * Display the view
 	 *
-	 * @param   null  $tpl  Default template.
+	 * @param  null  $tpl  Default template.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -62,7 +61,7 @@ class HtmlView extends KrHtmlView\Site
 		$this->params     = KrMethods::getParams();
 		$this->list_limit = $this->params->get('list_limit', 10);
 
-		$this->state = $this->get('State');
+		$this->state = $this->get('state');
 		$this->state->set('filter.property_id', $property_id);
 		$this->state->set('filter.state', 1);
 		$this->state->set('filter.held', 0);
@@ -96,8 +95,8 @@ class HtmlView extends KrHtmlView\Site
 	/**
 	 * Set the pathway for the reviews
 	 *
-	 * @param   int     $region_id    ID of property / search region
-	 * @param   string  $region_name  Name of property / search region
+	 * @param  int     $region_id    ID of property / search region
+	 * @param  string  $region_name  Name of property / search region
 	 *
 	 * @throws Exception
 	 * @since  1.0.0

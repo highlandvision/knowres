@@ -15,21 +15,21 @@ namespace HighlandVision\Component\Knowres\Site\Controller;
 defined('_JEXEC') or die;
 
 use Exception;
-use Factura\Api as Factura;
+use HighlandVision\Factura\Factura;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
-use HighlandVision\KR\Service\Beyond;
 use HighlandVision\KR\Service\Ical;
 use HighlandVision\KR\Session as KrSession;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Utility;
+use HighlandVision\Beyond\Rates;
+use HighlandVision\Ru\Manager as RuManager;
+use HighlandVision\VintageTravel\VintageTravel;
+use HighlandVision\Vrbo\Manager as VrboManager;
 use JetBrains\PhpStorm\NoReturn;
 use Joomla\CMS\MVC\Controller\BaseController;
-use Ru\Api\Manager as RuManager;
 use RuntimeException;
 use stdClass;
-use VintageTravel\Api as VT;
-use VRBO\Api\Manager as VrboManager;
 
 use function class_exists;
 use function count;
@@ -62,7 +62,7 @@ class CronserviceController extends BaseController
 	{
 		$this->checkSecret();
 
-		$PullRates = new Beyond\PullRates($this->test);
+		$PullRates = new Rates\PullRates($this->test);
 		$PullRates->pullRates();
 
 		jexit();
@@ -79,7 +79,7 @@ class CronserviceController extends BaseController
 	{
 		$this->checkSecret();
 
-		$PushRates = new Beyond\PushRates($this->test);
+		$PushRates = new Rates\PushRates($this->test);
 		if (method_exists($PushRates, 'processQueue'))
 		{
 			$queue = KrFactory::getListModel('servicequeues')->getQueueByServiceMethod($i->id, 'updateListing');
@@ -88,16 +88,13 @@ class CronserviceController extends BaseController
 				foreach ($queue as $q)
 				{
 					//TODO-v4.1 Pass all queues to class
-					if (method_exists($PushRates, 'processQueue'))
-					{
-						$PushRates->processQueue($q);
+					$PushRates->processQueue($q);
 
-						$actioned             = new stdClass();
-						$actioned->id         = $q->id;
-						$actioned->actioned   = 1;
-						$actioned->updated_at = TickTock::getTS();
-						KrFactory::update('service_queue', $actioned);
-					}
+					$actioned             = new stdClass();
+					$actioned->id         = $q->id;
+					$actioned->actioned   = 1;
+					$actioned->updated_at = TickTock::getTS();
+					KrFactory::update('service_queue', $actioned);
 				}
 			}
 		}
@@ -121,8 +118,8 @@ class CronserviceController extends BaseController
 		{
 			$class = match ($s->plugin)
 			{
-				'ru' => 'Ru\src\Manager\Availability',
-				'vrbo' => 'HighlandVision\VRBO\Manager\Availability'
+				'ru' => 'HighlandVision\Ru\Manager\Availability',
+				'vrbo' => 'HighlandVision\Vrbo\Manager\Availability'
 			};
 
 			if (class_exists($class) && method_exists($class, 'processQueue'))
@@ -174,8 +171,8 @@ class CronserviceController extends BaseController
 		{
 			$class = match ($s->plugin)
 			{
-				'ru' => 'Ru\src\Manager\Properties',
-				'vrbo' => 'HighlandVision\VRBO\Manager\Properties'
+				'ru' => 'HighlandVision\Ru\Manager\Properties',
+				'vrbo' => 'HighlandVision\Vrbo\Manager\Properties'
 			};
 
 			if (class_exists($class))
@@ -234,8 +231,8 @@ class CronserviceController extends BaseController
 		{
 			$class = match ($s->plugin)
 			{
-				'ru' => 'Ru\src\Manager\Rates',
-				'vrbo' => 'HighlandVision\VRBO\Manager\Rates'
+				'ru' => 'HighlandVision\Ru\Manager\Rates',
+				'vrbo' => 'HighlandVision\Vrbo\Manager\Rates'
 			};
 
 			if (class_exists($class) && method_exists($class, 'processQueue'))
@@ -271,10 +268,10 @@ class CronserviceController extends BaseController
 		{
 			$class = match ($s->plugin)
 			{
-				'ru' => 'Ru\src\Manager\Sync',
+				'ru' => 'HighlandVision\Ru\Manager\Sync',
 			};
 
-			if (class_exists($class) && method_exists($class, 'sync'))
+			if (class_exists($class) && method_exists($class, 'doSync'))
 			{
 				$Sync = match ($s->plugin)
 				{
@@ -345,6 +342,39 @@ class CronserviceController extends BaseController
 	}
 
 	/**
+	 * Process RU channel adhoc requests
+	 *
+	 * @throws RuntimeException
+	 * @throws Exception
+	 * @since  1.2.2
+	 */
+	#[NoReturn] public function rua()
+	{
+		$this->checkSecret();
+		$method = KrMethods::inputString('method', null, 'get');
+		if (!$method){
+			echo "Enter a method in the url";
+			jexit();
+		}
+
+		$services = $this->getServicesByType('c');
+		foreach ($services as $s)
+		{
+			if ($s->plugin == 'ru')
+			{
+				$class = 'HighlandVision\Ru\Manager';
+				if (class_exists($class) && method_exists($class, $method))
+				{
+					$Manager = new RuManager($this->test);
+					$data = $Manager->$method();
+				}
+			}
+		}
+
+		jexit();
+	}
+
+	/**
 	 * Vintage Travel process API
 	 * Add "availonly=1" to url to process availability only
 	 *
@@ -360,8 +390,8 @@ class CronserviceController extends BaseController
 		{
 			if ($s->plugin == 'vt')
 			{
-				$VT = new VT($s->id, $this->test);
-				$VT->updateApi();
+				$VintageTravel = new VintageTravel($s->id, $this->test);
+				$VintageTravel->updateApi();
 			}
 		}
 
@@ -419,7 +449,7 @@ class CronserviceController extends BaseController
 	/**
 	 * Get services by type
 	 *
-	 * @param   string  $type  Service type
+	 * @param  string  $type  Service type
 	 *
 	 * @throws RuntimeException
 	 * @since  1.2.0

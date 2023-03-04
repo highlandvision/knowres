@@ -13,6 +13,7 @@ defined('_JEXEC') or die;
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
+use HighlandVision\KR\Logger;
 use HighlandVision\KR\Translations;
 use JetBrains\PhpStorm\Pure;
 use Joomla\CMS\Factory;
@@ -199,8 +200,9 @@ class ContentHistoryHelper extends \Joomla\Component\Contenthistory\Administrato
 			{
 				$result = $db->loadResult();
 			}
-			catch (Exception)
+			catch (Exception $e)
 			{
+				Logger::logMe($e->getMessage());
 				return false;
 			}
 		}

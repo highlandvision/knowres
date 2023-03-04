@@ -6,27 +6,27 @@
  * @license     See the file "LICENSE.txt" for the full license governing this code.
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
+
 /** @noinspection PhpUnhandledExceptionInspection */
 
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Utility;
-use Joomla\CMS\Object\CMSObject;
 
 extract($displayData);
 /**
  * Layout variables
  *
- * @var CMSObject $contract The contract item.
- * @var mixed     $fees     Contract fees.
- * @var mixed     $payments Contract payments
- * @var float     $balance  Outstanding balance
+ * @var false|object $contract The contract item.
+ * @var mixed        $fees     Contract fees.
+ * @var mixed        $payments Contract payments
+ * @var float        $balance  Outstanding balance
  */
 ?>
 
 <?php if ($contract->deposit > 0): ?>
 	<div class="row summary">
-		<div class="small-6 columns">
+		<div class="small-4 columns">
 			<?php if ($contract->deposit != $contract->contract_total): ?>
 				<?php echo KrMethods::plain('COM_KNOWRES_DEPOSIT'); ?>
 			<?php else: ?>

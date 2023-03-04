@@ -17,7 +17,6 @@ use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\HtmlView as KrHtmlView;
 use HighlandVision\KR\Utility;
-use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 
 use function strtolower;
@@ -29,15 +28,15 @@ use function strtolower;
  */
 class HtmlView extends KrHtmlView
 {
-	/** @var CMSObject Contract item. */
-	public CMSObject $contract;
-	/** @var CMSObject Property item. */
-	public CMSObject $property;
+	/** @var false|object Contract item. */
+	public false|object $contract;
+	/** @var false|object Property item. */
+	public false|object $property;
 
 	/**
 	 * Display the view
 	 *
-	 * @param   null  $tpl  Default template
+	 * @param  null  $tpl  Default template
 	 *
 	 * @throws Exception
 	 * @since  1.0.0

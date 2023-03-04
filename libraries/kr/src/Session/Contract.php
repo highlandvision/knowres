@@ -11,15 +11,17 @@ namespace HighlandVision\KR\Session;
 
 defined('_JEXEC') or die;
 
+use Exception;
 use HighlandVision\KR\Session;
 use JetBrains\PhpStorm\Pure;
 use stdClass;
 
 use function defined;
 use function is_null;
+use function property_exists;
 
 /**
- * Knowres Session helper
+ * Knowres Contract Session
  *
  * @since 3.3.0
  */
@@ -28,7 +30,8 @@ class Contract extends Session
 	/**
 	 * Initialise
 	 *
-	 * @since 3.3.0
+	 * @throws Exception
+	 * @since  3.3.0
 	 */
 	public function __construct()
 	{
@@ -61,6 +64,30 @@ class Contract extends Session
 	public function resetData(): stdClass
 	{
 		$data = $this->init();
+		$this->saveSession($data);
+
+		return $data;
+	}
+
+	/**
+	 * Update session data from array (db item or jform)
+	 *
+	 * @param  array|object  $item  Update data
+	 *
+	 * @since  3.2.0
+	 * @return stdClass
+	 */
+	public function updateData(array|object $item): stdClass
+	{
+		$data = $this->getData();
+		foreach ($item as $key => $value)
+		{
+			if (property_exists($data, $key))
+			{
+				$data->$key = $value;
+			}
+		}
+
 		$this->saveSession($data);
 
 		return $data;
@@ -149,7 +176,7 @@ class Contract extends Session
 		$data->isEdit                          = false;
 		$data->manager_id                      = 0;
 		$data->markup                          = 0;
-		$data->markup_pc                       = 0;
+		$data->markup_pc                       = [];
 		$data->manual                          = 0;
 		$data->net_price                       = 0;
 		$data->net_price_system                = 0;
@@ -171,7 +198,7 @@ class Contract extends Session
 		$data->room_total_gross_system         = 0;
 		$data->seasonsDb                       = [];
 		$data->seasonsRq                       = true;
-		$data->service_id                      = [];
+		$data->service_id                      = 0;
 		$data->shortbook                       = 0;
 		$data->shortbook_departure             = '';
 		$data->shortbook_nights                = '0';

@@ -182,24 +182,27 @@
 			maxlength="20"
 			label="COM_KNOWRES_POSTCODE"
 			description="COM_KNOWRES_POSTCODE_DSC"/>
+
 		<field name="country_id"
-			type="combocountry"
-			class="countrychain"
 			allowproperty="1"
+			class="countrychain"
 			filter="integer"
-			target="jform_region_id"
-			ajaxname="country_id"
+			layout="joomla.form.field.list-fancy-select"
+			onchange="comboGeo(this.value, 'property.combo', 'region');"
+			required="true"
+			type="combocountry"
 			label="COM_KNOWRES_COUNTRY"
 			description="COM_KNOWRES_COUNTRY_DSC">
 			<option value="0">COM_KNOWRES_SELECT_COUNTRY</option>
 		</field>
 		<field name="region_id"
-			type="comboregion"
-			class="regionchain"
 			allowproperty="1"
+			class="regionchain"
 			filter="integer"
-			target="jform_town_id"
-			ajaxname="region_id"
+			layout="joomla.form.field.list-fancy-select"
+			onchange="comboGeo(this.value, 'property.combo', 'town');"
+			required="true"
+			type="comboregion"
 			label="COM_KNOWRES_REGION"
 			description="COM_KNOWRES_REGION_DSC">
 			<option value="0">COM_KNOWRES_SELECT_REGION</option>
@@ -209,14 +212,53 @@
 			label="COM_KNOWRES_PROPERTY_PROPERTY_REGION_LBL"
 			description="COM_KNOWRES_PROPERTY_PROPERTY_REGION_DSC"/>
 		<field name="town_id"
-			type="combotown"
-			class="townchain"
 			allowproperty="1"
+			class="townchain"
 			filter="integer"
+			type="combotown"
 			label="COM_KNOWRES_TOWN"
 			description="COM_KNOWRES_TOWN_DSC">
 			<option value="0">COM_KNOWRES_SELECT_TOWN</option>
 		</field>
+
+
+
+
+<!--		<field name="country_id"-->
+<!--			class="countrychain"-->
+<!--			filter="integer"-->
+<!--			type="combocountry"-->
+<!--			allowproperty="1"-->
+<!--			target="jform_region_id"-->
+<!--			ajaxname="country_id"-->
+<!--			label="COM_KNOWRES_COUNTRY"-->
+<!--			description="COM_KNOWRES_COUNTRY_DSC">-->
+<!--			<option value="0">COM_KNOWRES_SELECT_COUNTRY</option>-->
+<!--		</field>-->
+<!--		<field name="region_id"-->
+<!--			type="comboregion"-->
+<!--			class="regionchain"-->
+<!--			allowproperty="1"-->
+<!--			filter="integer"-->
+<!--			target="jform_town_id"-->
+<!--			ajaxname="region_id"-->
+<!--			label="COM_KNOWRES_REGION"-->
+<!--			description="COM_KNOWRES_REGION_DSC">-->
+<!--			<option value="0">COM_KNOWRES_SELECT_REGION</option>-->
+<!--		</field>-->
+<!--		<field name="property_region"-->
+<!--			type="hidden"-->
+<!--			label="COM_KNOWRES_PROPERTY_PROPERTY_REGION_LBL"-->
+<!--			description="COM_KNOWRES_PROPERTY_PROPERTY_REGION_DSC"/>-->
+<!--		<field name="town_id"-->
+<!--			type="combotown"-->
+<!--			class="townchain"-->
+<!--			allowproperty="1"-->
+<!--			filter="integer"-->
+<!--			label="COM_KNOWRES_TOWN"-->
+<!--			description="COM_KNOWRES_TOWN_DSC">-->
+<!--			<option value="0">COM_KNOWRES_SELECT_TOWN</option>-->
+<!--		</field>-->
 		<field name="property_town"
 			type="hidden"
 			filter="string"

@@ -14,7 +14,7 @@ use Joomla\CMS\Helper\ModuleHelper;
 
 $wa = $app->getDocument()->getWebAssetManager();
 $wa->getRegistry()->addExtensionRegistryFile('com_knowres');
-$wa->useScript('com_knowres.modules');
+$wa->useScript('com_knowres.site-modules');
 
 $Translations = new Translations();
 $destination  = $Translations->getText('region', $params->get('region_id'));

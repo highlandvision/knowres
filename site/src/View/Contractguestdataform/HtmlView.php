@@ -16,22 +16,22 @@ use HighlandVision\Component\Knowres\Site\Model\ContractguestdataModel;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\HtmlView as KrHtmlView;
+use HighlandVision\KR\Logger;
 use HighlandVision\KR\SiteHelper;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Object\CMSObject;
 use RuntimeException;
 
 /**
- * Edit contract guest data (arrival details)
+ * Dashboard contract guest data form (arrival details)
  *
  * @since 2.5.0
  */
 class HtmlView extends KrHtmlView\Site
 {
-	/** @var CMSObject Contract item. */
-	public CMSObject $contract;
-	/** @var CMSObject Property item. */
-	public CMSObject $property;
+	/** @var object Contract item. */
+	public object $contract;
+	/** @var object Property item. */
+	public object $property;
 
 	/**
 	 * Display the view
@@ -45,12 +45,14 @@ class HtmlView extends KrHtmlView\Site
 	public function display($tpl = null): void
 	{
 		SiteHelper::checkUser();
+
 		try
 		{
 			list($guest_id, $contract_id) = SiteHelper::validateDashboardSession();
 		}
-		catch (Exception)
+		catch (Exception $e)
 		{
+			Logger::logMe($e->getMessage(), 'error');
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_FATAL'));
 			SiteHelper::redirectDashboard();
 		}
@@ -64,8 +66,9 @@ class HtmlView extends KrHtmlView\Site
 			}
 			$this->property = KrFactory::getAdminModel('property')->getItem($this->contract->property_id);
 		}
-		catch (Exception)
+		catch (Exception $e)
 		{
+			Logger::logMe($e->getMessage(), 'error');
 			SiteHelper::redirectDashboard();
 		}
 
@@ -88,8 +91,8 @@ class HtmlView extends KrHtmlView\Site
 		$this->params          = KrMethods::getParams();
 		$this->form_aria_label = KrMethods::plain('COM_KNOWRES_DASHBOARD_EDIT_CONTRACTGUESTDATA');
 
-		$this->meta_title       = KrMethods::plain('COM_KNOWRES_TITLE_DASHBOARD_CONTRACTGUESTDATA');
-		$this->meta_description = KrMethods::plain('COM_KNOWRES_TITLE_DASHBOARD_CONTRACTGUESTDATA');
+		$this->meta_title       = KrMethods::plain('COM_KNOWRES_DASHBOARD_EDIT_CONTRACTGUESTDATA');
+		$this->meta_description = KrMethods::plain('COM_KNOWRES_DASHBOARD_CONTRACTGUESTDATA');
 		$this->prepareDocument();
 
 		parent::display($tpl);
@@ -113,12 +116,12 @@ class HtmlView extends KrHtmlView\Site
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	protected function setPathway()
+	protected function setMyPathway()
 	{
 		$pathway = Factory::getApplication()->getPathway();
-		$pathway->setMyPathway([]);
+		$pathway->setPathway([]);
 
 		$pathway = HtmlView::dashboardPathway($pathway);
-		$pathway->addItem(KrMethods::plain('COM_KNOWRES_TITLE_DASHBOARD_CONTRACTGUESTDATA'));
+		$pathway->addItem(KrMethods::plain('COM_KNOWRES_DASHBOARD_CONTRACTGUESTDATA'));
 	}
 }

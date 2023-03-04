@@ -14,7 +14,8 @@ defined('_JEXEC') or die;
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
-use HighlandVision\KR\Session as KnowresSession;
+use HighlandVision\KR\Session as KrSession;
+use Joomla\Registry\Registry;
 use RuntimeException;
 use stdClass;
 
@@ -42,13 +43,15 @@ class Search
 	protected int $highval = 9999999;
 	/** @var array Price ranges. */
 	protected array $ranges = [];
+	/** @var Registry KR paramaters. */
+	private Registry $params;
 	/** @var Translations Translations object. */
 	protected Translations $Translations;
 
 	/**
 	 * Initialize
 	 *
-	 * @param   stdClass  $data  Search session data.
+	 * @param  stdClass  $data  Search session data.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -63,8 +66,8 @@ class Search
 	/**
 	 * Compare values
 	 *
-	 * @param   array  $a  Value 1
-	 * @param   array  $b  Value 2
+	 * @param  array  $a  Value 1
+	 * @param  array  $b  Value 2
 	 *
 	 * @since  1.0.0
 	 * @return int
@@ -82,8 +85,8 @@ class Search
 	/**
 	 * Compare values
 	 *
-	 * @param   array  $a  Value 1
-	 * @param   array  $b  Value 2
+	 * @param  array  $a  Value 1
+	 * @param  array  $b  Value 2
 	 *
 	 * @since  1.0.0
 	 * @return int
@@ -101,14 +104,14 @@ class Search
 	/**
 	 * Set count for the displayed filters
 	 *
-	 * @param   array  $totalBedrooms
-	 * @param   array  $totalBook
-	 * @param   array  $totalFeature
-	 * @param   array  $totalType
-	 * @param   array  $totalTown
-	 * @param   array  $totalArea
-	 * @param   array  $totalCategory
-	 * @param   array  $idPrice
+	 * @param  array  $totalBedrooms
+	 * @param  array  $totalBook
+	 * @param  array  $totalFeature
+	 * @param  array  $totalType
+	 * @param  array  $totalTown
+	 * @param  array  $totalArea
+	 * @param  array  $totalCategory
+	 * @param  array  $idPrice
 	 *
 	 * @since 1.0.0
 	 */
@@ -193,7 +196,7 @@ class Search
 	}
 
 	/**
-	 * Set search data and do nase search
+	 * Set search data and do base search
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -211,7 +214,8 @@ class Search
 			$this->data->baseIds = array_column($baseItems, 'id');
 			$this->setCurrency();
 
-			$this->checkGuestData($baseItems);
+			//TODO-v4.1 Reinstate
+			//			$this->checkGuestData($baseItems);
 			if (!count($this->data->baseIds))
 			{
 				return;
@@ -238,14 +242,21 @@ class Search
 	/**
 	 * Get ajax request data
 	 *
-	 * @param   string  $field  Input type field
-	 * @param   string  $value  Input value field
+	 * @param  string  $field  Input type field
+	 * @param  string  $value  Input value field
 	 *
+	 * @throws Exception
 	 * @since        1.0.0
 	 * @noinspection PhpStatementHasEmptyBodyInspection
 	 */
 	public function getAjaxData(string $field, string $value): void
 	{
+		if ($field == 'view' && $this->data->limitstart > 0)
+		{
+			$this->data->start      = $this->data->limitstart;
+			$this->data->limitstart = 0;
+		}
+
 		if ($field == 'page')
 		{
 			$this->data->start = $value;
@@ -411,11 +422,11 @@ class Search
 	/**
 	 * Check that all calendar conditions are met
 	 *
-	 * @param   array  $rates  Rates for properties
+	 * @param  array  $rates  Rates for properties
 	 *
 	 * @since  3.3.4
 	 */
-	private function checkCalendarData(array $rates)
+	private function checkCalendarData(array $rates): void
 	{
 		$valid = [];
 		foreach ($this->data->baseIds as $id)
@@ -437,48 +448,52 @@ class Search
 		$this->data->baseIds = $valid;
 	}
 
-	/**
-	 * Check that the number of guests does not exceed the max for a property
-	 *
-	 * @param   array  $items  Base properties data for search
-	 *
-	 * @since  4.0.0
-	 */
-	private function checkGuestData(array $items): void
-	{
-		$valid = [];
-
-		foreach ($items as $item)
-		{
-			if (!in_array($item->id, $this->data->baseIds))
-			{
-				continue;
-			}
-
-			$free = $this->setFreeGuests($item);
-			if ($this->data->guests > $item->sleeps + $item->sleeps_extra + $free)
-			{
-				continue;
-			}
-
-			if ($this->data->children > 0 && is_countable($this->data->child_ages))
-			{
-				if (count($this->data->child_ages) > 0 && count($this->data->child_ages) < $this->data->children)
-				{
-					continue;
-				}
-			}
-
-			$valid[] = $item->id;
-		}
-
-		$this->data->baseIds = $valid;
-	}
+//	/**
+//	 * Check that the number of guests does not exceed the max for a property
+//	 *
+//	 * @param  array  $items  Base properties data for search
+//	 *
+//	 * @since  4.0.0
+//	 */
+//	private function checkGuestData(array $items): void
+//	{
+//		//TODO-v4.1 to be sorted
+//		$valid = [];
+//
+//		foreach ($items as $item)
+//		{
+//			if (!in_array($item->id, $this->data->baseIds))
+//			{
+//				continue;
+//			}
+//
+//			$free = $this->setFreeGuests($item);
+//			if ($this->data->guests > $item->sleeps + $item->sleeps_extra + $free)
+//			{
+//				if ($this->data->guests > $item->sleeps + $item->sleeps_extra)
+//				{
+//					continue;
+//				}
+//			}
+//
+//			if ($this->data->children > 0 && is_countable($this->data->child_ages))
+//			{
+//				if (count($this->data->child_ages) > 0 && count($this->data->child_ages) < $this->data->children)
+//				{
+//					continue;
+//				}
+//			}
+//
+//			$valid[] = $item->id;
+//		}
+//
+//		$this->data->baseIds = $valid;
+//	}
 
 	/**
 	 * Set number of free guests - children under free infants age
 	 *
-	 * @param   stdClass  $item  Property item details
+	 * @param  stdClass  $item  Property item details
 	 *
 	 * @since  4.0.0
 	 * @return int
@@ -505,9 +520,9 @@ class Search
 	/**
 	 * Check if filter value is selected
 	 *
-	 * @param   array  $selected  Current counts and selections
-	 * @param   mixed  $value     Value to increment
-	 * @param   bool   $reset     FALSE will not reset any selected items with zero count
+	 * @param  array  $selected  Current counts and selections
+	 * @param  mixed  $value     Value to increment
+	 * @param  bool   $reset     FALSE will not reset any selected items with zero count
 	 *
 	 * @since  1.0.0
 	 * @return array
@@ -538,7 +553,7 @@ class Search
 	/**
 	 * Clear the filter count and selected filters
 	 *
-	 * @param   array  $selected  Selected filters
+	 * @param  array  $selected  Selected filters
 	 *
 	 * @since  1.0.0
 	 * @return mixed
@@ -696,7 +711,7 @@ class Search
 	/**
 	 * Calculates the slot for the property price
 	 *
-	 * @param   int  $price  Property price
+	 * @param  int  $price  Property price
 	 *
 	 * @since  1.2.2
 	 * @return string
@@ -720,8 +735,8 @@ class Search
 	/**
 	 * Clear and reset the filter data
 	 *
-	 * @param   array  $saved  Saved filter
-	 * @param   array  $new    New filters
+	 * @param  array  $saved  Saved filter
+	 * @param  array  $new    New filters
 	 *
 	 * @since      3.3.0
 	 * @return array
@@ -763,7 +778,7 @@ class Search
 		                                              ->getMarkups($this->data->baseIds));
 		$seasons     = KrFactory::getListModel('seasons')->getSeasons();
 
-		$contractSession = new KnowresSession\Contract;
+		$contractSession = new KrSession\Contract;
 		foreach ($this->data->baseIds as $property_id)
 		{
 			$contractData                = $contractSession->resetData();
@@ -788,8 +803,8 @@ class Search
 				'seasons',
 				'shortstay',
 				'longstay',
-				'discount',
 				'ratemarkup',
+				'discount',
 				'tax',
 				'extras',
 			];
@@ -817,7 +832,7 @@ class Search
 	/**
 	 * Set the base filters as per base property results and input fields
 	 *
-	 * @param   array  $baseItems  Base property items
+	 * @param  array  $baseItems  Base property items
 	 *
 	 * @since  1.0.0
 	 */
@@ -1032,9 +1047,9 @@ class Search
 	/**
 	 * Increase the filter count if a matching record is found
 	 *
-	 * @param   array  $selected  Current counts and selections
-	 * @param   mixed  $id        Current item
-	 * @param   int    $value     Value to increment
+	 * @param  array  $selected  Current counts and selections
+	 * @param  mixed  $id        Current item
+	 * @param  int    $value     Value to increment
 	 *
 	 * @since  1.0.0
 	 * @return array
@@ -1055,8 +1070,8 @@ class Search
 	/**
 	 * Increase the filter count for prices if a record is found
 	 *
-	 * @param   array  $selected  Current counts and selections
-	 * @param   int    $price     Price of current item
+	 * @param  array  $selected  Current counts and selections
+	 * @param  int    $price     Price of current item
 	 *
 	 * @since  1.2.2
 	 * @return array
@@ -1078,7 +1093,7 @@ class Search
 	/**
 	 * Extract database results per property
 	 *
-	 * @param   array  $db_rows  Database rows
+	 * @param  array  $db_rows  Database rows
 	 *
 	 * @since  3.2.0
 	 * @return array
@@ -1185,9 +1200,8 @@ class Search
 				$net = array_key_exists($r->property_id, $net_rates) ? $net_rates[$r->property_id] : $net_rates[0];
 				if ($net)
 				{
-					$markup = $net_markup[$r->property_id] ?? $net_markup[0];
-					$prices[$r->property_id]
-					        = KrFactory::getAdminModel('ratemarkup')::getGrossRate((float) $r->minrate,
+					$markup                  = $net_markup[$r->property_id] ?? $net_markup[0];
+					$prices[$r->property_id] = KrFactory::getAdminModel('ratemarkup')::getGrossRate((float) $r->minrate,
 						$markup);
 				}
 				else
@@ -1233,11 +1247,11 @@ class Search
 		}
 
 		$region = KrFactory::getAdminModel('region')->getItem($this->data->region_id);
-		if (!$region->id || $region->state != 1)
+		if (empty($region->id) || $region->state != 1)
 		{
 			$this->data->region_id = $this->params->get('default_region');
 			$region                = KrFactory::getAdminModel('region')->getItem($this->data->region_id);
-			if (!$region->id)
+			if (empty($region->id))
 			{
 				throw new RuntimeException('Region not found for Region ID ' . $this->data->region_id);
 			}
@@ -1252,7 +1266,7 @@ class Search
 	/**
 	 * Zeroise the filter count
 	 *
-	 * @param   array  $selected  Selected items
+	 * @param  array  $selected  Selected items
 	 *
 	 * @since  1.0.0
 	 * @return array

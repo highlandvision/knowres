@@ -16,7 +16,6 @@ use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\AdminModel;
 use HighlandVision\KR\TickTock;
-use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Table\Table;
 use RuntimeException;
 
@@ -37,13 +36,13 @@ class OwnerpaymentModel extends AdminModel
 	/**
 	 * Return the ownerpayment row.
 	 *
-	 * @param   integer  $pk  The id of the primary key.
+	 * @param  integer  $pk  The id of the primary key.
 	 *
 	 * @throws Exception
 	 * @since  3.3.1
-	 * @return CMSObject|false  Object on success, false on failure.
+	 * @return object|false  Object on success, false on failure.
 	 */
-	public function getItem($pk = null): CMSObject|false
+	public function getItem($pk = null): object|false
 	{
 		/** @var OwnerpaymentModel $model */
 		$item = parent::getItem($pk);
@@ -77,7 +76,7 @@ class OwnerpaymentModel extends AdminModel
 	/**
 	 * Prepare and sanitise the table prior to saving.
 	 *
-	 * @param   Table  $table  Table instance
+	 * @param  Table  $table  Table instance
 	 *
 	 * @throws RuntimeException
 	 * @throws Exception

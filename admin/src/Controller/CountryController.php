@@ -39,7 +39,7 @@ class CountryController extends FormController
 		$id   = $model->getItem()->get('id');
 		$name = (string) $validData['name'];
 
-		$translation = new Translations();
-		$translation->updateDefault('country', $id, 'name', $name);
+		$Translations = new Translations();
+		$Translations->updateDefault('country', $id, 'name', $name);
 	}
 }

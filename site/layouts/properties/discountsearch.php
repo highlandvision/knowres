@@ -19,11 +19,13 @@ extract($displayData);
 /**
  * Layout variables
  *
- * @var array $discounts  Available discounts.
- * @var array $currencies Property currencies.
+ * @var int   $property_id ID of property.
+ * @var array $discounts   Available discounts.
+ * @var array $currencies  Property currencies.
  */
 
-$toggle = "kr-discount-data";
+$toggle = "kr-discount-data" . $property_id;
+$count = 0;
 ?>
 
 <div class="kr-search-discounts">
@@ -51,10 +53,14 @@ $toggle = "kr-discount-data";
 					TickTock::modifyDays('now', $d->param2, '+', 'j M Y')); ?>
 			<?php endif; ?>
 
-			<div>
+			<?php if ($count): ?>
+				<?php echo '----------'; ?>
+			<?php endif; ?>
+			<div style="font-size:13px;">
 				<?php echo $text1; ?><br>
 				<span><?php echo $text2; ?></span>
 			</div>
+			<?php $count++; ?>
 		<?php endforeach; ?>
 	</div>
 </div>

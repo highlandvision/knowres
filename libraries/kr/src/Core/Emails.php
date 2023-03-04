@@ -28,10 +28,10 @@ class Emails
 	/**
 	 * Action emails
 	 *
-	 * @param   Hub  $hub  Hub data
+	 * @param  Hub  $hub  Hub data
 	 *
 	 * @throws Exception
-	 * @since 1.0.0
+	 * @since  1.0.0
 	 * @return bool
 	 */
 	public function action(Hub $hub): bool
@@ -78,7 +78,7 @@ class Emails
 		{
 			$trigger = 'BOOKREQUEST';
 		}
-		else if ($this->hub->getValue('booking_status') > 10)
+		else if ($this->hub->getValue('booking_status') >= 10)
 		{
 			$trigger = 'BOOKCONFIRM';
 		}

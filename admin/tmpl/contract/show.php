@@ -22,8 +22,7 @@ $wa->useScript('keepalive')
    ->useScript('core');
 ?>
 
-	<form
-		action="<?php echo KrMethods::route('index.php?option=com_knowres&layout=edit&id=' . (int) $this->item->id); ?>"
+	<form action="<?php echo KrMethods::route('index.php?option=com_knowres&layout=edit&id=' . (int) $this->item->id); ?>"
 		id="contract-form" method="post" name="adminForm">
 		<input type="hidden" name="id" value="<?php echo $this->item->id; ?>">
 		<input type="hidden" name="property_id" value="<?php echo $this->item->property_id; ?>">
@@ -60,7 +59,7 @@ $wa->useScript('keepalive')
 	<div class="accordion">
 		<div class="row">
 			<div class="col-xl-6">
-				<div style="max-width:700px;">
+				<div style="max-width:600px;">
 					<?php echo $this->loadTemplate('summary'); ?>
 					<?php echo $this->loadTemplate('rooms'); ?>
 					<?php echo $this->loadTemplate('notes'); ?>
@@ -72,8 +71,8 @@ $wa->useScript('keepalive')
 					<?php echo $this->loadTemplate('adjustments'); ?>
 				</div>
 			</div>
-			<div class="col-xl-6" style="max-width:700px;">
-				<div style="max-width:700px;">
+			<div class="col-xl-6" style="max-width:600px;">
+				<div style="max-width:600px;">
 					<?php echo $this->loadTemplate('guest'); ?>
 					<?php echo $this->loadTemplate('guestdata'); ?>
 				</div>

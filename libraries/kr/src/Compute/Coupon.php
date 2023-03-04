@@ -27,7 +27,7 @@ class Coupon
 	/**
 	 * Calculate any coupon discounts
 	 *
-	 * @param   Hub  $Hub  Hub base class
+	 * @param  Hub  $Hub  Hub base class
 	 *
 	 * @throws Exception
 	 * @since 1.0.0
@@ -52,7 +52,7 @@ class Coupon
 	/**
 	 * Check if coupon code is valid
 	 *
-	 * @param   float  $coupon_amount  Amount of coupon
+	 * @param  float  $coupon_amount  Amount of coupon
 	 *
 	 * @throws Exception
 	 * @since  1.0.0

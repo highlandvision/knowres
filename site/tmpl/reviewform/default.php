@@ -22,16 +22,16 @@ $wa->useScript('com_knowres.site')
 
 <div class="narrower">
 	<div class="row">
-		<div class="small-12 medium-12 columns">
-			<h1><?php echo KrMethods::sprintf('COM_KNOWRES_TITLE_REVIEW_REQUEST',
-					$this->contract->property_name); ?></h1>
+		<div class="small-12 large-10 large-offset-1 columns">
+			<h1><?php echo KrMethods::sprintf('COM_KNOWRES_REVIEW_REQUEST', $this->contract->property_name); ?></h1>
 		</div>
 	</div>
 
 	<div class="row">
-		<div class="small-12 medium-10 columns">
-			<form action="<?php echo KrMethods::route('index.php?option=com_knowres&task=reviewform.save'); ?>"
-			      id="kr-form-review" method="post" class="formbg form-validate">
+		<div class="small-12 large-10 large-offset-1 columns">
+			<form action="<?php echo 'index.php?option=com_knowres'; ?>"
+			      aria-label="<?php echo $this->form_aria_label; ?>" class="formbg form-validate" id="kr-review-form"
+			      method="post" name="adminForm">
 				<fieldset class="fieldset">
 					<div class="callout">
 						<div class="row">
@@ -195,6 +195,7 @@ $wa->useScript('com_knowres.site')
 
 				<?php echo HTMLHelper::_('form.token'); ?>
 				<input type="hidden" name="id" value="<?php echo (int) $this->item->id; ?>">
+				<input type="hidden" name="task" value="review.save">
 				<input type="hidden" name="jform[id]" value="<?php echo (int) $this->item->id; ?>">
 				<input type="hidden" name="jform[contract_id]" value="<?php echo $this->contract->id; ?>">
 				<input type="hidden" name="jform[property_id]" value="<?php echo $this->contract->property_id; ?>">

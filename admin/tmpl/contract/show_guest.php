@@ -15,6 +15,7 @@ use HighlandVision\KR\TickTock;
 use Joomla\CMS\Factory;
 
 $guest_edit = KrMethods::route('index.php?option=com_knowres&task=guest.edit&id=' . $this->item->guest_id, false);
+KrMethods::setUserState('com_knowres.gobackto', 'task=contract.show&id=' . $this->item->id);
 ?>
 
 <?php if (!$this->item->black_booking) : ?>
@@ -25,10 +26,8 @@ $guest_edit = KrMethods::route('index.php?option=com_knowres&task=guest.edit&id=
 				   aria-expanded="true" aria-controls="panel-collapse-guest">
 					<?php echo KrMethods::plain('COM_KNOWRES_GUEST_DETAILS'); ?>
 				</a>
-				<?php if (isset($this->guest->checked_out)
-					&& $this->guest->checked_out_time != "0000-00-00 00:00:00"): ?>
-					<?php $name = Factory::getUser($this->guest->checked_out)->name
-						?: KrMethods::plain('COM_KNOWRES_GUEST'); ?>
+				<?php if (!is_null($this->guest->checked_out) || !is_null($this->guest->checked_out_time)): ?>
+					<?php $name = Factory::getUser($this->guest->checked_out)->name ?: KrMethods::plain('COM_KNOWRES_GUEST'); ?>
 					<?php $when = TickTock::displayTS($this->guest->checked_out_time); ?>
 					<a class="float-end" href="javascript:void(0);" aria-labelledby="guest-checkin-desc" title=""
 					   onclick="return Knowres.submitform('guest.checkin', document.getElementById('contract-checkin'));">

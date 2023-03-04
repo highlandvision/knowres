@@ -33,9 +33,9 @@ class ServicelogsController extends AdminController
 	/**
 	 * Proxy for getModel.
 	 *
-	 * @param   string  $name    Model name
-	 * @param   string  $prefix  Model prefix administrator or site (defaults to administrator)
-	 * @param   array   $config  Config options
+	 * @param  string  $name    Model name
+	 * @param  string  $prefix  Model prefix administrator or site (defaults to administrator)
+	 * @param  array   $config  Config options
 	 *
 	 * @since  1.6
 	 * @return bool|BaseDatabaseModel

@@ -38,8 +38,8 @@ class ServicelogModel extends AdminModel
 	/**
 	 * Delete old service logs
 	 *
-	 * @param   string  $date     Delete before this date
-	 * @param   int     $success  Success status to delete
+	 * @param  string  $date     Delete before this date
+	 * @param  int     $success  Success status to delete
 	 *
 	 * @throws RuntimeException
 	 * @since  3.3.0
@@ -82,7 +82,7 @@ class ServicelogModel extends AdminModel
 	/**
 	 * Resend queue records for selected logs
 	 *
-	 * @param   array  $pks  IDs to be resent
+	 * @param  array  $pks  IDs to be resent
 	 *
 	 * @throws RuntimeException
 	 * @since  1.2.0

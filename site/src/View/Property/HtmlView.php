@@ -49,6 +49,8 @@ class HtmlView extends KrHtmlView\Site
 	public string $departure = '';
 	/** @var array Features for this property. */
 	public array $features = [];
+	/** @var int Guest count. */
+	public int $guests = 0;
 	/** @var array Images for this property. */
 	public array $images = [];
 	/** @var int Pagination limit. */
@@ -59,6 +61,8 @@ class HtmlView extends KrHtmlView\Site
 	public string $max_date = '';
 	/** @var string Earliest arrival date. */
 	public string $min_date = '';
+	/** @var string Modules text from loadposition. */
+	public string $modules = '';
 	/** @var bool True if more than list limit reviews. */
 	public bool $more_reviews = false;
 	/** @var array Net markup setting for all properties. */
@@ -87,7 +91,7 @@ class HtmlView extends KrHtmlView\Site
 	/**
 	 * Display the view
 	 *
-	 * @param   null  $tpl  Default template.
+	 * @param  null  $tpl  Default template.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -361,8 +365,8 @@ class HtmlView extends KrHtmlView\Site
 	/**
 	 * Set the pathway for the property
 	 *
-	 * @param   int     $region_id    ID of property / search region
-	 * @param   string  $region_name  Name of property / search region
+	 * @param  int     $region_id    ID of property / search region
+	 * @param  string  $region_name  Name of property / search region
 	 *
 	 * @throws Exception
 	 * @since  1.0.0

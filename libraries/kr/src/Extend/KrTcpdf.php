@@ -28,7 +28,7 @@ class KrTcpdf extends TCPDF
 	/**
 	 * Wxtend TCPDF construct
 	 *
-	 * @param   mixed  $agency  Agency details
+	 * @param  mixed  $agency  Agency details
 	 *
 	 * @since  4.0.0
 	 */

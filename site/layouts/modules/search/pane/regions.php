@@ -42,3 +42,12 @@ extract($displayData);
 		<?php endforeach; ?>
 	</div>
 </div>
+
+<script>
+	function setregion(id) {
+		let element = document.getElementById('region_id');
+		element.value = id;
+		let pane = document.getElementById('region_id');
+		pane.click();
+	}
+</script>

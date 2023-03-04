@@ -6,20 +6,20 @@
  * @license    See the file "LICENSE.txt" for the full license governing this code.
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
+
 /** @noinspection PhpUnhandledExceptionInspection */
 
 defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
-use Joomla\CMS\Object\CMSObject;
 
 extract($displayData);
 /**
  * Layout variables
  *
- * @var CMSObject $guestdata Guestdata row.
- * @var CMSObject $property  Property row.
+ * @var false|object $guestdata Guestdata row.
+ * @var false|object $property  Property row.
  */
 
 if (!$guestdata->adults)

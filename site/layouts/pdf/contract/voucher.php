@@ -14,26 +14,25 @@ defined('_JEXEC') or die;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Utility;
-use Joomla\CMS\Object\CMSObject;
 
 extract($displayData);
 /**
  * Layout variables
  *
- * @var CMSObject $contract  Contract item.
- * @var CMSObject $agency    Agency item.
- * @var CMSObject $property  Property item;
- * @var CMSObject $guestdata Guestdata item.
- * @var array     $notes     Contract notes.
- * @var float     $balance   Contract balance.
+ * @var false|object $contract  Contract item.
+ * @var false|object $agency    Agency item.
+ * @var false|object $property  Property item;
+ * @var false|object $guestdata Guestdata item.
+ * @var array        $notes     Contract notes.
+ * @var float        $balance   Contract balance.
  */
 
-$checkintime = strtolower(KrMethods::plain('COM_KNOWRES_FROM')) . ' ' . $property->checkin_time;
+$checkintime = strtolower(KrMethods::sprintf('COM_KNOWRES_ARRIVAL_FROM', $property->checkin_time));
 if ($property->checkin_time_to)
 {
 	$checkintime .= ' - ' . $property->checkin_time_to;
 }
-$checkouttime = strtolower(KrMethods::plain('COM_KNOWRES_BY')) . ' ' . $property->checkout_time;
+$checkouttime = strtolower(KrMethods::sprintf('COM_KNOWRES_DEPARTURE_BY', $property->checkout_time));
 
 $address = Utility::formatAddress($property->property_street, '', $property->property_postcode, $property->town_name,
 	$property->region_name, $property->country_name, '<br>');
@@ -88,11 +87,19 @@ $lng = floatval(trim($property->lng_actual)) ? trim($property->lng_actual) : tri
 	</tr>
 </table>
 
-<?php echo KrMethods::render('pdf.contract.voucher.partysize', [
-	'property' => $property,
-	'contract' => $contract
-]);
+<?php
+echo KrMethods::render('pdf.contract.guestdata.partysize',
+	['guestdata' => $guestdata,
+	 'property'  => $property,
+	 'contract'  => $contract]
+);
 ?>
+<!--TODO-v4.1 FIX GUEST NUMBERS FOR GOOD-->
+<?php //echo KrMethods::render('pdf.contract.voucher.partysize', [
+//	'property' => $property,
+//	'contract' => $contract
+//]);
+//?>
 
 <table style="width:100%;border:none;border-collapse:collapse;">
 	<tr style="font-size:92%;color:#999;">
@@ -100,11 +107,11 @@ $lng = floatval(trim($property->lng_actual)) ? trim($property->lng_actual) : tri
 	</tr>
 
 	<tr>
-		<td style="width:25%;"><?php echo KrMethods::plain('COM_KNOWRES_PDF_ACCOMMODATION_VOUCHER_ARRIVAL'); ?></td>
+		<td style="width:25%;"><?php echo KrMethods::plain('COM_KNOWRES_ARRIVAL'); ?></td>
 		<td style="width:75%;"><?php echo TickTock::displayDate($contract->arrival) . ' ' . $checkintime; ?></td>
 	</tr>
 	<tr>
-		<td><?php echo KrMethods::plain('COM_KNOWRES_PDF_ACCOMMODATION_VOUCHER_DEPARTURE'); ?></td>
+		<td><?php echo KrMethods::plain('COM_KNOWRES_DEPARTURE'); ?></td>
 		<td><?php echo TickTock::displayDate($contract->departure) . ' ' . $checkouttime; ?></td>
 	</tr>
 	<tr>

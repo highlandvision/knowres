@@ -12,13 +12,17 @@ namespace HighlandVision\Component\Knowres\Administrator\Controller;
 defined('_JEXEC') or die;
 
 use Exception;
+use HighlandVision\Component\Knowres\Administrator\Model\AgencyModel;
 use HighlandVision\Component\Knowres\Administrator\Model\TownModel;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\FormController;
 use HighlandVision\KR\Translations;
+use JetBrains\PhpStorm\NoReturn;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Response\JsonResponse;
 use Joomla\String\StringHelper;
+
+use function jexit;
 
 /**
  * Town controller class
@@ -33,16 +37,27 @@ class TownController extends FormController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function combo()
+	#[NoReturn] public function combo()
 	{
 		$model  = new TownModel();
-		$form   = $model->getForm([], false);
-		$target = KrMethods::inputString('target');
+		$form      = $model->getForm([], false);
+		$parent_id = KrMethods::inputInt('parent');
+		$target    = KrMethods::inputString('target');
+
+		if ($target == 'region_id')
+		{
+			$form->setValue('country_id', null, $parent_id);
+		}
+		else
+		{
+			$form->setValue('region_id', null, $parent_id);
+		}
 
 		$wrapper         = [];
 		$wrapper['html'] = $form->getInput($target);
 
 		echo new JsonResponse($wrapper);
+		jexit();
 	}
 
 	/**

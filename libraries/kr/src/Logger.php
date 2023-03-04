@@ -1,4 +1,5 @@
-<?php
+<?php /** @noinspection ALL */
+
 /**
  * @package     Know Reservations (Knowres)
  * @subpackage  Exception Handling
@@ -42,11 +43,11 @@ class Logger
 	/**
 	 * Default and set entered params
 	 *
-	 * @param   string  $message  Logging message
-	 * @param   int     $code     Logging code
-	 * @param   string  $file     Logging file
-	 * @param   int     $line     Logging line
-	 * @param   string  $level    Error level
+	 * @param  string   $message  Logging message
+	 * @param  int      $code     Logging code
+	 * @param  string   $file     Logging file
+	 * @param  int      $line     Logging line
+	 * @param  string   $level    Error level
 	 * @param  ?string  $trace    Trace
 	 *
 	 * @throws Exception
@@ -68,10 +69,9 @@ class Logger
 	/**
 	 * Standalone log message only
 	 *
-	 * @param   string  $message  Error message
-	 * @param   string  $level    Error level
+	 * @param  string  $message  Error message
+	 * @param  string  $level    Error level
 	 *
-	 * @throws Exception
 	 * @since  3.3.0
 	 */
 	public static function logMe(string $message, string $level = 'notice'): void
@@ -89,9 +89,8 @@ class Logger
 	/**
 	 * Log error to file
 	 *
-	 * @param   array  $params  Data for log
+	 * @param array  $params  Data for log
 	 *
-	 * @throws Exception
 	 * @since 3.4.0
 	 */
 	protected static function logToFile(array $params): void
@@ -115,7 +114,7 @@ class Logger
 	/**
 	 * Send emails if required, avoiding an endless loop if mailer fails
 	 *
-	 * @param   array  $params  Data for logging
+	 * @param  array  $params  Data for logging
 	 *
 	 * @since 3.4.0
 	 */
@@ -152,12 +151,12 @@ class Logger
 	/**
 	 * Default and set entered params
 	 *
-	 * @param   string  $message  Logging message
-	 * @param   int     $code     Logging code
-	 * @param   string  $file     Logging file
-	 * @param   int     $line     Logging line
-	 * @param   string  $level    Error level
-	 * @param   string  $trace    Trace report
+	 * @param  string  $message  Logging message
+	 * @param  int     $code     Logging code
+	 * @param  string  $file     Logging file
+	 * @param  int     $line     Logging line
+	 * @param  string  $level    Error level
+	 * @param  string  $trace    Trace report
 	 *
 	 * @since  3.3.0
 	 * @return array

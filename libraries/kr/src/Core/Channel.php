@@ -39,7 +39,7 @@ class Channel
 	/**
 	 * Action channel
 	 *
-	 * @param   Hub  $hub  Hub data
+	 * @param  Hub  $hub  Hub data
 	 *
 	 * @throws Exception
 	 * @since 1.0.0
@@ -57,7 +57,6 @@ class Channel
 	 * Controls the save and processing for the channel contract
 	 *
 	 * @throws RuntimeException
-	 * @throws Exception
 	 * @throws Exception
 	 * @since  3.3.0
 	 * @return bool
@@ -173,35 +172,39 @@ class Channel
 	 * Saves the agent pseudo payment if required
 	 *
 	 * @throws Exception
-	 * @since  3.2.0
+	 * @since        3.2.0
+	 * @noinspection DuplicatedCode
 	 */
 	protected function savePaymentAgent(): void
 	{
-		if (!$this->hub->getValue('isEdit'))
+		$agent_id           = $this->hub->getValue('agent_id');
+		$agent_deposit_paid = $this->hub->getValue('agent_deposit_paid');
+		$deposit            = $this->hub->getValue('deposit');
+
+		if ($agent_id && $agent_deposit_paid && $deposit > 0)
 		{
-			$agent_id           = $this->hub->getValue('agent_id');
-			$agent_deposit_paid = $this->hub->getValue('agent_deposit_paid');
-			$deposit            = $this->hub->getValue('deposit');
-			if ($agent_id && $agent_deposit_paid && $deposit > 0)
+			if ($this->hub->getValue('isEdit'))
 			{
-				$agent                 = KrFactory::getAdminModel('agent')->getItem($agent_id);
-				$payment               = new stdClass();
-				$payment->id           = 0;
-				$payment->contract_id  = $this->id;
-				$payment->service_id   = 0;
-				$payment->payment_date = TickTock::getDate();
-				$payment->amount       = $deposit;
-				$payment->rate         = 1;
-				$payment->base_amount  = $deposit;
-				$payment->currency     = $this->hub->getValue('currency');
-				$payment->payment_ref  = $this->hub->getValue('agent_reference') ?: $agent->name;
-				$payment->note         = KrMethods::sprintf('COM_KNOWRES_PAID_AGENT_NOTE', $agent->name);
-				$payment->confirmed    = 1;
-				$payment->state        = 1;
-				$payment->created_at   = TickTock::getTS();
-				$payment->created_by   = KrMethods::getUser()->id;
-				KrFactory::insert('contract_payment', $payment);
+				KrFactory::getAdminModel('contractpayments')->unsetPseudoPayments($this->id);
 			}
+
+			$agent                 = KrFactory::getAdminModel('agent')->getItem($agent_id);
+			$payment               = new stdClass();
+			$payment->id           = 0;
+			$payment->contract_id  = $this->id;
+			$payment->service_id   = 0;
+			$payment->payment_date = TickTock::getDate();
+			$payment->amount       = $deposit;
+			$payment->rate         = 1;
+			$payment->base_amount  = $deposit;
+			$payment->currency     = $this->hub->getValue('currency');
+			$payment->payment_ref  = $this->hub->getValue('agent_reference') ?: $agent->name;
+			$payment->note         = KrMethods::sprintf('COM_KNOWRES_PAID_AGENT_NOTE', $agent->name);
+			$payment->confirmed    = 1;
+			$payment->state        = 1;
+			$payment->created_at   = TickTock::getTS();
+			$payment->created_by   = KrMethods::getUser()->id;
+			KrFactory::insert('contract_payment', $payment);
 		}
 	}
 

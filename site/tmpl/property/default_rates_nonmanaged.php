@@ -17,19 +17,20 @@ use HighlandVision\KR\Utility;
 ?>
 
 <?php if (is_countable($this->rates) && count($this->rates)): ?>
+	<?php $decimals = KrFactory::getListModel('currencies')->getDp($this->settings['currency']); ?>
+
 	<ul>
 		<?php foreach ($this->rates as $r): ?>
 			<?php
 			$rate = $r->rate;
 			if ($this->settings['net_rates'])
 			{
-				$rate = KrFactory::getAdminModel('ratemarkup')::getGrossRate((float) $rate,
-					$this->settings['net_markup'],
+				$rate = KrFactory::getAdminModel('ratemarkup')::getGrossRate((float) $rate, $this->settings['net_markup'],
 					$this->settings['currency']);
 			}
 			else
 			{
-				$rate = Utility::roundValue((float) $rate, $this->settings['currency']);
+				$rate = Utility::roundValue((float) $rate, $this->settings['currency'], $decimals);
 			}
 			?>
 
@@ -76,7 +77,7 @@ use HighlandVision\KR\Utility;
 					}
 					else
 					{
-						$rate = Utility::roundValue((float) $rate, $this->settings['currency']);
+						$rate = Utility::roundValue((float) $rate, $this->settings['currency'], $decimals);
 					}
 					?>
 					<?php if ((int) $m->more_max - (int) $m->more_min == 0): ?>

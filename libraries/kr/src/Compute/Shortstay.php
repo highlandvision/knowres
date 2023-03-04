@@ -29,7 +29,7 @@ class Shortstay
 	/**
 	 * Calculate any short break adjustments
 	 *
-	 * @param   Hub  $Hub  Hub details class
+	 * @param  Hub  $Hub  Hub details class
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -57,7 +57,7 @@ class Shortstay
 	/**
 	 * Calculates the short break discount
 	 *
-	 * @param   int  $pc  Percentage surcharge for short stay
+	 * @param  int  $pc  Percentage surcharge for short stay
 	 *
 	 * @throws InvalidArgumentException
 	 * @throws RuntimeException

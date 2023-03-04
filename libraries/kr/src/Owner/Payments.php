@@ -41,8 +41,8 @@ class Payments
 	/**
 	 * Initialize
 	 *
-	 * @param   object  $payment  Payment data
-	 * @param   string  $type     Payment type
+	 * @param  object  $payment  Payment data
+	 * @param  string  $type     Payment type
 	 *
 	 * @throws Exception
 	 * @since  3.3.1
@@ -93,8 +93,8 @@ class Payments
 	/**
 	 * Get property setting
 	 *
-	 * @param   int     $property_id  ID of property
-	 * @param   string  $name         Name of settings
+	 * @param  int     $property_id  ID of property
+	 * @param  string  $name         Name of settings
 	 *
 	 * @since  3.3.1
 	 * @return mixed
@@ -116,7 +116,7 @@ class Payments
 	/**
 	 * Insert owner payment
 	 *
-	 * @param   float  $amount  Payment value
+	 * @param  float  $amount  Payment value
 	 *
 	 * @throws Exception
 	 * @since  3.3.1

@@ -37,10 +37,10 @@ class Manager
 	/**
 	 * Action manager
 	 *
-	 * @param   Hub  $hub  Hub data
+	 * @param  Hub  $hub  Hub data
 	 *
 	 * @throws Exception
-	 * @since 1.0.0
+	 * @since  1.0.0
 	 * @return bool
 	 */
 	public function action(Hub $hub): bool
@@ -132,7 +132,6 @@ class Manager
 	 * Controls the save and processing for the contract
 	 *
 	 * @throws RuntimeException
-	 * @throws Exception
 	 * @throws Exception
 	 * @since  1.0.0
 	 * @return bool

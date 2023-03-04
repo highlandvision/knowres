@@ -54,8 +54,8 @@ class Site extends KrHtmlView
 	/**
 	 * Add confirm pathway link
 	 *
-	 * @param   Pathway  $pathway  Current pathway
-	 * @param  ?int      $Itemid   Item ID of search page
+	 * @param  Pathway  $pathway  Current pathway
+	 * @param  ?int     $Itemid   Item ID of search page
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -72,7 +72,7 @@ class Site extends KrHtmlView
 	/**
 	 * Build the breadcrumbs for the dashbaord
 	 *
-	 * @param   Pathway  $pathway  Current pathway
+	 * @param  Pathway  $pathway  Current pathway
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -89,10 +89,10 @@ class Site extends KrHtmlView
 	/**
 	 * Build properties / property pathway
 	 *
-	 * @param   Pathway  $pathway      Current pathway
-	 * @param  ?int      $region_id    ID of seach region
-	 * @param  ?string   $region_name  Name of seach region
-	 * @param   int      $Itemid       Memu item id for search region page for multi region sites
+	 * @param  Pathway  $pathway      Current pathway
+	 * @param  ?int     $region_id    ID of seach region
+	 * @param  ?string  $region_name  Name of seach region
+	 * @param  int      $Itemid       Memu item id for search region page for multi region sites
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -115,9 +115,9 @@ class Site extends KrHtmlView
 	/**
 	 * Add property pathway
 	 *
-	 * @param   Pathway  $pathway  Existing pathway instance
-	 * @param   int      $id       ID of property
-	 * @param   string   $name     Name of property
+	 * @param  Pathway  $pathway  Existing pathway instance
+	 * @param  int      $id       ID of property
+	 * @param  string   $name     Name of property
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -133,9 +133,9 @@ class Site extends KrHtmlView
 	/**
 	 * Add search backlink to pathway
 	 *
-	 * @param   Pathway  $pathway    Current pathway
-	 * @param  ?int      $region_id  ID of search region
-	 * @param  ?int      $Itemid     Item ID of search page
+	 * @param  Pathway  $pathway    Current pathway
+	 * @param  ?int     $region_id  ID of search region
+	 * @param  ?int     $Itemid     Item ID of search page
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -153,7 +153,7 @@ class Site extends KrHtmlView
 	/**
 	 * Set pathway base
 	 *
-	 * @param   Pathway  $pathway  Current pathway
+	 * @param  Pathway  $pathway  Current pathway
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -200,8 +200,8 @@ class Site extends KrHtmlView
 	/**
 	 * Prepares the document data
 	 *
-	 * @param   string  $title        Default page title
-	 * @param   string  $description  Default page description
+	 * @param  string  $title        Default page title
+	 * @param  string  $description  Default page description
 	 *
 	 * @throws Exception
 	 * @since 3.3.0

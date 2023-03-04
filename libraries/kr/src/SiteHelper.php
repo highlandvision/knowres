@@ -17,7 +17,7 @@ use HighlandVision\Component\Knowres\Site\Model\GuestModel;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Session as KrSession;
-use Joomla\CMS\Object\CMSObject;
+use InvalidArgumentException;
 use Joomla\Registry\Registry;
 use RuntimeException;
 
@@ -58,15 +58,15 @@ class SiteHelper
 	/**
 	 * Build the link for a dashboard view
 	 *
-	 * @param   object  $contract  Contract object containing minimum id, guest_id and qkey
+	 * @param  object   $contract  Contract object containing minimum id, guest_id and qkey
 	 * @param  ?string  $view      Target view
-	 * @param   bool    $external  True for external links including root
+	 * @param  bool     $external  True for external links including root
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
 	 * @return string
 	 */
-	public static function buildDashboardLink(object $contract, string $view = null, bool $external = false): string
+	public static function buildDashboardLink(object $contract, ?string $view = null, bool $external = false): string
 	{
 		if (is_null($view))
 		{
@@ -93,9 +93,9 @@ class SiteHelper
 	/**
 	 * Build the link for a property
 	 *
-	 * @param   int          $id        ID of property
-	 * @param   string|null  $append    String to append to link
-	 * @param   bool         $external  True for external link
+	 * @param  int          $id        ID of property
+	 * @param  string|null  $append    String to append to link
+	 * @param  bool         $external  True for external link
 	 *
 	 * @throws Exception
 	 * @since  4.0.0
@@ -124,13 +124,13 @@ class SiteHelper
 	 * Check that admin and guest are not trying to change the same row
 	 * If all OK check the row out
 	 *
-	 * @param   CMSObject                          $item   Database guest row.
-	 * @param   GuestModel|ContractguestdataModel  $model  Database model.
+	 * @param  object                             $item   Database guest row.
+	 * @param  GuestModel|ContractguestdataModel  $model  Database model.
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	public static function checkLocks(CMSObject $item, GuestModel|ContractguestdataModel $model): void
+	public static function checkLocks(object $item, GuestModel|ContractguestdataModel $model): void
 	{
 		if (is_int($item->checked_out) && $item->checked_out != KrMethods::getUser()->id)
 		{
@@ -155,7 +155,7 @@ class SiteHelper
 	}
 
 	/**
-	 * Check logged-in user
+	 * Check for logged-in user
 	 *
 	 * @throws Exception
 	 * @since  2.5.0
@@ -166,13 +166,19 @@ class SiteHelper
 		{
 			self::redirectLogin();
 		}
+
+		$guest_id = KrFactory::getListModel('guests')->getGuestForUser(KrMethods::getUser()->id);
+		if (empty($guest_id))
+		{
+			SiteHelper::redirectLogin();
+		}
 	}
 
 	/**
 	 * Redirect for expired session to property or search page
 	 *
-	 * @param  ?int   $property_id  ID of property
-	 * @param   bool  $ajax         TRUE for ajax request
+	 * @param  ?int  $property_id  ID of property
+	 * @param  bool  $ajax         TRUE for ajax request
 	 *
 	 * @throws Exception
 	 * @since 1.0.0
@@ -212,8 +218,8 @@ class SiteHelper
 	/**
 	 * Get the dates for the season
 	 *
-	 * @param   string  $season   Season name
-	 * @param   array   $seasons  Array of seasons
+	 * @param  string  $season   Season name
+	 * @param  array   $seasons  Array of seasons
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -236,8 +242,8 @@ class SiteHelper
 	/**
 	 * Returns link to google map directions if required otherwise false
 	 *
-	 * @param   object  $params    Component parameters
-	 * @param   object  $contract  Contract database object
+	 * @param  object  $params    Component parameters
+	 * @param  object  $contract  Contract database object
 	 *
 	 * @since  2.5.0
 	 * @return string
@@ -336,7 +342,7 @@ class SiteHelper
 	/**
 	 * Return array of properties requiring vouchers
 	 *
-	 * @param   object  $item  Contract item
+	 * @param  object  $item  Contract item
 	 *
 	 * @throws Exception
 	 * @since  2.5.0
@@ -362,7 +368,7 @@ class SiteHelper
 	/**
 	 * Return array of properties requiring vouchers
 	 *
-	 * @param   object  $item  Contract item
+	 * @param  object  $item  Contract item
 	 *
 	 * @throws Exception
 	 * @since  2.5.0
@@ -387,10 +393,10 @@ class SiteHelper
 	 * Returns the Itemid associated with a component
 	 * if a link to this component is available in the menus table
 	 *
-	 * @param   string  $component     Component name
-	 * @param   string  $view          View name
-	 * @param   array   $variables     Possible URL variables
-	 * @param   array   $alternatives  Alternative variables
+	 * @param  string  $component     Component name
+	 * @param  string  $view          View name
+	 * @param  array   $variables     Possible URL variables
+	 * @param  array   $alternatives  Alternative variables
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -451,7 +457,7 @@ class SiteHelper
 	/**
 	 * Get guest pdf documents for download
 	 *
-	 * @param   object  $item  Item database object
+	 * @param  object  $item  Item database object
 	 *
 	 * @throws Exception
 	 * @since  2.5.0
@@ -512,7 +518,7 @@ class SiteHelper
 	/**
 	 * Get Itemid for region if multi region site
 	 *
-	 * @param   int  $region_id  ID of region
+	 * @param  int  $region_id  ID of region
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -536,7 +542,7 @@ class SiteHelper
 	/**
 	 * Get name of site template
 	 *
-	 * @throws RuntimeException
+	 * @throws RuntimeException|InvalidArgumentException
 	 * @since  3.3.0
 	 * @return mixed
 	 */
@@ -559,8 +565,8 @@ class SiteHelper
 	/**
 	 * Return array of properties requiring vouchers
 	 *
-	 * @param   Registry  $params  Component parameters
-	 * @param   object    $item    Contract
+	 * @param  Registry  $params  Component parameters
+	 * @param  object    $item    Contract
 	 *
 	 * @throws Exception
 	 * @since  2.5.0
@@ -581,6 +587,34 @@ class SiteHelper
 		}
 
 		return $voucher;
+	}
+
+	/**
+	 * Login for registered user
+	 *
+	 * @throws Exception
+	 * @since  2.5.0
+	 */
+	public static function loginUser(): void
+	{
+		if (self::userRequired() && !KrMethods::getUser()->id)
+		{
+			self::redirectLogin();
+		}
+
+		$guest_id = KrFactory::getListModel('guests')->getGuestForUser(KrMethods::getUser()->id);
+		if (!$guest_id)
+		{
+			SiteHelper::redirectLogin();
+		}
+
+		$userSession              = new KrSession\User();
+		$userData                 = $userSession->getData();
+		$userData->user_id        = KrMethods::getUser()->id;
+		$userData->db_guest_id    = (int) $guest_id;
+		$userData->db_contracts   = [];
+		$userData->db_contract_id = 0;
+		$userSession->setData($userData);
 	}
 
 	/**
@@ -622,14 +656,14 @@ class SiteHelper
 	/**
 	 * Redirect to property
 	 *
-	 * @param   int  $id  ID of property
+	 * @param  int  $id  ID of property
 	 *
 	 * @throws Exception
 	 * @since 1.0.0
 	 */
 	public static function redirectProperty(int $id): void
 	{
-		$Itemid = self::getItemId('com_knowres', 'property', array('id' => $id));
+		$Itemid = self::getItemId('com_knowres', 'property', ['id' => $id]);
 		KrMethods::redirect(
 			KrMethods::route(
 				'index.php?option=com_knowres&view=property&id=' . $id . '&Itemid=' . $Itemid, false
@@ -640,8 +674,8 @@ class SiteHelper
 	/**
 	 * Redirect to search
 	 *
-	 * @param   int   $region_id  ID of region for search
-	 * @param   bool  $message    Display property no longer available message
+	 * @param  int   $region_id  ID of region for search
+	 * @param  bool  $message    Display property no longer available message
 	 *
 	 * @throws Exception
 	 * @since 3.3.0
@@ -666,7 +700,7 @@ class SiteHelper
 	/**
 	 * Return to correct dashboard action
 	 *
-	 * @param   string  $view  View for redirect
+	 * @param  string  $view  View for redirect
 	 *
 	 * @throws Exception
 	 * @since  2.5.0
@@ -674,17 +708,14 @@ class SiteHelper
 	public static function redirectView(string $view): void
 	{
 		$Itemid = self::getItemId('com_knowres', $view);
-		KrMethods::redirect(
-			KrMethods::route(
-				'index.php?option=com_knowres&view=' . $view . '&Itemid=' . $Itemid, false
-			)
-		);
+		KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&view=' . $view . '&Itemid=' . $Itemid,
+			false));
 	}
 
 	/**
 	 * Set guest contracts
 	 *
-	 * @param   int  $guest_id  ID of guest
+	 * @param  int  $guest_id  ID of guest
 	 *
 	 * @throws Exception
 	 * @since  3.3.0

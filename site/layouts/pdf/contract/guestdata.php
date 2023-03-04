@@ -14,18 +14,17 @@ defined('_JEXEC') or die;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Utility;
-use Joomla\CMS\Object\CMSObject;
 
 extract($displayData);
 /**
  * Layout variables
  *
- * @var CMSObject $contract         Contract item.
- * @var CMSObject $agency           Agency item.
- * @var CMSObject $property         Property item;
- * @var CMSObject $guestdata        Guestdata item.
- * @var array     $property_options Property options.
- * @var float     $balance          Contract balance.
+ * @var false|object $contract         Contract item.
+ * @var false|object $agency           Agency item.
+ * @var false|object $property         Property item;
+ * @var false|object $guestdata        Guestdata item.
+ * @var array        $property_options Property options.
+ * @var float        $balance          Contract balance.
  */
 
 $params = KrMethods::getParams();
@@ -48,8 +47,8 @@ $params = KrMethods::getParams();
 
 	<table style="width:100%;border:none;border-collapse:collapse;">
 		<tr>
-			<td style="width:30%;"><?php echo KrMethods::plain('COM_KNOWRES_PROPERTIES_PROPERTY_NAME'); ?></td>
-			<td style="width:70%;"><?php echo $property->property_name; ?></td>
+			<td style="width:25%;"><?php echo KrMethods::plain('COM_KNOWRES_PROPERTIES_PROPERTY_NAME'); ?></td>
+			<td style="width:75%;"><?php echo $property->property_name; ?></td>
 		</tr>
 		<?php if ($property->property_aka) : ?>
 			<tr>
@@ -74,9 +73,11 @@ $params = KrMethods::getParams();
 		<?php endif; ?>
 	</table>
 
-<?php echo KrMethods::render('pdf.contract.guestdata.partysize', ['property' => $property,
-                                                                  'contract' => $contract
-]);
+<?php echo KrMethods::render('pdf.contract.guestdata.partysize',
+	['guestdata' => $guestdata,
+	 'property'  => $property,
+	 'contract'  => $contract]
+);
 ?>
 
 	<div>
@@ -93,10 +94,10 @@ $params = KrMethods::getParams();
 
 	<table style="width:100%;border:none;border-collapse:collapse;">
 		<tr>
-			<td style="width:30%;">
+			<td style="width:25%;">
 				<?php echo KrMethods::plain('COM_KNOWRES_GUEST_MOBILE_LBL'); ?>
 			</td>
-			<td style="width:70%;">
+			<td style="width:75%;">
 				<?php echo Utility::formatPhoneNumber($contract->guest_mobile, $contract->guest_mobile_country_id); ?>
 			</td>
 		</tr>
@@ -109,16 +110,16 @@ $params = KrMethods::getParams();
 	<!-- Emergency contact-->
 	<table style="width:100%;border:none;border-collapse:collapse;">
 		<tr>
-			<td style="width:30%;">
+			<td style="width:25%;">
 				<?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATAFORM_SECTION_EMERGENCY'); ?>
 			</td>
-			<td style="width:70%;">
+			<td style="width:75%;">
 				<?php if (!$guestdata->c_name): ?><?php echo KrMethods::plain('COM_KNOWRES_WAITING_GUEST'); ?><?php else: ?>
 					<table style="width:100%;border:none;border-collapse:collapse;">
 						<tr style="font-size:92%;color:#999;">
 							<td><?php echo KrMethods::plain('COM_KNOWRES_NAME'); ?></td>
-							<td><?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATAFORM_CONTACT_PHONE_LBL'); ?></td>
-							<td><?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATAFORM_CONTACT_EMAIL_LBL'); ?></td>
+							<td><?php echo KrMethods::plain('COM_KNOWRES_TELEPHONE'); ?></td>
+							<td><?php echo KrMethods::plain('COM_KNOWRES_EMAIL'); ?></td>
 						</tr>
 						<tr>
 							<td><?php echo $guestdata->c_name; ?></td>

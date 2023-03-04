@@ -15,7 +15,6 @@ use Exception;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\AdminModel;
 use Joomla\CMS\Form\Form;
-use Joomla\CMS\Object\CMSObject;
 
 /**
  * Confirm payment
@@ -28,9 +27,9 @@ class ConfirmModel extends AdminModel
 	 * Get the form data from session as no item.
 	 *
 	 * @since  1.0.0
-	 * @return CMSObject|bool Session data
+	 * @return false|object Session data
 	 */
-	public function getItem($pk = null): CMSObject|bool
+	public function getItem($pk = null): object|bool
 	{
 		return $this->state->get('formdata');
 	}
@@ -39,8 +38,8 @@ class ConfirmModel extends AdminModel
 	 * Method to get the profile form.
 	 * The base form is loaded from XML
 	 *
-	 * @param   array   $data      An optional array of data for the form to interogate.
-	 * @param   bool    $loadData  True if the form is to load its own data (default case), false if not.
+	 * @param  array    $data      An optional array of data for the form to interogate.
+	 * @param  bool     $loadData  True if the form is to load its own data (default case), false if not.
 	 * @param  ?string  $source    The form name if required.
 	 *
 	 * @throws Exception

@@ -3,6 +3,7 @@
   line-height: 3;
   background: #d5d5d5;
   padding: 5px;
+  margin-left: 5px;
 }
 #ganttselections .remove {
   margin-right: 10px;

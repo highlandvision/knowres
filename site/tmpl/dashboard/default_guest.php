@@ -24,7 +24,7 @@ use HighlandVision\KR\Utility;
 	</div>
 </div>
 <div class="row">
-	<div class="small-12 columns" style="line-height:150%;">
+	<div class="small-12 columns" style="line-height:150%;margin-top:10px;">
 		<address>
 			<?php if ($this->guest->mobile) : ?>
 				<i class="fas fa-lg fa-mobile-alt"></i>

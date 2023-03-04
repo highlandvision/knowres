@@ -17,6 +17,7 @@ use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\FormController;
 use HighlandVision\KR\Utility;
 use JetBrains\PhpStorm\NoReturn;
+use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Response\JsonResponse;
 
 use function jexit;
@@ -29,9 +30,27 @@ use function jexit;
 class GuestController extends FormController
 {
 	/**
+	 * Method to run batch operations.
+	 *
+	 * @param  BaseDatabaseModel  $model  The model of the component being processed.
+	 *
+	 * @since   1.7
+	 * @return  bool  True if successful, false otherwise and internal error is set.
+	 */
+	public function batch($model = null): bool
+	{
+		$this->checkToken();
+
+		$model = $this->getModel('Guest', 'Administrator', []);
+		$this->setRedirect(Route::_('index.php?option=com_foos&view=foos' . $this->getRedirectToListAppend(), false));
+
+		return parent::batch($model);
+	}
+
+	/**
 	 * Method to cancel an edit.
 	 *
-	 * @param   null  $key  The name of the primary key of the URL variable.
+	 * @param  null  $key  The name of the primary key of the URL variable.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -66,6 +85,7 @@ class GuestController extends FormController
 		$guest_id = KrMethods::inputInt('guest_id');
 		if ($guest_id)
 		{
+			/** @var GuestModel $model */
 			$model = $this->getModel();
 			$model->checkin($guest_id);
 		}
@@ -82,22 +102,53 @@ class GuestController extends FormController
 	 */
 	#[NoReturn] public function combo()
 	{
-		$model  = new GuestModel();
-		$form   = $model->getForm([], false, false);
-		$target = KrMethods::inputString('target');
-		$child  = KrMethods::inputInt('child');
+		$model     = new GuestModel();
+		$form      = $model->getForm([], false);
+		$parent_id = KrMethods::inputInt('parent');
+		$target    = KrMethods::inputString('target');
 
-		$wrapper = [];
-		if ($child)
+		if ($target == 'region_id')
 		{
-			$wrapper['html'] = $form->getInput($target, null, $child);
+			$form->setValue('country_id', null, $parent_id);
 		}
-		else
+		else if ($target == 'b_region_id')
 		{
-			$wrapper['html'] = $form->getInput($target);
+			$form->setValue('b_country_id', null, $parent_id);
 		}
+		else if ($target == 'town_id')
+		{
+			$form->setValue('region_id', null, $parent_id);
+		}
+		else if ($target == 'b_town_id')
+		{
+			$form->setValue('b_region_id', null, $parent_id);
+		}
+
+		$wrapper         = [];
+		$wrapper['html'] = $form->getInput($target);
 
 		echo new JsonResponse($wrapper);
 		jexit();
+	}
+
+	/**
+	 * Function that allows child controller access to model data after the data has been saved.
+	 *
+	 * @param  BaseDatabaseModel  $model      The data model object.
+	 * @param  array              $validData  The validated data.
+	 *
+	 * @throws Exception
+	 * @since  1.0.0
+	 */
+	protected function postSaveHook(BaseDatabaseModel $model, $validData = [])
+	{
+		if ($this->getTask() != 'apply')
+		{
+			$gobackto = Utility::getGoBackTo();
+			if ($gobackto)
+			{
+				KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&' . $gobackto, false));
+			}
+		}
 	}
 }

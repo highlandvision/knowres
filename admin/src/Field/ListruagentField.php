@@ -16,10 +16,10 @@ defined('_JEXEC') or die;
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
+use HighlandVision\Ru\Manager;
 use Joomla\CMS\Form\Field\ListField;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\Utilities\ArrayHelper;
-use Ru\API\Manager;
 use RuntimeException;
 
 use function array_merge;
@@ -73,7 +73,7 @@ class ListruagentField extends ListField
 			return array_merge(parent::getOptions(), $options);
 		}
 
-		$class = 'Ru\API\Manager';
+		$class = 'HighlandVision\Ru\Manager';
 		if (!class_exists($class) || !method_exists($class, 'pullAgents'))
 		{
 			throw new RuntimeException('RU service library needs to be installed');

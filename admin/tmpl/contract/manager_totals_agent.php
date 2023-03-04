@@ -77,12 +77,12 @@ use HighlandVision\KR\Utility;
 					<span id="jform_deposit_date"></span>
 				</label>
 			</div>
-			<div class="col-4 text-end">
+			<div class="col text-end">
 				<div id="jform_deposit"></div>
 			</div>
 		</div>
 		<div class="row">
-			<div class="col">
+			<div class="col-8">
 				<div id="jform_balance_date"></div>
 			</div>
 			<div class="col text-end">
@@ -91,7 +91,7 @@ use HighlandVision\KR\Utility;
 		</div>
 		<hr>
 		<div class="row">
-			<div class="col">
+			<div class="col-8">
 				<?php echo $this->form->getLabel('agent_commission'); ?>
 			</div>
 			<div class="col text-end" id="jform_agent_commission"></div>

@@ -16,8 +16,6 @@ use HighlandVision\KR\Framework\KrMethods;
 use Joomla\Session\SessionInterface;
 use stdClass;
 
-use function property_exists;
-
 /**
  * Knowres Session helper
  *
@@ -29,13 +27,13 @@ class Session
 	protected SessionInterface $session;
 	/**  @var string Session type */
 	protected string $type = '';
-	/** @var string Name space  for session. */
+	/** @var string Namespace for session. */
 	protected string $session_name = 'comknowres';
 
 	/**
 	 * Initialise
 	 *
-	 * @param   string  $type  Session type
+	 * @param  string  $type  Session type
 	 *
 	 * @throws Exception
 	 * @since 1.0.0
@@ -47,33 +45,9 @@ class Session
 	}
 
 	/**
-	 * Update session data from array (db item or jform)
-	 *
-	 * @param   array|object  $item  Update data
-	 *
-	 * @since  3.2.0
-	 * @return stdClass
-	 */
-	public function updateData(array|object $item): stdClass
-	{
-		$data = $this->getData();
-		foreach ($item as $key => $value)
-		{
-			if (property_exists($data, $key))
-			{
-				$data->$key = $value;
-			}
-		}
-
-		$this->saveSession($data);
-
-		return $data;
-	}
-
-	/**
 	 * Get the stored session data
 	 *
-	 * @param   stdClass  $data  Data to be saved
+	 * @param  stdClass  $data  Data to be saved
 	 *
 	 * @since 1.0.0
 	 */
@@ -96,7 +70,7 @@ class Session
 	/**
 	 * Set the updated session data
 	 *
-	 * @param   stdClass  $data  Session data to store
+	 * @param  stdClass  $data  Session data to store
 	 *
 	 * @since 1.0.0
 	 */

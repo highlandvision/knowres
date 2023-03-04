@@ -33,8 +33,8 @@ class Paypal extends Gateway
 	/**
 	 * Initialize
 	 *
-	 * @param   int       $service_id   ID of service
-	 * @param   stdClass  $paymentData  Session payment data
+	 * @param  int       $service_id   ID of service
+	 * @param  stdClass  $paymentData  Session payment data
 	 *
 	 * @throws Exception
 	 * @since  1.0.0

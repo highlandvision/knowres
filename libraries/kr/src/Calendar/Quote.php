@@ -26,9 +26,9 @@ class Quote extends Calendar
 	/**
 	 * Initialise
 	 *
-	 * @param   int     $property_id  ID of property
-	 * @param   string  $first        From date Y-m-d
-	 * @param   string  $final        End date Y-m-d
+	 * @param  int     $property_id  ID of property
+	 * @param  string  $first        From date Y-m-d
+	 * @param  string  $final        End date Y-m-d
 	 *
 	 * @throws Exception
 	 * @since  3.4.0

@@ -10,13 +10,12 @@
 defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrMethods;
-use Joomla\CMS\Object\CMSObject;
 
 extract($displayData);
 /**
  * Layout variables
  *
- * @var CMSObject $guestdata Guest data.
+ * @var false|object $guestdata Guest data.
  */
 
 $heading   = [];
@@ -25,19 +24,19 @@ $other     = [];
 $departure = [];
 ?>
 
-	<table style="width:100%;border:none;border-collapse:collapse;">
-		<tr>
-			<td style="width:30%;">
-				<?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATAFORM_SECTION_TRAVEL_SCHEDULE'); ?>
-			</td>
-			<td style="width:70%;">
-				<?php if (!$guestdata->arrival_means): ?>
-					<?php echo KrMethods::plain('COM_KNOWRES_WAITING_GUEST'); ?>
-					<br>
-				<?php endif; ?>
-			</td>
-		</tr>
-	</table>
+<table style="width:100%;border:none;border-collapse:collapse;">
+	<tr>
+		<td style="width:30%;">
+			<?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATAFORM_SECTION_TRAVEL_SCHEDULE'); ?>
+		</td>
+		<td style="width:70%;">
+			<?php if (!$guestdata->arrival_means): ?>
+				<?php echo KrMethods::plain('COM_KNOWRES_WAITING_GUEST'); ?>
+				<br>
+			<?php endif; ?>
+		</td>
+	</tr>
+</table>
 
 <?php if ($guestdata->arrival_means): ?>
 	<?php $text = "COM_KNOWRES_CONTRACTGUESTDATAFORM_" . strtoupper($guestdata->arrival_means); ?>

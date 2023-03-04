@@ -11,7 +11,6 @@ namespace HighlandVision\Component\Knowres\Site\Field;
 
 defined('_JEXEC') or die;
 
-use HighlandVision\KR\Framework\KrFactory;
 use Joomla\CMS\Form\Field\GroupedlistField;
 use Joomla\CMS\HTML\HTMLHelper;
 use UnexpectedValueException;

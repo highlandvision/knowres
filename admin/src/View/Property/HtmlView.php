@@ -28,10 +28,14 @@ use function strtolower;
  */
 class HtmlView extends KrHtmlView
 {
+	/** @var array Bedtypes. */
+	public array $bedtypes;/**
 	/** @var ?float Property latitude. */
 	public ?float $lat = 0;
 	/** @var ?float Property longitude. */
-	public ?float $lng = 0;
+	public ?float $lng = 0;/**
+	/** @var array Property settings. */
+	public array $settings;
 
 	/**
 	 * Display the view
@@ -76,7 +80,6 @@ class HtmlView extends KrHtmlView
 		$this->checkErrors();
 		$this->setTitle();
 		$Toolbar = $this->addFormToolbar(strtolower($this->getName()));
-		$this->addCustomToolbar($Toolbar);
 
 		parent::display($tpl);
 	}

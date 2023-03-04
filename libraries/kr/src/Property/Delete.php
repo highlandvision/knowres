@@ -13,6 +13,7 @@ defined('_JEXEC') or die;
 
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
+use HighlandVision\KR\Logger;
 use HighlandVision\KR\Media;
 use InvalidArgumentException;
 use Joomla\Database\DatabaseDriver;
@@ -32,7 +33,7 @@ class Delete
 	/**
 	 * Initialise
 	 *
-	 * @param   int  $id  ID of property to delete
+	 * @param  int  $id  ID of property to delete
 	 *
 	 * @throws InvalidArgumentException
 	 * @since  3.0.0
@@ -47,9 +48,7 @@ class Delete
 	 * Delete property also needs canDelete set in Model
 	 *
 	 * @throws Exception
-	 * @throws Exception
-	 * @throws Exception
-	 * @since   3.0.0
+	 * @since  3.0.0
 	 */
 	public function deleteTheProperty(): void
 	{
@@ -83,9 +82,10 @@ class Delete
 
 			$this->db->transactionCommit();
 		}
-		catch (Exception)
+		catch (Exception $e)
 		{
 			$this->db->transactionRollback();
+			Logger::logMe($e->getMessage());
 		}
 	}
 
@@ -93,8 +93,6 @@ class Delete
 	 * Create tmp table based on actual table
 	 * loading all rows with matching id
 	 *
-	 * @throws Exception
-	 * @throws Exception
 	 * @throws Exception
 	 * @since  3.0.0
 	 */
@@ -108,11 +106,11 @@ class Delete
 	/**
 	 * Delete linked tables with translations
 	 *
-	 * @param   string  $table  Table to replicate
-	 * @param   string  $class  Model class
+	 * @param  string  $table  Table to replicate
+	 * @param  string  $class  Model class
 	 *
 	 * @throws Exception
-	 * @since 3.0.0
+	 * @since  3.0.0
 	 */
 	protected function deleteLinked(string $table, string $class): void
 	{
@@ -134,7 +132,6 @@ class Delete
 	/**
 	 * Delete property settings table
 	 *
-	 * @throws Exception
 	 * @throws Exception
 	 * @since 3.0.0
 	 */

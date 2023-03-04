@@ -583,11 +583,11 @@ class Upgrade
 		$query->select($db->qn(['id', 'name']))
 		      ->from($db->qn('#__knowres_agency'))
 		      ->setLimit(1);
-
 		$db->setQuery($query);
 		$rows = $db->loadObjectList();
 		if (is_countable($rows) && !count($rows))
 		{
+			$query = $db->getQuery(true);
 			$query->select($db->qn('user_id'))
 			      ->from($db->qn('#__user_usergroup_map'))
 			      ->where($db->qn('group_id') . '=8')
@@ -595,7 +595,6 @@ class Upgrade
 			$db->setQuery($query);
 			$user = $db->loadObject();
 
-			//TODO-v4.1 Installation - check that user is set correctly
 			$new                   = new stdClass();
 			$new->id               = 1;
 			$new->name             = 'Agency Name';
@@ -767,10 +766,10 @@ class Upgrade
 	 * Check if a history content type exists for a table and
 	 * create / edit as required
 	 *
-	 * @param   object  $table  The table object
-	 * @param   string  $name   The table name
-	 * @param   string  $title  The table title
-	 * @param   string  $alias  The table alias
+	 * @param  object  $table  The table object
+	 * @param  string  $name   The table name
+	 * @param  string  $title  The table title
+	 * @param  string  $alias  The table alias
 	 *
 	 * @throws InvalidArgumentException
 	 * @throws RuntimeException
@@ -1322,7 +1321,7 @@ class Upgrade
 	/**
 	 * Update guest and owner service xrefs from client and owner tables (V4.0)
 	 *
-	 * @param   string  $table  Table namee
+	 * @param  string  $table  Table namee
 	 *
 	 * @throws Exception
 	 * @since  4.0.0

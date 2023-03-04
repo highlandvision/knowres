@@ -11,14 +11,13 @@ defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Utility;
-use Joomla\CMS\Object\CMSObject;
 
 extract($displayData);
 /**
  * Layout variables
  *
- * @var CMSObject $property Property item;
- * @var CMSObject $contract Contract item.
+ * @var false|object $property Property item;
+ * @var false|object $contract Contract item.
  */
 
 $guests   = $contract->guests;

@@ -6,6 +6,7 @@
  * @license     See the file "LICENSE.txt" for the full license governing this code.
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
+
 /** @noinspection PhpUnhandledExceptionInspection */
 
 defined('_JEXEC') or die;
@@ -13,14 +14,13 @@ defined('_JEXEC') or die;
 use HighlandVision\KR\Media;
 use HighlandVision\KR\Translations;
 use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Object\CMSObject;
 use Joomla\Registry\Registry;
 
 extract($displayData);
 /**
  * Layout variables
  *
- * @var CMSObject    $item         Image data from DB.
+ * @var false|object $item         Image data from DB.
  * @var Registry     $params       KR params.
  * @var string       $plink        Property link.
  * @var Translations $Translations Translations object.

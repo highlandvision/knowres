@@ -50,7 +50,7 @@ class ContractController extends FormController
 	protected string $return = '';
 
 	/**
-	 * Returns the values for the agent booking
+	 * Returns the values for a manual agent booking
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -145,7 +145,7 @@ class ContractController extends FormController
 		$cid = KrMethods::inputArray('cid', [], 'get');
 		if (is_countable($cid))
 		{
-			if (!KrFactory::getAdminModel('contractpayment')::updateXeroBatch($cid))
+			if (!KrFactory::getListModel('contractpayments')->updateXeroBatch($cid))
 			{
 				KrMethods::message("An error occurred please reselect contracts", 'error');
 			}
@@ -352,6 +352,7 @@ class ContractController extends FormController
 		catch (Exception $e)
 		{
 			echo new JsonResponse(null, $e->getMessage(), true);
+			Logger::logMe($e->getMessage());
 			jexit();
 		}
 
@@ -520,8 +521,7 @@ class ContractController extends FormController
 		$id = KrMethods::inputInt('id');
 		if (!$id)
 		{
-			KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN_CHECK'), 'error');
-			echo new JsonResponse(null, KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN_CHECK'), true);
+			echo new JsonResponse(null, KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN_CHECK'));
 			jexit();
 		}
 
@@ -1177,18 +1177,7 @@ class ContractController extends FormController
 			$id = 0;
 		}
 
-		if ($gobackto)
-		{
-			if (str_contains($gobackto, 'task') || str_contains($gobackto, 'view'))
-			{
-				$url .= 'index.php?option=com_knowres&' . $gobackto;
-			}
-			else
-			{
-				$url .= 'index.php?option=com_knowres&view=' . $gobackto;
-			}
-		}
-		else if ($task === 'save' && $id > 0 && $action != 'block')
+		if ($task === 'save' && $id > 0 && $action != 'block')
 		{
 			$url .= 'index.php?option=com_knowres&task=contract.show&id=' . $id;
 		}
@@ -1198,6 +1187,17 @@ class ContractController extends FormController
 			if ($action)
 			{
 				$url .= '&layout=' . $action;
+			}
+		}
+		else if ($gobackto)
+		{
+			if (str_contains($gobackto, 'task') || str_contains($gobackto, 'view'))
+			{
+				$url .= 'index.php?option=com_knowres&' . $gobackto;
+			}
+			else
+			{
+				$url .= 'index.php?option=com_knowres&view=' . $gobackto;
 			}
 		}
 		else if (($task === 'trash' || $task === 'resurrect') && $id > 0)

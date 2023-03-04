@@ -48,7 +48,7 @@ class FMethods
 	/**
 	 * Add include path
 	 *
-	 * @param   string|array  $path  Required path
+	 * @param  string|array  $path  Required path
 	 *
 	 * @since  3.2.0
 	 */
@@ -60,11 +60,11 @@ class FMethods
 	/**
 	 * Create log
 	 *
-	 * @param   mixed    $entry
-	 * @param   integer  $priority
-	 * @param   string   $category
-	 * @param  ?string   $date
-	 * @param   array    $context
+	 * @param  mixed    $entry
+	 * @param  integer  $priority
+	 * @param  string   $category
+	 * @param  ?string  $date
+	 * @param  array    $context
 	 *
 	 * @since 3.7.0
 	 */
@@ -77,8 +77,8 @@ class FMethods
 	/**
 	 * Create logger route
 	 *
-	 * @param   array  $options     Options
-	 * @param   array  $categories  Categories
+	 * @param  array  $options     Options
+	 * @param  array  $categories  Categories
 	 *
 	 * @since 3.7.0
 	 */
@@ -90,14 +90,14 @@ class FMethods
 	/**
 	 * Build select list
 	 *
-	 * @param   array   $data       Options array with key / value
-	 * @param   string  $name       Nmae of select
-	 * @param   mixed   $attribs    See genericlist
-	 * @param   string  $optKey     See genericlist
-	 * @param   string  $optText    See genericlist
-	 * @param   null    $selected   See genericlist
-	 * @param   string  $idtag      See genericlist
-	 * @param   bool    $translate  See genericlist
+	 * @param  array   $data       Options array with key / value
+	 * @param  string  $name       Nmae of select
+	 * @param  mixed   $attribs    See genericlist
+	 * @param  string  $optKey     See genericlist
+	 * @param  string  $optText    See genericlist
+	 * @param  null    $selected   See genericlist
+	 * @param  string  $idtag      See genericlist
+	 * @param  bool    $translate  See genericlist
 	 *
 	 * @throws InvalidArgumentException
 	 * @since  3.9.0
@@ -119,7 +119,7 @@ class FMethods
 	/**
 	 * Convert email to punycode
 	 *
-	 * @param   string  $email  Email to convert
+	 * @param  string  $email  Email to convert
 	 *
 	 * @since   3.3.0
 	 * @return string
@@ -132,8 +132,8 @@ class FMethods
 	/**
 	 * Add message to queue
 	 *
-	 * @param   string  $message  Message text
-	 * @param   string  $type     Message type, error, alert etc
+	 * @param  string  $message  Message text
+	 * @param  string  $type     Message type, error, alert etc
 	 *
 	 * @throws Exception
 	 * @since  3.2.0
@@ -146,7 +146,7 @@ class FMethods
 	/**
 	 * Get Joomla articles used for KR terms
 	 *
-	 * @param   int  $article_id  ID of article
+	 * @param  int  $article_id  ID of article
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -174,7 +174,7 @@ class FMethods
 	/**
 	 * Get instance of Cache
 	 *
-	 * @param   array  $options  Cache options
+	 * @param  array  $options  Cache options
 	 *
 	 * @since  3.3.0
 	 * @return Cache
@@ -187,8 +187,8 @@ class FMethods
 	/**
 	 * Get config value
 	 *
-	 * @param   string  $name     Name of config item
-	 * @param   mixed   $default  The default return value
+	 * @param  string  $name     Name of config item
+	 * @param  mixed   $default  The default return value
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -202,7 +202,7 @@ class FMethods
 	/**
 	 * Returns cookie with the given name.
 	 *
-	 * @param   string  $name  Cookie name
+	 * @param  string  $name  Cookie name
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -216,7 +216,7 @@ class FMethods
 	/**
 	 * Get current default language
 	 *
-	 * @param   string  $area  Area of site
+	 * @param  string  $area  Area of site
 	 *
 	 * @since  1.0.0
 	 * @return mixed
@@ -275,9 +275,9 @@ class FMethods
 	/**
 	 * Get layout to use
 	 *
-	 * @param   string  $name      Name of layout
-	 * @param   string  $basepath  Path to search
-	 * @param   array   $options   Optional parameters
+	 * @param  string  $name      Name of layout
+	 * @param  string  $basepath  Path to search
+	 * @param  array   $options   Optional parameters
 	 *
 	 * @since   3.2.0
 	 * @return FileLayout
@@ -301,7 +301,7 @@ class FMethods
 	/**
 	 * Get menu item
 	 *
-	 * @param   string  $link  Menu link to search for
+	 * @param  string  $link  Menu link to search for
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -315,7 +315,7 @@ class FMethods
 	/**
 	 * Get component params
 	 *
-	 * @param   string  $name  Component name
+	 * @param  string  $name  Component name
 	 *
 	 * @since  3.0.0
 	 * @return Registry
@@ -328,7 +328,7 @@ class FMethods
 	/**
 	 * Get path info
 	 *
-	 * @param   string  $type  Path type
+	 * @param  string  $type  Path type
 	 *
 	 * @since  1.0.0
 	 * @return false|string
@@ -402,8 +402,8 @@ class FMethods
 	/**
 	 * Set user state
 	 *
-	 * @param   string  $key      Key field
-	 * @param  ?mixed   $default  Default value
+	 * @param  string  $key      Key field
+	 * @param  ?mixed  $default  Default value
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -417,9 +417,9 @@ class FMethods
 	/**
 	 * Get array input
 	 *
-	 * @param   string  $name     Name of input
-	 * @param   array   $default  Default value
-	 * @param   string  $method   Input type
+	 * @param  string  $name     Name of input
+	 * @param  array   $default  Default value
+	 * @param  string  $method   Input type
 	 *
 	 * @throws Exception
 	 * @since  3.5.0
@@ -440,9 +440,9 @@ class FMethods
 	/**
 	 * Get boolean input
 	 *
-	 * @param   string  $name     Name of input
-	 * @param   bool    $default  Default value
-	 * @param   string  $method   Type of input
+	 * @param  string  $name     Name of input
+	 * @param  bool    $default  Default value
+	 * @param  string  $method   Type of input
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -463,8 +463,8 @@ class FMethods
 	/**
 	 * Get float input
 	 *
-	 * @param   string  $name     Name of input
-	 * @param   array   $default  Default value
+	 * @param  string  $name     Name of input
+	 * @param  array   $default  Default value
 	 *
 	 * @throws Exception
 	 * @since  4.0.0
@@ -478,9 +478,9 @@ class FMethods
 	/**
 	 * Get float input
 	 *
-	 * @param   string  $name     Name of input
-	 * @param   float   $default  Default value
-	 * @param   string  $method   Input type
+	 * @param  string  $name     Name of input
+	 * @param  float   $default  Default value
+	 * @param  string  $method   Input type
 	 *
 	 * @throws Exception
 	 * @since  3.5.0
@@ -501,9 +501,9 @@ class FMethods
 	/**
 	 * Get integer input
 	 *
-	 * @param   string  $name     Name of input
-	 * @param   int     $default  Default value
-	 * @param   string  $method   Type of input
+	 * @param  string  $name     Name of input
+	 * @param  int     $default  Default value
+	 * @param  string  $method   Type of input
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -524,9 +524,9 @@ class FMethods
 	/**
 	 * Get string input
 	 *
-	 * @param   string  $name     Name of input
+	 * @param  string   $name     Name of input
 	 * @param  ?string  $default  Default value
-	 * @param   string  $method   Type of input
+	 * @param  string   $method   Type of input
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -572,7 +572,7 @@ class FMethods
 	/**
 	 * Loads a plugin or module position
 	 *
-	 * @param   string  $position  Position to load
+	 * @param  string  $position  Position to load
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -593,7 +593,7 @@ class FMethods
 	/**
 	 * Log out a user.
 	 *
-	 * @param   int  $user_id  ID of user
+	 * @param  int  $user_id  ID of user
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -611,7 +611,7 @@ class FMethods
 	/**
 	 * Translate language constant
 	 *
-	 * @param   string  $string  String to translate
+	 * @param  string  $string  String to translate
 	 *
 	 * @since  3.2.0
 	 * @return string
@@ -624,7 +624,7 @@ class FMethods
 	/**
 	 * Translate language variable
 	 *
-	 * @param   mixed  ...$string  $string String to pluralise
+	 * @param  mixed  ...$string  $string String to pluralise
 	 *
 	 * @since  3.3.0
 	 * @return string
@@ -637,8 +637,8 @@ class FMethods
 	/**
 	 * Redirect
 	 *
-	 * @param   string  $link    URL
-	 * @param   int     $status  HTTP status code
+	 * @param  string  $link    URL
+	 * @param  int     $status  HTTP status code
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -651,10 +651,10 @@ class FMethods
 	/**
 	 * Resgister a new user
 	 *
-	 * @param   string  $name      Name of user
-	 * @param   string  $username  Username of user
-	 * @param   string  $email     Email of user
-	 * @param   string  $password  Generated password
+	 * @param  string  $name      Name of user
+	 * @param  string  $username  Username of user
+	 * @param  string  $email     Email of user
+	 * @param  string  $password  Generated password
 	 *
 	 * @throws RuntimeException
 	 * @since  3.3.0
@@ -697,9 +697,9 @@ class FMethods
 	/**
 	 * Get router url
 	 *
-	 * @param   string  $url    URL
-	 * @param   bool    $xhtml  Replace & by &amp; for XML compliance.
-	 * @param   int     $ssl    Secure state for the resolved URI.
+	 * @param  string  $url    URL
+	 * @param  bool    $xhtml  Replace & by &amp; for XML compliance.
+	 * @param  int     $ssl    Secure state for the resolved URI.
 	 *
 	 * @throws Exception
 	 * @since  3.4.0
@@ -713,17 +713,17 @@ class FMethods
 	/**
 	 * Send email
 	 *
-	 * @param   mixed  $from        From email
-	 * @param   mixed  $fromName    From name
-	 * @param   mixed  $to          To email
-	 * @param   mixed  $subject     Subject
-	 * @param   mixed  $body        Body
-	 * @param   bool   $html        TRUE for html, FALSO for plain text
-	 * @param   mixed  $cc          Carbon copy emaiols
-	 * @param   mixed  $bcc         Blind carbon copy emails
-	 * @param   mixed  $reply       Reply email
-	 * @param   mixed  $replyName   Reply name
-	 * @param   mixed  $attachment  Attachments
+	 * @param  mixed  $from        From email
+	 * @param  mixed  $fromName    From name
+	 * @param  mixed  $to          To email
+	 * @param  mixed  $subject     Subject
+	 * @param  mixed  $body        Body
+	 * @param  bool   $html        TRUE for html, FALSO for plain text
+	 * @param  mixed  $cc          Carbon copy emaiols
+	 * @param  mixed  $bcc         Blind carbon copy emails
+	 * @param  mixed  $reply       Reply email
+	 * @param  mixed  $replyName   Reply name
+	 * @param  mixed  $attachment  Attachments
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -776,8 +776,8 @@ class FMethods
 	/**
 	 * Set user state
 	 *
-	 * @param   string  $key    Key field
-	 * @param   mixed   $value  Value
+	 * @param  string  $key    Key field
+	 * @param  mixed   $value  Value
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -790,7 +790,7 @@ class FMethods
 	/**
 	 * Translate language variable
 	 *
-	 * @param   mixed  ...$string  $string String to translate
+	 * @param  mixed  ...$string  $string String to translate
 	 *
 	 * @since  3.3.0
 	 * @return string

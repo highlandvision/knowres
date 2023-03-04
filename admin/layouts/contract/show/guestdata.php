@@ -11,19 +11,18 @@
 
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
-use Joomla\CMS\Object\CMSObject;
 
 extract($displayData);
 /**
  * Layout variables
  *
- * @var CMSObject $contract     The contract item.
- * @var CMSObject $guest        The contract guest.
- * @var CMSObject $guestdata    The conract guest data.
- * @var CMSObject $property     The conract property data.
- * @var float     $balance      Current confirmed balance.
- * @var float     $balance_all  Current balance less unconfirmed payments.
- * @var bool      $access_level Access level of user.
+ * @var false|object $contract     The contract item.
+ * @var false|object $guest        The contract guest.
+ * @var false|object $guestdata    The conract guest data.
+ * @var false|object $property     The conract property data.
+ * @var float        $balance      Current confirmed balance.
+ * @var float        $balance_all  Current balance less unconfirmed payments.
+ * @var bool         $access_level Access level of user.
  */
 
 $params = KrMethods::getParams();

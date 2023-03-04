@@ -73,8 +73,8 @@ class Images extends Media
 	/**
 	 * Copy image folder
 	 *
-	 * @param   int  $old  Source property id
-	 * @param   int  $new  Dest property id
+	 * @param  int  $old  Source property id
+	 * @param  int  $new  Dest property id
 	 *
 	 * @throws RuntimeException|Exception
 	 * @since  3.0.0
@@ -96,7 +96,7 @@ class Images extends Media
 	/**
 	 * Delete recursively
 	 *
-	 * @param   string  $dir  Path to directory to be removed
+	 * @param  string  $dir  Path to directory to be removed
 	 *
 	 * @since 3.0.0
 	 */
@@ -127,7 +127,7 @@ class Images extends Media
 	/**
 	 * Delete image folder
 	 *
-	 * @param   int  $id  ID of  property
+	 * @param  int  $id  ID of  property
 	 *
 	 * @throws Exception
 	 * @since  3.0.0
@@ -144,9 +144,9 @@ class Images extends Media
 	/**
 	 * Get path to image for display
 	 *
-	 * @param   int     $property_id  ID of property
-	 * @param   string  $type         e.g. "solo" or "slideshow"
-	 * @param   string  $image        Image name
+	 * @param  int     $property_id  ID of property
+	 * @param  string  $type         e.g. "solo" or "slideshow"
+	 * @param  string  $image        Image name
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -162,9 +162,9 @@ class Images extends Media
 	/**
 	 * Get path to image for display
 	 *
-	 * @param   int     $property_id  ID of property
-	 * @param   string  $type         e.g. "solo" or "slideshow"
-	 * @param   string  $image        Image name\
+	 * @param  int     $property_id  ID of property
+	 * @param  string  $type         e.g. "solo" or "slideshow"
+	 * @param  string  $image        Image name\
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -180,7 +180,7 @@ class Images extends Media
 	/**
 	 * Get link for map category image
 	 *
-	 * @param   int  $mapcategory_id  ID of map category
+	 * @param  int  $mapcategory_id  ID of map category
 	 *
 	 * @since   3.2.0
 	 * @return  string
@@ -219,7 +219,7 @@ class Images extends Media
 	/**
 	 * Get name of marker image
 	 *
-	 * @param   int  $mapcategory_id  ID of map category
+	 * @param  int  $mapcategory_id  ID of map category
 	 *
 	 * @since  3.2.0
 	 * @return string
@@ -249,9 +249,9 @@ class Images extends Media
 	/**
 	 * Get path to image folder or image
 	 *
-	 * @param   int     $property_id  ID of property
-	 * @param   string  $type         e.g. "solo" or "slideshow"
-	 * @param   string  $image        Image name
+	 * @param  int     $property_id  ID of property
+	 * @param  string  $type         e.g. "solo" or "slideshow"
+	 * @param  string  $image        Image name
 	 *
 	 * @throws Exception
 	 * @since  2.4.0
@@ -292,7 +292,7 @@ class Images extends Media
 	/**
 	 * Get link for property image
 	 *
-	 * @param   int  $property_id  ID of property
+	 * @param  int  $property_id  ID of property
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -323,7 +323,7 @@ class Images extends Media
 	/**
 	 * Get name of property image
 	 *
-	 * @param   int  $property_id  ID of property
+	 * @param  int  $property_id  ID of property
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -348,12 +348,12 @@ class Images extends Media
 	/**
 	 * Resize and crop images as required
 	 *
-	 * @param   string  $source   Source file path
-	 * @param   string  $target   Target file path
-	 * @param   int     $width    Required width
-	 * @param   int     $height   Required height
-	 * @param   int     $quality  Quality
-	 * @param   int     $crop     1 to crop image
+	 * @param  string  $source   Source file path
+	 * @param  string  $target   Target file path
+	 * @param  int     $width    Required width
+	 * @param  int     $height   Required height
+	 * @param  int     $quality  Quality
+	 * @param  int     $crop     1 to crop image
 	 *
 	 * @since  1.0.0
 	 */
@@ -435,9 +435,9 @@ class Images extends Media
 	/**
 	 * Validate uploaded file
 	 *
-	 * @param   string  $name      File name
-	 * @param   string  $tmp_name  Temporary path and name
-	 * @param   int     $error     Upload error code
+	 * @param  string  $name      File name
+	 * @param  string  $tmp_name  Temporary path and name
+	 * @param  int     $error     Upload error code
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -512,7 +512,7 @@ class Images extends Media
 	/**
 	 * Set exception messages
 	 *
-	 * @param   int  $error  Upload error
+	 * @param  int  $error  Upload error
 	 *
 	 * @throws Exception
 	 * @since 1.0.0
@@ -537,7 +537,7 @@ class Images extends Media
 	/**
 	 * Make property and image folders if they do not exist
 	 *
-	 * @param   string  $folder_path  Path of folder
+	 * @param  string  $folder_path  Path of folder
 	 *
 	 * @since 1.0.0
 	 */
@@ -580,7 +580,7 @@ class Images extends Media
 	/**
 	 * Replace non-acceptable characters in file name
 	 *
-	 * @param   string  $name  The raw file name;
+	 * @param  string  $name  The raw file name;
 	 *
 	 * @since  1.0.0
 	 */
@@ -645,7 +645,7 @@ class Images extends Media
 	/**
 	 *  Set exists to true if file already in folder
 	 *
-	 * @param   string  $file  Name of file
+	 * @param  string  $file  Name of file
 	 *
 	 * @since 1.0.0
 	 */
@@ -660,7 +660,7 @@ class Images extends Media
 	/**
 	 * Set ID of item being uploaded
 	 *
-	 * @param   int  $id  ID of image
+	 * @param  int  $id  ID of image
 	 *
 	 * @throws InvalidArgumentException
 	 * @since  1.0.0

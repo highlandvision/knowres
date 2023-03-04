@@ -15,14 +15,12 @@ use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Session;
-use HighlandVision\KR\Utility;
 use JetBrains\PhpStorm\Pure;
 use stdClass;
 
-use function count;
 use function defined;
-use function implode;
 use function is_null;
+use function property_exists;
 
 /**
  * Knowres Session helper
@@ -34,7 +32,8 @@ class User extends Session
 	/**
 	 * Initialise
 	 *
-	 * @since 3.3.0
+	 * @throws Exception
+	 * @since  3.3.0
 	 */
 	public function __construct()
 	{
@@ -105,6 +104,30 @@ class User extends Session
 	}
 
 	/**
+	 * Update session data from array (db item or jform)
+	 *
+	 * @param  array|object  $item  Update data
+	 *
+	 * @since  3.2.0
+	 * @return stdClass
+	 */
+	public function updateData(array|object $item): stdClass
+	{
+		$data = $this->getData();
+		foreach ($item as $key => $value)
+		{
+			if (property_exists($data, $key))
+			{
+				$data->$key = $value;
+			}
+		}
+
+		$this->saveSession($data);
+
+		return $data;
+	}
+
+	/**
 	 * Session reset current property fields for user
 	 *
 	 * @since  3.3.0
@@ -158,6 +181,7 @@ class User extends Session
 		return $data;
 	}
 
+	//TODO-v4 Delete if no consequences
 	/**
 	 * Set user session data after admin login
 	 *

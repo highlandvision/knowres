@@ -10,14 +10,13 @@
 defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrMethods;
-use Joomla\CMS\Object\CMSObject;
 
 extract($displayData);
 /**
  * Layout variables
  *
- * @var CMSObject $guestdata Guestdata row.
- * @var array     $options   Property options.
+ * @var false|object $guestdata Guestdata row.
+ * @var array        $options   Property options.
  */
 
 $answers = [];

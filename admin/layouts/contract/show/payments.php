@@ -6,28 +6,28 @@
  * @license     See the file "LICENSE.txt" for the full license governing this code.
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
+
 /** @noinspection PhpUnhandledExceptionInspection */
 
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Utility;
-use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Session\Session;
 
 extract($displayData);
 /**
  * Layout variables
  *
- * @var CMSObject $contract The contract item.
- * @var mixed     $payments Contract payments
+ * @var false|object $contract The contract item.
+ * @var mixed        $payments Contract payments
  */
 
 $count = 0;
 ?>
 
 	<div class="row">
-		<div class="col-3 strong"><?php echo KrMethods::plain('COM_KNOWRES_DATE'); ?></div>
-		<div class="col-3 strong"><?php echo KrMethods::plain('COM_KNOWRES_STATUS'); ?></div>
+		<div class="col-2 strong"><?php echo KrMethods::plain('COM_KNOWRES_DATE'); ?></div>
+		<div class="col-4 strong"><?php echo KrMethods::plain('COM_KNOWRES_STATUS'); ?></div>
 		<div class="col-3 strong text-end"><?php echo KrMethods::plain('COM_KNOWRES_CONTRACTPAYMENTS_AMOUNT'); ?></div>
 		<div
 			class="col-3 strong text-end"><?php echo KrMethods::plain('COM_KNOWRES_CONTRACTPAYMENTS_BASE_AMOUNT'); ?></div>
@@ -42,10 +42,10 @@ $count = 0;
 		</div>
 	<?php endif; ?>
 	<div class="row">
-		<div class="col-3">
+		<div class="col-2">
 			<?php echo TickTock::displayDate($p->payment_date, 'dMy'); ?>
 		</div>
-		<div class="col-3">
+		<div class="col-4">
 			<?php if ($p->confirmed) : ?>
 				<?php echo KrMethods::plain('COM_KNOWRES_CONFIRMED'); ?>
 			<?php else: ?>

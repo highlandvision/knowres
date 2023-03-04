@@ -18,8 +18,12 @@ use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Media;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Translations;
-use JetBrains\PhpStorm\NoReturn;
+use Joomla\CMS\Installer\Installer;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Log\Log;
 use Joomla\CMS\MVC\Controller\BaseController;
+use Joomla\Database\Exception\ExecutionFailureException;
+use Joomla\Database\Exception\PrepareStatementFailureException;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use RuntimeException;
@@ -29,8 +33,11 @@ use UnexpectedValueException;
 use function count;
 use function explode;
 use function file_exists;
+use function file_get_contents;
 use function is_dir;
 use function rmdir;
+use function str_replace;
+use function substr;
 use function unlink;
 
 use const JPATH_ROOT;
@@ -82,12 +89,51 @@ class AdhocController extends BaseController
 	}
 
 	/**
+	 * Fix up database for null values etc
+	 *
+	 * @since   4.0.0
+	 */
+	public function fixupv4db(): bool
+	{
+		$filename = JPATH_ROOT . '/administrator/components/com_knowres/queries/updates/fixupv4.sql';
+		if (!file_exists($filename))
+		{
+			return true;
+		}
+
+		$db     = KrFactory::getDatabase();
+		$buffer = file_get_contents($filename);
+
+		$queries = Installer::splitSql($buffer);
+		foreach ($queries as $query)
+		{
+			$queryString = $query;
+			$queryString = str_replace(["\r", "\n"], ['', ' '], substr($queryString, 0, 80));
+
+			try
+			{
+				$db->setQuery($query)->execute();
+			}
+			catch (ExecutionFailureException|PrepareStatementFailureException $e)
+			{
+				$errorMessage = Text::sprintf('JLIB_INSTALLER_ERROR_SQL_ERROR', $e->getMessage());
+				Log::add(Text::sprintf('JLIB_INSTALLER_UPDATE_LOG_QUERY', $filename, $queryString), Log::INFO,
+					'Update');
+				Log::add($errorMessage, Log::INFO, 'Update');
+				Log::add(Text::_('JLIB_INSTALLER_SQL_END_NOT_COMPLETE'), Log::INFO, 'Update');
+				Log::add($errorMessage, Log::WARNING, 'jerror');
+			}
+		}
+	}
+
+	/**
 	 * Update guests numbers from contract guest data to contract (V4.0)
 	 *
 	 * @throws Exception
 	 * @since  4.0.0
 	 */
-	#[NoReturn] public function gueststocontract()
+	#[
+		NoReturn] public function gueststocontract()
 	{
 		$db    = KrFactory::getDatabase();
 		$query = $db->getQuery(true);
@@ -294,8 +340,6 @@ class AdhocController extends BaseController
 	 * Copy rates year to year
 	 *
 	 * @throws RuntimeException
-	 * @throws Exception
-	 * @throws Exception
 	 * @throws Exception
 	 * @since  2.4.0
 	 */

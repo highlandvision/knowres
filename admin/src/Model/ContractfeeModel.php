@@ -16,7 +16,6 @@ defined('_JEXEC') or die;
 use Exception;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\AdminModel;
-use Joomla\CMS\Object\CMSObject;
 
 /**
  * Knowres model for contract fees
@@ -37,9 +36,9 @@ class ContractfeeModel extends AdminModel
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return CMSObject|false  Object on success, false on failure.
+	 * @return false|object  Object on success, false on failure.
 	 */
-	public function getItem($pk = null): CMSObject|false
+	public function getItem($pk = null): object|false
 	{
 		return parent::getItem($pk);
 	}

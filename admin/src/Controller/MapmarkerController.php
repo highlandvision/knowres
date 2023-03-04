@@ -39,8 +39,18 @@ class MapmarkerController extends FormController
 	#[NoReturn] public function combo()
 	{
 		$model  = new MapmarkerModel();
-		$form   = $model->getForm([], false);
-		$target = KrMethods::inputString('target');
+		$form      = $model->getForm([], false);
+		$parent_id = KrMethods::inputInt('parent');
+		$target    = KrMethods::inputString('target');
+
+		if ($target == 'region_id')
+		{
+			$form->setValue('country_id', null, $parent_id);
+		}
+		else
+		{
+			$form->setValue('region_id', null, $parent_id);
+		}
 
 		$wrapper         = [];
 		$wrapper['html'] = $form->getInput($target);
@@ -52,8 +62,8 @@ class MapmarkerController extends FormController
 	/**
 	 * Process additional requirements after save map marker
 	 *
-	 * @param   BaseDatabaseModel  $model      The data model object.
-	 * @param   array              $validData  The validated data.
+	 * @param  BaseDatabaseModel  $model      The data model object.
+	 * @param  array              $validData  The validated data.
 	 *
 	 * @throws Exception
 	 * @since  3.1

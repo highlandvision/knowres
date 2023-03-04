@@ -19,7 +19,6 @@ use HighlandVision\KR\Joomla\Extend\AdminModel;
 use HighlandVision\KR\Logger;
 use HighlandVision\KR\Media\Images\MapMarkers;
 use HighlandVision\KR\Translations;
-use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Versioning\VersionableControllerTrait;
 use RuntimeException;
 
@@ -42,14 +41,13 @@ class MapmarkerModel extends AdminModel
 	/**
 	 * Method to get a map marker record.
 	 *
-	 * @param   int  $pk  The id of the primary key.
+	 * @param  int  $pk  The id of the primary key.
 	 *
 	 * @since  1.0.0
-	 * @return CMSObject|false  Object on success, false on failure.
+	 * @return false|object  Object on success, false on failure.
 	 */
-	public function getItem($pk = null): CMSObject|false
+	public function getItem($pk = null): false|object
 	{
-		/** @var MapmarkerModel $item */
 		$item = parent::getItem($pk);
 		if ($item)
 		{
@@ -120,7 +118,7 @@ class MapmarkerModel extends AdminModel
 	/**
 	 * Method to save the form data.
 	 *
-	 * @param   array  $data  The form data.
+	 * @param  array  $data  The form data.
 	 *
 	 * @throws Exception
 	 * @since  4.0.0
@@ -128,15 +126,18 @@ class MapmarkerModel extends AdminModel
 	 */
 	public function save($data): bool
 	{
-		parent::save($data);
-
-		$files = KrMethods::inputFiles('jform');
-		if (!empty($files['marker_image']['name']))
+		if (parent::save($data))
 		{
-			$id = $this->getState('mapmarker.id');
-			$this->saveImage($id, $files['marker_image']);
+			$files = KrMethods::inputFiles('jform');
+			if (!empty($files['marker_image']['name']))
+			{
+				$id = $this->getState('mapmarker.id');
+				$this->saveImage($id, $files['marker_image']);
+			}
+
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 }

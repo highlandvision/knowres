@@ -172,22 +172,7 @@ class DashboardController extends BaseController
 	 */
 	public function login()
 	{
-		SiteHelper::checkUser();
-
-		$guest_id = KrFactory::getListModel('guests')->getGuestForUser(KrMethods::getUser()->id);
-		if (!$guest_id)
-		{
-			SiteHelper::redirectLogin();
-		}
-
-		$userSession              = new KrSession\User();
-		$userData                 = $userSession->getData();
-		$userData->user_id        = KrMethods::getUser()->id;
-		$userData->db_guest_id    = (int) $guest_id;
-		$userData->db_contracts   = [];
-		$userData->db_contract_id = 0;
-		$userSession->setData($userData);
-
+		SiteHelper::loginUser();
 		SiteHelper::redirectDashboard();
 	}
 
@@ -200,9 +185,10 @@ class DashboardController extends BaseController
 	 */
 	public function request()
 	{
-		$userSession       = new KrSession\User();
-		$userData          = $userSession->getData();
-		$userData->user_id = 0;
+		SiteHelper::checkUser();
+
+		$userSession = new KrSession\User();
+		$userData    = $userSession->getData();
 
 		$key = KrMethods::inputString('key', '', 'get');
 		list($contract_id, $guest_id, $qkey, $view) = Cryptor::decrypt($key);
@@ -211,7 +197,26 @@ class DashboardController extends BaseController
 			SiteHelper::badUser();
 		}
 
-		if ($view !== 'dashboard')
+		//TODO-v4.1 Can be deleted after 1 year
+		if ($view == 'guestdataform')
+		{
+			$view = 'contractguestdataform';
+		}
+
+		if ($view == 'reviewform')
+		{
+			$contract = KrFactory::getAdminModel('contract')->getItem($contract_id);
+			if (!$contract->id || $contract->qkey != $qkey || $contract->guest_id != $guest_id)
+			{
+				SiteHelper::redirectHome();
+			}
+
+			$userData->db_contract_id = $contract_id;
+			$userSession->setData($userData);
+
+			SiteHelper::redirectView($view);
+		}
+		else if ($view !== 'dashboard')
 		{
 			$contract = KrFactory::getAdminModel('contract')->getItem($contract_id);
 			if (!$contract->id || $contract->qkey != $qkey || $contract->guest_id != $guest_id)
@@ -230,12 +235,8 @@ class DashboardController extends BaseController
 				$userData->db_guest_update = true;
 				$view                      = 'guestform';
 			}
-			else
+			else if ($view == 'contractguestdataform')
 			{
-				if ($view == 'guestdataform')
-				{
-					$view = 'contractguestdataform';
-				}
 				$userData->db_guest_update = false;
 			}
 

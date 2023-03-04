@@ -150,25 +150,13 @@
 			description="COM_KNOWRES_TAXRATE_TAXRATE_ID_DSC">
 			<option value="0">COM_KNOWRES_SELECT</option>
 		</field>
-		<field name="service"
-			input_type="list"
-			key_field="id"
-			layout="joomla.form.field.list-fancy-select"
-			multiple="true"
-			table="#__knowres_service"
-			where="state=1 AND type='c' AND agency_id>0"
-			type="listforeignkey"
-			value_field="name"
-			label="COM_KNOWRES_TAXRATE_SERVICE_LBL"
-			description="COM_KNOWRES_TAXRATE_SERVICE_DSC"
-			hint="COM_KNOWRES_SELECT_MULTIPLE"/>
 		<field name="agent"
 			default="0"
 			key_field="id"
 			layout="joomla.form.field.list-fancy-select"
 			multiple="true"
 			table="#__knowres_agent"
-			where="state=1 AND service_id=0"
+			where="state=1"
 			type="listforeignkey"
 			value_field="name"
 			label="COM_KNOWRES_TAXRATE_AGENT_LBL"

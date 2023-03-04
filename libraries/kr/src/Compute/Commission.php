@@ -28,7 +28,7 @@ class Commission
 	/**
 	 * Calculate commission
 	 *
-	 * @param   Hub  $Hub  Hub base class
+	 * @param  Hub  $Hub  Hub base class
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -107,9 +107,20 @@ class Commission
 		$net_discount            = 0;
 		$commission_discount     = 0;
 
+		$average = 0;
+		$total   = 0;
 		if (!empty($discount) || !empty($coupon))
 		{
-			$net_discount        = ($discount + $coupon) * (100 / (100 + $markup_pc));
+			if (is_countable($markup_pc) && count($markup_pc))
+			{
+				foreach ($markup_pc as $m)
+				{
+					$total += $m;
+				}
+				$average = $total / count($markup_pc);
+			}
+
+			$net_discount        = ($discount + $coupon) * (100 / (100 + $average));
 			$commission_discount = $discount + $coupon - $net_discount;
 		}
 

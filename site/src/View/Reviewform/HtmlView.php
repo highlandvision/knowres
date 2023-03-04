@@ -7,7 +7,7 @@
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
 
-namespace HighlandVision\Component\Knowres\Site\View\Review;
+namespace HighlandVision\Component\Knowres\Site\View\Reviewform;
 
 defined('_JEXEC') or die;
 
@@ -18,7 +18,6 @@ use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\HtmlView as KrHtmlView;
 use HighlandVision\KR\Session as KrSession;
 use HighlandVision\KR\SiteHelper;
-use Joomla\CMS\Object\CMSObject;
 
 /**
  * Guest review form
@@ -27,13 +26,13 @@ use Joomla\CMS\Object\CMSObject;
  */
 class HtmlView extends KrHtmlView\Site
 {
-	/** @var CMSObject|bool Contract row. */
-	public CMSObject|bool $contract;
+	/** @var false|object Contract row. */
+	public false|object $contract;
 
 	/**
 	 * Display the view
 	 *
-	 * @param   null  $tpl  Default template.
+	 * @param  null  $tpl  Default template.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -64,7 +63,7 @@ class HtmlView extends KrHtmlView\Site
 		$this->params = KrMethods::getParams();
 
 		/** @var ReviewModel $model */
-		$model      = $this->getModel();
+		$model      = KrFactory::getSiteModel('review');
 		$this->item = $model->getItem();
 		$this->form = $model->getForm();
 

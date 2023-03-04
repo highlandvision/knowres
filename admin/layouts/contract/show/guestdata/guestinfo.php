@@ -15,13 +15,12 @@ use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Translations;
-use Joomla\CMS\Object\CMSObject;
 
 extract($displayData);
 /**
  * Layout variables
  *
- * @var CMSObject $guestdata Guestdata row.
+ * @var false|object $guestdata Guestdata row.
  */
 
 $params    = KrMethods::getParams();

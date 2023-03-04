@@ -15,8 +15,6 @@ use Exception;
 use HighlandVision\Component\Knowres\Administrator\Model\GuestModel as AdminGuestModel;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
-use HighlandVision\KR\Session as KrSession;
-use HighlandVision\KR\SiteHelper;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Utility;
 use Joomla\CMS\Form\Form;
@@ -35,7 +33,7 @@ class GuestModel extends AdminGuestModel
 	/**
 	 * Override checkout for guestdata as checked_out set to 0.
 	 *
-	 * @param   int|null  $pk  The id of the row to check out.
+	 * @param  int|null  $pk  The id of the row to check out.
 	 *
 	 * @throws Exception
 	 * @since  4.0.0
@@ -56,44 +54,12 @@ class GuestModel extends AdminGuestModel
 	}
 
 	/**
-	 * Method to save the form data.
-	 *
-	 * @param   array  $data  The existing form data.
-	 *
-	 * @throws Exception
-	 * @since  4.0.0
-	 * @return bool  True on success.
-	 */
-	public function save($data): bool
-	{
-		if (parent::save($data))
-		{
-			$userSession = new KrSession\User();
-			$userData    = $userSession->getData();
-
-			if ($userData->db_guest_update)
-			{
-				KrMethods::message(KrMethods::plain('COM_KNOWRES_ITEM_UPDATED_SUCCESSFULLY'));
-				SiteHelper::redirectDashboard();
-			}
-			else
-			{
-				$Itemid = SiteHelper::getItemId('com_knowres', 'paymentform');
-				KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&view=paymentform&Itemid=' . $Itemid,
-					false));
-			}
-		}
-
-		return true;
-	}
-
-	/**
 	 * Method to validate the form data.
 	 *
-	 * @param   Form    $form      The form to validate against.
-	 * @param   array   $data      The data to validate.
+	 * @param  Form     $form      The form to validate against.
+	 * @param  array    $data      The data to validate.
 	 * @param  ?string  $group     The name of the field group to validate.
-	 * @param   array   $settings  Property settings
+	 * @param  array    $settings  Property settings
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -101,7 +67,7 @@ class GuestModel extends AdminGuestModel
 	 */
 	public function validate($form, $data, $group = null, array $settings = []): array|bool
 	{
-		$data['telephone'] = Utility::encodeJson(KrMethods::inputArray('telephone', []));
+		$data['telephone'] = Utility::encodeJson(KrMethods::inputArray('telephone'));
 
 		if (is_countable($settings) && count($settings))
 		{
@@ -132,8 +98,8 @@ class GuestModel extends AdminGuestModel
 	/**
 	 * Set the required fields for the manager guest form (from settings)
 	 *
-	 * @param   Form   $form      Guest form
-	 * @param   array  $settings  Property settings
+	 * @param  Form   $form      Guest form
+	 * @param  array  $settings  Property settings
 	 *
 	 * @throws UnexpectedValueException
 	 * @since  4.0.0

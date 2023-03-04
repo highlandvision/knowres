@@ -12,15 +12,14 @@
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Utility;
-use Joomla\CMS\Object\CMSObject;
 
 extract($displayData);
 /**
  * Layout variables
  *
- * @var CMSObject $contract    The contract item.
- * @var CMSObject $guest       The contract guest.
- * @var bool      $document_id True to display document ID.
+ * @var false|object $contract    The contract item.
+ * @var false|object $guest       The contract guest.
+ * @var bool         $document_id True to display document ID.
  */
 ?>
 

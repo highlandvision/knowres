@@ -124,10 +124,10 @@ class HtmlView extends KrHtmlView\Site
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	protected function setPathway()
+	protected function setMyPathway()
 	{
 		$pathway = Factory::getApplication()->getPathway();
-		$pathway->setMyPathway([]);
+		$pathway->setPathway([]);
 
 		$pathway = HtmlView::dashboardPathway($pathway);
 		$pathway->addItem(KrMethods::plain('COM_KNOWRES_PAY_NOW'));

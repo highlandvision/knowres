@@ -63,6 +63,11 @@ class ListforeignkeyField extends ListField
 			$query->where($this->getAttribute('today') . '>=' . $db->q(TickTock::getDate()));
 		}
 
+		if ($this->getAttribute('b4today'))
+		{
+			$query->where($this->getAttribute('b4today') . '<' . $db->q(TickTock::getDate()));
+		}
+
 		$db->setQuery($query);
 		$options = $db->loadObjectList();
 

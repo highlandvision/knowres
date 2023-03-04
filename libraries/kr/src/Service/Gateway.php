@@ -37,16 +37,18 @@ use function nl2br;
  */
 class Gateway extends Service
 {
+	/** @var false|object Contractpayment item */
+	protected false|object $payment;
 	/** @var stdClass Payment session data */
 	protected stdClass $paymentData;
 
 	/**
 	 * Initialize
 	 *
-	 * @param   int       $service_id     ID of service
-	 * @param   stdClass  $paymentData    Session payment data
-	 * @param   bool      $manual         True for manual gateway
-	 * @param   array     $payment_types  Valid payment types
+	 * @param  int       $service_id     ID of service
+	 * @param  stdClass  $paymentData    Session payment data
+	 * @param  bool      $manual         True for manual gateway
+	 * @param  array     $payment_types  Valid payment types
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -66,7 +68,7 @@ class Gateway extends Service
 	/**
 	 * Set gateway class for payment
 	 *
-	 * @param   string  $gateway_name  Name of selected gateway
+	 * @param  string  $gateway_name  Name of selected gateway
 	 *
 	 * @since  3.3.1
 	 * @return string
@@ -140,7 +142,7 @@ class Gateway extends Service
 		{
 			if ($this->paymentData->payment_type == 'PBB')
 			{
-				$type = KrMethods::plain('COM_KNOWRES_PAYMENT_BALANCE');
+				$type = KrMethods::plain('COM_KNOWRES_PAYMENT_BALANCE_PAYMENT');
 			}
 			else
 			{
@@ -154,7 +156,7 @@ class Gateway extends Service
 				}
 			}
 
-			$this->paymentData->note = KrMethods::sprintf('COM_KNOWRES_SERVICE_DESCRIPTION', $type,
+			$this->paymentData->note = KrMethods::sprintf('COM_KNOWRES_PAYMENT_DESCRIPTION', $type,
 				Utility::displayValue($this->paymentData->amount, $this->paymentData->currency),
 				$this->contract->property_name, TickTock::displayDate($this->contract->arrival),
 				TickTock::displayDate($this->contract->departure));
@@ -264,7 +266,7 @@ class Gateway extends Service
 	/**
 	 * Set the fex rate
 	 *
-	 * @param   string  $rate  FEX rate
+	 * @param  string  $rate  FEX rate
 	 *
 	 * @since 1.0.0
 	 */
@@ -276,10 +278,11 @@ class Gateway extends Service
 	/**
 	 * Validate payment type
 	 *
-	 * @param   stdClass  $paymentData    Payment data
-	 * @param   array     $payment_types  Valid payment types
+	 * @param  stdClass  $paymentData    Payment data
+	 * @param  array     $payment_types  Valid payment types
 	 *
-	 * @since   3.3.1
+	 * @throws InvalidArgumentException
+	 * @since  3.3.1
 	 */
 	protected function validatePaymentType(stdClass $paymentData, array $payment_types)
 	{

@@ -51,7 +51,11 @@ class ServicexrefpropertyRule extends FormRule
 		Form $form = null): bool
 	{
 		$service_id = ($input instanceof Registry) ? $input->get('service_id') : '';
-		$sell       = ($input instanceof Registry) ? $input->get('sell') : '0';
+		$sell       = ($input instanceof Registry) ? $input->get('sell', 1) : '0';
+		if (!$sell)
+		{
+			return true;
+		}
 		$id         = ($input instanceof Registry) ? $input->get('id') : 0;
 		$state      = ($input instanceof Registry) ? $input->get('state') : 1;
 
@@ -148,19 +152,23 @@ class ServicexrefpropertyRule extends FormRule
 
 		// Room spaces and bed types
 		$entered = false;
-
-		// At least one bed selected
-		foreach ($item->bed_types as $d)
+		if (!empty($item->bed_types) && is_countable($item->bed_types))
 		{
-			$bed_types = $d['bed_types'];
-			foreach ($bed_types as $b)
+			foreach ($item->bed_types as $d)
 			{
-				foreach ($b as $n)
+				if ((int)$d['room_id'] > 0)
 				{
-					if ($n > 0)
+					$bed_types = (int)$d['bed_types'];
+					foreach ($bed_types as $b)
 					{
-						$entered = true;
-						break 3;
+						foreach ($b as $n)
+						{
+							if ($n > 0)
+							{
+								$entered = true;
+								break 3;
+							}
+						}
 					}
 				}
 			}
@@ -228,53 +236,62 @@ class ServicexrefpropertyRule extends FormRule
 		}
 
 		// Check for rates
-		if ($sell)
+		$rates = KrFactory::getListModel('rates')->getRatesForProperty($value, TickTock::getDate());
+		if (!is_countable($rates) || !count($rates))
 		{
-			$rates = KrFactory::getListModel('rates')->getRatesForProperty($value, TickTock::getDate());
-			if (!is_countable($rates) || !count($rates))
+			KrMethods::message(KrMethods::plain('COM_KNOWRES_SERVICEXREF_ERROR5'), 'error');
+
+			$error = true;
+		}
+
+		//Check licence info for RU
+		if (!$item->licence_id)
+		{
+			$country = KrFactory::getAdminModel('country')->getItem($item->country_id);
+			if ($country->property_licence)
 			{
-				KrMethods::message(KrMethods::plain('COM_KNOWRES_SERVICEXREF_ERROR5'), 'error');
+				KrMethods::message(KrMethods::plain('COM_KNOWRES_SERVICEXREF_ERROR7'), 'error');
 
 				$error = true;
 			}
+		}
 
-			// Check that guest count for HA does not exceed 10
-			if ($service->plugin == 'vrbo')
+		// Check that guest count for HA does not exceed 10
+		if ($service->plugin == 'vrbo')
+		{
+			foreach ($rates as $r)
 			{
-				foreach ($rates as $r)
+				if ($r->ignore_pppn)
 				{
-					if ($r->ignore_pppn)
-					{
-						$guests = 1;
-					}
-					else
-					{
-						$guests = $r->max_guests;
-					}
+					$guests = 1;
+				}
+				else
+				{
+					$guests = $r->max_guests;
+				}
 
-					$more_guests = Utility::decodeJson($r->more_guests);
-					if (is_countable($more_guests))
+				$more_guests = Utility::decodeJson($r->more_guests);
+				if (is_countable($more_guests))
+				{
+					foreach ($more_guests as $m)
 					{
-						foreach ($more_guests as $m)
+						if ($m->more_pppn)
 						{
-							if ($m->more_pppn)
-							{
-								$guests = $guests + 1;
-							}
-							else
-							{
-								$guests = $guests + $m->more_max + 1 - $m->more_min;
-							}
+							$guests = $guests + 1;
+						}
+						else
+						{
+							$guests = $guests + (int)$m->more_max + 1 - (int)$m->more_min;
 						}
 					}
+				}
 
-					if ($guests > 10)
-					{
-						$element->addAttribute('message',
-							KrMethods::plain('Guest numbers in Rates exceeds the limit of 10 imposed by HomeAway. Please consolidate some of the Rates entry lines or use Includes all guests'),
-							'error');
-						$error = true;
-					}
+				if ($guests > 10)
+				{
+					$element->addAttribute('message',
+						KrMethods::plain('Guest numbers in Rates exceeds the limit of 10 imposed by HomeAway. Please consolidate some of the Rates entry lines or use Includes all guests'),
+						'error');
+					$error = true;
 				}
 			}
 		}

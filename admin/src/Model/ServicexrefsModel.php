@@ -30,7 +30,7 @@ class ServicexrefsModel extends ListModel
 	/**
 	 * Constructor.
 	 *
-	 * @param   array  $config  An optional associative array of configuration settings.
+	 * @param  array  $config  An optional associative array of configuration settings.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -67,8 +67,8 @@ class ServicexrefsModel extends ListModel
 	/**
 	 * Find channels for a property
 	 *
-	 * @param   int   $property_id  ID of property
-	 * @param   bool  $new          True for new properties
+	 * @param  int   $property_id  ID of property
+	 * @param  bool  $new          True for new properties
 	 *
 	 * @throws RuntimeException
 	 * @throws DatabaseNotFoundException
@@ -109,8 +109,8 @@ class ServicexrefsModel extends ListModel
 	}
 
 	/**
-	 * @param   int     $service_id   ID of service
-	 * @param   string  $foreign_key  Foreign copntract key
+	 * @param  int     $service_id   ID of service
+	 * @param  string  $foreign_key  Foreign copntract key
 	 *
 	 * @throws RuntimeException
 	 * @since  2.0.0
@@ -135,7 +135,7 @@ class ServicexrefsModel extends ListModel
 	/**
 	 * Get contracts for service
 	 *
-	 * @param   int  $service_id  ID of service
+	 * @param  int  $service_id  ID of service
 	 *
 	 * @throws RuntimeException
 	 * @throws Exception
@@ -172,9 +172,9 @@ class ServicexrefsModel extends ListModel
 	/**
 	 * Get the foreign key for a contract
 	 *
-	 * @param   int  $service_id   ID of service
-	 * @param   int  $contract_id  ID of contract
-	 * @param   int  $cancelled    Cancelled indicator
+	 * @param  int  $service_id   ID of service
+	 * @param  int  $contract_id  ID of contract
+	 * @param  int  $cancelled    Cancelled indicator
 	 *
 	 * @throws RuntimeException
 	 * @since  2.0.0
@@ -200,9 +200,9 @@ class ServicexrefsModel extends ListModel
 	/**
 	 * Get foreign key by table_name and table_id
 	 *
-	 * @param   int     $service_id  ID of service
-	 * @param   string  $table_name  Table name
-	 * @param   int     $table_id    Table ID
+	 * @param  int     $service_id  ID of service
+	 * @param  string  $table_name  Table name
+	 * @param  int     $table_id    Table ID
 	 *
 	 * @since  2.0.0
 	 * @return ?string
@@ -227,7 +227,7 @@ class ServicexrefsModel extends ListModel
 	/**
 	 * Get properties or an individual property for all active channel managers
 	 *
-	 * @param   int     $property_id  ID of property
+	 * @param  int      $property_id  ID of property
 	 * @param  ?string  $method       API method for checking queue
 	 * @param  ?string  $plugin       Specific plugin
 	 *
@@ -250,14 +250,14 @@ class ServicexrefsModel extends ListModel
 		         ->where($db->qn('q.service_id') . '=' . $db->qn('x.service_id'))
 		         ->where($db->qn('q.method') . '=' . $db->q($method));
 
-		$query->select($db->qn(array(
+		$query->select($db->qn([
 			'x.property_id',
 			'x.foreign_key',
 			'x.service_id',
 			'x.new',
 			'i.plugin',
 			'i.parameters'
-		)));
+		]));
 		$query->from($db->qn('#__knowres_service_xref', 'x'))
 		      ->join('', $db->qn('#__knowres_service', 'i')
 			      . ' ON ' . $db->qn('i.id') . '=' . $db->qn('x.service_id')
@@ -290,10 +290,10 @@ class ServicexrefsModel extends ListModel
 	/**
 	 * Get properties for service
 	 *
-	 * @param   int   $service_id  ID of service
-	 * @param   bool  $new         Set to true to only retrieve new records
-	 * @param   bool  $all         All properties for serviceSet to true to only retrieve new records
-	 * @param   bool  $sellonly    Sell only filter (HA only)
+	 * @param  int   $service_id  ID of service
+	 * @param  bool  $new         Set to true to only retrieve new records
+	 * @param  bool  $all         All properties for serviceSet to true to only retrieve new records
+	 * @param  bool  $sellonly    Sell only filter (HA only)
 	 *
 	 * @throws RuntimeException
 	 * @since  3.3.0
@@ -346,9 +346,9 @@ class ServicexrefsModel extends ListModel
 	/**
 	 * Return local ID for foreign key and type
 	 *
-	 * @param   int     $service_id   ID of service
-	 * @param   string  $table_name   Local table
-	 * @param   string  $foreign_key  Foreign key
+	 * @param  int     $service_id   ID of service
+	 * @param  string  $table_name   Local table
+	 * @param  string  $foreign_key  Foreign key
 	 *
 	 * @throws RuntimeException
 	 * @since  2.0.0
@@ -375,8 +375,8 @@ class ServicexrefsModel extends ListModel
 	/**
 	 * Return property id for service and foreign key
 	 *
-	 * @param   int     $service_id   ID of service
-	 * @param   string  $foreign_key  Channel key
+	 * @param  int     $service_id   ID of service
+	 * @param  string  $foreign_key  Channel key
 	 *
 	 * @throws RuntimeException
 	 * @since  2.0.0
@@ -403,7 +403,7 @@ class ServicexrefsModel extends ListModel
 	/**
 	 * Get service xref for the service and property
 	 *
-	 * @param   int  $service_id   ID of service
+	 * @param  int   $service_id   ID of service
 	 * @param  ?int  $property_id  ID of property
 	 *
 	 * @throws RuntimeException
@@ -441,8 +441,8 @@ class ServicexrefsModel extends ListModel
 	/**
 	 * Set the xref contract record to cancelled
 	 *
-	 * @param   int  $service_id   ID of service
-	 * @param   int  $contract_id  ID of contract
+	 * @param  int  $service_id   ID of service
+	 * @param  int  $contract_id  ID of contract
 	 *
 	 * @throws RuntimeException
 	 * @since  2.0.0
@@ -640,7 +640,7 @@ class ServicexrefsModel extends ListModel
 	 * different modules that might need different sets of data or different
 	 * ordering requirements.
 	 *
-	 * @param   string  $id  A prefix for the store id.
+	 * @param  string  $id  A prefix for the store id.
 	 *
 	 * @since  2.0.0
 	 * @return string   A store id.
@@ -663,8 +663,8 @@ class ServicexrefsModel extends ListModel
 	 * Method to autopopulate the model state.
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @param   null|string  $ordering
-	 * @param   null|string  $direction
+	 * @param  null|string  $ordering
+	 * @param  null|string  $direction
 	 *
 	 * @since 2.0.0
 	 */

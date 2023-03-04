@@ -19,15 +19,18 @@ use HighlandVision\KR\Media;
 use HighlandVision\KR\SiteHelper;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Utility;
-use Joomla\CMS\Object\CMSObject;
 use RuntimeException;
 
+use function array_unique;
 use function count;
 use function explode;
 use function implode;
+use function in_array;
 use function ltrim;
 use function rtrim;
+use function str_replace;
 use function stripslashes;
+use function strtolower;
 use function trim;
 
 /**
@@ -41,20 +44,20 @@ class ContractEmail extends Email
 	protected mixed $agent;
 	/** @var string The caretaker email */
 	protected string $caretaker_email = '';
-	/** @var CMSObject Contract item */
-	protected CMSObject $contract;
+	/** @var object Contract item */
+	protected object $contract;
 	/** @var int ID of contract */
 	protected int $contract_id = 0;
 	/** @var array Contract fees */
 	protected array $fees;
-	/** @var CMSObject Guest Db item */
-	protected CMSObject $guest;
-	/** @var CMSObject Manager Db item */
-	protected CMSObject $manager;
+	/** @var object Guest Db item */
+	protected object $guest;
+	/** @var object Manager Db item */
+	protected object $manager;
 	/** @var array Contract notes */
 	protected array $notes;
-	/** @var CMSObject Owner Db item */
-	protected CMSObject $owner;
+	/** @var object Owner Db item */
+	protected object $owner;
 	/** @var float Payment amount */
 	protected float $payment_amount = 0;
 	/** @var string Payment currency */
@@ -63,14 +66,13 @@ class ContractEmail extends Email
 	protected array $payments;
 	/** @var int Payment method via Service */
 	protected int $service_id = 0;
-	/** @var int ID of trigger */
-	protected int $trigger_id = 0;
 
 	/**
+	 * /**
 	 * Constructor
 	 *
-	 * @param   string  $trigger     The email trigger
-	 * @param   int     $trigger_id  ID of required trigger
+	 * @param  string  $trigger     The email trigger
+	 * @param  int     $trigger_id  ID of required trigger
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -85,10 +87,10 @@ class ContractEmail extends Email
 	/**
 	 * Send emails as required for contract
 	 *
-	 * @param   int     $contract_id       ID of contract
-	 * @param   float   $payment_amount    Amount of payment
-	 * @param   string  $payment_currency  Currency of payment
-	 * @param   int     $service_id        ID of service
+	 * @param  int     $contract_id       ID of contract
+	 * @param  float   $payment_amount    Amount of payment
+	 * @param  string  $payment_currency  Currency of payment
+	 * @param  int     $service_id        ID of service
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -142,9 +144,6 @@ class ContractEmail extends Email
 		$this->fees     = KrFactory::getListModel('contractfees')->getForContract($this->contract_id);
 		$this->notes    = KrFactory::getListModel('contractnotes')->getForContract($this->contract_id);
 		$this->manager  = KrFactory::getAdminModel('manager')->getItem($this->contract->manager_id);
-		$this->settings = KrFactory::getListModel('propertysettings')
-		                           ->getPropertysettings($this->contract->property_id);
-
 		if ($this->contract->agent_id)
 		{
 			$this->agent = KrFactory::getAdminModel('agent')->getItem($this->contract->agent_id);
@@ -155,6 +154,161 @@ class ContractEmail extends Email
 		}
 
 		$this->formatData();
+	}
+
+	/**
+	 * Check for and add any auto generated email pdf attachments
+	 *
+	 * @param  array  $pdfs  Array of auto attachments
+	 *
+	 * @throws Exception
+	 * @since  1.0.0
+	 */
+	protected function addAutoAttachment(array $pdfs): void
+	{
+		foreach ($pdfs as $t)
+		{
+			if ($t == 'voucher')
+			{
+				$voucher             = new Media\Pdf\Contract\Voucher('email', $this->contract_id);
+				$this->attachments[] = $voucher->getPdf();
+			}
+			else if ($t == 'guestdata' && $this->contract->guestdata_id)
+			{
+				$guestdata           = new Media\Pdf\Contract\Guestdata('email', $this->contract_id);
+				$this->attachments[] = $guestdata->getPdf();
+			}
+		}
+	}
+
+	/**
+	 * Check for and add any uploaded email attachments
+	 *
+	 * @param  array  $pdfs  Uploaded attachments
+	 *
+	 * @since 1.0.0
+	 */
+	protected function addUploadedAttachment(array $pdfs): void
+	{
+		$matches = [];
+
+		foreach ($pdfs as $t)
+		{
+			if ($t == 'propertys')
+			{
+				$matches['propertys'] = $this->contract->property_id;
+			}
+			else if ($t == 'regions')
+			{
+				$matches['regions'] = $this->property->region_id;
+			}
+			else if ($t == 'towns')
+			{
+				$matches['towns'] = strtolower(str_replace(' ', '-', $this->property->town_name));
+			}
+			else if ($t == 'types')
+			{
+				$matches['types'] = $this->property->type_id;
+			}
+			else if ($t == 'contracts')
+			{
+				$matches['contracts'] = $this->contract->tag;
+			}
+		}
+
+		$matches = array_unique($matches);
+		foreach ($matches as $type => $id)
+		{
+			$pdfs = Media\Pdf::listPdfs($type, $id);
+			if (count($pdfs) > 0)
+			{
+				foreach ($pdfs as $pdf)
+				{
+					$this->attachments[] = $pdf;
+				}
+			}
+		}
+	}
+
+	/**
+	 * Check for any custom by date emails past their normal due date
+	 *
+	 * @throws Exception
+	 * @since  2.5.0
+	 */
+	protected function checkCustomByDate(): void
+	{
+		$emails = KrFactory::getListModel('emailtriggers')->getTriggers('CUSTOMBYDATE');
+		if ($emails)
+		{
+			foreach ($emails as $e)
+			{
+				if (!$e->days_before || !$e->send_guest)
+				{
+					continue;
+				}
+
+				$due_date = TickTock::modifyDays($this->today, $e->days);
+
+				if ($e->trigger_cron == 'arrival')
+				{
+					$actual_date = $this->contract->arrival;
+				}
+				else if ($e->trigger_cron == 'departure')
+				{
+					$actual_date = $this->contract->departure;
+				}
+				else if ($e->trigger_cron == 'expiry_date')
+				{
+					$actual_date = $this->contract->expiry_date;
+				}
+				else if ($e->trigger_cron == 'balance_date')
+				{
+					$actual_date = $this->contract->balance_date;
+				}
+
+				if ($due_date < $actual_date)
+				{
+					continue;
+				}
+
+				$values = Utility::decodeJson($e->booking_status, true);
+				if (!in_array($this->contract->booking_status, $values))
+				{
+					continue;
+				}
+
+				$this->sendEmails($e);
+			}
+		}
+	}
+
+	/**
+	 * Build email body and subject
+	 *
+	 * @param  int   $template_id  ID of template to be used
+	 * @param  bool  $send_guest   Indicates a guest email
+	 *
+	 * @throws Exception
+	 * @since  1.0.0
+	 */
+	protected function constructEmail(int $template_id, bool $send_guest = false): void
+	{
+		$template = $this->getTemplate($template_id);
+
+		$this->output_message = $template->blurb;
+		$this->output_subject = $template->subject;
+		foreach ($this->data as $k => $v)
+		{
+			$this->output_message = str_replace("[$k]", $v, $this->output_message);
+			$this->output_subject = str_replace("[$k]", $v, $this->output_subject);
+		}
+
+		$this->attachments = null;
+		$this->addUploadedAttachment($template->pdf_uploaded);
+		$this->addAutoAttachment($template->pdf_auto);
+
+		$this->output_message = $this->makePretty($send_guest);
 	}
 
 	/**
@@ -207,7 +361,7 @@ class ContractEmail extends Email
 		$notes                    = $this->setNotes('2');
 		$this->data['OWNERNOTES'] = $notes ?: KrMethods::plain('JNO');
 
-		if ($this->agency_id)
+		if ($this->agency->id)
 		{
 			$this->setHelpScout();
 		}
@@ -216,7 +370,7 @@ class ContractEmail extends Email
 	/**
 	 * Send guest email
 	 *
-	 * @param   int  $template_id  ID of email template
+	 * @param  int  $template_id  ID of email template
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -224,13 +378,13 @@ class ContractEmail extends Email
 	protected function sendEmailGuest(int $template_id)
 	{
 		$cc = [];
-		if ($this->guest_email_2)
+		if ($this->guest->email_2)
 		{
-			$cc[] = $this->guest_email_2;
+			$cc[] = $this->guest->email_2;
 		}
-		if ($this->guest_email_3)
+		if ($this->guest->email_3)
 		{
-			$cc[] = $this->guest_email_3;
+			$cc[] = $this->guest->email_3;
 		}
 
 		if (count($cc))
@@ -243,7 +397,7 @@ class ContractEmail extends Email
 		$tags[] = 'guest';
 		$tags[] = $this->property->property_name;
 
-		$this->dispatchEmail($this->guest_email, $this->guest->firstname, $this->guest->surname, $tags);
+		$this->dispatchEmail($this->guest->email, $this->guest->firstname, $this->guest->surname, $tags);
 
 		$text = KrMethods::sprintf(
 			'COM_KNOWRES_CONTRACTNOTE_TEXT_SENT_GUEST', $this->Translations->getText('emailtemplate', $template_id)
@@ -262,16 +416,16 @@ class ContractEmail extends Email
 	/**
 	 * Send owner email
 	 *
-	 * @param   int  $template_id  ID of template
+	 * @param  int    $template_id  ID of template
+	 * @param  array  $emails       Owner emails
 	 *
 	 * @throws Exception
-	 * @since 3.3.0
+	 * @since  3.3.0
 	 */
-	protected function sendEmailOwner(int $template_id)
+	protected function sendEmailOwner(int $template_id, array $emails)
 	{
-		$emails = explode(',', stripslashes(trim($this->property->property_email)));
-		$count  = 0;
-		$cc     = [];
+		$count = 0;
+		$cc    = [];
 
 		foreach ($emails as $email)
 		{
@@ -331,7 +485,7 @@ class ContractEmail extends Email
 	/**
 	 * Send email
 	 *
-	 * @param   object  $trigger  Email trigger
+	 * @param  object  $trigger  Email trigger
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -342,9 +496,9 @@ class ContractEmail extends Email
 		$this->bcc        = null;
 		$this->reply_to   = $this->manager_email;
 		$this->reply_name = $this->manager_name;
-		$this->constructEmail($trigger->email_template_id, true, $trigger->send_guest);
+		$this->constructEmail($trigger->email_template_id, $trigger->send_guest);
 
-		if ($trigger->send_guest && $this->guest_email)
+		if ($trigger->send_guest && $this->guest->email)
 		{
 			$this->sendEmailGuest($trigger->email_template_id);
 			$this->cc = null;
@@ -355,16 +509,16 @@ class ContractEmail extends Email
 			$emails = explode(',', stripslashes(trim($this->property->property_email)));
 			if (is_countable($emails) && count($emails))
 			{
-				$this->sendEmailOwner($trigger->email_template_id);
+				$this->sendEmailOwner($trigger->email_template_id, $emails);
 				$this->cc = null;
 			}
 		}
 
 		if ($trigger->send_caretaker && $this->caretaker_email)
 		{
-			KrMethods::sendEmail(
-				$this->getFromEmail(), $this->getFromName(), $this->caretaker_email, $this->output_subject,
-				$this->output_message, 1, $this->cc, $this->bcc, $this->reply_to, $this->reply_name, $this->attachments
+			KrMethods::sendEmail($this->getFromEmail(), $this->getFromName(), $this->caretaker_email,
+				$this->output_subject, $this->output_message, 1, $this->cc, $this->bcc, $this->reply_to,
+				$this->reply_name, $this->attachments
 			);
 		}
 
@@ -424,7 +578,7 @@ class ContractEmail extends Email
 	protected function setButtons()
 	{
 		$link                       = SiteHelper::buildDashboardLink($this->contract, 'reviewform', true);
-		$this->data['BUTTONREVIEW'] = KrMethods::render('emails . button',
+		$this->data['BUTTONREVIEW'] = KrMethods::render('emails.button',
 			['button_bg' => $this->button_bg,
 			 'font'      => $this->font,
 			 'link'      => $link,
@@ -563,10 +717,6 @@ class ContractEmail extends Email
 	 */
 	protected function setGuestData()
 	{
-		$this->guest_email   = $this->guest->email;
-		$this->guest_email_2 = $this->guest->email_2;
-		$this->guest_email_3 = $this->guest->email_3;
-
 		$this->data['GUESTEMAIL']     = $this->guest->email;
 		$this->data['GUESTFIRSTNAME'] = $this->guest->firstname;
 		$this->data['GUESTNAME']      = $this->guest->firstname . ' ' . $this->guest->surname;
@@ -640,13 +790,12 @@ class ContractEmail extends Email
 		if ((int) $this->params->get('link_login', '0'))
 		{
 			$query                   = [
-				'option' => 'com_knowres',
 				'Itemid' => (int) $this->params->get('link_login', '0'),
 			];
 			$this->data['LINKLOGIN'] = KrMethods::render('html.link',
 				['query'    => $query,
 				 'external' => true,
-				 'text'     => KrMethods::plain('COM_KNOWRES_EMAIL_TERMS'),
+				 'text'     => KrMethods::plain('COM_KNOWRES_HERE'),
 				 'title'    => ''
 				]);
 		}
@@ -655,7 +804,7 @@ class ContractEmail extends Email
 	/**
 	 * Format notes for audience
 	 *
-	 * @param   int  $audience  '1' Guest, '2' Owner
+	 * @param  int  $audience  '1' Guest, '2' Owner
 	 *
 	 * @since  1.0.0
 	 * @return string
@@ -711,7 +860,7 @@ class ContractEmail extends Email
 	/**
 	 * Set Payments total
 	 *
-	 * @param   bool  $confirmed_only  Set true to only include confirmed payments
+	 * @param  bool  $confirmed_only  Set true to only include confirmed payments
 	 *
 	 * @since 1.0.0
 	 */
@@ -752,15 +901,15 @@ class ContractEmail extends Email
 		}
 		$this->data['PROPERTYCOUNTRY']  = $this->property->country_name;
 		$this->data['PROPERTYNAME']     = $this->property->property_name;
+		$this->data['PROPERTYSTREET']   = $this->property->street;
 		$this->data['PROPERTYPOSTCODE'] = $this->property->property_postcode;
 		$this->data['PROPERTYREGION']   = $this->property->region_name;
 		$this->data['PROPERTYTOWN']     = $this->property->town_name;
 
 		$this->caretaker_email        = $this->property->caretaker_email;
 		$this->data['SECURITYTEXT']   = $this->property->security_text;
-		$this->data['SECURITYAMOUNT'] = Utility::displayValue(
-			$this->property->security_amount, $this->settings['currency']
-		);
+		$this->data['SECURITYAMOUNT'] = Utility::displayValue($this->property->security_amount,
+			$this->contract->currency);
 
 		if (isset($this->property->nearest_transport))
 		{

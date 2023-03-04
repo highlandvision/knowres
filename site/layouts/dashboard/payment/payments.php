@@ -41,7 +41,7 @@ extract($displayData);
 			</h4>
 		<?php else: ?>
 			<a class="button no-margin-bottom" id="showgateways">
-				<?php echo KrMethods::plain('COM_KNOWRES_CONTRACTPAYMENTS'); ?>
+				<?php echo KrMethods::plain('COM_KNOWRES_PAYMENT_OPTIONS'); ?>
 			</a>
 		<?php endif; ?>
 	</div>

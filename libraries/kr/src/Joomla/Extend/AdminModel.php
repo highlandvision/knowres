@@ -14,10 +14,10 @@ defined('_JEXEC') or die;
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
+use HighlandVision\KR\Logger;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Utility;
 use Joomla\CMS\Form\Form;
-use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Table\Table;
 use RuntimeException;
 use stdClass;
@@ -35,7 +35,7 @@ class AdminModel extends \Joomla\CMS\MVC\Model\AdminModel
 	/**
 	 * Constructor.
 	 *
-	 * @param   array  $config  An optional associative array of configuration settings.
+	 * @param  array  $config  An optional associative array of configuration settings.
 	 *
 	 * @throws Exception
 	 * @since  3.0.0
@@ -48,8 +48,8 @@ class AdminModel extends \Joomla\CMS\MVC\Model\AdminModel
 	/**
 	 * Set updated_at timestamp for publish/unpublish listing option
 	 *
-	 * @param   int     $id     ID of item
-	 * @param   string  $table  Table to update (table name only)
+	 * @param  int     $id     ID of item
+	 * @param  string  $table  Table to update (table name only)
 	 *
 	 * @throws Exception
 	 * @since   3.3.0
@@ -69,12 +69,12 @@ class AdminModel extends \Joomla\CMS\MVC\Model\AdminModel
 	/**
 	 * Method to get a model record.
 	 *
-	 * @param   int  $pk  The id of the primary key.
+	 * @param  int  $pk  The id of the primary key.
 	 *
 	 * @since  1.6
-	 * @return CMSObject|bool  Object on success, false on failure.
+	 * @return object|false  Object on success, false on failure.
 	 */
-	public function getItem($pk = null): CMSObject|bool
+	public function getItem($pk = null): object|bool
 	{
 		return parent::getItem($pk);
 	}
@@ -82,11 +82,11 @@ class AdminModel extends \Joomla\CMS\MVC\Model\AdminModel
 	/**
 	 * Set form attributes
 	 *
-	 * @param   int     $setting  Setting for field
+	 * @param  int     $setting   Setting for field
 	 *                            0 = Optional, 1 = Required, 2 = Hidden
-	 * @param   string  $name     Field name
+	 * @param  string  $name      Field name
 	 *                            0 = Optional, 1 = Required, 2 = Hidden
-	 * @param   Form    $form     Form object
+	 * @param  Form    $form      Form object
 	 *
 	 * @throws UnexpectedValueException
 	 * @since  4.0.0
@@ -102,12 +102,12 @@ class AdminModel extends \Joomla\CMS\MVC\Model\AdminModel
 		if ($setting == 0 || $setting == 2)
 		{
 			$attr  = 'required';
-			$value = false;
+			$value = 'false';
 		}
 		else if ($setting == 1)
 		{
 			$attr  = 'required';
-			$value = true;
+			$value = 'true';
 		}
 
 		$form->setFieldAttribute($name, $attr, $value);
@@ -118,8 +118,8 @@ class AdminModel extends \Joomla\CMS\MVC\Model\AdminModel
 	/**
 	 * Method to get the record form.
 	 *
-	 * @param   array   $data      An optional array of data for the form to interogate.
-	 * @param   bool    $loadData  True if the form is to load its own data (default case), false if not.
+	 * @param  array    $data      An optional array of data for the form to interogate.
+	 * @param  bool     $loadData  True if the form is to load its own data (default case), false if not.
 	 * @param  ?string  $source    The form name if required.
 	 *
 	 * @throws Exception
@@ -137,10 +137,10 @@ class AdminModel extends \Joomla\CMS\MVC\Model\AdminModel
 
 			return $this->loadForm($this->typeAlias, $source, ['control' => 'jform', 'load_data' => $loadData]);
 		}
-		catch (Exception)
+		catch (Exception $e)
 		{
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_FATAL'));
-
+			Logger::logMe($e->getMessage());
 			return false;
 		}
 	}
@@ -148,11 +148,11 @@ class AdminModel extends \Joomla\CMS\MVC\Model\AdminModel
 	/**
 	 * Method to save the form data.
 	 *
-	 * @param   array  $data  The form data.
+	 * @param  array  $data  The form data.
 	 *
-	 * @throws  Exception
-	 * @since   3.2
-	 * @return  bool  True on success.
+	 * @throws Exception
+	 * @since  3.2
+	 * @return bool  True on success.
 	 */
 	public function save($data): bool
 	{
@@ -180,7 +180,7 @@ class AdminModel extends \Joomla\CMS\MVC\Model\AdminModel
 	/**
 	 * Prepare and sanitise the table prior to saving.
 	 *
-	 * @param   Table  $table  Table data
+	 * @param  Table  $table  Table data
 	 *
 	 * @throws RuntimeException
 	 * @throws Exception

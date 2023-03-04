@@ -15,8 +15,8 @@ use Joomla\CMS\Form\Form;
 extract($displayData);
 /**
  * Layout variables
- * Service log Form object
  *
+ * Service log Form object
  * @var Form $form
  */
 ?>

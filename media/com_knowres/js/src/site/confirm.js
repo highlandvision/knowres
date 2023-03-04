@@ -14,7 +14,7 @@
 	const livesite = window.location.origin + '/';
 
 	let lang = $("#kr-lang").data('krlang');
-	let myConfirm;
+	let myConfirm, action, $mytask;
 
 	class Krconfirm {
 		constructor($form) {
@@ -27,12 +27,18 @@
 		}
 
 		updateQuote($form) {
+			action = $form.attr('action');
+			$form.attr('action', 'index.php?option=com_knowres&task=confirm.compute&lang=' + lang);
+			$mytask = $('#mytask');
+			$mytask.val('confirm.compute');
 			jQuery.ajax({
 				type:     'POST',
-				url:      livesite + 'index.php?option=com_knowres&task=confirm.compute&lang=' + lang,
+				url:      'index.php?option=com_knowres&task=confirm.compute&lang=' + lang,
 				data:     $form.serializeArray(),
 				dataType: 'json',
 				success:  function (result) {
+					$form.attr('action',action);
+					$mytask.val('confirm.payment');
 					if (result.success) {
 						const data = result.data;
 						if (data.hasOwnProperty('redirect')) {
@@ -62,37 +68,13 @@
 		if ($element.length) {
 			myConfirm = new Krconfirm($element);
 		}
-
-		$element.on('change, click', '.kr-calculate', function (e) {
+		$element.on('change click', '.kr-calculate', function (e) {
 			e.preventDefault();
 			$element = $('#kr-form-confirm');
 			myConfirm.updateQuote($element);
 		});
 
-		$(document).on('submit', '.jsonform', function (e) {
-			e.preventDefault();
-			const $form = $(this);
-			$.ajax({
-				type:     'POST',
-				url:      $form.attr('action') + '&lang=' + lang,
-				data:     $form.serialize(),
-				dataType: 'json',
-				success:  function (result) {
-					if (result.success) {
-						window.location.href = result.data.redirect;
-					} else {
-						$('.kr-ajax-modal-error-message').html(result.message);
-						const $modal = new Foundation.Reveal($('#KrAjaxModalError'));
-						$modal.open();
-					}
-				},
-				error:    function () {
-					$('.kr-ajax-modal-error-message').html('Sorry an error has occurred, please try again');
-					const $modal = new Foundation.Reveal($('#KrAjaxModalError'));
-					$modal.open();
-				}
-			});
-		}).on('click', '#checkterms', function (e) {
+		$(document).on('click', '#checkterms', function (e) {
 			e.preventDefault();
 			if (checkTerms()) {
 				$('#checkterms').trigger('submit');

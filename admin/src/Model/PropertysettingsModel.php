@@ -12,6 +12,7 @@ namespace HighlandVision\Component\Knowres\Administrator\Model;
 defined('_JEXEC') or die;
 
 use Exception;
+use HighlandVision\Beyond;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\ListModel;
@@ -278,7 +279,7 @@ class PropertysettingsModel extends ListModel
 	 *
 	 * @throws RuntimeException
 	 * @throws Exception
-	 * @since 3.3.0
+	 * @since  3.3.0
 	 */
 	public function saveSettings(array $settings, int $property_id)
 	{
@@ -348,24 +349,21 @@ class PropertysettingsModel extends ListModel
 
 					if ($rates_update)
 					{
-						KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updatePropertyRates',
-							$property_id);
+						KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updatePropertyRates', $property_id);
 					}
 
 					// Update beyond if min / base rates have changed and solo property
 					if ($bp_update && $property_id)
 					{
-						KrFactory::getAdminModel('service')::beyondSettingRateUpdate($property_id);
+						Beyond\Rates::settingRateUpdate($property_id);
 					}
 
 					if ($deposit_update)
 					{
 						if ($property_id)
 						{
-							KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updateProperty',
-								$property_id);
-							KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updatePropertyRates',
-								$property_id);
+							KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updateProperty', $property_id);
+							KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updatePropertyRates', $property_id);
 						}
 						else
 						{
@@ -380,8 +378,7 @@ class PropertysettingsModel extends ListModel
 				catch (Exception $e)
 				{
 					$db->transactionRollback();
-
-					throw new $e;
+					throw $e;
 				}
 			}
 		}

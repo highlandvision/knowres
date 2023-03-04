@@ -29,8 +29,8 @@ class ExtraController extends FormController
 	/**
 	 * Process additional requirements after save payment
 	 *
-	 * @param   BaseDatabaseModel  $model      The data model object.
-	 * @param   array              $validData  The validated data.
+	 * @param  BaseDatabaseModel  $model      The data model object.
+	 * @param  array              $validData  The validated data.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0

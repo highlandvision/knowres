@@ -6,21 +6,21 @@
  * @license     See the file "LICENSE.txt" for the full license governing this code.
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
+
 /** @noinspection PhpUnhandledExceptionInspection */
 
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Utility;
-use Joomla\CMS\Object\CMSObject;
 
 extract($displayData);
 /**
  * Layout variables
  *
- * @var CMSObject $contract The contract item.
- * @var mixed     $fees     Contract fees.
- * @var mixed     $payments Contract payments
- * @var float     $balance  Outstanding balance
+ * @var false|object $contract The contract item.
+ * @var mixed        $fees     Contract fees.
+ * @var mixed        $payments Contract payments
+ * @var float        $balance  Outstanding balance
  */
 
 $balance_amount = Utility::roundValue($contract->contract_total - $contract->deposit, $contract->currency);

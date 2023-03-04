@@ -12,6 +12,7 @@
 defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrMethods;
+use HighlandVision\KR\SiteHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 
@@ -19,28 +20,28 @@ $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useScript('com_knowres.site')
    ->useScript('form.validate')
    ->useScript('keepalive');
+
+$Itemid = SiteHelper::getItemId('com_knowres', 'confirm', ['layout' => 'payment']);
+$action = KrMethods::route('index.php?option=com_knowres&view=confirm&layout=payment&Itemid=' . $Itemid);
 ?>
 
 <div id="kr-confirm">
 	<div class="row">
 		<div class="small-12 columns">
 			<?php if ($this->property->booking_type == 2) : ?>
-				<h1 class="h2"><?php echo KrMethods::sprintf('COM_KNOWRES_CONFIRM_BOOK_YOUR_RESERVATION',
+				<h1><?php echo KrMethods::sprintf('COM_KNOWRES_CONFIRM_BOOK_YOUR_RESERVATION',
 						$this->property->property_name); ?></h1>
 			<?php else: ?>
-				<h1 class="h2"><?php echo KrMethods::sprintf('COM_KNOWRES_CONFIRM_REQUEST_YOUR_RESERVATION',
+				<h1><?php echo KrMethods::sprintf('COM_KNOWRES_CONFIRM_REQUEST_YOUR_RESERVATION',
 						$this->property->property_name); ?></h1>
 			<?php endif; ?>
-			<h6><?php echo KrMethods::plain('COM_KNOWRES_CONFIRM_BOOK_ENTER'); ?></h6>
-			<br>
+			<h5><?php echo KrMethods::plain('COM_KNOWRES_CONFIRM_BOOK_ENTER'); ?></h5>
 		</div>
 	</div>
 
 	<div class="row">
 		<div class="small-12 medium-7 large-8 columns">
-			<form action="<?php echo KrMethods::route('index.php?option=com_knowres&task=confirm.validate'); ?>"
-			      class="form-validate jsonform" id="kr-form-confirm" method="post">
-
+			<form action="<?php echo $action; ?>" class="form-validate" id="kr-form-confirm" method="post">
 				<?php echo $this->loadTemplate('coupon'); ?>
 				<?php echo $this->loadTemplate('extras'); ?>
 				<?php echo $this->loadTemplate('guest'); ?>
@@ -49,7 +50,7 @@ $wa->useScript('com_knowres.site')
 					'gdpr_statement'); ?>
 				<?php if (!empty($gdpr)): ?>
 					<div class="callout small success">
-						<p><?php echo $gdpr; ?></p>
+						<small><?php echo $gdpr; ?></small>
 					</div>
 				<?php endif; ?>
 
@@ -63,6 +64,7 @@ $wa->useScript('com_knowres.site')
 				<input type="hidden" name="jform[property_id]" value="<?php echo $this->contractData->property_id; ?>">
 				<input type="hidden" name="jform[arrival]" value="<?php echo $this->contractData->arrival; ?>">
 				<input type="hidden" name="jform[room_total]" value="<?php echo $this->contractData->room_total; ?>">
+				<input type="hidden" name="task" id="mytask" value="confirm.payment" />
 			</form>
 		</div>
 		<div class="small-12 medium-5 large-4 columns">

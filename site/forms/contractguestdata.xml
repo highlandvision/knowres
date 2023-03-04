@@ -87,14 +87,14 @@
 			description="COM_KNOWRES_CONTRACTGUESTDATAFORM_ARRIVAL_TIME_DSC"/>
 	</fieldset>
 	<fieldset name="krarrivalauto">
-		<field name="arrival_from"
+		<field name="auto_arrival_from"
 			filter="string"
 			hiddenDescription="true"
 			showon="arrival_means:auto"
 			type="text"
 			label="COM_KNOWRES_CONTRACTGUESTDATAFORM_AUTO_ARRIVAL_FROM_LBL"
 			description="COM_KNOWRES_CONTRACTGUESTDATAFORM_AUTO_ARRIVAL_FROM_DSC"/>
-		<field name="arrival_time"
+		<field name="auto_arrival_time"
 			filter="string"
 			hiddenDescription="true"
 			type="text"

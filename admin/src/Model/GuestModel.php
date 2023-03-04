@@ -18,7 +18,6 @@ use HighlandVision\KR\Joomla\Extend\AdminModel;
 use HighlandVision\KR\Translations;
 use HighlandVision\KR\Utility;
 use Joomla\CMS\Form\Form;
-use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Versioning\VersionableControllerTrait;
 use stdClass;
 use UnexpectedValueException;
@@ -46,7 +45,7 @@ class GuestModel extends AdminModel
 	/**
 	 * Override checkin for guest as checked_out set to 0.
 	 *
-	 * @param   mixed  $pks  The ID of the primary key or an array of IDs
+	 * @param  mixed  $pks  The ID of the primary key or an array of IDs
 	 *
 	 * @throws Exception
 	 * @since  4.0.0
@@ -68,12 +67,42 @@ class GuestModel extends AdminModel
 	}
 
 	/**
+	 * Method to test whether a record can have its state changed.
+	 * Disallow when contracts ecist
+	 *
+	 * @param  object  $record  A record object.
+	 *
+	 * @throws Exception
+	 * @since  4.0.0
+	 * @return bool  True if allowed to change the state of the record. Defaults to the permission for the component.
+	 */
+	protected function canEditState($record): bool
+	{
+		//TODO-v4.1 Revisit this Joomla is a bit out with messages
+		// nothing is updated if errors exist but messages sayus that updates are done
+		// Action trying to unpublish guests from listing page when contracts exists
+		if ($record->state == 1)
+		{
+			$count = KrFactory::getListModel('contracts')->getCountForGuest($record->id);
+			if ($count > 0)
+			{
+				KrMethods::message(KrMethods::sprintf('COM_KNOWRES_GUEST_RULE_EDIT',
+					$record->firstname . ' ' . $record->surname), 'error');
+
+				return false;
+			}
+		}
+
+		return parent::canEditState($record);
+	}
+
+	/**
 	 * Method to get the record form.
 	 *
-	 * @param   array   $data         An optional array of data for the form to interogate.
-	 * @param   bool    $loadData     True if the form is to load its own data (default case), false if not.
+	 * @param  array    $data         An optional array of data for the form to interogate.
+	 * @param  bool     $loadData     True if the form is to load its own data (default case), false if not.
 	 * @param  ?string  $source       The form name if required.
-	 * @param   int     $property_id  ID of property if required fields to be set.
+	 * @param  int      $property_id  ID of property if required fields to be set.
 	 *
 	 * @throws Exception
 	 * @since  1.0
@@ -95,17 +124,16 @@ class GuestModel extends AdminModel
 	}
 
 	/**
-	 * Method to get a knowres record.
+	 * Method to get a Guest item.
 	 *
-	 * @param   int  $pk  The id of the primary key.
+	 * @param  int  $pk  The id of the primary key.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return CMSObject|false  Object on success, false on failure.
+	 * @return object|false  Object on success, false on failure.
 	 */
-	public function getItem($pk = null): CMSObject|false
+	public function getItem($pk = null): object|false
 	{
-		/* @var GuestModel $item */
 		$item = parent::getItem($pk);
 		if ($item)
 		{
@@ -166,26 +194,12 @@ class GuestModel extends AdminModel
 	}
 
 	/**
-	 * Method to save the form data.
-	 *
-	 * @param   array  $data  The existing form data.
-	 *
-	 * @throws Exception
-	 * @since  4.0.0
-	 * @return bool  True on success.
-	 */
-	public function save($data): bool
-	{
-		return parent::save($data);
-	}
-
-	/**
 	 * Method to validate the form data.
 	 *
-	 * @param   Form    $form      The form to validate against.
-	 * @param   array   $data      The data to validate.
+	 * @param  Form     $form      The form to validate against.
+	 * @param  array    $data      The data to validate.
 	 * @param  ?string  $group     The name of the field group to validate.
-	 * @param   array   $settings  Property settings
+	 * @param  array    $settings  Property settings
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -193,7 +207,7 @@ class GuestModel extends AdminModel
 	 */
 	public function validate($form, $data, $group = null, array $settings = []): array|bool
 	{
-		$data['telephone'] = Utility::encodeJson(KrMethods::inputArray('telephone', []));
+		$data['telephone'] = Utility::encodeJson(KrMethods::inputArray('telephone'));
 
 		if (is_countable($settings) && count($settings))
 		{
@@ -224,8 +238,8 @@ class GuestModel extends AdminModel
 	/**
 	 * Set the required fields for the manager guest form (from settings)
 	 *
-	 * @param   Form   $form      Guest form
-	 * @param   array  $settings  Property settings
+	 * @param  Form   $form      Guest form
+	 * @param  array  $settings  Property settings
 	 *
 	 * @throws UnexpectedValueException
 	 * @since  1.0.0

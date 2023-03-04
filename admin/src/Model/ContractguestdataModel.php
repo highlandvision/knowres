@@ -18,7 +18,6 @@ use HighlandVision\KR\Joomla\Extend\AdminModel;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Utility;
 use Joomla\CMS\Form\Form;
-use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Versioning\VersionableControllerTrait;
 use stdClass;
 
@@ -139,12 +138,12 @@ class ContractguestdataModel extends AdminModel
 	/**
 	 * Method to get a knowres record.
 	 *
-	 * @param   int  $pk  The id of the primary key.
+	 * @param  int  $pk  The id of the primary key.
 	 *
 	 * @since  1.0.0
-	 * @return CMSObject|false  Object on success, false on failure.
+	 * @return object|false  Object on success, false on failure.
 	 */
-	public function getItem($pk = null): CMSObject|false
+	public function getItem($pk = null): object|false
 	{
 		$item = parent::getItem($pk);
 		if ($item)
@@ -155,20 +154,6 @@ class ContractguestdataModel extends AdminModel
 		}
 
 		return $item;
-	}
-
-	/**
-	 * Method to save the form data.
-	 *
-	 * @param   array  $data  The existing form data.
-	 *
-	 * @throws Exception
-	 * @since  4.0.0
-	 * @return bool  True on success.
-	 */
-	public function save($data): bool
-	{
-		return parent::save($data);
 	}
 
 	/**
@@ -184,11 +169,11 @@ class ContractguestdataModel extends AdminModel
 	 */
 	public function validate($form, $data, $group = null): bool|array
 	{
-		$data['guestinfo']   = Utility::encodeJson(KrMethods::inputArray('guestinfo', []));
-		$data['arrival_air'] = Utility::encodeJson(KrMethods::inputArray('arrival_air', []));
+		$data['guestinfo']   = Utility::encodeJson(KrMethods::inputArray('guestinfo'));
+		$data['arrival_air'] = Utility::encodeJson(KrMethods::inputArray('arrival_air'));
 		$data['options']     = $this->prepareOptions();
 
-		$jform            = KrMethods::inputArray('jform', []);
+		$jform            = KrMethods::inputArray('jform');
 		$data['children'] = '';
 		if (!empty($jform['child_ages']))
 		{
@@ -207,8 +192,8 @@ class ContractguestdataModel extends AdminModel
 			return false;
 		}
 
-		$dob            = KrMethods::inputArray('dob', []);
-		$document_issue = KrMethods::inputArray('document_issue', []);
+		$dob            = KrMethods::inputArray('dob');
+		$document_issue = KrMethods::inputArray('document_issue');
 		$today          = TickTock::getDate();
 		foreach ($dob as $d)
 		{
@@ -260,8 +245,8 @@ class ContractguestdataModel extends AdminModel
 	 */
 	private function prepareOptions(): array
 	{
-		$oid    = KrMethods::inputArray('oid', []);
-		$answer = KrMethods::inputArray('answer', []);
+		$oid    = KrMethods::inputArray('oid');
+		$answer = KrMethods::inputArray('answer');
 
 		$options = [];
 		for ($i = 0; $i < count($oid); $i++)

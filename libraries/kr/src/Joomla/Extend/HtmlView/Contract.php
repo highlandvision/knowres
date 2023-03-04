@@ -47,8 +47,8 @@ class Contract extends KrHtmlView
 	/**
 	 * Add related property data.
 	 *
-	 * @param   Toolbar  $Toolbar  Current toolbar.
-	 * @param   string   $name     Name of view
+	 * @param  Toolbar  $Toolbar  Current toolbar.
+	 * @param  string   $name     Name of view
 	 *
 	 * @throws Exception
 	 * @since  4.0.0
@@ -125,8 +125,8 @@ class Contract extends KrHtmlView
 	/**
 	 * Add the custom toolbar for contract show
 	 *
-	 * @param   Toolbar  $Toolbar  Current toolbar
-	 * @param   string   $name     Name of view
+	 * @param  Toolbar  $Toolbar  Current toolbar
+	 * @param  string   $name     Name of view
 	 *
 	 * @throws Exception
 	 * @since  2.0.0
@@ -193,6 +193,10 @@ class Contract extends KrHtmlView
 			             ->text('JTOOLBAR_DELETE');
 		}
 
+		if ($this->access_level == 40)
+		{
+			$Toolbar = $this->addRelated($Toolbar, 'show');
+		}
 		$Toolbar = $this->addPdf($Toolbar);
 
 		$link = KrMethods::route('index.php?option=com_knowres&task=property.calendar&property_id='
@@ -236,7 +240,7 @@ class Contract extends KrHtmlView
 	/**
 	 * Check if pdf toolbar required and add
 	 *
-	 * @param   Toolbar  $Toolbar  Toolbar instsance
+	 * @param  Toolbar  $Toolbar  Toolbar instsance
 	 *
 	 * @since  4.0.0
 	 * @return Toolbar

@@ -48,7 +48,7 @@ class Cloner
 	/**
 	 * Initialise
 	 *
-	 * @param   int  $id  ID of existing property to clone
+	 * @param  int  $id  ID of existing property to clone
 	 *
 	 * @throws InvalidArgumentException
 	 * @since  3.0.0
@@ -63,7 +63,7 @@ class Cloner
 	/**
 	 * Clone property
 	 *
-	 * @param   array  $options  Array of cloning options
+	 * @param  array  $options   Array of cloning options
 	 *                           Default values if not set
 	 *                           $options['property_name']  New property_name;
 	 *                           $options['image']          Clone images Default true
@@ -99,9 +99,9 @@ class Cloner
 	/**
 	 * Create cloned tables with translations
 	 *
-	 * @param   string  $newid    New property id
-	 * @param   string  $type     Child property type
-	 * @param   array   $options  Clone options
+	 * @param  string  $newid    New property id
+	 * @param  string  $type     Child property type
+	 * @param  array   $options  Clone options
 	 *
 	 * @throws Exception
 	 * @throws RuntimeException
@@ -225,9 +225,10 @@ class Cloner
 
 			return true;
 		}
-		catch (RuntimeException)
+		catch (RuntimeException $re)
 		{
 			$this->db->transactionRollback();
+			Logger::logMe($re->getMessage(), 'info');
 
 			return false;
 		}
@@ -243,8 +244,8 @@ class Cloner
 	/**
 	 * Create cloned tables with translations
 	 *
-	 * @param   string  $table  Table to replicate
-	 * @param   string  $type   TranslationsModel item
+	 * @param  string  $table  Table to replicate
+	 * @param  string  $type   TranslationsModel item
 	 *
 	 * @throws RuntimeException
 	 * @throws Exception
@@ -403,9 +404,10 @@ class Cloner
 
 			return true;
 		}
-		catch (RuntimeException)
+		catch (RuntimeException $re)
 		{
 			$this->db->transactionRollback();
+			Logger::logMe($re->getMessage());
 
 			return false;
 		}
@@ -414,7 +416,7 @@ class Cloner
 	/**
 	 * Set clone options from input or default if no input
 	 *
-	 * @param   array  $options  Parameter input options
+	 * @param  array  $options  Parameter input options
 	 *
 	 * @since 3.0.0
 	 */
@@ -456,7 +458,7 @@ class Cloner
 	/**
 	 * Alter tmp remove primary key
 	 *
-	 * @param   int  $scope  Tables to drop 1 = tmp, 2 = 2mp1, 3 = both
+	 * @param  int  $scope  Tables to drop 1 = tmp, 2 = 2mp1, 3 = both
 	 *
 	 * @throws RuntimeException
 	 * @since  3.0.0
@@ -481,9 +483,9 @@ class Cloner
 	/**
 	 * Copy tmp to require table
 	 *
-	 * @param   string  $table   Table name to insert
-	 * @param   string  $tmp     Temp table to read
-	 * @param   bool    $getNew  True to return new ID
+	 * @param  string  $table   Table name to insert
+	 * @param  string  $tmp     Temp table to read
+	 * @param  bool    $getNew  True to return new ID
 	 *
 	 * @since  3.0.0
 	 * @return int

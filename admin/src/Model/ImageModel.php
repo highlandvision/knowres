@@ -22,7 +22,6 @@ use HighlandVision\KR\Session as KrSession;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Translations;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Versioning\VersionableControllerTrait;
 use Joomla\Utilities\ArrayHelper;
@@ -48,7 +47,7 @@ class ImageModel extends AdminModel
 	/**
 	 * Delete Images
 	 *
-	 * @param   array  $pks
+	 * @param  array  $pks Image IDs for deletion
 	 *
 	 * @throws Exception
 	 * @throws RuntimeException
@@ -72,9 +71,12 @@ class ImageModel extends AdminModel
 			$db->setQuery($query);
 			$result = $db->loadObject();
 
-			$property_id = $result->property_id;
-			$property    = new Property($result->property_id);
-			$property->deleteImage($result->filename);
+			if (!empty($result->property_id) && !empty($result->filename))
+			{
+				$property_id = $result->property_id;
+				$property    = new Property($property_id);
+				$property->deleteImage($result->filename);
+			}
 		}
 
 		parent::delete($pks);
@@ -88,12 +90,12 @@ class ImageModel extends AdminModel
 	/**
 	 * Method to get a knowres record.
 	 *
-	 * @param   int  $pk  The id of the primary key.
+	 * @param  int  $pk  The id of the primary key.
 	 *
 	 * @since  1.0.0
-	 * @return CMSObject|false  Object on success, false on failure.
+	 * @return false|object  Object on success, false on failure.
 	 */
-	public function getItem($pk = null): CMSObject|false
+	public function getItem($pk = null): false|object
 	{
 		/** @var ImageModel $item */
 		$item = parent::getItem($pk);
@@ -110,8 +112,8 @@ class ImageModel extends AdminModel
 	/**
 	 * Override publish function
 	 *
-	 * @param   array   &$pks    A list of the primary keys to change.
-	 * @param   int      $value  The value of the published state.
+	 * @param  array   &$pks    A list of the primary keys to change.
+	 * @param  int      $value  The value of the published state.
 	 *
 	 * @throws Exception
 	 * @since  3.1.0
@@ -136,7 +138,7 @@ class ImageModel extends AdminModel
 	/**
 	 * Save image
 	 *
-	 * @param   string  $filename  Image file name
+	 * @param  string  $filename  Image file name
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -176,7 +178,7 @@ class ImageModel extends AdminModel
 	 * Set image ordering after online shuffle
 	 * It is used despite the error
 	 *
-	 * @param   string  $order  New ordering
+	 * @param  string  $order  New ordering
 	 *
 	 * @throws RuntimeException
 	 * @since  3.3.0
@@ -204,7 +206,7 @@ class ImageModel extends AdminModel
 	/**
 	 * Method to test whether a record can be deleted.
 	 *
-	 * @param   object  $record  A record object.
+	 * @param  object  $record  A record object.
 	 *
 	 * @since  3.0.0
 	 * @return bool  True if allowed to delete the record. Defaults to the permission for the component.
@@ -237,7 +239,7 @@ class ImageModel extends AdminModel
 	/**
 	 * Prepare and sanitise the table prior to saving.
 	 *
-	 * @param   Table  $table  Table data
+	 * @param  Table  $table  Table data
 	 *
 	 * @throws RuntimeException
 	 * @throws Exception

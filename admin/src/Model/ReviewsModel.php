@@ -148,15 +148,15 @@ class ReviewsModel extends ListModel
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
-		$query->select($db->qn(array('r.id',
-		                             'r.title',
-		                             'p.property_name',
-		                             'c.tag')))
-		      ->from($db->qn('#__knowres_review', 'r'))
+		$query->select($db->qn(['r.id',
+		                        'r.title',
+		                        'p.property_name',
+		                        'c.tag']));
+		$query->from($db->qn('#__knowres_review', 'r'))
 		      ->join('LEFT',
-			      $db->qn('#__knowres_contract', 'c') . ' ON ' . $db->qn('c.id') . ' = ' . $db->qn('r.contract_id'))
+			      $db->qn('#__knowres_contract', 'c') . 'ON' . $db->qn('c.id') . '=' . $db->qn('r.contract_id'))
 		      ->join('LEFT',
-			      $db->qn('#__knowres_property', 'p') . ' ON ' . $db->qn('p.id') . ' = ' . $db->qn('r.property_id'))
+			      $db->qn('#__knowres_property', 'p') . 'ON' . $db->qn('p.id') . '=' . $db->qn('r.property_id'))
 		      ->where($db->qn('r.state') . '=0')
 		      ->where($db->qn('r.approved') . '=0')
 		      ->where($db->qn('r.held') . '=0')

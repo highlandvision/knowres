@@ -39,9 +39,9 @@ class Mailchimp extends Service
 	/**
 	 * Initialize
 	 *
-	 * @param   int     $service_id  ID of service
-	 * @param   string  $email       Email
-	 * @param   string  $name        Subscriber name
+	 * @param  int     $service_id  ID of service
+	 * @param  string  $email       Email
+	 * @param  string  $name        Subscriber name
 	 *
 	 * @throws Exception
 	 * @since 1.0.0
@@ -118,7 +118,7 @@ class Mailchimp extends Service
 	/**
 	 * Validate and set email
 	 *
-	 * @param   string  $email  Subscriber email
+	 * @param  string  $email  Subscriber email
 	 *
 	 * @throws InvalidArgumentException
 	 * @since 1.0.0
@@ -141,7 +141,7 @@ class Mailchimp extends Service
 	/**
 	 * Set name field and split for first and last
 	 *
-	 * @param   string  $name  Subscriber name
+	 * @param  string  $name  Subscriber name
 	 *
 	 * @since 1.0.0
 	 */

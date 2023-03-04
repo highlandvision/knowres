@@ -34,22 +34,27 @@ $wa->useScript('keepalive')
 
 				<?php if (!(int) $this->item->contract_id && !(int) $this->item->guest_id
 					&& !(int) $this->item->owner_id) : ?>
-					<?php $this->form->setFieldAttribute('property_id', 'required', true); ?>
+					<?php if (!$this->item->id && $this->property_id): ?>
+						<?php $this->form->setValue('property_id', '', $this->property_id); ?>
+					<?php endif; ?>
 					<?php echo $this->form->renderField('property_id'); ?>
-					<?php if ($service->plugin == 'vrbo'): ?>
+					<?php if ($service->plugin == 'vrbo' || $service->plugin == 'ru'): ?>
 						<?php $this->form->setFieldAttribute('sell', 'required', true); ?>
 						<?php echo $this->form->renderField('sell'); ?>
 					<?php endif; ?>
 				<?php endif; ?>
 				<?php if ((int) $this->item->contract_id) : ?>
+					<?php $this->form->setFieldAttribute('property_id', 'required', false); ?>
 					<?php $this->form->setFieldAttribute('contract_id', 'required', true); ?>
 					<?php echo $this->form->renderField('contract_id'); ?>
 				<?php endif; ?>
 				<?php if ((int) $this->item->guest_id) : ?>
+					<?php $this->form->setFieldAttribute('property_id', 'required', false); ?>
 					<?php $this->form->setFieldAttribute('guest_id', 'required', true); ?>
 					<?php echo $this->form->renderField('guest_id'); ?>
 				<?php endif; ?>
 				<?php if ((int) $this->item->owner_id) : ?>
+					<?php $this->form->setFieldAttribute('property_id', 'required', false); ?>
 					<?php $this->form->setFieldAttribute('owner_id', 'required', true); ?>
 					<?php echo $this->form->renderField('owner_id'); ?>
 				<?php endif; ?>
@@ -67,5 +72,6 @@ $wa->useScript('keepalive')
 	</div>
 
 	<input type="hidden" name="task" value="">
+	<input type="hidden" name="old_sell" value="<?php echo $this->form->getValue('sell'); ?>">
 	<?php echo HTMLHelper::_('form.token'); ?>
 </form>

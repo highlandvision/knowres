@@ -31,7 +31,7 @@ class Seasons
 	/**
 	 * Calculate any season adjutsments
 	 *
-	 * @param   Hub  $Hub  Hub data
+	 * @param  Hub  $Hub  Hub data
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -74,7 +74,7 @@ class Seasons
 	 * Calculates the season surcharge / discount
 	 * Adds to gross if surcharge or sets as discount
 	 *
-	 * @param   array  $seasons  Season DB data
+	 * @param  array  $seasons  Season DB data
 	 *
 	 * @throws Exception
 	 * @since  3.4.0
@@ -121,8 +121,8 @@ class Seasons
 	/**
 	 * Get rate mark-ups for calculations
 	 *
-	 * @param   array  $seasonsDb   Rate markups from DB
-	 * @param   array  $date_range  Booking date range
+	 * @param  array  $seasonsDb   Rate markups from DB
+	 * @param  array  $date_range  Booking date range
 	 *
 	 * @throws Exception
 	 * @since  3.4.0
@@ -157,7 +157,7 @@ class Seasons
 	/**
 	 * Get the pc adjustment for season
 	 *
-	 * @param   string  $season  Season
+	 * @param  string  $season  Season
 	 *
 	 * @since  3.3.0
 	 * @return float|int

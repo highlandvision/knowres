@@ -16,6 +16,7 @@ use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\SiteHelper;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Utility;
+use Joomla\CMS\HTML\HTMLHelper;
 
 $currency   = $this->quote->getValue('currency');
 $price      = Utility::displayValue($this->quote->getValue('contract_total'), $currency);
@@ -44,9 +45,8 @@ else
 	$deposit_text = KrMethods::plain('COM_KNOWRES_CONFIRM_REQUEST_DEPOSIT_DUE');
 }
 
-// TODO-v4.0 Revisit below to see if fixed in 4sef
 $Itemid = SiteHelper::getItemId('com_knowres', 'confirm', ['layout' => 'html']);
-$action = KrMethods::getRoot() . 'index.php?option=com_knowres&view=confirm&Itemid=' . $Itemid;
+$action = KrMethods::route('index.php?option=com_knowres&view=confirm&Itemid=' . $Itemid);
 ?>
 
 <?php if (!empty($this->error)): ?>
@@ -96,5 +96,7 @@ $action = KrMethods::getRoot() . 'index.php?option=com_knowres&view=confirm&Item
 			<p>(<?php echo KrMethods::sprintf('COM_KNOWRES_NIGHTS_GUESTS', $this->quote->getValue('nights'),
 					$this->quote->getValue('guests')); ?>)</p>
 		</div>
+
+		<?php echo HTMLHelper::_('form.token'); ?>
 	</form>
 <?php endif; ?>

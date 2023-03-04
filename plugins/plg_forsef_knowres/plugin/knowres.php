@@ -84,26 +84,31 @@ class Knowres extends Base
 			}
 			catch (Exception $e)
 			{
-				Logger::logMe($e->getMessage);
+				Logger::logMe($e->getMessage());
 			}
 		}
 
 		switch ($view)
 		{
-			case 'guestform':
-				$sefSegments[] = KrMethods::plain('COM_KNOWRES_TITLE_DASHBOARD_GUEST');
-				$platformUri->delvar('view');
-				break;
-
-			case 'contractguestdataform':
-				$sefSegments[] = KrMethods::plain('COM_KNOWRES_DASHBOARD_ADD_CONTRACTGUESTDATA_SEF');
-				$platformUri->delvar('view');
-				break;
-
-			case 'dashboard':
-				$sefSegments[] = KrMethods::plain('COM_KNOWRES_TITLE_DASHBOARD');
-				$platformUri->delvar('view');
-				break;
+//			case 'guestform':
+//				$sefSegments[] = KrMethods::plain('COM_KNOWRES_TITLE_DASHBOARD_GUEST');
+//				$platformUri->delvar('view');
+//				break;
+//
+//			case 'contractguestdataform':
+//				$sefSegments[] = KrMethods::plain('COM_KNOWRES_DASHBOARD_ADD_CONTRACTGUESTDATA_SEF');
+//				$platformUri->delvar('view');
+//				break;
+//
+//			case 'reviewform':
+//				$sefSegments[] = KrMethods::plain('COM_KNOWRES_TITLE_REVIEWFORM');
+//				$platformUri->delvar('view');
+//				break;
+//
+//			case 'dashboard':
+//				$sefSegments[] = KrMethods::plain('COM_KNOWRES_TITLE_DASHBOARD');
+//				$platformUri->delvar('view');
+//				break;
 
 			case 'property':
 				if ($id)
@@ -202,6 +207,18 @@ class Knowres extends Base
 				}
 
 				$platformUri->delvar('view');
+				break;
+
+			default:
+				if (!$view || !$alias)
+				{
+					$dosef = false;
+				}
+				else
+				{
+					$sefSegments[] = $alias;
+					$platformUri->delvar('view');
+				}
 		}
 
 		return $sefSegments;

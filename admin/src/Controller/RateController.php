@@ -30,8 +30,8 @@ class RateController extends FormController
 	/**
 	 * Process additional requirements after save
 	 *
-	 * @param   BaseDatabaseModel  $model      The data model object.
-	 * @param   array              $validData  The validated data.
+	 * @param  BaseDatabaseModel  $model      The data model object.
+	 * @param  array              $validData  The validated data.
 	 *
 	 * @throws Exception
 	 * @since  3.1
@@ -49,8 +49,9 @@ class RateController extends FormController
 
 		$Translations = new Translations();
 		$Translations->updateDefault('rate', $id, 'name', $name);
-
+		KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updateAvailability',
+			(int) $validData['property_id'], 0, null,  $validData['valid_from'],  $validData['valid_to']);
 		KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updatePropertyRates',
-			(int) $validData['property_id']);
+			(int) $validData['property_id'], 0, null,  $validData['valid_from'],  $validData['valid_to']);
 	}
 }

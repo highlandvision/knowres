@@ -107,11 +107,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 			e(this).removeClass("ui-state-hover"), -1 !== this.className.indexOf("ui-datepicker-prev") && e(this).removeClass("ui-datepicker-prev-hover"), -1 !== this.className.indexOf("ui-datepicker-next") && e(this).removeClass("ui-datepicker-next-hover");
 		}).delegate(i, "mouseover", o);
 	}
-
 	function o() {
 		e.datepicker._isDisabledDatepicker(d.inline ? d.dpDiv.parent()[0] : d.input[0]) || (e(this).parents(".ui-datepicker-calendar").find("a").removeClass("ui-state-hover"), e(this).addClass("ui-state-hover"), -1 !== this.className.indexOf("ui-datepicker-prev") && e(this).addClass("ui-datepicker-prev-hover"), -1 !== this.className.indexOf("ui-datepicker-next") && e(this).addClass("ui-datepicker-next-hover"));
 	}
-
 	function r(t, i) {
 		e.extend(t, i);
 
@@ -268,8 +266,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 			for (a = 0; null != (n = i[a]); a++) {
 				try {
 					s = e._data(n, "events"), s && s.remove && e(n).triggerHandler("remove");
-				} catch (o) {
-				}
+				} catch (o) {}
 			}
 
 			t(i);

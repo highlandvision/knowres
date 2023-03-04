@@ -9,6 +9,7 @@
 
 namespace HighlandVision\KR;
 
+use ErrorException;
 use Exception;
 use InvalidArgumentException;
 use Joomla\CMS\Application\CMSApplication;
@@ -32,17 +33,38 @@ class ExceptionHandling
 	{
 		set_exception_handler([$this,
 		                       'exceptionHandler']);
+		set_error_handler([$this,
+		                   'exceptionErrorHandler']);
+	}
+
+	/**
+	 * Set override error handler.
+	 *
+	 * @param  int     $severity  Error severity
+	 * @param  string  $message   Error message
+	 * @param  string  $file      Filename
+	 * @param  int     $line      Line number
+	 *
+	 * @throws Exception
+	 * @since  4.0.0
+	 */
+	public function exceptionErrorHandler(int $severity, string $message, string $file, int $line = 0): void
+	{
+		if ($this->setLevel($severity))
+		{
+			Logger::logMe($message, $this->setLevel($severity));
+		}
 	}
 
 	/**
 	 * Set override exception handler.
 	 *
-	 * @param   Throwable  $error  Thrown exception
+	 * @param  Throwable  $error  Thrown exception
 	 *
 	 * @throws ExceptionHandling
 	 * @throws Exception
 	 * @throws Throwable
-	 * @since 3.5.0
+	 * @since  3.5.0
 	 */
 	public function exceptionHandler(Throwable $error): void
 	{
@@ -52,8 +74,9 @@ class ExceptionHandling
 			$class = get_class($error);
 			if ($class == 'ErrorException')
 			{
+				/* @var ErrorException $error */
 				$code  = $error->getSeverity();
-				$level = $this->setLevel($severity);
+				$level = $this->setLevel($code);
 			}
 			else
 			{
@@ -67,14 +90,15 @@ class ExceptionHandling
 
 			new Logger($error->getMessage(), $code, $error->getFile(), $error->getLine(), $level,
 				$error->getTraceAsString());
-			static::render($error);
+
+			// static::render($error);
 		}
 	}
 
 	/**
 	 * Render the error page based on an exception.
 	 *
-	 * @param   Throwable  $error  An Exception or Throwable (PHP 7+) object for which to render the error page.
+	 * @param  Throwable  $error  An Exception or Throwable (PHP 7+) object for which to render the error page.
 	 *
 	 * @throws Throwable
 	 * @since   3.0
@@ -182,30 +206,30 @@ class ExceptionHandling
 	/**
 	 * Set level for log file
 	 *
-	 * @param   int  $code  Exception code
+	 * @param  int  $code  Exception code
 	 *
 	 * @since 3.5.0
 	 * @return string
 	 */
 	protected function setLevel(int $code): string
 	{
-		$this->level_xref                      = [];
-		$this->level_xref[E_ERROR]             = 'error';
-		$this->level_xref[E_WARNING]           = 'warning';
-		$this->level_xref[E_PARSE]             = 'parse';
-		$this->level_xref[E_NOTICE]            = 'notice';
-		$this->level_xref[E_CORE_ERROR]        = 'error';
-		$this->level_xref[E_CORE_WARNING]      = 'warning';
-		$this->level_xref[E_COMPILE_ERROR]     = 'parse';
-		$this->level_xref[E_COMPILE_WARNING]   = 'notice';
-		$this->level_xref[E_USER_ERROR]        = 'error';
-		$this->level_xref[E_USER_WARNING]      = 'warning';
-		$this->level_xref[E_USER_NOTICE]       = 'notice';
-		$this->level_xref[E_STRICT]            = 'notice';
-		$this->level_xref[E_RECOVERABLE_ERROR] = 'error';
-		$this->level_xref[E_DEPRECATED]        = 'notice';
-		$this->level_xref[E_USER_DEPRECATED]   = 'notice';
+		$level_xref                      = [];
+		$level_xref[E_ERROR]             = 'error';
+		$level_xref[E_WARNING]           = 'warning';
+		$level_xref[E_PARSE]             = 'parse';
+		$level_xref[E_NOTICE]            = 'notice';
+		$level_xref[E_CORE_ERROR]        = 'error';
+		$level_xref[E_CORE_WARNING]      = 'warning';
+		$level_xref[E_COMPILE_ERROR]     = 'parse';
+		$level_xref[E_COMPILE_WARNING]   = 'notice';
+		$level_xref[E_USER_ERROR]        = 'error';
+		$level_xref[E_USER_WARNING]      = 'warning';
+		$level_xref[E_USER_NOTICE]       = 'notice';
+		$level_xref[E_STRICT]            = 'notice';
+		$level_xref[E_RECOVERABLE_ERROR] = 'error';
+		$level_xref[E_DEPRECATED]        = 'ignore';
+		$level_xref[E_USER_DEPRECATED]   = 'ignore';
 
-		return $this->level_xref[$code] ?? 'error';
+		return $level_xref[$code] ?? 'error';
 	}
 }

@@ -14,6 +14,7 @@ defined('_JEXEC') or die;
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
+use HighlandVision\KR\Logger;
 use HighlandVision\KR\Media;
 use HighlandVision\KR\Session as KrSession;
 use HighlandVision\KR\SiteHelper;
@@ -178,9 +179,10 @@ class PropertiesController extends BaseController
 			echo new JsonResponse($wrapper);
 			jexit();
 		}
-		catch (Exception)
+		catch (Exception $e)
 		{
-			echo new JsonResponse(null, KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN'), true);
+			Logger::logMe($e->getMessage(), 'error');
+			echo new JsonResponse(null, KrMethods::plain('COM_KNOWRES_TRY_LATER'), true);
 		}
 
 		jexit();
@@ -276,7 +278,8 @@ class PropertiesController extends BaseController
 		}
 		catch (Exception)
 		{
-			echo new JsonResponse(null, KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN'), true);
+			Logger::logMe($e->getMessage(), 'error');
+			echo new JsonResponse(null, KrMethods::plain('COM_KNOWRES_TRY_LATER'), true);
 		}
 
 		jexit();
