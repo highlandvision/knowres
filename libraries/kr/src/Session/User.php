@@ -181,7 +181,6 @@ class User extends Session
 		return $data;
 	}
 
-	//TODO-v4 Delete if no consequences
 	/**
 	 * Set user session data after admin login
 	 *

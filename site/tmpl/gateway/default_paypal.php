@@ -13,8 +13,6 @@ defined('_JEXEC') or die;
 use HighlandVision\KR\Framework\KrMethods;
 
 $approval_url = KrMethods::route('index.php?option=com_knowres&task=service.paypal');
-
-//TODO-v4 TEST payoal again
 ?>
 
 <div class="row">

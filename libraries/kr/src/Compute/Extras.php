@@ -47,7 +47,6 @@ class Extras
 		{
 			if (!$this->Hub->agent->mandatory_extras_charge)
 			{
-				//TODO-v4 test this
 				$this->Hub->setValue('extra_total', 0);
 				$this->Hub->setValue('extras', []);
 
