@@ -166,6 +166,9 @@ class ListgenericfeatureField extends ListField
 		$values[] = "laundry shared";
 		$values[] = "lounge";
 		$values[] = "luggage storage facilities";
+		$values[] = "location rural";
+		$values[] = "location town";
+		$values[] = "location village";
 		$values[] = "maid service";
 		$values[] = "marble floor";
 		$values[] = "microwave";
