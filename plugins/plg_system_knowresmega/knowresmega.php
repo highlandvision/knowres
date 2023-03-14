@@ -21,7 +21,7 @@ use Joomla\CMS\Plugin\CMSPlugin;
 class plgSystemKnowresmega extends CMSPlugin
 {
 	/** @var bool Load the language file on instantiation. */
-	protected bool $autoloadLanguage = true;
+	protected $autoloadLanguage = true;
 
 	/**
 	 * @param $subject
