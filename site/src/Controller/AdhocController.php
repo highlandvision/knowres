@@ -98,7 +98,8 @@ class AdhocController extends BaseController
 		$filename = JPATH_ROOT . '/administrator/components/com_knowres/queries/updates/fixupv4.sql';
 		if (!file_exists($filename))
 		{
-			return true;
+			echo "no fixup file exists";
+			jexit();
 		}
 
 		$db     = KrFactory::getDatabase();

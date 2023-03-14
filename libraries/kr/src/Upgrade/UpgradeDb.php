@@ -72,8 +72,6 @@ class UpgradeDb
 		self::change($db, '#__knowres_translation', 'state', 'state', 'TINYINT(1) DEFAULT 1');
 		//INSERT INTO `#__knowres_property_setting`name - 'multiple_bookings', default - 0;
 		self::addPS($db, 'multiple_bookings', 0);
-		//ALTER TABLE `#__knowres_owner` ADD COLUMN `deposit_pc` TINYINT(1) NOT NULL DEFAULT 0 AFTER `pay_deposit`;
-		self::add($db, '#__knowres_owner', 'deposit_pc', 'pay_deposit', 'TINYINT(1) DEFAULT 0');
 	}
 
 	/**
@@ -293,6 +291,8 @@ class UpgradeDb
 		self::add($db, '#__knowres_country', 'property_licence', 'allow_property', 'TINYINT(1) DEFAULT 0');
 		//ALTER TABLE `#__knowres_coupon` DROP COLUMN `ordering`;
 		self::drop($db, '#__knowres_coupon', 'ordering');
+		//ALTER TABLE `#__knowres_owner` ADD COLUMN `deposit_pc` TINYINT(1) NOT NULL DEFAULT 0 AFTER `pay_deposit`;
+		self::add($db, '#__knowres_owner', 'deposit_pc', 'pay_deposit', 'TINYINT(1) DEFAULT 0');
 		//ALTER TABLE `#__knowres_tax_rate` ADD COLUMN `tax_type` VARCHAR(10) DEFAULT NULL AFTER `tax_id`;
 		self::add($db, '#__knowres_tax_rate', 'tax_type', 'tax_id', 'VARCHAR(10) DEFAULT NULL');
 		//ALTER TABLE `#__knowres_tax_rate` ADD COLUMN `agent` VARCHAR(255) DEFAULT NULL AFTER `code`;
