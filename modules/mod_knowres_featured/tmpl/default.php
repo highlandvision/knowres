@@ -10,22 +10,13 @@
 defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrMethods;
-use HighlandVision\KR\Translations;
-
-$Translations = new Translations();
 ?>
 
 <div class="row">
 	<div class="small-12 text-center medium-text-left large-10 columns">
 		<h3 class="h2">
-			<?php if (!$title): ?><?php echo KrMethods::plain('MOD_KNOWRES_FEATURED_FEATURED'); ?>
-				<span class="color-secondary">
-					<?php echo KrMethods::plain('MOD_KNOWRES_FEATURED_VILLAS'); ?>
-				</span>
-				<?php echo KrMethods::plain('MOD_KNOWRES_FEATURED_BEST'); ?>
-				<span class="color-secondary">
-					<?php echo KrMethods::plain('MOD_KNOWRES_FEATURED_QUALITY'); ?>
-				</span>
+			<?php if (!$title): ?>
+				<?php echo $module->title; ?>
 			<?php else: ?>
 				<?php echo $title; ?>
 			<?php endif; ?>
@@ -38,8 +29,10 @@ $Translations = new Translations();
 
 <div class="row kr-featured" data-equalizer data-slick='{"slidesToShow": <?php echo $slidestoshow; ?>}'>
 	<?php foreach ($data as $p => $d): ?>
-		<?php echo KrMethods::render('modules.featured.default', ['id'   => $p,
-		                                                          'data' => $d]
-		); ?>
+		<?php echo KrMethods::render('modules.featured.default',
+			['id'   => $p,
+			 'data' => $d]
+		);
+		?>
 	<?php endforeach; ?>
 </div>
