@@ -148,7 +148,8 @@ class HtmlView extends KrHtmlView\Site
 				$searchData->ordercustom = $ordercustom;
 
 				$searchSession->setData($searchData);
-				$searchData = $this->setInput($searchData);
+
+				$searchData = $this->setInput($searchData, $searchSession);
 
 				$today = TickTock::getDate();
 				if (!empty($searchData->arrival) && !empty($searchData->departure))
@@ -228,33 +229,42 @@ class HtmlView extends KrHtmlView\Site
 	/**
 	 * Get request search data and store in session
 	 *
-	 * @param  stdClass  $searchData  Session search data
+	 * @param  stdClass          $searchData     Session search data
+	 * @param  KrSession\Search  $searchSession  Search session
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 * @return stdClass
 	 */
-	protected function setInput(stdClass $searchData): stdClass
+	protected function setInput(stdClass $searchData, KrSession\Search $searchSession): stdClass
 	{
-		$searchData->region_id     = KrMethods::inputInt('region_id', $this->params->get('default_region'), 'get');
-		$searchData->property_area = KrMethods::inputString('property_area', '', 'get');
-		$searchData->town          = KrMethods::inputString('town', '', 'get');
-		$searchData->arrival       = KrMethods::inputString('arrival', '', 'get');
-		Utility::validateInputDate($searchData->arrival);
-		$searchData->departure = KrMethods::inputString('departure', '', 'get');
-		Utility::validateInputDate($searchData->departure);
-		$searchData->type_id     = KrMethods::inputInt('type_id', 0, 'get');
-		$searchData->category_id = KrMethods::inputInt('category_id', 0, 'get');
-		$searchData->feature_id  = KrMethods::inputInt('feature_id', 0, 'get');
-		$searchData->bedrooms    = KrMethods::inputInt('bedrooms', 0, 'get');
-		$searchData->flexible    = KrMethods::inputInt('flexible', 0, 'get');
-		$searchData->guests      = KrMethods::inputInt('guests', 2, 'get');
-		$searchData->adults      = KrMethods::inputInt('adults', 2, 'get');
-		$searchData->children    = KrMethods::inputInt('children', 0, 'get');
-		$searchData->child_ages  = KrMethods::inputArray('child_ages', [], 'get');
-		$searchData->limitstart  = KrMethods::inputint('limitstart', 0, 'get');
+		try
+		{
+			$searchData->region_id     = KrMethods::inputInt('region_id', $this->params->get('default_region'), 'get');
+			$searchData->property_area = KrMethods::inputString('property_area', '', 'get');
+			$searchData->town          = KrMethods::inputString('town', '', 'get');
+			$searchData->arrival       = KrMethods::inputString('arrival', '', 'get');
+			Utility::validateInputDate($searchData->arrival);
+			$searchData->departure = KrMethods::inputString('departure', '', 'get');
+			Utility::validateInputDate($searchData->departure);
+			$searchData->type_id     = KrMethods::inputInt('type_id', 0, 'get');
+			$searchData->category_id = KrMethods::inputInt('category_id', 0, 'get');
+			$searchData->feature_id  = KrMethods::inputInt('feature_id', 0, 'get');
+			$searchData->bedrooms    = KrMethods::inputInt('bedrooms', 0, 'get');
+			$searchData->flexible    = KrMethods::inputInt('flexible', 0, 'get');
+			$searchData->guests      = KrMethods::inputInt('guests', 2, 'get');
+			$searchData->adults      = KrMethods::inputInt('adults', 2, 'get');
+			$searchData->children    = KrMethods::inputInt('children', 0, 'get');
+			$searchData->child_ages  = KrMethods::inputArray('child_ages', [], 'get');
+			$searchData->limitstart  = KrMethods::inputint('limitstart', 0, 'get');
 
-		return $searchData;
+			return $searchData;
+		}
+		catch (Exception $e)
+		{
+			$searchData = $searchSession->resetData();
+			SiteHelper::redirectHome();
+		}
 	}
 
 	/**

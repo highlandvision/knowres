@@ -701,7 +701,6 @@ class FMethods
 	 * @param  bool    $xhtml  Replace & by &amp; for XML compliance.
 	 * @param  int     $ssl    Secure state for the resolved URI.
 	 *
-	 * @throws Exception
 	 * @since  3.4.0
 	 * @return ?string
 	 */

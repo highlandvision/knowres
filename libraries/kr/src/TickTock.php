@@ -18,6 +18,7 @@ use Carbon\Exceptions\InvalidFormatException;
 use Exception as Exception;
 use HighlandVision\KR\Framework\KrMethods;
 
+use function count;
 use function date_default_timezone_set;
 use function gmdate;
 
@@ -357,7 +358,7 @@ class TickTock
 	}
 
 	/**
-	 * Validate for a valid date
+	 * Validate for a valid yyyy-mm-dd Date
 	 *
 	 * @param  string  $date  Date as yyyy-mm-dd
 	 *
@@ -367,12 +368,18 @@ class TickTock
 	public static function isValidDate(string $date): bool
 	{
 		$tmp = explode('-', $date);
-		if (!is_countable($tmp) || count($tmp) < 3)
+
+		if (!is_countable($tmp) || count($tmp) <> 3)
 		{
 			return false;
 		}
 
-		return checkdate($tmp[1], $tmp[2], $tmp[0]);
+		if (!is_numeric($tmp[0]) || !is_numeric($tmp[1]) || !is_numeric($tmp[2]))
+		{
+			return false;
+		}
+
+		return checkdate((int)$tmp[1], (int)$tmp[2], (int)$tmp[0]);
 	}
 
 	/**

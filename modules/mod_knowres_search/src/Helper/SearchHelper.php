@@ -14,7 +14,9 @@ defined('_JEXEC') or die;
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
+use Highlandvision\KR\Model\SiteModel;
 use HighlandVision\KR\Session as KrSession;
+use HighlandVision\KR\Utility;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use RuntimeException;
@@ -39,17 +41,27 @@ class SearchHelper
 		$searchSession = new KrSession\Search();
 		$searchData    = $searchSession->getData();
 
-		$input             = new stdClass;
-		$input->region_id  = KrMethods::inputInt('region_id', $searchData->region_id, 'get');
-		$input->arrival    = KrMethods::inputString('arrival', $searchData->arrival, 'get');
-		$input->departure  = KrMethods::inputString('departure', $searchData->departure, 'get');
-		$input->guests     = KrMethods::inputInt('guests', $searchData->guests, 'get');
-		$input->flexible   = KrMethods::inputInt('flexible', $searchData->flexible, 'get');
-		$input->type_id    = KrMethods::inputInt('type_id', $searchData->type_id, 'get');
-		$input->bedrooms   = KrMethods::inputInt('bedrooms', $searchData->bedrooms, 'get');
-		$input->adults     = KrMethods::inputInt('adults', $searchData->adults, 'get');
-		$input->children   = KrMethods::inputInt('children', $searchData->children, 'get');
-		$input->child_ages = KrMethods::inputArray('child_ages', $searchData->child_ages, 'get');
+		try
+		{
+			$input            = new stdClass;
+			$input->region_id = KrMethods::inputInt('region_id', $searchData->region_id, 'get');
+			$input->arrival   = KrMethods::inputString('arrival', $searchData->arrival, 'get');
+			Utility::validateInputDate($input->arrival);
+			$input->departure = KrMethods::inputString('departure', $searchData->departure, 'get');
+			Utility::validateInputDate($input->departure);
+			$input->guests     = KrMethods::inputInt('guests', $searchData->guests, 'get');
+			$input->flexible   = KrMethods::inputInt('flexible', $searchData->flexible, 'get');
+			$input->type_id    = KrMethods::inputInt('type_id', $searchData->type_id, 'get');
+			$input->bedrooms   = KrMethods::inputInt('bedrooms', $searchData->bedrooms, 'get');
+			$input->adults     = KrMethods::inputInt('adults', $searchData->adults, 'get');
+			$input->children   = KrMethods::inputInt('children', $searchData->children, 'get');
+			$input->child_ages = KrMethods::inputArray('child_ages', $searchData->child_ages, 'get');
+		}
+		catch (Exception $e)
+		{
+			$searchData = $searchSession->resetData();
+			SiteModel::redirectHome();
+		}
 
 		return $input;
 	}
@@ -57,7 +69,7 @@ class SearchHelper
 	/**
 	 * Creates the country regions array for grouped dropdown and region pane
 	 *
-	 * @param   bool  $show  TRUE to show regions
+	 * @param  bool  $show  TRUE to show regions
 	 *
 	 * @throws RuntimeException
 	 * @since  3.3.1
@@ -81,7 +93,7 @@ class SearchHelper
 	/**
 	 * Creates the guest select
 	 *
-	 * @param   int  $default  Default value
+	 * @param  int  $default  Default value
 	 *
 	 * @since  1.0.0
 	 * @return mixed
