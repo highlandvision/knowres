@@ -18,14 +18,6 @@
 	<config>
 		<fields name="params">
 			<fieldset name="Basic">
-				<field name="width"
-					type="text"
-					label="MOD_KNOWRES_SPOTLIGHT_WIDTH"
-					description="MOD_KNOWRES_SPOTLIGHT_WIDTH_DSC"/>
-				<field name="height"
-					type="text"
-					label="MOD_KNOWRES_SPOTLIGHT_HEIGHT"
-					description="MOD_KNOWRES_SPOTLIGHT_HEIGHT_DSC"/>
 				<field name="textcolor"
 					default="#fefefe"
 					type="color"
@@ -126,7 +118,9 @@
 					validate="moduleLayout"
 					label="JFIELD_ALT_LAYOUT_LABEL"/>
 				<field name="moduleclass_sfx"
-					type="text"
+					type="textarea"
+					rows="1"
+					validate="CssIdentifier"
 					label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"/>
 				<field name="cache"
 					type="list"

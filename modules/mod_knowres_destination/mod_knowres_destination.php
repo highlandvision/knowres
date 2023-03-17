@@ -19,5 +19,4 @@ $wa->useScript('com_knowres.site-modules');
 $Translations = new Translations();
 $destination  = $Translations->getText('region', $params->get('region_id'));
 
-$moduleclass_sfx = htmlspecialchars($params->get('moduleclass_sfx'));
 require ModuleHelper::getLayoutPath('mod_knowres_destination', $params->get('layout', 'default'));

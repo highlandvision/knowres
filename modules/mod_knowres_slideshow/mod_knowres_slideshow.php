@@ -67,5 +67,4 @@ for ($i = 1; $i <= 6; $i++)
 	}
 }
 
-$moduleclass_sfx = htmlspecialchars($params->get('moduleclass_sfx'));
 require ModuleHelper::getLayoutPath('mod_knowres_slideshow', $params->get('layout', 'default'));

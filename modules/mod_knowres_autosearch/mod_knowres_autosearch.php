@@ -15,5 +15,4 @@ $wa = $app->getDocument()->getWebAssetManager();
 $wa->getRegistry()->addExtensionRegistryFile('com_knowres');
 $wa->useScript('com_knowres.site-modules');
 
-$moduleclass_sfx = htmlspecialchars($params->get('moduleclass_sfx'));
 require ModuleHelper::getLayoutPath('mod_knowres_autosearch', $params->get('layout', 'default'));

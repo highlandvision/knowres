@@ -99,7 +99,9 @@
 					validate="moduleLayout"
 					label="JFIELD_ALT_LAYOUT_LABEL"/>
 				<field name="moduleclass_sfx"
-					type="text"
+					type="textarea"
+					rows="1"
+					validate="CssIdentifier"
 					label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"/>
 				<field name="cache"
 					type="list"

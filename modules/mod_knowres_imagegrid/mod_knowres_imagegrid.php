@@ -32,5 +32,4 @@ foreach ($grid as $g)
 
 $count = count($data);
 
-$moduleclass_sfx = htmlspecialchars($params->get('moduleclass_sfx'));
 require ModuleHelper::getLayoutPath('mod_knowres_imagegrid', $params->get('layout', 'default'));

@@ -22,5 +22,4 @@ $form->addFormPath(dirname(__FILE__) . 'form/form.xml');
 $form->loadFile($filepath);
 $form->bind([]);
 
-$moduleclass_sfx = htmlspecialchars($params->get('moduleclass_sfx'));
 require ModuleHelper::getLayoutPath('mod_knowres_mailchimp', $params->get('layout', 'default'));

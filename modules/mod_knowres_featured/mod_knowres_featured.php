@@ -76,5 +76,4 @@ foreach ($properties as $p)
 	$data[$p]['text']          = Utility::cutString($Translations->getText('property', $p, 'p1'), 180);
 }
 
-$moduleclass_sfx = htmlspecialchars($params->get('moduleclass_sfx'));
 require ModuleHelper::getLayoutPath('mod_knowres_featured', $params->get('layout', 'default'));

@@ -22,5 +22,4 @@ $KRparams  = KrMethods::getParams();
 $region_id = $KRparams->get('default_region');
 $Itemid    = SiteHelper::getItemId('com_knowres', 'properties', array("region_id" => 0));
 
-$moduleclass_sfx = htmlspecialchars($params->get('moduleclass_sfx'));
 require ModuleHelper::getLayoutPath('mod_knowres_searchbymap', $params->get('layout', 'default'));

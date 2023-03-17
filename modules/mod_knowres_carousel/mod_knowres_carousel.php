@@ -36,5 +36,4 @@ foreach ($fimages as $i)
 	}
 }
 
-$moduleclass_sfx = htmlspecialchars($params->get('moduleclass_sfx'));
 require ModuleHelper::getLayoutPath('mod_knowres_carousel', $params->get('layout', 'default'));
