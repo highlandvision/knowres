@@ -25,7 +25,6 @@
 			maxlength="30"
 			required="true"
 			type="text"
-			validate="taxratecode"
 			label="COM_KNOWRES_TAXRATE_CODE_LBL"
 			description="COM_KNOWRES_TAXRATE_CODE_DSC"/>
 		<field name="valid_from"
