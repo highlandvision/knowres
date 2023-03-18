@@ -7,7 +7,7 @@
 	<license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
 	<authorEmail>hazel@highlandvision.com</authorEmail>
 	<authorUrl>https://highlandvision.com/</authorUrl>
-	<version>4.0.0</version>
+	<version>4.0.2</version>
 	<description>KR Forsef Urls plugin</description>
 	<files>
 		<filename plugin="knowres">knowres.php</filename>
