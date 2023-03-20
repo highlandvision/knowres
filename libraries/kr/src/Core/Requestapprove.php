@@ -60,8 +60,6 @@ class Requestapprove
 	 *
 	 * @throws RuntimeException
 	 * @throws Exception
-	 * @throws Exception
-	 * @throws Exception
 	 * @since  1.0.0
 	 * @return true
 	 */

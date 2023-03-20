@@ -12,7 +12,7 @@
 			required="true"
 			type="text"
 			label="COM_KNOWRES_SERVICE_PUBLISHABLE_KEY_LBL"
-			description="COM_KNOWRES_FORM_SERVICE_PUBLISHABLE_KEY"/>
+			description="COM_KNOWRES_SERVICE_PUBLISHABLE_KEY_DSC"/>
 		<field name="api_version"
 			filter="string"
 			type="text"

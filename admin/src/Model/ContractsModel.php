@@ -17,6 +17,7 @@ use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\ListModel;
 use HighlandVision\KR\Session as KrSession;
 use HighlandVision\KR\TickTock;
+use InvalidArgumentException;
 use Joomla\Database\QueryInterface;
 use RuntimeException;
 
@@ -81,7 +82,7 @@ class ContractsModel extends ListModel
 	 *
 	 * @param  string  $tag  Tag to check
 	 *
-	 * @throws RuntimeException
+	 * @throws RuntimeException|InvalidArgumentException
 	 * @since  1.0.0
 	 * @return mixed False if not in use otherwise true
 	 */
@@ -110,7 +111,7 @@ class ContractsModel extends ListModel
 	 *
 	 * @param  int  $service_id  ID of service
 	 *
-	 * @throws RuntimeException
+	 * @throws RuntimeException|InvalidArgumentException
 	 * @since  3.3.0
 	 * @return array
 	 */
@@ -961,7 +962,7 @@ class ContractsModel extends ListModel
 	/**
 	 * Get the latest update date for each propertiy
 	 *
-	 * @throws RuntimeException
+	 * @throws RuntimeException|InvalidArgumentException
 	 * @since  3.3.0
 	 * @return array
 	 */
@@ -1008,13 +1009,15 @@ class ContractsModel extends ListModel
 
 		$query->from($db->qn('#__knowres_contract', 'c'))
 		      ->select($db->qn('a.name', 'agent_name'))
-		      ->join('LEFT', $db->qn('#__knowres_agent', 'a') . ' ON a.id = c.agent_id')
-		      ->join('LEFT', $db->qn('#__knowres_guest', 'g') . ' ON g.id = c.guest_id')
-		      ->join('LEFT', $db->qn('#__knowres_property', 'p') . ' ON p.id = c.property_id')
+		      ->join('LEFT', $db->qn('#__knowres_agent', 'a') . 'ON' . $db->qn('a.id') . '=' . $db->qn('c.agent_id'))
+		      ->join('LEFT', $db->qn('#__knowres_guest', 'g') . 'ON' . $db->qn('g.id') . '=' . $db->qn('c.guest_id'))
 		      ->join('LEFT',
-			      $db->qn('#__knowres_contract_payment', 'cp') . ' ON cp.contract_id = c.id AND cp.state = 0');
+			      $db->qn('#__knowres_property', 'p') . 'ON' . $db->qn('p.id') . '=' . $db->qn('c.property_id'))
+		      ->join('LEFT',
+			      $db->qn('#__knowres_contract_payment', 'cp') . 'ON' . $db->qn('cp.contract_id') . '='
+			      . $db->qn('c.id') . 'AND' . $db->qn('cp.state') . '=0');
 
-		$query->where($db->qn('c.departure') . ' >= ' . $db->q($today))
+		$query->where($db->qn('c.departure') . '>=' . $db->q($today))
 		      ->where($db->qn('c.black_booking') . '=0')
 		      ->where($db->qn('c.state') . '=1')
 		      ->where('(( c.booking_status = 0 )'

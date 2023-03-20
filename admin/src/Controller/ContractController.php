@@ -59,7 +59,7 @@ class ContractController extends FormController
 	{
 		$this->checkToken();
 
-		$jform           = KrMethods::inputArray('jform', []);
+		$jform           = KrMethods::inputArray('jform');
 		$contractSession = new KrSession\Contract();
 		$contractSession->resetData();
 		$contractData         = $contractSession->updateData($jform);
@@ -155,7 +155,7 @@ class ContractController extends FormController
 	/**
 	 * Abort the task and return
 	 *
-	 * @param   string|null  $key  The name of the primary key of the URL variable.
+	 * @param  string|null  $key  The name of the primary key of the URL variable.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -312,7 +312,7 @@ class ContractController extends FormController
 	{
 		$this->checkToken('post', false);
 
-		$jform   = KrMethods::inputArray('jform', []);
+		$jform   = KrMethods::inputArray('jform');
 		$id      = isset($jform['id']) ? (int) $jform['id'] : 0;
 		$initial = isset($jform['initial']) ? (int) $jform['initial'] : 0;
 		$manual  = isset($jform['manual']) ? (int) $jform['manual'] : 0;
@@ -330,8 +330,8 @@ class ContractController extends FormController
 		//		$contractData->children         = $jform['children'];
 		//		$contractData->child_ages       = !empty($jform['child_ages']) ? explode(',', $jform['child_ages']) : [];
 		$contractData->isEdit           = (bool) $id;
-		$contractData->extra_quantities = KrMethods::inputArray('extra_quantity', []);
-		$contractData->extra_ids        = KrMethods::inputArray('extra_id', []);
+		$contractData->extra_quantities = KrMethods::inputArray('extra_quantity');
+		$contractData->extra_ids        = KrMethods::inputArray('extra_id');
 		$contractData                   = $this->validateCoupon($contractData);
 
 		if ($id && $initial)
@@ -606,7 +606,7 @@ class ContractController extends FormController
 	{
 		$this->checkToken();
 
-		$jform = KrMethods::inputArray('jform', []);
+		$jform = KrMethods::inputArray('jform');
 		$id    = $jform['id'];
 		if (!$id)
 		{
@@ -652,7 +652,6 @@ class ContractController extends FormController
 		$id         = $this->validateId();
 		$service_id = $this->input->getInt('service_id', 0);
 
-		/* @var ContractModel $item */
 		$item = KrFactory::getAdminModel('contract')->getItem($id);
 		if (!$item->id)
 		{
@@ -733,7 +732,7 @@ class ContractController extends FormController
 	{
 		$this->checkToken();
 
-		$jform = KrMethods::inputArray('jform', []);
+		$jform = KrMethods::inputArray('jform');
 		$id    = $this->validateId($jform['id']);
 
 		$item = KrFactory::getAdminModel('contract')->getItem($id);
@@ -775,8 +774,8 @@ class ContractController extends FormController
 	 * Override save function
 	 * Requires session data to be set with current data
 	 *
-	 * @param   null  $key     The name of the primary key of the URL variable.
-	 * @param   null  $urlVar  The name of the URL variable if different from the primary key (sometimes required to avoid router collisions).
+	 * @param  null  $key     The name of the primary key of the URL variable.
+	 * @param  null  $urlVar  The name of the URL variable if different from the primary key (sometimes required to avoid router collisions).
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -786,7 +785,7 @@ class ContractController extends FormController
 		$this->checkToken();
 
 		$action = KrMethods::inputString('action', '');
-		$jform  = KrMethods::inputArray('jform', []);
+		$jform  = KrMethods::inputArray('jform');
 
 		$contractSession          = new KrSession\Contract();
 		$contractData             = $contractSession->updateData($jform);
@@ -979,8 +978,8 @@ class ContractController extends FormController
 	/**
 	 * Compute the reservation values
 	 *
-	 * @param   Hub    $Hub           Hub
-	 * @param   array  $computations  Computations to be actioned
+	 * @param  Hub    $Hub           Hub
+	 * @param  array  $computations  Computations to be actioned
 	 *
 	 * @throws Exception
 	 * @since  3.2.0
@@ -1002,8 +1001,8 @@ class ContractController extends FormController
 	/**
 	 * Process the updates and actions.
 	 *
-	 * @param   Hub    $Hub      Hub
-	 * @param   array  $actions  Core processes to be actioned
+	 * @param  Hub    $Hub      Hub
+	 * @param  array  $actions  Core processes to be actioned
 	 *
 	 * @throws Exception
 	 * @since  3.2.0
@@ -1026,7 +1025,7 @@ class ContractController extends FormController
 	/**
 	 * Format the ajax response for manager
 	 *
-	 * @param   Hub  $Hub  Quote data
+	 * @param  Hub  $Hub  Quote data
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -1087,7 +1086,7 @@ class ContractController extends FormController
 	/**
 	 * Format the output values for display in the form
 	 *
-	 * @param   Hub  $Hub  Quote data
+	 * @param  Hub  $Hub  Quote data
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -1148,9 +1147,9 @@ class ContractController extends FormController
 	/**
 	 * Set the return value for block and manager.
 	 *
-	 * @param   Hub     $Hub      Hub
-	 * @param   string  $action   Layout action
-	 * @param   bool    $success  True for success
+	 * @param  Hub     $Hub      Hub
+	 * @param  string  $action   Layout action
+	 * @param  bool    $success  True for success
 	 *
 	 * @throws InvalidArgumentException
 	 * @throws RuntimeException
@@ -1228,7 +1227,7 @@ class ContractController extends FormController
 	/**
 	 * Validate coupon code
 	 *
-	 * @param   stdClass  $data  Form data
+	 * @param  stdClass  $data  Form data
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -1268,7 +1267,7 @@ class ContractController extends FormController
 	/**
 	 * Check that contract ID has been sent
 	 *
-	 * @param   int  $id  Conteact ID
+	 * @param  int  $id  Conteact ID
 	 *
 	 * @throws Exception
 	 * @since  3.2.0

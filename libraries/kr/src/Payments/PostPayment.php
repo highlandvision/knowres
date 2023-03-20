@@ -142,8 +142,8 @@ class PostPayment
 	 */
 	protected function readPayment(): void
 	{
-		$this->payment = KrFactory::getListModel('contractpayments')->getPending($this->contract_id, $this->service_id);
-		if (!$this->payment->id)
+		$payment = KrFactory::getListModel('contractpayments')->getPending($this->contract_id, $this->service_id);
+		if (!$payment->id)
 		{
 			throw new RuntimeException('Payment not found for id ' . $this->contract_id);
 		}
