@@ -334,7 +334,7 @@ class ContractController extends FormController
 		$contractData->extra_ids        = KrMethods::inputArray('extra_id');
 		$contractData                   = $this->validateCoupon($contractData);
 
-		if ($id && $initial)
+		if (!$id && $initial)
 		{
 			echo new JsonResponse(null, KrMethods::plain('COM_KNOWRES_CONTRACT_EDIT_EDIT'), false);
 			jexit();
@@ -1288,75 +1288,4 @@ class ContractController extends FormController
 
 		return $id;
 	}
-
-	//TODO-v4.1 - reinstate with correct stripe processing end email notifications
-	//	/**
-	//	 * Take balance via Stripe
-	//	 *
-	//	 * @since 1.0.0
-	//	 */
-	//	public function stripebalance()
-	//	{
-	//		JRequest::checkToken('get') or die(KrMethods::plain('Invalid Token'));
-	//
-	//		$back = KrMethods::route('index.php?option=com_knowres&task=contracts.daily');
-	//
-	//		$contract_id = $this->input->getInt('id', 0);
-	//		if (!$contract_id)
-	//		{
-	//			KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_NO_CONTRACT'), 'error');
-	//			KrMethods::redirect($back);
-	//		}
-	//
-	//		$contract = KrFactory::getAdminModel('Contract')->getItem($contract_id);
-	//		if (!$contract->id)
-	//		{
-	//			KrMethods::message(KrMethods::plain('Reservation not found'), 'error');
-	//			KrMethods::redirect($back);
-	//		}
-	//
-	//		$services = KrFactory::getListModel('Services')->getServicesByPlugin('stripe', $contract->agency_id, $contract->currency);
-	//		if (is_countable($services) && count($services) != 1)
-	//		{
-	//			KrMethods::message(KrMethods::plain('Gateway cannot be determined'), 'error');
-	//			KrMethods::redirect($back);
-	//		}
-	//
-	//		foreach ($services as $i)
-	//		{
-	//			$class   = '\\HighlandVision\\KR\\Service\\Gateway\\' . ucfirst($i->plugin);
-	//			$gateway = new $class($i->id, $contract_id, 'CBB');
-	//			if (!$gateway->getGatewayData())
-	//			{
-	//				foreach ($gateway->getErrors() as $e)
-	//				{
-	//					KrMethods::message($e, 'error');
-	//				}
-	//
-	//				return;
-	//			}
-	//
-	//			if (!$gateway->setOutputForPaymentType())
-	//			{
-	//				foreach ($gateway->getErrors() as $e)
-	//				{
-	//					KrMethods::message($e, 'error');
-	//				}
-	//
-	//				return;
-	//			}
-	//
-	//			if (!$gateway->processCBB())
-	//			{
-	//				foreach ($gateway->getErrors() as $e)
-	//				{
-	//					KrMethods::message($e, 'error');
-	//				}
-	//			}
-	//			else
-	//			{
-	//				KrMethods::message(KrMethods::plain('COM_KNOWRES_CONTRACT_REQUEST_SUCCESS'));
-	//			}
-	//		}
-	//	}
 }
