@@ -38,7 +38,7 @@ class HtmlView extends KrHtmlView
 	 */
 	public function display($tpl = null): void
 	{
-		$this->getUserSessionData();
+		$this->getUserSessionData(false);
 
 		/** @var ServicexrefModel $model */
 		$model       = $this->getModel();

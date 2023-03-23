@@ -211,7 +211,7 @@ class ServiceController extends BaseController
 
 		if ($this->test)
 		{
-			$xmlstring = $this->zzTestLNM();
+			$xmlstring = trim(file_get_contents('Z:\apps\ProjectKR\api\ru\test\bcom.xml'));
 			$xml       = simplexml_load_string($xmlstring);
 		}
 		else if ($_SERVER['REQUEST_METHOD'] === 'POST')
@@ -600,7 +600,7 @@ class ServiceController extends BaseController
 				$paymentData->rate               = $rate;
 				$paymentData->service_id         = $service_id;
 
-				$Redsys = new Gateway\Redsys($service_id, $paymentData);
+				$Redsys      = new Gateway\Redsys($service_id, $paymentData);
 				$paymentData = $Redsys->setResponseData();
 
 				$postPayment = new PostPayment($service_id, $paymentData);
@@ -687,93 +687,6 @@ class ServiceController extends BaseController
 		{
 			KrMethods::redirect(KrMethods::route(KrMethods::getRoot(), false));
 		}
-	}
-
-	protected function zzTestLNMCancel(): string
-	{
-		return
-			'<LNM_CancelReservation_RQ>
-  <Authentication>
-    <UserName>hazel@highlandvision.com</UserName>
-    <Password>0B84CCD175624184565DC9A2677E8C2D2E8AAED5</Password>
-  </Authentication>
-  <ReservationID>149329799</ReservationID>
-</LNM_CancelReservation_RQ>';
-	}
-
-	/**
-	 * Generate test LNM string
-	 *
-	 * @since  1.0.0
-	 * @return string
-	 */
-	protected function zzTestLNM(): string
-	{
-		return
-			'<LNM_PutConfirmedReservation_RQ>
-	<Authentication>
-		<UserName>hazel@highlandvision.com</UserName>
-		<Password>0B84CCD175624184565DC9A2677E8C2D2E8AAED5</Password>
-	</Authentication>
-	<Reservation Currency="">
-		<ReservationID>100000000</ReservationID>
-		<CreatedDate>2023-02-17</CreatedDate>
-		<LastMod>2023-02-17 07:30:21</LastMod>
-		<StayInfos>
-			<StayInfo>
-				<PropertyID>3372950</PropertyID>
-				<DateFrom>2023-05-15</DateFrom>
-				<DateTo>2023-05-18</DateTo>
-				<NumberOfGuests>4</NumberOfGuests>
-				<Costs>
-					<RUPrice>646.03</RUPrice>
-					<ClientPrice>760.03</ClientPrice>
-					<AlreadyPaid>760.03</AlreadyPaid>
-					<PriceScale>0%</PriceScale>
-				</Costs>
-				<ResapaID>165417209</ResapaID>
-				<Units>1</Units>
-				<ReservationBreakdown>
-					<RUBreakdown>
-						<DayPrices Date="2023-02-14">
-							<Rent>168.68</Rent>
-							<Price>168.68</Price>
-						</DayPrices>
-						<DayPrices Date="2023-02-15">
-							<Rent>168.68</Rent>
-							<Price>168.68</Price>
-						</DayPrices>
-						<DayPrices Date="2023-02-16">
-							<Rent>168.67</Rent>
-							<Price>168.67</Price>
-						</DayPrices>
-						<TotalFeesTaxes>
-							<TotalFeeTax AlreadyIncluded="false" Amount="140" Name="CleaningFee" FeeTaxType="41"/>
-						</TotalFeesTaxes>
-						<Total>646.03</Total>
-						<Rent>506.03</Rent>
-					</RUBreakdown>
-				</ReservationBreakdown>
-			</StayInfo>
-		</StayInfos>
-		<CustomerInfo>
-			<Name>Hairy</Name>
-			<SurName>Bain</SurName>
-			<Email>john@northendnairn.co.uk</Email>
-			<Phone>08001235</Phone>
-			<SkypeID/>
-			<Address/>
-			<ZipCode/>
-			<CountryID>20</CountryID>
-			<MessagingContactId>1234567</MessagingContactId>
-		</CustomerInfo>
-		<Creator>test@test.com</Creator>
-		<ReservationStatusID>1</ReservationStatusID>
-		<ReferenceID>X3GWB0NO</ReferenceID>
-		<IsArchived>false</IsArchived>
-		<Comments>These are my comments</Comments>
-	</Reservation>
-</LNM_PutConfirmedReservation_RQ>';
 	}
 
 	/**

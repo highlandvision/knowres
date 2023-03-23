@@ -901,7 +901,7 @@ class ContractEmail extends Email
 		}
 		$this->data['PROPERTYCOUNTRY']  = $this->property->country_name;
 		$this->data['PROPERTYNAME']     = $this->property->property_name;
-		$this->data['PROPERTYSTREET']   = $this->property->street;
+		$this->data['PROPERTYSTREET']   = $this->property->property_street;
 		$this->data['PROPERTYPOSTCODE'] = $this->property->property_postcode;
 		$this->data['PROPERTYREGION']   = $this->property->region_name;
 		$this->data['PROPERTYTOWN']     = $this->property->town_name;

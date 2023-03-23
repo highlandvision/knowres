@@ -71,19 +71,12 @@
 			<option value="0">JNO</option>
 			<option value="1">JYES</option>
 		</field>
-		<field name="commission"
-			addonAfter="%"
-			class="input-mini"
-			default="15"
-			filter="string"
-			type="text"
-			label="COM_KNOWRES_AGENT_COMMISSION_LBL"
-			description="COM_KNOWRES_AGENT_COMMISSION_DSC"/>
 		<field name="deposit"
 			addonAfter="%"
 			class="input-mini"
 			default="30"
 			filter="string"
+			showon="deposit_paid:1"
 			type="text"
 			label="COM_KNOWRES_AGENT_DEPOSIT_LBL"
 			description="COM_KNOWRES_AGENT_DEPOSIT_DSC"/>
@@ -92,7 +85,7 @@
 			class="input-mini"
 			default="30"
 			filter="string"
-			showon="deposit_paid:1"
+			showon="deposit_paid:0"
 			type="text"
 			label="COM_KNOWRES_AGENT_DEPOSIT_UNCONFIRMED_LBL"
 			description="COM_KNOWRES_AGENT_DEPOSIT_UNCONFIRMED_DSC"/>
@@ -106,6 +99,14 @@
 			<option value="0">JNO</option>
 			<option value="1">JYES</option>
 		</field>
+		<field name="commission"
+			addonAfter="%"
+			class="input-mini"
+			default="15"
+			filter="string"
+			type="text"
+			label="COM_KNOWRES_AGENT_COMMISSION_LBL"
+			description="COM_KNOWRES_AGENT_COMMISSION_DSC"/>
 		<field name="owner_deposit_payment"
 			class="btn-group btn-group-yesno"
 			default="0"
