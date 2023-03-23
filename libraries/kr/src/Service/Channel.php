@@ -225,7 +225,6 @@ class Channel extends Service
 			'shortstay',
 			'longstay',
 			'ratemarkup',
-			'discount',
 			'tax',
 			'extras',
 			'deposit',
@@ -243,9 +242,7 @@ class Channel extends Service
 
 		$computations = [
 			'extras',
-			'discount',
 			'agent',
-			'tax',
 			'deposit',
 			'paymentdates',
 			'commission',

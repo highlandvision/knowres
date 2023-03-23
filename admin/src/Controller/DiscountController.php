@@ -50,9 +50,8 @@ class DiscountController extends FormController
 		$Translations = new Translations();
 		$Translations->updateDefault('discount', $id, 'name', $name);
 
-		KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updateLastMinute',
-			(int) $validData['property_id'], 0, 'ru');
 		KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updatePropertyRates',
-			(int) $validData['property_id'], 0, 'vrbo');
+			(int) $validData['property_id'], 0, null, (string)$validData['valid_from'],
+			(string)$validData['valid_to']);
 	}
 }

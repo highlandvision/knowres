@@ -282,7 +282,7 @@ class ServicequeueModel extends AdminModel
 	 */
 	protected function prepareTable($table)
 	{
-		if ($table->method != 'updateAvailability')
+		if ($table->method != 'updateAvailability' && $table->method != 'updatePropertyRates')
 		{
 			$table->arrival     = null;
 			$table->departure   = null;

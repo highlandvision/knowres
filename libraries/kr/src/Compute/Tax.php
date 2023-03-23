@@ -125,6 +125,9 @@ class Tax
 		if ($this->trow->taxrate_id)
 		{
 			$base_id                      = $this->trow->id;
+			$gross                        = $this->trow->gross;
+			$poa                          = $this->trow->pay_arrival;
+			$agent                        = $this->trow->agent;
 			$this->trow                   = KrFactory::getAdminModel('taxrate')->getItem($this->trow->taxrate_id);
 			$supplement                   = $this->calcTaxValue($tax, $agents, $base_id);
 			$this->taxes[$this->trow->id] = [
@@ -133,9 +136,9 @@ class Tax
 				'calc'        => $tax,
 				'type'        => $this->setType($this->trow, $agents),
 				'id'          => $this->trow->id,
-				'agent'       => $this->trow->agent,
-				'gross'       => $this->trow->gross,
-				'pay_arrival' => $this->trow->pay_arrival,
+				'agent'       => $agent,
+				'gross'       => $gross,
+				'pay_arrival' => $poa,
 				'taxrate_id'  => $this->trow->taxrate_id,
 				'base_id'     => $base_id
 			];
