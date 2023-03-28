@@ -21,9 +21,8 @@
 			type="hidden"/>
 		<field name="guests"
 			addfieldprefix="HighlandVision\Component\Knowres\Site\Field"
-			class="kr-quote-auto"
 			default="2"
-			type="listguests"
+			type="listpartysize"
 			hint="MOD_KNOWRES_SEARCH_GUESTS_LBL"
 			label="COM_KNOWRES_QUOTE_GUESTS"/>
 	</fieldset>

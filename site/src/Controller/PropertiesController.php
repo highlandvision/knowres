@@ -304,9 +304,9 @@ class PropertiesController extends BaseController
 		$input['bedrooms']      = KrMethods::inputInt('bedrooms');
 		$input['flexible']      = KrMethods::inputInt('flexible');
 		$input['guests']        = KrMethods::inputInt('guests', 2);
-		//$input['adults']      = KrMethods::inputInt('adults', 2);
-		//$input['children']    = KrMethods::inputInt('children', 0);
-		//$input['child_ages']  = KrMethods::inputArray('child_ages', []);
+		$input['adults']        = KrMethods::inputInt('adults', 2);
+		$input['children']      = KrMethods::inputInt('children');
+		$input['child_ages']    = KrMethods::inputArray('child_ages');
 
 		foreach ($input as $k => $v)
 		{
@@ -327,7 +327,7 @@ class PropertiesController extends BaseController
 	/**
 	 * Set model for individual filters
 	 *
-	 * @param   mixed   $model   Property model
+	 * @param  mixed    $model   Property model
 	 * @param  ?array   $filter  Filter options
 	 * @param  ?string  $name    Filter name
 	 *
@@ -359,9 +359,9 @@ class PropertiesController extends BaseController
 	/**
 	 * Set the property filters for map search
 	 *
-	 * @param   object  $data  KR Search session
+	 * @param  object  $data  KR Search session
 	 *
-	 * @since   3.2.0
+	 * @since  3.2.0
 	 * @return mixed
 	 */
 	protected function setFilters(object $data): mixed
@@ -410,7 +410,7 @@ class PropertiesController extends BaseController
 	/**
 	 * Find and set the map markers
 	 *
-	 * @param   int  $region_id  ID of region
+	 * @param  int  $region_id  ID of region
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -474,8 +474,8 @@ class PropertiesController extends BaseController
 	/**
 	 * Set solo map marker
 	 *
-	 * @param   object  $item  DB Property object
-	 * @param   string  $type  Map type 'solo' or 'multi'
+	 * @param  object  $item  DB Property object
+	 * @param  string  $type  Map type 'solo' or 'multi'
 	 *
 	 * @throws Exception
 	 * @since  3.3.0

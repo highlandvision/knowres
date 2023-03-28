@@ -339,6 +339,15 @@
       }
     },
     {
+      "name": "com_knowres.module-search",
+      "description": "Module search helper functions",
+      "type": "script",
+      "uri": "com_knowres/modulesearch.min.js",
+      "attributes": {
+        "defer": true
+      }
+    },
+    {
       "name": "jquery",
       "description": "Jquery",
       "type": "script",
@@ -373,15 +382,6 @@
       "attributes": {
         "defer": true
       }
-    },
-    {
-      "name": "com_knowres.module-search",
-      "type": "script",
-      "uri": "com_knowres/module-search.min.js",
-      "attributes": {
-        "defer": true
-      },
-      "version": "4efda122de260213f85aceee619bfc3ea5b4a0aa"
     }
   ]
 }

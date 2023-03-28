@@ -151,7 +151,6 @@ class KrFactory
 	 *
 	 * @param  string  $name  Model name
 	 *
-	 * @throws RuntimeException
 	 * @since  3.3.0
 	 * @return mixed
 	 */
@@ -165,7 +164,6 @@ class KrFactory
 	 *
 	 * @param  string  $name  Model name
 	 *
-	 * @throws RuntimeException
 	 * @since  3.3.0
 	 * @return mixed
 	 */

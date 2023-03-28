@@ -379,9 +379,7 @@ class ConfirmController extends FormController
 		}
 
 		$output->taxbreakdown1 = $this->taxDisplay($Hub, 1);
-		// Gross rates
 		$output->taxbreakdown2 = $this->taxDisplay($Hub, 2);
-		//Pay arrival
 		$output->taxbreakdown3 = $this->taxDisplay($Hub, 3);
 
 		$output->extrasbreakdown = $this->extrasBreakdown($Hub);

@@ -39,13 +39,13 @@ $tchildren = KrMethods::plain('MOD_KNOWRES_SEARCH_CHILDREN');
 			<div class="input-group input-number-group">
 				<div class="input-group-button">
 					<span class="input-number-decrement"
-					      onClick="guestIncrement(-1, 'adults', '<?php echo $tadults; ?>', '<?php echo $tchildren; ?>')">-</span>
+					      onClick="moduleSearch.guestIncrement(-1, 'adults', '<?php echo $tadults; ?>', '<?php echo $tchildren; ?>', false)">-</span>
 				</div>
 				<input class="input-number" id="adults" name="adults" type="number"
 				       value="<?php echo $defaults->adults; ?>" min="1" max="50" readonly>
 				<div class="input-group-button">
 					<span class="input-number-increment"
-					      onClick="guestIncrement(1, 'adults', '<?php echo $tadults; ?>', '<?php echo $tchildren; ?>')">+</span>
+					      onClick="moduleSearch.guestIncrement(1, 'adults', '<?php echo $tadults; ?>', '<?php echo $tchildren; ?>', false)">+</span>
 				</div>
 			</div>
 		</div>
@@ -57,13 +57,13 @@ $tchildren = KrMethods::plain('MOD_KNOWRES_SEARCH_CHILDREN');
 			<div class="input-group input-number-group">
 				<div class="input-group-button">
 					<span class="input-number-decrement"
-					      onClick="guestIncrement(-1, 'children', '<?php echo $tadults; ?>', '<?php echo $tchildren; ?>')">-</span>
+					      onClick="moduleSearch.guestIncrement(-1, 'children', '<?php echo $tadults; ?>', '<?php echo $tchildren; ?>', false)">-</span>
 				</div>
 				<input class="input-number" id="children" name="children" type="number"
 				       value="<?php echo $defaults->children; ?>" min="0" max="10" readonly>
 				<div class="input-group-button">
 					<span class="input-number-increment"
-					      onClick="guestIncrement(1, 'children', '<?php echo $tadults; ?>', '<?php echo $tchildren; ?>')">+</span>
+					      onClick="moduleSearch.guestIncrement(1, 'children', '<?php echo $tadults; ?>', '<?php echo $tchildren; ?>', false)">+</span>
 				</div>
 			</div>
 		</div>

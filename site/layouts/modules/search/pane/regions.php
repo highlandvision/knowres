@@ -34,7 +34,7 @@ extract($displayData);
 			<div class="small-12 large-2 columns small-uncollapse <?php echo $end; ?>">
 				<h6><?php echo $k; ?></h6>
 				<?php foreach ($v as $id => $r): ?>
-					<a href="#" onclick="setregion(<?php echo $id; ?>);">
+					<a href="#" onclick="moduleSearch.setregion(<?php echo $id; ?>);">
 						<?php echo $r; ?>
 					</a><br>
 				<?php endforeach; ?>
@@ -42,12 +42,3 @@ extract($displayData);
 		<?php endforeach; ?>
 	</div>
 </div>
-
-<script>
-	function setregion(id) {
-		let element = document.getElementById('region_id');
-		element.value = id;
-		let pane = document.getElementById('region_id');
-		pane.click();
-	}
-</script>

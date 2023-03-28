@@ -62,10 +62,9 @@ class ContractController extends FormController
 		$jform           = KrMethods::inputArray('jform');
 		$contractSession = new KrSession\Contract();
 		$contractSession->resetData();
-		$contractData         = $contractSession->updateData($jform);
-		$contractData->guests = $jform['guests'];
-		//		$contractData->guests     = $jform['adults'] + $jform['children'];
-		//		$contractData->child_ages = !empty($jform['child_ages']) ? explode(',', $jform['child_ages']) : [];
+		$contractData             = $contractSession->updateData($jform);
+		$contractData->guests     = (int) $jform['adults'] + (int) $jform['children'];
+		$contractData->child_ages = !empty($jform['child_ages']) ? explode(',', $jform['child_ages']) : [];
 
 		/* @var ContractModel $model */
 		$model = $this->getModel();
@@ -323,12 +322,9 @@ class ContractController extends FormController
 		{
 			$contractSession->resetData();
 		}
-		$contractData         = $contractSession->updateData($jform);
-		$contractData->guests = $jform['guests'];
-		//TODO-v4.1 reinstate when tax requires
-		//		$contractData->adults           = $jform['adults'];
-		//		$contractData->children         = $jform['children'];
-		//		$contractData->child_ages       = !empty($jform['child_ages']) ? explode(',', $jform['child_ages']) : [];
+		$contractData                   = $contractSession->updateData($jform);
+		$contractData->guests           = (int) $jform['adults'] + (int) $jform['children'];
+		$contractData->child_ages       = !empty($jform['child_ages']) ? explode(',', $jform['child_ages']) : [];
 		$contractData->isEdit           = (bool) $id;
 		$contractData->extra_quantities = KrMethods::inputArray('extra_quantity');
 		$contractData->extra_ids        = KrMethods::inputArray('extra_id');

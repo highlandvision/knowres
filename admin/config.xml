@@ -26,15 +26,6 @@
 			type="listcountry"
 			label="COM_KNOWRES_CONFIG_ADMIN_COUNTRY"
 			description="COM_KNOWRES_CONFIG_ADMIN_COUNTRY_DSC"/>
-		<field name="tax_ignore"
-			default="1"
-			type="radio"
-			class="btn-group btn-group-yesno"
-			label="COM_KNOWRES_CONFIG_ADMIN_TAX_IGNORE"
-			description="COM_KNOWRES_CONFIG_ADMIN_TAX_IGNORE_DSC">
-			<option value="0">JNO</option>
-			<option value="1">JYES</option>
-		</field>
 		<field name="download_registration"
 			class="btn-group btn-group-yesno"
 			default="0"
@@ -166,6 +157,19 @@
 		<field name="delete_contracts"
 			default="1"
 			type="hidden"/>
+	</fieldset>
+	<fieldset name="taxes"
+		label="COM_KNOWRES_CONFIG_TAX"
+		description="COM_KNOWRES_CONFIG_TAX_DSC">
+		<field name="tax_ignore"
+			default="1"
+			type="radio"
+			class="btn-group btn-group-yesno"
+			label="COM_KNOWRES_CONFIG_TAX_IGNORE"
+			description="COM_KNOWRES_CONFIG_TAX_IGNORE_DSC">
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
 	</fieldset>
 	<fieldset name="property"
 		label="COM_KNOWRES_CONFIG_SITE"
@@ -405,25 +409,24 @@
 				step="1"
 				label="COM_KNOWRES_CONFIG_SEARCH_OPTIONS_MAXBEDROOMS"
 				description="COM_KNOWRES_CONFIG_SEARCH_OPTIONS_MAXBEDROOMS_DSC"/>
-			<!--TODO-v4.1 reinstate below for taxes and ages-->
-			<!--			<field name="adult_age"-->
-			<!--				class="w-auto"-->
-			<!--				default="16"-->
-			<!--				type="number"-->
-			<!--				min="14"-->
-			<!--				max="21"-->
-			<!--				step="1"-->
-			<!--				label="COM_KNOWRES_CONFIG_SEARCH_OPTIONS_ADULT_AGE"-->
-			<!--				description="COM_KNOWRES_CONFIG_SEARCH_OPTIONS_ADULT_AGE_DSC"/>-->
-			<!--			<field name="child_age"-->
-			<!--				class="w-auto"-->
-			<!--				default="2"-->
-			<!--				type="number"-->
-			<!--				min="0"-->
-			<!--				max="21"-->
-			<!--				step="1"-->
-			<!--				label="COM_KNOWRES_CONFIG_SEARCH_OPTIONS_CHILD_AGE"-->
-			<!--				description="COM_KNOWRES_CONFIG_SEARCH_OPTIONS_CHILD_AGE_DSC"/>-->
+			<field name="adult_age"
+				class="w-auto"
+				default="18"
+				type="number"
+				min="14"
+				max="21"
+				step="1"
+				label="COM_KNOWRES_CONFIG_SEARCH_OPTIONS_ADULT_AGE"
+				description="COM_KNOWRES_CONFIG_SEARCH_OPTIONS_ADULT_AGE_DSC"/>
+			<field name="child_age"
+				class="w-auto"
+				default="2"
+				type="number"
+				min="0"
+				max="21"
+				step="1"
+				label="COM_KNOWRES_CONFIG_SEARCH_OPTIONS_CHILD_AGE"
+				description="COM_KNOWRES_CONFIG_SEARCH_OPTIONS_CHILD_AGE_DSC"/>
 		</fieldset>
 		<fieldset name="searchview"
 			label="COM_KNOWRES_CONFIG_SEARCH_VIEW"

@@ -656,7 +656,7 @@ class FMethods
 	 * @param  string  $email     Email of user
 	 * @param  string  $password  Generated password
 	 *
-	 * @throws RuntimeException
+	 * @throws InvalidArgumentException
 	 * @since  3.3.0
 	 * @return int
 	 */
@@ -681,14 +681,14 @@ class FMethods
 		$user = new User();
 		if (!$user->bind($data))
 		{
-			throw new RuntimeException(Text::sprintf('COM_USERS_REGISTRATION_BIND_FAILED', $user->getError()));
+			throw new InvalidArgumentException(Text::sprintf('COM_USERS_REGISTRATION_BIND_FAILED', $user->getError()));
 		}
 
 		PluginHelper::importPlugin('user');
 		$user->save();
 		if (!$user->id)
 		{
-			throw new RuntimeException(Text::sprintf('COM_USERS_REGISTRATION_SAVE_FAILED', $user->getError()));
+			throw new InvalidArgumentException(Text::sprintf('COM_USERS_REGISTRATION_SAVE_FAILED', $user->getError()));
 		}
 
 		return $user->id;

@@ -17,8 +17,6 @@ use HighlandVision\KR\Framework\KrMethods;
 use Highlandvision\KR\Model\SiteModel;
 use HighlandVision\KR\Session as KrSession;
 use HighlandVision\KR\Utility;
-use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Language\Text;
 use RuntimeException;
 use stdClass;
 
@@ -88,30 +86,5 @@ class SearchHelper
 		}
 
 		return $regions;
-	}
-
-	/**
-	 * Creates the guest select
-	 *
-	 * @param  int  $default  Default value
-	 *
-	 * @since  1.0.0
-	 * @return mixed
-	 */
-	public static function guestSelect(int $default = 2)
-	{
-		$options[] = HTMLHelper::_('select.option', 1, KrMethods::plain('MOD_KNOWRES_SEARCH_ANY'));
-
-		for ($i = 2; $i < (int) $maxguests; $i++)
-		{
-			$options[] = HTMLHelper::_('select.option', $i, Text::plural('MOD_KNOWRES_SEARCH_GUEST', $i));
-		}
-
-		$options[] = HTMLHelper::_('select.option', $maxguests,
-			Text::plural('MOD_KNOWRES_SEARCH_GUEST', $maxguests . "+"));
-
-		$attribs = ['aria-label' => KrMethods::plain('MOD_KNOWRES_SEARCH_GUESTS_LABEL_ARIA')];
-
-		return HTMLHelper::_('select.genericlist', $options, 'guests', $attribs, 'value', 'text', $default);
 	}
 }

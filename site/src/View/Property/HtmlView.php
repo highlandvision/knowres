@@ -326,16 +326,6 @@ class HtmlView extends KrHtmlView\Site
 
 			$this->min_date = TickTock::modifyDays($this->today, (int) $this->settings['mindaysbeforearrival']);
 			$this->max_date = TickTock::modifyDays($this->today, (int) $this->settings['advanceBookingsLimit']);
-
-			//			$options = [];
-			//			$max     = $this->item->sleeps + $this->item->sleeps_extra;
-			//			for ($i = 1; $i <= $max; $i++)
-			//			{
-			//				$options[] = HTMLHelper::_('select.option', $i, KrMethods::plural('COM_KNOWRES_SEARCH_GUEST', $i, $this->item->sleeps_infant_age));
-			//			}
-			//
-			//			$this->guests = HTMLHelper::_('select.genericlist', $options, 'jform[guests]', 'class="kr-quote-auto"',
-			//				'value', 'text', $this->guests, 'jform_guests');
 		}
 	}
 

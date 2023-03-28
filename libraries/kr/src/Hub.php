@@ -20,6 +20,7 @@ use InvalidArgumentException;
 use Joomla\Registry\Registry;
 use RuntimeException;
 use stdClass;
+use UnexpectedValueException;
 
 use function abs;
 use function count;
@@ -106,7 +107,6 @@ class Hub
 	 * @param  float  $value     Discount value
 	 * @param  bool   $increase  False to decrease nightly rate
 	 *
-	 * @throws RuntimeException
 	 * @throws InvalidArgumentException
 	 * @since  3.4.0
 	 * @return array
@@ -278,7 +278,6 @@ class Hub
 	 * @param  float  $value  Value to be displayed
 	 *
 	 * @throws InvalidArgumentException
-	 * @throws RuntimeException
 	 * @since  3.3.0
 	 * @return string
 	 */
@@ -329,7 +328,6 @@ class Hub
 	 * @param  string  $session  Session data type to return
 	 *
 	 * @throws InvalidArgumentException
-	 * @throws RuntimeException
 	 * @since  3.3.0
 	 * @return stdClass
 	 */
@@ -357,7 +355,6 @@ class Hub
 	 * @param  string  $key      Session key
 	 * @param  string  $session  Session type
 	 *
-	 * @throws RuntimeException
 	 * @throws InvalidArgumentException
 	 * @since  3.3.0
 	 * @return mixed
@@ -375,7 +372,6 @@ class Hub
 	 * @param  float  $value  Value to be rounded
 	 *
 	 * @throws InvalidArgumentException
-	 * @throws RuntimeException
 	 * @since  3.3.0
 	 * @return float
 	 */
@@ -399,7 +395,6 @@ class Hub
 	 * @param  string  $calc   Base calculation value
 	 *
 	 * @throws InvalidArgumentException
-	 * @throws RuntimeException
 	 * @since  3.3.0
 	 */
 	public function setAdjustments(string $type, string $value, string $pc, string $calc): void
@@ -418,14 +413,14 @@ class Hub
 	 *
 	 * @param  object  $agent  Agent row
 	 *
-	 * @throws RuntimeException
+	 * @throws InvalidArgumentException
 	 * @since  3.3.0
 	 */
 	public function setAgent(object $agent): void
 	{
 		if (empty($agent))
 		{
-			throw new RuntimeException('Agent data is not set');
+			throw new InvalidArgumentException('Agent data is not set');
 		}
 
 		$this->agent = $agent;
@@ -438,7 +433,6 @@ class Hub
 	 * @param  string    $session  Session type
 	 *
 	 * @throws InvalidArgumentException
-	 * @throws RuntimeException
 	 * @since  3.3.0
 	 */
 	public function setData(stdClass $data, string $session = 'contractData'): void
@@ -471,7 +465,6 @@ class Hub
 	 * Validate extras
 	 *
 	 * @throws InvalidArgumentException
-	 * @throws RuntimeException
 	 * @since  3.3.0
 	 */
 	public function setExtras(): void
@@ -512,8 +505,7 @@ class Hub
 	 * @param  string  $session  Session type
 	 *
 	 * @throws InvalidArgumentException
-	 * @throws RuntimeException
-	 * @since 1.0.0
+	 * @since  1.0.0
 	 */
 	public function setValue(string $key, mixed $value, string $session = 'contractData'): void
 	{
@@ -528,7 +520,6 @@ class Hub
 	 * @param  float|string  $value  Value to be displayed
 	 *
 	 * @throws InvalidArgumentException
-	 * @throws RuntimeException
 	 * @since  3.3.0
 	 * @return string
 	 */
@@ -541,7 +532,7 @@ class Hub
 	 * Create new user
 	 *
 	 * @throws Exception
-	 * @throws RuntimeException
+	 * @throws InvalidArgumentException
 	 * @since  3.3.0
 	 */
 	protected function createUser(): void
@@ -595,7 +586,7 @@ class Hub
 	/**
 	 * Validate arrival date
 	 *
-	 * @throws InvalidArgumentException|RuntimeException
+	 * @throws InvalidArgumentException
 	 * @since  3.3.0
 	 */
 	protected function validateArrival(): void
@@ -618,7 +609,6 @@ class Hub
 	 * Validate departure date
 	 *
 	 * @throws InvalidArgumentException
-	 * @throws RuntimeException
 	 * @since  3.3.0
 	 */
 	protected function validateDeparture(): void
@@ -643,8 +633,7 @@ class Hub
 	/**
 	 * Validate guest numbers
 	 *
-	 * @throws InvalidArgumentException
-	 * @throws RuntimeException
+	 * @throws InvalidArgumentException|UnexpectedValueException
 	 * @since  3.3.0
 	 */
 	protected function validateGuests(): void
@@ -657,76 +646,57 @@ class Hub
 				throw new InvalidArgumentException('#Guests should consist of numbers only and should not be zero');
 			}
 
-			//TODO-v4.1 Reinstate for adults, children and ages
-			//			$free = $this->setFreeGuests();
-			//			if ($guests > $this->property->sleeps + $this->property->sleeps_extra + $free)
-			//			{
-			//				throw new InvalidArgumentException('Adults plus Children exceed the sleeping capacity for this property');
-			//			}
-			//
-			//			$children   = $this->getValue('children');
-			//			$child_ages = $this->getValue('child_ages');
-			//			if ($children > 0 && is_countable($child_ages))
-			//			{
-			//				if (count($child_ages) > 0 && count($child_ages) < $children)
-			//				{
-			//					throw new InvalidArgumentException('Please enter an age for each child');
-			//				}
-			//				if (count($child_ages) > 0 && count($child_ages) > $children)
-			//				{
-			//					throw new InvalidArgumentException('Number of children must match number of ages');
-			//				}
-			//
-			//				foreach ($child_ages as $age)
-			//				{
-			//					if ($age < 0 or $age > 18)
-			//					{
-			//						throw new InvalidArgumentException('Please enter ages from 2 to 17 for each child');
-			//					}
-			//				}
-			//			}
-			//			else if ($children == 0 && is_countable($child_ages) && count($child_ages) > 0)
-			//			{
-			//				throw new InvalidArgumentException('Number of children must match number of ages');
-			//			}
+			$free = SiteHelper::setFreeGuests($this->property->sleeps_infant_max, $this->property->sleeps_infant_age,
+				$this->getValue('child_ages'));
+			if ($guests > $this->property->sleeps + $this->property->sleeps_extra + $free)
+			{
+				if ($this->property->sleeps_infant_max > 1)
+				{
+					throw new UnexpectedValueException(KrMethods::sprintf('COM_KNOWRES_QUOTE_ERROR_GUESTS',
+						$this->property->sleeps + $this->property->sleeps_extra,
+						$this->property->sleeps_infant_max, $this->property->sleeps_infant_age));
+				}
+				else
+				{
+					throw new UnexpectedValueException(KrMethods::sprintf('COM_KNOWRES_QUOTE_ERROR_GUESTS_1',
+						$this->property->sleeps + $this->property->sleeps_extra,
+						$this->property->sleeps_infant_max, $this->property->sleeps_infant_age));
+				}
+			}
+
+			$this->setValue('free_guests', $free);
+			$children   = $this->getValue('children');
+			$child_ages = $this->getValue('child_ages');
+			if ($children > 0 && is_countable($child_ages))
+			{
+				if (count($child_ages) > 0 && count($child_ages) < $children)
+				{
+					throw new UnexpectedValueException('Please enter an age for each child');
+				}
+				if (count($child_ages) > 0 && count($child_ages) > $children)
+				{
+					throw new UnexpectedValueException('Number of children must match number of ages');
+				}
+
+				foreach ($child_ages as $age)
+				{
+					if ($age < 0 or $age > 18)
+					{
+						throw new UnexpectedValueException('Please enter ages from 0 to 17 for each child');
+					}
+				}
+			}
+			else if ($children == 0 && is_countable($child_ages) && count($child_ages) > 0)
+			{
+				throw new UnexpectedValueException('Number of children must match number of ages');
+			}
 		}
 	}
-
-	//TODO-v4.1 Reinstate for adults, children and ages
-	//	/**
-	//	 * Set number of free guests - children under free infants age
-	//	 *
-	//	 * @throws InvalidArgumentException
-	//	 * @throws RuntimeException
-	//	 * @since  4.0.0
-	//	 */
-	//	public function setFreeGuests()
-	//	{
-	//		if (!$this->property->sleeps_infant_max)
-	//		{
-	//			$this->setValue('free_guests', 0);
-	//		}
-	//
-	//		$child_ages = $this->getValue('child_ages');
-	//		$free       = 0;
-	//		foreach ($child_ages as $age)
-	//		{
-	//			if ($age <= $this->property->sleeps_infant_age && $free < $this->property->sleeps_infant_max)
-	//			{
-	//				$free++;
-	//			}
-	//		}
-	//
-	//		$this->setValue('free_guests', $free);
-	//
-	//		return $free;
-	//	}
 
 	/**
 	 * Validate edit ID
 	 *
 	 * @throws InvalidArgumentException
-	 * @throws RuntimeException
 	 * @since  3.3.0
 	 */
 	protected function validateId(): void
@@ -747,7 +717,6 @@ class Hub
 	 * Validate property
 	 *
 	 * @throws InvalidArgumentException
-	 * @throws RuntimeException
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
@@ -762,7 +731,7 @@ class Hub
 		$this->property = KrFactory::getAdminModel('property')->getItem($property_id);
 		if (empty($this->property->id))
 		{
-			throw new RuntimeException('Property ID not found');
+			throw new InvalidArgumentException('Property ID not found');
 		}
 	}
 
@@ -773,7 +742,6 @@ class Hub
 	 * @param  ?string  $key      Session key
 	 *
 	 * @throws InvalidArgumentException
-	 * @throws RuntimeException
 	 * @since  3.3.0
 	 */
 	protected function validateSession(string $session, string $key = null): void
@@ -787,7 +755,7 @@ class Hub
 		{
 			if (!property_exists($this->$session, $key))
 			{
-				throw new RuntimeException('Variable does not exist for ' . $key . ' in ' . $session);
+				throw new InvalidArgumentException('Variable does not exist for ' . $key . ' in ' . $session);
 			}
 		}
 	}
@@ -795,7 +763,6 @@ class Hub
 	/**
 	 * Reset short book fields after rate is calculated
 	 *
-	 * @throws RuntimeException
 	 * @throws InvalidArgumentException
 	 * @since  3.4.0
 	 */

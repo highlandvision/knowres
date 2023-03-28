@@ -5,18 +5,21 @@
  * @license    See the file "LICENSE.txt" for the full license governing this code.
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
+// noinspection JSUnusedGlobalSymbols
 
 "use strict";
-//TODO-v4.1 Include in webpack.build.modules.js and remove setRegion from hero layout
-// noinspection JSUnusedGlobalSymbols
-function guestIncrement(updown, target, atext, ctext) {
+
+export function guestIncrement(updown, target, atext, ctext, quote) {
 	let cac = document.getElementById('child-ages-container');
 	let aci = document.getElementById(target);
 	let value = parseInt(aci.value);
 	value += updown;
 	if (value >= aci.getAttribute('min') && value <= aci.getAttribute('max')) {
+		document.getElementById('aplus').disabled = false;
+		document.getElementById('cplus').disabled = false;
 		let guests = document.getElementById('guests');
-		let maxguests = guests.dataset.max;
+		let maxguests = parseInt(guests.dataset.max);
+		let maxadults = parseInt(guests.dataset.adults);
 		let guestcount = parseInt(guests.options[guests.selectedIndex].value) + parseInt(updown);
 		if (guestcount > 0 && guestcount <= maxguests) {
 			document.getElementById(target).value = value;
@@ -24,7 +27,7 @@ function guestIncrement(updown, target, atext, ctext) {
 			let children = document.getElementById('children').value;
 			guests.options[guestcount - 1].text = adults + ' ' + atext + ', ' + children + ' ' + ctext;
 			guests.value = guestcount;
-			if (target === "children") {
+			if (target === 'children') {
 				let agehelp = document.getElementById('age-help');
 				if (updown === 1) {
 					if (value === 1) {
@@ -38,11 +41,18 @@ function guestIncrement(updown, target, atext, ctext) {
 					removeAgeField(value + 1)
 				}
 			}
+			if ((parseInt(adults) + parseInt(children)) === maxguests) {
+				document.getElementById('aplus').disabled = true;
+				document.getElementById('cplus').disabled = true;
+			}
+			if (parseInt(adults) === maxadults) {
+				document.getElementById('aplus').disabled = true;
+			}
 		}
 	}
 }
 
-function createAgeField(count) {
+export function createAgeField(count) {
 	let newage = document.createElement('input');
 	newage.setAttribute('type', 'number');
 	newage.setAttribute('aria-label', 'Age ' + count);
@@ -56,12 +66,12 @@ function createAgeField(count) {
 	return newage;
 }
 
-function removeAgeField(count) {
+export function removeAgeField(count) {
 	let container = document.getElementById('child_ages_' + count);
 	container.remove()
 }
 
-function setregion(id) {
+export function setregion(id) {
 	let element = document.getElementById('region_id');
 	element.value = id;
 	let pane = document.getElementById('region_id');

@@ -11,10 +11,9 @@
 (function ($) {
 	if (!window.location.origin)
 		window.location.origin = window.location.protocol + "//" + window.location.host;
-	const livesite = window.location.origin + '/';
 
 	let lang = $("#kr-lang").data('krlang');
-	let myConfirm, action, $mytask;
+	let myConfirm, $myTask;
 
 	class Krconfirm {
 		constructor($form) {
@@ -27,18 +26,15 @@
 		}
 
 		updateQuote($form) {
-			action = $form.attr('action');
-			$form.attr('action', 'index.php?option=com_knowres&task=confirm.compute&lang=' + lang);
-			$mytask = $('#mytask');
-			$mytask.val('confirm.compute');
+			$myTask = $('#mytask');
+			$myTask.val('confirm.compute');
 			jQuery.ajax({
 				type:     'POST',
 				url:      'index.php?option=com_knowres&task=confirm.compute&lang=' + lang,
 				data:     $form.serializeArray(),
 				dataType: 'json',
 				success:  function (result) {
-					$form.attr('action',action);
-					$mytask.val('confirm.payment');
+					$myTask.val('confirm.payment');
 					if (result.success) {
 						const data = result.data;
 						if (data.hasOwnProperty('redirect')) {
