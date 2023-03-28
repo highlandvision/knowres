@@ -7,7 +7,7 @@
 	<authorEmail>hazel@highlandvision.com</authorEmail>
 	<copyright>2020 Highland Vision, all rights reserved.</copyright>
 	<license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
-	<version>4.0.2</version>
+	<version>4.1.0</version>
 	<description>PLG_SYSTEM_KNOWRESMEGA_DESCRIPTION</description>
 	<files>
 		<filename plugin="knowresmega">knowresmega.php</filename>

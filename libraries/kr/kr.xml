@@ -2,7 +2,7 @@
 <extension type="library" version="4.0" method="upgrade">
 	<name>KR Library</name>
 	<libraryname>highlandvision/kr</libraryname>
-	<version>4.0.2</version>
+	<version>4.1.0</version>
 	<creationDate>September 2020</creationDate>
 	<author>Highland Vision</author>
 	<authorEmail>support@highlandvision.com</authorEmail>
