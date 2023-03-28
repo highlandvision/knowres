@@ -20,6 +20,7 @@ use HighlandVision\KR\Calendar;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Hub;
+use HighlandVision\KR\Logger;
 use HighlandVision\KR\Media\Pdf\Property\Terms;
 use HighlandVision\KR\PropertyIcs;
 use HighlandVision\KR\Session as KrSession;
@@ -30,6 +31,10 @@ use JetBrains\PhpStorm\NoReturn;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Response\JsonResponse;
 use RuntimeException;
+
+use UnexpectedValueException;
+
+use function jexit;
 
 /**
  * Property controller class.
@@ -176,16 +181,15 @@ class PropertyController extends BaseController
 		$property_id = KrMethods::inputInt('property_id');
 		$arrival     = KrMethods::inputString('arrival');
 		$departure   = KrMethods::inputString('departure');
-		$guests      = KrMethods::inputInt('guests');
-		//TODO-V4.1 Reinstate for adults, children and ages
-		//		$adults      = KrMethods::inputInt('adults');
-		//		$children    = KrMethods::inputInt('children');
-		//		$child_ages  = KrMethods::inputArray('child_ages', []);
 
 		if (empty($property_id) || empty($arrival) || empty($departure))
 		{
 			jexit();
 		}
+
+		$adults      = KrMethods::inputInt('adults');
+		$children    = KrMethods::inputInt('children');
+		$child_ages  = KrMethods::inputArray('child_ages');
 
 		if (!KrFactory::getListModel('contracts')
 		              ->isPropertyAvailable($property_id, $arrival, $departure))
@@ -201,17 +205,22 @@ class PropertyController extends BaseController
 			$contractData->property_id = $property_id;
 			$contractData->arrival     = $arrival;
 			$contractData->departure   = $departure;
-			$contractData->guests      = $guests;
-			//TODO-V4.1 Reinstate for adults, children and ages
-			//	$contractData->adults      = $adults;
-			//	$contractData->children    = $children;
-			//	$contractData->child_ages  = $child_ages;
-			$contractData->tax_total = 0;
-			$contractData->taxes     = [];
-			$Hub                     = new Hub($contractData);
+			$contractData->adults      = $adults;
+			$contractData->children    = $children;
+			$contractData->child_ages  = $child_ages;
+			$contractData->guests      = $adults + $children;
+			$contractData->tax_total   = 0;
+			$contractData->taxes       = [];
+			$Hub                       = new Hub($contractData);
 		}
-		catch (Exception)
+		catch (UnexpectedValueException $e)
 		{
+			$view->error = $e->getMessage();
+			$view->display();
+		}
+		catch (Exception $e)
+		{
+			Logger::logme($e->getMessage());
 			$view->error = KrMethods::plain('COM_KNOWRES_NO_PRICE');
 			$view->display();
 		}

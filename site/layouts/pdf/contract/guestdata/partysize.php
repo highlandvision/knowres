@@ -34,7 +34,7 @@ if ($guestdata)
 		$ages = KrFactory::getAdminModel('contractguestdata')::getChildAges($guestdata->children);
 	}
 }
-//
+// TODO-v4.1 is this needed
 //$guests   = $contract->guests;
 //$adults   = $contract->adults;
 //$children = $contract->children;

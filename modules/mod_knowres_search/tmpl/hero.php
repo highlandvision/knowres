@@ -46,12 +46,19 @@ $action = KrMethods::getRoot() . 'index.php?option=com_knowres&task=properties.s
 				<input type="hidden" id="departure" name="departure" value="">
 			<?php endif; ?>
 			<?php if ($params->get('show_guests', 1)): ?>
-				<div class="small-12 medium-12 large-2 columns">
-					<?php echo $form->renderField('guests', null, $defaults->guests,
-						['adults' => $defaults->adults, 'children' => $defaults->children]); ?>
+				<div class="small-12 medium-12 large-3 columns">
+					<?php echo $form->renderField('guests', null, $defaults->guests, [
+						'adults'            => $defaults->adults,
+						'children'          => $defaults->children,
+						'child_ages'        => $defaults->child_ages ?: [],
+						'max'               => KrMethods::getParams()->get('search_maxguests', 16),
+						'sleeps_infant_max' => 0,
+						'sleeps_infant_age' => 0,
+					]);
+					?>
 				</div>
 			<?php endif; ?>
-			<div class="small-12 medium-12 large-3 columns">
+			<div class="small-12 medium-12 large-2 columns">
 				<button type="submit" class="button expanded large">
 					<?php echo KrMethods::plain('MOD_KNOWRES_SEARCH_BUTTON'); ?>
 					&nbsp;&nbsp;<i class="fas fa-search"></i>
@@ -59,8 +66,7 @@ $action = KrMethods::getRoot() . 'index.php?option=com_knowres&task=properties.s
 			</div>
 		</div>
 
-		<!--		TODO-V4.1 reinstate-->
-		<!--		--><?php //echo KrMethods::render('modules.search.pane.guests', ['defaults' => $defaults, 'collapse' => '']); ?>
+		<?php echo KrMethods::render('modules.search.pane.guests', ['defaults' => $defaults, 'collapse' => '']); ?>
 	</form>
 
 	<?php if ($params->get('show_regions_expanded', 0)): ?>

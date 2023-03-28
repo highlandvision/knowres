@@ -40,15 +40,15 @@ $tchildren = KrMethods::plain('MOD_KNOWRES_SEARCH_CHILDREN');
 		<div class="small-12 columns">
 			<div class="input-group input-number-group">
 				<div class="input-group-button">
-					<span class="input-number-decrement"
-					      onClick="guestIncrement(-1, 'adults', '<?php echo $tadults; ?>', '<?php echo $tchildren; ?>')">-</span>
+					<button type="button" id="aminus" class="input-number-decrement"
+					      onClick="moduleSearch.guestIncrement(-1, 'adults', '<?php echo $tadults; ?>', '<?php echo $tchildren; ?>', true)">-</button>
 				</div>
 				<input class="input-number" id="adults" name="adults" type="number"
 				       value="<?php echo $defaults->adults; ?>" min="1"
 				       max="<?php echo $item->sleeps + $item->sleeps_extra; ?>" readonly>
 				<div class="input-group-button">
-					<span class="input-number-increment"
-					      onClick="guestIncrement(1, 'adults', '<?php echo $tadults; ?>', '<?php echo $tchildren; ?>')">+</span>
+					<button type="button" id="aplus" class="input-number-increment"
+					      onClick="moduleSearch.guestIncrement(1, 'adults', '<?php echo $tadults; ?>', '<?php echo $tchildren; ?>', true)">+</button>
 				</div>
 			</div>
 		</div>
@@ -61,15 +61,15 @@ $tchildren = KrMethods::plain('MOD_KNOWRES_SEARCH_CHILDREN');
 		<div class="small-12 columns">
 			<div class="input-group input-number-group">
 				<div class="input-group-button">
-					<span class="input-number-decrement"
-					      onClick="guestIncrement(-1, 'children', '<?php echo $tadults; ?>', '<?php echo $tchildren; ?>')">-</span>
+					<button type="button" id="cminus" class="input-number-decrement"
+					      onClick="moduleSearch.guestIncrement(-1, 'children', '<?php echo $tadults; ?>', '<?php echo $tchildren; ?>', true)">-</button>
 				</div>
 				<input class="input-number" id="children" name="children" type="number"
 				       value="<?php echo $defaults->children; ?>" min="0"
-				       max="<?php echo $item->sleeps + $item->sleeps_extra - 1; ?>" readonly>
+				       max="<?php echo $item->sleeps + $item->sleeps_extra + $item->sleeps_infant_max - 1; ?>" readonly>
 				<div class="input-group-button">
-					<span class="input-number-increment"
-					      onClick="guestIncrement(1, 'children', '<?php echo $tadults; ?>', '<?php echo $tchildren; ?>')">+</span>
+					<button type="button" id="cplus" class="input-number-increment"
+					      onClick="moduleSearch.guestIncrement(1, 'children', '<?php echo $tadults; ?>', '<?php echo $tchildren; ?>', true)">+</button>
 				</div>
 			</div>
 		</div>

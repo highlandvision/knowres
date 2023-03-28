@@ -222,21 +222,19 @@ class Tax
 				// Per guest
 				if ($this->trow->applicable_age > 17)
 				{
-					//$tax = $tax * $this->Hub->getValue('adults');
-					$tax = $tax * $this->Hub->getValue('guests');
+					$tax = $tax * $this->Hub->getValue('adults');
 				}
 				else
 				{
-					//					$count = $this->Hub->getValue('adults');
-					$count = $this->Hub->getValue('guests');
-					//					$ages  = $this->Hub->getValue('child_ages');
-					//					foreach ($ages as $age)
-					//					{
-					//						if ($age >= $this->trow->applicable_age)
-					//						{
-					//							$count++;
-					//						}
-					//					}
+					$count = $this->Hub->getValue('adults');
+					$ages  = $this->Hub->getValue('child_ages');
+					foreach ($ages as $age)
+					{
+						if ($age >= $this->trow->applicable_age)
+						{
+							$count++;
+						}
+					}
 
 					$tax = $tax * $count;
 				}
@@ -244,17 +242,6 @@ class Tax
 		}
 
 		$tax = $this->Hub->round($tax);
-
-		//		if (!in_array($this->agent_id, $agents) && !$this->trow->gross && !$this->trow->pay_arrival)
-		//		{
-		//			$this->tax_total += $tax;
-		//		}
-
-		//		if (!in_array($this->agent_id, $agents) && !$this->trow->pay_arrival)
-		//		{
-		//			$this->tax_total += $tax;
-		//		}
-
 		if (in_array($this->agent_id, $agents) || !$this->trow->pay_arrival)
 		{
 			$this->tax_total += $tax;

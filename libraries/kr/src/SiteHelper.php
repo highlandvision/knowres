@@ -713,6 +713,35 @@ class SiteHelper
 	}
 
 	/**
+	 * Set number of free guests - children under free infants age
+	 *
+	 * @param  int    $sleeps_infant_max  #Number of free infants allowed
+	 * @param  int    $sleeps_infant_age  Max age of free infant
+	 * @param  array  $child_ages         Ages of chldren
+	 *
+	 * @since  4.0.0
+	 * @return int
+	 */
+	public static function setFreeGuests(int $sleeps_infant_max, int $sleeps_infant_age, array $child_ages): int
+	{
+		if (!$sleeps_infant_max)
+		{
+			return 0;
+		}
+
+		$free = 0;
+		foreach ($child_ages as $age)
+		{
+			if ($age < $sleeps_infant_age && $free < $sleeps_infant_max)
+			{
+				$free++;
+			}
+		}
+
+		return $free;
+	}
+
+	/**
 	 * Set guest contracts
 	 *
 	 * @param  int  $guest_id  ID of guest

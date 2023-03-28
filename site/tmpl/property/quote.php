@@ -17,44 +17,46 @@ use HighlandVision\KR\SiteHelper;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Utility;
 use Joomla\CMS\HTML\HTMLHelper;
-
-$currency   = $this->quote->getValue('currency');
-$price      = Utility::displayValue($this->quote->getValue('contract_total'), $currency);
-$price_text = KrMethods::plain('COM_KNOWRES_QUOTE_TOTAL_NOTAX');
-if ((isset($this->quote->settings['tax_ignore']) && $this->quote->settings['tax_ignore'])
-	|| KrMethods::getParams()->get('tax_ignore', 0))
-{
-	$price_text = KrMethods::plain('COM_KNOWRES_QUOTE_TOTAL');
-}
-
-$discount = $this->quote->getValue('discount');
-if (!empty($discount))
-{
-	$discount = Utility::displayValue($this->quote->getValue('discount'), $currency);
-	$total    = $this->quote->getValue('contract_total') + $this->quote->getValue('discount');
-	$full     = Utility::displayValue($total, $currency);
-}
-
-$deposit = Utility::displayValue($this->quote->getValue('deposit'), $currency);
-if ($this->quote->getValue('booking_type') == 2)
-{
-	$deposit_text = KrMethods::plain('COM_KNOWRES_CONFIRM_BOOK_DEPOSIT_DUE');
-}
-else
-{
-	$deposit_text = KrMethods::plain('COM_KNOWRES_CONFIRM_REQUEST_DEPOSIT_DUE');
-}
-
-$Itemid = SiteHelper::getItemId('com_knowres', 'confirm', ['layout' => 'html']);
-$action = KrMethods::route('index.php?option=com_knowres&view=confirm&Itemid=' . $Itemid);
 ?>
 
 <?php if (!empty($this->error)): ?>
-	<h4 class="h5">
+	<h4 class="h6 error-message">
 		<?php echo $this->error; ?>
 		<br><br>
 	</h4>
 <?php else: ?>
+	<?php
+	$currency   = $this->quote->getValue('currency');
+	$price      = Utility::displayValue($this->quote->getValue('contract_total'), $currency);
+	$price_text = KrMethods::plain('COM_KNOWRES_QUOTE_TOTAL_NOTAX');
+	if ((isset($this->quote->settings['tax_ignore']) && $this->quote->settings['tax_ignore'])
+		|| KrMethods::getParams()->get('tax_ignore', 0))
+	{
+		$price_text = KrMethods::plain('COM_KNOWRES_QUOTE_TOTAL');
+	}
+
+	$discount = $this->quote->getValue('discount');
+	if (!empty($discount))
+	{
+		$discount = Utility::displayValue($this->quote->getValue('discount'), $currency);
+		$total    = $this->quote->getValue('contract_total') + $this->quote->getValue('discount');
+		$full     = Utility::displayValue($total, $currency);
+	}
+
+	$deposit = Utility::displayValue($this->quote->getValue('deposit'), $currency);
+	if ($this->quote->getValue('booking_type') == 2)
+	{
+		$deposit_text = KrMethods::plain('COM_KNOWRES_CONFIRM_BOOK_DEPOSIT_DUE');
+	}
+	else
+	{
+		$deposit_text = KrMethods::plain('COM_KNOWRES_CONFIRM_REQUEST_DEPOSIT_DUE');
+	}
+
+	$Itemid = SiteHelper::getItemId('com_knowres', 'confirm', ['layout' => 'html']);
+	$action = KrMethods::route('index.php?option=com_knowres&view=confirm&Itemid=' . $Itemid);
+	?>
+
 	<form action="<?php echo $action; ?>" method="post" id="kr-form-prebook">
 		<h4><?php echo $price_text; ?></h4>
 		<div class="total-price">

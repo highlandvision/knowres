@@ -28,9 +28,8 @@
 			addfieldprefix="HighlandVision\Component\Knowres\Site\Field"
 			default="2"
 			hiddenLabel="true"
-			type="listguests"
+			type="listpartysize"
 			label="MOD_KNOWRES_SEARCH_GUESTS">
-			<option value="1">MOD_KNOWRES_SEARCH_ANY</option>
 		</field>
 		<field name="bedrooms"
 			default="0"

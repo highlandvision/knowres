@@ -25,7 +25,7 @@ use function array_merge;
  */
 class ListguestsField extends ListField
 {
-	//TODO-v4.1 Remove and reinstate Listpartysizefield in search form
+	//TODO-v4.2 Remove if not required
 	/** @var string $type The form field type. */
 	protected $type = 'Listguests';
 

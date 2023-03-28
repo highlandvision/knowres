@@ -31,26 +31,18 @@ if ($this->arrival)
 		<div class="col-sm-6 col-lg-2">
 			<?php echo $this->form->renderField('departure_bd'); ?>
 		</div>
-		<div class="col-sm-2 col-lg-1">
-			<?php echo KrMethods::render('contract.form.guests', [
-				'form'  => $this->form,
-				'max'   => $this->property->sleeps + $this->property->sleeps_extra,
-				'rooms' => $this->property->rooms,
-			]); ?>
+		<div class="col-sm-2 col-lg-2">
+			<?php echo $this->form->renderField('adults'); ?>
 		</div>
-		<!--		TODO-v4.1 reinstate when tax requires-->
-		<!--		<div class="col-sm-2 col-lg-1">-->
-		<!--			--><?php //echo $this->form->renderField('adults'); ?>
-		<!--		</div>-->
-		<!--		<div class="col-sm-2 col-lg-1">-->
-		<!--			--><?php //echo $this->form->renderField('children'); ?>
-		<!--		</div>-->
-		<!--		<div class="col-sm-6 col-lg-3">-->
-		<!--			--><?php //$this->form->setValue('child_ages', null, implode(',', $this->form->getValue('child_ages'))); ?>
-		<!--			--><?php //echo $this->form->renderField('child_ages'); ?>
-		<!--		</div>-->
+		<div class="col-sm-2 col-lg-2">
+			<?php echo $this->form->renderField('children'); ?>
+		</div>
+		<div class="col-sm-6 col-lg-3">
+			<?php $this->form->setValue('child_ages', null, implode(',', $this->form->getValue('child_ages'))); ?>
+			<?php echo $this->form->renderField('child_ages'); ?>
+		</div>
 		<?php if (!empty($this->item->id)): ?>
-			<div class="col-lg-2">
+			<div class="col-lg-1">
 				<?php echo $this->form->renderField('fixrate'); ?>
 			</div>
 		<?php endif; ?>

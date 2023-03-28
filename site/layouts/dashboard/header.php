@@ -93,22 +93,22 @@ $image  = Media\Images::getPropertyImageName($contract->property_id);
 				<dt><?php echo KrMethods::plain('COM_KNOWRES_GUESTS'); ?></dt>
 				<dd><?php echo $contract->guests; ?></dd>
 			</div>
-			<!--			TODO-v4.1 reinstate for Ages -->
-			<!--			<div>-->
-			<!--				<dt>--><?php //echo KrMethods::plain('COM_KNOWRES_ADULTS'); ?><!--</dt>-->
-			<!--				<dd>--><?php //echo $contract->adults; ?><!--</dd>-->
-			<!--			</div>-->
-			<!--			--><?php //if ($contract->children > 0): ?>
-			<!--			<div>-->
-			<!--				<dt>--><?php //echo KrMethods::plain('COM_KNOWRES_CHILDREN'); ?><!--</dt>-->
-			<!--				<dd>--><?php //echo $contract->children; ?><!--</dd>-->
-			<!--			</div>-->
-			<!--			<div>-->
-			<!--				<dt>--><?php //echo KrMethods::plain('COM_KNOWRES_CHILD_AGES'); ?><!--</dt>-->
-			<!--				            <dd>-->
-			<?php //echo implode(',', Utility::decodeJson($contract->child_ages, true)); ?><!--</dd>-->
-			<!--			</div>-->
-			<!--			--><?php //endif; ?>
+			<div>
+				<dt><?php echo KrMethods::plain('COM_KNOWRES_ADULTS'); ?></dt>
+				<dd><?php echo $contract->adults; ?></dd>
+			</div>
+			<?php if ($contract->children > 0): ?>
+			<div>
+				<dt><?php echo KrMethods::plain('COM_KNOWRES_CHILDREN'); ?></dt>
+				<dd><?php echo $contract->children; ?></dd>
+			</div>
+			<div>
+				<dt><?php echo KrMethods::plain('COM_KNOWRES_CHILD_AGES'); ?></dt>
+				<dd>
+					<?php echo implode(',', Utility::decodeJson($contract->child_ages, true)); ?>
+				</dd>
+			</div>
+			<?php endif; ?>
 			<?php if ($contract->agent_id) : ?>
 				<p class="smaller">
 					<i><?php echo KrMethods::sprintf('COM_KNOWRES_DASHBOARD_AGENT', $contract->agent_name); ?></i>
