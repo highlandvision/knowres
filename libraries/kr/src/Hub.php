@@ -16,6 +16,7 @@ use HighlandVision\KR\Compute;
 use HighlandVision\KR\Email\RegistrationEmail;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
+use HighlandVision\KR\Session as KrSession;
 use InvalidArgumentException;
 use Joomla\Registry\Registry;
 use RuntimeException;
@@ -99,44 +100,7 @@ class Hub
 
 		$this->params = KrMethods::getParams();
 		$this->today  = TickTock::getDateForTimezone('Y-m-d', $this->property->timezone);
-	}
-
-	/**
-	 * Adjust nightly rates for all dates
-	 *
-	 * @param  float  $value     Discount value
-	 * @param  bool   $increase  False to decrease nightly rate
-	 *
-	 * @throws InvalidArgumentException
-	 * @since  3.4.0
-	 * @return array
-	 */
-	public function adjustNightly(float $value, bool $increase = true): array
-	{
-		$nightly   = $this->getValue('nightly');
-		$last      = array_key_last($nightly);
-		$remaining = $value;
-		$per_night = round($value / $this->getValue('nights'), 2);
-		if (!$increase)
-		{
-			$per_night = -abs($per_night);
-		}
-
-		foreach ($nightly as $date => $rate)
-		{
-			if ($date == $last)
-			{
-				$nightly[$date] = $rate - $remaining;
-			}
-			else
-			{
-				$nightly[$date] = $rate + $per_night;
-			}
-
-			$remaining = round($remaining - abs($per_night), 2);
-		}
-
-		return $nightly;
+		$this->setManagerAgency();
 	}
 
 	/**
@@ -178,6 +142,44 @@ class Hub
 		}
 
 		return true;
+	}
+
+	/**
+	 * Adjust nightly rates for all dates
+	 *
+	 * @param  float  $value     Discount value
+	 * @param  bool   $increase  False to decrease nightly rate
+	 *
+	 * @throws InvalidArgumentException
+	 * @since  3.4.0
+	 * @return array
+	 */
+	public function adjustNightly(float $value, bool $increase = true): array
+	{
+		$nightly   = $this->getValue('nightly');
+		$last      = array_key_last($nightly);
+		$remaining = $value;
+		$per_night = round($value / $this->getValue('nights'), 2);
+		if (!$increase)
+		{
+			$per_night = -abs($per_night);
+		}
+
+		foreach ($nightly as $date => $rate)
+		{
+			if ($date == $last)
+			{
+				$nightly[$date] = $rate - $remaining;
+			}
+			else
+			{
+				$nightly[$date] = $rate + $per_night;
+			}
+
+			$remaining = round($remaining - abs($per_night), 2);
+		}
+
+		return $nightly;
 	}
 
 	/**
@@ -581,6 +583,27 @@ class Hub
 		}
 
 		return $username;
+	}
+
+	/**
+	 * Set the default manager and agency
+	 *
+	 * @since  4.1.0
+	 */
+	protected function setManagerAgency(): void
+	{
+		if ($this->params->get('manager_scope', 0))
+		{
+			$userSession = new KrSession\User();
+			$userData    = $userSession->getData();
+			$this->setValue('agency_id', $userData->agency_id);
+			$this->setValue('manager_id', $userData->manager_id);
+		}
+		else
+		{
+			$this->setValue('manager_id', $this->settings['default_manager']);
+			$this->setValue('agency_id', KrFactory::getListModel('managers')->getAgency($this->settings['default_manager']));
+		}
 	}
 
 	/**

@@ -57,13 +57,6 @@ class Confirm
 	 */
 	protected function setValues(): void
 	{
-		$this->hub->setValue('manager_id', $this->hub->settings['default_manager']);
-		if ($this->hub->settings['default_manager'])
-		{
-			$this->hub->setValue('agency_id',
-				KrFactory::getListModel('managers')->getAgency($this->hub->settings['default_manager']));
-		}
-
 		$this->hub->setValue('id', 0, 'guestData');
 		$this->hub->setValue('user_id', 0, 'guestData');
 		$this->hub->setValue('email', KrMethods::emailToPunycode($this->hub->getValue('email', 'guestData')),

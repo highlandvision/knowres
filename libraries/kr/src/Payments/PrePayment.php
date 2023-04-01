@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
-use HighlandVision\KR\Session as KnowresSession;
+use HighlandVision\KR\Session as KrSession;
 use HighlandVision\KR\Utility;
 use InvalidArgumentException;
 use RuntimeException;
@@ -48,7 +48,7 @@ class PrePayment
 			throw new InvalidArgumentException('Invalid Contract object passed');
 		}
 
-		$paymentSession    = new KnowresSession\Payment();
+		$paymentSession    = new KrSession\Payment();
 		$this->paymentData = $paymentSession->getData();
 		$paymentSession->resetData();
 
@@ -81,7 +81,7 @@ class PrePayment
 			throw new InvalidArgumentException('Invalid Contract object passed');
 		}
 
-		$paymentSession    = new KnowresSession\Payment();
+		$paymentSession    = new KrSession\Payment();
 		$this->paymentData = $paymentSession->getData();
 		$paymentSession->resetData();
 

@@ -46,11 +46,12 @@ $action = KrMethods::route('index.php?option=com_knowres&view=confirm&layout=pay
 				<?php echo $this->loadTemplate('extras'); ?>
 				<?php echo $this->loadTemplate('guest'); ?>
 
-				<?php $gdpr = $this->Translations->getText('agency', $this->contractData->agency_id,
-					'gdpr_statement'); ?>
+				<?php $gdpr = $this->Translations->getText('agency', $this->contractData->agency_id, 'gdpr_statement'); ?>
 				<?php if (!empty($gdpr)): ?>
 					<div class="callout small success">
-						<small><?php echo $gdpr; ?></small>
+						<div class="smaller">
+							<?php echo $gdpr; ?>
+						</div>
 					</div>
 				<?php endif; ?>
 

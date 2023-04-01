@@ -69,7 +69,7 @@ class ManagersModel extends ListModel
 
 		$query->select($db->qn('agency_id'));
 		$query->from($db->qn('#__knowres_manager'))
-		      ->where($db->qn('id') . ' = ' . $id)
+		      ->where($db->qn('id') . '=' . $id)
 		      ->setLimit(1);
 
 		$db->setQuery($query);
