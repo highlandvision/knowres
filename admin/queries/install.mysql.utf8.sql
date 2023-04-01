@@ -218,8 +218,6 @@ CREATE TABLE IF NOT EXISTS `#__knowres_contract_guestdata` (
 	`c_name`             VARCHAR(255)     DEFAULT NULL,
 	`c_phone`            VARCHAR(255)     DEFAULT NULL,
 	`c_email`            VARCHAR(255)     DEFAULT NULL,
-	`vmobile`            VARCHAR(50)      DEFAULT NULL,
-	`vmobile_country_id` INT(11)          NOT NULL DEFAULT 0,
 	`arrival_means`      VARCHAR(255)     DEFAULT NULL,
 	`arrival_time`       VARCHAR(255)     DEFAULT NULL,
 	`arrival_place`      VARCHAR(255)     DEFAULT NULL,

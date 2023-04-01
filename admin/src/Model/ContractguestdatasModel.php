@@ -48,8 +48,6 @@ class ContractguestdatasModel extends ListModel
 				'c_name', 'a.c_name',
 				'c_phone', 'a.c_phone',
 				'c_email', 'a.c_email',
-				'vmobile', 'a.vmobile',
-				'vmobile_country_id', 'a.vmobile_country_id',
 				'arrival_means', 'a.arrival_means',
 				'arrival_time', 'a.arrival_time',
 				'arrival_place', 'a.arrival_place',

@@ -1131,14 +1131,6 @@ class Upgrade
 				);
 			}
 
-			if (property_exists($table, 'vmobile_country_id'))
-			{
-				$lookup[] = array(
-					'sourceColumn' => 'vmobile_country_id', 'targetTable' => 'country',
-					'targetColumn' => 'krtranslate', 'displayColumn' => 'name'
-				);
-			}
-
 			if (property_exists($table, 'owner_id'))
 			{
 				$lookup[] = array(

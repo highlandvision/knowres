@@ -41,7 +41,6 @@ $params = KrMethods::getParams();
 <?php echo KrMethods::render('contract.show.guestdata.partysize',
 	['guestdata' => $guestdata, 'property' => $property]); ?>
 <?php echo KrMethods::render('contract.show.guestdata.guestinfo', ['guestdata' => $guestdata]); ?>
-<?php //echo KrMethods::render('contract.show.guestdata.contact', ['guestdata' => $guestdata]); ?>
 <?php echo KrMethods::render('contract.show.guestdata.arrival', ['guestdata' => $guestdata]); ?>
 <?php echo KrMethods::render('contract.show.guestdata.departure', ['guestdata' => $guestdata]); ?>
 

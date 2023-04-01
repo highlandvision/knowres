@@ -41,16 +41,6 @@
 			description="COM_KNOWRES_CONTRACTGUESTDATA_GUESTINFO_DSC"/>
 	</fieldset>
 	<fieldset name="krcontact">
-		<field name="vmobile_country_id"
-			filter="integer"
-			type="listdialcode"
-			label="COM_KNOWRES_CONTRACTGUESTDATA_VMOBILE_TEXT_LBL"
-			description="COM_KNOWRES_CONTRACTGUESTDATA_VMOBILE_COUNTRY_DSC"/>
-		<field name="vmobile"
-			filter="integer"
-			type="text"
-			label="COM_KNOWRES_CONTRACTGUESTDATA_VMOBILE_LBL"
-			description="COM_KNOWRES_CONTRACTGUESTDATA_VMOBILE_DSC"/>
 		<field name="c_name"
 			filter="string"
 			type="text"
