@@ -1212,6 +1212,7 @@ CREATE TABLE IF NOT EXISTS `#__knowres_tax_rate` (
 	`per_night`        TINYINT(1)       NOT NULL DEFAULT 0,
 	`valid_from`       DATE             DEFAULT NULL,
 	`taxrate_id`       INT(11)          NOT NULL DEFAULT 0,
+	`tt_option`        TINYINT(1)       NOT NULL DEFAULT 0,
 	`ordering`         INT(11)          NOT NULL DEFAULT 0,
 	`state`            TINYINT(1)       NOT NULL DEFAULT 0,
 	`checked_out`      INT(11)          DEFAULT NULL,

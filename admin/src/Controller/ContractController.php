@@ -33,6 +33,7 @@ use JetBrains\PhpStorm\NoReturn;
 use Joomla\CMS\Response\JsonResponse;
 use RuntimeException;
 use stdClass;
+use UnexpectedValueException;
 
 use function count;
 use function explode;
@@ -65,6 +66,11 @@ class ContractController extends FormController
 		$contractData             = $contractSession->updateData($jform);
 		$contractData->guests     = (int) $jform['adults'] + (int) $jform['children'];
 		$contractData->child_ages = !empty($jform['child_ages']) ? explode(',', $jform['child_ages']) : [];
+		if (empty($jform['child_ages']))
+		{
+			$contractData->child_ages_set = false;
+		}
+
 
 		/* @var ContractModel $model */
 		$model = $this->getModel();
@@ -80,6 +86,12 @@ class ContractController extends FormController
 			$Hub   = new Hub($contractData);
 			$agent = KrFactory::getAdminModel('agent')->getItem($contractData->agent_id);
 			$Hub->setAgent($agent);
+		}
+		catch (UnexpectedValueException $e)
+		{
+			Logger::logMe($e->getMessage());
+			echo new JsonResponse(null, $e->getMessage(), true);
+			jexit();
 		}
 		catch (Exception $e)
 		{

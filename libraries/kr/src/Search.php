@@ -491,33 +491,6 @@ class Search
 	}
 
 	/**
-	 * Set number of free guests - children under free infants age
-	 *
-	 * @param  stdClass  $item  Property item details
-	 *
-	 * @since  4.0.0
-	 * @return int
-	 */
-	protected function setFreeGuests(stdClass $item): int
-	{
-		if (!$item->sleeps_infant_max)
-		{
-			return 0;
-		}
-
-		$free = 0;
-		foreach ($this->data->child_ages as $age)
-		{
-			if ($age <= $item->sleeps_infant_age && $free < $item->sleeps_infant_max)
-			{
-				$free++;
-			}
-		}
-
-		return $free;
-	}
-
-	/**
 	 * Check if filter value is selected
 	 *
 	 * @param  array  $selected  Current counts and selections

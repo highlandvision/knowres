@@ -134,6 +134,7 @@ class Contract extends Session
 		$data->channel_markup                  = 0;
 		$data->children                        = 0;
 		$data->child_ages                      = [];
+		$data->child_ages_set                  = true;
 		$data->cluster_id                      = 0;
 		$data->commission                      = 0;
 		$data->contract_total                  = 0;

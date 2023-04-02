@@ -102,12 +102,21 @@ class Tax
 			$agents = [];
 		}
 		$type = $this->setType($this->trow, $agents);
+		if (!$type)
+		{
+			return;
+		}
+
 		if ($gross && in_array($this->agent_id, $agents))
 		{
 			$this->trow->gross = true;
 		}
 
 		$tax = $this->calcTaxValue($this->room_total, $agents);
+		if ($type <> 3)
+		{
+			$this->tax_total += $tax;
+		}
 
 		$this->taxes[$this->trow->id] = [
 			'value'       => $tax,
@@ -117,29 +126,38 @@ class Tax
 			'id'          => $this->trow->id,
 			'agent'       => $this->trow->agent,
 			'gross'       => $this->trow->gross,
-			'pay_arrival' => $this->trow->pay_arrival,
+			'pay_arrival' => $this->trow->pay_arrival || $type == 3 ? 1 : 0,
 			'taxrate_id'  => $this->trow->taxrate_id,
+			'tt_option'   => $this->trow->tt_option,
 			'base_id'     => 0
 		];
 
 		if ($this->trow->taxrate_id)
 		{
-			$base_id                      = $this->trow->id;
-			$gross                        = $this->trow->gross;
-			$poa                          = $this->trow->pay_arrival;
-			$agent                        = $this->trow->agent;
-			$this->trow                   = KrFactory::getAdminModel('taxrate')->getItem($this->trow->taxrate_id);
-			$supplement                   = $this->calcTaxValue($tax, $agents, $base_id);
+			$base_id   = $this->trow->id;
+			$gross     = $this->trow->gross;
+			$poa       = $this->trow->pay_arrival || $this->trow->type == 3 ? 1 : 0;
+			$agent     = $this->trow->agent;
+			$tt_option = $this->trow->tt_option;
+
+			$this->trow = KrFactory::getAdminModel('taxrate')->getItem($this->trow->taxrate_id);
+			$supplement = $this->calcTaxValue($tax, $agents, $base_id);
+			if ($type <> 3)
+			{
+				$this->tax_total += $supplement;
+			}
+
 			$this->taxes[$this->trow->id] = [
 				'value'       => $supplement,
 				'pc'          => $this->trow->rate,
 				'calc'        => $tax,
-				'type'        => $this->setType($this->trow, $agents),
+				'type'        => $type,
 				'id'          => $this->trow->id,
 				'agent'       => $agent,
 				'gross'       => $gross,
 				'pay_arrival' => $poa,
 				'taxrate_id'  => $this->trow->taxrate_id,
+				'tt_option'   => $tt_option,
 				'base_id'     => $base_id
 			];
 		}
@@ -160,6 +178,29 @@ class Tax
 		{
 			return 1;
 		}
+		// if Agent and TT
+		if ($this->agent_id && $trow->tax_type == 'TOURIST')
+		{
+			// if !age applicable
+			if (!$trow->applicable_age)
+			{
+				return 1;
+			}
+			// if child ages set
+			if ($this->Hub->getValue('child_ages_set'))
+			{
+				return 1;
+			}
+			// do not charge
+			if (!$trow->tt_option)
+			{
+				return 0;
+			}
+
+			// if tt_option = 1 charge all adults as POA
+			return 3;
+		}
+
 		if ($trow->gross)
 		{
 			return 2;
@@ -179,7 +220,6 @@ class Tax
 	 * @param  array  $agents   All agent_id who include the tax
 	 * @param  int    $base_id  ID of base rate for supplements
 	 *
-	 * @throws RuntimeException
 	 * @throws InvalidArgumentException
 	 * @since  2.5.0
 	 * @return float Tax value
@@ -241,12 +281,6 @@ class Tax
 			}
 		}
 
-		$tax = $this->Hub->round($tax);
-		if (in_array($this->agent_id, $agents) || !$this->trow->pay_arrival)
-		{
-			$this->tax_total += $tax;
-		}
-
-		return $tax;
+		return $this->Hub->round($tax);
 	}
 }

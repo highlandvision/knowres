@@ -16,7 +16,6 @@ use HighlandVision\KR\Compute;
 use HighlandVision\KR\Hub;
 use HighlandVision\KR\Utility;
 use InvalidArgumentException;
-use RuntimeException;
 
 /**
  * Pricing for agent
@@ -112,7 +111,7 @@ class Agent
 	 *
 	 * @param  float  $working  Working value
 	 *
-	 * @throws RuntimeException|InvalidArgumentException
+	 * @throws InvalidArgumentException
 	 * @since  3.2.0
 	 * @return float
 	 */

@@ -169,7 +169,7 @@ class UpgradeDb
 		self::drop($db, '#__knowres_contract', 'rooms_tariffs');
 		//ALTER TABLE `#__knowres_contract` CHANGE `email_poststay` `review_requested` TINYINT(1) NOT NULL DEFAULT 0 AFTER `reviewed`;
 		self::change($db, '#__knowres_contract', 'email_poststay', 'review_requested', 'TINYINT(1) NOT NULL DEFAULT 0');
-		//ALTER TABLE `#__knowres_contract_payment` CHANGE `interface_id` `service_id` 'INT(11) NOT NULL DEFAULT 0');
+		//ALTER TABLE `#__knowres_contract_payment` CHANGE `interface_id` `service_id` 'INT(11) NOT NULL DEFAULT 0';
 		self::change($db, '#__knowres_contract_payment', 'interface_id', 'service_id', 'INT(11) NOT NULL DEFAULT 0');
 		//ALTER TABLE `#__knowres_contract_payment` CHANGE `interface_ref` `service_ref` VARCHAR(255) DEFAULT NULL;
 		self::change($db, '#__knowres_contract_payment', 'interface_ref', 'service_ref', 'VARCHAR(255) DEFAULT NULL');
@@ -335,6 +335,24 @@ class UpgradeDb
 			. ' WHERE ' . $db->qn('plugin') . '=' . $db->q('ha');
 		$db->setQuery($query);
 		$db->execute();
+	}
+
+	/**
+	 * Changes for V410.
+	 *
+	 * @since   4.0.0
+	 * @return  void
+	 */
+	public static function forV410(): void
+	{
+		$db = KrFactory::getDatabase();
+
+		//ALTER TABLE `#__knowres_contract_guestdata` DROP COLUMN `vmobile`;
+		self::drop($db, '#__knowres_contract_guestdata', 'vmobile');
+		//ALTER TABLE `#__knowres_contract_guestdata` DROP COLUMN `vmobile_country_id`;
+		self::drop($db, '#__knowres_contract_guestdata', 'vmobile_country_id');
+		// ALTER TABLE `#__knowres_tax_rate` ADD COLUMN `tt_option` TINYINT(1) NOT NULL DEFAULT 0 AFTER `taxrate_id`;
+		self::add($db, '#__knowres_tax_rate', 'tt_option', 'taxrate_id', 'TINYINT(1) NOT NULL DEFAULT 0');
 	}
 
 	/**

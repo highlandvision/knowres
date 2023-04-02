@@ -63,9 +63,10 @@ class ListtaxcodesField extends ListField
 			if (is_countable($taxrates) && count($taxrates))
 			{
 				$taxrates = $this->matchTax($property_id, $taxrates);
-				$taxrates = $this->getCurrent($taxrates);
 			}
 		}
+
+		$taxrates = $this->getCurrent($taxrates);
 
 		$options = [];
 		foreach ($taxrates as $k => $v)

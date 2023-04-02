@@ -31,7 +31,6 @@ use JetBrains\PhpStorm\NoReturn;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Response\JsonResponse;
 use RuntimeException;
-
 use UnexpectedValueException;
 
 use function jexit;
