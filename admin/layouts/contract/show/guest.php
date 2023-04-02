@@ -91,7 +91,7 @@ extract($displayData);
 
 		<b>
 			<?php echo KrMethods::sprintf('COM_KNOWRES_CONTRACT_GUEST_NUMBERS', $contract->guests); ?>
-		</b>
+		</b><br>
 		<?php if ($contract->adults == 1): ?>
 			<?php echo KrMethods::sprintf('COM_KNOWRES_CONTRACT_ADULTS_1', $contract->adults); ?>
 		<?php elseif ($contract->adults > 1): ?>

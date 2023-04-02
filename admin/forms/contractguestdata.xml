@@ -43,16 +43,19 @@
 	<fieldset name="krcontact">
 		<field name="c_name"
 			filter="string"
+			hiddenDescription="true"
 			type="text"
 			label="COM_KNOWRES_NAME"
 			description="COM_KNOWRES_CONTRACTGUESTDATA_CONTACT_NAME_DSC"/>
 		<field name="c_phone"
 			filter="string"
+			hiddenDescription="true"
 			type="text"
 			label="COM_KNOWRES_TELEPHONE"
 			description="COM_KNOWRES_CONTRACTGUESTDATA_CONTACT_PHONE_DSC"/>
 		<field name="c_email"
 			filter="email"
+			hiddenDescription="true"
 			type="email"
 			label="COM_KNOWRES_CONTRACTGUESTDATA_CONTACT_EMAIL_LBL"
 			description="COM_KNOWRES_CONTRACTGUESTDATA_CONTACT_EMAIL_DSC"/>
@@ -88,7 +91,7 @@
 			hiddenLabel="true"
 			showon="arrival_means:train"
 			type="text"
-			label="COM_KNOWRES_CONTRACTGUESTDATA_ARRIVAL_JOURNEY"
+			label="COM_KNOWRES_CONTRACTGUESTDATA_ARRIVAL_FROM_LBL"
 			description="COM_KNOWRES_CONTRACTGUESTDATA_ARRIVAL_FROM_DSC"/>
 		<field name="arrival_place"
 			filter="string"
@@ -123,7 +126,9 @@
 	</fieldset>
 	<fieldset name="krarrivalother">
 		<field name="other_information"
+			class="w-auto"
 			filter="string"
+			hiddenDescription="true"
 			cols="50"
 			rows="6"
 			showon="arrival_means:other"
@@ -168,7 +173,7 @@
 	<fieldset name="krpreferences">
 		<field name="preferences"
 			filter="string"
-			hiddenLabel="true"
+			hiddenDescription="true"
 			type="textarea"
 			rows="6"
 			cols="15"

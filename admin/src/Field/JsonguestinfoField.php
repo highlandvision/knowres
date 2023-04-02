@@ -58,7 +58,7 @@ class JsonguestinfoField extends FormField
 		$contract_id = $this->form->getValue('contract_id');
 		$contract    = KrFactory::getAdminModel('contract')->getItem($contract_id);
 		$property    = KrFactory::getAdminModel('property')->getItem($contract->property_id);
-		$maxguests   = $contract->guests + $property->sleeps_infant_max;
+		$maxguests   = $contract->adults + $contract->children;
 
 		$firstname     = '';
 		$surname1      = '';

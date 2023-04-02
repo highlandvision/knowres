@@ -18,21 +18,34 @@ $wa->useScript('keepalive')
    ->useStyle('com_knowres.admin-guestdata');
 ?>
 
-<div class="main-card" style="padding-top:0;">
-	<div class="row">
-		<div class="col">
+<div class="row">
+	<div class="col-lg-10 col-xl-9 col-xxl-8">
+		<fieldset>
 			<?php echo $this->form->renderField('options'); ?>
 
-			<fieldset>
-				<legend>
-					<?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATA_LEGEND_PREFERENCES'); ?>
-				</legend>
-				<div class="row">
-					<div class="col-lg-6">
-						<?php echo $this->form->renderField('preferences'); ?>
-					</div>
+			<legend><?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATA_LEGEND_EMERGENCY'); ?></legend>
+			<div class="row">
+				<div class="col-9">
+					<?php echo $this->form->renderField('c_name'); ?>
 				</div>
-			</fieldset>
-		</div>
+			</div>
+			<div class="row">
+				<div class="col-9">
+					<?php echo $this->form->renderField('c_phone'); ?>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-9">
+					<?php echo $this->form->renderField('c_email'); ?>
+				</div>
+			</div>
+
+			<legend><?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATA_LEGEND_PREFERENCES'); ?></legend>
+			<div class="row">
+				<div class="col-9">
+					<?php echo $this->form->renderField('preferences'); ?>
+				</div>
+			</div>
+		</fieldset>
 	</div>
 </div>
