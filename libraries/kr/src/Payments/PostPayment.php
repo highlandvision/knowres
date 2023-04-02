@@ -476,7 +476,6 @@ class PostPayment
 	 *
 	 * @param  int  $payment_id  ID of payment
 	 *
-	 * @throws RuntimeException
 	 * @since  1.0.0
 	 */
 	protected function updateIncludedFees(int $payment_id): void

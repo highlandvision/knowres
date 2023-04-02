@@ -143,6 +143,7 @@ class Mailchimp extends Service
 	 *
 	 * @param  string  $name  Subscriber name
 	 *
+	 * @throws InvalidArgumentException
 	 * @since 1.0.0
 	 */
 	protected function setName(string $name)

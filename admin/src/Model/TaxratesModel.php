@@ -11,11 +11,14 @@ namespace HighlandVision\Component\Knowres\Administrator\Model;
 
 defined('_JEXEC') or die;
 
+use Carbon\Exceptions\InvalidFormatException;
 use Exception;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\ListModel;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Translations;
+use Joomla\Database\Exception\DatabaseNotFoundException;
+use Joomla\Database\Exception\QueryTypeAlreadyDefinedException;
 use Joomla\Database\QueryInterface;
 use RuntimeException;
 
@@ -72,6 +75,10 @@ class TaxratesModel extends ListModel
 	 *
 	 * @param  string  $order  Sort by field
 	 *
+	 * @throws DatabaseNotFoundException
+	 * @throws InvalidFormatException
+	 * @throws QueryTypeAlreadyDefinedException
+	 * @throws RuntimeException
 	 * @since  3.3.0
 	 * @return array
 	 */

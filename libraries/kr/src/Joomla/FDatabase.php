@@ -197,6 +197,7 @@ class FDatabase
 	 * @param  string    $key    Primary key
 	 *
 	 * @throws RuntimeException
+	 * @throws KeyNotFoundException
 	 * @since  3.3.0
 	 * @return mixed
 	 */
@@ -214,6 +215,7 @@ class FDatabase
 	 * @param  string  $table  Name of table
 	 *
 	 * @throws RuntimeException
+	 * @throws KeyNotFoundException
 	 * @since  3.3.0
 	 */
 	public static function truncate(string $table): void
@@ -229,6 +231,7 @@ class FDatabase
 	 * @param  string    $key    Name of primary key
 	 *
 	 * @throws RuntimeException
+	 * @throws KeyNotFoundException
 	 * @since  3.3.0
 	 */
 	public static function update(string $table, stdClass $data, string $key): void

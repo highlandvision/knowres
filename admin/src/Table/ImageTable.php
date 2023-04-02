@@ -77,7 +77,7 @@ class ImageTable extends Table implements VersionableTableInterface
 	 * @param   string  $where  WHERE clause to use for selecting the MAX(ordering) for the table.
 	 *
 	 * @throws RuntimeException
-	 * @throws UnexpectedValueException
+	 * @throws UnexpectedValueException|InvalidArgumentException
 	 * @since   1.0.0
 	 * @return  int  Boolean false a failure or the next ordering value as an integer.
 	 * @link    https://docs.joomla.org/Table/getNextOrder
@@ -120,7 +120,7 @@ class ImageTable extends Table implements VersionableTableInterface
 	 * @param   string  $where  WHERE clause to use for limiting the selection of rows to compact the ordering values.
 	 *
 	 * @throws RuntimeException
-	 * @throws UnexpectedValueException
+	 * @throws UnexpectedValueException|InvalidArgumentException
 	 * @since  1.0.0
 	 * @return bool  Boolean  True on success.
 	 * @link   https://docs.joomla.org/Table/reorder

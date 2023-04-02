@@ -222,8 +222,6 @@ class Hub
 	 * @param  array  $computations   Computations to perform for contract
 	 * @param  bool   $set_total      True to set the contract total
 	 *                                normally when deposit is not required
-	 *
-	 * @throws RuntimeException
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
@@ -565,6 +563,8 @@ class Hub
 	 * @param  string  $firstname  Guest first anme
 	 * @param  string  $surname    Guest surname
 	 *
+	 * @throws QueryTypeAlreadyDefinedException
+	 * @throws InvalidArgumentException|RuntimeException
 	 * @since  3.3.1
 	 * @return string
 	 */
@@ -588,6 +588,8 @@ class Hub
 	/**
 	 * Set the default manager and agency
 	 *
+	 * @throws InvalidArgumentException
+	 * @throws RuntimeException
 	 * @since  4.1.0
 	 */
 	protected function setManagerAgency(): void

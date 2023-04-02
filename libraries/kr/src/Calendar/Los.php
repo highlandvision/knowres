@@ -11,6 +11,7 @@ namespace HighlandVision\KR\Calendar;
 
 defined('_JEXEC') or die;
 
+use Carbon\Exceptions\InvalidFormatException;
 use Exception;
 use HighlandVision\KR\Calendar;
 use HighlandVision\KR\TickTock;
@@ -106,6 +107,7 @@ class Los extends Calendar
 	 * @param  string  $date        Required date
 	 * @param  int     $max_nights  Maximum allowed stay
 	 *
+	 * @throws InvalidFormatException
 	 * @since  3.4.0
 	 * @return array
 	 */

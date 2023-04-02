@@ -24,6 +24,8 @@ use Joomla\CMS\Form\Form;
 use Joomla\CMS\Table\Table;
 use RuntimeException;
 
+use UnexpectedValueException;
+
 use function count;
 use function is_countable;
 use function mt_rand;
@@ -82,7 +84,7 @@ class ContractModel extends AdminModel
 	/**
 	 * Generate 8 digit contract tag
 	 *
-	 * @throws RuntimeException
+	 * @throws RuntimeException|InvalidArgumentException
 	 * @since  3.3.0
 	 * @return string
 	 */
@@ -193,6 +195,7 @@ class ContractModel extends AdminModel
 	 * @param  Form   $form      Guest form
 	 * @param  array  $settings  Property settings
 	 *
+	 * @throws UnexpectedValueException
 	 * @since  1.0.0
 	 * @return Form
 	 */

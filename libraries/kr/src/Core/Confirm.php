@@ -52,7 +52,6 @@ class Confirm
 	 * Add any additional fields before validation
 	 *
 	 * @throws InvalidArgumentException
-	 * @throws RuntimeException
 	 * @since  1.0.0
 	 */
 	protected function setValues(): void

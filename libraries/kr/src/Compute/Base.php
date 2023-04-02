@@ -251,6 +251,7 @@ class Base
 	 * @param  int     $min_nights  Minimum nights
 	 * @param  string  $arrival     Arrival date
 	 *
+	 * @throws RuntimeException
 	 * @since  3.3.4
 	 * @return int
 	 */
@@ -416,7 +417,6 @@ class Base
 	 * @param  float  $total    Total rate
 	 *
 	 * @throws InvalidArgumentException
-	 * @throws RuntimeException
 	 * @since  3.4.0
 	 * @return array
 	 */

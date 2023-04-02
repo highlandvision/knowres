@@ -461,7 +461,7 @@ class ContractController extends FormController
 	 * Ajax - Returns the Json data for the book modal for calendars
 	 *
 	 * @throws Exception
-	 * @since        3.2.0
+	 * @since  3.2.0
 	 */
 	#[NoReturn] public function modalbook()
 	{
@@ -975,7 +975,7 @@ class ContractController extends FormController
 	 * Returns the data for the Xero modal
 	 *
 	 * @throws Exception
-	 * @since 3.1.0
+	 * @since  3.1.0
 	 */
 	public function xero()
 	{

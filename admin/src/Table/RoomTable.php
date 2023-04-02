@@ -12,7 +12,6 @@ namespace HighlandVision\Component\Knowres\Administrator\Table;
 defined('_JEXEC') or die;
 
 use HighlandVision\KR\Translations;
-use InvalidArgumentException;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Versioning\VersionableTableInterface;
 use Joomla\Database\DatabaseDriver;
@@ -49,7 +48,6 @@ class RoomTable extends Table implements VersionableTableInterface
 	 *
 	 * @param   mixed  $pk  An optional primary key value to delete.  If not set the instance property value is used.
 	 *
-	 * @throws InvalidArgumentException
 	 * @throws RuntimeException
 	 * @throws UnexpectedValueException
 	 * @since  1.0.0

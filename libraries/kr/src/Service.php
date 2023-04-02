@@ -345,6 +345,7 @@ abstract class Service
 	 * @param  int  $property_id  ID of property
 	 *
 	 * @throws InvalidArgumentException
+	 * @throws RuntimeException
 	 * @since 1.2.2
 	 */
 	protected function getSettings(int $property_id): void

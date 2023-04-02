@@ -18,12 +18,15 @@ use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Media;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Translations;
+use InvalidArgumentException;
+use JetBrains\PhpStorm\NoReturn;
 use Joomla\CMS\Installer\Installer;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Log\Log;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\Database\Exception\PrepareStatementFailureException;
+use Joomla\DI\Exception\KeyNotFoundException;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use RuntimeException;
@@ -90,7 +93,9 @@ class AdhocController extends BaseController
 
 	/**
 	 * Fix up database for null values etc
-	 *
+	 * @throws InvalidArgumentException
+	 * @throws KeyNotFoundException
+	 * @throws RuntimeException
 	 * @since   4.0.0
 	 */
 	public function fixupv4db(): bool
@@ -133,8 +138,7 @@ class AdhocController extends BaseController
 	 * @throws Exception
 	 * @since  4.0.0
 	 */
-	#[
-		NoReturn] public function gueststocontract()
+	#[NoReturn] public function gueststocontract()
 	{
 		$db    = KrFactory::getDatabase();
 		$query = $db->getQuery(true);

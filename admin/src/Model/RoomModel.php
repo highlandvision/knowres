@@ -19,6 +19,8 @@ use HighlandVision\KR\Joomla\Extend\AdminModel;
 use HighlandVision\KR\Translations;
 use Joomla\CMS\Versioning\VersionableModelTrait;
 
+use RuntimeException;
+
 use function defined;
 
 /**
@@ -42,6 +44,7 @@ class RoomModel extends AdminModel
 	 *
 	 * @param  int  $pk  The id of the primary key.
 	 *
+	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return false|object  Object on success, false on failure.
 	 */

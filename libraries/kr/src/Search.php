@@ -545,6 +545,7 @@ class Search
 	/**
 	 * Get the categories with names
 	 *
+	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return array
 	 */
@@ -564,6 +565,7 @@ class Search
 	/**
 	 * Get the feature names
 	 *
+	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return array
 	 */
@@ -807,6 +809,7 @@ class Search
 	 *
 	 * @param  array  $baseItems  Base property items
 	 *
+	 * @throws RuntimeException
 	 * @since  1.0.0
 	 */
 	private function setBaseFilters(array $baseItems): void
@@ -1008,6 +1011,7 @@ class Search
 	 * Set the currency for the search from a property
 	 * as all properties in the search have the same currency
 	 *
+	 * @throws RuntimeException
 	 * @since 3.3.0
 	 */
 	private function setCurrency(): void

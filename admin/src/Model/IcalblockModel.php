@@ -18,6 +18,7 @@ use HighlandVision\KR\Session as KrSession;
 use HighlandVision\KR\TickTock;
 use Joomla\CMS\Factory;
 use Joomla\Database\DatabaseInterface;
+use Joomla\Database\Exception\DatabaseNotFoundException;
 use RuntimeException;
 
 /**
@@ -63,6 +64,8 @@ class IcalblockModel extends AdminModel
 	 * @param  int                     $service_id   ID of service
 	 * @param  DatabaseInterface|null  $db           Database instance
 	 *
+	 * @throws DatabaseNotFoundException
+	 * @throws RuntimeException
 	 * @since  3.3.0
 	 */
 	public function deleteExisting(int $property_id, int $service_id = 0, ?DatabaseInterface $db = null)
@@ -172,6 +175,7 @@ class IcalblockModel extends AdminModel
 	 * @param  int                $property_id  ID of property
 	 * @param  DatabaseInterface  $db           DB Instance
 	 *
+	 * @throws RuntimeException
 	 * @since  3.3.0
 	 */
 	protected function deleteOldIcalData(int $property_id, DatabaseInterface $db)
@@ -194,6 +198,7 @@ class IcalblockModel extends AdminModel
 	 * @param  array              $blocks  New blocks
 	 * @param  DatabaseInterface  $db      Database instance
 	 *
+	 * @throws RuntimeException
 	 * @since  3.3.0
 	 */
 	protected function insertBlocks(array $blocks, DatabaseInterface $db)

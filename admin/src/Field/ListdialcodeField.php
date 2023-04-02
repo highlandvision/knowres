@@ -16,6 +16,7 @@ use HighlandVision\KR\Framework\KrMethods;
 use InvalidArgumentException;
 use Joomla\CMS\Form\Field\ListField;
 use Joomla\CMS\HTML\HTMLHelper;
+use RuntimeException;
 
 /**
  * Dialling code form field
@@ -30,7 +31,6 @@ class ListdialcodeField extends ListField
 	/**
 	 * Get the field options.
 	 *
-	 * @throws InvalidArgumentException
 	 * @since  1.6
 	 * @return string The field input markup.
 	 */
@@ -48,6 +48,7 @@ class ListdialcodeField extends ListField
 	 * Get the field options.
 	 *
 	 * @throws InvalidArgumentException
+	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return array The field input markup.
 	 */

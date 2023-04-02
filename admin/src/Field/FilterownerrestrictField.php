@@ -13,6 +13,8 @@ defined('_JEXEC') or die;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Joomla\Extend\ListField as KrListField;
 use HighlandVision\KR\Session as KrSession;
+use InvalidArgumentException;
+use Joomla\DI\Exception\KeyNotFoundException;
 use RuntimeException;
 
 use function array_merge;
@@ -31,7 +33,9 @@ class FilterownerrestrictField extends KrListField
 	/**
 	 * Method to get the owners to populate filter list
 	 *
-	 * @throws  RuntimeException
+	 * @throws RuntimeException
+	 * @throws KeyNotFoundException
+	 * @throws InvalidArgumentException
 	 * @since   2.5.1
 	 * @return  array  The field option objects.
 	 */

@@ -12,6 +12,7 @@ defined('_JEXEC') or die;
 
 use HighlandVision\KR\Joomla\Extend\ListField as KrListField;
 use HighlandVision\KR\Translations;
+use InvalidArgumentException;
 use RuntimeException;
 
 use function array_merge;
@@ -30,6 +31,7 @@ class FilterregionjoinField extends KrListField
 	 * Method to get the regions to populate filter list
 	 *
 	 * @throws RuntimeException
+	 * @throws InvalidArgumentException
 	 * @since  2.5.1
 	 * @return array  The field option objects.
 	 */

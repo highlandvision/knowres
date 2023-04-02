@@ -16,6 +16,8 @@ use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\FormController;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
+use Joomla\DI\Exception\KeyNotFoundException;
+use RuntimeException;
 use stdClass;
 
 /**
@@ -28,8 +30,8 @@ class ReviewController extends FormController
 	/**
 	 * Method to save a record.
 	 *
-	 * @param   string  $key     The name of the primary key of the URL variable.
-	 * @param   string  $urlVar  The name of the URL variable if different from the primary key (sometimes required to avoid router collisions).
+	 * @param  string  $key     The name of the primary key of the URL variable.
+	 * @param  string  $urlVar  The name of the URL variable if different from the primary key (sometimes required to avoid router collisions).
 	 *
 	 * @throws  Exception
 	 * @since   4.0.0
@@ -55,8 +57,8 @@ class ReviewController extends FormController
 	 * Method to check if you can save a new or existing record.
 	 * Override - All edit checks have been done so just return true
 	 *
-	 * @param   array   $data  An array of input data.
-	 * @param   string  $key   The name of the key for the primary key.
+	 * @param  array   $data  An array of input data.
+	 * @param  string  $key   The name of the key for the primary key.
 	 *
 	 * @since   1.0.0
 	 * @return  bool
@@ -69,9 +71,11 @@ class ReviewController extends FormController
 	/**
 	 * Process additional requirements after save review
 	 *
-	 * @param   BaseDatabaseModel  $model      The data model object.
-	 * @param   array              $validData  The validated data.
+	 * @param  BaseDatabaseModel  $model      The data model object.
+	 * @param  array              $validData  The validated data.
 	 *
+	 * @throws KeyNotFoundException
+	 * @throws RuntimeException
 	 * @since   1.0.0
 	 * @return  void
 	 */

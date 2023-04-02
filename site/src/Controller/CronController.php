@@ -338,8 +338,9 @@ class CronController extends BaseController
 	/**
 	 * Get trigger if exists
 	 *
-	 * @param   string  $trigger_actual  Email trigger
+	 * @param  string  $trigger_actual  Email trigger
 	 *
+	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return mixed
 	 */

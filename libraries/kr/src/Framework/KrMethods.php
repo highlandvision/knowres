@@ -105,6 +105,7 @@ class KrMethods
 	 * @param  string  $idtag      See genericlist
 	 * @param  bool    $translate  See genericlist
 	 *
+	 * @throws InvalidArgumentException
 	 * @since  3.3.0
 	 * @return mixed
 	 */
@@ -609,6 +610,7 @@ class KrMethods
 	 * @param  string  $password  Generated password
 	 *
 	 * @throws InvalidArgumentException
+	 * @throws RuntimeException
 	 * @since  3.9.0
 	 * @return int
 	 */

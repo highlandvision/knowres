@@ -18,6 +18,8 @@ use Joomla\CMS\Extension\MVCComponent;
 use Joomla\CMS\HTML\HTMLRegistryAwareTrait;
 use Joomla\Database\DatabaseInterface;
 use Psr\Container\ContainerInterface;
+use RuntimeException;
+use UnexpectedValueException;
 
 /**
  * Component class for com_knowres
@@ -35,8 +37,10 @@ class KnowresComponent extends MVCComponent implements BootableExtensionInterfac
 	 * If required, some initial set up can be done from services of the container, e.g.
 	 * registering HTML services.
 	 *
-	 * @param   ContainerInterface  $container  The container
+	 * @param  ContainerInterface  $container  The container
 	 *
+	 * @throws UnexpectedValueException
+	 * @throws RuntimeException
 	 * @since   4.0.0
 	 * @return  void
 	 */

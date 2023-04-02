@@ -16,7 +16,6 @@ use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Hub;
 use HighlandVision\KR\Utility;
 use InvalidArgumentException;
-use RuntimeException;
 
 use function count;
 use function in_array;
@@ -169,6 +168,7 @@ class Tax
 	 * @param  mixed  $trow    Object or stdClass.
 	 * @param  array  $agents  Agents who already include this tax.
 	 *
+	 * @throws InvalidArgumentException
 	 * @since  4.0.0
 	 * @return int
 	 */

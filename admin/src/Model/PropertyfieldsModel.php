@@ -14,6 +14,7 @@ defined('_JEXEC') or die;
 use Exception;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\ListModel;
+use Joomla\Database\Exception\DatabaseNotFoundException;
 use Joomla\Database\QueryInterface;
 use RuntimeException;
 
@@ -28,7 +29,7 @@ class PropertyfieldsModel extends ListModel
 	/**
 	 * Constructor.
 	 *
-	 * @param   array  $config  An optional associative array of configuration settings.
+	 * @param  array  $config  An optional associative array of configuration settings.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -58,9 +59,11 @@ class PropertyfieldsModel extends ListModel
 	/**
 	 * Read property text fields
 	 *
-	 * @param   bool  $required  Required fields only
-	 * @param   bool  $format    Special format only
+	 * @param  bool  $required  Required fields only
+	 * @param  bool  $format    Special format only
 	 *
+	 * @throws DatabaseNotFoundException
+	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return mixed
 	 */
@@ -93,9 +96,9 @@ class PropertyfieldsModel extends ListModel
 	/**
 	 * Build an SQL query to load the list data.
 	 *
-	 * @throws  RuntimeException
-	 * @since   1.0.0
-	 * @return  QueryInterface
+	 * @throws RuntimeException
+	 * @since  1.0.0
+	 * @return QueryInterface
 	 */
 	protected function getListQuery(): QueryInterface
 	{
@@ -177,7 +180,7 @@ class PropertyfieldsModel extends ListModel
 	 * different modules that might need different sets of data or different
 	 * ordering requirements.
 	 *
-	 * @param   string  $id  A prefix for the store id.
+	 * @param  string  $id  A prefix for the store id.
 	 *
 	 * @since  1.0.0
 	 * @return string A store id.
@@ -196,8 +199,8 @@ class PropertyfieldsModel extends ListModel
 	 * Method to autopopulate the model state.
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @param   null|string  $ordering
-	 * @param   null|string  $direction
+	 * @param  null|string  $ordering
+	 * @param  null|string  $direction
 	 *
 	 * @since  1.0.0
 	 */

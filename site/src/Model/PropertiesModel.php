@@ -11,6 +11,7 @@ namespace HighlandVision\Component\Knowres\Site\Model;
 
 defined('_JEXEC') or die;
 
+use Carbon\Exceptions\InvalidFormatException;
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
@@ -19,9 +20,13 @@ use HighlandVision\KR\Joomla\Extend\ListModel;
 use HighlandVision\KR\Joomla\Extend\Pagination;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Utility;
+use InvalidArgumentException;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\Database\DatabaseInterface;
+use Joomla\Database\Exception\DatabaseNotFoundException;
+use Joomla\Database\Exception\QueryTypeAlreadyDefinedException;
 use Joomla\Database\QueryInterface;
+use Joomla\DI\Exception\KeyNotFoundException;
 use RuntimeException;
 
 use function date;
@@ -232,6 +237,10 @@ class PropertiesModel extends ListModel
 	 *
 	 * @param  int  $property_id  ID of property
 	 *
+	 * @throws InvalidFormatException
+	 * @throws DatabaseNotFoundException
+	 * @throws RuntimeException
+	 * @throws QueryTypeAlreadyDefinedException
 	 * @since  1.0.0
 	 * @return mixed
 	 */
@@ -275,6 +284,8 @@ class PropertiesModel extends ListModel
 	 * Get the distinct types for published properties
 	 *
 	 * @throws RuntimeException
+	 * @throws KeyNotFoundException
+	 * @throws InvalidArgumentException
 	 * @since  3.2
 	 * @return mixed
 	 */
@@ -313,6 +324,7 @@ class PropertiesModel extends ListModel
 	 * @param  int  $region_id  The property region for the select
 	 *
 	 * @throws RuntimeException
+	 * @throws InvalidArgumentException
 	 * @return mixed
 	 */
 	public function getMaxBedsSleeps(int $region_id): mixed
@@ -340,6 +352,7 @@ class PropertiesModel extends ListModel
 	 * @param  mixed  $properties  Single, string or array of property IDs
 	 *
 	 * @throws RuntimeException
+	 * @throws InvalidArgumentException
 	 * @since  1.0.0
 	 * @return mixed
 	 */
@@ -391,6 +404,7 @@ class PropertiesModel extends ListModel
 	 * @param  mixed  $properties  IDs to get names for
 	 *
 	 * @throws RuntimeException
+	 * @throws InvalidArgumentException
 	 * @since  3.2.0
 	 * @return array
 	 */

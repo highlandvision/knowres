@@ -62,7 +62,7 @@ if ($new)
 								                                                    'view'  => $view]); ?>
 							<?php endif; ?>
 							<?php if ($new && $item->created_at >= $created): ?>
-								<?php echo KrMethods::render('properties.badge', []); ?>
+								<?php echo KrMethods::render('properties.badge'); ?>
 							<?php endif; ?>
 						</div>
 					<?php endif; ?>

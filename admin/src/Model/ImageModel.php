@@ -92,6 +92,7 @@ class ImageModel extends AdminModel
 	 *
 	 * @param  int  $pk  The id of the primary key.
 	 *
+	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return false|object  Object on success, false on failure.
 	 */

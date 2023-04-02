@@ -14,6 +14,7 @@ defined('_JEXEC') or die;
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Hub;
+use InvalidArgumentException;
 
 use function count;
 use function is_countable;
@@ -77,7 +78,8 @@ class Extras
 	 *
 	 * @param  array  $extrasDb  Extras for property
 	 *
-	 * @since 1.0.0
+	 * @throws InvalidArgumentException
+	 * @since  1.0.0
 	 * @return array
 	 */
 	protected function setExtras(array $extrasDb): array

@@ -461,6 +461,7 @@ class Cloner
 	 * @param  int  $scope  Tables to drop 1 = tmp, 2 = 2mp1, 3 = both
 	 *
 	 * @throws RuntimeException
+	 * @throws InvalidArgumentException
 	 * @since  3.0.0
 	 */
 	protected function tmpAlter(int $scope = 0): void
@@ -487,6 +488,8 @@ class Cloner
 	 * @param  string  $tmp     Temp table to read
 	 * @param  bool    $getNew  True to return new ID
 	 *
+	 * @throws InvalidArgumentException
+	 * @throws RuntimeException
 	 * @since  3.0.0
 	 * @return int
 	 */
@@ -503,7 +506,7 @@ class Cloner
 	/**
 	 * Drop tmp table
 	 *
-	 * @throws RuntimeException
+	 * @throws RuntimeException|InvalidArgumentException
 	 * @since 3.0.0
 	 */
 	protected function tmpDrop(): void

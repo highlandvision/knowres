@@ -12,8 +12,8 @@ namespace HighlandVision\Component\Knowres\Administrator\Field;
 defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrFactory;
-use InvalidArgumentException;
 use Joomla\CMS\Form\Field\ListField;
+use RuntimeException;
 use stdClass;
 
 use function array_merge;
@@ -31,7 +31,7 @@ class FilterregioncountryField extends ListField
 	/**
 	 * Get the field options.
 	 *
-	 * @throws InvalidArgumentException
+	 * @throws RuntimeException
 	 * @since  1.6
 	 * @return array    The field input markup.
 	 */

@@ -657,6 +657,7 @@ class FMethods
 	 * @param  string  $password  Generated password
 	 *
 	 * @throws InvalidArgumentException
+	 * @throws RuntimeException
 	 * @since  3.3.0
 	 * @return int
 	 */

@@ -173,7 +173,7 @@ class PropertyController extends FormController
 	 */
 	#[NoReturn] public function cloner()
 	{
-		$jform         = KrMethods::inputArray('jform', []);
+		$jform         = KrMethods::inputArray('jform');
 		$id            = (int) $jform['id'];
 		$property_name = (string) $jform['property_name'];
 
@@ -445,7 +445,7 @@ class PropertyController extends FormController
 	{
 		$this->checkToken();
 
-		$jform = KrMethods::inputArray('jform', []);
+		$jform = KrMethods::inputArray('jform');
 		if (empty($jform['id']))
 		{
 			Logger::logme('ID not received for property save video', 'error');

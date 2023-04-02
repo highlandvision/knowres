@@ -92,7 +92,7 @@ class PropertyIcs
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	private function addBookedDates(array $booked)
+	private function addBookedDates(array $booked): void
 	{
 		$start = false;
 		$prev  = false;

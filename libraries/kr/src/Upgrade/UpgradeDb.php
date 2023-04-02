@@ -14,7 +14,9 @@ defined('_JEXEC') or die;
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\TickTock;
+use InvalidArgumentException;
 use Joomla\Database\DatabaseDriver;
+use RuntimeException;
 use stdClass;
 
 use function array_key_exists;
@@ -77,8 +79,10 @@ class UpgradeDb
 	/**
 	 * Changes for V321.
 	 *
-	 * @since   4.0.0
-	 * @return  void
+	 * @throws RuntimeException
+	 * @throws InvalidArgumentException
+	 * @since  4.0.0
+	 * @return void
 	 */
 	public static function forV321(): void
 	{
@@ -102,8 +106,8 @@ class UpgradeDb
 	 * Changes for V330.
 	 *
 	 * @throws Exception
-	 * @since   4.0.0
-	 * @return  void
+	 * @since  4.0.0
+	 * @return void
 	 */
 	public static function forV330(): void
 	{
@@ -203,6 +207,8 @@ class UpgradeDb
 	/**
 	 * Changes for V331.
 	 *
+	 * @throws RuntimeException
+	 * @throws InvalidArgumentException
 	 * @since   4.0.0
 	 * @return  void
 	 */
@@ -237,6 +243,8 @@ class UpgradeDb
 	/**
 	 * Changes for V333.
 	 *
+	 * @throws RuntimeException
+	 * @throws InvalidArgumentException
 	 * @since  4.0.0
 	 * @return void
 	 */
@@ -340,6 +348,8 @@ class UpgradeDb
 	/**
 	 * Changes for V410.
 	 *
+	 * @throws RuntimeException
+	 * @throws InvalidArgumentException
 	 * @since   4.0.0
 	 * @return  void
 	 */
@@ -364,6 +374,8 @@ class UpgradeDb
 	 * @param  string          $after    Column name after
 	 * @param  mixed           $default  Default value
 	 *
+	 * @throws RuntimeException
+	 * @throws InvalidArgumentException
 	 * @since  4.0.0
 	 * @return void
 	 */
@@ -448,6 +460,8 @@ class UpgradeDb
 	 * @param  string          $new      New name
 	 * @param  mixed           $default  Default value
 	 *
+	 * @throws RuntimeException
+	 * @throws InvalidArgumentException
 	 * @since  4.0.0
 	 */
 	protected static function change(DatabaseDriver $db, string $table, string $field, string $new,
@@ -466,10 +480,12 @@ class UpgradeDb
 	/**
 	 * Drop the database
 	 *
-	 * @param  DatabaseDriver  $db       Database instance
-	 * @param  string          $table    Table name
-	 * @param  string          $field    Row name
+	 * @param  DatabaseDriver  $db     Database instance
+	 * @param  string          $table  Table name
+	 * @param  string          $field  Row name
 	 *
+	 * @throws RuntimeException
+	 * @throws InvalidArgumentException
 	 * @since  4.0.0
 	 * @return void
 	 */
@@ -487,8 +503,8 @@ class UpgradeDb
 	/**
 	 * Drop table
 	 *
-	 * @param  DatabaseDriver  $db       Database instance
-	 * @param  string          $table    Table name
+	 * @param  DatabaseDriver  $db     Database instance
+	 * @param  string          $table  Table name
 	 *
 	 * @since  4.0.0
 	 * @return void
@@ -510,9 +526,9 @@ class UpgradeDb
 	/**
 	 * Drop index
 	 *
-	 * @param  DatabaseDriver  $db       Database instance
-	 * @param  string          $table    Table name
-	 * @param  string          $index    Index name
+	 * @param  DatabaseDriver  $db     Database instance
+	 * @param  string          $table  Table name
+	 * @param  string          $index  Index name
 	 *
 	 * @since  4.0.0
 	 * @return void

@@ -51,7 +51,7 @@ class HtmlView extends KrHtmlView
 
 		$this->checkErrors();
 		ToolbarHelper::title(KrMethods::plain('COM_KNOWRES_SERVICEQUEUES_TITLE'), 'tasks knowres');
-		$this->addListToolbar($this->get('name'), false);
+		$this->addListToolbar($this->get('name'));
 
 		parent::display($tpl);
 	}

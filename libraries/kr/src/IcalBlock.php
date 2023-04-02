@@ -42,6 +42,8 @@ class IcalBlock
 	protected array $arrivals = [];
 	/** @var array New blocks for upddate */
 	protected array $blocks = [];
+	/** @var Vcalendar Vcalendar object */
+	protected Vcalendar $calendar;
 	/** @var array Event departure dates */
 	protected array $departures = [];
 	/** @var string ICS file directory */
@@ -58,10 +60,12 @@ class IcalBlock
 	protected array $messages = [];
 	/** @var array New ICS date ranges */
 	protected array $new_date_ranges = [];
-	/** @var integer ID of service */
+	/** @var int ID of property */
+	private int $property_id;
+	/** @var int ID of service */
 	protected int $service_id = 0;
-	/** @var Vcalendar Vcalendar object */
-	protected Vcalendar $calendar;
+	/** @var string Today as yyyy-mm-dd */
+	private string $today;
 	/** @var array Validated events */
 	protected array $vevents = [];
 
@@ -149,29 +153,8 @@ class IcalBlock
 	{
 		$this->messages[] = '----Arrival: ' . $data->arrival;
 		$this->messages[] = '--Departure: ' . $data->departure;
-
-		//		$booked = KrFactory::getListModel('contracts')
-		//		                   ->getPropertyAvailableDates($this->property_id, $data->arrival, $data->departure);
-
-		//		if (!count($booked))
-		//		{
 		$this->updateBlock($data);
 		$this->messages[] = 'New iCal block created';
-
-		return;
-		//		}
-
-		//		foreach ($booked as $b)
-		//		{
-		//			if ($data->arrival == $b->arrival && $data->departure == $b->departure)
-		//			{
-		//				$this->messages[] = 'Property booked and dates match - block ignored';
-		//
-		//				return;
-		//			}
-		//		}
-		//
-		//		$this->buildConcatenatedBlock($data, $booked);
 	}
 
 	/**

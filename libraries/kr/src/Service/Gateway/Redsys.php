@@ -14,14 +14,12 @@ defined('_JEXEC') or die;
 use Exception;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Service\Gateway;
-use HighlandVision\KR\Utility;
 use JetBrains\PhpStorm\Pure;
 use RuntimeException;
 use stdClass;
 
 use function base64_decode;
 use function base64_encode;
-use function explode;
 use function hash_hmac;
 use function implode;
 use function json_decode;

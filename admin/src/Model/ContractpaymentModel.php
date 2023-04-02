@@ -17,6 +17,7 @@ use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\AdminModel;
 use HighlandVision\KR\Utility;
 use Joomla\CMS\Form\Form;
+use RuntimeException;
 
 /**
  * Knowres contract payment model.
@@ -39,6 +40,7 @@ class ContractpaymentModel extends AdminModel
 	 * @param  array   $payments  Contract payments
 	 * @param  array   $fees      Contract fees
 	 *
+	 * @throws RuntimeException
 	 * @since  4.0.0
 	 * @return array [Confirmed balance, Full balance].
 	 */

@@ -14,6 +14,8 @@ defined('_JEXEC') or die;
 use Exception;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\ListModel;
+use Joomla\Database\Exception\DatabaseNotFoundException;
+use Joomla\Database\Exception\QueryTypeAlreadyDefinedException;
 use Joomla\Database\QueryInterface;
 use RuntimeException;
 use UnexpectedValueException;
@@ -115,12 +117,15 @@ class TranslationsModel extends ListModel
 	/**
 	 * Get item by text
 	 *
-	 * @param   string  $item      Table name
-	 * @param   string  $text      Text value
-	 * @param   string  $field     Field value
-	 * @param   string  $language  Required language
+	 * @param  string  $item      Table name
+	 * @param  string  $text      Text value
+	 * @param  string  $field     Field value
+	 * @param  string  $language  Required language
 	 *
 	 * @throws UnexpectedValueException
+	 * @throws DatabaseNotFoundException
+	 * @throws RuntimeException
+	 * @throws QueryTypeAlreadyDefinedException
 	 * @since  3.3.3
 	 */
 	public function getByValue(string $item, string $text, string $field = 'name', string $language = 'en-GB')

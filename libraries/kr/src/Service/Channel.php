@@ -84,6 +84,7 @@ class Channel extends Service
 	 * @param  int  $property_id  ID of property
 	 *
 	 * @throws RuntimeException
+	 * @throws InvalidArgumentException
 	 * @since  3.3.0
 	 */
 	protected function getServiceXrefForProperty(int $property_id)
@@ -108,6 +109,7 @@ class Channel extends Service
 	 *
 	 * @param  float  $service_value  Booking value
 	 *
+	 * @throws InvalidArgumentException
 	 * @since  2.3.0
 	 * @return float
 	 */
@@ -126,6 +128,7 @@ class Channel extends Service
 	/**
 	 * Get contract id from foreign key
 	 *
+	 * @throws RuntimeException
 	 * @since  1.2.2
 	 * @return bool|array
 	 */
@@ -148,6 +151,7 @@ class Channel extends Service
 	 *
 	 * @param  string  $name  Name of field holding data to display
 	 *
+	 * @throws RuntimeException
 	 * @since  1.2.2
 	 * @return array
 	 */

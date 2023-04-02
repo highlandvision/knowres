@@ -20,6 +20,7 @@ use HighlandVision\KR\Translations;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Versioning\VersionableControllerTrait;
+use RuntimeException;
 
 /**
  * Knowres Discount model
@@ -42,6 +43,7 @@ class DiscountModel extends AdminModel
 	 *
 	 * @param  int  $pk  The id of the primary key.
 	 *
+	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return false|object  Object on success, false on failure.
 	 */

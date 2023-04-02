@@ -245,6 +245,7 @@ class SiteHelper
 	 * @param  object  $params    Component parameters
 	 * @param  object  $contract  Contract database object
 	 *
+	 * @throws RuntimeException
 	 * @since  2.5.0
 	 * @return string
 	 */

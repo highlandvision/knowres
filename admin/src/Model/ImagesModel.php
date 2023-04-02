@@ -15,6 +15,7 @@ use Exception;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\ListModel;
 use HighlandVision\KR\Translations;
+use Joomla\Database\Exception\DatabaseNotFoundException;
 use Joomla\Database\QueryInterface;
 use RuntimeException;
 
@@ -88,8 +89,10 @@ class ImagesModel extends ListModel
 	/**
 	 * Get all for property
 	 *
-	 * @param   int  $property_id  ID of property
+	 * @param  int  $property_id  ID of property
 	 *
+	 * @throws DatabaseNotFoundException
+	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return mixed
 	 */
@@ -111,9 +114,11 @@ class ImagesModel extends ListModel
 	/**
 	 * Get images for xml site map
 	 *
-	 * @param   int  $property_id  ID of property
-	 * @param   int  $limit        Number of images to return 0 = unlimited
+	 * @param  int  $property_id  ID of property
+	 * @param  int  $limit        Number of images to return 0 = unlimited
 	 *
+	 * @throws DatabaseNotFoundException
+	 * @throws RuntimeException
 	 * @since  4.0.0
 	 * @return mixed
 	 */
@@ -263,8 +268,9 @@ class ImagesModel extends ListModel
 	/**
 	 * Set any translated text fields
 	 *
-	 * @param   array  $items  Items to translate
+	 * @param  array  $items  Items to translate
 	 *
+	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return array
 	 */

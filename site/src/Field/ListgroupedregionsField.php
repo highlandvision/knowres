@@ -11,6 +11,7 @@ namespace HighlandVision\Component\Knowres\Site\Field;
 
 defined('_JEXEC') or die;
 
+use InvalidArgumentException;
 use Joomla\CMS\Form\Field\GroupedlistField;
 use Joomla\CMS\HTML\HTMLHelper;
 use UnexpectedValueException;
@@ -32,10 +33,11 @@ class ListgroupedregionsField extends GroupedlistField
 	/**
 	 * Method to get a control group with label and input.
 	 *
-	 * @param   array  $options  Any options to be passed into the rendering of the field
+	 * @param  array  $options  Any options to be passed into the rendering of the field
 	 *
-	 * @since   3.2.3
-	 * @return  string  A string containing the html for the control group
+	 * @since  3.2.3
+	 * @return string  A string containing the html for the control group
+	 * @noinspection PhpMissingReturnTypeInspection
 	 */
 	public function renderField($options = [])
 	{
@@ -55,7 +57,7 @@ class ListgroupedregionsField extends GroupedlistField
 	/**
 	 * Method to get the field input markup.
 	 *
-	 * @throws UnexpectedValueException
+	 * @throws UnexpectedValueException|InvalidArgumentException
 	 * @since  4.0.0
 	 * @return array  The field option objects as a nested array in groups.
 	 */

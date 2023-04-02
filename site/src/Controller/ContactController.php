@@ -70,7 +70,7 @@ class ContactController extends FormController
 	public function getModel($name = 'Contact', $prefix = 'KnowresModel',
 		$config = ['ignore_request' => true]): BaseDatabaseModel
 	{
-		return parent::getModel($name, $prefix, array('ignore_request' => true));
+		return parent::getModel($name, $prefix);
 	}
 
 	/**
@@ -85,7 +85,7 @@ class ContactController extends FormController
 		$this->checkToken();
 
 		$id   = KrMethods::inputInt('id');
-		$data = KrMethods::inputArray('jform', []);
+		$data = KrMethods::inputArray('jform');
 
 		$params    = KrMethods::getParams();
 		$Itemid    = SiteHelper::getItemId('com_knowres', 'contact');

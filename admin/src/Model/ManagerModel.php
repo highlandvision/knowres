@@ -16,8 +16,10 @@ use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\AdminModel;
 use HighlandVision\KR\Utility;
+use InvalidArgumentException;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Versioning\VersionableModelTrait;
+use Joomla\DI\Exception\KeyNotFoundException;
 use RuntimeException;
 
 /**
@@ -72,6 +74,7 @@ class ManagerModel extends AdminModel
 	 * @param  int  $user_id  ID of user
 	 *
 	 * @throws RuntimeException
+	 * @throws KeyNotFoundException|InvalidArgumentException
 	 * @since  1.0.0
 	 * @return mixed
 	 */

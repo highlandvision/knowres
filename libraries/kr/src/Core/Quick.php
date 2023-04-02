@@ -18,6 +18,7 @@ use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Hub;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Utility;
+use InvalidArgumentException;
 use RuntimeException;
 
 use function count;
@@ -132,6 +133,7 @@ class Quick
 	/**
 	 * Any additional procesing before save
 	 *
+	 * @throws InvalidArgumentException
 	 * @since  1.0.0
 	 * @return bool
 	 */

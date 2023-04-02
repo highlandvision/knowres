@@ -21,6 +21,7 @@ use HighlandVision\KR\Session as KrSession;
 use HighlandVision\KR\Translations;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Versioning\VersionableControllerTrait;
+use RuntimeException;
 
 /**
  * Extra model
@@ -65,6 +66,7 @@ class ExtraModel extends AdminModel
 	 *
 	 * @param  int  $pk  The id of the primary key.
 	 *
+	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return object|false  Object on success, false on failure.
 	 */

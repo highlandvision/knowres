@@ -231,6 +231,7 @@ class Exchange extends Service
 	/**
 	 * Get the latest rate for from and to
 	 *
+	 * @throws RuntimeException
 	 * @since 3.3.0
 	 */
 	private function readCurrent()
@@ -243,7 +244,6 @@ class Exchange extends Service
 	 *
 	 * @param  string  $from  ISO currency code
 	 *
-	 * @throws RuntimeException
 	 * @throws RuntimeException
 	 * @since  3.3.0
 	 */

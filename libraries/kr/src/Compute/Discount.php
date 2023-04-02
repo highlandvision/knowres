@@ -16,7 +16,6 @@ use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Hub;
 use HighlandVision\KR\TickTock;
 use InvalidArgumentException;
-use RuntimeException;
 
 use function abs;
 use function array_splice;
@@ -71,7 +70,7 @@ class Discount
 	 *
 	 * @param  float  $room_total  Calculated rate
 	 *
-	 * @throws RuntimeException|InvalidArgumentException
+	 * @throws InvalidArgumentException
 	 * @since  1.0.0
 	 */
 	private function applyLargest(float $room_total): void
@@ -313,7 +312,6 @@ class Discount
 	 * Applies a manually entered discount
 	 *
 	 * @throws InvalidArgumentException
-	 * @throws RuntimeException
 	 * @since  3.4.0
 	 */
 	private function calculateManual(): void
@@ -341,7 +339,6 @@ class Discount
 	 * @param  float   $total_discount  Discount value
 	 *
 	 * @throws InvalidArgumentException
-	 * @throws RuntimeException
 	 * @since  3.4.0
 	 */
 	private function adjustNightly(string $type, float $total_discount): void

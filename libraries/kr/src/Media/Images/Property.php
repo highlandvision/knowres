@@ -182,6 +182,7 @@ class Property extends Images
 	/**
 	 * Set the upload folder names
 	 *
+	 * @throws RuntimeException
 	 * @since  4.0.0
 	 */
 	protected function setFolders()

@@ -15,7 +15,9 @@ use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\ListModel;
+use InvalidArgumentException;
 use Joomla\Database\QueryInterface;
+use Joomla\DI\Exception\KeyNotFoundException;
 use RuntimeException;
 
 /**
@@ -55,9 +57,10 @@ class GuestsModel extends ListModel
 	/**
 	 * Get last guest update
 	 *
-	 * @param   int  $service_id  ID of service
+	 * @param  int  $service_id  ID of service
 	 *
 	 * @throws RuntimeException
+	 * @throws KeyNotFoundException|InvalidArgumentException
 	 * @since  3.3.0
 	 * @return array
 	 */

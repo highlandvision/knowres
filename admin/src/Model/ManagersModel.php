@@ -15,6 +15,7 @@ use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\ListModel;
+use InvalidArgumentException;
 use Joomla\Database\QueryInterface;
 use RuntimeException;
 
@@ -112,6 +113,7 @@ class ManagersModel extends ListModel
 	 * Get managers
 	 *
 	 * @throws RuntimeException
+	 * @throws InvalidArgumentException
 	 * @since  1.0.0
 	 * @return array  Object on success, false on failure.
 	 */

@@ -11,6 +11,7 @@ namespace HighlandVision\KR\Joomla\Extend;
 
 use HighlandVision\KR\Framework\KrMethods;
 use Joomla\Database\DatabaseInterface;
+use Joomla\Database\Exception\QueryTypeAlreadyDefinedException;
 use Joomla\Database\QueryInterface;
 use RuntimeException;
 
@@ -132,6 +133,7 @@ abstract class ListModel extends \Joomla\CMS\MVC\Model\ListModel
 	 * @param  DatabaseInterface  $db     Database instance
 	 * @param  QueryInterface     $query  Existing query
 	 *
+	 * @throws QueryTypeAlreadyDefinedException
 	 * @since  4.0.0
 	 * @return QueryInterface
 	 */

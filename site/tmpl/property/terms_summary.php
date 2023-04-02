@@ -6,7 +6,6 @@
  * @license     http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
  * @author      Hazel Wilson <hazel@highlandvision.com> - http://www.highlandvision.com
  */
-/** @noinspection PhpUnhandledExceptionInspection */
 
 defined('_JEXEC') or die;
 

@@ -111,7 +111,7 @@ class EnquiryModel extends AdminModel
 	 * @since  3.2.0
 	 * @return array
 	 */
-	public function prepareRooms(array $property_rooms)
+	public function prepareRooms(array $property_rooms): array
 	{
 		$input = KrMethods::inputArray('rooms', [], 'get');
 

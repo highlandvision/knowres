@@ -14,9 +14,11 @@ defined('_JEXEC') or die;
 use Exception;
 use HighlandVision\KR\Joomla\Extend\FormModel;
 use HighlandVision\KR\Joomla\FDatabase as FNS;
+use InvalidArgumentException;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\MVC\Model\ModelInterface;
 use Joomla\Database\DatabaseDriver;
+use Joomla\DI\Exception\KeyNotFoundException;
 use RuntimeException;
 use stdClass;
 
@@ -35,6 +37,8 @@ class KrFactory
 	 *
 	 * @param  string  $email  Guest email
 	 *
+	 * @throws QueryTypeAlreadyDefinedException
+	 * @throws RuntimeException|InvalidArgumentException
 	 * @since  3.3.0
 	 * @return mixed
 	 */
@@ -48,6 +52,8 @@ class KrFactory
 	 *
 	 * @param  string  $name  Proposed username
 	 *
+	 * @throws QueryTypeAlreadyDefinedException
+	 * @throws RuntimeException|InvalidArgumentException
 	 * @since  3.3.0
 	 * @return mixed
 	 */
@@ -62,6 +68,8 @@ class KrFactory
 	 * @param  string  $table       Table name
 	 * @param  array   $conditions  Deletion conditions
 	 *
+	 * @throws QueryTypeAlreadyDefinedException
+	 * @throws RuntimeException|InvalidArgumentException
 	 * @since  3.3.0
 	 */
 	public static function deleteData(string $table, array $conditions): void
@@ -138,6 +146,7 @@ class KrFactory
 	/**
 	 * Get database
 	 *
+	 * @throws KeyNotFoundException
 	 * @since  3.3.0
 	 * @return DatabaseDriver
 	 */
@@ -180,6 +189,7 @@ class KrFactory
 	 * @param  string    $key    Primary key
 	 *
 	 * @throws RuntimeException
+	 * @throws KeyNotFoundException
 	 * @since  3.3.0
 	 * @return mixed
 	 */
@@ -194,6 +204,7 @@ class KrFactory
 	 * @param  string  $table  Name of table
 	 *
 	 * @throws RuntimeException
+	 * @throws KeyNotFoundException
 	 * @since  3.3.0
 	 */
 	public static function truncate(string $table): void
@@ -208,7 +219,7 @@ class KrFactory
 	 * @param  stdClass  $data   Data to be inserted
 	 * @param  string    $key    Name of primary key
 	 *
-	 * @throws RuntimeException
+	 * @throws RuntimeException|KeyNotFoundException
 	 * @since  3.3.0
 	 */
 	public static function update(string $table, stdClass $data, string $key = 'id'): void

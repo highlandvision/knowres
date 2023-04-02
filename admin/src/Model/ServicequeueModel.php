@@ -18,6 +18,7 @@ use HighlandVision\KR\Joomla\Extend\AdminModel;
 use HighlandVision\KR\Session as KrSession;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Utility;
+use InvalidArgumentException;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Versioning\VersionableControllerTrait;
@@ -82,6 +83,7 @@ class ServicequeueModel extends AdminModel
 	 * @param  string  $date  Delete before this date
 	 *
 	 * @throws RuntimeException
+	 * @throws InvalidArgumentException
 	 * @since  3.3.0
 	 */
 	public static function deleteOldQueue(string $date)

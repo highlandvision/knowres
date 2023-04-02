@@ -26,6 +26,7 @@ use HighlandVision\KR\Utility;
 use InvalidArgumentException;
 use Joomla\CMS\Table\ContentType;
 use Joomla\CMS\Table\Table;
+use Joomla\Database\Exception\QueryTypeAlreadyDefinedException;
 use RuntimeException;
 use stdClass;
 use UnexpectedValueException;
@@ -1418,6 +1419,11 @@ class Upgrade
 		}
 	}
 
+	/**
+	 * @throws QueryTypeAlreadyDefinedException
+	 * @throws InvalidArgumentException
+	 * @throws RuntimeException
+	 */
 	public static function deleteOldData(): void
 	{
 		$db    = KrFactory::getDatabase();

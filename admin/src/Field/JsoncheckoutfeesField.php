@@ -13,8 +13,9 @@ defined('JPATH_BASE') or die;
 
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Session as KrSession;
-use InvalidArgumentException;
 use Joomla\CMS\Form\FormField;
+
+use RuntimeException;
 
 use function count;
 
@@ -28,7 +29,7 @@ class JsoncheckoutfeesField extends FormField
 	/**
 	 * Get the field input.
 	 *
-	 * @throws InvalidArgumentException
+	 * @throws RuntimeException
 	 * @since  1.6
 	 * @return string
 	 */
