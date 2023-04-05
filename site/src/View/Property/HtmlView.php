@@ -43,6 +43,8 @@ class HtmlView extends KrHtmlView\Site
 	public array $bedtypes = [];
 	/** @var int Property booking type. */
 	public int $booking_type = 0;
+	/** @var string Contact link to enquiry form. */
+	public string $contactlink = '';
 	/** @var array Currency setting for all properties. */
 	public array $currencies = [];
 	/** @var string Departure date. */
@@ -121,6 +123,11 @@ class HtmlView extends KrHtmlView\Site
 		$this->Translations = new Translations();
 		$searchSession      = new KrSession\Search();
 		$this->searchData   = $searchSession->getData();
+
+		$Itemid = SiteHelper::getItemId('com_knowres', 'contact', [
+			'id' => $this->item->id
+		]);
+		$this->contactlink = KrMethods::route('index.php?option=com_knowres&view=contact&id=' . $this->item->id . '&Itemid=' . $Itemid);
 
 		if (is_countable($this->searchData->baseIds) && count($this->searchData->baseIds))
 		{
