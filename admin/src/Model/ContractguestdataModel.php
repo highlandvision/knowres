@@ -21,8 +21,6 @@ use Joomla\CMS\Form\Form;
 use Joomla\CMS\Versioning\VersionableControllerTrait;
 use stdClass;
 
-use function implode;
-
 /**
  * Knowres contract guest data model.
  *
@@ -42,7 +40,7 @@ class ContractguestdataModel extends AdminModel
 	/**
 	 * Get child ages from guestdata
 	 *
-	 * @param   string  $children  Child ages
+	 * @param  string  $children  Child ages
 	 *
 	 * @since  2.2.0
 	 * @return string
@@ -75,7 +73,7 @@ class ContractguestdataModel extends AdminModel
 	/**
 	 * Return the document text for the given document type
 	 *
-	 * @param   string  $type  Type of document
+	 * @param  string  $type  Type of document
 	 *
 	 * @since  2.2.0
 	 * @return string
@@ -90,7 +88,7 @@ class ContractguestdataModel extends AdminModel
 	/**
 	 * Returns the textual gender
 	 *
-	 * @param   string  $sex  M or F
+	 * @param  string  $sex  M or F
 	 *
 	 * @since  2.2.0
 	 * @return string
@@ -114,7 +112,7 @@ class ContractguestdataModel extends AdminModel
 	/**
 	 * Override checkin for guestdata as checked_out set to 0.
 	 *
-	 * @param   array  $pks  The id of the row to check out.
+	 * @param  array  $pks  The id of the row to check out.
 	 *
 	 * @throws Exception
 	 * @since  4.0.0
@@ -159,9 +157,9 @@ class ContractguestdataModel extends AdminModel
 	/**
 	 * Add additional validation to form data
 	 *
-	 * @param   Form   $form   The form to validate against.
-	 * @param   array  $data   The data to validate.
-	 * @param   null   $group  From group
+	 * @param  Form   $form   The form to validate against.
+	 * @param  array  $data   The data to validate.
+	 * @param  null   $group  From group
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -173,13 +171,7 @@ class ContractguestdataModel extends AdminModel
 		$data['arrival_air'] = Utility::encodeJson(KrMethods::inputArray('arrival_air'));
 		$data['options']     = $this->prepareOptions();
 
-		$jform            = KrMethods::inputArray('jform');
-		$data['children'] = '';
-		if (!empty($jform['child_ages']))
-		{
-			$data['children'] = implode(',', $jform['child_ages']);
-		}
-
+		$jform = KrMethods::inputArray('jform');
 		if ($jform['arrival_means'] == 'auto')
 		{
 			$data['arrival_from'] = $jform['auto_arrival_from'];
@@ -192,24 +184,34 @@ class ContractguestdataModel extends AdminModel
 			return false;
 		}
 
-		$dob            = KrMethods::inputArray('dob');
-		$document_issue = KrMethods::inputArray('document_issue');
-		$today          = TickTock::getDate();
+		$dob             = KrMethods::inputArray('dob');
+		$document_issue  = KrMethods::inputArray('document_issue');
+		$document_expiry = KrMethods::inputArray('document_expiry');
+		$today           = TickTock::getDate();
+
 		foreach ($dob as $d)
 		{
 			if (trim($d) && $d >= $today)
 			{
-				$this->setError('Date of Birth must not be in the future');
+				$this->setError('Date of Birth should not be in the future');
 
 				return false;
 			}
 		}
-
 		foreach ($document_issue as $d)
 		{
 			if (trim($d) && $d >= $today)
 			{
-				$this->setError("Issue date must not be in the future");
+				$this->setError("Issue date should not be in the future");
+
+				return false;
+			}
+		}
+		foreach ($document_expiry as $d)
+		{
+			if (trim($d) && $d <= $today)
+			{
+				$this->setError("Expiry date should not be in the past");
 
 				return false;
 			}

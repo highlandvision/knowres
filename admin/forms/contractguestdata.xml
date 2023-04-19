@@ -1,36 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form addfieldprefix="HighlandVision\Component\Knowres\Administrator\Field"
 	addruleprefix="HighlandVision\Component\Knowres\Administrator\Rule">
-	<fieldset id="krpartysize">
-		<field name="children"
-			filter="string"
-			type="hidden"/>
-		<field name="adults"
-			filter="integer"
-			type="number"
-			min="1"
-			max="20"
-			step="1"
-			label="COM_KNOWRES_CONTRACTGUESTDATA_ADULTS_LBL"
-			description="COM_KNOWRES_CONTRACTGUESTDATA_ADULTS_DSC"/>
-		<field name="child"
-			default="0"
-			filter="integer"
-			type="number"
-			min="0"
-			max="20"
-			step="1"
-			label="COM_KNOWRES_CONTRACTGUESTDATA_CHILDREN_LBL"
-			description="COM_KNOWRES_CONTRACTGUESTDATA_CHILDREN_DSC"/>
-		<field name="infants"
-			filter="integer"
-			min="0"
-			max="5"
-			step="1"
-			type="number"
-			label="COM_KNOWRES_CONTRACTGUESTDATA_INFANTS_LBL"
-			description="COM_KNOWRES_CONTRACTGUESTDATA_INFANTS_DSC"/>
-	</fieldset>
 	<fieldset name="krguestinfo">
 		<field name="guestinfo"
 			filter="string"

@@ -28,18 +28,16 @@ extract($displayData);
 $params = KrMethods::getParams();
 ?>
 
-	<div class="row">
-		<div class="col-12">
-			<?php if (empty($guestdata->id)): ?>
-				<?php echo KrMethods::plain('COM_KNOWRES_MESSAGE_CONTRACTGUESTDATA_PENDING'); ?>
-				<?php return; ?>
-			<?php endif; ?>
-		</div>
+<div class="row">
+	<div class="col-12">
+		<?php if (empty($guestdata->id)): ?>
+			<?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATA_PENDING'); ?>
+			<?php return; ?>
+		<?php endif; ?>
 	</div>
+</div>
 
 <?php echo KrMethods::render('contract.show.guestdata.boa', ['contract' => $contract, 'balance' => $balance]); ?>
-<?php echo KrMethods::render('contract.show.guestdata.partysize',
-	['guestdata' => $guestdata, 'property' => $property]); ?>
 <?php echo KrMethods::render('contract.show.guestdata.guestinfo', ['guestdata' => $guestdata]); ?>
 <?php echo KrMethods::render('contract.show.guestdata.arrival', ['guestdata' => $guestdata]); ?>
 <?php echo KrMethods::render('contract.show.guestdata.departure', ['guestdata' => $guestdata]); ?>

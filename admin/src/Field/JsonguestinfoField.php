@@ -78,16 +78,17 @@ class JsonguestinfoField extends FormField
 
 		foreach ($this->value as $d)
 		{
-			$tmp                   = [];
-			$tmp['name']           = $d->name;
-			$tmp['surname1']       = $d->surname1;
-			$tmp['surname2']       = $d->surname2;
-			$tmp['sex']            = $d->sex;
-			$tmp['dob']            = $d->dob;
-			$tmp['document_nat']   = (int) $d->document_nat;
-			$tmp['document_type']  = (int) $d->document_type;
-			$tmp['document_id']    = $d->document_id;
-			$tmp['document_issue'] = $d->document_issue;
+			$tmp                    = [];
+			$tmp['name']            = $d->name;
+			$tmp['surname1']        = $d->surname1;
+			$tmp['surname2']        = $d->surname2;
+			$tmp['sex']             = $d->sex;
+			$tmp['dob']             = $d->dob;
+			$tmp['document_nat']    = (int) $d->document_nat;
+			$tmp['document_type']   = (int) $d->document_type;
+			$tmp['document_id']     = $d->document_id;
+			$tmp['document_issue']  = $d->document_issue;
+			$tmp['document_expiry'] = $d->document_expiry;
 
 			$values[$count] = $tmp;
 			$count++;
@@ -95,16 +96,17 @@ class JsonguestinfoField extends FormField
 
 		while ($count < $maxguests)
 		{
-			$tmp                   = [];
-			$tmp['name']           = !$count ? $firstname : '';
-			$tmp['surname1']       = !$count ? $surname1 : '';
-			$tmp['surname2']       = '';
-			$tmp['sex']            = '';
-			$tmp['dob']            = '';
-			$tmp['document_nat']   = 0;
-			$tmp['document_type']  = !$count ? $document_type : 0;
-			$tmp['document_id']    = !$count ? $document_id : '';
-			$tmp['document_issue'] = '';
+			$tmp                    = [];
+			$tmp['name']            = !$count ? $firstname : '';
+			$tmp['surname1']        = !$count ? $surname1 : '';
+			$tmp['surname2']        = '';
+			$tmp['sex']             = '';
+			$tmp['dob']             = '';
+			$tmp['document_nat']    = 0;
+			$tmp['document_type']   = !$count ? $document_type : 0;
+			$tmp['document_id']     = !$count ? $document_id : '';
+			$tmp['document_issue']  = '';
+			$tmp['document_expiry'] = '';
 
 			$values[$count] = $tmp;
 			$count++;

@@ -12,7 +12,6 @@ namespace HighlandVision\Component\Knowres\Site\View\Contractguestdataform;
 defined('_JEXEC') or die;
 
 use Exception;
-use HighlandVision\Component\Knowres\Site\Model\ContractguestdataModel;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\HtmlView as KrHtmlView;
@@ -36,7 +35,7 @@ class HtmlView extends KrHtmlView\Site
 	/**
 	 * Display the view
 	 *
-	 * @param   null  $tpl  Default template.
+	 * @param  null  $tpl  Default template.
 	 *
 	 * @throws Exception
 	 * @since  2.5.0
@@ -62,7 +61,7 @@ class HtmlView extends KrHtmlView\Site
 			$this->contract = KrFactory::getAdminModel('contract')->getItem($contract_id);
 			if (empty($this->contract->id) || $this->contract->guest_id != $guest_id)
 			{
-				throw new RuntimeException('Contract not found for ID = ' . $contract_id);
+				throw new RuntimeException('Contract not found for ID ' . $contract_id);
 			}
 			$this->property = KrFactory::getAdminModel('property')->getItem($this->contract->property_id);
 		}
@@ -72,7 +71,6 @@ class HtmlView extends KrHtmlView\Site
 			SiteHelper::redirectDashboard();
 		}
 
-		/** @var ContractguestdataModel $model */
 		$model      = KrFactory::getSiteModel('contractguestdata');
 		$this->item = $model->getItem($this->contract->guestdata_id);
 		if (!empty($this->item->id))
@@ -87,10 +85,9 @@ class HtmlView extends KrHtmlView\Site
 			$this->form->setValue('contract_id', null, $contract_id);
 		}
 
-		$this->state           = $model->getState();
-		$this->params          = KrMethods::getParams();
-		$this->form_aria_label = KrMethods::plain('COM_KNOWRES_DASHBOARD_EDIT_CONTRACTGUESTDATA');
-
+		$this->state            = $model->getState();
+		$this->params           = KrMethods::getParams();
+		$this->form_aria_label  = KrMethods::plain('COM_KNOWRES_DASHBOARD_EDIT_CONTRACTGUESTDATA');
 		$this->meta_title       = KrMethods::plain('COM_KNOWRES_DASHBOARD_EDIT_CONTRACTGUESTDATA');
 		$this->meta_description = KrMethods::plain('COM_KNOWRES_DASHBOARD_CONTRACTGUESTDATA');
 		$this->prepareDocument();
@@ -102,9 +99,9 @@ class HtmlView extends KrHtmlView\Site
 	 * Prepares the document
 	 *
 	 * @throws Exception
-	 * @since   1.0.0
+	 * @since  1.0.0
 	 */
-	protected function prepareDocument()
+	protected function prepareDocument(): void
 	{
 		$this->prepareDefaultDocument($this->meta_title, $this->meta_description);
 		$this->setMyPathway();
@@ -116,7 +113,7 @@ class HtmlView extends KrHtmlView\Site
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	protected function setMyPathway()
+	protected function setMyPathway(): void
 	{
 		$pathway = Factory::getApplication()->getPathway();
 		$pathway->setPathway([]);

@@ -192,6 +192,7 @@ class Registration
 					$line[] = (int) $g->document_nat != $es_id ? $g->document_id : '';
 					$line[] = $this->getDocumentType($g->document_type);
 					$line[] = TickTock::displayDate($g->document_issue, 'Ymd');
+					$line[] = TickTock::displayDate($g->document_expiry, 'Ymd');
 				}
 				else
 				{

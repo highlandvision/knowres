@@ -37,7 +37,7 @@
 	</fieldset>
 	<fieldset name="dob" class="col-lg-3">
 		<field name="dob"
-			class="dobissue input-mini"
+			class="dobissue min input-mini"
 			filter="string"
 			hiddenLabel="true"
 			type="text"
@@ -74,11 +74,20 @@
 	</fieldset>
 	<fieldset name="document_issue" class="col-lg-3">
 		<field name="document_issue"
-			class="dobissue input-mini"
+			class="dobissue min input-mini"
 			filter="string"
 			hiddenLabel="true"
 			type="string"
 			label="COM_KNOWRES_CONTRACTGUESTDATA_DOCUMENT_DOI_LBL"
 			description="COM_KNOWRES_CONTRACTGUESTDATA_DOCUMENT_DOI_LBL"/>
+	</fieldset>
+	<fieldset name="document_expiry" class="col-lg-3">
+		<field name="document_expiry"
+			class="dobissue max input-mini"
+			filter="string"
+			hiddenLabel="true"
+			type="string"
+			label="COM_KNOWRES_CONTRACTGUESTDATA_DOCUMENT_DOE_LBL"
+			description="COM_KNOWRES_CONTRACTGUESTDATA_DOCUMENT_DOE_LBL"/>
 	</fieldset>
 </form>

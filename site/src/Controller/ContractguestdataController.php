@@ -28,16 +28,15 @@ class ContractguestdataController extends FormController
 	 * Proxy for getModel
 	 * Includes the admin model to save repetition and not a site model
 	 *
-	 * @param   string  $name
-	 * @param   string  $prefix
-	 * @param   array   $config
+	 * @param  string  $name
+	 * @param  string  $prefix
+	 * @param  array   $config
 	 *
 	 * @since  2.5.0
 	 * @return BaseDatabaseModel
 	 */
 	public function getModel($name = 'contractguestdata', $prefix = 'Site',
-		$config = ['ignore_request' => true]): BaseDatabaseModel
-	{
+		$config = ['ignore_request' => true]): BaseDatabaseModel {
 		return parent::getModel($name, $prefix, $config);
 	}
 
@@ -69,11 +68,11 @@ class ContractguestdataController extends FormController
 	 * Method to check if you can save a new or existing record.
 	 * Override - All edit checks have been done so just return true
 	 *
-	 * @param   array   $data  An array of input data.
-	 * @param   string  $key   The name of the key for the primary key.
+	 * @param  array   $data  An array of input data.
+	 * @param  string  $key   The name of the key for the primary key.
 	 *
-	 * @since   1.0.0
-	 * @return  bool
+	 * @since  1.0.0
+	 * @return bool
 	 */
 	protected function allowSave($data, $key = 'id'): bool
 	{
