@@ -21,6 +21,9 @@ use Joomla\CMS\Form\Form;
 use Joomla\CMS\Versioning\VersionableControllerTrait;
 use stdClass;
 
+use function implode;
+use function trim;
+
 /**
  * Knowres contract guest data model.
  *

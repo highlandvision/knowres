@@ -135,7 +135,7 @@ class Tax
 		{
 			$base_id   = $this->trow->id;
 			$gross     = $this->trow->gross;
-			$poa       = $this->trow->pay_arrival || $this->trow->type == 3 ? 1 : 0;
+			$poa       = $this->trow->pay_arrival || $type == 3 ? 1 : 0;
 			$agent     = $this->trow->agent;
 			$tt_option = $this->trow->tt_option;
 
@@ -170,7 +170,7 @@ class Tax
 	 *
 	 * @throws InvalidArgumentException
 	 * @since  4.0.0
-	 * @return int
+	 * @return int 0->Do not charge, 1->Charge, 2->Gross, 3->POA.
 	 */
 	protected function setType(mixed $trow, array $agents): int
 	{

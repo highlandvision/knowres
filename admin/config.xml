@@ -764,15 +764,6 @@
 		<fieldset name="guestdata"
 			label="COM_KNOWRES_CONFIG_CONTRACTGUESTDATA"
 			description="COM_KNOWRES_CONFIG_CONTRACTGUESTDATA_DSC">
-			<field name="guestdata_partysize_details"
-				type="radio"
-				default="0"
-				class="btn-group btn-group-yesno"
-				label="COM_KNOWRES_CONFIG_CONTRACTGUESTDATA_PARTYSIZE_DETAILS"
-				description="COM_KNOWRES_CONFIG_CONTRACTGUESTDATA_PARTYSIZE_DETAILS_DSC">
-				<option value="0">JNO</option>
-				<option value="1">JYES</option>
-			</field>
 			<field name="guestdata_second_surname"
 				type="radio"
 				default="0"

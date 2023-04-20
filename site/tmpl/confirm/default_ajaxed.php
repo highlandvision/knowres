@@ -41,8 +41,8 @@ use HighlandVision\KR\Utility;
 			<div id="discount" class="small-4 columns red text-right"></div>
 		</div>
 		<div class="row">
-			<div id="coupon_text" class="small-7 columns red"></div>
-			<div id="coupon_discount" class="small-5 columns red text-right"></div>
+			<div id="coupon_text" class="small-5 columns red"></div>
+			<div id="coupon_discount" class="small-4 columns red text-right"></div>
 		</div>
 		<div class="row">
 			<div id="hr" class="small-12 columns"></div>
@@ -57,7 +57,7 @@ use HighlandVision\KR\Utility;
 			<div class="small-7 columns strong">
 				<?php echo strtoupper(KrMethods::plain('COM_KNOWRES_CONFIRM_TOTAL')); ?>
 			</div>
-			<div id="contract_total" class="small-5 columns text-right"></div>
+			<div id="contract_total" class="small-5 columns strong text-right"></div>
 			<br>
 		</div>
 		<br>

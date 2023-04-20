@@ -70,7 +70,6 @@ $g = 0;
 					<?php $field->__set('id', $name . $k); ?>
 					<?php $field->__set('value', $v[$name]); ?>
 					<?php echo $field->renderField(); ?>
-					<?php $count++; ?>
 				<?php endforeach; ?>
 			</div>
 		<?php endforeach; ?>

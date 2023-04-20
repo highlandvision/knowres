@@ -28,6 +28,7 @@ use UnexpectedValueException;
 
 use function count;
 use function is_countable;
+use function is_null;
 use function mt_rand;
 
 /**
@@ -276,7 +277,7 @@ class ContractModel extends AdminModel
 			$item->adjustments = Utility::decodeJson($item->adjustments, true);
 			$item->discounts   = Utility::decodeJson($item->discounts, true);
 			$item->extras      = Utility::decodeJson($item->extras, true);
-			$item->child_ages  = Utility::decodeJson($item->child_ages, true);
+			$item->child_ages  = Utility::decodeJson(is_null($item->child_ages) ? '[]' : $item->child_ages, true);
 			$item->guest_types = Utility::decodeJson($item->guest_types, true);
 			$item->nightly     = Utility::decodeJson($item->nightly, true);
 			$item->rooms       = Utility::decodeJson($item->rooms, true);

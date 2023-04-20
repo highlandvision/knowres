@@ -3,12 +3,14 @@
 	addruleprefix="HighlandVision\Component\Knowres\Administrator\Rule">
 	<fieldset name="krdates">
 		<field name="arrival_bd"
+			class="input-mini"
 			hiddenDescription="true"
 			readonly="true"
 			type="text"
 			label="COM_KNOWRES_CONTRACT_ARRIVAL_LBL"
 			description="COM_KNOWRES_CONTRACT_ARRIVAL_DSC"/>
 		<field name="departure_bd"
+			class="input-mini"
 			hiddenDescription="true"
 			readonly="true"
 			type="text"
@@ -25,6 +27,7 @@
 			filter="integer"
 			min="1"
 			max="16"
+			required="true"
 			step="1"
 			type="number"
 			label="COM_KNOWRES_CONTRACT_GUESTS_ADULTS"/>

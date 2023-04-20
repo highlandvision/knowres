@@ -57,7 +57,7 @@ class ListpartysizeField extends ListField
 	 */
 	function getOptions(): array
 	{
-		$options   = [];
+		$options = [];
 
 		$maxguests = $this->max ?: KrMethods::getParams()->get('search_maxguests', 16);
 
