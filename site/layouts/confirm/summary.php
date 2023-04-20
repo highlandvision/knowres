@@ -21,23 +21,17 @@ extract($displayData);
  */
 
 $nights = TickTock::differenceDays($data->arrival, $data->departure);
-//TODO-v4.1 Test the plural and sprintf for children at the bottom
 ?>
 
 <?php echo KrMethods::plain('COM_KNOWRES_ARRIVAL'); ?>
 <?php echo ' ' . TickTock::displayDate($data->arrival, 'D j F Y'); ?>
-	<br>
+<br>
 <?php echo KrMethods::plain('COM_KNOWRES_DEPARTURE'); ?>
 <?php echo ' ' . TickTock::displayDate($data->departure, 'D j F Y'); ?>
-	<br>
+<br>
 <?php echo KrMethods::sprintf('COM_KNOWRES_CONFIRM_NIGHTS', $nights); ?>
-<?php if (empty($data->adults)): ?>
-	<?php echo KrMethods::plural('COM_KNOWRES_CONFIRM_GUESTS', $data->guests); ?>
-<?php endif; ?>
-<?php if (!empty($data->adults)): ?>
-	<br>
-	<?php echo KrMethods::plural('COM_KNOWRES_CONFIRM_ADULTS', $data->adults); ?>
-<?php endif; ?>
+<br>
+<?php echo KrMethods::plural('COM_KNOWRES_CONFIRM_ADULTS', $data->adults); ?>
 <?php if (!empty($data->children)): ?>
 	<br>
 	<?php echo KrMethods::plural('COM_KNOWRES_CONFIRM_CHILDREN', $data->children,

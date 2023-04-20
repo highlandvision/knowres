@@ -82,7 +82,7 @@ class PropertyController extends BaseController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	#[NoReturn] public function ics()
+	#[NoReturn] public function ics(): void
 	{
 		$id     = KrMethods::inputInt('id', 0, 'get');
 		$action = KrMethods::inputString('action', '', 'get');
@@ -143,7 +143,7 @@ class PropertyController extends BaseController
 	 * @since        3.3.0
 	 * @noinspection PhpUnused
 	 */
-	#[NoReturn] public function mobi()
+	#[NoReturn] public function mobi(): void
 	{
 		$property_id = KrMethods::inputInt('pid');
 		if (!$property_id)
@@ -173,7 +173,7 @@ class PropertyController extends BaseController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function quote()
+	public function quote(): void
 	{
 		/** @var QuoteView $view */
 		$view        = $this->getView('property', 'quote');
@@ -224,6 +224,15 @@ class PropertyController extends BaseController
 			$view->display();
 		}
 
+		$searchSession           = new KrSession\Search();
+		$searchData              = $searchSession->getData();
+		$searchData->adults      = $adults;
+		$searchData->children    = $children;
+		$searchData->child_ages  = $child_ages;
+		$searchData->guests      = $adults + $children;
+		$searchSession->setData($searchData);
+
+		$Hub                       = new Hub($contractData);
 		$computations = [
 			'base',
 			'dow',
@@ -267,7 +276,7 @@ class PropertyController extends BaseController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function terms()
+	public function terms(): void
 	{
 		$id = KrMethods::inputInt('id', 0, 'get');
 		if ($id)

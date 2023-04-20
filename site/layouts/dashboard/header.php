@@ -21,7 +21,7 @@ extract($displayData);
  * Layout variables
  *
  * @var false|object $contract Contract Item.
- * @var bool         $times    Truw to display times.
+ * @var bool         $times    True to display times.
  */
 
 if (!isset($times))
@@ -93,21 +93,23 @@ $image  = Media\Images::getPropertyImageName($contract->property_id);
 				<dt><?php echo KrMethods::plain('COM_KNOWRES_GUESTS'); ?></dt>
 				<dd><?php echo $contract->guests; ?></dd>
 			</div>
-			<div>
-				<dt><?php echo KrMethods::plain('COM_KNOWRES_ADULTS'); ?></dt>
-				<dd><?php echo $contract->adults; ?></dd>
-			</div>
-			<?php if ($contract->children > 0): ?>
-			<div>
-				<dt><?php echo KrMethods::plain('COM_KNOWRES_CHILDREN'); ?></dt>
-				<dd><?php echo $contract->children; ?></dd>
-			</div>
-			<div>
-				<dt><?php echo KrMethods::plain('COM_KNOWRES_CHILD_AGES'); ?></dt>
-				<dd>
-					<?php echo implode(',', Utility::decodeJson($contract->child_ages, true)); ?>
-				</dd>
-			</div>
+			<?php if (!empty($contract->adults)): ?>
+				<div>
+					<dt><?php echo KrMethods::plain('COM_KNOWRES_ADULTS'); ?></dt>
+					<dd><?php echo $contract->adults; ?></dd>
+				</div>
+				<?php if ($contract->children > 0): ?>
+					<div>
+						<dt><?php echo KrMethods::plain('COM_KNOWRES_CHILDREN'); ?></dt>
+						<dd><?php echo $contract->children; ?></dd>
+					</div>
+					<?php if (is_array($contract->child_ages) && count($contract->child_ages)): ?>
+						<div>
+							<dt><?php echo KrMethods::plain('COM_KNOWRES_CHILD_AGES'); ?></dt>
+							<dd><?php echo implode(',', $contract->child_ages); ?></dd>
+						</div>
+					<?php endif; ?>
+				<?php endif; ?>
 			<?php endif; ?>
 			<?php if ($contract->agent_id) : ?>
 				<p class="smaller">

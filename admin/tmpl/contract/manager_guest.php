@@ -15,7 +15,7 @@ use HighlandVision\KR\Framework\KrMethods;
 <fieldset>
 	<legend><?php echo KrMethods::plain('COM_KNOWRES_LEGEND_CONTRACTS_GUEST_DETAILS'); ?></legend>
 	<div class="row">
-		<div class="col">
+		<div class="col-lg-5">
 			<?php echo $this->guestForm->renderField('email'); ?>
 		</div>
 	</div>
@@ -23,10 +23,10 @@ use HighlandVision\KR\Framework\KrMethods;
 	<?php if ($this->guestForm->getFieldAttribute('firstname', 'type', 'hidden') != 'hidden'
 		|| $this->guestForm->getFieldAttribute('surname', 'type', 'hidden') != 'hidden'): ?>
 		<div class="row">
-			<div class="col">
+			<div class="col-lg-5">
 				<?php echo $this->guestForm->renderField('firstname'); ?>
 			</div>
-			<div class="col">
+			<div class="col-lg-5">
 				<?php echo $this->guestForm->renderField('surname'); ?>
 			</div>
 		</div>
@@ -34,10 +34,10 @@ use HighlandVision\KR\Framework\KrMethods;
 
 	<?php if ($this->guestForm->getFieldAttribute('mobile', 'type', 'hidden') != 'hidden'): ?>
 		<div class="row">
-			<div class="col">
+			<div class="col-lg-5">
 				<?php echo $this->guestForm->renderField('mobile_country_id'); ?>
 			</div>
-			<div class="col">
+			<div class="col-lg-5">
 				<?php echo $this->guestForm->renderField('mobile'); ?>
 			</div>
 		</div>
@@ -45,10 +45,10 @@ use HighlandVision\KR\Framework\KrMethods;
 
 	<?php if ($this->guestForm->getFieldAttribute('address1', 'type', 'hidden') != 'hidden'): ?>
 		<div class="row">
-			<div class="col">
+			<div class="col-lg-5">
 				<?php echo $this->guestForm->renderField('address1'); ?>
 			</div>
-			<div class="col">
+			<div class="col-sm-6">
 				<?php echo $this->guestForm->renderField('address2'); ?>
 			</div>
 		</div>
@@ -56,10 +56,10 @@ use HighlandVision\KR\Framework\KrMethods;
 
 	<?php if ($this->guestForm->getFieldAttribute('town', 'type', 'hidden') != 'hidden'): ?>
 		<div class="row">
-			<div class="col">
+			<div class="col-lg-5">
 				<?php echo $this->guestForm->renderField('town'); ?>
 			</div>
-			<div class="col">
+			<div class="col-lg-5">
 				<?php echo $this->guestForm->renderField('postcode'); ?>
 			</div>
 		</div>
@@ -67,10 +67,10 @@ use HighlandVision\KR\Framework\KrMethods;
 
 	<?php if ($this->guestForm->getFieldAttribute('region_id', 'type', 'hidden') != 'hidden'): ?>
 		<div class="row">
-			<div class="col">
+			<div class="col-lg-5">
 				<?php echo $this->guestForm->renderField('country_id'); ?>
 			</div>
-			<div class="col">
+			<div class="col-lg-5">
 				<?php echo $this->guestForm->renderField('region_id'); ?>
 			</div>
 		</div>

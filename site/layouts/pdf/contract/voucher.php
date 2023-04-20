@@ -87,19 +87,7 @@ $lng = floatval(trim($property->lng_actual)) ? trim($property->lng_actual) : tri
 	</tr>
 </table>
 
-<?php
-echo KrMethods::render('pdf.contract.guestdata.partysize',
-	['guestdata' => $guestdata,
-	 'property'  => $property,
-	 'contract'  => $contract]
-);
-?>
-<!--TODO-v4.1 FIX GUEST NUMBERS FOR GOOD-->
-<?php //echo KrMethods::render('pdf.contract.voucher.partysize', [
-//	'property' => $property,
-//	'contract' => $contract
-//]);
-//?>
+<?php echo KrMethods::render('pdf.contract.guestdata.partysize', ['contract'  => $contract]); ?>
 
 <table style="width:100%;border:none;border-collapse:collapse;">
 	<tr style="font-size:92%;color:#999;">
