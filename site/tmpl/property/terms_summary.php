@@ -4,7 +4,7 @@
  * @package     com_knowres
  * @copyright   Copyright (C) 2014 Highland Vision Limited. All rights reserved.
  * @license     http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
- * @author      Hazel Wilson <hazel@highlandvision.com> - http://www.highlandvision.com
+ * @author      Hazel Wilson <hazel@highlandvision.com> - https://www.highlandvision.com
  */
 
 defined('_JEXEC') or die;
