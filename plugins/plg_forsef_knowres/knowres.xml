@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="plugin" group="forsef" method="upgrade">
-	<name>KR - Forsef</name>
-	<author>Hazel Wilson</author>
+	<name>plg_forsef_knowres</name>
+	<author>Highland Vision</author>
 	<creationDate>November 2022</creationDate>
 	<copyright>2022 Highland Vision. All rights reserved.</copyright>
 	<license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
