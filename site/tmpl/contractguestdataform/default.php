@@ -22,29 +22,15 @@ $wa->useScript('com_knowres.site')
 
 <h1><?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATAFORM_TITLE'); ?></h1>
 
-<?php echo KrMethods::render('dashboard.header', ['contract' => $this->contract,
-                                                  'times'    => false]);
-?>
-<br>
-<div class="callout small alert">
+<div class="callout small secondary">
 	<?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATAFORM_INSTRUCTIONS'); ?>
 </div>
 
-<form action="<?php echo 'index.php?option=com_knowres'; ?>"
-      aria-label="<?php echo $this->form_aria_label; ?>" class="form-validate" id="kr-guestdata-form"
-      method="post" name="adminForm">
+<form action="<?php echo 'index.php?option=com_knowres'; ?>" aria-label="<?php echo $this->form_aria_label; ?>"
+      class="form-validate" id="kr-guestdata-form" method="post" name="adminForm">
 
 	<h3><?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATAFORM_SECTION_GUEST_REGISTRATION'); ?></h3>
-	<fieldset>
-		<legend><?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATAFORM_PARTYSIZE_HELP'); ?></legend>
-		<div class="row">
-			<div class="small-12 columns">
-				<div class="callout small formbg">
-					<?php echo $this->loadTemplate('partyinfo'); ?>
-				</div>
-			</div>
-		</div>
-	</fieldset>
+	<?php echo $this->loadTemplate('partydetails'); ?>
 
 	<fieldset>
 		<legend><?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATAFORM_LEGEND_GUESTINFO'); ?></legend>

@@ -12,6 +12,10 @@ defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Utility;
+
+$wa = $this->document->getWebAssetManager();
+$wa->useScript('keepalive')
+   ->useScript('form.validate');
 ?>
 
 <div class="row">
@@ -27,10 +31,11 @@ use HighlandVision\KR\Utility;
 				<?php endif; ?>
 
 				<?php if ($this->contract->children == 1): ?>
-					<?php echo ', ' . KrMethods::sprintf('COM_KNOWRES_CONTRACT_CHILD', $this->contract->child_ages[0]); ?>
+					<?php echo ' & ' . KrMethods::sprintf('COM_KNOWRES_CONTRACT_CHILD',
+							$this->contract->child_ages[0]); ?>
 				<?php elseif ($this->contract->children > 1): ?>
-					<?php echo ', ' .  KrMethods::sprintf('COM_KNOWRES_CONTRACT_CHILDREN', $this->contract->children,
-						Utility::displayAges($this->contract->child_ages)); ?>
+					<?php echo ' & ' . KrMethods::sprintf('COM_KNOWRES_CONTRACT_CHILDREN', $this->contract->children,
+							Utility::displayAges($this->contract->child_ages)); ?>
 				<?php endif; ?>
 				)
 			</legend>

@@ -56,7 +56,7 @@ class ContractController extends FormController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function agent()
+	public function agent(): void
 	{
 		$this->checkToken();
 

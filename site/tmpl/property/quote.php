@@ -28,12 +28,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 	<?php
 	$currency   = $this->quote->getValue('currency');
 	$price      = Utility::displayValue($this->quote->getValue('contract_total'), $currency);
-	$price_text = KrMethods::plain('COM_KNOWRES_QUOTE_TOTAL_NOTAX');
-	if ((isset($this->quote->settings['tax_ignore']) && $this->quote->settings['tax_ignore'])
-		|| KrMethods::getParams()->get('tax_ignore', 0))
-	{
-		$price_text = KrMethods::plain('COM_KNOWRES_QUOTE_TOTAL');
-	}
+	$price_text = KrMethods::plain('COM_KNOWRES_QUOTE_TOTAL');
 
 	$discount = $this->quote->getValue('discount');
 	if (!empty($discount))
