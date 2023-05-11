@@ -285,8 +285,8 @@ class ServiceController extends BaseController
 	 * @throws Exception
 	 * @since  1.2.2
 	 */
-	public function stripe()
-	{
+	public function stripe(): void
+    {
 		$paymentSession = new KrSession\Payment();
 		$paymentData    = $paymentSession->getData();
 		$payment_type   = $paymentData->payment_type;

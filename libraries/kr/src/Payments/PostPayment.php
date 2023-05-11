@@ -203,11 +203,11 @@ class PostPayment
 		$userData->pr_contract_id = $this->contract_id;
 		$userSession->setData($userData);
 
-		$paymentSession = new KnowresSession\Payment();
+		$paymentSession = new KrSession\Payment();
 		$paymentSession->resetData();
-		$contractSession = new KnowresSession\Contract();
+		$contractSession = new KrSession\Contract();
 		$contractSession->resetData();
-		$guestSession = new KnowresSession\Guest();
+		$guestSession = new KrSession\Guest();
 		$guestSession->resetData();
 	}
 
