@@ -15,6 +15,7 @@ use Exception;
 use HighlandVision\KR\Cryptor;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\HtmlView as KrHtmlView;
+use HighlandVision\KR\TickTock;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 
@@ -137,7 +138,8 @@ class Contract extends KrHtmlView
 		                        ->toggleButtonClass('btn');
 		$ChildToolbar = $dropdown->getChildToolbar();
 
-		if (!in_array($name, $this->related) && $this->item->departure >= $this->today && !$this->item->cancelled)
+		$cutoff = TickTock::modifyDays($this->today, 14, '-');
+		if (!in_array($name, $this->related) && $this->item->departure >= $cutoff && !$this->item->cancelled)
 		{
 			if ($this->access_level > 10
 				|| $this->checkAccess($this->item->black_booking ? 'block_edit' : 'contract.edit'))
