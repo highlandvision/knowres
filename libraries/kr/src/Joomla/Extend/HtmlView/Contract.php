@@ -15,6 +15,7 @@ use Exception;
 use HighlandVision\KR\Cryptor;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\HtmlView as KrHtmlView;
+use HighlandVision\KR\TickTock;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 
@@ -137,7 +138,7 @@ class Contract extends KrHtmlView
 		                        ->toggleButtonClass('btn');
 		$ChildToolbar = $dropdown->getChildToolbar();
 
-		if (!in_array($name, $this->related) && $this->item->departure >= $this->today && !$this->item->cancelled)
+		if (!in_array($name, $this->related) && !$this->item->cancelled)
 		{
 			if ($this->access_level > 10
 				|| $this->checkAccess($this->item->black_booking ? 'block_edit' : 'contract.edit'))
@@ -153,7 +154,7 @@ class Contract extends KrHtmlView
 			}
 		}
 
-		if ($this->access_level > 10)
+		if ($this->access_level > 10 && !$this->item->black_booking)
 		{
 			if (!$this->item->cancelled)
 			{
@@ -161,7 +162,7 @@ class Contract extends KrHtmlView
 				$html  = KrMethods::render('toolbar.contract.trigger', ['title' => $title]);
 				$ChildToolbar->customButton('trigger')->html($html);
 			}
-			else if ($this->item->departure > $this->today)
+			if ($this->item->cancelled && $this->item->arrival >= $this->today)
 			{
 				$title = KrMethods::plain('COM_KNOWRES_CONTRACTS_RESURRECT');
 				$html  = KrMethods::render('toolbar.contract.resurrect', ['title' => $title]);
@@ -169,7 +170,7 @@ class Contract extends KrHtmlView
 			}
 		}
 
-		if ($this->item->departure >= $this->today && !$this->item->cancelled)
+		if (!$this->item->cancelled)
 		{
 			if ($this->access_level > 10
 				|| $this->checkAccess($this->item->black_booking ? 'block_cancel' : 'contract.cancel'))
