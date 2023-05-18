@@ -50,9 +50,8 @@ class Upgrade
 	 * @throws UnexpectedValueException
 	 * @throws Exception
 	 * @since  2.4.0
-	 * @return null
 	 */
-	public static function historyTables()
+	public static function historyTables(): void
 	{
 		Table::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_knowres/tables');
 

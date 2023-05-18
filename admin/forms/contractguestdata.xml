@@ -116,6 +116,7 @@
 		<field name="departure_means"
 			default=""
 			filter="string"
+			hiddenLabel="true"
 			type="list"
 			label="COM_KNOWRES_CONTRACTGUESTDATA_DEPARTURE_MEANS_LBL"
 			description="COM_KNOWRES_CONTRACTGUESTDATA_DEPARTURE_MEANS_DSC">
@@ -127,6 +128,7 @@
 		</field>
 		<field name="departure_number"
 			filter="string"
+			hiddenLabel="true"
 			type="text"
 			label="COM_KNOWRES_CONTRACTGUESTDATA_DEPARTURE_NUMBER_LBL"
 			description="COM_KNOWRES_CONTRACTGUESTDATA_DEPARTURE_NUMBER_DSC"/>

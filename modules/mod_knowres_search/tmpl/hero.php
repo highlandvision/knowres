@@ -59,7 +59,7 @@ $action = KrMethods::getRoot() . 'index.php?option=com_knowres&task=properties.s
 				</div>
 			<?php endif; ?>
 			<div class="small-12 medium-12 large-2 columns">
-				<button type="submit" class="button expanded large">
+				<button type="submit" class="button expanded">
 					<?php echo KrMethods::plain('MOD_KNOWRES_SEARCH_BUTTON'); ?>
 					&nbsp;&nbsp;<i class="fas fa-search"></i>
 				</button>

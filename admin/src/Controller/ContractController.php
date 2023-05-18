@@ -71,7 +71,6 @@ class ContractController extends FormController
 			$contractData->child_ages_set = false;
 		}
 
-
 		/* @var ContractModel $model */
 		$model = $this->getModel();
 		$form  = $model->getForm();

@@ -18,8 +18,8 @@ use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Media;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Translations;
+use HighlandVision\KR\Utility;
 use InvalidArgumentException;
-use JetBrains\PhpStorm\NoReturn;
 use Joomla\CMS\Installer\Installer;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Log\Log;
@@ -38,17 +38,22 @@ use function explode;
 use function file_exists;
 use function file_get_contents;
 use function is_dir;
+use function is_null;
+use function json_decode;
 use function rmdir;
+use function sort;
 use function str_replace;
 use function substr;
 use function unlink;
 
 use const JPATH_ROOT;
+use const SORT_NUMERIC;
 
 /**
  * Adhoc controller class for browser access
  *
  * @since  1.0.0
+ * @noinspection PhpUnused
  */
 class AdhocController extends BaseController
 {
@@ -57,12 +62,11 @@ class AdhocController extends BaseController
 	 *
 	 * @throws UnexpectedValueException
 	 * @since  4.0.0
+	 * @noinspection PhpUnused
 	 */
-	public function deleteObsolete()
+	public function deleteObsolete(): void
 	{
 		$dir = JPATH_ROOT . '/templates';
-		//		foreach ($obsolete as $dir)
-		//		{
 		if (file_exists($dir))
 		{
 			if (!is_dir($dir))
@@ -88,15 +92,16 @@ class AdhocController extends BaseController
 				rmdir($dir);
 			}
 		}
-		//		}
 	}
 
 	/**
 	 * Fix up database for null values etc
+	 *
 	 * @throws InvalidArgumentException
 	 * @throws KeyNotFoundException
 	 * @throws RuntimeException
-	 * @since   4.0.0
+	 * @since  4.0.0
+	 * @noinspection PhpUnused
 	 */
 	public function fixupv4db(): bool
 	{
@@ -133,83 +138,61 @@ class AdhocController extends BaseController
 	}
 
 	/**
-	 * Update guests numbers from contract guest data to contract (V4.0)
+	 * Update party size, adults, children and child_ages for v4.1 and above
 	 *
 	 * @throws Exception
-	 * @since  4.0.0
+	 * @since  4.1.0
 	 */
-	#[NoReturn] public function gueststocontract()
+	public function fixupv41PartySize(): void
 	{
 		$db    = KrFactory::getDatabase();
 		$query = $db->getQuery(true);
-		$query->select($db->qn(['a.contract_id', 'a.adults', 'a.children', 'a.infants']))
-		      ->from($db->qn('#__knowres_contract_guestdata', 'a'))
-		      ->select($db->qn('c.guests', 'guests'))
-		      ->join('LEFT',
-			      ($db->qn('#__knowres_contract', 'c') . 'ON' . $db->qn('c.id') . '=' . $db->qn('a.contract_id')))
-		      ->where($db->qn('cancelled') . '=0')
-		      ->where($db->qn('black_booking') . '=0')
-		      ->where($db->qn('state') . '=1')
-		      ->where($db->qn('arrival') . '>=' . $db->q('2020-01-01'));
-		$db->setQuery($query);
-		$rows = $db->loadObjectList();
 
+		$query->select($db->qn('c.id', 'c_id'));
+		$query->select($db->qn('c.guests', 'c_guests'));
+		$query->select($db->qn('a.contract_id', 'contract_id'));
+		$query->select($db->qn('a.adults', 'cd_adults'));
+		$query->select($db->qn('a.children', 'cd_children'));
+		$query->select($db->qn('a.infants', 'cd_infants'));
+		$query->select($db->qn('a.guestinfo', 'cd_guestinfo'));
+		$query->from($db->qn('#__knowres_contract', 'c'));
+		$query->join('LEFT',
+			($db->qn('#__knowres_contract_guestdata', 'a') . 'ON' . $db->qn('a.contract_id') . '='
+			 . $db->qn('c.id')));
+		$query->where($db->qn('c.black_booking') . '=0');
+		$db->setQuery($query);
+
+		$rows = $db->loadObjectList();
 		foreach ($rows as $r)
 		{
-			$adults   = $r->adults;
-			$children = 0;
-			if (!empty($r->children))
+			$adults     = !empty($r->cd_adults) ? $r->cd_adults : $r->c_guests;
+			$children   = 0;
+			$infants    = !empty($r->cd_infants) ? $r->cd_infants : 0;
+			$gi_count   = !is_null($r->cd_guestinfo) ? json_decode($r->cd_guestinfo) : 0;
+			$child_ages = [];
+			if (!empty($r->cd_children))
 			{
-				$r->children = str_replace('Under 1', 0, $r->children);
-				$children    = count(explode(',', $r->children));
-			}
-			$child_ages = $r->children;
+				$children   = str_replace('Under 1', 0, $r->cd_children);
+				$child_ages = explode(',', $children);
 
-			$tmp = $r->infants;
-			while ($tmp > 0)
-			{
-				$child_ages = '0,' . $child_ages;
-				$children++;
-				$tmp--;
+				for ($i = 1; $i <= $infants; $i++)
+				{
+					$child_ages[] = '0';
+				}
+
+				sort($child_ages, SORT_NUMERIC);
+				$children = count($child_ages);
 			}
 
-			if (!empty($child_ages))
-			{
-				$child_ages = explode(',', $child_ages);
-			}
-			else
-			{
-				$child_ages = [];
-			}
-			//			$children = count($child_ages) + (int) $r->infants;
-
-			if (!$adults)
-			{
-				echo "Reservation " . $r->contract_id . ' no guest numbers entered yet<br>';
-			}
-			else if ($adults + $children != $r->guests + $r->infants)
-			{
-				echo "Reservation " . $r->contract_id . ' guests do not tally with adults and children<br>';
-				echo $adults, $children, $r->guests, $r->infants . '<br>';
-			}
-			else if (count($child_ages) != $children)
-			{
-				echo "Reservation " . $r->contract_id . ' child ages and children count do not match<br>';
-			}
-			else
-			{
-				echo "Reservation " . $r->contract_id . ' no mismatches reported<br>';
-			}
-			//			$update             = new stdClass();
-			//			$update->id         = $r->contract_id;
-			//			$update->adults     = $r->adults;
-			//			$update->children   = $children;
-			//			$update->infants    = $infants;
-			//			$update->child_ages = Utility::encodeJson($child_ages);
-			//			KrFactory::update('contract', $update);
+			$update             = new stdClass();
+			$update->id         = $r->c_id;
+			$update->adults     = $adults;
+			$update->children   = $children;
+			$update->child_ages = Utility::encodeJson($child_ages);
+			$update->guests     = $r->c_guests + $r->cd_infants;
+			$update->infants    = 0;
+			KrFactory::update('contract', $update);
 		}
-
-		jexit();
 	}
 
 	/**
@@ -218,8 +201,9 @@ class AdhocController extends BaseController
 	 * @throws RuntimeException
 	 * @throws Exception
 	 * @since  3.1.0
+	 * @noinspection PhpUnused
 	 */
-	public function resizeoriginal()
+	public function resizeoriginal(): void
 	{
 		$params          = KrMethods::getParams();
 		$maxServerWidth  = $params->get('max_upload_width', 2100);
@@ -241,18 +225,6 @@ class AdhocController extends BaseController
 					{
 						Media\Images::resizeImage($f, $f, $maxServerWidth, 0, 90);
 					}
-
-					//					$imgSize = getimagesize($sourcePath);
-					//					if (empty($imgSize[0]) || empty($imgSize[1]))
-					//					{
-					//						$this->raiseError(
-					//							'Error: the image dimensions of the file ' . $destFile . ' cannot be read, please delete and re-upload this image.',
-					//							$refresh);
-					//
-					//						return true;
-					//					}
-					//
-					//					return true;
 				}
 			}
 
@@ -266,8 +238,9 @@ class AdhocController extends BaseController
 	 *
 	 * @throws Exception
 	 * @since  3.4.0
+	 * @noinspection PhpUnused
 	 */
-	public function fkToService()
+	public function fkToService(): void
 	{
 		$factura = KrFactory::getAdminModel('services')->getServicesByPlugin('factura');
 		if (!is_countable($factura) || !count($factura))
@@ -347,8 +320,9 @@ class AdhocController extends BaseController
 	 * @throws RuntimeException
 	 * @throws Exception
 	 * @since  2.4.0
+	 * @noinspection PhpUnused
 	 */
-	public function xxcopyrates()
+	public function xxcopyrates(): void
 	{
 		$old          = '2021-01-01';
 		$new          = '2022-01-01';
