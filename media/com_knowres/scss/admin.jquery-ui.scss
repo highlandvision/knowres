@@ -89,7 +89,8 @@
 }
 .ui-datepicker {
 	border: 1px solid #2c4359;
-	width: 280px;
+	width: 210px;
+	text-align: center;
 	padding: .2em .2em 0;
 	display: none;
 	.ui-datepicker-header {
@@ -99,14 +100,14 @@
 	.ui-datepicker-prev,
 	.ui-datepicker-next {
 		position: absolute;
-		top: 6px;
+		top: 8px;
 		background-color: #a1a1a1;
 		width: 1.6em;
 		height: 1.6em;
 	}
 	.ui-datepicker-prev-hover,
 	.ui-datepicker-next-hover {
-		top: 7px;
+		top: 8px;
 	}
 	.ui-datepicker-prev {
 		left: 2px;
@@ -140,8 +141,8 @@
 	}
 	select.ui-datepicker-month,
 	select.ui-datepicker-year {
-		width: 40%;
-		padding: 3px 5px;
+		width: 45%;
+		padding: 3px;
 	}
 	table {
 		width: 100%;
@@ -184,6 +185,11 @@
 		button.ui-datepicker-current {
 			float: left;
 		}
+	}
+}
+@media only screen and (min-width: 992px) {
+	.ui-datepicker {
+		margin-left: 0;
 	}
 }
 /* multiple calendars */
@@ -264,7 +270,7 @@
 .ui-state-focus,
 .ui-widget-content .ui-state-focus,
 .ui-widget-header .ui-state-focus {
-	background: #0a0a0a;
+	background: #fefefe;
 	font-weight: normal;
 	color: #fefefe;
 }
@@ -375,7 +381,7 @@
 	background-position: 16px 16px;
 }
 .ui-icon-circle-triangle-e {
-	background-position: -48px -192px;
+	background-position: -46px -192px;
 }
 .ui-icon-circle-triangle-w {
 	background-position: -80px -192px;

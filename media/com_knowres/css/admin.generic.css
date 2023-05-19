@@ -87,6 +87,7 @@ input[readonly].hasDatepicker {
   background: #ededed;
   border-bottom: 2px solid #ccc;
   border-right: 2px solid #ccc;
+  max-width: 500px;
 }
 .manager-totals .infolist {
   clear: both;
@@ -247,11 +248,10 @@ input[type=number], .input-tiny {
 }
 
 legend {
-  font-size: 18px !important;
-  color: #999 !important;
-  border-bottom: 1px solid #ccc !important;
-  padding-top: 15px !important;
-  margin-bottom: 15px !important;
+  font-size: 1.4rem !important;
+  border-bottom: none !important;
+  padding-top: 1rem !important;
+  margin-bottom: 0.5rem !important;
 }
 
 .main-card {
@@ -280,6 +280,14 @@ legend {
 .table th.right,
 .table td.right {
   text-align: right;
+}
+
+.form-control-feedback {
+  display: inline !important;
+}
+
+joomla-tab > joomla-tab-element {
+  padding: 1rem 2vw !important;
 }
 
 /*# sourceMappingURL=admin.generic.css.map */

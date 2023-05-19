@@ -300,7 +300,9 @@ if (typeof jQuery !== 'undefined')
 			const $container = $('#container-datepicker');
 			let width = $container.width();
 			let max = 5;
-			if (width < 600)
+			if (width < 400)
+				max = 1;
+			if (width > 400 && width < 600)
 				max = 2;
 			else if (width >= 600 && width < 800)
 				max = 3;
