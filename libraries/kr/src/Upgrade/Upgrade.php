@@ -33,6 +33,7 @@ use UnexpectedValueException;
 
 use function count;
 use function defined;
+use function explode;
 use function implode;
 
 /**
@@ -958,355 +959,299 @@ class Upgrade
 			$lookup = [];
 			if (property_exists($table, 'agency_id'))
 			{
-				$lookup[] = array(
+				$lookup[] = [
 					'sourceColumn'  => 'agency_id', 'targetTable' => '#__knowres_agency', 'targetColumn' => 'id',
 					'displayColumn' => 'name'
-				);
+				];
 			}
 
 			if (property_exists($table, 'agent_id'))
 			{
-				$lookup[] = array(
+				$lookup[] = [
 					'sourceColumn'  => 'agent_id', 'targetTable' => '#__knowres_agent', 'targetColumn' => 'id',
 					'displayColumn' => 'name'
-				);
+				];
 			}
 
 			if (property_exists($table, 'allow_payment'))
 			{
-				$lookup[] = array(
+				$lookup[] = [
 					'sourceColumn'  => 'allow_payment', 'targetTable' => '#__knowres_currency', 'targetColumn' => 'iso',
 					'displayColumn' => 'iso'
-				);
+				];
 			}
 
 			if (property_exists($table, 'arrival_air'))
 			{
-				$lookup[] = array(
+				$lookup[] = [
 					'sourceColumn'  => 'arrival_air', 'targetTable' => 'layout', 'targetColumn' => '',
 					'displayColumn' => ''
-				);
+				];
 			}
 
 			if (property_exists($table, 'bed_types'))
 			{
-				$lookup[] = array(
+				$lookup[] = [
 					'sourceColumn'  => 'bed_types', 'targetTable' => 'layout', 'targetColumn' => '',
 					'displayColumn' => ''
-				);
+				];
 			}
 
 			if (property_exists($table, 'cancellation_penalty'))
 			{
-				$lookup[] = array(
+				$lookup[] = [
 					'sourceColumn'  => 'cancellation_penalty', 'targetTable' => 'layout', 'targetColumn' => '',
 					'displayColumn' => ''
-				);
+				];
 			}
 
 			if (property_exists($table, 'categories'))
 			{
-				$lookup[] = array(
+				$lookup[] = [
 					'sourceColumn'  => 'categories', 'targetTable' => 'category', 'targetColumn' => 'krtranslate',
 					'displayColumn' => 'name'
-				);
+				];
 			}
 
 			if (property_exists($table, 'checkin_fees'))
 			{
-				$lookup[] = array(
+				$lookup[] = [
 					'sourceColumn'  => 'checkin_fees', 'targetTable' => 'layout', 'targetColumn' => '',
 					'displayColumn' => ''
-				);
+				];
 			}
 
 			if (property_exists($table, 'checkout_fees'))
 			{
-				$lookup[] = array(
+				$lookup[] = [
 					'sourceColumn'  => 'checkout_fees', 'targetTable' => 'layout', 'targetColumn' => '',
 					'displayColumn' => ''
-				);
+				];
 			}
 
 			if (property_exists($table, 'cluster_id'))
 			{
-				$lookup[] = array(
+				$lookup[] = [
 					'sourceColumn'  => 'cluster_id', 'targetTable' => 'cluster', 'targetColumn' => 'krtranslate',
 					'displayColumn' => 'name'
-				);
+				];
 			}
 
 			if (property_exists($table, 'children'))
 			{
-				$lookup[] = array(
+				$lookup[] = [
 					'sourceColumn' => 'children', 'targetTable' => 'layout', 'targetColumn' => '', 'displayColumn' => ''
-				);
+				];
 			}
 
 			if (property_exists($table, 'contract_id'))
 			{
-				$lookup[] = array(
+				$lookup[] = [
 					'sourceColumn'  => 'contract_id', 'targetTable' => '#__knowres_contract', 'targetColumn' => 'id',
 					'displayColumn' => 'tag'
-				);
+				];
 			}
 
 			if (property_exists($table, 'country_id'))
 			{
-				$lookup[] = array(
+				$lookup[] = [
 					'sourceColumn'  => 'country_id', 'targetTable' => 'country', 'targetColumn' => 'krtranslate',
 					'displayColumn' => 'name'
-				);
+				];
 			}
 
 			if (property_exists($table, 'b_country_id'))
 			{
-				$lookup[] = array(
+				$lookup[] = [
 					'sourceColumn'  => 'b_country_id', 'targetTable' => 'country', 'targetColumn' => 'krtranslate',
 					'displayColumn' => 'name'
-				);
+				];
 			}
 
 			if (property_exists($table, 'created_by'))
 			{
-				$lookup[] = array(
+				$lookup[] = [
 					'sourceColumn'  => 'created_by', 'targetTable' => '#__users', 'targetColumn' => 'id',
 					'displayColumn' => 'name'
-				);
+				];
 			}
 
 			if (property_exists($table, 'email_template_id'))
 			{
-				$lookup[] = array(
+				$lookup[] = [
 					'sourceColumn' => 'email_template_id', 'targetTable' => 'emailtemplate',
 					'targetColumn' => 'krtranslate', 'displayColumn' => 'name'
-				);
+				];
 			}
 
 			if (property_exists($table, 'guest_id'))
 			{
-				$lookup[] = array(
+				$lookup[] = [
 					'sourceColumn'  => 'guest_id', 'targetTable' => '#__knowres_guest', 'targetColumn' => 'id',
 					'displayColumn' => 'surname'
-				);
+				];
 			}
 
 			if (property_exists($table, 'guestinfo'))
 			{
-				$lookup[] = array(
+				$lookup[] = [
 					'sourceColumn'  => 'guestinfo', 'targetTable' => 'layout', 'targetColumn' => '',
 					'displayColumn' => ''
-				);
+				];
 			}
 
 			if (property_exists($table, 'service_id'))
 			{
-				$lookup[] = array(
+				$lookup[] = [
 					'sourceColumn'  => 'service_id', 'targetTable' => '#__knowres_service', 'targetColumn' => 'id',
 					'displayColumn' => 'name'
-				);
+				];
 			}
 
 			if (property_exists($table, 'manager_id'))
 			{
-				$lookup[] = array(
+				$lookup[] = [
 					'sourceColumn'  => 'manager_id', 'targetTable' => '#__knowres_manager', 'targetColumn' => 'id',
 					'displayColumn' => 'user_id'
-				);
+				];
 			}
 
 			if (property_exists($table, 'map_category_id'))
 			{
-				$lookup[] = array(
+				$lookup[] = [
 					'sourceColumn' => 'map_category_id', 'targetTable' => 'mapcategory',
 					'targetColumn' => 'krtranslate', 'displayColumn' => 'name'
-				);
+				];
 			}
 
 			if (property_exists($table, 'mobile_country_id'))
 			{
-				$lookup[] = array(
+				$lookup[] = [
 					'sourceColumn'  => 'mobile_country_id', 'targetTable' => 'country', 'targetColumn' => 'krtranslate',
 					'displayColumn' => 'name'
-				);
+				];
 			}
 
 			if (property_exists($table, 'owner_id'))
 			{
-				$lookup[] = array(
+				$lookup[] = [
 					'sourceColumn'  => 'owner_id', 'targetTable' => '#__knowres_owner', 'targetColumn' => 'id',
 					'displayColumn' => 'name'
-				);
+				];
 			}
 
 			if (property_exists($table, 'properties'))
 			{
-				$lookup[] = array(
+				$lookup[] = [
 					'sourceColumn'  => 'properties', 'targetTable' => '#__knowres_property', 'targetColumn' => 'id',
 					'displayColumn' => 'property_name'
-				);
+				];
 			}
 
 			if (property_exists($table, 'property_alternatives'))
 			{
-				$lookup[] = array(
+				$lookup[] = [
 					'sourceColumn' => 'property_alternatives', 'targetTable' => '#__knowres_property',
 					'targetColumn' => 'id', 'displayColumn' => 'property_name'
-				);
+				];
 			}
 
 			if (property_exists($table, 'property_features'))
 			{
-				$lookup[] = array(
+				$lookup[] = [
 					'sourceColumn' => 'property_features', 'targetTable' => 'propertyfeature',
 					'targetColumn' => 'krtranslate', 'displayColumn' => 'name'
-				);
+				];
 			}
 
 			if (property_exists($table, 'property_id'))
 			{
-				$lookup[] = array(
+				$lookup[] = [
 					'sourceColumn'  => 'property_id', 'targetTable' => '#__knowres_property', 'targetColumn' => 'id',
 					'displayColumn' => 'property_name'
-				);
+				];
 			}
 
 			if (property_exists($table, 'property_units'))
 			{
-				$lookup[] = array(
+				$lookup[] = [
 					'sourceColumn'  => 'property_units', 'targetTable' => '#__knowres_property', 'targetColumn' => 'id',
 					'displayColumn' => 'property_name'
-				);
+				];
 			}
 
 			if (property_exists($table, 'referral_id'))
 			{
-				$lookup[] = array(
+				$lookup[] = [
 					'sourceColumn'  => 'referral_id', 'targetTable' => 'referral', 'targetColumn' => 'krtranslate',
 					'displayColumn' => 'name'
-				);
+				];
 			}
 
 			if (property_exists($table, 'region_id'))
 			{
-				$lookup[] = array(
+				$lookup[] = [
 					'sourceColumn'  => 'region_id', 'targetTable' => 'region', 'targetColumn' => 'krtranslate',
 					'displayColumn' => 'name'
-				);
+				];
 			}
 
 			if (property_exists($table, 'b_region_id'))
 			{
-				$lookup[] = array(
+				$lookup[] = [
 					'sourceColumn'  => 'b_region_id', 'targetTable' => 'region', 'targetColumn' => 'krtranslate',
 					'displayColumn' => 'name'
-				);
+				];
 			}
 
 			if ($name == 'guest' && property_exists($table, 'telephone'))
 			{
-				$lookup[] = array(
+				$lookup[] = [
 					'sourceColumn'  => 'telephone', 'targetTable' => 'layout', 'targetColumn' => '',
 					'displayColumn' => ''
-				);
+				];
 			}
 
 			if (property_exists($table, 'town_id'))
 			{
-				$lookup[] = array(
+				$lookup[] = [
 					'sourceColumn'  => 'town_id', 'targetTable' => 'town', 'targetColumn' => 'krtranslate',
 					'displayColumn' => 'name'
-				);
+				];
 			}
 
 			if (property_exists($table, 'type_id'))
 			{
-				$lookup[] = array(
+				$lookup[] = [
 					'sourceColumn'  => 'type_id', 'targetTable' => 'type', 'targetColumn' => 'krtranslate',
 					'displayColumn' => 'name'
-				);
+				];
 			}
 
 			if (property_exists($table, 'updated_by'))
 			{
-				$lookup[] = array(
+				$lookup[] = [
 					'sourceColumn'  => 'updated_by', 'targetTable' => '#__users', 'targetColumn' => 'id',
 					'displayColumn' => 'name'
-				);
+				];
 			}
 
 			if (property_exists($table, 'user_id'))
 			{
-				$lookup[] = array(
+				$lookup[] = [
 					'sourceColumn'  => 'user_id', 'targetTable' => '#__users', 'targetColumn' => 'id',
 					'displayColumn' => 'name'
-				);
+				];
 			}
 
-			$contentType->content_history_options = Utility::encodeJson(array(
+			$contentType->content_history_options = Utility::encodeJson([
 				'formFile'      => 'administrator/components/com_knowres/models/forms/' . $name . '.xml',
 				'hideFields'    => $hide, 'ignoreChanges' => $ignore, 'convertToInt' => $convert,
 				'displayLookup' => $lookup
-			));
+			]);
 
 			$contentType->router = '';
 			$contentType->store();
-		}
-	}
-
-	/**
-	 * Update guests numbers from contract guest data to contract (V4.0)
-	 *
-	 * @throws Exception
-	 * @since  4.0.0
-	 */
-	public static function guestsToContract(): void
-	{
-		$db    = KrFactory::getDatabase();
-		$query = $db->getQuery(true);
-		$query->select($db->qn(['a.contract_id', 'a.adults', 'a.children', 'a.infants']))
-		      ->from($db->qn('#__knowres_contract_guestdata', 'a'));
-		$query->select($db->qn('c.guests', 'guests'));
-		$query->join('LEFT',
-			($db->qn('#__knowres_contract', 'c') . 'ON' . $db->qn('c.id') . '=' . $db->qn('a.contract_id')));
-		$db->setQuery($query);
-		$rows = $db->loadObjectList();
-
-		foreach ($rows as $r)
-		{
-			$adults     = $r->adults;
-			$children   = 0;
-			$child_ages = [];
-			$infants    = $r->infants;
-			if (!empty($r->children))
-			{
-				$child_ages = explode(',', $r->children);
-				foreach ($child_ages as $k => $ca)
-				{
-					if ($ca == 'Under 1')
-					{
-						$infants++;
-						unset($child_ages[$k]);
-					}
-				}
-			}
-
-			if ($adults + $children != $r->guests)
-			{
-				echo "Reservation " . $r->contract_id . ' guests do not tally with adults and children';
-			}
-			if (count($child_ages) != $children)
-			{
-				echo "Reservation " . $r->contract_id . ' child ages and children do not match';
-			}
-
-			$update             = new stdClass();
-			$update->id         = $r->contract_id;
-			$update->adults     = $r->adults;
-			$update->children   = $children;
-			$update->infants    = $infants;
-			$update->child_ages = Utility::encodeJson($child_ages);
-			KrFactory::update('contract', $update);
 		}
 	}
 
@@ -1419,6 +1364,8 @@ class Upgrade
 	}
 
 	/**
+	 * Delete old translations
+	 *
 	 * @throws QueryTypeAlreadyDefinedException
 	 * @throws InvalidArgumentException
 	 * @throws RuntimeException
@@ -1456,14 +1403,14 @@ class Upgrade
 	 *
 	 * @throws RuntimeException
 	 * @throws Exception
-	 * @since 1.0.0
+	 * @since  1.0.0
 	 */
 	protected static function updateFeatures(): void
 	{
 		$db = KrFactory::getDatabase();
 
 		$query = 'UPDATE ' . $db->qn('#__knowres_property_feature') . ' SET ' . $db->qn('id') . ' = (' . $db->qn('id')
-			. '+ 10000), ' . $db->qn('room_type') . '=' . $db->q('property');
+		         . '+ 10000), ' . $db->qn('room_type') . '=' . $db->q('property');
 
 		$db->setQuery($query);
 		$db->execute();
@@ -1512,7 +1459,7 @@ class Upgrade
 		// Update all custom to id + 10000
 		$db    = KrFactory::getDatabase();
 		$query = 'UPDATE ' . $db->qn('#__knowres_translation') . ' SET ' . $db->qn('item_id') . ' = ('
-			. $db->qn('item_id') . '+ 10000) WHERE `item` = "propertyfeature"';
+		         . $db->qn('item_id') . '+ 10000) WHERE `item` = "propertyfeature"';
 
 		$db->setQuery($query);
 		$db->execute();

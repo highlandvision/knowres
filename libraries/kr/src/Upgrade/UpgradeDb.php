@@ -20,8 +20,12 @@ use RuntimeException;
 use stdClass;
 
 use function array_key_exists;
+use function count;
 use function defined;
+use function explode;
 use function in_array;
+use function is_numeric;
+use function str_replace;
 
 if (!defined('KRFRAMEWORK'))
 {
@@ -349,9 +353,9 @@ class UpgradeDb
 	 * Changes for V410.
 	 *
 	 * @throws RuntimeException
-	 * @throws InvalidArgumentException
-	 * @since   4.0.0
-	 * @return  void
+	 * @throws InvalidArgumentException|Exception
+	 * @since  4.0.0
+	 * @return void
 	 */
 	public static function forV410(): void
 	{
@@ -363,6 +367,8 @@ class UpgradeDb
 		self::drop($db, '#__knowres_contract_guestdata', 'vmobile_country_id');
 		// ALTER TABLE `#__knowres_tax_rate` ADD COLUMN `tt_option` TINYINT(1) NOT NULL DEFAULT 0 AFTER `taxrate_id`;
 		self::add($db, '#__knowres_tax_rate', 'tt_option', 'taxrate_id', 'TINYINT(1) NOT NULL DEFAULT 0');
+
+		self::updateTaxSettings();
 	}
 
 	/**
@@ -544,6 +550,49 @@ class UpgradeDb
 		catch (Exception)
 		{
 			// Do nothing index does not exist
+		}
+	}
+
+	/**
+	 * Update property settings taxes to replace tax ID with tax code
+	 *
+	 * @since  4.1.0
+	 */
+	public static function updateTaxSettings(): void
+	{
+		$db    = KrFactory::getDatabase();
+		$query = $db->getQuery(true);
+
+		$query->select($db->qn(['id', 'akey', 'value']))
+		      ->from($db->qn('#__knowres_property_setting'))
+		      ->where($db->qn('akey') . ' IN  ("tax_code_1", "tax_code_2", "tax_code_3")');
+		$db->setQuery($query);
+		$rows = $db->loadObjectList();
+
+		foreach ($rows as $r)
+		{
+			if ($r->value == 0)
+			{
+				$update        = new stdClass();
+				$update->id    = $r->id;
+				$update->value = '';
+				KrFactory::update('property_setting', $update);
+			}
+			else if ($r->value > 0 && is_numeric($r->value))
+			{
+				$query = $db->getQuery(true);
+				$query->select($db->qn('code'))
+				      ->from($db->qn('#__knowres_tax_rate'))
+				      ->where($db->qn('id') . '=' . (int) $r->value)
+				      ->setLimit(1);
+				$db->setQuery($query);
+				$code = $db->loadResult();
+
+				$update        = new stdClass();
+				$update->id    = $r->id;
+				$update->value = $code;
+				KrFactory::update('property_setting', $update);
+			}
 		}
 	}
 }

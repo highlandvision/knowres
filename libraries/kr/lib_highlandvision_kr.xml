@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="library" version="4.0" method="upgrade">
-	<name>lib_kr</name>
+<extension type="library" method="upgrade">
+	<name>lib_highlandvision_kr</name>
 	<libraryname>highlandvision/kr</libraryname>
 	<version>4.1.0</version>
 	<creationDate>November 2022</creationDate>
@@ -9,18 +9,11 @@
 	<authorUrl>https://www.highlandvision.com</authorUrl>
 	<copyright>2022 Highland Vision, all rights reserved.</copyright>
 	<license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
-	<description>LIB_KR_XML_DESCRIPTION</description>
+	<description>LIB_HIGHLANDVISION_KR_XML_DESCRIPTION</description>
 	<namespace path="src">HighlandVision\KR</namespace>
 	<files>
 		<folder>src</folder>
-		<filename>lib_kr.xml</filename>
+		<folder>language</folder>
+		<filename>lib_highlandvision_kr.xml</filename>
 	</files>
-	<languages folder="admin">
-		<language tag="en-GB">language/en-GB/lib_kr.sys.ini</language>
-		<language tag="en-GB">language/en-GB/lib_kr.ini</language>
-	</languages>
-	<languages folder="site">
-		<language tag="en-GB">language/en-GB/lib_kr.sys.ini</language>
-		<language tag="en-GB">language/en-GB/lib_kr.ini</language>
-	</languages>
 </extension>

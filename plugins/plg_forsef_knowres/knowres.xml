@@ -11,6 +11,7 @@
 	<description>KR Forsef Urls plugin</description>
 	<files>
 		<filename plugin="knowres">knowres.php</filename>
+		<folder>language</folder>
 		<folder plugin="knowres">plugin</folder>
 	</files>
 </extension>
