@@ -11,11 +11,14 @@ namespace HighlandVision\Component\Knowres\Administrator\Model;
 
 defined('_JEXEC') or die;
 
+use Carbon\Exceptions\InvalidFormatException;
 use Exception;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\ListModel;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Translations;
+use Joomla\Database\Exception\DatabaseNotFoundException;
+use Joomla\Database\Exception\QueryTypeAlreadyDefinedException;
 use Joomla\Database\QueryInterface;
 use RuntimeException;
 
@@ -29,7 +32,7 @@ class TaxratesModel extends ListModel
 	/**
 	 * Constructor.
 	 *
-	 * @param   array  $config  An optional associative array of configuration settings.
+	 * @param  array  $config  An optional associative array of configuration settings.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -70,8 +73,12 @@ class TaxratesModel extends ListModel
 	/**
 	 * Get all published rows including jurisdiction locations
 	 *
-	 * @param   string  $order  Sort by field
+	 * @param  string  $order  Sort by field
 	 *
+	 * @throws DatabaseNotFoundException
+	 * @throws InvalidFormatException
+	 * @throws QueryTypeAlreadyDefinedException
+	 * @throws RuntimeException
 	 * @since  3.3.0
 	 * @return array
 	 */
@@ -115,8 +122,8 @@ class TaxratesModel extends ListModel
 	/**
 	 * Get tax code row for current date.
 	 *
-	 * @param   string  $code  Tax code
-	 * @param   string  $date  YY-MM-DD Applicable date (normally arrival date
+	 * @param  string  $code  Tax code
+	 * @param  string  $date  YY-MM-DD Applicable date (normally arrival date
 	 *
 	 * @since  3.3.0
 	 * @return array
@@ -129,7 +136,8 @@ class TaxratesModel extends ListModel
 		$query->select($db->qn([
 			'a.id', 'a.tax_id', 'a.tax_type', 'a.code', 'a.agent', 'a.rate', 'a.fixed', 'a.basis',
 			'a.max_nights', 'a.reduced_rate', 'a.gross', 'a.pay_arrival', 'a.applicable_age', 'a.per_night',
-			'a.valid_from', 'a.taxrate_id', 'a.state', 'a.created_by', 'a.created_at', 'a.updated_by', 'a.updated_at'
+			'a.valid_from', 'a.taxrate_id', 'a.tt_option', 'a.state', 'a.created_by', 'a.created_at', 'a.updated_by',
+			'a.updated_at'
 		]));
 
 		$query->from($db->qn('#__knowres_tax_rate', 'a'))
@@ -243,7 +251,7 @@ class TaxratesModel extends ListModel
 	 * different modules that might need different sets of data or different
 	 * ordering requirements.
 	 *
-	 * @param   string  $id  A prefix for the store id.
+	 * @param  string  $id  A prefix for the store id.
 	 *
 	 * @since  1.0.0
 	 * @return string        A store id.
@@ -261,8 +269,8 @@ class TaxratesModel extends ListModel
 	 * Method to autopopulate the model state.
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @param   string  $ordering   Ordering field
-	 * @param   string  $direction  Ordering direction
+	 * @param  string  $ordering   Ordering field
+	 * @param  string  $direction  Ordering direction
 	 *
 	 * @throws Exception
 	 * @since  1.0.0

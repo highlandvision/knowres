@@ -18,8 +18,6 @@
 			label="COM_KNOWRES_SERVICEQUEUE_METHOD_LBL"
 			description="COM_KNOWRES_SERVICEQUEUE_METHOD_DSC">
 			<option value="updateListing">COM_KNOWRES_SERVICEQUEUE_METHOD_BEYOND</option>
-			<option value="updateLastMinute">COM_KNOWRES_SERVICEQUEUE_METHOD_LASTTMINUTE</option>
-			<option value="updateLongStay">COM_KNOWRES_SERVICEQUEUE_METHOD_LONGSTAY</option>
 			<option value="updateAvailability">COM_KNOWRES_SERVICEQUEUE_METHOD_AVAILABILITY</option>
 			<option value="updateProperty">COM_KNOWRES_SERVICEQUEUE_METHOD_PROPERTY</option>
 			<option value="updateLodging">COM_KNOWRES_SERVICEQUEUE_METHOD_LODGING</option>
@@ -36,14 +34,14 @@
 		<field name="arrival"
 			class="input-mini"
 			datepicker='{"minDate": "0", "maxDate": "+3Y", "altField": "#jform_arrival"}'
-			showon="method:updateAvailability"
+			showon="method:updateAvailability[OR]method:updatePropertyRates"
 			type="uicalendar"
 			label="COM_KNOWRES_SERVICEQUEUE_ARRIVAL_LBL"
 			description="COM_KNOWRES_SERVICEQUEUE_ARRIVAL_DSC"/>
 		<field name="departure"
 			class="input-mini"
 			datepicker='{"minDate": "0", "maxDate": "+3Y", "altField": "#jform_departure"}'
-			showon="method:updateAvailability"
+			showon="method:updateAvailability[OR]method:updatePropertyRates"
 			type="uicalendar"
 			validate="daterangearrival"
 			label="COM_KNOWRES_SERVICEQUEUE_DEPARTURE_LBL"

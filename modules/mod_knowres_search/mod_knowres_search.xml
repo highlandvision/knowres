@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="module" client="site" method="upgrade">
-	<name>MOD_KNOWRES_SEARCH</name>
+	<name>mod_knowres_search</name>
 	<author>Highland Vision</author>
 	<authorEmail>hazel@highlandvision.com</authorEmail>
 	<authorUrl>https://www.highlandvision.com</authorUrl>
-	<copyright>2020 Highland Vision, all rights reserved.</copyright>
-	<creationDate>September 2015</creationDate>
+	<copyright>2023 Highland Vision, all rights reserved.</copyright>
+	<creationDate>April 2023</creationDate>
 	<description>MOD_KNOWRES_SEARCH_DSC</description>
 	<license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
 	<namespace path="src">Knowres\Module\Search</namespace>
-	<version>4.0.2</version>
+	<version>4.1.0</version>
 	<files>
 		<folder module="mod_knowres_search">services</folder>
 		<folder>forms</folder>

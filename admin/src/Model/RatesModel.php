@@ -11,6 +11,7 @@ namespace HighlandVision\Component\Knowres\Administrator\Model;
 
 defined('_JEXEC') or die;
 
+use Carbon\Exceptions\InvalidFormatException;
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
@@ -124,7 +125,8 @@ class RatesModel extends ListModel
 	 * @param  int  $property_id  ID of property
 	 *
 	 * @throws RuntimeException
-	 * @since 1.0.0
+	 * @throws InvalidFormatException
+	 * @since  1.0.0
 	 * @return ?int
 	 */
 	public function getCurrent(int $property_id): ?int

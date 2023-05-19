@@ -16,6 +16,7 @@ use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Translations;
 use JetBrains\PhpStorm\NoReturn;
+use RuntimeException;
 use stdClass;
 
 use function defined;
@@ -132,6 +133,7 @@ class Payments
 	 *
 	 * @param  stdClass  $row  Contract row
 	 *
+	 * @throws RuntimeException
 	 * @since  2.4.0
 	 * @return array
 	 */

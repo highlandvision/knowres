@@ -12,6 +12,10 @@ namespace HighlandVision\KR\Email;
 use Exception;
 use HighlandVision\KR\Framework\KrMethods;
 
+/**
+ * Inteface for emails service *
+ * @since 3.3.0
+ */
 class JoomlaEmailService implements InterfaceEmailService
 {
 	/**

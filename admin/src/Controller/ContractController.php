@@ -33,6 +33,7 @@ use JetBrains\PhpStorm\NoReturn;
 use Joomla\CMS\Response\JsonResponse;
 use RuntimeException;
 use stdClass;
+use UnexpectedValueException;
 
 use function count;
 use function explode;
@@ -55,17 +56,20 @@ class ContractController extends FormController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function agent()
+	public function agent(): void
 	{
 		$this->checkToken();
 
 		$jform           = KrMethods::inputArray('jform');
 		$contractSession = new KrSession\Contract();
 		$contractSession->resetData();
-		$contractData         = $contractSession->updateData($jform);
-		$contractData->guests = $jform['guests'];
-		//		$contractData->guests     = $jform['adults'] + $jform['children'];
-		//		$contractData->child_ages = !empty($jform['child_ages']) ? explode(',', $jform['child_ages']) : [];
+		$contractData             = $contractSession->updateData($jform);
+		$contractData->guests     = (int) $jform['adults'] + (int) $jform['children'];
+		$contractData->child_ages = !empty($jform['child_ages']) ? explode(',', $jform['child_ages']) : [];
+		if (empty($jform['child_ages']))
+		{
+			$contractData->child_ages_set = false;
+		}
 
 		/* @var ContractModel $model */
 		$model = $this->getModel();
@@ -81,6 +85,12 @@ class ContractController extends FormController
 			$Hub   = new Hub($contractData);
 			$agent = KrFactory::getAdminModel('agent')->getItem($contractData->agent_id);
 			$Hub->setAgent($agent);
+		}
+		catch (UnexpectedValueException $e)
+		{
+			Logger::logMe($e->getMessage());
+			echo new JsonResponse(null, $e->getMessage(), true);
+			jexit();
 		}
 		catch (Exception $e)
 		{
@@ -308,7 +318,7 @@ class ContractController extends FormController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function manager()
+	public function manager(): void
 	{
 		$this->checkToken('post', false);
 
@@ -323,12 +333,9 @@ class ContractController extends FormController
 		{
 			$contractSession->resetData();
 		}
-		$contractData         = $contractSession->updateData($jform);
-		$contractData->guests = $jform['guests'];
-		//TODO-v4.1 reinstate when tax requires
-		//		$contractData->adults           = $jform['adults'];
-		//		$contractData->children         = $jform['children'];
-		//		$contractData->child_ages       = !empty($jform['child_ages']) ? explode(',', $jform['child_ages']) : [];
+		$contractData                   = $contractSession->updateData($jform);
+		$contractData->guests           = (int) $jform['adults'] + (int) $jform['children'];
+		$contractData->child_ages       = !empty($jform['child_ages']) ? explode(',', $jform['child_ages']) : [];
 		$contractData->isEdit           = (bool) $id;
 		$contractData->extra_quantities = KrMethods::inputArray('extra_quantity');
 		$contractData->extra_ids        = KrMethods::inputArray('extra_id');
@@ -453,7 +460,7 @@ class ContractController extends FormController
 	 * Ajax - Returns the Json data for the book modal for calendars
 	 *
 	 * @throws Exception
-	 * @since        3.2.0
+	 * @since  3.2.0
 	 */
 	#[NoReturn] public function modalbook()
 	{
@@ -967,7 +974,7 @@ class ContractController extends FormController
 	 * Returns the data for the Xero modal
 	 *
 	 * @throws Exception
-	 * @since 3.1.0
+	 * @since  3.1.0
 	 */
 	public function xero()
 	{

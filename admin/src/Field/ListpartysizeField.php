@@ -13,6 +13,7 @@ defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrMethods;
 use InvalidArgumentException;
+use JetBrains\PhpStorm\NoReturn;
 use Joomla\CMS\Form\Field\ListField;
 use Joomla\CMS\HTML\HTMLHelper;
 
@@ -29,6 +30,8 @@ class ListpartysizeField extends ListField
 	public int $adults = 2;
 	/** @var int $children The number of children. */
 	public int $children = 0;
+	/** @var int $max The max number of guests. */
+	public int $max = 0;
 	/** @var string $type The form field type. */
 	protected $type = 'Listpartysize';
 
@@ -54,12 +57,14 @@ class ListpartysizeField extends ListField
 	 */
 	function getOptions(): array
 	{
-		$options   = [];
-		$maxguests = KrMethods::getParams()->get('search_maxguests', 16);
+		$options = [];
+
+		$maxguests = $this->max ?: KrMethods::getParams()->get('search_maxguests', 16);
 
 		for ($i = 1; $i <= $maxguests; $i++)
 		{
-			$options[] = HTMLHelper::_('select.option', $i, KrMethods::sprintf('COM_KNOWRES_CONTRACT_GUESTS_OPTIONS', $i, 0));
+			$options[] = HTMLHelper::_('select.option', $i,
+				KrMethods::sprintf('COM_KNOWRES_CONTRACT_GUESTS_OPTIONS', $i, 0));
 		}
 
 		$key           = $this->adults + $this->children - 1;
@@ -72,12 +77,12 @@ class ListpartysizeField extends ListField
 	/**
 	 * Method to get a control group with label and input.
 	 *
-	 * @param   array  $options  Any options to be passed into the rendering of the field
+	 * @param  array  $options  Any options to be passed into the rendering of the field
 	 *
 	 * @since   3.2.3
 	 * @return  string  A string containing the html for the control group
 	 */
-	public function renderField($options = []): string
+	#[NoReturn] public function renderField($options = []): string
 	{
 		if (!empty($options['adults']))
 		{

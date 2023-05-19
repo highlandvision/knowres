@@ -18,7 +18,9 @@ use HighlandVision\KR\Joomla\Extend\ListField as KrListField;
 use HighlandVision\KR\Joomla\Extend\ListModel;
 use HighlandVision\KR\Session as KrSession;
 use HighlandVision\KR\TickTock;
+use InvalidArgumentException;
 use Joomla\Database\QueryInterface;
+use Joomla\DI\Exception\KeyNotFoundException;
 use RuntimeException;
 
 /**
@@ -53,6 +55,8 @@ class PropertiesModel extends ListModel
 	 * Get last property update
 	 *
 	 * @throws RuntimeException
+	 * @throws KeyNotFoundException
+	 * @throws InvalidArgumentException
 	 * @since  3.3.0
 	 * @return array
 	 */
@@ -79,6 +83,8 @@ class PropertiesModel extends ListModel
 	 * @param  string  $table  Name of table
 	 *
 	 * @throws RuntimeException
+	 * @throws KeyNotFoundException
+	 * @throws InvalidArgumentException
 	 * @since  3.3.0
 	 * @return array
 	 */

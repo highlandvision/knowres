@@ -23,6 +23,7 @@ use HighlandVision\KR\Utility;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Versioning\VersionableControllerTrait;
+use RuntimeException;
 
 /**
  * Knowres rate model
@@ -45,6 +46,7 @@ class RateModel extends AdminModel
 	 *
 	 * @param  int  $pk  The id of the primary key.
 	 *
+	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return false|object  Object on success, false on failure.
 	 */
@@ -86,7 +88,7 @@ class RateModel extends AdminModel
 					if ($item)
 					{
 						KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updatePropertyRates',
-							(int) $item->property_id, 0, null, $item->valid_from, $item->valid_to);
+							(int) $item->property_id, 0, null, (string)$item->valid_from, (string)$item->valid_to);
 						KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updateAvailability',
 							(int) $item->property_id, 0, 'vrbo');
 					}

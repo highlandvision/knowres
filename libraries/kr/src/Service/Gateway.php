@@ -264,18 +264,6 @@ class Gateway extends Service
 	}
 
 	/**
-	 * Set the fex rate
-	 *
-	 * @param  string  $rate  FEX rate
-	 *
-	 * @since 1.0.0
-	 */
-	protected function setRate(string $rate)
-	{
-		$this->rate = $rate;
-	}
-
-	/**
 	 * Validate payment type
 	 *
 	 * @param  stdClass  $paymentData    Payment data

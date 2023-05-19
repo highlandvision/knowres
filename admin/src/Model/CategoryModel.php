@@ -18,6 +18,7 @@ use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\AdminModel;
 use HighlandVision\KR\Translations;
 use Joomla\CMS\Versioning\VersionableModelTrait;
+use RuntimeException;
 
 /**
  * Knowres Category model
@@ -38,9 +39,10 @@ class CategoryModel extends AdminModel
 	/**
 	 * Method to get a knowres record.
 	 *
-	 * @param   int  $pk  The id of the primary key.
+	 * @param  int  $pk  The id of the primary key.
 	 *
-	 * @since   1.0.0
+	 * @throws RuntimeException
+	 * @since  1.0.0
 	 * @return object|false  Object on success, false on failure.
 	 */
 	public function getItem($pk = null): object|false

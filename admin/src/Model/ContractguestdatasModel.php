@@ -14,6 +14,8 @@ defined('_JEXEC') or die;
 use Exception;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\ListModel;
+use Joomla\Database\Exception\DatabaseNotFoundException;
+use Joomla\Database\Exception\QueryTypeAlreadyDefinedException;
 use Joomla\Database\QueryInterface;
 use RuntimeException;
 
@@ -48,8 +50,6 @@ class ContractguestdatasModel extends ListModel
 				'c_name', 'a.c_name',
 				'c_phone', 'a.c_phone',
 				'c_email', 'a.c_email',
-				'vmobile', 'a.vmobile',
-				'vmobile_country_id', 'a.vmobile_country_id',
 				'arrival_means', 'a.arrival_means',
 				'arrival_time', 'a.arrival_time',
 				'arrival_place', 'a.arrival_place',
@@ -113,7 +113,10 @@ class ContractguestdatasModel extends ListModel
 	 *
 	 * @param  ?int  $contract_id  ID of contract
 	 *
-	 * @since   1.0.0
+	 * @throws DatabaseNotFoundException
+	 * @throws QueryTypeAlreadyDefinedException
+	 * @throws RuntimeException
+	 * @since  1.0.0
 	 * @return ?int
 	 */
 	public function getByContractId(?int $contract_id): ?int
@@ -139,6 +142,9 @@ class ContractguestdatasModel extends ListModel
 	/**
 	 * Build an SQL query to load the list data.
 	 *
+	 * @throws DatabaseNotFoundException
+	 * @throws QueryTypeAlreadyDefinedException
+	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return QueryInterface
 	 */

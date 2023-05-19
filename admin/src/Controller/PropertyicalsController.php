@@ -16,7 +16,7 @@ use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Logger;
 use HighlandVision\KR\Service\Ical;
-use HighlandVision\KR\Session as KnowresSession;
+use HighlandVision\KR\Session as KrSession;
 use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 
@@ -56,7 +56,7 @@ class PropertyicalsController extends AdminController
 		$this->checkToken();
 		$return = KrMethods::route('index.php?option=com_knowres&view=propertyicals', false);
 
-		$userSession = new KnowresSession\User();
+		$userSession = new KrSession\User();
 		$userData    = $userSession->getData();
 		$property_id = (int) $userData->cr_property_id;
 		if (!$property_id)
@@ -101,7 +101,7 @@ class PropertyicalsController extends AdminController
 		$this->checkToken();
 		$return = KrMethods::route('index.php?option=com_knowres&view=propertyicals', false);
 
-		$userSession = new KnowresSession\User();
+		$userSession = new KrSession\User();
 		$userData    = $userSession->getData();
 		$property_id = (int) $userData->cr_property_id;
 		if (!$property_id)

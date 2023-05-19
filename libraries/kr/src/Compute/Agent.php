@@ -14,6 +14,8 @@ defined('_JEXEC') or die;
 use Exception;
 use HighlandVision\KR\Compute;
 use HighlandVision\KR\Hub;
+use HighlandVision\KR\Utility;
+use InvalidArgumentException;
 
 /**
  * Pricing for agent
@@ -109,31 +111,23 @@ class Agent
 	 *
 	 * @param  float  $working  Working value
 	 *
+	 * @throws InvalidArgumentException
 	 * @since  3.2.0
 	 * @return float
 	 */
 	private function addIncludedTax(float $working): float
 	{
-		$taxes = $this->Hub->getValue('taxes');
-		if (!empty($taxes[1]) && $taxes[1]['value'] > 0)
+		$taxes    = $this->Hub->getValue('taxes');
+		$agent_id = $this->Hub->getValue('agent_id');
+
+		foreach ($taxes as $tax)
 		{
-			if ($this->isTaxIncluded($taxes[1]))
+			if (!empty($tax) && $tax['value'] > 0)
 			{
-				$working += $taxes[1]['value'];
-			}
-		}
-		if (!empty($taxes[2]) && $taxes[2]['value'] > 0)
-		{
-			if ($this->isTaxIncluded($taxes[2]))
-			{
-				$working += $taxes[2]['value'];
-			}
-		}
-		if (!empty($taxes[3]) && $taxes[3]['value'] > 0)
-		{
-			if ($this->isTaxIncluded($taxes[3]))
-			{
-				$working += $taxes[3]['value'];
+				if ($this->isTaxIncluded($tax, $agent_id))
+				{
+					$working += $tax['value'];
+				}
 			}
 		}
 
@@ -141,16 +135,17 @@ class Agent
 	}
 
 	/**
-	 * Check if a tax is included
+	 * Check if a tax is included for the agent
 	 *
-	 * @param  array  $tax  Tax values from tax calculation
+	 * @param  array  $tax       Tax values from tax calculation
+	 * @param  int    $agent_id  ID of agent
 	 *
 	 * @since  4.0.0
 	 * @return bool
 	 */
-	private function isTaxIncluded(array $tax): bool
+	private function isTaxIncluded(array $tax, int $agent_id): bool
 	{
-		if (!empty($tax['agent']) && $tax['type'] == 1)
+		if (!empty($tax['agent']) && in_array($agent_id, Utility::decodeJson($tax['agent'])))
 		{
 			return true;
 		}

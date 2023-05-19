@@ -16,6 +16,8 @@ use HighlandVision\KR\Media\Images;
 use InvalidArgumentException;
 use Joomla\CMS\Filesystem\File;
 
+use RuntimeException;
+
 use function glob;
 use function unlink;
 
@@ -37,6 +39,7 @@ class MapMarkers extends Images
 	 * @param  int  $marker_id  ID of marker
 	 *
 	 * @throws InvalidArgumentException
+	 * @throws RuntimeException
 	 * @since  1.0.0
 	 */
 	public function __construct(int $marker_id)
@@ -74,6 +77,7 @@ class MapMarkers extends Images
 	/**
 	 * Resize original uploaded image
 	 *
+	 * @throws RuntimeException
 	 * @since 4.0.0
 	 */
 	public function resize()
@@ -103,6 +107,7 @@ class MapMarkers extends Images
 	/**
 	 * Set the upload folder names
 	 *
+	 * @throws RuntimeException
 	 * @since  4.0.0
 	 */
 	protected function setFolders()

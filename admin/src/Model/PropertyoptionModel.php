@@ -20,6 +20,7 @@ use HighlandVision\KR\Session as KrSession;
 use HighlandVision\KR\Translations;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Versioning\VersionableControllerTrait;
+use RuntimeException;
 
 /**
  * Knowres  Property option model.
@@ -42,6 +43,7 @@ class PropertyoptionModel extends AdminModel
 	 *
 	 * @param  int  $pk  The id of the primary key.
 	 *
+	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return false|object  Object on success, false on failure.
 	 */

@@ -189,11 +189,26 @@ class DashboardController extends BaseController
 
 		$userSession = new KrSession\User();
 		$userData    = $userSession->getData();
+		$contract_id = 0;
+		$guest_id    = 0;
 
 		$key = KrMethods::inputString('key', '', 'get');
-		list($contract_id, $guest_id, $qkey, $view) = Cryptor::decrypt($key);
-		if (!$guest_id || !$qkey)
+		try
 		{
+			if (empty($key))
+			{
+				throw new Exception('Dashboard key was not received');
+			}
+
+			list($contract_id, $guest_id, $qkey, $view) = Cryptor::decrypt($key);
+			if (!$guest_id || !$qkey)
+			{
+				throw new Exception('Dashboard key was invalid');
+			}
+		}
+		catch (Exception $e)
+		{
+			KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_DASHBOARD_ACCESS'));
 			SiteHelper::badUser();
 		}
 

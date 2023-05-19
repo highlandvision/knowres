@@ -14,7 +14,7 @@ defined('_JEXEC') or die;
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
-use HighlandVision\KR\Session as KnowresSession;
+use HighlandVision\KR\Session as KrSession;
 use HighlandVision\KR\Utility;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\MVC\Controller\BaseController;
@@ -53,7 +53,7 @@ class DisplayController extends BaseController
 	public function __construct($config = [], MVCFactoryInterface $factory = null, ?CMSApplication $app = null,
 		?Input $input = null)
 	{
-		$userSession = new KnowresSession\User();
+		$userSession = new KrSession\User();
 		$userData    = $userSession->getData();
 
 		if (empty($userData->access_level))
@@ -126,7 +126,7 @@ class DisplayController extends BaseController
 		$layout = KrMethods::inputString('layout', 'default', 'get');
 		$id     = KrMethods::inputInt('id', 0, 'get');
 
-		$userSession = new KnowresSession\User();
+		$userSession = new KrSession\User();
 		$userData    = $userSession->getData();
 
 		$valid = [

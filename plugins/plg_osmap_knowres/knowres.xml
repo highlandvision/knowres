@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <extension type="plugin" group="osmap" method="upgrade">
-	<name>KR - Osmap</name>
-	<author>Hazel Wilson</author>
+	<name>plg_osmap_knowres</name>
+	<author>Highland Vision</author>
 	<creationDate>December 2022</creationDate>
 	<authorUrl>https://www.highlandvision.com</authorUrl>
 	<authorEmail>hazel@highlandvision.com</authorEmail>
 	<copyright>2022 Highland Vision. All rights reserved.</copyright>
 	<license>https://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
-	<version>4.0.2</version>
+	<version>4.1.0</version>
 	<description>Know Reservations OsMap plugin</description>
 	<files>
 		<folder>language</folder>

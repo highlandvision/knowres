@@ -12,7 +12,6 @@ namespace HighlandVision\Component\Knowres\Site\Field;
 defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrFactory;
-use InvalidArgumentException;
 use Joomla\CMS\Form\FormField;
 
 /**
@@ -25,7 +24,6 @@ class JsontelephoneField extends FormField
 	/**
 	 * Get the field input.
 	 *
-	 * @throws InvalidArgumentException
 	 * @since  4.0.0
 	 * @return string
 	 */

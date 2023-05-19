@@ -268,6 +268,7 @@ class Utility
 	 * @param  mixed     $country   ID of country or name
 	 * @param   ?string  $string    Value for implode
 	 *
+	 * @throws RuntimeException
 	 * @since  3.3.0
 	 * @return ?string
 	 */
@@ -354,6 +355,7 @@ class Utility
 	 * @param  mixed         $value         Item value
 	 * @param  string        $field         Translation field name
 	 *
+	 * @throws RuntimeException
 	 * @since  3.3.0
 	 * @return array|string
 	 */
@@ -589,6 +591,7 @@ class Utility
 	 * @param  string  $iso       ISO currency for rounding
 	 * @param  int     $decimals  Decimals for rounding
 	 *
+	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return float
 	 */
@@ -613,6 +616,7 @@ class Utility
 	 *
 	 * @param  string  $date  Date to validate
 	 *
+	 * @throws RuntimeException
 	 * @since  3.3.1
 	 */
 	public static function validateInputDate(string $date): void

@@ -14,29 +14,33 @@ defined('_JEXEC') or die;
 use HighlandVision\KR\Framework\KrMethods;
 use Joomla\CMS\HTML\HTMLHelper;
 
+/** @var HighlandVision\Component\Knowres\Administrator\View\Contractguestdata\HtmlView $this */
+
 $wa = $this->document->getWebAssetManager();
 $wa->useScript('keepalive')
    ->useScript('form.validate')
-   ->useScript('com_knowres.admin-guestdata')
    ->useStyle('com_knowres.admin-guestdata');
+
+if (empty($this->contract->adults) || $this->contract->guests != $this->contract->adults + $this->contract->children )
+{
+	KrMethods::message(KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATA_PARTYDETAILS_REQUIRED'), 'error');
+	KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&task=contract.show&id=' . $this->contract->id, false));
+	return;
+}
 ?>
 
 <form action="<?php echo KrMethods::route('index.php?option=com_knowres&layout=edit&id=' . (int) $this->item->id); ?>"
       class="form-validate" id="contractguestdata-form" method="post" name="adminForm">
 	<?php
 	echo HTMLHelper::_('uitab.startTabSet', 'kr-guestdataTabs',
-		['active' => 'partysize', 'recall' => true, 'breakpoint' => 768]);
+		['active' => 'kr-partydetails', 'breakpoint' => 768]);
 	echo HTMLHelper::_('uitab.addTab', 'kr-guestdataTabs', 'kr-partydetails',
 		KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATA_TAB_PARTYINFO'));
-	echo $this->loadTemplate('partyinfo');
+	echo $this->loadTemplate('partydetails');
 	echo HTMLHelper::_('uitab.endTab');
 	echo HTMLHelper::_('uitab.addTab', 'kr-guestdataTabs', 'kr-arrivalinfo',
 		KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATA_TAB_ARRIVALINFO'));
 	echo $this->loadTemplate('arrivalinfo');
-	echo HTMLHelper::_('uitab.endTab');
-	echo HTMLHelper::_('uitab.addTab', 'kr-guestdataTabs', 'kr-guestinfo',
-		KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATA_TAB_CONTACTINFO'));
-	echo $this->loadTemplate('contactinfo');
 	echo HTMLHelper::_('uitab.endTab');
 	echo HTMLHelper::_('uitab.addTab', 'kr-guestdataTabs', 'kr-options',
 		KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATA_TAB_OPTIONS'));

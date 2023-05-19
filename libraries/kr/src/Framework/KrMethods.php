@@ -14,6 +14,7 @@ defined('_JEXEC') or die;
 use Exception;
 use HighlandVision\KR\Joomla\FMethods as FNS;
 use HighlandVision\KR\SiteHelper;
+use InvalidArgumentException;
 use Joomla\CMS\Cache\Cache;
 use Joomla\CMS\Language\Language;
 use Joomla\CMS\Layout\FileLayout;
@@ -104,6 +105,7 @@ class KrMethods
 	 * @param  string  $idtag      See genericlist
 	 * @param  bool    $translate  See genericlist
 	 *
+	 * @throws InvalidArgumentException
 	 * @since  3.3.0
 	 * @return mixed
 	 */
@@ -607,6 +609,7 @@ class KrMethods
 	 * @param  string  $email     Email of user
 	 * @param  string  $password  Generated password
 	 *
+	 * @throws InvalidArgumentException
 	 * @throws RuntimeException
 	 * @since  3.9.0
 	 * @return int

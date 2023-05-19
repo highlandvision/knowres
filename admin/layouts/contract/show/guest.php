@@ -89,23 +89,22 @@ extract($displayData);
 		</address>
 		<br><br>
 
-		<!--		TODO-v4.1 Reinstate for tax-->
-		<!--		<b>-->
-		<?php //echo KrMethods::sprintf('COM_KNOWRES_CONTRACT_GUEST_NUMBERS', $contract->guests); ?><!--</b>-->
-		<!--		<br>-->
-		<!--		--><?php //if ($contract->adults == 1): ?>
-		<!--			--><?php //echo KrMethods::sprintf('COM_KNOWRES_CONTRACT_ADULTS_1', $contract->adults); ?>
-		<!--		--><?php //elseif ($contract->adults > 1): ?>
-		<!--			--><?php //echo KrMethods::sprintf('COM_KNOWRES_CONTRACT_ADULTS', $contract->adults); ?>
-		<!--		--><?php //endif; ?>
-		<!--		<br>-->
-		<!---->
-		<!--		--><?php //if ($contract->children == 1): ?>
-		<!--			--><?php //echo KrMethods::sprintf('COM_KNOWRES_CONTRACT_CHILD', $contract->child_ages[0]); ?>
-		<!--		--><?php //elseif ($contract->children > 1): ?>
-		<!--			--><?php //echo KrMethods::sprintf('COM_KNOWRES_CONTRACT_CHILDREN', $contract->children,
-		//				Utility::displayAges($contract->child_ages)); ?>
-		<!--		--><?php //endif; ?>
-		<!--		<br>-->
+		<b>
+			<?php echo KrMethods::sprintf('COM_KNOWRES_CONTRACT_GUEST_NUMBERS', $contract->guests); ?>
+		</b><br>
+		<?php if ($contract->adults == 1): ?>
+			<?php echo KrMethods::sprintf('COM_KNOWRES_CONTRACT_ADULTS_1', $contract->adults); ?>
+		<?php elseif ($contract->adults > 1): ?>
+			<?php echo KrMethods::sprintf('COM_KNOWRES_CONTRACT_ADULTS', $contract->adults); ?>
+		<?php endif; ?>
+		<br>
+
+		<?php if ($contract->children == 1): ?>
+			<?php echo KrMethods::sprintf('COM_KNOWRES_CONTRACT_CHILD', $contract->child_ages[0]); ?>
+		<?php elseif ($contract->children > 1): ?>
+			<?php echo KrMethods::sprintf('COM_KNOWRES_CONTRACT_CHILDREN', $contract->children,
+				Utility::displayAges($contract->child_ages)); ?>
+		<?php endif; ?>
+		<br>
 	</div>
 </div>

@@ -15,6 +15,7 @@ use Carbon\Carbon;
 use Exception;
 use HighlandVision\KR\ExceptionHandling;
 use HighlandVision\KR\Framework\KrFactory;
+use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\SiteHelper;
 use Joomla\CMS\Dispatcher\AbstractModuleDispatcher;
 use Knowres\Module\Search\Site\Helper\SearchHelper;

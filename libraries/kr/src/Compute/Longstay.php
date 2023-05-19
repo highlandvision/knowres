@@ -14,7 +14,6 @@ defined('_JEXEC') or die;
 use Exception;
 use HighlandVision\KR\Hub;
 use InvalidArgumentException;
-use RuntimeException;
 
 /**
  * Calculate long stay adjustments
@@ -59,7 +58,6 @@ class Longstay
 	 * @param  int  $pc  Percentage decrease for long stay
 	 *
 	 * @throws InvalidArgumentException
-	 * @throws RuntimeException
 	 * @since  3.4.0
 	 */
 	private function calculateLongstay(int $pc): void

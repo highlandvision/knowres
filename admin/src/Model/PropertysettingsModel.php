@@ -17,7 +17,9 @@ use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\ListModel;
 use HighlandVision\KR\TickTock;
+use InvalidArgumentException;
 use Joomla\Database\QueryInterface;
+use Joomla\DI\Exception\KeyNotFoundException;
 use RuntimeException;
 
 use function count;
@@ -61,9 +63,10 @@ class PropertysettingsModel extends ListModel
 	 * SQL query to return an array of one setting per
 	 * property as requested.
 	 *
-	 * @param   array  $settings  Array of settings required
+	 * @param  array  $settings  Array of settings required
 	 *
 	 * @throws RuntimeException
+	 * @throws KeyNotFoundException|InvalidArgumentException
 	 * @since  3.3.0
 	 * @return array
 	 */

@@ -56,7 +56,7 @@ class JsonguestinfoField extends FormField
 		$contract_id = $this->form->getValue('contract_id');
 		$contract    = KrFactory::getAdminModel('contract')->getItem($contract_id);
 		$property    = KrFactory::getAdminModel('property')->getItem($contract->property_id);
-		$maxguests   = $contract->guests + $property->sleeps_infant_max;
+		$maxguests   = $contract->guests;
 
 		$firstname     = '';
 		$surname1      = '';
@@ -76,16 +76,17 @@ class JsonguestinfoField extends FormField
 
 		foreach ($this->value as $d)
 		{
-			$tmp                   = [];
-			$tmp['name']           = $d->name;
-			$tmp['surname1']       = $d->surname1;
-			$tmp['surname2']       = $d->surname2;
-			$tmp['sex']            = $d->sex;
-			$tmp['dob']            = $d->dob;
-			$tmp['document_nat']   = (int) $d->document_nat;
-			$tmp['document_type']  = (int) $d->document_type;
-			$tmp['document_id']    = $d->document_id;
-			$tmp['document_issue'] = $d->document_issue;
+			$tmp                    = [];
+			$tmp['name']            = $d->name;
+			$tmp['surname1']        = $d->surname1;
+			$tmp['surname2']        = $d->surname2;
+			$tmp['sex']             = $d->sex;
+			$tmp['dob']             = $d->dob;
+			$tmp['document_nat']    = (int) $d->document_nat;
+			$tmp['document_type']   = (int) $d->document_type;
+			$tmp['document_id']     = $d->document_id;
+			$tmp['document_issue']  = $d->document_issue;
+			$tmp['document_expiry'] = $d->document_expiry;
 
 			$values[$count] = $tmp;
 			$count++;
@@ -103,6 +104,7 @@ class JsonguestinfoField extends FormField
 			$tmp['document_type']  = !$count ? $document_type : 0;
 			$tmp['document_id']    = !$count ? $document_id : '';
 			$tmp['document_issue'] = '';
+			$tmp['document_expiry'] = '';
 
 			$values[$count] = $tmp;
 			$count++;

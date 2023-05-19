@@ -15,6 +15,7 @@ use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\ListModel;
+use InvalidArgumentException;
 use Joomla\Database\QueryInterface;
 use RuntimeException;
 
@@ -69,7 +70,7 @@ class ManagersModel extends ListModel
 
 		$query->select($db->qn('agency_id'));
 		$query->from($db->qn('#__knowres_manager'))
-		      ->where($db->qn('id') . ' = ' . $id)
+		      ->where($db->qn('id') . '=' . $id)
 		      ->setLimit(1);
 
 		$db->setQuery($query);
@@ -112,6 +113,7 @@ class ManagersModel extends ListModel
 	 * Get managers
 	 *
 	 * @throws RuntimeException
+	 * @throws InvalidArgumentException
 	 * @since  1.0.0
 	 * @return array  Object on success, false on failure.
 	 */

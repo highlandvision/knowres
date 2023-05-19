@@ -12,7 +12,6 @@ namespace HighlandVision\Component\Knowres\Administrator\Controller;
 defined('_JEXEC') or die;
 
 use Exception;
-use HighlandVision\Component\Knowres\Administrator\Model\AgencyModel;
 use HighlandVision\Component\Knowres\Administrator\Model\TownModel;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\FormController;

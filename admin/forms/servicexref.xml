@@ -18,7 +18,6 @@
 			input_type="list"
 			key_field="id"
 			layout="joomla.form.field.list-fancy-select"
-			required="true"
 			table="#__knowres_property"
 			type="listforeignkey"
 			value_field="property_name"

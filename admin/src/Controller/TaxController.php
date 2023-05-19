@@ -16,6 +16,7 @@ use HighlandVision\Component\Knowres\Administrator\Model\TaxModel;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\FormController;
 use HighlandVision\KR\Translations;
+use JetBrains\PhpStorm\NoReturn;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Response\JsonResponse;
 use Joomla\String\StringHelper;
@@ -35,7 +36,7 @@ class TaxController extends FormController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function combo()
+	#[NoReturn] public function combo()
 	{
 		$model  = new TaxModel();
 		$form      = $model->getForm([], false);
@@ -61,8 +62,8 @@ class TaxController extends FormController
 	/**
 	 * Function that allows child controller access to model data after the data has been saved.
 	 *
-	 * @param   BaseDatabaseModel  $model      The data model object.
-	 * @param   array              $validData  The validated data.
+	 * @param  BaseDatabaseModel  $model      The data model object.
+	 * @param  array              $validData  The validated data.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0

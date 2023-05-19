@@ -11,10 +11,10 @@
 defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrMethods;
-use HighlandVision\KR\Session as KnowresSession;
+use HighlandVision\KR\Session as KrSession;
 use Joomla\CMS\HTML\HTMLHelper;
 
-$contractSession = new KnowresSession\Contract();
+$contractSession = new KrSession\Contract();
 $contractSession->resetData();
 $contractSession->updateData($this->item);
 ?>

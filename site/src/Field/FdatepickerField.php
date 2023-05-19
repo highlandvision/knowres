@@ -11,6 +11,7 @@ namespace HighlandVision\Component\Knowres\Site\Field;
 
 defined('_JEXEC') or die;
 
+use Carbon\Exceptions\InvalidFormatException;
 use HighlandVision\KR\TickTock;
 use Joomla\CMS\Form\FormField;
 
@@ -48,6 +49,7 @@ class FdatepickerField extends FormField
 	/**
 	 * Method to get the field input markup.
 	 *
+	 * @throws InvalidFormatException
 	 * @since  3.2.0
 	 * @return string    The field input markup.
 	 */

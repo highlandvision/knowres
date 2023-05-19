@@ -16,10 +16,10 @@ defined('_JEXEC') or die;
 	<fieldset>
 		<legend><?php echo KrMethods::plain('COM_KNOWRES_CONTRACT_COUPON_LBL'); ?></legend>
 		<div class="row">
-			<div class="col-md-4">
+			<div class="col-4">
 				<?php echo $this->form->renderField('coupon_code'); ?>
 			</div>
-			<div class="col">
+			<div class="col-4">
 				<button type="button" class="btn btn-secondary kr-calculate">
 					<?php echo KrMethods::plain('COM_KNOWRES_CONTRACT_COUPON_APPLY'); ?>
 				</button>

@@ -33,7 +33,7 @@ class JsonguesttypesField extends FormField
 	 * @since  3.2.0
 	 * @return string
 	 */
-	public function getInput()
+	public function getInput(): string
 	{
 		$guest_types = KrMethods::getUserState('com_knowres.enquiry.jsonguesttypes', []);
 		if (!is_array($guest_types))

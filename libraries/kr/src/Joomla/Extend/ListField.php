@@ -13,6 +13,7 @@ defined('_JEXEC') or die;
 
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
+use InvalidArgumentException;
 use Joomla\CMS\Form\Form;
 use RuntimeException;
 
@@ -30,6 +31,7 @@ class ListField extends \Joomla\CMS\Form\Field\ListField
 	 * Filter manager for Contracts
 	 *
 	 * @throws RuntimeException
+	 * @throws InvalidArgumentException
 	 * @since  3.3.0
 	 * @return mixed
 	 */
@@ -58,7 +60,7 @@ class ListField extends \Joomla\CMS\Form\Field\ListField
 	 *
 	 * @param  string  $table  Filter table
 	 *
-	 * @throws RuntimeException
+	 * @throws RuntimeException|InvalidArgumentException
 	 * @since  3.3.0
 	 * @return mixed
 	 */
@@ -82,6 +84,7 @@ class ListField extends \Joomla\CMS\Form\Field\ListField
 	 * Filter region for Contracts
 	 *
 	 * @throws RuntimeException
+	 * @throws InvalidArgumentException
 	 * @since  3.3.0
 	 * @return mixed
 	 */
@@ -242,6 +245,7 @@ class ListField extends \Joomla\CMS\Form\Field\ListField
 	 * Get property filter for translations
 	 *
 	 * @throws RuntimeException
+	 * @throws InvalidArgumentException
 	 * @since  3.3.0
 	 * @return mixed
 	 */

@@ -13,8 +13,11 @@ defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Translations;
+use InvalidArgumentException;
 use Joomla\CMS\Form\Field\ListField;
 use Joomla\CMS\HTML\HTMLHelper;
+
+use RuntimeException;
 
 use function array_merge;
 
@@ -31,6 +34,7 @@ class ListreferralField extends ListField
 	/**
 	 * Get the field options.
 	 *
+	 * @throws RuntimeException|InvalidArgumentException
 	 * @since  1.0.0
 	 * @return array  The field input markup.
 	 */

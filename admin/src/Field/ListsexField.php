@@ -12,7 +12,6 @@ namespace HighlandVision\Component\Knowres\Administrator\Field;
 defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrMethods;
-use InvalidArgumentException;
 use Joomla\CMS\Form\Field\ListField;
 
 use function array_merge;
@@ -30,7 +29,6 @@ class ListsexField extends ListField
 	/**
 	 * Get the field options.
 	 *
-	 * @throws InvalidArgumentException
 	 * @since  1.6
 	 * @return array The field options.
 	 */

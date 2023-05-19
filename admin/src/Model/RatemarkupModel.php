@@ -22,6 +22,7 @@ use HighlandVision\KR\Translations;
 use HighlandVision\KR\Utility;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Versioning\VersionableControllerTrait;
+use RuntimeException;
 
 /**
  * Knowres Rate markup model.
@@ -48,6 +49,7 @@ class RatemarkupModel extends AdminModel
 	 * @param  string  $currency  Currency for rounding
 	 * @param  int     $decimals  Decimals required in rounding
 	 *
+	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return string Marked up rounded rate
 	 */

@@ -64,7 +64,8 @@ $count     = 1;
 		</div>
 		<div class="col-4 fw500">
 			<small>
-				<?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATA_DOCUMENT_DOI_LBL'); ?>
+				<?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATA_DOCUMENT_DOI_LBL') . '/'
+				           . KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATA_DOCUMENT_DOE_LBL'); ?>
 			</small>
 		</div>
 	</div>
@@ -111,7 +112,10 @@ $count     = 1;
 			</div>
 			<div class="col-4">
 				<?php if ($g->document_issue): ?>
-					<?php echo TickTock::displayDate($g->document_issue); ?>
+					<?php echo TickTock::displayDate($g->document_issue, 'M-Y'); ?>
+				<?php endif; ?>
+				<?php if ($g->document_expiry): ?>
+					<?php echo ' / ' . TickTock::displayDate($g->document_expiry, 'M-Y'); ?>
 				<?php endif; ?>
 			</div>
 		</div>

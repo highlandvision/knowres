@@ -12,6 +12,8 @@ namespace HighlandVision\KR;
 use Exception;
 use HighlandVision\KR\Framework\KrMethods;
 
+use RuntimeException;
+
 use function implode;
 
 defined('_JEXEC') or die;
@@ -98,6 +100,7 @@ class Gantt
 	 * @param  array         $properties    Properties for display
 	 * @param  Translations  $Translations  Translations object
 	 *
+	 * @throws RuntimeException
 	 * @since  3.3.0
 	 * @return array Formatted property options
 	 */

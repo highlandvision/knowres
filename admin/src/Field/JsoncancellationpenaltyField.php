@@ -12,7 +12,6 @@ namespace HighlandVision\Component\Knowres\Administrator\Field;
 defined('JPATH_BASE') or die;
 
 use HighlandVision\KR\Framework\KrFactory;
-use InvalidArgumentException;
 use Joomla\CMS\Form\FormField;
 
 use function count;
@@ -27,7 +26,6 @@ class JsoncancellationpenaltyField extends FormField
 	/**
 	 * Get the field input.
 	 *
-	 * @throws InvalidArgumentException
 	 * @since  1.6
 	 * @return string
 	 */

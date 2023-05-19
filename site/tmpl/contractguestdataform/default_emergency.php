@@ -10,7 +10,7 @@
 defined('_JEXEC') or die;
 ?>
 
-<div class="callout gray">
+<div class="callout small gray">
 	<div class="row">
 		<div class="small-12 medium-4 columns">
 			<?php echo $this->form->getLabel('c_name'); ?>

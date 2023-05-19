@@ -12,6 +12,7 @@ namespace HighlandVision\KR\Owner\Payments;
 use Exception;
 use HighlandVision\KR\Owner\Payments;
 use HighlandVision\KR\Utility;
+use RuntimeException;
 
 /**
  * Process Deposit payment (pay on receipt of guest deposit) schedule
@@ -63,6 +64,7 @@ class Deposit extends Payments
 	/**
 	 * Set owner commission payment
 	 *
+	 * @throws RuntimeException
 	 * @since  3.3.1
 	 * @return float
 	 */

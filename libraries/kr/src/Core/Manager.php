@@ -15,7 +15,6 @@ use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Hub;
-use HighlandVision\KR\Session as KnowresSession;
 use HighlandVision\KR\TickTock;
 use RuntimeException;
 use stdClass;
@@ -85,23 +84,6 @@ class Manager
 		{
 			$agent = KrFactory::getAdminModel('agent')->getItem($this->hub->getValue('agent_id'));
 			$this->hub->setValue('service_id', $agent->service_id);
-		}
-
-		if ($this->hub->params->get('manager_scope', 0))
-		{
-			$userSession = new KnowresSession\User();
-			$userData    = $userSession->getData();
-			$this->hub->setValue('agency_id', $userData->agency_id);
-			$this->hub->setValue('manager_id', $userData->manager_id);
-		}
-		else
-		{
-			$this->hub->setValue('manager_id', $this->hub->settings['default_manager']);
-			if ($this->hub->settings['default_manager'])
-			{
-				$this->hub->setValue('agency_id',
-					KrFactory::getListModel('managers')->getAgency($this->hub->settings['default_manager']));
-			}
 		}
 	}
 

@@ -13,7 +13,6 @@ defined('_JEXEC') or die;
 use Exception;
 use HighlandVision\KR\Joomla\Extend\ListField as KrListField;
 use HighlandVision\KR\Translations;
-use InvalidArgumentException;
 use stdClass;
 
 use function array_merge;
@@ -31,7 +30,7 @@ class FiltertownField extends KrListField
 	/**
 	 * Get the field options.
 	 *
-	 * @throws InvalidArgumentException|Exception
+	 * @throws Exception
 	 * @since  1.6
 	 * @return array    The field input markup.
 	 */

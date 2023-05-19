@@ -16,7 +16,7 @@ use HighlandVision\KR\Email\ContractEmail;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Logger;
-use HighlandVision\KR\Session as KnowresSession;
+use HighlandVision\KR\Session as KrSession;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Utility;
 use InvalidArgumentException;
@@ -198,16 +198,16 @@ class PostPayment
 		KrMethods::setUserState('com_knowres.edit.guest.data', null);
 		KrMethods::setUserState('com_knowres.edit.confirm.data', null);
 
-		$userSession              = new KnowresSession\User();
+		$userSession              = new KrSession\User();
 		$userData                 = $userSession->getData();
 		$userData->pr_contract_id = $this->contract_id;
 		$userSession->setData($userData);
 
-		$paymentSession = new KnowresSession\Payment();
+		$paymentSession = new KrSession\Payment();
 		$paymentSession->resetData();
-		$contractSession = new KnowresSession\Contract();
+		$contractSession = new KrSession\Contract();
 		$contractSession->resetData();
-		$guestSession = new KnowresSession\Guest();
+		$guestSession = new KrSession\Guest();
 		$guestSession->resetData();
 	}
 
@@ -476,7 +476,6 @@ class PostPayment
 	 *
 	 * @param  int  $payment_id  ID of payment
 	 *
-	 * @throws RuntimeException
 	 * @since  1.0.0
 	 */
 	protected function updateIncludedFees(int $payment_id): void

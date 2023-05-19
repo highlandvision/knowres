@@ -19,6 +19,7 @@ use HighlandVision\KR\Translations;
 use HighlandVision\KR\Utility;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Versioning\VersionableControllerTrait;
+use RuntimeException;
 use SimpleXMLElement;
 
 use function count;
@@ -137,6 +138,7 @@ class ServiceModel extends AdminModel
 	 *
 	 * @param  int  $pk  The id of the primary key.
 	 *
+	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return object|bool  Object on success, false on failure.
 	 */

@@ -11,6 +11,7 @@ namespace HighlandVision\KR\Export;
 
 defined('_JEXEC') or die;
 
+use Carbon\Exceptions\InvalidFormatException;
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
@@ -131,6 +132,7 @@ class Registration
 	 * @param  string  $property_name  Name of property
 	 * @param  int     $count          Line type 2 count
 	 *
+	 * @throws InvalidFormatException
 	 * @since  2.5.0
 	 * @return string $line Text line to be added to file
 	 */
@@ -190,6 +192,7 @@ class Registration
 					$line[] = (int) $g->document_nat != $es_id ? $g->document_id : '';
 					$line[] = $this->getDocumentType($g->document_type);
 					$line[] = TickTock::displayDate($g->document_issue, 'Ymd');
+					$line[] = TickTock::displayDate($g->document_expiry, 'Ymd');
 				}
 				else
 				{

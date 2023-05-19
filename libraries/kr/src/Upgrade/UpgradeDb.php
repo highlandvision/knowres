@@ -14,12 +14,18 @@ defined('_JEXEC') or die;
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\TickTock;
+use InvalidArgumentException;
 use Joomla\Database\DatabaseDriver;
+use RuntimeException;
 use stdClass;
 
 use function array_key_exists;
+use function count;
 use function defined;
+use function explode;
 use function in_array;
+use function is_numeric;
+use function str_replace;
 
 if (!defined('KRFRAMEWORK'))
 {
@@ -77,8 +83,10 @@ class UpgradeDb
 	/**
 	 * Changes for V321.
 	 *
-	 * @since   4.0.0
-	 * @return  void
+	 * @throws RuntimeException
+	 * @throws InvalidArgumentException
+	 * @since  4.0.0
+	 * @return void
 	 */
 	public static function forV321(): void
 	{
@@ -102,8 +110,8 @@ class UpgradeDb
 	 * Changes for V330.
 	 *
 	 * @throws Exception
-	 * @since   4.0.0
-	 * @return  void
+	 * @since  4.0.0
+	 * @return void
 	 */
 	public static function forV330(): void
 	{
@@ -169,7 +177,7 @@ class UpgradeDb
 		self::drop($db, '#__knowres_contract', 'rooms_tariffs');
 		//ALTER TABLE `#__knowres_contract` CHANGE `email_poststay` `review_requested` TINYINT(1) NOT NULL DEFAULT 0 AFTER `reviewed`;
 		self::change($db, '#__knowres_contract', 'email_poststay', 'review_requested', 'TINYINT(1) NOT NULL DEFAULT 0');
-		//ALTER TABLE `#__knowres_contract_payment` CHANGE `interface_id` `service_id` 'INT(11) NOT NULL DEFAULT 0');
+		//ALTER TABLE `#__knowres_contract_payment` CHANGE `interface_id` `service_id` 'INT(11) NOT NULL DEFAULT 0';
 		self::change($db, '#__knowres_contract_payment', 'interface_id', 'service_id', 'INT(11) NOT NULL DEFAULT 0');
 		//ALTER TABLE `#__knowres_contract_payment` CHANGE `interface_ref` `service_ref` VARCHAR(255) DEFAULT NULL;
 		self::change($db, '#__knowres_contract_payment', 'interface_ref', 'service_ref', 'VARCHAR(255) DEFAULT NULL');
@@ -203,6 +211,8 @@ class UpgradeDb
 	/**
 	 * Changes for V331.
 	 *
+	 * @throws RuntimeException
+	 * @throws InvalidArgumentException
 	 * @since   4.0.0
 	 * @return  void
 	 */
@@ -237,6 +247,8 @@ class UpgradeDb
 	/**
 	 * Changes for V333.
 	 *
+	 * @throws RuntimeException
+	 * @throws InvalidArgumentException
 	 * @since  4.0.0
 	 * @return void
 	 */
@@ -338,6 +350,28 @@ class UpgradeDb
 	}
 
 	/**
+	 * Changes for V410.
+	 *
+	 * @throws RuntimeException
+	 * @throws InvalidArgumentException|Exception
+	 * @since  4.0.0
+	 * @return void
+	 */
+	public static function forV410(): void
+	{
+		$db = KrFactory::getDatabase();
+
+		//ALTER TABLE `#__knowres_contract_guestdata` DROP COLUMN `vmobile`;
+		self::drop($db, '#__knowres_contract_guestdata', 'vmobile');
+		//ALTER TABLE `#__knowres_contract_guestdata` DROP COLUMN `vmobile_country_id`;
+		self::drop($db, '#__knowres_contract_guestdata', 'vmobile_country_id');
+		// ALTER TABLE `#__knowres_tax_rate` ADD COLUMN `tt_option` TINYINT(1) NOT NULL DEFAULT 0 AFTER `taxrate_id`;
+		self::add($db, '#__knowres_tax_rate', 'tt_option', 'taxrate_id', 'TINYINT(1) NOT NULL DEFAULT 0');
+
+		self::updateTaxSettings();
+	}
+
+	/**
 	 * Add database column.
 	 *
 	 * @param  DatabaseDriver  $db       Database instance
@@ -346,6 +380,8 @@ class UpgradeDb
 	 * @param  string          $after    Column name after
 	 * @param  mixed           $default  Default value
 	 *
+	 * @throws RuntimeException
+	 * @throws InvalidArgumentException
 	 * @since  4.0.0
 	 * @return void
 	 */
@@ -430,6 +466,8 @@ class UpgradeDb
 	 * @param  string          $new      New name
 	 * @param  mixed           $default  Default value
 	 *
+	 * @throws RuntimeException
+	 * @throws InvalidArgumentException
 	 * @since  4.0.0
 	 */
 	protected static function change(DatabaseDriver $db, string $table, string $field, string $new,
@@ -448,10 +486,12 @@ class UpgradeDb
 	/**
 	 * Drop the database
 	 *
-	 * @param  DatabaseDriver  $db       Database instance
-	 * @param  string          $table    Table name
-	 * @param  string          $field    Row name
+	 * @param  DatabaseDriver  $db     Database instance
+	 * @param  string          $table  Table name
+	 * @param  string          $field  Row name
 	 *
+	 * @throws RuntimeException
+	 * @throws InvalidArgumentException
 	 * @since  4.0.0
 	 * @return void
 	 */
@@ -469,8 +509,8 @@ class UpgradeDb
 	/**
 	 * Drop table
 	 *
-	 * @param  DatabaseDriver  $db       Database instance
-	 * @param  string          $table    Table name
+	 * @param  DatabaseDriver  $db     Database instance
+	 * @param  string          $table  Table name
 	 *
 	 * @since  4.0.0
 	 * @return void
@@ -492,9 +532,9 @@ class UpgradeDb
 	/**
 	 * Drop index
 	 *
-	 * @param  DatabaseDriver  $db       Database instance
-	 * @param  string          $table    Table name
-	 * @param  string          $index    Index name
+	 * @param  DatabaseDriver  $db     Database instance
+	 * @param  string          $table  Table name
+	 * @param  string          $index  Index name
 	 *
 	 * @since  4.0.0
 	 * @return void
@@ -510,6 +550,49 @@ class UpgradeDb
 		catch (Exception)
 		{
 			// Do nothing index does not exist
+		}
+	}
+
+	/**
+	 * Update property settings taxes to replace tax ID with tax code
+	 *
+	 * @since  4.1.0
+	 */
+	public static function updateTaxSettings(): void
+	{
+		$db    = KrFactory::getDatabase();
+		$query = $db->getQuery(true);
+
+		$query->select($db->qn(['id', 'akey', 'value']))
+		      ->from($db->qn('#__knowres_property_setting'))
+		      ->where($db->qn('akey') . ' IN  ("tax_code_1", "tax_code_2", "tax_code_3")');
+		$db->setQuery($query);
+		$rows = $db->loadObjectList();
+
+		foreach ($rows as $r)
+		{
+			if ($r->value == 0)
+			{
+				$update        = new stdClass();
+				$update->id    = $r->id;
+				$update->value = '';
+				KrFactory::update('property_setting', $update);
+			}
+			else if ($r->value > 0 && is_numeric($r->value))
+			{
+				$query = $db->getQuery(true);
+				$query->select($db->qn('code'))
+				      ->from($db->qn('#__knowres_tax_rate'))
+				      ->where($db->qn('id') . '=' . (int) $r->value)
+				      ->setLimit(1);
+				$db->setQuery($query);
+				$code = $db->loadResult();
+
+				$update        = new stdClass();
+				$update->id    = $r->id;
+				$update->value = $code;
+				KrFactory::update('property_setting', $update);
+			}
 		}
 	}
 }

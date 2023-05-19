@@ -31,6 +31,8 @@ if (!window.location.origin) {
 		field_width_month:     6,
 		field_width_year:      7,
 		field_width_sep:       2,
+		minmax:                '',
+		min_date:              false,
 		max_date:              false,
 		min_year:              1910,
 		month_name:            [
@@ -54,7 +56,7 @@ if (!window.location.origin) {
 		E_YEAR_NAN:            'Year must be a number',
 		E_YEAR_LENGTH:         'Year must be 4 digits',
 		E_YEAR_TOO_SMALL:      'Year must not be before %y',
-		E_MIN_DATE:            'Date must be after %DATE',
+		E_MIN_DATE:            'Date must not be in the past',
 		E_MAX_DATE:            'Date must not be in the future'
 	};
 
@@ -224,8 +226,6 @@ if (!window.location.origin) {
 		}
 
 		init() {
-			if (!settings.max_date)
-				settings.max_date = today;
 			if (!settings.min_year)
 				settings.min_year = '1910';
 
@@ -367,19 +367,31 @@ if (!window.location.origin) {
 		validateCompleteDate() {
 			const date_obj = this.getDate();
 			const date_iso = KrDobEntry.getYmdObject(date_obj);
+			settings.minmax = this.$element.data('validation');
 
-			let max_date = settings.max_date;
-			if (typeof max_date === 'function') {
-				max_date = max_date.call(this);
-			}
-			if (typeof max_date === 'string') {
-				max_date = this.parseDate(max_date);
-			}
-			if (max_date) {
-				if (date_iso > settings.max_date) {
+			if (settings.minmax === 'max') {
+				if (date_iso > today) {
 					throw(settings.E_MAX_DATE);
 				}
 			}
+			if (settings.minmax === 'min') {
+				if (date_iso < today) {
+					throw(settings.E_MIN_DATE);
+				}
+			}
+
+			// let max_date = settings.max_date;
+			// if (typeof max_date === 'function') {
+			// 	max_date = max_date.call(this);
+			// }
+			// if (typeof max_date === 'string') {
+			// 	max_date = this.parseDate(max_date);
+			// }
+			// if (max_date) {
+			// 	if (date_iso > settings.max_date) {
+			// 		throw(settings.E_MAX_DATE);
+			// 	}
+			// }
 
 			if (this.custom_validation) {
 				date_obj.date = new Date(

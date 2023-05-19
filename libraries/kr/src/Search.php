@@ -214,8 +214,7 @@ class Search
 			$this->data->baseIds = array_column($baseItems, 'id');
 			$this->setCurrency();
 
-			//TODO-v4.1 Reinstate
-			//			$this->checkGuestData($baseItems);
+			$this->checkGuestNumbers($baseItems);
 			if (!count($this->data->baseIds))
 			{
 				return;
@@ -448,73 +447,47 @@ class Search
 		$this->data->baseIds = $valid;
 	}
 
-//	/**
-//	 * Check that the number of guests does not exceed the max for a property
-//	 *
-//	 * @param  array  $items  Base properties data for search
-//	 *
-//	 * @since  4.0.0
-//	 */
-//	private function checkGuestData(array $items): void
-//	{
-//		//TODO-v4.1 to be sorted
-//		$valid = [];
-//
-//		foreach ($items as $item)
-//		{
-//			if (!in_array($item->id, $this->data->baseIds))
-//			{
-//				continue;
-//			}
-//
-//			$free = $this->setFreeGuests($item);
-//			if ($this->data->guests > $item->sleeps + $item->sleeps_extra + $free)
-//			{
-//				if ($this->data->guests > $item->sleeps + $item->sleeps_extra)
-//				{
-//					continue;
-//				}
-//			}
-//
-//			if ($this->data->children > 0 && is_countable($this->data->child_ages))
-//			{
-//				if (count($this->data->child_ages) > 0 && count($this->data->child_ages) < $this->data->children)
-//				{
-//					continue;
-//				}
-//			}
-//
-//			$valid[] = $item->id;
-//		}
-//
-//		$this->data->baseIds = $valid;
-//	}
-
 	/**
-	 * Set number of free guests - children under free infants age
+	 * Check that the number of guests does not exceed the max for a property
 	 *
-	 * @param  stdClass  $item  Property item details
+	 * @param  array  $items  Base properties data for search
 	 *
 	 * @since  4.0.0
-	 * @return int
 	 */
-	protected function setFreeGuests(stdClass $item): int
+	private function checkGuestNumbers(array $items): void
 	{
-		if (!$item->sleeps_infant_max)
-		{
-			return 0;
-		}
+		$valid = [];
 
-		$free = 0;
-		foreach ($this->data->child_ages as $age)
+		foreach ($items as $item)
 		{
-			if ($age <= $item->sleeps_infant_age && $free < $item->sleeps_infant_max)
+			if (!in_array($item->id, $this->data->baseIds))
 			{
-				$free++;
+				continue;
 			}
+
+			$free = SiteHelper::setFreeGuests($item->sleeps_infant_max, $item->sleeps_infant_age,
+				$this->data->child_ages);
+
+			if ($this->data->guests > $item->sleeps + $item->sleeps_extra + $free)
+			{
+				if ($this->data->guests > $item->sleeps + $item->sleeps_extra)
+				{
+					continue;
+				}
+			}
+
+			if ($this->data->children > 0 && is_countable($this->data->child_ages))
+			{
+				if (count($this->data->child_ages) > 0 && count($this->data->child_ages) < $this->data->children)
+				{
+					continue;
+				}
+			}
+
+			$valid[] = $item->id;
 		}
 
-		return $free;
+		$this->data->baseIds = $valid;
 	}
 
 	/**
@@ -572,6 +545,7 @@ class Search
 	/**
 	 * Get the categories with names
 	 *
+	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return array
 	 */
@@ -591,6 +565,7 @@ class Search
 	/**
 	 * Get the feature names
 	 *
+	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return array
 	 */
@@ -834,6 +809,7 @@ class Search
 	 *
 	 * @param  array  $baseItems  Base property items
 	 *
+	 * @throws RuntimeException
 	 * @since  1.0.0
 	 */
 	private function setBaseFilters(array $baseItems): void
@@ -1035,6 +1011,7 @@ class Search
 	 * Set the currency for the search from a property
 	 * as all properties in the search have the same currency
 	 *
+	 * @throws RuntimeException
 	 * @since 3.3.0
 	 */
 	private function setCurrency(): void

@@ -14,6 +14,7 @@ defined('_JEXEC') or die;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\SiteHelper;
 use HighlandVision\KR\TickTock;
+use HighlandVision\KR\Utility;
 
 $wa = $this->document->getWebAssetManager();
 $wa->useScript('com_knowres.site')
@@ -44,12 +45,15 @@ $wa->useScript('com_knowres.site')
 				<?php $first = false; ?>
 			<?php endif; ?>
 
+			<?php $this->item->child_ages = Utility::decodeJson(is_null($this->item->child_ages) ? '[]'
+				: $this->item->child_ages, true); ?>
+
 			<?php $invoice = SiteHelper::getInvoice($this->item); ?>
 			<?php $guestdata = SiteHelper::getGuestdata($this->item); ?>
 			<?php $voucher = SiteHelper::getVoucher($this->params, $this->item); ?>
 			<?php $pdfs = SiteHelper::getPdfs($this->item); ?>
 
-			<div class="callout gray">
+			<div class="callout small gray">
 				<div class="row">
 					<div class="small-12 medium-8 columns">
 						<?php echo KrMethods::render('dashboard.header', ['contract' => $this->item,

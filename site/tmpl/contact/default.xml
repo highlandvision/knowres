@@ -5,6 +5,16 @@
 			<![CDATA[COM_KNOWRES_TITLE_CONTACT_DSC]]>
 		</message>
 	</layout>
-	<fields name="params">
+	<fields name="request">
+		<fieldset name="request">
+			<field name="id"
+				addfieldprefix="HighlandVision\Component\Knowres\Administrator\Field"
+				layout="joomla.form.field.list-fancy-select"
+				type="listproperties"
+				label="COM_KNOWRES_TITLE_PROPERTY"
+				description="COM_KNOWRES_TITLE_PROPERTY_SELECT">
+				<option value="">COM_KNOWRES_SELECT</option>
+			</field>
+		</fieldset>
 	</fields>
 </metadata>

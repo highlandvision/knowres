@@ -52,10 +52,6 @@ class HtmlView extends KrHtmlView\Site
 			$this->region_id     = $property->region_id;
 		}
 
-		$model      = KrFactory::getAdminModel('contract');
-		$this->form = KrFactory::getAdhocForm('contract-form', 'contract.xml');
-		$this->item = $model->getItem();
-
 		/** @var ContactModel $model */
 		$model      = $this->getModel();
 		$this->form = $model->getForm();
@@ -74,7 +70,7 @@ class HtmlView extends KrHtmlView\Site
 	 * @throws Exception
 	 * @since   1.0.0
 	 */
-	protected function prepareDocument()
+	protected function prepareDocument(): void
 	{
 		$this->prepareDefaultDocument($this->meta_title, $this->meta_description);
 		$this->setMyPathway();
@@ -86,7 +82,7 @@ class HtmlView extends KrHtmlView\Site
 	 * @throws Exception
 	 * @since 3.3.0
 	 */
-	protected function setMyPathway()
+	protected function setMyPathway(): void
 	{
 		$pathway = Factory::getApplication()->getPathway();
 		$pathway->setPathway([]);
@@ -113,7 +109,7 @@ class HtmlView extends KrHtmlView\Site
 			$pathway = self::searchPathway($pathway, $this->region_id, $Itemid);
 			$pathway = self::propertyPathway($pathway, $this->property_id, $this->property_name);
 		}
-		else if ($this->property_id && !is_null($this->property_name))
+		else if ($this->property_id)
 		{
 			$pathway = self::propertyPathway($pathway, $this->property_id, $this->property_name);
 		}

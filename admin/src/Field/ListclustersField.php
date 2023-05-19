@@ -16,6 +16,8 @@ use InvalidArgumentException;
 use Joomla\CMS\Form\Field\ListField;
 use Joomla\CMS\HTML\HTMLHelper;
 
+use RuntimeException;
+
 use function array_merge;
 
 /**
@@ -32,6 +34,7 @@ class ListclustersField extends ListField
 	 * Get the field options.
 	 *
 	 * @throws InvalidArgumentException
+	 * @throws RuntimeException
 	 * @since  1.6
 	 * @return array    The field input markup.
 	 */

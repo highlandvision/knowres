@@ -38,7 +38,6 @@ class ListdocumenttypeField extends ListField
 	protected function getOptions(): array
 	{
 		$options   = [];
-		$options[] = HTMLHelper::_('select.option', 0, KrMethods::plain('COM_KNOWRES_FORM_OPTION_DOCUMENT_TYPE'));
 		$options[] = HTMLHelper::_('select.option', 1, KrMethods::plain('COM_KNOWRES_FORM_OPTION_DOCUMENT_TYPE1'));
 		$options[] = HTMLHelper::_('select.option', 2, KrMethods::plain('COM_KNOWRES_FORM_OPTION_DOCUMENT_TYPE2'));
 		$options[] = HTMLHelper::_('select.option', 3, KrMethods::plain('COM_KNOWRES_FORM_OPTION_DOCUMENT_TYPE3'));

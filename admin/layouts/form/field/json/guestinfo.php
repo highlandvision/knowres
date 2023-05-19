@@ -17,7 +17,7 @@ $surname2        = $params->get('guestdata_second_surname', 0);
 $sex             = $params->get('guestdata_sex', 1);
 $dob             = $params->get('guestdata_age', 1);
 $document        = $params->get('guestdata_document', 1);
-$document_fields = ['document_nat', 'document_type', 'document_id', 'document_issue'];
+$document_fields = ['document_nat', 'document_type', 'document_id', 'document_issue', 'document_expiry'];
 
 extract($displayData);
 /**
@@ -28,12 +28,15 @@ extract($displayData);
  * @var   array  $values Massaged form value fields
  * @var   string $group  Json Group name
  */
+
+$g = 0;
 ?>
 
 <?php foreach ($values as $k => $v): ?>
-	<div class="row" id="<?php echo $group . $k; ?>">
+	<?php $bg = $g % 2 > 0 ? '#fefefe' : '#f1f1f1'; ?>
+	<?php $g++; ?>
+	<div class="row" style="background:<?php echo $bg;?>;padding-top:1rem;" id="<?php echo $group . $k; ?>">
 		<!-- Loop each fieldset - one fieldset per form item so each column can have a width-->
-		<?php $count = 0; ?>
 		<?php foreach ($form->getFieldsets() as $fieldset) : ?>
 			<?php $hidden = ""; ?>
 			<?php if (!$surname2 && $fieldset->name == "surname2"): ?>
@@ -67,7 +70,6 @@ extract($displayData);
 					<?php $field->__set('id', $name . $k); ?>
 					<?php $field->__set('value', $v[$name]); ?>
 					<?php echo $field->renderField(); ?>
-					<?php $count++; ?>
 				<?php endforeach; ?>
 			</div>
 		<?php endforeach; ?>

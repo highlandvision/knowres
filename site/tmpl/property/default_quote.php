@@ -34,13 +34,18 @@ use Joomla\CMS\HTML\HTMLHelper;
 					TickTock::getDate($this->departure, 'j M Y')); ?>
 			</div>
 			<div class="small-12 columns">
-				<?php echo $this->form->renderField('guests', null, $this->searchData->guests,
-					['adults' => $this->searchData->adults, 'children' => $this->searchData->children]); ?>
+				<?php echo $this->form->renderField('guests', null, $this->searchData->guests, [
+					'adults'            => $this->searchData->adults ?: 2,
+					'children'          => $this->searchData->children ?: 0,
+					'child_ages'        => $this->searchData->child_ages ?: [],
+					'max'               => $this->item->sleeps + $this->item->sleeps_extra + $this->item->sleeps_infant_max,
+					'sleeps_infant_max' => $this->item->sleeps_infant_max,
+					'sleeps_infant_age' => $this->item->sleeps_infant_age,
+				]); ?>
 			</div>
 		</div>
 
-		<!--		TODO-V4.1 reinstate-->
-		<!--		--><?php //echo KrMethods::render('property.partysize', ['defaults' => $this->searchData, 'item' => $this->item]); ?>
+		<?php echo KrMethods::render('property.partysize', ['defaults' => $this->searchData, 'item' => $this->item]); ?>
 
 		<?php echo HTMLHelper::_('form.token'); ?>
 		<input type="hidden" name="option" value="com_knowres">

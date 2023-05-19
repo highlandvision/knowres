@@ -11,6 +11,7 @@ namespace HighlandVision\Component\Knowres\Administrator\Table;
 
 defined('_JEXEC') or die;
 
+use InvalidArgumentException;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Versioning\VersionableTableInterface;
 use Joomla\Database\DatabaseDriver;
@@ -58,7 +59,7 @@ class ContractguestdataTable extends Table implements VersionableTableInterface
 	 * @param   mixed  $pk  An optional primary key value to check out.  If not set the instance property value is used.
 	 *
 	 * @throws UnexpectedValueException*@throws RuntimeException
-	 * @throws RuntimeException
+	 * @throws RuntimeException|InvalidArgumentException
 	 * @since  1.0.0
 	 * @return bool  True on success.
 	 */

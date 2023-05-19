@@ -66,7 +66,7 @@ input[type="file"] {
 }
 input[type="number"], .input-tiny {
 	min-width: 5rem !important;
-	max-width: 5rem !important;
+	max-width: 8rem !important;
 	width: 100% !important;
 	padding-left: .8rem !important;
 	padding-right: .8rem !important;
@@ -76,11 +76,10 @@ input[type="number"], .input-tiny {
 	max-height: 100% !important;
 }
 legend {
-	font-size: 18px !important;
-	color: #999 !important;
-	border-bottom: 1px solid #ccc !important;
-	padding-top: 15px !important;
-	margin-bottom: 15px !important;
+	font-size: 1.4rem !important;
+	border-bottom: none !important;
+	padding-top: 1rem !important;
+	margin-bottom: 0.5rem !important;
 }
 .main-card {
 	padding: 2rem;
@@ -106,4 +105,10 @@ legend {
 .table th.right,
 .table td.right {
 	text-align: right;
+}
+.form-control-feedback {
+	display: inline !important;
+}
+joomla-tab>joomla-tab-element {
+	padding: 1rem 2vw !important;
 }

@@ -84,9 +84,7 @@ class Base
 			                    ->getRatesForProperty($this->Hub->getValue('property_id'), $arrival, $departure);
 		}
 
-		$guests = $this->Hub->getValue('guests');
-		//TODO-v4.1 Reinstate for taxes.
-		//		$guests = $this->Hub->getValue('guests') - $this->Hub->getValue('free_guests');
+		$guests = $this->Hub->getValue('guests') - $this->Hub->getValue('free_guests');
 		$this->Hub->setValue('nightly', []);
 
 		$count      = 0;
@@ -253,6 +251,7 @@ class Base
 	 * @param  int     $min_nights  Minimum nights
 	 * @param  string  $arrival     Arrival date
 	 *
+	 * @throws RuntimeException
 	 * @since  3.3.4
 	 * @return int
 	 */
@@ -418,7 +417,6 @@ class Base
 	 * @param  float  $total    Total rate
 	 *
 	 * @throws InvalidArgumentException
-	 * @throws RuntimeException
 	 * @since  3.4.0
 	 * @return array
 	 */

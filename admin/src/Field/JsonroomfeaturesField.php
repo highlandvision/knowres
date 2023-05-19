@@ -14,6 +14,7 @@ defined('_JEXEC') or die;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Utility;
 use Joomla\CMS\Form\FormField;
+use RuntimeException;
 
 /**
  * Supports a value from an external table
@@ -25,6 +26,7 @@ class JsonroomfeaturesField extends FormField
 	/**
 	 * Get the field input data.
 	 *
+	 * @throws RuntimeException
 	 * @since  1.6
 	 * @return string    The field input markup.
 	 */

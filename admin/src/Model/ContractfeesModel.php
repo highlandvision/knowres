@@ -14,6 +14,8 @@ defined('_JEXEC') or die;
 use Exception;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\ListModel;
+use Joomla\Database\Exception\DatabaseNotFoundException;
+use Joomla\Database\Exception\QueryTypeAlreadyDefinedException;
 use Joomla\Database\QueryInterface;
 use RuntimeException;
 
@@ -158,9 +160,12 @@ class ContractfeesModel extends ListModel
 	/**
 	 * Update paid fees with payment ID
 	 *
-	 * @param   int  $contract_id  ID of contract
-	 * @param   int  $payment_id   ID of payment
+	 * @param  int  $contract_id  ID of contract
+	 * @param  int  $payment_id   ID of payment
 	 *
+	 * @throws RuntimeException
+	 * @throws DatabaseNotFoundException
+	 * @throws QueryTypeAlreadyDefinedException
 	 * @since  1.0.0
 	 */
 	public function updatePaidFees(int $contract_id, int $payment_id)

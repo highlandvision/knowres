@@ -11,12 +11,13 @@ defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Session as KrSession;
+use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\CMSPlugin;
 
 /**
  * Redirect to selected page on login.
  *
- * @since       1.0.0.
+ * @since 1.0.0.
  */
 class plgSystemKnowresredirect extends CMSPlugin
 {
@@ -28,14 +29,14 @@ class plgSystemKnowresredirect extends CMSPlugin
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	function onUserAfterLogin(array $options = [])
+	function onUserAfterLogin(array $options = []): void
 	{
 		if (KrMethods::isAdmin())
 		{
 			$user = new KrSession\User();
 			$user->setLogin();
 
-			$return = base64_decode(KrMethods::inputString('return', null, 'get'));
+			$return = base64_decode(Factory::getApplication()->input->post->get('return', null, 'base64'));
 			if (empty($return) || $return == 'index.php')
 			{
 				$landing = KrMethods::getParams()->get('landing', 'view=contracts');

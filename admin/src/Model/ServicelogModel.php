@@ -15,6 +15,8 @@ use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\AdminModel;
+use InvalidArgumentException;
+use Joomla\DI\Exception\KeyNotFoundException;
 use RuntimeException;
 
 use function count;
@@ -42,6 +44,7 @@ class ServicelogModel extends AdminModel
 	 * @param  int     $success  Success status to delete
 	 *
 	 * @throws RuntimeException
+	 * @throws KeyNotFoundException|InvalidArgumentException
 	 * @since  3.3.0
 	 */
 	public static function deleteOldLogs(string $date, int $success = 1)

@@ -23,9 +23,11 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Table\Table;
 use RuntimeException;
+use UnexpectedValueException;
 
 use function count;
 use function is_countable;
+use function is_null;
 use function mt_rand;
 
 /**
@@ -82,7 +84,7 @@ class ContractModel extends AdminModel
 	/**
 	 * Generate 8 digit contract tag
 	 *
-	 * @throws RuntimeException
+	 * @throws RuntimeException|InvalidArgumentException
 	 * @since  3.3.0
 	 * @return string
 	 */
@@ -193,6 +195,7 @@ class ContractModel extends AdminModel
 	 * @param  Form   $form      Guest form
 	 * @param  array  $settings  Property settings
 	 *
+	 * @throws UnexpectedValueException
 	 * @since  1.0.0
 	 * @return Form
 	 */
@@ -224,10 +227,10 @@ class ContractModel extends AdminModel
 			. $db->qn('cp.base_amount') . '),0) AS balance')
 		      ->from($db->qn('#__knowres_contract', 'c'))
 		      ->join('LEFT', $db->qn('#__knowres_contract_fee', 'cf') . ' ON '
-			      . $db->qn('cf.contract_id') . '=' . $contract_id)
+		            . $db->qn('cf.contract_id') . '=' . $contract_id)
 		      ->join('LEFT', $db->qn('#__knowres_contract_payment', 'cp') . ' ON '
-			      . $db->qn('cp.contract_id') . '=' . $contract_id . ' AND '
-			      . $db->qn('cp.state') . '=1')
+                 . $db->qn('cp.contract_id') . '=' . $contract_id . ' AND '
+                 . $db->qn('cp.state') . '=1')
 		      ->where($db->qn('c.id') . '=' . $contract_id);
 
 		$db->setQuery($query);
@@ -273,7 +276,7 @@ class ContractModel extends AdminModel
 			$item->adjustments = Utility::decodeJson($item->adjustments, true);
 			$item->discounts   = Utility::decodeJson($item->discounts, true);
 			$item->extras      = Utility::decodeJson($item->extras, true);
-			$item->child_ages  = Utility::decodeJson($item->child_ages, true);
+			$item->child_ages  = Utility::decodeJson(is_null($item->child_ages) ? '[]' : $item->child_ages, true);
 			$item->guest_types = Utility::decodeJson($item->guest_types, true);
 			$item->nightly     = Utility::decodeJson($item->nightly, true);
 			$item->rooms       = Utility::decodeJson($item->rooms, true);
@@ -391,7 +394,7 @@ class ContractModel extends AdminModel
 	 * @throws Exception
 	 * @since  2.4.0
 	 */
-	protected function prepareTable($table)
+	protected function prepareTable($table): void
 	{
 		if (!$table->black_booking)
 		{
@@ -399,7 +402,7 @@ class ContractModel extends AdminModel
 			$table->qkey = hash('ripemd160', $hash);
 
 			// Convert all values to 2dp
-			// TODO-v4.1 Change to match with currency
+			// TODO-v4.2 Change to match with currency
 			$table->agent_value             = Utility::displayMoney((float) $table->agent_value);
 			$table->agent_commission        = Utility::displayMoney((float) $table->agent_commission);
 			$table->contract_total          = Utility::displayMoney((float) $table->contract_total);
@@ -433,8 +436,10 @@ class ContractModel extends AdminModel
 		}
 		else
 		{
-			$table->updated_at = TickTock::getTS();
-			$table->updated_by = KrMethods::getUser()->id;
+			$table->updated_at       = TickTock::getTS();
+			$table->updated_by       = KrMethods::getUser()->id;
+			$table->checked_out      = null;
+			$table->checked_out_time = null;
 		}
 	}
 }

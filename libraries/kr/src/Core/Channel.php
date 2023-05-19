@@ -258,11 +258,5 @@ class Channel
 		}
 
 		$this->hub->setValue('net_price', $this->hub->getValue('net_price_system'));
-		$this->hub->setValue('manager_id', $this->hub->settings['default_manager']);
-		if ($this->hub->settings['default_manager'])
-		{
-			$this->hub->setValue('agency_id',
-				KrFactory::getListModel('managers')->getAgency($this->hub->settings['default_manager']));
-		}
 	}
 }

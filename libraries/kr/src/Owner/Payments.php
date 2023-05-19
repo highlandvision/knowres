@@ -12,7 +12,6 @@ namespace HighlandVision\KR\Owner;
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\TickTock;
-use InvalidArgumentException;
 use RuntimeException;
 use stdClass;
 
@@ -60,7 +59,7 @@ class Payments
 	 * Read Contract
 	 *
 	 * @throws RuntimeException
-	 * @throws InvalidArgumentException|Exception
+	 * @throws Exception
 	 * @since  3.3.1
 	 */
 	protected function readContract(): void
@@ -96,6 +95,7 @@ class Payments
 	 * @param  int     $property_id  ID of property
 	 * @param  string  $name         Name of settings
 	 *
+	 * @throws RuntimeException
 	 * @since  3.3.1
 	 * @return mixed
 	 */

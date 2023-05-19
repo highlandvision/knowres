@@ -6,6 +6,7 @@
  * @license     See the file "LICENSE.txt" for the full license governing this code.
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
+
 /** @noinspection PhpUnhandledExceptionInspection */
 
 defined('_JEXEC') or die;
@@ -61,7 +62,7 @@ $count  = 0;
 				<?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATAFORM_DOCUMENT_COUNTRY_LBL'); ?>
 			</td>
 			<td>
-				<?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATAFORM_DOCUMENT_DOI_LBL'); ?>
+				<?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATAFORM_DOCUMENT_DATES_LBL'); ?>
 			</td>
 		</tr>
 	<?php endif; ?>
@@ -107,6 +108,9 @@ $count  = 0;
 				<td>
 					<?php if ($g->document_issue): ?>
 						<?php echo TickTock::displayDate($g->document_issue); ?>
+					<?php endif; ?>
+					<?php if ($g->document_expiry): ?>
+						<?php echo ' / ' . TickTock::displayDate($g->document_expiry); ?>
 					<?php endif; ?>
 				</td>
 			</tr>

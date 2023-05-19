@@ -36,7 +36,7 @@
 			label="COM_KNOWRES_TAXRATE_VALID_FROM_LBL"
 			description="COM_KNOWRES_TAXRATE_VALID_FROM_DSC"/>
 		<field name="basis"
-			class="btn-group"
+			class="btn-group btn-group-yesno"
 			default="0"
 			filter="integer"
 			required="true"
@@ -55,7 +55,7 @@
 			label="COM_KNOWRES_TAXRATE_RATE_LBL"
 			description="COM_KNOWRES_TAXRATE_RATE_DSC"/>
 		<field name="fixed"
-			class="btn-group"
+			class="btn-group btn-group-yesno"
 			default="0"
 			required="true"
 			type="radio"
@@ -72,16 +72,16 @@
 			type="list"
 			label="COM_KNOWRES_TAXRATE_TYPE_LBL"
 			description="COM_KNOWRES_TAXRATE_TYPE_DSC">
-			<option value="">COM_KNOWRES_SELECT</option>
-			<option value="CITY">COM_KNOWRES_TAXTRATE_TYPE_CITY</option>
-			<option value="LOCAL">COM_KNOWRES_TAXTRATE_TYPE_LOCAL</option>
-			<option showon="basis:1" value="TOURIST">COM_KNOWRES_TAXTRATE_TYPE_TOURIST</option>
-			<option showon="basis:0" value="VAT">COM_KNOWRES_TAXTRATE_TYPE_VAT</option>
+			<option value="CITY">COM_KNOWRES_TAXRATE_TYPE_CITY</option>
+			<option value="LOCAL">COM_KNOWRES_TAXRATE_TYPE_LOCAL</option>
+			<option value="TOURIST">COM_KNOWRES_TAXRATE_TYPE_TOURIST</option>
+			<option value="VAT">COM_KNOWRES_TAXRATE_TYPE_VAT</option>
 		</field>
 		<field name="gross"
 			class="btn-group btn-group-yesno"
 			default="0"
 			filter="int"
+			required="true"
 			type="radio"
 			label="COM_KNOWRES_TAXRATE_GROSS_LBL"
 			description="COM_KNOWRES_TAXRATE_GROSS_DSC">
@@ -92,6 +92,7 @@
 			class="btn-group btn-group-yesno"
 			default="0"
 			filter="int"
+			required="true"
 			showon="gross:0"
 			type="radio"
 			label="COM_KNOWRES_TAXRATE_PAY_ARRIVAL_LBL"
@@ -107,8 +108,8 @@
 			type="radio"
 			label="COM_KNOWRES_TAXRATE_PER_NIGHT_LBL"
 			description="COM_KNOWRES_TAXRATE_PER_NIGHT_DSC">
-			<option value="1">JYES</option>
 			<option value="0">JNO</option>
+			<option value="1">JYES</option>
 		</field>
 		<field name="applicable_age"
 			class="input-mini"
@@ -117,7 +118,7 @@
 			showon="basis:1"
 			type="integer"
 			first="0"
-			last="21"
+			last="17"
 			step="1"
 			label="COM_KNOWRES_TAXRATE_APPLICABLE_AGE_LBL"
 			description="COM_KNOWRES_TAXRATE_APPLICABLE_AGE_DSC"/>
@@ -161,6 +162,17 @@
 			label="COM_KNOWRES_TAXRATE_AGENT_LBL"
 			description="COM_KNOWRES_TAXRATE_AGENT_DSC"
 			hint="COM_KNOWRES_SELECT_MULTIPLE"/>
+		<field name="tt_option"
+			class="btn-group"
+			default="0"
+			filter="int"
+			showon="tax_type:TOURIST[AND]applicable_age!:0"
+			type="radio"
+			label="COM_KNOWRES_TAXRATE_TT_OPTION_LBL"
+			description="COM_KNOWRES_TAXRATE_TT_OPTION_DSC">
+			<option class="btn btn-outline-success" value="0">COM_KNOWRES_TT_0</option>
+			<option class="btn btn-outline-danger" value="1">COM_KNOWRES_TT_1</option>
+		</field>
 	</fieldset>
 	<fieldset name="krcommon">
 		<field name="state"

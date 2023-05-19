@@ -204,6 +204,9 @@ class ServicexrefsModel extends ListModel
 	 * @param  string  $table_name  Table name
 	 * @param  int     $table_id    Table ID
 	 *
+	 * @throws DatabaseNotFoundException
+	 * @throws RuntimeException
+	 * @throws QueryTypeAlreadyDefinedException
 	 * @since  2.0.0
 	 * @return ?string
 	 */

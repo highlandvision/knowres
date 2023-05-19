@@ -43,6 +43,8 @@ class HtmlView extends KrHtmlView\Site
 	public array $bedtypes = [];
 	/** @var int Property booking type. */
 	public int $booking_type = 0;
+	/** @var string Contact link to enquiry form. */
+	public string $contactlink = '';
 	/** @var array Currency setting for all properties. */
 	public array $currencies = [];
 	/** @var string Departure date. */
@@ -121,6 +123,11 @@ class HtmlView extends KrHtmlView\Site
 		$this->Translations = new Translations();
 		$searchSession      = new KrSession\Search();
 		$this->searchData   = $searchSession->getData();
+
+		$Itemid = SiteHelper::getItemId('com_knowres', 'contact', [
+			'id' => $this->item->id
+		]);
+		$this->contactlink = KrMethods::route('index.php?option=com_knowres&view=contact&id=' . $this->item->id . '&Itemid=' . $Itemid);
 
 		if (is_countable($this->searchData->baseIds) && count($this->searchData->baseIds))
 		{
@@ -326,16 +333,6 @@ class HtmlView extends KrHtmlView\Site
 
 			$this->min_date = TickTock::modifyDays($this->today, (int) $this->settings['mindaysbeforearrival']);
 			$this->max_date = TickTock::modifyDays($this->today, (int) $this->settings['advanceBookingsLimit']);
-
-			//			$options = [];
-			//			$max     = $this->item->sleeps + $this->item->sleeps_extra;
-			//			for ($i = 1; $i <= $max; $i++)
-			//			{
-			//				$options[] = HTMLHelper::_('select.option', $i, KrMethods::plural('COM_KNOWRES_SEARCH_GUEST', $i, $this->item->sleeps_infant_age));
-			//			}
-			//
-			//			$this->guests = HTMLHelper::_('select.genericlist', $options, 'jform[guests]', 'class="kr-quote-auto"',
-			//				'value', 'text', $this->guests, 'jform_guests');
 		}
 	}
 

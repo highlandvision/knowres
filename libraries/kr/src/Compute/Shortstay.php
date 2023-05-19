@@ -14,7 +14,6 @@ defined('_JEXEC') or die;
 use Exception;
 use HighlandVision\KR\Hub;
 use InvalidArgumentException;
-use RuntimeException;
 
 /**
  * Calculate short stay adjustments
@@ -60,7 +59,6 @@ class Shortstay
 	 * @param  int  $pc  Percentage surcharge for short stay
 	 *
 	 * @throws InvalidArgumentException
-	 * @throws RuntimeException
 	 * @since  3.4.0
 	 */
 	private function calculateShortstay(int $pc): void

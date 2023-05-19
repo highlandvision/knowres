@@ -537,6 +537,7 @@ class Calendar
 	 * @param  string  $date        Required date
 	 * @param  int     $min_nights  Minimum nights
 	 *
+	 * @throws RuntimeException
 	 * @since  3.3.4
 	 * @return int
 	 */
@@ -671,6 +672,7 @@ class Calendar
 	/**
 	 * Set the maximum stay for all dates
 	 *
+	 * @throws InvalidFormatException
 	 * @since  3.4.0
 	 */
 	protected function setMaxStay(): void

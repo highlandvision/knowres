@@ -17,7 +17,7 @@ $surname2        = $params->get('guestdata_second_surname', 0);
 $sex             = $params->get('guestdata_sex', 1);
 $age             = $params->get('guestdata_age', 1);
 $document        = $params->get('guestdata_document', 1);
-$document_fields = ['document_nat', 'document_type', 'document_id', 'document_issue'];
+$document_fields = ['document_nat', 'document_type', 'document_id', 'document_issue', 'document_expiry'];
 
 extract($displayData);
 /**

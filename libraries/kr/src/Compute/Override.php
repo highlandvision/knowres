@@ -13,7 +13,6 @@ defined('_JEXEC') or die;
 
 use HighlandVision\KR\Hub;
 use InvalidArgumentException;
-use RuntimeException;
 
 /**
  * Calculate gross rate
@@ -30,7 +29,6 @@ class Override
 	 *
 	 * @param  Hub  $Hub  Hub data
 	 *
-	 * @throws RuntimeException
 	 * @throws InvalidArgumentException
 	 * @since  3.3.0
 	 */
@@ -45,7 +43,6 @@ class Override
 	 * Calculate override values
 	 *
 	 * @throws InvalidArgumentException
-	 * @throws RuntimeException
 	 * @since  1.0.0
 	 */
 	private function calculateOverride(): void

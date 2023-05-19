@@ -19,6 +19,7 @@ use HighlandVision\KR\Joomla\Extend\AdminModel;
 use HighlandVision\KR\Translations;
 use HighlandVision\KR\Utility;
 use Joomla\CMS\Versioning\VersionableControllerTrait;
+use RuntimeException;
 
 /**
  * Knowres Currency model
@@ -41,6 +42,7 @@ class CurrencyModel extends AdminModel
 	 *
 	 * @param  int  $pk  The id of the primary key.
 	 *
+	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return object|false  Object on success, false on failure.
 	 */

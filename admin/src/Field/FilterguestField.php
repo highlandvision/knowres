@@ -12,6 +12,9 @@ defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Joomla\Extend\ListField as KrListField;
+use InvalidArgumentException;
+use Joomla\Database\Exception\QueryTypeAlreadyDefinedException;
+use Joomla\DI\Exception\KeyNotFoundException;
 use RuntimeException;
 
 use function array_merge;
@@ -30,6 +33,9 @@ class FilterguestField extends KrListField
 	 * Method to get the guests to populate filter list
 	 *
 	 * @throws RuntimeException
+	 * @throws InvalidArgumentException
+	 * @throws KeyNotFoundException
+	 * @throws QueryTypeAlreadyDefinedException
 	 * @since  2.5.1
 	 * @return array  The field option objects.
 	 */

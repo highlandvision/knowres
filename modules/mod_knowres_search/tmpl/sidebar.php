@@ -35,8 +35,15 @@ $action = KrMethods::getRoot() . 'index.php?option=com_knowres&task=properties.s
 				<input type="hidden" id="departure" name="departure">
 			<?php endif; ?>
 			<?php if ($params->get('show_guests', 1)): ?>
-				<?php echo $form->renderField('guests', null, $defaults->guests,
-					['adults' => $defaults->adults, 'children' => $defaults->children]); ?>
+				<?php echo $form->renderField('guests', null, $defaults->guests, [
+					'adults'            => $defaults->adults,
+					'children'          => $defaults->children,
+					'child_ages'        => $defaults->child_ages ?: [],
+					'max'               => KrMethods::getParams()->get('search_maxguests', 16),
+					'sleeps_infant_max' => 0,
+					'sleeps_infant_age' => 0,
+				]);
+				?>
 			<?php endif; ?>
 			<?php if ($params->get('show_bedrooms', 1)): ?>
 				<?php echo $form->renderField('bedrooms', null, $defaults->bedrooms); ?>

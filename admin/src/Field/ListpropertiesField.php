@@ -15,6 +15,7 @@ use HighlandVision\KR\Framework\KrFactory;
 use InvalidArgumentException;
 use Joomla\CMS\Form\Field\ListField;
 use Joomla\CMS\HTML\HTMLHelper;
+use RuntimeException;
 
 /**
  * The category options for menu selection
@@ -30,6 +31,7 @@ class ListpropertiesField extends ListField
 	 * Get the field options.
 	 *
 	 * @throws InvalidArgumentException
+	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return array The field options.
 	 */

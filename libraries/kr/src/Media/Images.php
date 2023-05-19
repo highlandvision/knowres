@@ -60,6 +60,7 @@ class Images extends Media
 	 * Constructor
 	 *
 	 * @throws InvalidArgumentException
+	 * @throws RuntimeException
 	 * @since  1.0.0
 	 */
 	public function __construct()
@@ -355,6 +356,7 @@ class Images extends Media
 	 * @param  int     $quality  Quality
 	 * @param  int     $crop     1 to crop image
 	 *
+	 * @throws RuntimeException
 	 * @since  1.0.0
 	 */
 	public static function resizeImage(string $source, string $target, int $width, int $height, int $quality = 80,
@@ -539,6 +541,7 @@ class Images extends Media
 	 *
 	 * @param  string  $folder_path  Path of folder
 	 *
+	 * @throws RuntimeException
 	 * @since 1.0.0
 	 */
 	public static function makeFolder(string $folder_path)

@@ -15,6 +15,7 @@ use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use Joomla\CMS\Cache\Cache;
+use RuntimeException;
 use stdClass;
 use UnexpectedValueException;
 
@@ -78,6 +79,7 @@ class Translations
 	 *
 	 * @param  ?int  $country_id  ID of country
 	 *
+	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return string
 	 */
@@ -103,6 +105,7 @@ class Translations
 	 * @param  string  $new    Name of variable to be added to object
 	 * @param  bool    $sort   Sort $field by alpha
 	 *
+	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return array
 	 */
@@ -157,6 +160,7 @@ class Translations
 	 * @param  string  $item  Table name
 	 * @param  array   $pks   Array of item ids for item
 	 *
+	 * @throws RuntimeException
 	 * @since  3.0.0
 	 */
 	public function deleteMultiple(string $item, array $pks): void
@@ -171,6 +175,7 @@ class Translations
 	 * @param  int     $item_id  ID of the base item
 	 *
 	 * @throws UnexpectedValueException
+	 * @throws RuntimeException
 	 * @since  1.0.0
 	 */
 	public function deleteText(string $item, int $item_id): void
@@ -187,6 +192,7 @@ class Translations
 	 * @param  string  $field  Field name
 	 * @param  bool    $sort   Sort by alpha
 	 *
+	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return array
 	 */
@@ -251,6 +257,7 @@ class Translations
 	 * @param  ?int    $item_id  ID of the base item
 	 * @param  string  $field    Name of the field (column)
 	 *
+	 * @throws RuntimeException
 	 * @since        1.0.0
 	 * @return string
 	 */
@@ -345,6 +352,7 @@ class Translations
 	 *
 	 * @param  string  $item  Item name to return
 	 *
+	 * @throws RuntimeException
 	 * @since  1.0.0
 	 */
 	protected function checkCache(string $item): void
@@ -445,6 +453,7 @@ class Translations
 	 *
 	 * @param  string  $item  Table name
 	 *
+	 * @throws RuntimeException
 	 * @since 1.0.0
 	 */
 	protected function setTranslations(string $item): void

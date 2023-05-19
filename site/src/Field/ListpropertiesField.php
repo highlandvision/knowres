@@ -12,8 +12,11 @@ namespace HighlandVision\Component\Knowres\Site\Field;
 defined('_JEXEC') or die('Restricted access');
 
 use HighlandVision\KR\Framework\KrFactory;
+use InvalidArgumentException;
 use Joomla\CMS\Form\Field\ListField;
 use Joomla\CMS\HTML\HTMLHelper;
+
+use RuntimeException;
 
 use function array_merge;
 
@@ -30,6 +33,7 @@ class ListpropertiesField extends ListField
 	/**
 	 * Get properties list options
 	 *
+	 * @throws RuntimeException|InvalidArgumentException
 	 * @since 4.0.0
 	 * @return array  The field options.
 	 */

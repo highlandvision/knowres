@@ -26,6 +26,7 @@ class SwitchField extends FormField
 	/**
 	 * Method to get the radio button field input markup.
 	 *
+	 * @throws UnexpectedValueException
 	 * @since  1.7.0
 	 * @return string  The field input markup.
 	 */

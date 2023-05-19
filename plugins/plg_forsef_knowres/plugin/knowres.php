@@ -33,9 +33,9 @@ class Knowres extends Base
 	/**
 	 * Builds the SEF URL for a non-sef.
 	 *
-	 * @param   Uri\Uri  $uriToBuild
-	 * @param   Uri\Uri  $platformUri
-	 * @param   Uri\Uri  $originalUri
+	 * @param  Uri\Uri  $uriToBuild
+	 * @param  Uri\Uri  $platformUri
+	 * @param  Uri\Uri  $originalUri
 	 *
 	 * @throws Exception
 	 * @return array
@@ -65,7 +65,8 @@ class Knowres extends Base
 			}
 		}
 
-		if (($view == 'property' && !empty($id)) || ($view == 'reviews' && !empty($property_id)))
+		if (($view == 'property' && !empty($id)) || ($view == 'contact' && !empty($id))
+			|| ($view == 'reviews' && !empty($property_id)))
 		{
 			$seo_property  = $params->get('seo_property');
 			$property_name = 'property';
@@ -75,7 +76,7 @@ class Knowres extends Base
 
 			try
 			{
-				$key           = $view == 'property' ? $id : $property_id;
+				$key           = $view == 'property' || $view == 'contact' ? $id : $property_id;
 				$property      = KrFactory::getAdminModel('property')->getItem($key);
 				$property_name = $property->property_name;
 				$area          = $property->property_area;
@@ -90,25 +91,37 @@ class Knowres extends Base
 
 		switch ($view)
 		{
-//			case 'guestform':
-//				$sefSegments[] = KrMethods::plain('COM_KNOWRES_TITLE_DASHBOARD_GUEST');
-//				$platformUri->delvar('view');
-//				break;
-//
-//			case 'contractguestdataform':
-//				$sefSegments[] = KrMethods::plain('COM_KNOWRES_DASHBOARD_ADD_CONTRACTGUESTDATA_SEF');
-//				$platformUri->delvar('view');
-//				break;
-//
-//			case 'reviewform':
-//				$sefSegments[] = KrMethods::plain('COM_KNOWRES_TITLE_REVIEWFORM');
-//				$platformUri->delvar('view');
-//				break;
-//
-//			case 'dashboard':
-//				$sefSegments[] = KrMethods::plain('COM_KNOWRES_TITLE_DASHBOARD');
-//				$platformUri->delvar('view');
-//				break;
+			//			case 'guestform':
+			//				$sefSegments[] = KrMethods::plain('COM_KNOWRES_TITLE_DASHBOARD_GUEST');
+			//				$platformUri->delvar('view');
+			//				break;
+			//
+			//			case 'contractguestdataform':
+			//				$sefSegments[] = KrMethods::plain('COM_KNOWRES_DASHBOARD_ADD_CONTRACTGUESTDATA_SEF');
+			//				$platformUri->delvar('view');
+			//				break;
+			//
+			//			case 'reviewform':
+			//				$sefSegments[] = KrMethods::plain('COM_KNOWRES_TITLE_REVIEWFORM');
+			//				$platformUri->delvar('view');
+			//				break;
+			//
+			//			case 'dashboard':
+			//				$sefSegments[] = KrMethods::plain('COM_KNOWRES_TITLE_DASHBOARD');
+			//				$platformUri->delvar('view');
+			//				break;
+
+			case 'contact':
+				$sefSegments[] = KrMethods::plain('COM_KNOWRES_SEND_AN_ENQUIRY');
+				$platformUri->delvar('view');
+
+				if ($id)
+				{
+					$sefSegments[] = $property_name;
+					$platformUri->delvar('id');
+				}
+
+				break;
 
 			case 'property':
 				if ($id)
@@ -230,7 +243,7 @@ class Knowres extends Base
 	 * vars processing should happen here. For instance, stripping pagination variables if the plugin
 	 * handles pagination dynamically.
 	 *
-	 * @param   array  $vars
+	 * @param  array  $vars
 	 *
 	 * @return array
 	 */
@@ -246,7 +259,7 @@ class Knowres extends Base
 	/**
 	 * Check if passed URI is for an extension configured to be left non-sef.
 	 *
-	 * @param   Uri\Uri  $uri
+	 * @param  Uri\Uri  $uri
 	 *
 	 * @throws Exception
 	 * @return bool

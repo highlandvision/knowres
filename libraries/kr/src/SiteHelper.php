@@ -245,6 +245,7 @@ class SiteHelper
 	 * @param  object  $params    Component parameters
 	 * @param  object  $contract  Contract database object
 	 *
+	 * @throws RuntimeException
 	 * @since  2.5.0
 	 * @return string
 	 */
@@ -710,6 +711,35 @@ class SiteHelper
 		$Itemid = self::getItemId('com_knowres', $view);
 		KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&view=' . $view . '&Itemid=' . $Itemid,
 			false));
+	}
+
+	/**
+	 * Set number of free guests - children under free infants age
+	 *
+	 * @param  int    $sleeps_infant_max  #Number of free infants allowed
+	 * @param  int    $sleeps_infant_age  Max age of free infant
+	 * @param  array  $child_ages         Ages of chldren
+	 *
+	 * @since  4.0.0
+	 * @return int
+	 */
+	public static function setFreeGuests(int $sleeps_infant_max, int $sleeps_infant_age, array $child_ages): int
+	{
+		if (!$sleeps_infant_max)
+		{
+			return 0;
+		}
+
+		$free = 0;
+		foreach ($child_ages as $age)
+		{
+			if ($age < $sleeps_infant_age && $free < $sleeps_infant_max)
+			{
+				$free++;
+			}
+		}
+
+		return $free;
 	}
 
 	/**

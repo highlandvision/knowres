@@ -14,7 +14,7 @@ defined('_JEXEC') or die;
 use Exception;
 use HighlandVision\KR\Calendar\Los;
 use HighlandVision\KR\Framework\KrFactory;
-use HighlandVision\KR\Session as KnowresSession;
+use HighlandVision\KR\Session as KrSession;
 
 use function count;
 use function is_countable;
@@ -381,7 +381,7 @@ class LosRates
 	 */
 	private function initHub(string $arrival, string $departure, int $guests): void
 	{
-		$contractSession             = new KnowresSession\Contract();
+		$contractSession             = new KrSession\Contract();
 		$contractData                = $contractSession->resetData();
 		$contractData->adjustmentsRq = false;
 		$contractData->arrival       = $arrival;
