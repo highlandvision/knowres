@@ -34,7 +34,8 @@ class HtmlView extends KrHtmlView
 	public Form $adhoc;
 	/** @var array External services. */
 	public array $external
-		= ['factura',
+		= ['beyond',
+		   'factura',
 		   'helpscout',
 		   'ru',
 		   'vintagetravel',

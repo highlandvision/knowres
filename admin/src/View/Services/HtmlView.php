@@ -49,14 +49,11 @@ class HtmlView extends KrHtmlView
 		$this->ordering      = in_array('ordering', $model->getFilterFields());
 		$this->form_name     = 'service';
 
-		if (!$this->checkEmpty())
-		{
-			$this->checkErrors();
-			ToolbarHelper::title(KrMethods::plain('COM_KNOWRES_SERVICES_TITLE'), 'tasks knowres');
-			$this->addListToolbar($this->get('name'));
+		$this->checkErrors();
+		ToolbarHelper::title(KrMethods::plain('COM_KNOWRES_SERVICES_TITLE'), 'tasks knowres');
+		$this->addListToolbar($this->get('name'));
 
-			parent::display($tpl);
-		}
+		parent::display($tpl);
 	}
 
 	/**

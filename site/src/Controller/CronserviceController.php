@@ -36,7 +36,7 @@ use function count;
 use function jexit;
 use function method_exists;
 
-//TODO-v4.1 Reinstate Xero II
+//TODO-v4.2 Reinstate Xero II
 //use HighlandVision\XERO\Xero\Payments;
 //use XeroPHP\Exception as XeroPHPException;
 //use XeroPHP\Remote\Exception\NotFoundException;
@@ -75,8 +75,8 @@ class CronserviceController extends BaseController
 	 * @throws RuntimeException
 	 * @since  2.4.0
 	 */
-	#[NoReturn] public function beyondpushrates()
-	{
+	#[NoReturn] public function beyondpushrates(): void
+    {
 		$this->checkSecret();
 
 		$PushRates = new Rates\PushRates($this->test);
@@ -109,8 +109,8 @@ class CronserviceController extends BaseController
 	 * @throws Exception
 	 * @since  1.2.2
 	 */
-	#[NoReturn] public function channelavailability()
-	{
+	#[NoReturn] public function channelavailability(): void
+    {
 		$this->checkSecret();
 
 		$services = $this->getServicesByType('c');
@@ -150,8 +150,8 @@ class CronserviceController extends BaseController
 	 * @throws Exception
 	 * @since  3.3.1
 	 */
-	#[NoReturn] public function channelbookings()
-	{
+	#[NoReturn] public function channelbookings(): void
+    {
 		self::channelavailability();
 	}
 
@@ -162,8 +162,8 @@ class CronserviceController extends BaseController
 	 * @throws Exception
 	 * @since  1.2.2
 	 */
-	#[NoReturn] public function channelproperties()
-	{
+	#[NoReturn] public function channelproperties(): void
+    {
 		$this->checkSecret();
 
 		$services = self::getServicesByType('c');
@@ -222,8 +222,8 @@ class CronserviceController extends BaseController
 	 * @throws RuntimeException|Exception
 	 * @since  1.2.2
 	 */
-	#[NoReturn] public function channelrates()
-	{
+	#[NoReturn] public function channelrates(): void
+    {
 		$this->checkSecret();
 
 		$services = self::getServicesByType('c');
@@ -259,8 +259,8 @@ class CronserviceController extends BaseController
 	 * @throws Exception
 	 * @since  1.2.2
 	 */
-	#[NoReturn] public function channelsync()
-	{
+	#[NoReturn] public function channelsync(): void
+    {
 		$this->checkSecret();
 
 		$services = self::getServicesByType('c');
@@ -291,8 +291,8 @@ class CronserviceController extends BaseController
 	 * @throws RuntimeException
 	 * @since  2.2.0
 	 */
-	#[NoReturn] public function factura()
-	{
+	#[NoReturn] public function factura(): void
+    {
 		$this->checkSecret();
 
 		$services = self::getServicesByType('s');
@@ -315,8 +315,8 @@ class CronserviceController extends BaseController
 	 * @throws RuntimeException
 	 * @since  2.1.0
 	 */
-	#[NoReturn] public function icalimport()
-	{
+	#[NoReturn] public function icalimport(): void
+    {
 		$this->checkSecret();
 
 		$userSession            = new KrSession\User();
@@ -348,8 +348,8 @@ class CronserviceController extends BaseController
 	 * @throws Exception
 	 * @since  1.2.2
 	 */
-	#[NoReturn] public function rua()
-	{
+	#[NoReturn] public function rua(): void
+    {
 		$this->checkSecret();
 		$method = KrMethods::inputString('method', null, 'get');
 		if (!$method){
@@ -381,8 +381,8 @@ class CronserviceController extends BaseController
 	 * @throws Exception
 	 * @since  3.3.3`
 	 */
-	#[NoReturn] public function vt()
-	{
+	#[NoReturn] public function vt(): void
+    {
 		$this->checkSecret();
 
 		$services = self::getServicesByType('s');
@@ -435,8 +435,8 @@ class CronserviceController extends BaseController
 	 * @throws RuntimeException|Exception
 	 * @since  1.0.0
 	 */
-	private function checkSecret()
-	{
+	private function checkSecret(): void
+    {
 		$this->test = KrMethods::inputInt('test', 0, 'get');
 		$secret     = KrMethods::inputString('secret', '', 'get');
 

@@ -26,8 +26,10 @@ use stdClass;
 use function count;
 use function implode;
 use function str_repeat;
+use function strtolower;
 use function trim;
 
+use const JPATH_LIBRARIES;
 use const JPATH_ROOT;
 use const LIBXML_ERR_ERROR;
 use const LIBXML_ERR_FATAL;
@@ -133,31 +135,73 @@ abstract class Service
 	{
 		// 0 - service type
 		// 1 - 0 = free, 1 = paid, 2 = proprietary
-		// 2 - 0 not installed, 1 installed
+		// 2 - 0 = not installed, 1 = not enabled 2 = unpublished 3 = all good
 		// TODO-v4.1 Reinstate Xero
 		$services = [
-			'iCal'          => ['i', 0, 0],
+			'iCal'          => ['i', 0, 1],
 			'RU'            => ['c', 1, 0],
 			'VRBO'          => ['c', 2, 0],
-			'Wire'          => ['g', 0, 0],
+			'Wire'          => ['g', 0, 1],
 			'Bankia'        => ['g', 0, 0],
-			'Check'         => ['g', 0, 0],
-			'PayPal'        => ['g', 0, 0],
+			'Beyond'        => ['s', 1, 0],
+			'Check'         => ['g', 0, 1],
+			'PayPal'        => ['g', 0, 1],
 			'Redsys'        => ['g', 0, 0],
-			'Stripe'        => ['g', 0, 0],
-			'Exchange'      => ['s', 0, 0],
+			'Stripe'        => ['g', 0, 1],
+			'Exchange'      => ['s', 0, 1],
 			'Factura'       => ['s', 2, 0],
 			'HelpScout'     => ['s', 1, 0],
 			'VintageTravel' => ['s', 2, 0],
-			'MailChimp'     => ['s', 0, 0]
+			'MailChimp'     => ['s', 0, 1]
 		];
 
 		foreach ($services as $plugin => $data)
 		{
-			$list = KrFactory::getListModel('services')->getServicesByPlugin($plugin);
-			if (is_countable($list) && count($list))
+			if ($data[1] > 0)
 			{
-				$services[$plugin][2] = 1;
+				$lc = strtolower($plugin);
+				$services[$plugin][2] = 0;
+
+				if (file_exists(JPATH_LIBRARIES . '/highlandvision/' . $lc . '/lib_highlandvision_' . $lc . '.xml'))
+				{
+					$services[$plugin][2] = 1;
+
+					$list = KrFactory::getListModel('services')->getServicesByPlugin($plugin, 0, null, false);
+					if (is_countable($list) && count($list))
+					{
+						foreach ($list as $l)
+						{
+							if ($l->state == 1)
+							{
+								$services[$plugin][2] = 3;
+								break;
+							}
+							else
+							{
+								$services[$plugin][2] = 2;
+							}
+						}
+					}
+				}
+			}
+			else
+			{
+				$list = KrFactory::getListModel('services')->getServicesByPlugin($plugin, 0, null, false);
+				if (is_countable($list) && count($list))
+				{
+					foreach ($list as $l)
+					{
+						if ($l->state == 1)
+						{
+							$services[$plugin][2] = 3;
+							break;
+						}
+						else
+						{
+							$services[$plugin][2] = 2;
+						}
+					}
+				}
 			}
 		}
 

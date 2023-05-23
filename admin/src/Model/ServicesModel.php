@@ -158,12 +158,13 @@ class ServicesModel extends ListModel
 	 * @param   string  $plugin     Service internal name
 	 * @param   int     $agency_id  ID of agency
 	 * @param  ?string  $currency   ISO currency
+	 * @param  bool     $published  Publishd rows only
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return mixed
 	 */
-	public function getServicesByPlugin(string $plugin, int $agency_id = 0, ?string $currency = null): mixed
+	public function getServicesByPlugin(string $plugin, int $agency_id = 0, ?string $currency = null, bool $published = true): mixed
 	{
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
@@ -172,12 +173,16 @@ class ServicesModel extends ListModel
 		      ->from($db->qn('#__knowres_service', 'a'))
 		      ->select($db->qn('p.property_name', 'property_name'))
 		      ->join('LEFT',
-			      $db->qn('#__knowres_property', 'p') . ' ON ' . $db->qn('p.id') . ' = ' . $db->qn('a.property_id'))
+			      $db->qn('#__knowres_property', 'p') . 'ON' . $db->qn('p.id') . '=' . $db->qn('a.property_id'))
 		      ->select($db->qn('ag.name', 'agency_name'))
 		      ->join('LEFT',
-			      $db->qn('#__knowres_agency', 'ag') . ' ON ' . $db->qn('ag.id') . ' = ' . $db->qn('a.agency_id'))
-		      ->where($db->qn('a.plugin') . '=' . $db->q($plugin))
-		      ->where($db->qn('a.state') . '=1');
+			      $db->qn('#__knowres_agency', 'ag') . 'ON' . $db->qn('ag.id') . '=' . $db->qn('a.agency_id'))
+		      ->where($db->qn('a.plugin') . '=' . $db->q(strtolower($plugin)));
+
+		if ($published)
+		{
+			$query->where($db->qn('a.state') . '=1');
+		}
 
 		if (!is_null($currency))
 		{
@@ -207,8 +212,7 @@ class ServicesModel extends ListModel
 	 * @param   string  $type  Service type
 	 *
 	 * @throws RuntimeException
-	 * @throws RuntimeException
-	 * @since 1.0.0
+	 * @since  1.0.0
 	 * @return mixed
 	 */
 	public function getServicesByType(string $type): mixed

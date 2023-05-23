@@ -36,18 +36,22 @@ use HighlandVision\KR\Service;
 					<br>
 				</div>
 				<div class="card-footer text-center">
-					<?php if (!$type[1] && !$type[2]): ?>
+					<?php if (!$type[2]): ?>
+						<a href="#" class="button btn btn-primary disabled">
+							<?php echo KrMethods::plain('COM_KNOWRES_SERVICE_ENQUIRY'); ?>
+						</a>
+					<?php elseif ($type[2] == 1): ?>
 						<?php $link = KrMethods::route("index.php?option=com_knowres&view=service&layout=edit&plugin=" . $plugin); ?>
 						<a href="<?php echo $link; ?>" class="button btn btn-primary">
 							<?php echo KrMethods::plain('COM_KNOWRES_SERVICES_NEW'); ?>
 						</a>
-					<?php elseif (!$type[1] && $type[2]): ?>
+					<?php elseif ($type[2] == 2): ?>
 						<a href="#" class="button btn btn-primary disabled">
-							<?php echo KrMethods::plain('COM_KNOWRES_SERVICE_INSTALLED'); ?>
+							<?php echo KrMethods::plain('COM_KNOWRES_SERVICE_UNPUBLISHED'); ?>
 						</a>
 					<?php else: ?>
 						<a href="#" class="button btn btn-primary disabled">
-							<?php echo KrMethods::plain('COM_KNOWRES_SERVICE_ENQUIRY'); ?>
+							<?php echo KrMethods::plain('COM_KNOWRES_SERVICE_INSTALLED'); ?>
 						</a>
 					<?php endif; ?>
 
