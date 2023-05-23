@@ -48,8 +48,8 @@ class HaController extends BaseController
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	#[NoReturn] public function availability()
-	{
+	#[NoReturn] public function availability(): void
+    {
 		$test = KrMethods::inputInt('test', 0, 'get');
 		$id   = KrMethods::inputInt('id', 0, 'get');
 		$unit = KrMethods::inputString('unit', '', 'get');
@@ -69,8 +69,8 @@ class HaController extends BaseController
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	#[NoReturn] public function br()
-	{
+	#[NoReturn] public function br(): void
+    {
 		$test = KrMethods::inputInt('test', 0, 'get');
 		if ($test)
 		{
