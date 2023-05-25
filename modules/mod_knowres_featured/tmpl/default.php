@@ -16,7 +16,14 @@ use HighlandVision\KR\Framework\KrMethods;
 	<div class="small-12 text-center medium-text-left large-10 columns">
 		<h3 class="h2">
 			<?php if (!$title): ?>
-				<?php echo $module->title; ?>
+				<?php echo KrMethods::plain('MOD_KNOWRES_FEATURED_FEATURED'); ?>
+				<span class="color-secondary">
+					<?php echo KrMethods::plain('MOD_KNOWRES_FEATURED_VILLAS'); ?>
+				</span>
+				<?php echo KrMethods::plain('MOD_KNOWRES_FEATURED_BEST'); ?>
+				<span class="color-secondary">
+					<?php echo KrMethods::plain('MOD_KNOWRES_FEATURED_QUALITY'); ?>
+				</span>
 			<?php else: ?>
 				<?php echo $title; ?>
 			<?php endif; ?>
