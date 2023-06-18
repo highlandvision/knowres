@@ -29,7 +29,7 @@ $wa->useScript('com_knowres.site')
 		<?php endif; ?>
 		<div class="row align-bottom">
 			<div class="small-12 medium-8 large-9 columns">
-				<h1><?php echo $this->item->property_name . ' - ' . $this->item->property_area; ?></h1>
+				<h1><?php echo $this->item->property_name . ' - ' . $this->item->region_name . ' / ' . $this->item->property_area; ?></h1>
 			</div>
 			<div class="show-for-medium medium-4 medium-text-left large-3 columns">
 				<div class="addthis_toolbox addthis_default_style addthis_32x32_style" style="float:right;">

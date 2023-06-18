@@ -34,7 +34,7 @@ $Itemid = SiteHelper::getItemId('com_knowres', 'confirm', ['layout' => 'payment'
 $action = KrMethods::route('index.php?option=com_knowres&view=confirm&layout=payment&Itemid=' . $Itemid);
 ?>
 
-<form action="<?php echo $action; ?>" class="ajaxform formbg form-validate" id="kr-form-payment" method="post">
+<form action="<?php echo $action; ?>" class="ajaxform form-validate" id="kr-form-payment" method="post">
 	<fieldset class="fieldset">
 		<div class="callout">
 			<h3 class="color-primary">
@@ -93,7 +93,7 @@ $action = KrMethods::route('index.php?option=com_knowres&view=confirm&layout=pay
 		]);
 		?>
 
-		<div class="callout formbg">
+		<div class="callout formbg small">
 			<input type="checkbox" class="checkover" name="agreecheck" id="agreecheck">
 			<label class="checklabel" for="agreecheck">
 				<?php echo KrMethods::plain('COM_KNOWRES_PAYMENT_TERMS1'); ?>

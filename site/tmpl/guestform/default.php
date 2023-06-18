@@ -35,13 +35,13 @@ $wa->useScript('com_knowres.site')
 		<?php endif; ?>
 
 		<form action="<?php echo 'index.php?option=com_knowres'; ?>"
-		      aria-label="<?php echo $this->form_aria_label; ?>" class="formbg form-validate" id="kr-guest-form"
+		      aria-label="<?php echo $this->form_aria_label; ?>" class="form-validate" id="kr-guest-form"
 		      method="post" name="adminForm">
 
 			<fieldset class="fieldset">
 				<legend><?php echo KrMethods::plain('COM_KNOWRES_LEAD_GUEST'); ?></legend>
 
-				<div class="callout small formbg">
+				<div class="callout formbg small">
 					<div class="row">
 						<div class="small-12 medium-6 columns">
 							<?php echo $this->form->renderField('firstname'); ?>
@@ -87,7 +87,7 @@ $wa->useScript('com_knowres.site')
 
 			<fieldset class="fieldset">
 				<legend><?php echo KrMethods::plain('COM_KNOWRES_GUEST_ADDITIONAL_CONTACT_DETAILS'); ?></legend>
-				<div class="callout small formbg">
+				<div class="callout formbg small">
 					<div class="callout success small">
 						<p class="vsmall"><?php echo KrMethods::plain('COM_KNOWRES_ARRIVAL_EMAIL_CHANGE'); ?></p>
 					</div>
@@ -107,7 +107,7 @@ $wa->useScript('com_knowres.site')
 
 			<fieldset class="fieldset">
 				<legend><?php echo KrMethods::plain('COM_KNOWRES_MAILING_ADDRESS'); ?></legend>
-				<div class="callout small formbg">
+				<div class="callout formbg small">
 					<div class="row">
 						<?php if ((int) $settings['bookingform_requiredfields_address1'] == 1) : ?>
 							<?php $this->form->setFieldAttribute('address1', 'required', 'true'); ?>
@@ -154,7 +154,7 @@ $wa->useScript('com_knowres.site')
 					<?php echo KrMethods::plain('COM_KNOWRES_BILLING_ADDRESS'); ?>
 				</legend>
 
-				<div class="callout small formbg">
+				<div class="callout formbg small">
 					<div class="row">
 						<div class="small-12 medium-6 columns" style="margin-bottom:10px;">
 							<?php echo $this->form->renderField('billing'); ?>

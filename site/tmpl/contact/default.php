@@ -27,11 +27,11 @@ $action = KrMethods::route('index.php?option=com_knowres&task=contact.submit');
 		<h1 class="title"><?php echo KrMethods::plain('COM_KNOWRES_CONTACT_TITLE'); ?></h1>
 		<p class="smaller"><?php echo KrMethods::plain('COM_KNOWRES_CONTACT_REQUIRED'); ?></p>
 
-		<form action="<?php echo $action; ?>" class="formbg form-validate" id="kr-form-contact"
+		<form action="<?php echo $action; ?>" class="form-validate" id="kr-form-contact"
 		      onsubmit="return verifyEmail();" method="post">
 			<fieldset class="fieldset">
 				<legend><?php echo KrMethods::plain('COM_KNOWRES_YOUR_DETAILS'); ?></legend>
-				<div class="callout formbg">
+				<div class="callout formbg small">
 					<div class="row">
 						<div class="small-12 medium-6 columns">
 							<?php echo $this->form->renderField('contact_name'); ?>
@@ -58,7 +58,7 @@ $action = KrMethods::route('index.php?option=com_knowres&task=contact.submit');
 
 			<fieldset class="fieldset">
 				<legend><?php echo KrMethods::plain('Your Property Requirements'); ?></legend>
-				<div class="callout formbg">
+				<div class="callout formbg small">
 					<div class="row">
 						<div class="small-12 medium-4 columns">
 							<?php $this->form->setValue('region', '', $this->region_name); ?>

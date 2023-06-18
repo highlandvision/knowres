@@ -21,7 +21,7 @@ $form = KrFactory::getAdhocForm('contact', 'contact.xml', 'site');
 <p class="smaller"><?php echo KrMethods::plain('COM_KNOWRES_CONTACT_REQUIRED'); ?></p>
 
 <form action="<?php echo KrMethods::route('index.php?option=com_knowres&task=contact.submit'); ?>"
-      class="formbg form-validate" id="kr-form-contact" method="post" onsubmit="return verifyemail();">
+      class="form-validate" id="kr-form-contact" method="post" onsubmit="return verifyemail();">
 
 	<fieldset class="fieldset">
 		<div class="callout">

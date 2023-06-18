@@ -129,7 +129,7 @@ if (is_countable($all) && !count($all))
 
 <fieldset class="fieldset">
 	<legend><?php echo KrMethods::plain('COM_KNOWRES_CONFIRM_EXTRAS_LBL'); ?></legend>
-	<div class="callout small formbg">
+	<div class="callout formbg small">
 		<?php foreach ($all as $a) : ?>
 			<div class="row extras">
 				<div class="small-12 medium-3 columns">
