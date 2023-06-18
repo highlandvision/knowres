@@ -21,7 +21,7 @@ if (is_null(KrFactory::getListModel('coupons')->getValidCoupons($this->property-
 
 <fieldset class="fieldset">
 	<legend><?php echo KrMethods::plain('COM_KNOWRES_CONFIRM_COUPON_LBL'); ?></legend>
-	<div class="callout small formbg">
+	<div class="callout formbg small">
 		<div class="row">
 			<div class="small-12 medium-8 columns">
 				<?php echo $this->form->getInput('coupon_code', null, ''); ?>

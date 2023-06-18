@@ -28,7 +28,7 @@ extract($displayData);
  * @var bool   $favicon        Property is favourite.
  * @var bool   $saved          Property is favourite.
  * @var string $view           Selected view.
- * @var bool   $byAvailability Search by availabbility.
+ * @var bool   $byAvailability Search by availability.
  * @var array  $net            Net rates.
  * @var array  $discount       Discount value.
  */
@@ -49,7 +49,7 @@ if ($new)
 
 		<div id="<?php echo $id; ?>" class="<?php echo $view; ?>">
 			<div class="row">
-				<div class="small-12 medium-6 large-6 columns slider">
+				<div class="small-12 medium-6 columns slider">
 					<?php if ($item->imagefilename) : ?>
 						<div class="image-wrapper">
 							<?php echo KrMethods::render('properties.slideshow', ['item'         => $item,
@@ -68,14 +68,14 @@ if ($new)
 					<?php endif; ?>
 				</div>
 
-				<div class="small-12 medium-6 large-6 columns">
+				<div class="small-12 medium-6 columns">
 					<div class="top-section">
 						<a href="<?php echo $plink; ?>" title="<?php echo $item->property_name; ?>">
 							<h2 class="h3">
 								<?php echo $item->property_name; ?>
 							</h2>
 						</a>
-						<p class="smaller">
+						<p class="color-dark">
 							<?php echo $item->property_area . ', ' . $item->region_name; ?>
 							<br>
 							<?php echo KrMethods::plain('COM_KNOWRES_SLEEPS'); ?>
@@ -91,25 +91,25 @@ if ($new)
 							<?php echo $item->bathrooms; ?>
 						</p>
 
-						<h4>
+						<h3 class="h4 tagline hide-for-medium-only">
 							<?php echo $Translations->getText('property', $item->id, 'p10'); ?>
-						</h4>
+						</h3>
 
-						<p class="smaller">
-							<?php echo Utility::cutString($Translations->getText('property', $item->id, 'p1'), 180); ?>
+						<p class="property-description">
+							<?php echo Utility::cutString($Translations->getText('property', $item->id, 'p1'), 150); ?>
 						</p>
-					</div>
-					<div class="relative-pricing">
-						<?php echo KrMethods::render('properties.pricedisplay',
-							['item'           => $item,
-							 'currency'       => $currency,
-							 'byAvailability' => $byAvailability,
-							 'net'            => $net[$item->id] ?? 0,
-							 'discount'       => $discount[$item->id] ?? 0,
-							 'weekly'         => $weekly[$item->id] ?? $weekly[0],
-							 'plink'          => $plink
-							]);
-						?>
+						<div class="kr-relative-pricing">
+							<?php echo KrMethods::render('properties.pricedisplay',
+								['item'           => $item,
+								 'currency'       => $currency,
+								 'byAvailability' => $byAvailability,
+								 'net'            => $net[$item->id] ?? 0,
+								 'discount'       => $discount[$item->id] ?? 0,
+								 'weekly'         => $weekly[$item->id] ?? $weekly[0],
+								 'plink'          => $plink
+								]);
+							?>
+						</div>
 					</div>
 				</div>
 			</div>

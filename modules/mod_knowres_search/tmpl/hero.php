@@ -19,7 +19,7 @@ $wa->useScript('com_knowres.site-modules');
 $action = KrMethods::getRoot() . 'index.php?option=com_knowres&task=properties.search';
 ?>
 
-<div class="mod-knowres_search hero">
+<div class="kr-search <?php echo $params->get('hero-position', 'middle'); ?>">
 	<form action="<?php echo $action; ?>" method="post" name="search-default">
 		<div class="row">
 			<?php if (!empty($params->get('search_text', ''))): ?>

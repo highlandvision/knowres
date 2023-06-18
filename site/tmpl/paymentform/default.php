@@ -26,7 +26,7 @@ $termsurl = KrMethods::route('index.php?option=com_knowres&task=property.terms&i
 		<h1><?php echo KrMethods::plain('COM_KNOWRES_MAKE_A_PAYMENT'); ?></h1>
 
 		<form action="<?php echo KrMethods::route('index.php?option=com_knowres&task=payment.router'); ?>"
-		      class="ajaxform formbg form-validate" id="kr-form-payment" method="post">
+		      class="ajaxform form-validate" id="kr-form-payment" method="post">
 
 			<?php echo KrMethods::render('dashboard.header',
 				['contract' => $this->contract,
@@ -36,7 +36,7 @@ $termsurl = KrMethods::route('index.php?option=com_knowres&task=property.terms&i
 
 			<fieldset class="fieldset">
 				<?php if ($this->contract->cancelled): ?>
-					<div class="callout">
+					<div class="callout formbg small">
 						<div class="row">
 							<div class="small-12 columns">
 								<h4>

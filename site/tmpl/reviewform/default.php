@@ -30,7 +30,7 @@ $wa->useScript('com_knowres.site')
 	<div class="row">
 		<div class="small-12 large-10 large-offset-1 columns">
 			<form action="<?php echo 'index.php?option=com_knowres'; ?>"
-			      aria-label="<?php echo $this->form_aria_label; ?>" class="formbg form-validate" id="kr-review-form"
+			      aria-label="<?php echo $this->form_aria_label; ?>" class="form-validate" id="kr-review-form"
 			      method="post" name="adminForm">
 				<fieldset class="fieldset">
 					<div class="callout">

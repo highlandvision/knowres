@@ -27,7 +27,7 @@ extract($displayData);
  */
 ?>
 
-<div class="callout small formbg">
+<div class="callout formbg small">
 	<!--suppress HtmlFormInputWithoutLabel -->
 	<input type="radio" class="radioover gateway" name="plugincc" id="<?php echo $plugincc; ?>"
 	       value="<?php echo $plugincc; ?>" <?php echo $checked; ?>>
