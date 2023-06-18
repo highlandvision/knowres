@@ -59,7 +59,7 @@ class HtmlView extends KrHtmlView\Site
 	 * @param  null  $tpl  Default template.
 	 *
 	 * @throws Exception
-	 * @since  1.0.0
+	 * @since        1.0.0
 	 * @return void
 	 * @noinspection PhpLoopNeverIteratesInspection
 	 */

@@ -45,22 +45,18 @@ class TickTock
 	{
 		$dates = [];
 
-		if (!$first || !$last || $last < $first)
-		{
+		if (!$first || !$last || $last < $first) {
 			return $dates;
 		}
 
-		if (!$ignoreLast)
-		{
+		if (!$ignoreLast) {
 			$period = CarbonPeriod::create($first, $last);
 		}
-		else
-		{
+		else {
 			$period = CarbonPeriod::create($first, $last, CarbonPeriod::EXCLUDE_END_DATE);
 		}
 
-		foreach ($period as $d)
-		{
+		foreach ($period as $d) {
 			$dates[] = $d->toDateString();
 		}
 
@@ -80,22 +76,18 @@ class TickTock
 	public static function allDowBetween(string $first, string $last, bool $ignoreLast = false): array
 	{
 		$dow = [];
-		if (!$first || !$last || $last < $first)
-		{
+		if (!$first || !$last || $last < $first) {
 			return $dow;
 		}
 
-		if (!$ignoreLast)
-		{
+		if (!$ignoreLast) {
 			$period = CarbonPeriod::create($first, $last);
 		}
-		else
-		{
+		else {
 			$period = CarbonPeriod::create($first, $last, CarbonPeriod::EXCLUDE_END_DATE);
 		}
 
-		foreach ($period as $d)
-		{
+		foreach ($period as $d) {
 			$dow[$d->format('Y-m-d')] = $d->format('w');
 		}
 
@@ -114,14 +106,11 @@ class TickTock
 	 */
 	public static function differenceDays(string $date1, string $date2): int
 	{
-		try
-		{
+		try {
 			$start = new Carbon($date1);
 
 			return $start->diffInDays($date2);
-		}
-		catch (Exception $e)
-		{
+		} catch (Exception $e) {
 			Logger::logMe($e->getMessage());
 
 			return 999;
@@ -141,26 +130,20 @@ class TickTock
 	 */
 	public static function displayDate(?string $date, string $format = ''): string
 	{
-		try
-		{
-			if (empty($format))
-			{
+		try {
+			if (empty($format)) {
 				$format = KrMethods::plain('DATE_FORMAT_LC3');
 			}
 
-			if ($date && $date != '0000-00-00')
-			{
+			if ($date && $date != '0000-00-00') {
 				$dt = new Carbon($date);
 
 				return $dt->format($format);
 			}
-			else
-			{
+			else {
 				return '';
 			}
-		}
-		catch (Exception $e)
-		{
+		} catch (Exception $e) {
 			Logger::logMe($e->getMessage());
 
 			return '';
@@ -179,8 +162,7 @@ class TickTock
 	 */
 	public static function displayTS(?string $ts, string $format = 'j M Y @ H:i:s'): string
 	{
-		if (empty($ts) || $ts == '0000-00-00 00:00:00')
-		{
+		if (empty($ts) || $ts == '0000-00-00 00:00:00') {
 			return '';
 		}
 
@@ -203,7 +185,7 @@ class TickTock
 	 */
 	public static function getDate(string $string = 'now', string $format = 'Y-m-d', string $tz = 'UTC'): string
 	{
-		//TODO-v4.1 should default timezone be based on agency location
+		//TODO-v4.3 should default timezone be based on agency location
 		$date = new Carbon($string, $tz);
 
 		return $date->format($format);
@@ -222,12 +204,9 @@ class TickTock
 	public static function getDateForTimezone(string $format = 'Y-m-d', string $tz = 'Europe/Madrid'): string
 	{
 		$timestamp = self::getDate('now', 'Y-m-d H:i:s');
-		try
-		{
+		try {
 			$date = Carbon::createFromFormat('Y-m-d H:i:s', $timestamp, $tz);
-		}
-		catch (Exception)
-		{
+		} catch (Exception) {
 			$date = Carbon::createFromFormat('Y-m-d H:i:s', $timestamp, 'Europe/Madrid');
 		}
 
@@ -246,8 +225,7 @@ class TickTock
 	{
 		$day_name = '';
 
-		switch ($dow)
-		{
+		switch ($dow) {
 			case 0:
 				$day_name = KrMethods::plain('COM_KNOWRES_SUNDAY');
 				break;
@@ -305,27 +283,22 @@ class TickTock
 	 */
 	public static function getDueDate(string $weekendDays, int $days, string $date = ''): string
 	{
-		if (!$date)
-		{
+		if (!$date) {
 			$date = Carbon::today();
 		}
-		else
-		{
+		else {
 			$date = new Carbon($date);
 		}
 
 		$dow = [];
-		if ($weekendDays)
-		{
+		if ($weekendDays) {
 			$dow = explode(',', $weekendDays);
 		}
 
 		$count = 0;
-		while ($count < $days)
-		{
+		while ($count < $days) {
 			$date = $date->addDay();
-			if (!in_array($date->dayOfWeek, $dow))
-			{
+			if (!in_array($date->dayOfWeek, $dow)) {
 				$count++;
 			}
 		}
@@ -369,17 +342,15 @@ class TickTock
 	{
 		$tmp = explode('-', $date);
 
-		if (!is_countable($tmp) || count($tmp) <> 3)
-		{
+		if (!is_countable($tmp) || count($tmp) <> 3) {
 			return false;
 		}
 
-		if (!is_numeric($tmp[0]) || !is_numeric($tmp[1]) || !is_numeric($tmp[2]))
-		{
+		if (!is_numeric($tmp[0]) || !is_numeric($tmp[1]) || !is_numeric($tmp[2])) {
 			return false;
 		}
 
-		return checkdate((int)$tmp[1], (int)$tmp[2], (int)$tmp[0]);
+		return checkdate((int) $tmp[1], (int) $tmp[2], (int) $tmp[0]);
 	}
 
 	/**
@@ -398,12 +369,10 @@ class TickTock
 		string $format = 'Y-m-d'): string
 	{
 		$date = new Carbon($date);
-		if ($sign == '+')
-		{
+		if ($sign == '+') {
 			$date->addDays($days);
 		}
-		else
-		{
+		else {
 			$date->subDays($days);
 		}
 
@@ -426,12 +395,10 @@ class TickTock
 		string $format = 'Y-m-d H:i:s'): string
 	{
 		$date = new Carbon($ts);
-		if ($sign == '+')
-		{
+		if ($sign == '+') {
 			$date->addHours($hours);
 		}
-		else
-		{
+		else {
 			$date->subHours($hours);
 		}
 
@@ -454,12 +421,10 @@ class TickTock
 		string $format = 'Y-m-d'): string
 	{
 		$date = new Carbon($date);
-		if ($sign == '+')
-		{
+		if ($sign == '+') {
 			$date->addMonths($months);
 		}
-		else
-		{
+		else {
 			$date->subMonths($months);
 		}
 
@@ -480,12 +445,10 @@ class TickTock
 	public static function modifyYears(string $date = 'now', int $years = 1, string $sign = '+'): string
 	{
 		$date = new Carbon($date);
-		if ($sign == '+')
-		{
+		if ($sign == '+') {
 			$date->addYears($years);
 		}
-		else
-		{
+		else {
 			$date->subYears($years);
 		}
 
@@ -519,7 +482,9 @@ class TickTock
 	 */
 	public static function parseString(string $string, string $format = 'Y-m-d'): string
 	{
-		return Carbon::parse($string)->setTimezone('UTC')->format($format);
+		return Carbon::parse($string)
+		             ->setTimezone('UTC')
+		             ->format($format);
 	}
 
 	/**
@@ -534,14 +499,12 @@ class TickTock
 		$user = KrMethods::getUser();
 		$tz   = $user->getTimezone();
 		$name = $tz->getName();
-		if ($name)
-		{
+		if ($name) {
 			return $name;
 		}
 
 		$offset = KrMethods::getCfg('offset', 0);
-		if ($offset)
-		{
+		if ($offset) {
 			$now = Carbon::now($offset);
 
 			return $now->timezone;

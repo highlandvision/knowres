@@ -49,26 +49,44 @@ class ContractsModel extends ListModel
 	 */
 	public function __construct($config = [])
 	{
-		if (empty($config['filter_fields']))
-		{
-			$config['filter_fields'] = array(
-				'id', 'a.id',
-				'agent_id', 'a.agent_id',
-				'arrival', 'a.arrival',
-				'black_booking', 'a.black_booking',
-				'booking_status', 'a.booking_status',
-				'cancelled', 'a.cancelled',
-				'contract_total', 'a.contract_total',
-				'departure', 'a.departure',
-				'guest_id', 'a.guest_id',
-				'property_id', 'a.property_id',
-				'manager_id', 'a.manager_id',
-				'owner_id', 'p.owner_id',
-				'region_id', 'p.region_id',
-				'state', 'a.state',
-				'tag', 'a.tag',
-				'agent_name', 'owner_name', 'guest_name', 'manager_name', 'property_name', 'region_name'
-			);
+		if (empty($config['filter_fields'])) {
+			$config['filter_fields'] = ['id',
+			                            'a.id',
+			                            'agent_id',
+			                            'a.agent_id',
+			                            'arrival',
+			                            'a.arrival',
+			                            'black_booking',
+			                            'a.black_booking',
+			                            'booking_status',
+			                            'a.booking_status',
+			                            'cancelled',
+			                            'a.cancelled',
+			                            'contract_total',
+			                            'a.contract_total',
+			                            'departure',
+			                            'a.departure',
+			                            'guest_id',
+			                            'a.guest_id',
+			                            'property_id',
+			                            'a.property_id',
+			                            'manager_id',
+			                            'a.manager_id',
+			                            'owner_id',
+			                            'p.owner_id',
+			                            'region_id',
+			                            'p.region_id',
+			                            'state',
+			                            'a.state',
+			                            'tag',
+			                            'a.tag',
+			                            'agent_name',
+			                            'owner_name',
+			                            'guest_name',
+			                            'manager_name',
+			                            'property_name',
+			                            'region_name'
+			];
 		}
 
 		$userSession           = new KrSession\User();
@@ -88,8 +106,7 @@ class ContractsModel extends ListModel
 	 */
 	public static function checkTag(string $tag): mixed
 	{
-		if ($tag)
-		{
+		if ($tag) {
 			$db    = KrFactory::getDatabase();
 			$query = $db->getQuery(true);
 
@@ -120,8 +137,7 @@ class ContractsModel extends ListModel
 		$db    = KrFactory::getDatabase();
 		$query = $db->getQuery(true);
 
-		$query->select('GREATEST(MAX(' . $db->qn('c.created_at') . '), MAX(' . $db->qn('c.updated_at') . '))  as '
-			. $db->qn('maxdate'))
+		$query->select('GREATEST(MAX(' . $db->qn('c.created_at') . '), MAX(' . $db->qn('c.updated_at') . '))  as ' . $db->qn('maxdate'))
 		      ->select($db->qn('c.id', 'cid'))
 		      ->from($db->qn('#__knowres_contract', 'c'))
 		      ->where($db->qn('c.state') . '=1')
@@ -180,20 +196,16 @@ class ContractsModel extends ListModel
 		$query->select('(' . $subQueryContractpayment->__toString() . ') ' . $db->q('payments'));
 		$query->select('(' . $subQueryContractpayment1->__toString() . ') ' . $db->q('unconfirmed'));
 
-		if ($data['guest'])
-		{
-			$query->select($db->qn(array(
-				'g.firstname',
-				'g.surname',
-				'g.email',
-			)));
+		if ($data['guest']) {
+			$query->select($db->qn(['g.firstname',
+			                        'g.surname',
+			                        'g.email'
+			]));
 		}
 
-		if ($data['owner'])
-		{
-			$query->select($db->qn([
-				'o.name',
-				'o.commission'
+		if ($data['owner']) {
+			$query->select($db->qn(['o.name',
+			                        'o.commission'
 			]));
 		}
 
@@ -202,52 +214,44 @@ class ContractsModel extends ListModel
 		$query->join('LEFT',
 			$db->qn('#__knowres_property', 'p') . 'ON' . $db->qn('p.id') . '=' . $db->qn('a.property_id'));
 
-		$query->join('LEFT',
-			$db->qn('#__knowres_agent', 'ag') . 'ON' . $db->qn('ag.id') . '=' . $db->qn('a.agent_id'));
+		$query->join('LEFT', $db->qn('#__knowres_agent', 'ag') . 'ON' . $db->qn('ag.id') . '=' . $db->qn('a.agent_id'));
 
 		$query->join('LEFT',
 			$db->qn('#__knowres_service', 'i') . 'ON' . $db->qn('i.id') . '=' . $db->qn('a.service_id'));
 
-		$query->join('LEFT',
-			$db->qn('#__knowres_region', 'r') . 'ON' . $db->qn('r.id') . '=' . $db->qn('p.region_id'));
+		$query->join('LEFT', $db->qn('#__knowres_region', 'r') . 'ON' . $db->qn('r.id') . '=' . $db->qn('p.region_id'));
 
-		if ($data['guest'])
-		{
+		if ($data['guest']) {
 			$query->join('LEFT',
 				$db->qn('#__knowres_guest', 'g') . 'ON' . $db->qn('g.id') . '=' . $db->qn('a.guest_id'));
 		}
 
-		if ($data['owner'])
-		{
+		if ($data['owner']) {
 			$query->join('LEFT',
-				$db->qn('#__knowres_owner', 'o') . ' ON ' . $db->qn('o.id') . '=' . $db->qn('p.owner_id'));
+				$db->qn('#__knowres_owner', 'o') . 'ON' . $db->qn('o.id') . '=' . $db->qn('p.owner_id'));
 		}
 
 		$query->where($db->qn('a.state') . '=1');
 		$query = self::filterProperty($db, $query, $data['property_id']);
 
 		$filter_region_id = $data['region_id'];
-		if (is_numeric($filter_region_id) && $filter_region_id > 0)
-		{
+		if (is_numeric($filter_region_id) && $filter_region_id > 0) {
 			$query->where($db->qn('p.region_id') . '=' . (int) $filter_region_id);
 		}
 
 		$filter_agent_id = $data['agent_id'];
-		if (is_numeric($filter_agent_id))
-		{
+		if (is_numeric($filter_agent_id)) {
 			$query->where($db->qn('a.agent_id') . '=' . (int) $filter_agent_id);
 		}
 
 		$query->where($db->qn('a.black_booking') . '=0');
 
-		if (!$data['cancelled'])
-		{
+		if (!$data['cancelled']) {
 			$query->where($db->qn('a.cancelled') . '=0');
 		}
 
 		$query->group($db->qn('id'));
-		$query->having($db->qn('payments') . '<>' . $db->qn('fees') . '+' . $db->qn('a.contract_total') . ' OR '
-			. $db->qn('unconfirmed') . '<> 0');
+		$query->having($db->qn('payments') . '<>' . $db->qn('fees') . '+' . $db->qn('a.contract_total') . ' OR ' . $db->qn('unconfirmed') . '<> 0');
 		$query->order($db->qn('a.arrival'));
 
 		$db->setQuery($query);
@@ -270,37 +274,30 @@ class ContractsModel extends ListModel
 		$query = $db->getQuery(true);
 
 		$query->select($this->getState('list.select', 'a.*'));
-		$query->select($db->quoteName('p.property_name', 'property_name'));
-		$query->select($db->quoteName('ag.name', 'agent_name'));
-		$query->select($db->quoteName('i.name', 'service_name'));
-		$query->select($db->quoteName('r.id', 'region_id'));
+		$query->select($db->qn('p.property_name', 'property_name'));
+		$query->select($db->qn('ag.name', 'agent_name'));
+		$query->select($db->qn('i.name', 'service_name'));
+		$query->select($db->qn('r.id', 'region_id'));
 
-		if ($data['guest'])
-		{
-			$query->select($db->qn(array(
-				'g.firstname',
-				'g.surname',
-				'g.email',
-				'g.country_id'
-			)));
+		if ($data['guest']) {
+			$query->select($db->qn(['g.firstname',
+			                        'g.surname',
+			                        'g.email',
+			                        'g.country_id'
+			]));
 			$query->select($db->qn('g.document_id', 'guest_document_id'));
 		}
 
-		if ($data['referral'])
-		{
-			$query->select($db->qn(array(
-				'g.referral_id',
-				'g.referral_info'
-			)));
+		if ($data['referral']) {
+			$query->select($db->qn(['g.referral_id',
+			                        'g.referral_info'
+			]));
 		}
 
-		if ($data['owner'] || (int) $data['owner_id'] > 0)
-		{
-			$query->select($db->qn(array(
-				'o.name',
-				'o.commission'
-			)));
-
+		if ($data['owner'] || (int) $data['owner_id'] > 0) {
+			$query->select($db->qn(['o.name',
+			                        'o.commission'
+			]));
 			$query->select($db->qn('o.document_id', 'owner_document_id'));
 		}
 
@@ -320,14 +317,12 @@ class ContractsModel extends ListModel
 		$query->join('LEFT',
 			$db->qn('#__knowres_region', 'r') . ' ON ' . $db->qn('r.id') . '=' . $db->qn('p.region_id'));
 
-		if ($data['guest'] || $data['referral'])
-		{
+		if ($data['guest'] || $data['referral']) {
 			$query->join('LEFT',
 				$db->qn('#__knowres_guest', 'g') . ' ON ' . $db->qn('g.id') . '=' . $db->qn('a.guest_id'));
 		}
 
-		if ($data['owner'] || (int) $data['owner_id'] > 0)
-		{
+		if ($data['owner'] || (int) $data['owner_id'] > 0) {
 			$query->join('LEFT',
 				$db->qn('#__knowres_owner', 'o') . ' ON ' . $db->qn('o.id') . '=' . $db->qn('p.owner_id'));
 		}
@@ -335,51 +330,35 @@ class ContractsModel extends ListModel
 		$query = self::filterProperty($db, $query, $data['property_id']);
 
 		$filter_region_id = $data['region_id'];
-		if ($filter_region_id)
-		{
-			if (is_numeric($filter_region_id))
-			{
-				$query->where('p.region_id = ' . (int) $filter_region_id);
-			}
+		if ($filter_region_id && is_numeric($filter_region_id)) {
+			$query->where('p.region_id = ' . (int) $filter_region_id);
 		}
 
 		$filter_agent_id = $data['agent_id'];
-		if ($filter_agent_id)
-		{
-			if (is_numeric($filter_agent_id))
-			{
-				$query->where('a.agent_id = ' . (int) $filter_agent_id);
-			}
+		if ($filter_agent_id && is_numeric($filter_agent_id)) {
+			$query->where('a.agent_id = ' . (int) $filter_agent_id);
 		}
 
 		$filter_owner_id = $data['owner_id'];
-		if ($filter_owner_id)
-		{
-			if (is_numeric($filter_owner_id))
-			{
-				$query->where($db->qn('o.id') . '=' . (int) $filter_owner_id);
-			}
+		if ($filter_owner_id && is_numeric($filter_owner_id)) {
+			$query->where($db->qn('o.id') . '=' . (int) $filter_owner_id);
 		}
 
-		if (!$data['cancelled'])
-		{
+		if (!$data['cancelled']) {
 			$query->where($db->qn('a.cancelled') . ' = 0');
 		}
 
-		if ($data['inresidence'])
-		{
+		if ($data['inresidence']) {
 			$query->where($db->qn('a.arrival') . ' <= ' . $db->q($data['valid_from']));
 			$query->where($db->qn('a.departure') . ' >= ' . $db->q($data['valid_from']));
 		}
-		else if (!$data['datetype'])
-		{
+		else if (!$data['datetype']) {
 			$ts_a = $data['valid_from'] . ' 00:00:00';
 			$ts_d = $data['valid_to'] . ' 23:59:59';
 			$query->where($db->qn('a.created_at') . ' >= ' . $db->q($ts_a));
 			$query->where($db->qn('a.created_at') . ' <= ' . $db->q($ts_d));
 		}
-		else
-		{
+		else {
 			$query->where($db->qn('a.arrival') . ' >= ' . $db->q($data['valid_from']));
 			$query->where($db->qn('a.arrival') . ' <= ' . $db->q($data['valid_to']));
 		}
@@ -403,13 +382,18 @@ class ContractsModel extends ListModel
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
-		$query->select($db->qn(['a.id', 'a.property_id', 'p.property_name', 'g.adults', 'g.children', 'g.guestinfo']));
+		$query->select($db->qn(['a.id',
+		                        'a.property_id',
+		                        'p.property_name',
+		                        'g.adults',
+		                        'g.children',
+		                        'g.guestinfo'
+		]));
 		$query->from($db->qn('#__knowres_contract', 'a'))
 		      ->join('LEFT',
 			      $db->qn('#__knowres_property', 'p') . 'ON' . $db->qn('p.id') . '=' . $db->qn('a.property_id'))
-		      ->join('LEFT',
-			      $db->qn('#__knowres_contract_guestdata', 'g') . 'ON' . $db->qn('g.contract_id') . '='
-			      . $db->qn('a.id'))
+		      ->join('LEFT', $db->qn('#__knowres_contract_guestdata',
+				      'g') . 'ON' . $db->qn('g.contract_id') . '=' . $db->qn('a.id'))
 		      ->where($db->qn('a.arrival') . '=' . $db->q($arrival))
 		      ->where($db->qn('a.cancelled') . '=0')
 		      ->where($db->qn('a.black_booking') . '=0')
@@ -504,8 +488,7 @@ class ContractsModel extends ListModel
 	public function getBookedDates(mixed $properties, ?string $from = null, bool $array = false, int $sort = 0,
 		bool $published = true): array
 	{
-		if (is_null($from))
-		{
+		if (is_null($from)) {
 			$from = TickTock::getDate();
 		}
 
@@ -514,6 +497,7 @@ class ContractsModel extends ListModel
 
 		$q = $db->getQuery(true);
 		$q->select($db->qn('a.id', 'id'))
+		  ->select($db->qn('a.tag', 'tag'))
 		  ->select($db->qn('a.arrival', 'arrival'))
 		  ->select($db->qn('a.departure', 'departure'))
 		  ->select($db->qn('a.service_id', 'service_id'))
@@ -526,26 +510,21 @@ class ContractsModel extends ListModel
 		  ->where($db->qn('a.state') . '=1')
 		  ->where($db->qn('a.departure') . '>=' . $db->q($from));
 
-		if ($published)
-		{
+		if ($published) {
 			$q->where($db->qn('property.state') . '=1');
 		}
 
-		if (!empty($this->user_properties))
-		{
+		if (!empty($this->user_properties)) {
 			$q->where($db->qn('a.property_id') . ' IN (' . $this->user_properties . ')');
 		}
 
-		if (is_numeric($properties))
-		{
+		if (is_numeric($properties)) {
 			$q->where($db->qn('a.property_id') . '=' . (int) $properties);
 		}
-		else if (is_array($properties))
-		{
+		else if (is_array($properties)) {
 			$q->where($db->qn('a.property_id') . ' IN (' . implode(',', array_map('intval', $properties)) . ')');
 		}
-		else if (is_string($properties) && strlen($properties) > 0)
-		{
+		else if (is_string($properties) && strlen($properties) > 0) {
 			$ids = explode(',', $properties);
 			$q->where($db->qn('a.property_id') . ' IN (' . implode(',', array_map('intval', $ids)) . ')');
 		}
@@ -555,47 +534,38 @@ class ContractsModel extends ListModel
 		$q->select($db->qn('guest.firstname', 'firstname'));
 		$q->select($db->qn('guest.surname', 'surname'));
 		$q->join('LEFT',
-			$db->qn('#__knowres_guest', 'guest') . ' ON ' . $db->qn('guest.id') . ' = ' . $db->qn('a.guest_id'));
+			$db->qn('#__knowres_guest', 'guest') . 'ON' . $db->qn('guest.id') . '=' . $db->qn('a.guest_id'));
 
 		$q->select($db->qn('agent.name', 'agent_name'));
 		$q->join('LEFT',
-			$db->qn('#__knowres_agent', 'agent') . ' ON ' . $db->qn('agent.id') . ' = ' . $db->qn('a.agent_id'));
+			$db->qn('#__knowres_agent', 'agent') . 'ON' . $db->qn('agent.id') . '=' . $db->qn('a.agent_id'));
 
 		$q->select($db->qn('property.property_name', 'property_name'));
-		$q->join('LEFT',
-			$db->qn('#__knowres_property', 'property') . ' ON ' . $db->qn('property.id') . ' = '
-			. $db->qn('a.property_id'));
+		$q->select($db->qn('property.checkin_time', 'checkin_time'));
+		$q->select($db->qn('property.checkout_time', 'checkout_time'));
+		$q->join('LEFT', $db->qn('#__knowres_property',
+				'property') . 'ON' . $db->qn('property.id') . '=' . $db->qn('a.property_id'));
 
 		$q->select($db->qn('service.name', 'service_name'));
 		$q->join('LEFT',
-			$db->qn('#__knowres_service', 'service') . ' ON ' . $db->qn('service.id') . ' = '
-			. $db->qn('a.service_id'));
+			$db->qn('#__knowres_service', 'service') . 'ON' . $db->qn('service.id') . '=' . $db->qn('a.service_id'));
 
-		if (!$sort)
-		{
-			$q->order($db->qn('property_id'))
-			  ->order($db->qn('arrival'));
+		if (!$sort) {
+			$q->order($db->qn('property_id'))->order($db->qn('arrival'));
 		}
-		else if ($sort == 1)
-		{
-			$q->order($db->qn('property_name'))
-			  ->order($db->qn('arrival'));
+		else if ($sort == 1) {
+			$q->order($db->qn('property_name'))->order($db->qn('arrival'));
 		}
-		else if ($sort == 2)
-		{
-			$q->order($db->qn('property_id'))
-			  ->order($db->qn('black_booking') . ' DESC')
-			  ->order($db->qn('arrival'));
+		else if ($sort == 2) {
+			$q->order($db->qn('property_id'))->order($db->qn('black_booking') . 'DESC')->order($db->qn('arrival'));
 		}
 
 		$db->setQuery($q);
 
-		if ($array)
-		{
+		if ($array) {
 			return $db->loadAssocList();
 		}
-		else
-		{
+		else {
 			return $db->loadObjectList();
 		}
 	}
@@ -617,15 +587,13 @@ class ContractsModel extends ListModel
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
-		$query->select($db->qn(array(
-			'c.id',
-			'c.tag',
-			'c.arrival',
-			'c.departure',
-			'c.property_id',
-			'c.cancelled'
-		)));
-
+		$query->select($db->qn(['c.id',
+		                        'c.tag',
+		                        'c.arrival',
+		                        'c.departure',
+		                        'c.property_id',
+		                        'c.cancelled'
+		]));
 		$query->select($db->qn('i.service_id', 'service_id'))
 		      ->select($db->qn('i.foreign_key', 'foreign_key'))
 		      ->from($db->qn('#__knowres_contract', 'c'));
@@ -637,23 +605,19 @@ class ContractsModel extends ListModel
 		      ->where($db->qn('c.black_booking') . '=0')
 		      ->where($db->qn('c.state') . '=1');
 
-		if ($service_id)
-		{
+		if ($service_id) {
 			$query->where($db->qn('c.service_id') . '=' . $service_id);
 		}
 
 		$filter_property_id = $properties;
-		if (is_numeric($filter_property_id))
-		{
+		if (is_numeric($filter_property_id)) {
 			$query->where($db->qn('c.property_id') . '=' . (int) $filter_property_id);
 		}
-		else if (is_array($filter_property_id))
-		{
-			$query->where($db->qn('c.property_id') . ' IN (' . implode(',', array_map('intval', $filter_property_id))
-				. ')');
+		else if (is_array($filter_property_id)) {
+			$query->where($db->qn('c.property_id') . ' IN (' . implode(',',
+					array_map('intval', $filter_property_id)) . ')');
 		}
-		else if (is_string($filter_property_id) && strlen($filter_property_id) > 0)
-		{
+		else if (is_string($filter_property_id) && strlen($filter_property_id) > 0) {
 			$ids = explode(',', $filter_property_id);
 			$query->where($db->qn('c.property_id') . ' IN (' . implode(',', array_map('intval', $ids)) . ')');
 		}
@@ -708,19 +672,16 @@ class ContractsModel extends ListModel
 		      ->where($db->qn('black_booking') . '=0')
 		      ->where($db->qn('state') . '=1');
 
-		if (is_numeric($booking_status))
-		{
+		if (is_numeric($booking_status)) {
 			$query->where($db->qn('booking_status') . '=' . (int) $booking_status);
 		}
-		else if (is_string($booking_status) && strlen($booking_status))
-		{
+		else if (is_string($booking_status) && strlen($booking_status)) {
 			$values = explode(',', $booking_status);
 			$query->where($db->qn('booking_status') . ' IN (' . implode(',', array_map('intval', $values)) . ')');
 		}
-		else if (is_countable($booking_status) && count($booking_status))
-		{
-			$query->where($db->qn('booking_status') . ' IN (' . implode(',', array_map('intval', $booking_status))
-				. ')');
+		else if (is_countable($booking_status) && count($booking_status)) {
+			$query->where($db->qn('booking_status') . ' IN (' . implode(',',
+					array_map('intval', $booking_status)) . ')');
 		}
 
 		$query->order($db->qn('id'));
@@ -744,17 +705,37 @@ class ContractsModel extends ListModel
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
-		$query->select($db->qn([
-			'a.id', 'a.agent_id', 'a.agency_id',
-			'a.arrival', 'a.balance_date', 'a.booking_status',
-			'a.contract_total', 'a.currency', 'a.departure',
-			'a.guests', 'a.adults', 'a.children', 'a.child_ages',
-			'a.guest_id', 'a.property_id',
-			'a.qkey', 'a.tag',
-			'p.checkin_time', 'p.checkout_time',
-			'p.property_name', 'p.property_aka', 'p.type_id',
-			'p.lat', 'p.lng', 'p.lat_actual', 'p.lng_actual',
-			'p.property_street', 'p.property_area', 'p.town_id', 'p.region_id', 'p.country_id'
+		$query->select($db->qn(['a.id',
+		                        'a.agent_id',
+		                        'a.agency_id',
+		                        'a.arrival',
+		                        'a.balance_date',
+		                        'a.booking_status',
+		                        'a.contract_total',
+		                        'a.currency',
+		                        'a.departure',
+		                        'a.guests',
+		                        'a.adults',
+		                        'a.children',
+		                        'a.child_ages',
+		                        'a.guest_id',
+		                        'a.property_id',
+		                        'a.qkey',
+		                        'a.tag',
+		                        'p.checkin_time',
+		                        'p.checkout_time',
+		                        'p.property_name',
+		                        'p.property_aka',
+		                        'p.type_id',
+		                        'p.lat',
+		                        'p.lng',
+		                        'p.lat_actual',
+		                        'p.lng_actual',
+		                        'p.property_street',
+		                        'p.property_area',
+		                        'p.town_id',
+		                        'p.region_id',
+		                        'p.country_id'
 		]));
 
 		$query->from($db->qn('#__knowres_contract', 'a'))
@@ -766,9 +747,8 @@ class ContractsModel extends ListModel
 		      ->join('LEFT', $db->qn('#__knowres_guest', 'g') . 'ON' . $db->qn('g.id') . '=' . $db->qn('a.guest_id'));
 
 		$query->select($db->qn('gd.id', 'guestdata_id'))
-		      ->join('LEFT',
-			      $db->qn('#__knowres_contract_guestdata', 'gd') . ' ON ' . $db->qn('gd.contract_id') . '='
-			      . $db->qn('a.id'));
+		      ->join('LEFT', $db->qn('#__knowres_contract_guestdata',
+				      'gd') . 'ON' . $db->qn('gd.contract_id') . '=' . $db->qn('a.id'));
 
 		$query->select($db->qn('ag.name', 'agent_name'))
 		      ->join('LEFT', $db->qn('#__knowres_agent', 'ag') . 'ON' . $db->qn('a.agent_id') . '=' . $db->qn('ag.id'));
@@ -804,8 +784,14 @@ class ContractsModel extends ListModel
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
-		$query->select($db->qn(['id', 'agent_id', 'arrival', 'departure', 'room_total', 'created_at', 'created_by']
-		));
+		$query->select($db->qn(['id',
+		                        'agent_id',
+		                        'arrival',
+		                        'departure',
+		                        'room_total',
+		                        'created_at',
+		                        'created_by'
+		]));
 
 		$query->from($db->qn('#__knowres_contract'))
 		      ->where($db->qn('property_id') . '=' . $property_id)
@@ -873,12 +859,10 @@ class ContractsModel extends ListModel
 		      ->where($db->qn('booking_status') . '=40')
 		      ->where($db->qn('departure') . '=' . $db->q($departure));
 
-		if (!$reminder)
-		{
+		if (!$reminder) {
 			$query->where($db->qn('review_requested') . '=0');
 		}
-		else
-		{
+		else {
 			$query->where($db->qn('review_requested') . '=1');
 		}
 
@@ -901,9 +885,10 @@ class ContractsModel extends ListModel
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
-		$query->select($db->qn(array('c.id',
-		                             'c.on_request',
-		                             'c.created_at')));
+		$query->select($db->qn(['c.id',
+		                        'c.on_request',
+		                        'c.created_at'
+		]));
 		$query->from($db->qn('#__knowres_contract', 'c'))
 		      ->where($db->qn('c.on_request') . '>0')
 		      ->where($db->qn('c.booking_status') . '=1')
@@ -932,26 +917,24 @@ class ContractsModel extends ListModel
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
-		$query->select($db->qn(array(
-			'c.id',
-			'c.arrival',
-			'c.departure',
-			'g.firstname',
-			'g.surname',
-			'g.country_id'
-		)))
+		$query->select($db->qn(['c.id',
+		                        'c.arrival',
+		                        'c.departure',
+		                        'g.firstname',
+		                        'g.surname',
+		                        'g.country_id'
+		]))
 		      ->from($db->qn('#__knowres_contract', 'c'))
-		      ->join('LEFT',
-			      $db->qn('#__knowres_guest', 'g') . ' ON ' . $db->qn('g.id') . '=' . $db->qn('c.guest_id'))
+		      ->join('LEFT', $db->qn('#__knowres_guest', 'g') . 'ON' . $db->qn('g.id') . '=' . $db->qn('c.guest_id'))
 		      ->select($db->qn('g.firstname'))
 		      ->select($db->qn('g.surname'))
 		      ->select($db->qn('g.country_id'))
 		      ->where($db->qn('c.property_id') . '=' . $property_id)
-		      ->where($db->qn('c.state') . ' = 1')
-		      ->where($db->qn('c.departure') . ' >= ' . $db->q($today))
-		      ->where($db->qn('c.created_at') . ' >= ' . $db->q($created_at))
-		      ->where($db->qn('c.black_booking') . ' = 0')
-		      ->where($db->qn('c.cancelled') . ' = 0')
+		      ->where($db->qn('c.state') . '=1')
+		      ->where($db->qn('c.departure') . '>=' . $db->q($today))
+		      ->where($db->qn('c.created_at') . '>=' . $db->q($created_at))
+		      ->where($db->qn('c.black_booking') . '=0')
+		      ->where($db->qn('c.cancelled') . '=0')
 		      ->order($db->qn('c.created_at') . 'DESC')
 		      ->setLimit($limit);
 		$db->setQuery($query);
@@ -971,8 +954,7 @@ class ContractsModel extends ListModel
 		$db    = KrFactory::getDatabase();
 		$query = $db->getQuery(true);
 
-		$query->select('GREATEST(MAX(' . $db->qn('c.created_at') . '), MAX(' . $db->qn('c.updated_at') . '))  as '
-			. $db->qn('maxdate'))
+		$query->select('GREATEST(MAX(' . $db->qn('c.created_at') . '), MAX(' . $db->qn('c.updated_at') . '))  as ' . $db->qn('maxdate'))
 		      ->select($db->qn('c.property_id', 'pid'))
 		      ->from($db->qn('#__knowres_contract', 'c'))
 		      ->where($db->qn('c.state') . '=1')
@@ -998,13 +980,27 @@ class ContractsModel extends ListModel
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
-		$query->select($db->qn([
-			'c.id', 'c.booking_status', 'c.contract_total', 'c.on_request', 'c.tag',
-			'c.arrival', 'c.departure', 'c.guest_id', 'c.property_id', 'c.booking_status',
-			'c.currency', 'c.cancelled_timestamp', 'c.expiry_date', 'c.balance_date', 'c.created_at',
-			'cp.service_id', 'cp.service_ref',
-			'g.firstname', 'g.surname', 'g.customer_ref',
-			'p.property_name'
+		$query->select($db->qn(['c.id',
+		                        'c.booking_status',
+		                        'c.contract_total',
+		                        'c.on_request',
+		                        'c.tag',
+		                        'c.arrival',
+		                        'c.departure',
+		                        'c.guest_id',
+		                        'c.property_id',
+		                        'c.booking_status',
+		                        'c.currency',
+		                        'c.cancelled_timestamp',
+		                        'c.expiry_date',
+		                        'c.balance_date',
+		                        'c.created_at',
+		                        'cp.service_id',
+		                        'cp.service_ref',
+		                        'g.firstname',
+		                        'g.surname',
+		                        'g.customer_ref',
+		                        'p.property_name'
 		]));
 
 		$query->from($db->qn('#__knowres_contract', 'c'))
@@ -1013,27 +1009,15 @@ class ContractsModel extends ListModel
 		      ->join('LEFT', $db->qn('#__knowres_guest', 'g') . 'ON' . $db->qn('g.id') . '=' . $db->qn('c.guest_id'))
 		      ->join('LEFT',
 			      $db->qn('#__knowres_property', 'p') . 'ON' . $db->qn('p.id') . '=' . $db->qn('c.property_id'))
-		      ->join('LEFT',
-			      $db->qn('#__knowres_contract_payment', 'cp') . 'ON' . $db->qn('cp.contract_id') . '='
-			      . $db->qn('c.id') . 'AND' . $db->qn('cp.state') . '=0');
+		      ->join('LEFT', $db->qn('#__knowres_contract_payment',
+				      'cp') . 'ON' . $db->qn('cp.contract_id') . '=' . $db->qn('c.id') . 'AND' . $db->qn('cp.state') . '=0');
 
 		$query->where($db->qn('c.departure') . '>=' . $db->q($today))
 		      ->where($db->qn('c.black_booking') . '=0')
 		      ->where($db->qn('c.state') . '=1')
-		      ->where('(( c.booking_status = 0 )'
-			      . ' OR (c.booking_status = 1 )'
-			      . ' OR (c.booking_status = 5 )'
-			      . ' OR (c.booking_status = 10 AND c.created_at > ' . $db->q($yesterday) . ')'
-			      . ' OR (c.booking_status = 40 AND c.created_at > ' . $db->q($yesterday) . ')'
-			      . ' OR (c.booking_status = 39 AND c.created_at > ' . $db->q($yesterday) . ')'
-			      . ' OR (c.booking_status = 30) OR (c.booking_status = 35 )'
-			      . ' OR (c.cancelled <> 0 AND c.cancelled_timestamp > ' . $db->q($yesterday) . ')'
-			      . ' OR (c.booking_status >= 39 AND c.booking_status <= 40 AND c.arrival = ' . $db->q($today) . ')'
-			      . ' OR (c.booking_status >= 39 AND c.booking_status <= 40 AND c.departure = ' . $db->q($today)
-			      . '))');
+		      ->where('(( c.booking_status = 0 )' . ' OR (c.booking_status = 1 )' . ' OR (c.booking_status = 5 )' . ' OR (c.booking_status = 10 AND c.created_at > ' . $db->q($yesterday) . ')' . ' OR (c.booking_status = 40 AND c.created_at > ' . $db->q($yesterday) . ')' . ' OR (c.booking_status = 39 AND c.created_at > ' . $db->q($yesterday) . ')' . ' OR (c.booking_status = 30) OR (c.booking_status = 35 )' . ' OR (c.cancelled <> 0 AND c.cancelled_timestamp > ' . $db->q($yesterday) . ')' . ' OR (c.booking_status >= 39 AND c.booking_status <= 40 AND c.arrival = ' . $db->q($today) . ')' . ' OR (c.booking_status >= 39 AND c.booking_status <= 40 AND c.departure = ' . $db->q($today) . '))');
 
-		if (!empty($this->user_properties))
-		{
+		if (!empty($this->user_properties)) {
 			$query->where($db->qn('c.property_id') . ' IN (' . $this->user_properties . ')');
 		}
 
@@ -1061,18 +1045,14 @@ class ContractsModel extends ListModel
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
-		$query->select($db->qn(array(
-			'a.tag',
-			'a.arrival',
-			'a.departure',
-			'a.black_booking',
-			'a.id'
-		)));
+		$query->select($db->qn(['a.tag',
+		                        'a.arrival',
+		                        'a.departure',
+		                        'a.black_booking',
+		                        'a.id'
+		]))->from($db->qn('#__knowres_contract', 'a'));
 
-		$query->from($db->qn('#__knowres_contract', 'a'));
-
-		if ($id)
-		{
+		if ($id) {
 			$query->where($db->qn('a.id') . '<>' . $id);
 		}
 
@@ -1102,9 +1082,10 @@ class ContractsModel extends ListModel
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
-		$query->select($db->qn(array('a.id',
-		                             'a.guest_id')));
-		$query->from($db->qn('#__knowres_contract', 'a'))
+		$query->select($db->qn(['a.id',
+		                        'a.guest_id'
+		]))
+		      ->from($db->qn('#__knowres_contract', 'a'))
 		      ->where($db->qn('a.created_at') . '<' . $db->q($ts))
 		      ->where($db->qn('a.state') . '=0')
 		      ->order($db->qn('a.id'));
@@ -1128,19 +1109,17 @@ class ContractsModel extends ListModel
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
-		$query->select($db->qn(array(
-			'c.arrival',
-			'c.departure'
-		)))
-		      ->from($db->qn('#__knowres_contract', 'c'));
-
-		$query->select($db->qn('guest.firstname', 'firstname'))
+		$query->select($db->qn(['c.arrival',
+		                        'c.departure'
+		]))
+		      ->from($db->qn('#__knowres_contract', 'c'))
+		      ->select($db->qn('guest.firstname', 'firstname'))
 		      ->select($db->qn('guest.surname', 'surname'))
 		      ->select($db->qn('guest.email', 'email'))
 		      ->select($db->qn('guest.mobile', 'mobile'))
 		      ->select($db->qn('guest.mobile_country_id', 'mobile_country_id'));
 		$query->join('LEFT',
-			$db->qn('#__knowres_guest', 'guest') . ' ON ' . $db->qn('guest.id') . '=' . $db->qn('c.guest_id'));
+			$db->qn('#__knowres_guest', 'guest') . 'ON' . $db->qn('guest.id') . '=' . $db->qn('c.guest_id'));
 
 		$query->where($db->qn('c.id') . '=' . $id);
 		$query->setLimit(1);
@@ -1166,14 +1145,13 @@ class ContractsModel extends ListModel
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
-		$query->select($db->qn(array(
-			'c.id',
-			'c.arrival',
-			'c.departure',
-			'g.firstname',
-			'g.surname',
-			'g.country_id'
-		)))
+		$query->select($db->qn(['c.id',
+		                        'c.arrival',
+		                        'c.departure',
+		                        'g.firstname',
+		                        'g.surname',
+		                        'g.country_id'
+		]))
 		      ->from($db->qn('#__knowres_contract', 'c'))
 		      ->join('LEFT', $db->qn('#__knowres_guest', 'g') . ' ON ' . $db->qn('g.id') . '=' . $db->qn('c.guest_id'))
 		      ->select($db->qn('g.firstname'))
@@ -1208,7 +1186,7 @@ class ContractsModel extends ListModel
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
-		//TODO-v4.1 Check if join will work
+		//TODO-v4.2 Check if join will work
 		$query->select($db->qn('c.id'));
 		$query->from($db->qn('#__knowres_contract', 'c'))
 		      ->where($db->qn('c.property_id') . '=' . $property_id)
@@ -1217,16 +1195,14 @@ class ContractsModel extends ListModel
 		      ->where($db->qn('c.state') . '=1')
 		      ->where($db->qn('c.cancelled') . '=0');
 
-		if ($edit_id)
-		{
+		if ($edit_id) {
 			$query->where($db->qn('c.id') . '<>' . $edit_id);
 		}
 
 		$query->setLimit(1);
 		$db->setQuery($query);
 		$id = $db->loadResult();
-		if (!empty($id))
-		{
+		if (!empty($id)) {
 			return false;
 		}
 
@@ -1240,8 +1216,7 @@ class ContractsModel extends ListModel
 		      ->setLimit(1);
 		$db->setQuery($query);
 		$id = $db->loadResult();
-		if (!empty($id))
-		{
+		if (!empty($id)) {
 			return false;
 		}
 
@@ -1300,138 +1275,112 @@ class ContractsModel extends ListModel
 
 		$query->select('(' . self::transSQ($db, 'region', 'p.region_id') . ') AS ' . $db->q('region_name'));
 
-		if (!empty($this->user_properties))
-		{
+		if (!empty($this->user_properties)) {
 			$query->where($db->qn('a.property_id') . ' IN (' . $this->user_properties . ')');
 		}
 
 		$filter_property_id = $this->state->get('filter.property_id');
-		if ($filter_property_id)
-		{
-			if (is_numeric($filter_property_id))
-			{
+		if ($filter_property_id) {
+			if (is_numeric($filter_property_id)) {
 				$query->where('a.property_id = ' . (int) $filter_property_id);
 			}
-			else if (is_string($filter_property_id) && strlen($filter_property_id) > 0)
-			{
+			else if (is_string($filter_property_id) && strlen($filter_property_id) > 0) {
 				$ids = explode(',', $filter_property_id);
 				$query->where('a.property_id IN (' . implode(',', array_map('intval', $ids)) . ')');
 			}
 		}
 
 		$state = $this->getState('filter.state');
-		if (is_numeric($state))
-		{
+		if (is_numeric($state)) {
 			$query->where($db->qn('a.state') . '=' . (int) $state);
 		}
-		else if ($state == '')
-		{
+		else if ($state == '') {
 			$query->where($db->qn('a.state') . '= 1');
 		}
 
 		$filter_arrival = $this->state->get('filter.arrival');
-		if ($filter_arrival)
-		{
+		if ($filter_arrival) {
 			$query->where($db->qn('a.arrival') . ' >= ' . $db->q($filter_arrival));
 		}
 
 		$filter_departure = $this->state->get('filter.departure');
-		if ($filter_departure)
-		{
+		if ($filter_departure) {
 			$query->where($db->qn('a.departure') . '>=' . $db->q($filter_departure));
 		}
-		else
-		{
+		else {
 			$query->where($db->qn('a.departure') . '>=' . $db->q(TickTock::getDate()));
 		}
 
 		$filter_black_booking = $this->state->get('filter.black_booking');
-		if (is_numeric($filter_black_booking))
-		{
+		if (is_numeric($filter_black_booking)) {
 			$query->where($db->qn('a.black_booking') . '=' . (int) $filter_black_booking);
 		}
-		else if (is_string($filter_black_booking) && strlen($filter_black_booking))
-		{
+		else if (is_string($filter_black_booking) && strlen($filter_black_booking)) {
 			$values = explode(',', $filter_black_booking);
 			$query->where($db->qn('a.black_booking') . ' IN (' . implode(',', array_map('intval', $values)) . ')');
 		}
-		else
-		{
+		else {
 			$query->where($db->qn('a.black_booking') . '=0');
 		}
 
 		$cancelled = $this->state->get('filter.cancelled');
-		if (is_numeric($cancelled))
-		{
+		if (is_numeric($cancelled)) {
 			$query->where($db->qn('a.cancelled') . '=' . (int) $cancelled);
 		}
-		else if (is_string($cancelled) && strlen($cancelled))
-		{
+		else if (is_string($cancelled) && strlen($cancelled)) {
 			$values = explode(',', $cancelled);
 			$query->where($db->qn('a.cancelled') . ' IN (' . implode(',', array_map('intval', $values)) . ')');
 		}
-		else
-		{
+		else {
 			$query->where($db->qn('a.cancelled') . '=0');
 		}
 
 		$filter_booking_status = $this->state->get('filter.booking_status');
-		if (is_numeric($filter_booking_status))
-		{
+		if (is_numeric($filter_booking_status)) {
 			$query->where($db->qn('a.booking_status') . '=' . (int) $filter_booking_status);
 		}
 
 		$filter_guest_id = $this->state->get('filter.guest_id');
-		if ($filter_guest_id)
-		{
+		if ($filter_guest_id) {
 			$query->where($db->qn('a.guest_id') . '=' . (int) $filter_guest_id);
 		}
 
 		$filter_manager_id = $this->state->get('filter.manager_id');
-		if ($filter_manager_id)
-		{
+		if ($filter_manager_id) {
 			$query->where($db->qn('a.manager_id') . '=' . (int) $filter_manager_id);
 		}
 
 		$filter_agency_id = $this->state->get('filter.agency_id');
-		if ($filter_agency_id)
-		{
+		if ($filter_agency_id) {
 			$query->where($db->qn('a.agency_id') . '=' . (int) $filter_agency_id);
 		}
 
 		$filter_region_id = $this->state->get('filter.region_id');
-		if ($filter_region_id > 0)
-		{
+		if ($filter_region_id > 0) {
 			$query->where($db->qn('p.region_id') . '=' . (int) $filter_region_id);
 		}
 
 		$filter_owner_id = $this->state->get('filter.owner_id');
-		if ((int) $filter_owner_id > 0)
-		{
+		if ((int) $filter_owner_id > 0) {
 			$query->where($db->qn('p.owner_id') . '=' . (int) $filter_owner_id);
 		}
 
 		$filter_agent_id = $this->state->get('filter.agent_id');
-		if ((int) $filter_agent_id > 0)
-		{
+		if ((int) $filter_agent_id > 0) {
 			$query->where($db->qn('a.agent_id') . '=' . (int) $filter_agent_id);
 		}
 
 		$filter_created_at = $this->state->get('filter.created_at');
-		if ($filter_created_at)
-		{
+		if ($filter_created_at) {
 			$query->where($db->qn('a.created_at') . ' >= ' . $db->q($filter_created_at));
 		}
 
 		$search = $this->getState('filter.search');
-		if (!empty($search))
-		{
-			if (stripos($search, 'id:') === 0)
-			{
+		if (!empty($search)) {
+			if (stripos($search, 'id:') === 0) {
 				$query->where($db->qn('a.id') . '=' . (int) substr($search, 3));
 			}
-			else
-			{
+			else {
 				$search = $db->q('%' . $db->escape(trim($search), true) . '%');
 				$query->having('( guest_name LIKE ' . $search . ' OR ( a.tag LIKE ' . $search . ' ) )');
 			}
@@ -1439,8 +1388,7 @@ class ContractsModel extends ListModel
 
 		$orderCol  = $this->state->get('list.ordering');
 		$orderDirn = $this->state->get('list.direction');
-		if ($orderCol && $orderDirn)
-		{
+		if ($orderCol && $orderDirn) {
 			$query->order($db->escape($orderCol . ' ' . $orderDirn));
 		}
 
@@ -1544,6 +1492,7 @@ class ContractsModel extends ListModel
 	{
 		$q = $db->getQuery(true);
 		$q->select($db->qn('b.id', 'id'))
+		  ->select($db->q(null, 'tag'))
 		  ->select($db->qn('b.arrival', 'arrival'))
 		  ->select($db->qn('b.departure', 'departure'))
 		  ->select($db->qn('b.service_id', 'service_id'))
@@ -1556,38 +1505,35 @@ class ContractsModel extends ListModel
 		  ->select($db->q(null, 'agent_name'))
 		  ->from($db->qn('#__knowres_ical_block', 'b'));
 
-		$q->select('property.property_name AS property_name');
-		$q->join('LEFT',
-			$db->qn('#__knowres_property', 'property') . ' ON ' . $db->qn('property.id') . '='
-			. $db->qn('b.property_id'));
+		$q->select($db->qn('property.property_name', 'property_name'));
+		$q->select($db->qn('property.checkin_time', 'checkin_time'));
+		$q->select($db->qn('property.checkout_time', 'checkout_time'));
+		$q->join('LEFT', $db->qn('#__knowres_property',
+				'property') . 'ON' . $db->qn('property.id') . '=' . $db->qn('b.property_id'));
 
-		$q->select('service.name AS service_name');
+		$q->select($db->qn('service.name', 'service_name'));
 		$q->join('LEFT',
-			$db->qn('#__knowres_service', 'service') . ' ON ' . $db->qn('service.id') . '=' . $db->qn('b.service_id'));
+			$db->qn('#__knowres_service', 'service') . 'ON' . $db->qn('service.id') . '=' . $db->qn('b.service_id'));
 
-		if (!empty($this->user_properties))
-		{
+		if (!empty($this->user_properties)) {
 			$q->where($db->qn('b.property_id') . ' IN (' . $this->user_properties . ')');
 		}
 
-		if (is_numeric($properties))
-		{
+		if (is_numeric($properties)) {
 			$q->where($db->qn('b.property_id') . '=' . (int) $properties);
 		}
-		else if (is_array($properties))
-		{
+		else if (is_array($properties)) {
 			$q->where($db->qn('b.property_id') . ' IN (' . implode(',', array_map('intval', $properties)) . ')');
 		}
-		else if (is_string($properties) && strlen($properties) > 0)
-		{
-			$ids = explode(",", $properties);
+		else if (is_string($properties) && strlen($properties) > 0) {
+			$ids = explode(',', $properties);
 			$q->where($db->qn('b.property_id') . ' IN (' . implode(',', array_map('intval', $ids)) . ')');
 		}
 
-		if ($published)
-		{
+		if ($published) {
 			$q->where($db->qn('property.state') . '=1');
 		}
+
 		$q->where($db->qn('b.departure') . '>=' . $db->q($departure));
 
 		return $q;

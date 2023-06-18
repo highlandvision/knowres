@@ -84,20 +84,20 @@ class PropertyController extends BaseController
 	 */
 	#[NoReturn] public function ics(): void
 	{
-		$id     = KrMethods::inputInt('id', 0, 'get');
-		$action = KrMethods::inputString('action', '', 'get');
-		if (!$id)
-		{
+		$id = KrMethods::inputInt('id', 0, 'get');
+		if (!$id) {
 			exit('Invalid request');
 		}
 
+		$action = KrMethods::inputString('action', '', 'get');
+		$custom = KrMethods::inputString('custom', '', 'get');
+
 		$property = KrFactory::getAdminModel('property')->getItem($id);
-		if (!$property->id || $property->state != 1)
-		{
+		if (!$property->id || $property->state != 1) {
 			exit('Invalid property');
 		}
 
-		$propertyIcs = new PropertyIcs($property->id, $property->property_name);
+		$propertyIcs = new PropertyIcs($property->id, $property->property_name, $custom);
 		$propertyIcs->createIcs($action);
 
 		jexit();
@@ -128,8 +128,7 @@ class PropertyController extends BaseController
 		$view->params         = KrMethods::getParams();
 		$view->link           = SiteHelper::buildPropertyLink($id);
 
-		if (KrMethods::getParams()->get('review_ratings', 0))
-		{
+		if (KrMethods::getParams()->get('review_ratings', 0)) {
 			$view->ratings = KrFactory::getListModel('reviews')->getAvgReview($id);
 		}
 
@@ -146,8 +145,7 @@ class PropertyController extends BaseController
 	#[NoReturn] public function mobi(): void
 	{
 		$property_id = KrMethods::inputInt('pid');
-		if (!$property_id)
-		{
+		if (!$property_id) {
 			SiteHelper::redirectSearch();
 		}
 
@@ -181,24 +179,20 @@ class PropertyController extends BaseController
 		$arrival     = KrMethods::inputString('arrival');
 		$departure   = KrMethods::inputString('departure');
 
-		if (empty($property_id) || empty($arrival) || empty($departure))
-		{
+		if (empty($property_id) || empty($arrival) || empty($departure)) {
 			jexit();
 		}
 
-		$adults      = KrMethods::inputInt('adults');
-		$children    = KrMethods::inputInt('children');
-		$child_ages  = KrMethods::inputArray('child_ages');
+		$adults     = KrMethods::inputInt('adults');
+		$children   = KrMethods::inputInt('children');
+		$child_ages = KrMethods::inputArray('child_ages');
 
-		if (!KrFactory::getListModel('contracts')
-		              ->isPropertyAvailable($property_id, $arrival, $departure))
-		{
+		if (!KrFactory::getListModel('contracts')->isPropertyAvailable($property_id, $arrival, $departure)) {
 			$view->error = KrMethods::plain('COM_KNOWRES_ERROR_AVAILABILITY_CHANGED');
 			$view->display();
 		}
 
-		try
-		{
+		try {
 			$contractSession           = new KrSession\Contract();
 			$contractData              = $contractSession->getData();
 			$contractData->property_id = $property_id;
@@ -211,48 +205,41 @@ class PropertyController extends BaseController
 			$contractData->tax_total   = 0;
 			$contractData->taxes       = [];
 			$Hub                       = new Hub($contractData);
-		}
-		catch (UnexpectedValueException $e)
-		{
+		} catch (UnexpectedValueException $e) {
 			$view->error = $e->getMessage();
 			$view->display();
-		}
-		catch (Exception $e)
-		{
+		} catch (Exception $e) {
 			Logger::logme($e->getMessage());
 			$view->error = KrMethods::plain('COM_KNOWRES_NO_PRICE');
 			$view->display();
 		}
 
-		$searchSession           = new KrSession\Search();
-		$searchData              = $searchSession->getData();
-		$searchData->adults      = $adults;
-		$searchData->children    = $children;
-		$searchData->child_ages  = $child_ages;
-		$searchData->guests      = $adults + $children;
+		$searchSession          = new KrSession\Search();
+		$searchData             = $searchSession->getData();
+		$searchData->adults     = $adults;
+		$searchData->children   = $children;
+		$searchData->child_ages = $child_ages;
+		$searchData->guests     = $adults + $children;
 		$searchSession->setData($searchData);
 
-		$Hub                       = new Hub($contractData);
-		$computations = [
-			'base',
-			'dow',
-			'seasons',
-			'shortstay',
-			'longstay',
-			'ratemarkup',
-			'discount',
-			'tax',
-			'extras',
-			'deposit',
-			'paymentdates',
+		$Hub          = new Hub($contractData);
+		$computations = ['base',
+		                 'dow',
+		                 'seasons',
+		                 'shortstay',
+		                 'longstay',
+		                 'ratemarkup',
+		                 'discount',
+		                 'tax',
+		                 'extras',
+		                 'deposit',
+		                 'paymentdates',
 		];
 
-		try
-		{
+		try {
 			$Hub->compute($computations);
 			$gross = $Hub->getValue('room_total_gross');
-			if (!$gross)
-			{
+			if (!$gross) {
 				$view->error = KrMethods::plain('COM_KNOWRES_QUOTE_NO_RATES_YET');
 				$view->display();
 			}
@@ -262,9 +249,7 @@ class PropertyController extends BaseController
 			$view->quote = $Hub;
 			$view->error = '';
 			$view->display();
-		}
-		catch (Exception)
-		{
+		} catch (Exception) {
 			$view->error = KrMethods::plain('COM_KNOWRES_QUOTE_NO_RATES_YET');
 			$view->display();
 		}
@@ -279,28 +264,24 @@ class PropertyController extends BaseController
 	public function terms(): void
 	{
 		$id = KrMethods::inputInt('id', 0, 'get');
-		if ($id)
-		{
+		if ($id) {
 			/** @var TermsView $view */
 			$view             = $this->getView('property', 'terms');
 			$view->item       = KrFactory::getAdminModel('property')->getItem($id);
 			$view->article_id = 0;
 
 			$summary = $this->input->getInt('summary', 0);
-			if ($summary)
-			{
+			if ($summary) {
 				$view->setLayout('terms_summary');
 				$view->article_id = $summary;
 			}
-			else
-			{
+			else {
 				$view->setLayout('terms');
 				$params           = KrMethods::getParams();
 				$view->article_id = (int) $params->get('id_cancellation', '0');
 			}
 
-			if ($view->article_id)
-			{
+			if ($view->article_id) {
 				$view->article = KrMethods::getArticle($view->article_id);
 			}
 
@@ -319,17 +300,14 @@ class PropertyController extends BaseController
 	public function termspdf(): bool
 	{
 		$id = KrMethods::inputInt('id', 0, 'get');
-		if (!$id)
-		{
+		if (!$id) {
 			throw new RuntimeException('Property ID not received for PDF download');
 		}
 
 		$Terms  = new Terms('download', $id);
 		$result = $Terms->getPdf();
-		if (!$result)
-		{
-			foreach ($errors as $e)
-			{
+		if (!$result) {
+			foreach ($errors as $e) {
 				KrMethods::message($e);
 			}
 
