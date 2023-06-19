@@ -1146,7 +1146,7 @@ class Search
 				break;
 			case '51':
 				$this->data->ordercustom = '';
-				$this->data->ordering    = 'area';
+				$this->data->ordering    = 'property_area';
 				break;
 		}
 	}
