@@ -54,10 +54,9 @@ class AdminModel extends \Joomla\CMS\MVC\Model\AdminModel
 	 * @throws Exception
 	 * @since   3.3.0
 	 */
-	public static function setUpdatedAt(int $id, string $table)
+	public static function setUpdatedAt(int $id, string $table): void
 	{
-		if ($id && $table)
-		{
+		if ($id && $table) {
 			$update             = new stdClass();
 			$update->id         = $id;
 			$update->updated_at = TickTock::getTS();
@@ -74,45 +73,9 @@ class AdminModel extends \Joomla\CMS\MVC\Model\AdminModel
 	 * @since  1.6
 	 * @return object|false  Object on success, false on failure.
 	 */
-	public function getItem($pk = null): object|bool
+	public function getItem($pk = null): object|false
 	{
 		return parent::getItem($pk);
-	}
-
-	/**
-	 * Set form attributes
-	 *
-	 * @param  int     $setting   Setting for field
-	 *                            0 = Optional, 1 = Required, 2 = Hidden
-	 * @param  string  $name      Field name
-	 *                            0 = Optional, 1 = Required, 2 = Hidden
-	 * @param  Form    $form      Form object
-	 *
-	 * @throws UnexpectedValueException
-	 * @since  4.0.0
-	 * @return Form $form
-	 */
-	protected function setAttribute(int $setting, string $name, Form $form): Form
-	{
-		if ($setting == 2)
-		{
-			$form->setFieldAttribute($name, 'type', 'hidden');
-		}
-
-		if ($setting == 0 || $setting == 2)
-		{
-			$attr  = 'required';
-			$value = 'false';
-		}
-		else if ($setting == 1)
-		{
-			$attr  = 'required';
-			$value = 'true';
-		}
-
-		$form->setFieldAttribute($name, $attr, $value);
-
-		return $form;
 	}
 
 	/**
@@ -128,17 +91,15 @@ class AdminModel extends \Joomla\CMS\MVC\Model\AdminModel
 	 */
 	public function getForm($data = [], $loadData = true, ?string $source = null): Form|false
 	{
-		try
-		{
-			if (empty($source))
-			{
+		try {
+			if (empty($source)) {
 				$source = str_replace('com_knowres.', '', $this->typeAlias);
 			}
 
-			return $this->loadForm($this->typeAlias, $source, ['control' => 'jform', 'load_data' => $loadData]);
-		}
-		catch (Exception $e)
-		{
+			return $this->loadForm($this->typeAlias, $source, ['control'   => 'jform',
+			                                                   'load_data' => $loadData
+			]);
+		} catch (Exception $e) {
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_FATAL'));
 			Logger::logMe($e->getMessage());
 			return false;
@@ -156,25 +117,54 @@ class AdminModel extends \Joomla\CMS\MVC\Model\AdminModel
 	 */
 	public function save($data): bool
 	{
-		if (KrMethods::inputString('task', '', 'get') === 'save2copy')
-		{
-			if (isset($data['name']))
-			{
+		if (KrMethods::inputString('task', '', 'get') === 'save2copy') {
+			if (isset($data['name'])) {
 				$data['name'] = Utility::generateNewName($data['name']);
 			}
 
-			if (isset($data['state']))
-			{
+			if (isset($data['state'])) {
 				$data['state'] = 0;
 			}
 		}
 
-		if (!parent::save($data))
-		{
+		if (!parent::save($data)) {
 			throw new RuntimeException('Save failed with error ' . $this->getError());
 		}
 
 		return true;
+	}
+
+	/**
+	 * Set form attributes
+	 *
+	 * @param  int     $setting   Setting for field
+	 *                            0 = Optional, 1 = Required, 2 = Hidden
+	 * @param  string  $name      Field name
+	 *                            0 = Optional, 1 = Required, 2 = Hidden
+	 * @param  Form    $form      Form object
+	 *
+	 * @throws UnexpectedValueException
+	 * @since  4.0.0
+	 * @return Form $form
+	 */
+	protected function setAttribute(int $setting, string $name, Form $form): Form
+	{
+		if ($setting == 2) {
+			$form->setFieldAttribute($name, 'type', 'hidden');
+		}
+
+		if ($setting == 0 || $setting == 2) {
+			$attr  = 'required';
+			$value = 'false';
+		}
+		else if ($setting == 1) {
+			$attr  = 'required';
+			$value = 'true';
+		}
+
+		$form->setFieldAttribute($name, $attr, $value);
+
+		return $form;
 	}
 
 	/**
@@ -186,15 +176,13 @@ class AdminModel extends \Joomla\CMS\MVC\Model\AdminModel
 	 * @throws Exception
 	 * @since  3.2.0
 	 */
-	protected function prepareTable($table)
+	protected function prepareTable($table): void
 	{
-		if (empty($table->id))
-		{
+		if (empty($table->id)) {
 			$table->created_at = TickTock::getTS();
 			$table->created_by = KrMethods::getUser()->id;
 
-			if (isset($table->ordering) && empty($table->ordering))
-			{
+			if (isset($table->ordering) && empty($table->ordering)) {
 				$db    = $this->getDatabase();
 				$query = $db->getQuery(true)->select('MAX(ordering)')->from($db->qn($table->getTableName()));
 
@@ -204,19 +192,16 @@ class AdminModel extends \Joomla\CMS\MVC\Model\AdminModel
 				$table->ordering = $max + 1;
 			}
 		}
-		else
-		{
+		else {
 			$table->updated_at = TickTock::getTS();
 			$table->updated_by = KrMethods::getUser()->id;
 
-			if (isset($table->created_at) && $table->created_at == '')
-			{
+			if (isset($table->created_at) && $table->created_at == '') {
 				unset($table->created_at);
 			}
 		}
 
-		if (isset($table->version))
-		{
+		if (isset($table->version)) {
 			$table->version++;
 		}
 	}

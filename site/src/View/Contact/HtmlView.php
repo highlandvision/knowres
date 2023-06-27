@@ -42,7 +42,7 @@ class HtmlView extends KrHtmlView\Site
 		if ($this->property_id)
 		{
 			$property = KrFactory::getAdminModel('property')->getItem($this->property_id);
-			if (!$property)
+			if (empty($property->id))
 			{
 				SiteHelper::redirectSearch();
 			}

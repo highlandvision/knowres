@@ -51,7 +51,7 @@ class PropertyicalsController extends AdminController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function import()
+	public function import(): void
 	{
 		$this->checkToken();
 		$return = KrMethods::route('index.php?option=com_knowres&view=propertyicals', false);
@@ -96,7 +96,7 @@ class PropertyicalsController extends AdminController
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	public function purge()
+	public function purge(): void
 	{
 		$this->checkToken();
 		$return = KrMethods::route('index.php?option=com_knowres&view=propertyicals', false);
