@@ -7,80 +7,35 @@
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
 
-use HighlandVision\KR\Framework\KrMethods;
-
 defined('_JEXEC') or die;
 
-if ($count == 1)
-{
-	$class = "small-block-grid-1";
-}
-else if ($count == 2)
-{
-	$class = "small-block-grid-2 medium-block-grid-2";
-}
-else
-{
-	$class = "small-block-grid-3 medium-block-grid-3";
-}
+use HighlandVision\KR\Framework\KrMethods;
 
-$textalign     = $params->get('textalign');
-$textcolor     = $params->get('textcolor');
-$textbg        = $params->get('textbg');
-$verticalalign = $params->get('verticalalign');
-$textbold      = $params->get('textbold');
+$texthorizontalalign = $params->get('texthorizontalalign');
+$textcolor           = $params->get('textcolor');
+$textbg              = $params->get('textbg');
+$textverticalalign   = $params->get('textverticalalign');
+$textbold            = $params->get('textbold');
+$textsize            = $params->get('textsize') . 'px';
+$textoverlay         = $params->get('textoverlay');
+$small_cc            = $params->get('small-column-count');
+$medium_cc           = $params->get('medium-column-count');
+$large_cc            = $params->get('large-column-count');
 
-if ($params->get('textsize', ""))
-{
-	$textsize = $params->get('textsize') . "px";
+$pclass[] = $textverticalalign;
+if ($textbold) {
+	$pclass[] = 'strong';
 }
-else
-{
-	$textsize = "";
-}
-
-$textoverlay = $params->get('textoverlay');
-
-$pstyle = "";
-$pclass = [];
-$pstyle .= 'text-align:' . $textalign . ';';
-
-if ($textalign == "center")
-{
-	$pclass[] = "center";
-}
-if ($textbold)
-{
-	$pclass[] = "strong";
-}
-if ($textoverlay)
-{
-	$pclass[] = "overlay";
-}
-if ($textcolor)
-{
+$pstyle = 'text-align:' . $texthorizontalalign . ';';
+if ($textcolor) {
 	$pstyle .= 'color:' . $textcolor . ';';
 }
-if ($textsize)
-{
+if ($textsize) {
 	$pstyle .= 'font-size:' . $textsize . ';';
 }
-if ($textbg)
-{
+if (!empty($textbg)) {
 	$pstyle   .= 'background:' . $textbg . ';';
 	$pclass[] = "withbg";
-}
-if ($verticalalign == "top")
-{
-	$pclass[] = "top";
-}
-else if ($verticalalign == "middle")
-{
-	$pclass[] = "middle";
-}
-else if ($verticalalign == "bottom")
-{
-	$pclass[] = "bottom";
 }
 ?>
 
