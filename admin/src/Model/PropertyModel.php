@@ -19,6 +19,7 @@ use HighlandVision\KR\Joomla\Extend\AdminModel;
 use HighlandVision\KR\Session as KrSession;
 use HighlandVision\KR\Translations;
 use HighlandVision\KR\Utility;
+use JetBrains\PhpStorm\NoReturn;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Versioning\VersionableControllerTrait;
@@ -59,19 +60,15 @@ class PropertyModel extends AdminModel
 	 */
 	public static function bookingTypeText(int $booking_type): string
 	{
-		if (KrMethods::isAdmin())
-		{
-			return match ($booking_type)
-			{
+		if (KrMethods::isAdmin()) {
+			return match ($booking_type) {
 				0 => KrMethods::plain('COM_KNOWRES_PROPERTIES_BOOKING_TYPE_REQUEST'),
 				1 => KrMethods::plain('COM_KNOWRES_PROPERTIES_BOOKING_TYPE_PROVISIONAL'),
 				2 => KrMethods::plain('COM_KNOWRES_PROPERTIES_BOOKING_TYPE_CONFIRMED')
 			};
 		}
-		else
-		{
-			return match ($booking_type)
-			{
+		else {
+			return match ($booking_type) {
 				0 => KrMethods::plain('COM_KNOWRES_SEE_DETAILS'),
 				1 => KrMethods::plain('COM_KNOWRES_REQUEST_BOOKING'),
 				2 => KrMethods::plain('COM_KNOWRES_BOOK_NOW')
@@ -91,9 +88,8 @@ class PropertyModel extends AdminModel
 	public function getItem($pk = null): object|false
 	{
 		$item = parent::getItem($pk);
-		if ($item)
-		{
-			//TODO-v4.1 delete bed types
+		if ($item) {
+			//TODO-v4.3 delete bed types
 			$item->bed_types             = Utility::decodeJson($item->bed_types, true);
 			$item->cancellation_penalty  = Utility::decodeJson($item->cancellation_penalty);
 			$item->categories            = Utility::decodeJson($item->categories, true);
@@ -112,11 +108,9 @@ class PropertyModel extends AdminModel
 			$item->type_name         = $Translations->getText('type', $item->type_id);
 			$item->type_abbreviation = $Translations->getText('type', $item->type_id, 'abbreviation');
 			$item->timezone          = 'UTC';
-			if ($item->town_id > 0)
-			{
+			if ($item->town_id > 0) {
 				$town = KrFactory::getAdminModel('town')->getItem($item->town_id);
-				if (!empty($town->timezone))
-				{
+				if (!empty($town->timezone)) {
 					$item->timezone = $town->timezone;
 				}
 			}
@@ -141,16 +135,13 @@ class PropertyModel extends AdminModel
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
-		$fields = [
-			$db->qn('state') . '=-99'
+		$fields = [$db->qn('state') . '=-99'
 		];
 
-		$conditions = [
-			$db->qn('id') . ' IN (' . implode(',', array_map('intval', $cid)) . ')'
+		$conditions = [$db->qn('id') . ' IN (' . implode(',', array_map('intval', $cid)) . ')'
 		];
 
-		$query->update($db->qn('#__knowres_property'))
-		      ->set($fields)->where($conditions);
+		$query->update($db->qn('#__knowres_property'))->set($fields)->where($conditions);
 
 		$db->setQuery($query);
 
@@ -171,8 +162,8 @@ class PropertyModel extends AdminModel
 		$db = $this->getDatabase();
 
 		$query = 'UPDATE ' . $db->qn('#__knowres_property', 'p');
-		$query .= ' LEFT JOIN ' . $db->qn('#__knowres_contract', 'c') . 'ON' . $db->qn('c.property_id') . '='
-			. $db->qn('p.id');
+		$query .= ' LEFT JOIN ' . $db->qn('#__knowres_contract',
+				'c') . 'ON' . $db->qn('c.property_id') . '=' . $db->qn('p.id');
 		$query .= ' SET ' . $db->qn('p.state') . ' = (CASE WHEN `c`.`id` IS NULL THEN -2 ELSE 2 END)';
 		//	Do not use $db->qn('c.id') above as throws error
 		$query .= ' WHERE ' . $db->qn('p.id') . ' IN (' . implode(',', array_map('intval', $cid)) . ')';
@@ -190,12 +181,10 @@ class PropertyModel extends AdminModel
 	 * @throws Exception
 	 * @since  3.1.0
 	 */
-	public function publish(&$pks, $value = 1)
+	public function publish(&$pks, $value = 1): void
 	{
-		if (parent::publish($pks, $value))
-		{
-			foreach ($pks as $id)
-			{
+		if (parent::publish($pks, $value)) {
+			foreach ($pks as $id) {
 				KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updateProperty', $id, 0, 'ru');
 				self::setUpdatedAt($id, 'property');
 			}
@@ -214,8 +203,7 @@ class PropertyModel extends AdminModel
 	 */
 	public function save($data): bool
 	{
-		if (Factory::getApplication()->input->get('task') == 'save2copy')
-		{
+		if (Factory::getApplication()->input->get('task') == 'save2copy') {
 			$data['property_name'] = Utility::generateNewName($data['property_name']);
 		}
 
@@ -234,28 +222,23 @@ class PropertyModel extends AdminModel
 	 */
 	public function setPropertyFields(mixed $item, ?array $fields = null): mixed
 	{
-		if (is_null($fields))
-		{
+		if (is_null($fields)) {
 			$fields = KrFactory::getListModel('propertyfields')->getAllPropertyFields();
 		}
 
-		if (is_countable($fields))
-		{
+		if (is_countable($fields)) {
 			$Translations = new Translations();
-			foreach ($fields as $f)
-			{
+			foreach ($fields as $f) {
 				$label = $Translations->getText('propertyfield', $f->id, 'label');
 
 				$field = 'p' . $f->id;
 				$name  = $field;
-				if ($f->special)
-				{
+				if ($f->special) {
 					$name = KrFactory::getAdminModel('propertyfield')->propertyFieldSpecial($f->special, false);
 				}
 
 				$item->{$name} = trim($Translations->getText('property', $item->id, $field));
-				if ($f->format == 2)
-				{
+				if ($f->format == 3) {
 					$item->{$name} = nl2br($item->{$name});
 				}
 
@@ -289,12 +272,9 @@ class PropertyModel extends AdminModel
 
 		$jform                         = KrMethods::inputArray('jform');
 		$data['categories']            = !empty($jform['categories']) ? Utility::encodeJson($jform['categories']) : [];
-		$data['property_alternatives'] = !empty($jform['property_alternatives'])
-			? Utility::encodeJson($jform['property_alternatives']) : [];
-		$data['property_features']     = !empty($jform['property_features'])
-			? Utility::encodeJson($jform['property_features']) : [];
-		$data['property_units']        = !empty($jform['property_units'])
-			? Utility::encodeJson($jform['property_units']) : [];
+		$data['property_alternatives'] = !empty($jform['property_alternatives']) ? Utility::encodeJson($jform['property_alternatives']) : [];
+		$data['property_features']     = !empty($jform['property_features']) ? Utility::encodeJson($jform['property_features']) : [];
+		$data['property_units']        = !empty($jform['property_units']) ? Utility::encodeJson($jform['property_units']) : [];
 
 		return parent::validate($form, $data, $group);
 	}
@@ -310,12 +290,10 @@ class PropertyModel extends AdminModel
 	protected function canDelete($record): bool
 	{
 		$userSession = new KrSession\User();
-		if ($userSession->getAccessLevel() == 40)
-		{
+		if ($userSession->getAccessLevel() == 40) {
 			return true;
 		}
-		else
-		{
+		else {
 			return Factory::getUser()->authorise('core.delete', $this->option);
 		}
 	}
@@ -330,8 +308,7 @@ class PropertyModel extends AdminModel
 	protected function loadFormData(): mixed
 	{
 		$data = KrMethods::getUserState('com_knowres.edit.property.data', []);
-		if (empty($data))
-		{
+		if (empty($data)) {
 			$data = $this->getItem();
 		}
 
@@ -346,17 +323,15 @@ class PropertyModel extends AdminModel
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected function prepareTable($table)
+	protected function prepareTable($table): void
 	{
-		if (empty($table->id))
-		{
+		if (empty($table->id)) {
 			$params       = KrMethods::getParams();
 			$userSession  = new KrSession\User();
 			$access_level = $userSession->getAccessLevel();
 
 			$table->approved = 1;
-			if ($access_level == 10 && $params->get('property_approve', 0))
-			{
+			if ($access_level == 10 && $params->get('property_approve', 0)) {
 				$table->approved = 0;
 			}
 		}
@@ -378,23 +353,20 @@ class PropertyModel extends AdminModel
 	 * @since  4.0.0
 	 * @return void
 	 */
-	protected function preprocessForm(Form $form, $data, $group = null): void
+	#[NoReturn] protected function preprocessForm(Form $form, $data, $group = null): void
 	{
 		$fields = KrFactory::getListModel('propertyfields')->getAllPropertyFields();
-		if (is_countable($fields) && count($fields))
-		{
+		if (is_countable($fields) && count($fields)) {
 			$Translations = new Translations();
 
-			foreach ($fields as $f)
-			{
+			foreach ($fields as $f) {
 				$label       = $Translations->getText('propertyfield', $f->id, 'label');
 				$description = $Translations->getText('propertyfield', $f->id, 'description');
 
 				$field = 'p' . $f->id;
 				$name  = $field;
 				$tab   = 'propertyfields';
-				if ($f->special)
-				{
+				if ($f->special) {
 					$name = KrFactory::getAdminModel('propertyfield')->propertyFieldSpecial($f->special, false);
 					$tab  = KrFactory::getAdminModel('propertyfield')->getPropertyTab($f->special);
 				}
@@ -403,27 +375,22 @@ class PropertyModel extends AdminModel
 				$fieldXml->addAttribute('name', htmlentities($name));
 				$fieldXml->addAttribute('label', htmlentities($label));
 				$fieldXml->addAttribute('description', htmlentities($description));
-				if ($name == 'tagline')
-				{
+				if ($name == 'tagline') {
 					$fieldXml->addAttribute('maxlength', 100);
 				}
-				if ($f->required)
-				{
+				if ($f->required) {
 					$fieldXml->addAttribute('required', true);
 				}
-				if ($f->format == 1)
-				{
+				if ($f->format == 1) {
 					$fieldXml->addAttribute('type', 'text');
 					$fieldXml->addAttribute('filter', 'string');
 				}
-				else if ($f->format == 2)
-				{
+				else if ($f->format == 2) {
 					$fieldXml->addAttribute('type', 'textarea');
 					$fieldXml->addAttribute('filter', 'safehtml');
 					$fieldXml->addAttribute('rows', '6');
 				}
-				else if ($f->format == 3)
-				{
+				else if ($f->format == 3) {
 					$fieldXml->addAttribute('type', 'editor');
 					$fieldXml->addAttribute('filter', 'safehtml');
 				}

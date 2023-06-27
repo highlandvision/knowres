@@ -66,7 +66,7 @@ extract($displayData);
 	<?php endif; ?>
 	<?php if ($allow_book): ?>
 		<?php $link = KrMethods::route('index.php?option=com_knowres&view=contract&task=edit&layout=manager'); ?>
-		<a class="btn btn-primary" id="newreservation" href="<?php echo $link; ?>">
+		<a class="btn btn-primary" id="newreservation" data-id="<?php echo $property_id; ?>" href="<?php echo $link; ?>">
 			<?php echo KrMethods::plain('COM_KNOWRES_PROPERTY_CALENDAR_LINK'); ?>
 		</a>
 	<?php endif; ?>

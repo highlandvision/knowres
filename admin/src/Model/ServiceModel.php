@@ -56,19 +56,16 @@ class ServiceModel extends AdminModel
 	{
 		return parent::getForm($data, $loadData, $source);
 
-		// TODO v4.1 Sort out Xero
-		if ($form->getValue('plugin') != 'xero')
-		{
+		// TODO v4.3 Sort out Xero
+		if ($form->getValue('plugin') != 'xero') {
 			return $form;
 		}
 
 		$add_to_custom = [];
 		$banks         = KrFactory::getListModel('services')->getGateways();
-		if (is_countable($banks) && count($banks))
-		{
+		if (is_countable($banks) && count($banks)) {
 			$element = '<fieldset name="mapbanks">';
-			foreach ($banks as $f)
-			{
+			foreach ($banks as $f) {
 				$label           = $f->name . ' ' . $f->currency;
 				$description     = $f->agency_name;
 				$var             = 'bank_' . $f->plugin . $f->currency;
@@ -91,40 +88,7 @@ class ServiceModel extends AdminModel
 			$form->setField($element);
 		}
 
-		// Get the active tax rates
-		//		$taxrates      = KrFactory::getListModel('tax_rates')->getTaxRates();
-		//		if (count($taxrates))
-		//		{
-		//			$Translations = new Translations();
-		//
-		//			$element = '<fieldset name="maptaxrates">';
-		//
-		//			foreach ($taxrates as $f)
-		//			{
-		//				$label           = $f->code;
-		//				$description     = $Translations->getText('tax', $f->tax_id, 'name');
-		//				$var             = "tax_" . $f->id;
-		//				$add_to_custom[] = $var;
-		//
-		//				$field = "";
-		//				$field .= '<field name="' . htmlentities($var) . '" ';
-		//				$field .= 'type="xerotaxrate" ';
-		//				$field .= 'field="' . htmlentities($var) . '" ';
-		//				$field .= 'label="' . htmlentities($label) . '" ';
-		//				$field .= 'description="' . htmlentities($description) . '" ';
-		//				$field .= 'required="required"/>';
-		//
-		//				$element .= $field;
-		//			}
-		//
-		//			$element .= '</fieldset>';
-		//
-		//			$element = new SimpleXMLElement($element);
-		//			$form->setField($element);
-		//		}
-
-		if (is_countable($add_to_custom) && count($add_to_custom))
-		{
+		if (is_countable($add_to_custom) && count($add_to_custom)) {
 			$custom = $form->getFieldAttribute('custom', 'default');
 			$custom .= ',' . implode(',', $add_to_custom);
 			$form->setFieldAttribute('custom', 'default', $custom);
@@ -140,13 +104,12 @@ class ServiceModel extends AdminModel
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
-	 * @return object|bool  Object on success, false on failure.
+	 * @return object|false  Object on success, false on failure.
 	 */
-	public function getItem($pk = null): object|bool
+	public function getItem($pk = null): object|false
 	{
 		$item = parent::getItem($pk);
-		if ($item)
-		{
+		if ($item) {
 			$Translations         = new Translations();
 			$item->service_name   = $Translations->getText('service', $item->id);
 			$item->parameters     = Utility::decodeJson($item->parameters);
@@ -184,8 +147,7 @@ class ServiceModel extends AdminModel
 	protected function loadFormData(): mixed
 	{
 		$data = KrMethods::getUserState('com_knowres.edit.service.data', []);
-		if (empty($data))
-		{
+		if (empty($data)) {
 			$data = $this->getItem();
 		}
 
@@ -205,8 +167,7 @@ class ServiceModel extends AdminModel
 	 */
 	protected function preprocessForm(Form $form, $data, $group = 'plugin'): void
 	{
-		if (isset($data->plugin))
-		{
+		if (isset($data->plugin)) {
 			$plugin = $data->plugin;
 			$form->loadFile('service_' . $plugin, false);
 		}
