@@ -7,31 +7,32 @@
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
 
-use HighlandVision\KR\Framework\KrMethods;
 defined('_JEXEC') or die;
+
+use HighlandVision\KR\Framework\KrMethods;
 
 $textalign     = $params->get('textalign');
 $textcolor     = $params->get('textcolor');
 $textbg        = $params->get('textbg');
 $verticalalign = $params->get('verticalalign');
 $textbold      = $params->get('textbold');
-$textsize      = $params->get('textsize') . "px";
+$textsize      = $params->get('textsize') . 'px';
 $textoverlay   = $params->get('textoverlay');
 
-$pstyle = "";
+$pstyle = '';
 $pclass = [];
 $pstyle .= 'text-align:' . $textalign . ';';
-if ($textalign == "center")
+if ($textalign == 'center')
 {
-	$pclass[] = "center";
+	$pclass[] = 'center';
 }
 if ($textbold)
 {
-	$pclass[] = "strong";
+	$pclass[] = 'strong';
 }
 if ($textoverlay)
 {
-	$pclass[] = "overlay";
+	$pclass[] = 'overlay';
 }
 if ($textcolor)
 {
@@ -46,17 +47,9 @@ if ($textbg)
 	$pstyle   .= 'background:' . $textbg . ';';
 	$pclass[] = "withbg";
 }
-if ($verticalalign == "top")
+if (!empty($verticalalign))
 {
-	$pclass[] = "top";
-}
-else if ($verticalalign == "middle")
-{
-	$pclass[] = "middle";
-}
-else if ($verticalalign == "bottom")
-{
-	$pclass[] = "bottom";
+	$pclass[] = $verticalalign;
 }
 ?>
 
@@ -65,17 +58,17 @@ else if ($verticalalign == "bottom")
 		<?php foreach ($data as $d): ?>
 			<li>
 				<?php if ($d['link']): ?>
-				<a href="<?php echo (string) KrMethods::route('index.php?Itemid=' . $d['link']); ?>"
-				   title="<?php echo $d['text']; ?>">
-					<?php endif; ?>
+				    <a href="<?php echo KrMethods::route('index.php?Itemid=' . $d['link']); ?>"
+				        title="<?php echo $d['text']; ?>">
+				<?php endif; ?>
 
-					<?php if ($d['text']): ?>
-						<?php echo $d['text']; ?>
-					<?php endif; ?>
+				<?php if ($d['text']): ?>
+					<?php echo $d['text']; ?>
+				<?php endif; ?>
 
-					<?php if ($d['link']): ?>
-				</a>
-			<?php endif; ?>
+				<?php if ($d['link']): ?>
+				    </a>
+			    <?php endif; ?>
 			</li>
 		<?php endforeach; ?>
 	</ul>

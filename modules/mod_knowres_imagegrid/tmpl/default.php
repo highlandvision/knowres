@@ -84,35 +84,52 @@ else if ($verticalalign == "bottom")
 }
 ?>
 
-<div class="kr-imagegrid">
-	<ul class="<?php echo $class; ?>">
-		<?php foreach ($data as $d): ?>
-			<li>
-				<?php if ($d['link']): ?>
-				<a href="<?php echo (string) JRoute::_('index.php?Itemid=' . $d['link']); ?>"
-				   title="<?php echo $d['text']; ?>">
-					<?php endif; ?>
+<style>
+    .kr-imagegrid .gitem {
+        flex: 1 1 <?php echo $small_cc; ?>;
+    }
+    @media screen and (min-width: 40em) {
+        .kr-imagegrid .gitem {
+            flex: 1 1 <?php echo $medium_cc; ?>;
+        }
+    }
+    @media screen and (min-width: 64em) {
+        .kr-imagegrid .gitem {
+            flex: 1 1 <?php echo $large_cc; ?>;
+        }
+    }
+</style>
 
-					<?php
-					$options = [
-						'src'    => $d['image'],
-						'alt'    => $d['name'],
-						'class'  => 'th responsive',
-						'width'  => $params->get('width'),
-						'height' => $params->get('height')
+<div class="row">
+    <div class="column kr-imagegrid">
+		<?php foreach ($data as $d): ?>
+            <div class="gitem">
+				<?php if ($d['link']): ?>
+                    <a href="<?php echo KrMethods::route('index.php?Itemid=' . $d['link']); ?>"
+                        title="<?php echo KrMethods::plain('MOD_KNOWRES_IMAGEGRID_CLICK_TO_VIEW'); ?>">
+				<?php endif; ?>
+
+				<?php
+					list($width, $height) = getimagesize($d['image']);
+					$options = ['src'    => $d['image'],
+					            'alt'    => $d['name'],
+					            'class'  => 'th responsive',
+					            'width'  => $width,
+					            'height' => $height
 					];
 					echo KrMethods::render('joomla.html.image', $options);
-					?>
+				?>
 
-					<?php if ($d['text']): ?>
-						<p class="<?php echo implode(' ', $pclass); ?>"
-						   style="<?php echo $pstyle; ?>"><?php echo $d['text']; ?></p>
-					<?php endif; ?>
+                <?php if ($textoverlay && $d['text']): ?>
+                    <p class="<?php echo implode(' ', $pclass); ?>" style="<?php echo $pstyle; ?>">
+						<?php echo $d['text']; ?>
+                    </p>
+				<?php endif; ?>
 
-					<?php if ($d['link']): ?>
-				</a>
-			<?php endif; ?>
-			</li>
+				<?php if ($d['link']): ?>
+                    </a>
+			    <?php endif; ?>
+            </div>
 		<?php endforeach; ?>
-	</ul>
+    </div>
 </div>

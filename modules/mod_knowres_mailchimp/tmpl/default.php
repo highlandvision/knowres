@@ -40,7 +40,7 @@ $wa->useScript('com_knowres.site')
 		</div>
 		<div
 			class="small-10 small-offset-1 text-center medium-offset-0 medium-4 medium-text-left large-2 end columns">
-			<button class="button expanded no-margin-bottom" type="submit">
+			<button class="button expanded" type="submit">
 				<?php echo KrMethods::plain('MOD_KNOWRES_MAILCHIMP_SIGNUP'); ?>
 			</button>
 		</div>
