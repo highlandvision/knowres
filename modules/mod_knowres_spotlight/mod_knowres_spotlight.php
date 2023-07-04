@@ -20,16 +20,14 @@ $wa->useScript('com_knowres.site-modules');
 $count = 0;
 $data  = [];
 
-for ($i = 1; $i <= 3; $i++)
-{
-	if ($params->get('image' . $i))
-	{
+for ($i = 1; $i <= 3; $i++) {
+	if ($params->get('image' . $i)) {
 		$count++;
-		$data[$i] = array(
-			'image' => $params->get('image' . $i),
-			'text'  => $params->get('text' . $i),
-			'link'  => $params->get('link' . $i)
-		);
+		$data[$i] = ['image' => $params->get('image' . $i),
+		             'text'  => $params->get('text' . $i),
+		             'link'  => $params->get('link' . $i),
+		             'url'   => $params->get('url' . $i)
+		];
 	}
 }
 

@@ -20,13 +20,14 @@ $data = [];
 
 foreach ($grid as $g)
 {
-	if (isset($g->image) && $g->image)
+	if (!empty($g->image))
 	{
-		$data[] = array(
+		$data[] = [
 			'image' => $g->image,
 			'text'  => $g->text,
-			'link'  => $g->link
-		);
+			'link'  => $g->link,
+			'url'   => $g->url
+		];
 	}
 }
 

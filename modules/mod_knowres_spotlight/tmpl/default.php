@@ -24,10 +24,9 @@ $textcolor     = $params->get('textcolor');
 $textsize      = $params->get('textsize') . 'px';
 $verticalalign = $params->get('verticalalign');
 
+$pstyle   = '';
 $pclass[] = $textalign;
 $pclass[] = $verticalalign;
-$pstyle   = '';
-
 if ($textbg) {
 	$pstyle   .= 'background:' . $textbg . ';';
 	$pclass[] = 'withbg';
@@ -46,31 +45,41 @@ if ($textsize) {
 <div class="kr-spotlight">
     <div class="row <?php echo $class; ?>">
 		<?php foreach ($data as $d): ?>
+			<?php $link = ''; ?>
+
             <div class="column column-block text-center">
-				<?php if ($d['link']): ?>
-                <a href="<?php echo KrMethods::route('index.php?Itemid=' . $d['link']); ?>"
-                   title="<?php echo $d['text']; ?>">
-					<?php endif; ?>
+	            <?php if ($d['link'] != -1): ?>
+	                <?php $link = KrMethods::route('index.php?Itemid=' . $d['link']); ?>
+	                <?php $external = ''; ?>
+	            <?php elseif (!empty($d['url'])): ?>
+	                <?php $link = $d['url']; ?>
+	                <?php $external = 'target="_blank"'; ?>
+	            <?php endif; ?>
 
-					<?php
-					$options = ['src'    => $d['image'],
-					            'alt'    => $d['text'],
-					            'class'  => 'responsive',
-					            'width'  => $params->get('width'),
-					            'height' => $params->get('height')
-					];
-					echo KrMethods::render('joomla.html.image', $options);
-					?>
+	            <?php if ($link): ?>
+		            <a href="<?php echo $link; ?>" style="cursor:pointer;" <?php echo $external; ?>
+		               title="<?php echo $d['text'];; ?>">
+				<?php endif; ?>
 
-					<?php if ($d['text']): ?>
-                        <p class="<?php echo implode(' ', $pclass); ?>" style="<?php echo $pstyle; ?>">
-							<?php echo $d['text']; ?>
-                        </p>
-					<?php endif; ?>
+				<?php
+				$options = ['src'    => $d['image'],
+				            'alt'    => $d['text'],
+				            'class'  => 'responsive',
+				            'width'  => $params->get('width'),
+				            'height' => $params->get('height')
+				];
+				echo KrMethods::render('joomla.html.image', $options);
+				?>
 
-					<?php if ($d['link']): ?>
-                </a>
-			<?php endif; ?>
+				<?php if ($d['text']): ?>
+                    <p class="<?php echo implode(' ', $pclass); ?>" style="<?php echo $pstyle; ?>">
+						<?php echo $d['text']; ?>
+                    </p>
+				<?php endif; ?>
+
+	            <?php if ($link): ?>
+		            <?php echo '</a>'; ?>
+	            <?php endif; ?>
             </div>
 		<?php endforeach; ?>
     </div>

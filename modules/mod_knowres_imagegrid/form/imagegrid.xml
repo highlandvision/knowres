@@ -1,18 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form>
-	<field name="image"
-		type="media"
-		directory="imagegrid"
-		label="MOD_KNOWRES_IMAGEGRID_IMAGE"
-		description="MOD_KNOWRES_IMAGEGRID_IMAGE_DSC"/>
-	<field name="text"
-		type="text"
-		default=""
-		label="MOD_KNOWRES_IMAGEGRID_TEXT"
-		description="MOD_KNOWRES_IMAGEGRID_TEXT_DSC"/>
-	<field name="link"
-		type="menuitem"
-		default=""
-		label="MOD_KNOWRES_IMAGEGRID_LINK"
-		description="MOD_KNOWRES_IMAGEGRID_LINK_DSC"/>
+    <field name="image"
+           type="media"
+           directory="imagegrid"
+           label="MOD_KNOWRES_IMAGEGRID_IMAGE"
+           description="MOD_KNOWRES_IMAGEGRID_IMAGE_DSC"/>
+    <field name="text"
+           type="text"
+           default=""
+           label="MOD_KNOWRES_IMAGEGRID_TEXT"
+           description="MOD_KNOWRES_IMAGEGRID_TEXT_DSC"/>
+    <field name="link"
+           type="menuitem"
+           default=""
+           label="MOD_KNOWRES_IMAGEGRID_LINK"
+           description="MOD_KNOWRES_IMAGEGRID_LINK_DSC">
+        <option value="">COM_MODULES_OPTION_SELECT_MENU_ITEM</option>
+        <option value="-1">COM_MODULES_NONE</option>
+    </field>
+    <field name="url"
+           type="url"
+           filter="url"
+           size="35"
+           validate="url"
+           label="MOD_KNOWRES_IMAGEGRID_URL"
+           description="MOD_KNOWRES_IMAGEGRID_URL_DSC"/>
 </form>

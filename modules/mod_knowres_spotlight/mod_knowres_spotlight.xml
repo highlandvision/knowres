@@ -1,142 +1,180 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="module" client="site" method="upgrade">
-	<name>mod_knowres_spotlight</name>
-	<author>Highland Vision</author>
-	<creationDate>April 2023</creationDate>
-	<authorUrl>https://www.highlandvision.com</authorUrl>
-	<authorEmail>hazel@highlandvision.com</authorEmail>
-	<copyright>2023 Highland Vision, all rights reserved.</copyright>
-	<license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
-	<version>4.1.0</version>
-	<description>MOD_KNOWRES_SPOTLIGHT_DSC</description>
-	<files>
-		<filename module="mod_knowres_spotlight">mod_knowres_spotlight.php</filename>
-		<filename>mod_knowres_spotlight.xml</filename>
-		<folder>language</folder>
-		<folder>tmpl</folder>
-	</files>
-	<config>
-		<fields name="params">
-			<fieldset name="Basic">
-				<field name="textcolor"
-					default="#fefefe"
-					type="color"
-					label="MOD_KNOWRES_SPOTLIGHT_TEXTCOLOR"
-					description="MOD_KNOWRES_SPOTLIGHT_TEXTCOLOR_DSC"/>
-				<field name="textbg"
-					default=""
-					type="color"
-					label="MOD_KNOWRES_SPOTLIGHT_TEXTBG"
-					description="MOD_KNOWRES_SPOTLIGHT_TEXTBG_DSC"/>
-				<field name="textbold"
-					class="btn-group btn-group-yesno"
-					default="0"
-					type="radio"
-					label="MOD_KNOWRES_SPOTLIGHT_TEXTBOLD"
-					description="MOD_KNOWRES_SPOTLIGHT_TEXTBOLD_DSC">
-					<option value="0">JNO</option>
-					<option value="1">JYES</option>
-				</field>
-				<field name="textalign"
-					class="btn-group"
-					default="center"
-					type="radio"
-					label="MOD_KNOWRES_SPOTLIGHT_TEXTALIGN"
-					description="MOD_KNOWRES_SPOTLIGHT_TEXTALIGN_DSC">
-					<option value="left">MOD_KNOWRES_SPOTLIGHT_LEFT</option>
-					<option value="center">MOD_KNOWRES_SPOTLIGHT_CENTER</option>
-				</field>
-				<field name="verticalalign"
-					class="btn-group"
-					default="center"
-					type="radio"
-					label="MOD_KNOWRES_SPOTLIGHT_VERTICAL_ALIGN"
-					description="MOD_KNOWRES_SPOTLIGHT_VERTICAL_ALIGN_DSC">
-					<option value="top">MOD_KNOWRES_SPOTLIGHT_TOP</option>
-					<option value="middle">MOD_KNOWRES_SPOTLIGHT_MIDDLE</option>
-					<option value="bottom">MOD_KNOWRES_SPOTLIGHT_BOTTOM</option>
-				</field>
-				<field type="spacer"
-					name="spacer1"
-					label="&lt;b&gt;Image 1&lt;/b&gt;"/>
-				<field name="image1"
-					type="media"
-					directory="spotlight"
-					label="MOD_KNOWRES_SPOTLIGHT_IMAGE"
-					description="MOD_KNOWRES_SPOTLIGHT_IMAGE_DSC"/>
-				<field name="text1"
-					type="text"
-					default=""
-					label="MOD_KNOWRES_SPOTLIGHT_TEXT"
-					description="MOD_KNOWRES_SPOTLIGHT_TEXT_DSC"/>
-				<field name="link1"
-					type="menuitem"
-					default=""
-					label="MOD_KNOWRES_SPOTLIGHT_LINK"
-					description="MOD_KNOWRES_SPOTLIGHT_LINK_DSC"/>
-				<field type="spacer"
-					name="spacer2"
-					label="&lt;b&gt;Image 2&lt;/b&gt;"/>
-				<field name="image2"
-					type="media"
-					directory="spotlight"
-					label="MOD_KNOWRES_SPOTLIGHT_IMAGE"
-					description="MOD_KNOWRES_SPOTLIGHT_IMAGE_DSC"/>
-				<field name="text2"
-					type="text"
-					default=""
-					label="MOD_KNOWRES_SPOTLIGHT_TEXT"
-					description="MOD_KNOWRES_SPOTLIGHT_TEXT_DSC"/>
-				<field name="link2"
-					type="menuitem"
-					default=""
-					label="MOD_KNOWRES_SPOTLIGHT_LINK"
-					description="MOD_KNOWRES_SPOTLIGHT_LINK_DSC"/>
-				<field type="spacer"
-					name="spacer3"
-					label="&lt;b&gt;Image 3&lt;/b&gt;"/>
-				<field name="image3"
-					type="media"
-					directory="spotlight"
-					label="MOD_KNOWRES_SPOTLIGHT_IMAGE"
-					description="MOD_KNOWRES_SPOTLIGHT_IMAGE_DSC"/>
-				<field name="text3"
-					type="text"
-					default=""
-					label="MOD_KNOWRES_SPOTLIGHT_TEXT"
-					description="MOD_KNOWRES_SPOTLIGHT_TEXT_DSC"/>
-				<field name="link3"
-					type="menuitem"
-					default=""
-					label="MOD_KNOWRES_SPOTLIGHT_LINK"
-					description="MOD_KNOWRES_SPOTLIGHT_LINK_DSC"/>
-			</fieldset>
-			<fieldset name="advanced">
-				<field name="layout"
-					class="form-select"
-					type="modulelayout"
-					validate="moduleLayout"
-					label="JFIELD_ALT_LAYOUT_LABEL"/>
-				<field name="moduleclass_sfx"
-					type="textarea"
-					rows="1"
-					validate="CssIdentifier"
-					label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"/>
-				<field name="cache"
-					type="list"
-					default="1"
-					label="COM_MODULES_FIELD_CACHING_LABEL">
-					<option value="1">JGLOBAL_USE_GLOBAL</option>
-					<option value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
-				</field>
-				<field name="cache_time"
-					type="text"
-					default="900"
-					label="COM_MODULES_FIELD_CACHE_TIME_LABEL"/>
-				<field name="cachemode"
-					type="hidden"
-					default="static"/>
-			</fieldset>
-		</fields>
-	</config>
+    <name>mod_knowres_spotlight</name>
+    <author>Highland Vision</author>
+    <creationDate>April 2023</creationDate>
+    <authorUrl>https://www.highlandvision.com</authorUrl>
+    <authorEmail>hazel@highlandvision.com</authorEmail>
+    <copyright>2023 Highland Vision, all rights reserved.</copyright>
+    <license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
+    <version>4.1.0</version>
+    <description>MOD_KNOWRES_SPOTLIGHT_DSC</description>
+    <files>
+        <filename module="mod_knowres_spotlight">mod_knowres_spotlight.php</filename>
+        <filename>mod_knowres_spotlight.xml</filename>
+        <folder>language</folder>
+        <folder>tmpl</folder>
+    </files>
+    <config>
+        <fields name="params">
+            <fieldset name="Basic">
+                <field name="textcolor"
+                       default="#fefefe"
+                       type="color"
+                       label="MOD_KNOWRES_SPOTLIGHT_TEXTCOLOR"
+                       description="MOD_KNOWRES_SPOTLIGHT_TEXTCOLOR_DSC"/>
+                <field name="textbg"
+                       default=""
+                       type="color"
+                       label="MOD_KNOWRES_SPOTLIGHT_TEXTBG"
+                       description="MOD_KNOWRES_SPOTLIGHT_TEXTBG_DSC"/>
+                <field name="textbold"
+                       class="btn-group btn-group-yesno"
+                       default="0"
+                       type="radio"
+                       label="MOD_KNOWRES_SPOTLIGHT_TEXTBOLD"
+                       description="MOD_KNOWRES_SPOTLIGHT_TEXTBOLD_DSC">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field name="textsize"
+                       class="w-auto"
+                       default="16"
+                       type="number"
+                       min="10"
+                       max="30"
+                       label="MOD_KNOWRES_SPOTLIGHT_TEXTSIZE"
+                       description="MOD_KNOWRES_SPOTLIGHT_TEXTSIZE_DSC"/>
+                <field name="textalign"
+                       class="btn-group"
+                       default="center"
+                       type="radio"
+                       label="MOD_KNOWRES_SPOTLIGHT_TEXTALIGN"
+                       description="MOD_KNOWRES_SPOTLIGHT_TEXTALIGN_DSC">
+                    <option value="left">MOD_KNOWRES_SPOTLIGHT_LEFT</option>
+                    <option value="center">MOD_KNOWRES_SPOTLIGHT_CENTER</option>
+                </field>
+                <field name="verticalalign"
+                       class="btn-group"
+                       default="center"
+                       type="radio"
+                       label="MOD_KNOWRES_SPOTLIGHT_VERTICAL_ALIGN"
+                       description="MOD_KNOWRES_SPOTLIGHT_VERTICAL_ALIGN_DSC">
+                    <option value="top">MOD_KNOWRES_SPOTLIGHT_TOP</option>
+                    <option value="middle">MOD_KNOWRES_SPOTLIGHT_MIDDLE</option>
+                    <option value="bottom">MOD_KNOWRES_SPOTLIGHT_BOTTOM</option>
+                </field>
+                <field type="spacer"
+                       name="spacer1"
+                       label="&lt;b&gt;Image 1&lt;/b&gt;"/>
+                <field name="image1"
+                       type="media"
+                       directory="spotlight"
+                       label="MOD_KNOWRES_SPOTLIGHT_IMAGE"
+                       description="MOD_KNOWRES_SPOTLIGHT_IMAGE_DSC"/>
+                <field name="text1"
+                       type="text"
+                       default=""
+                       label="MOD_KNOWRES_SPOTLIGHT_TEXT"
+                       description="MOD_KNOWRES_SPOTLIGHT_TEXT_DSC"/>
+                <field name="link1"
+                       type="menuitem"
+                       default=""
+                       label="MOD_KNOWRES_SPOTLIGHT_LINK"
+                       description="MOD_KNOWRES_SPOTLIGHT_LINK_DSC">
+                    <option value="">COM_MODULES_OPTION_SELECT_MENU_ITEM</option>
+                    <option value="-1">COM_MODULES_NONE</option>
+                </field>
+                <field name="url1"
+                       type="url"
+                       filter="url"
+                       size="35"
+                       validate="url"
+                       label="MOD_KNOWRES_SPOTLIGHT_URL"
+                       description="MOD_KNOWRES_SPOTLIGHT_URL_DSC"/>
+                <field type="spacer"
+                       name="spacer2"
+                       label="&lt;b&gt;Image 2&lt;/b&gt;"/>
+                <field name="image2"
+                       type="media"
+                       directory="spotlight"
+                       label="MOD_KNOWRES_SPOTLIGHT_IMAGE"
+                       description="MOD_KNOWRES_SPOTLIGHT_IMAGE_DSC"/>
+                <field name="text2"
+                       type="text"
+                       default=""
+                       label="MOD_KNOWRES_SPOTLIGHT_TEXT"
+                       description="MOD_KNOWRES_SPOTLIGHT_TEXT_DSC"/>
+                <field name="link2"
+                       type="menuitem"
+                       default=""
+                       label="MOD_KNOWRES_SPOTLIGHT_LINK"
+                       description="MOD_KNOWRES_SPOTLIGHT_LINK_DSC">
+                    <option value="">COM_MODULES_OPTION_SELECT_MENU_ITEM</option>
+                    <option value="-1">COM_MODULES_NONE</option>
+                </field>
+                <field name="url2"
+                       type="url"
+                       filter="url"
+                       size="35"
+                       validate="url"
+                       label="MOD_KNOWRES_SPOTLIGHT_URL"
+                       description="MOD_KNOWRES_SPOTLIGHT_URL_DSC"/>
+                <field type="spacer"
+                       name="spacer3"
+                       label="&lt;b&gt;Image 3&lt;/b&gt;"/>
+                <field name="image3"
+                       type="media"
+                       directory="spotlight"
+                       label="MOD_KNOWRES_SPOTLIGHT_IMAGE"
+                       description="MOD_KNOWRES_SPOTLIGHT_IMAGE_DSC"/>
+                <field name="text3"
+                       type="text"
+                       default=""
+                       label="MOD_KNOWRES_SPOTLIGHT_TEXT"
+                       description="MOD_KNOWRES_SPOTLIGHT_TEXT_DSC"/>
+                <field name="link3"
+                       type="menuitem"
+                       default=""
+                       label="MOD_KNOWRES_SPOTLIGHT_LINK"
+                       description="MOD_KNOWRES_SPOTLIGHT_LINK_DSC">
+                        <option value="">COM_MODULES_OPTION_SELECT_MENU_ITEM</option>
+                        <option value="-1">COM_MODULES_NONE</option>
+                </field>
+                <field name="url3"
+                       type="url"
+                       filter="url"
+                       size="35"
+                       validate="url"
+                       label="MOD_KNOWRES_SPOTLIGHT_URL"
+                       description="MOD_KNOWRES_SPOTLIGHT_URL_DSC"/>
+            </fieldset>
+            <fieldset name="advanced">
+                <field name="layout"
+                       class="form-select"
+                       type="modulelayout"
+                       validate="moduleLayout"
+                       label="JFIELD_ALT_LAYOUT_LABEL"/>
+                <field name="moduleclass_sfx"
+                       type="textarea"
+                       rows="1"
+                       validate="CssIdentifier"
+                       label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"/>
+                <field name="cache"
+                       type="list"
+                       default="1"
+                       label="COM_MODULES_FIELD_CACHING_LABEL">
+                    <option value="1">JGLOBAL_USE_GLOBAL</option>
+                    <option value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
+                </field>
+                <field name="cache_time"
+                       type="text"
+                       default="900"
+                       label="COM_MODULES_FIELD_CACHE_TIME_LABEL"/>
+                <field name="cachemode"
+                       type="hidden"
+                       default="static"/>
+            </fieldset>
+        </fields>
+    </config>
 </extension>

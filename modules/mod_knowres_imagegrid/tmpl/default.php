@@ -22,11 +22,12 @@ $small_cc            = $params->get('small-column-count');
 $medium_cc           = $params->get('medium-column-count');
 $large_cc            = $params->get('large-column-count');
 
+$pstyle   = '';
+$pclass[] = $texthorizontalalign;
 $pclass[] = $textverticalalign;
 if ($textbold) {
 	$pclass[] = 'strong';
 }
-$pstyle = 'text-align:' . $texthorizontalalign . ';';
 if ($textcolor) {
 	$pstyle .= 'color:' . $textcolor . ';';
 }
@@ -35,56 +36,70 @@ if ($textsize) {
 }
 if (!empty($textbg)) {
 	$pstyle   .= 'background:' . $textbg . ';';
-	$pclass[] = "withbg";
+	$pclass[] = 'withbg';
+}
+if ($texthorizontalalign == "center") {
+	$pstyle .= 'text-align:center;';
 }
 ?>
 
 <style>
     .kr-imagegrid .gitem {
-        flex: 1 1 <?php echo $small_cc; ?>;
+        flex: <?php echo '1 1 ' . $small_cc; ?>;
     }
+
     @media screen and (min-width: 40em) {
         .kr-imagegrid .gitem {
-            flex: 1 1 <?php echo $medium_cc; ?>;
+            flex: <?php echo '1 1 ' . $medium_cc; ?>;
         }
     }
+
     @media screen and (min-width: 64em) {
         .kr-imagegrid .gitem {
-            flex: 1 1 <?php echo $large_cc; ?>;
+            flex: <?php echo '1 1 ' .  $large_cc; ?>;
         }
     }
 </style>
 
 <div class="row">
-    <div class="column kr-imagegrid">
+	<div class="column kr-imagegrid">
 		<?php foreach ($data as $d): ?>
-            <div class="gitem">
-				<?php if ($d['link']): ?>
-                    <a href="<?php echo KrMethods::route('index.php?Itemid=' . $d['link']); ?>"
-                        title="<?php echo KrMethods::plain('MOD_KNOWRES_IMAGEGRID_CLICK_TO_VIEW'); ?>">
+			<?php $link = ''; ?>
+
+			<div class="gitem">
+				<?php if ($d['link'] != -1): ?>
+					<?php $link = KrMethods::route('index.php?Itemid=' . $d['link']); ?>
+					<?php $external = ''; ?>
+				<?php elseif (!empty($d['url'])): ?>
+					<?php $link = $d['url']; ?>
+					<?php $external = 'target="_blank"'; ?>
 				<?php endif; ?>
 
-				<?php
-					list($width, $height) = getimagesize($d['image']);
-					$options = ['src'    => $d['image'],
-					            'alt'    => $d['name'],
-					            'class'  => 'th responsive',
-					            'width'  => $width,
-					            'height' => $height
+				<?php if ($link): ?>
+					<a href="<?php echo $link; ?>" style="cursor:pointer;" <?php echo $external; ?>
+				        title="<?php echo KrMethods::plain('MOD_KNOWRES_IMAGEGRID_CLICK_TO_VIEW'); ?>">
+				<?php endif; ?>
+
+				<?php list($width, $height) = getimagesize($d['image']); ?>
+				<?php $options = ['src'    => $d['image'],
+				                  'alt'    => $d['name'],
+				                  'class'  => 'th responsive',
+				                  'width'  => $width,
+				                  'height' => $height
 					];
-					echo KrMethods::render('joomla.html.image', $options);
 				?>
+				<?php echo KrMethods::render('joomla.html.image', $options); ?>
 
-                <?php if ($textoverlay && $d['text']): ?>
-                    <p class="<?php echo implode(' ', $pclass); ?>" style="<?php echo $pstyle; ?>">
+				<?php if ($textoverlay && $d['text']): ?>
+					<p class="<?php echo implode(' ', $pclass); ?>" style="<?php echo $pstyle; ?>">
 						<?php echo $d['text']; ?>
-                    </p>
+					</p>
 				<?php endif; ?>
 
-				<?php if ($d['link']): ?>
-                    </a>
-			    <?php endif; ?>
-            </div>
+				<?php if ($link): ?>
+					<?php echo '</a>'; ?>
+				<?php endif; ?>
+			</div>
 		<?php endforeach; ?>
-    </div>
+	</div>
 </div>
