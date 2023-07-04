@@ -29,7 +29,6 @@
 		</fieldset>
 		<fieldset name="f3" class="col-3 col-lg-1 col-xl-1 d-flex align-items-start flex-fill">
 			<field name="bed_number"
-				class="input-number"
 				min="0"
 				max="10"
 				type="number"/>

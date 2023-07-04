@@ -25,7 +25,7 @@ use function count;
 use function is_array;
 
 /**
- * Foramt bed types for property
+ * Format bed types for property
  *
  * @since 1.0.0
  */
@@ -106,7 +106,6 @@ class JsonbedtypesField extends FormField
 		$data['form']        = KrFactory::getAdhocForm('json-bedtypes', 'json_bedtypes.xml', 'administrator', null);
 		$data['group']       = 'bed_types';
 		$data['values']      = $values;
-
 		$renderer = $this->getRenderer($this->layout);
 
 		return $renderer->render($data);
