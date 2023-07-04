@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
 	<fields group="checkoutfees">
-		<fieldset name="f1"
-			class="col-lg-4">
+		<fieldset name="f1" class="col col-xl-2">
 			<field name="checkout_fees_from"
 				class="input-mini"
 				filter="string"
@@ -12,8 +11,7 @@
 				description="COM_KNOWRES_PROPERTY_FEES_FROM_DSC">
 			</field>
 		</fieldset>
-		<fieldset name="f2"
-			class="col-lg-4">
+		<fieldset name="f2" class="col col-xl-2">
 			<field name="checkout_fees_to"
 				class="input-mini"
 				filter="string"
@@ -22,8 +20,7 @@
 				label="COM_KNOWRES_PROPERTY_FEES_TO_LBL"
 				description="COM_KNOWRES_PROPERTY_FEES_TO_DSC"/>
 		</fieldset>
-		<fieldset name="f3"
-			class="col-lg-4">
+		<fieldset name="f3" class="col col-xl-2">
 			<field name="checkout_fees_amount"
 				addonBefore=""
 				class="input-mini"
