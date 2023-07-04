@@ -86,7 +86,7 @@ class ServicequeueModel extends AdminModel
 	 * @throws InvalidArgumentException
 	 * @since  3.3.0
 	 */
-	public static function deleteOldQueue(string $date)
+	public static function deleteOldQueue(string $date): void
 	{
 		$db    = KrFactory::getDatabase();
 		$query = $db->getQuery(true);
@@ -112,7 +112,7 @@ class ServicequeueModel extends AdminModel
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	public static function insertQueue(object $xref, string $method, ?string $arrival = null, ?string $departure = null)
+	public static function insertQueue(object $xref, string $method, ?string $arrival = null, ?string $departure = null): void
 	{
 		$queue               = new stdClass();
 		$queue->id           = 0;
@@ -149,7 +149,7 @@ class ServicequeueModel extends AdminModel
 	 * @since  3.3.0
 	 */
 	public static function serviceQueueUpdate(string $method, int $property_id = 0, int $cluster_id = 0,
-		?string $plugin = null, ?string $arrival = null, ?string $departure = null)
+		?string $plugin = null, ?string $arrival = null, ?string $departure = null): void
 	{
 		$result = KrFactory::getListModel('servicexrefs')->getPropertiesForAllServices($property_id, $method, $plugin);
 		if (is_countable($result) && count($result))
@@ -194,7 +194,7 @@ class ServicequeueModel extends AdminModel
 	 * @throws RuntimeException
 	 * @since  1.2.0
 	 */
-	public function resend(array $pks)
+	public function resend(array $pks): void
 	{
 		if (!is_countable($pks) || !count($pks))
 		{
@@ -257,7 +257,7 @@ class ServicequeueModel extends AdminModel
 	 * @throws Exception
 	 * @since  3.1.0
 	 */
-	public static function setQueueActioned(array $ids)
+	public static function setQueueActioned(array $ids): void
 	{
 		if (is_countable($ids) && count($ids))
 		{
@@ -282,7 +282,7 @@ class ServicequeueModel extends AdminModel
 	 * @throws Exception
 	 * @since  4.0.0
 	 */
-	protected function prepareTable($table)
+	protected function prepareTable($table): void
 	{
 		if ($table->method != 'updateAvailability' && $table->method != 'updatePropertyRates')
 		{

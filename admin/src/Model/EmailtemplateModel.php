@@ -89,7 +89,7 @@ class EmailtemplateModel extends AdminModel
 	 * @throws Exception
 	 * @since    2.4.0
 	 */
-	protected function prepareTable($table)
+	protected function prepareTable($table): void
 	{
 		$jform = Factory::getApplication()->input->post->get('jform', [], 'array');
 

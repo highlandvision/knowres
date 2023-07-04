@@ -125,7 +125,7 @@ class ManagerModel extends AdminModel
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected function prepareTable($table)
+	protected function prepareTable($table): void
 	{
 		if ($table->access_level >= 30)
 		{

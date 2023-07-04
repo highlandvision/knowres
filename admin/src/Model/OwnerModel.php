@@ -96,7 +96,7 @@ class OwnerModel extends AdminModel
 	 * @throws Exception
 	 * @since  3.4.0
 	 */
-	protected function prepareTable($table)
+	protected function prepareTable($table): void
 	{
 		if (!empty($table->iban))
 		{

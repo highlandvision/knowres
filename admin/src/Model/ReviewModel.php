@@ -102,7 +102,7 @@ class ReviewModel extends AdminModel
 	 * @throws Exception
 	 * @since  2.4.0
 	 */
-	protected function prepareTable($table)
+	protected function prepareTable($table): void
 	{
 		if (!$table->review_date)
 		{
