@@ -153,6 +153,7 @@
 		<field name="deposit_pc"
 			default="0"
 			filter="integer"
+		    showon="pay_deposit:1[OR]pay_deposit:2"
 			type="number"
 			min="1"
 			max="100"
@@ -161,6 +162,7 @@
 			description="COM_KNOWRES_OWNER_DEPOSIT_PC_DSC"/>
 		<field name="deposit_days"
 			class="input-mini"
+			default="0"
 			filter="integer"
 			showon="pay_deposit:2"
 			type="number"

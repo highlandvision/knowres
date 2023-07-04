@@ -53,14 +53,14 @@ class IbanRule extends FormRule
 		Form $form = null): bool
 	{
 
+		$payment_schedule = ($input instanceof Registry) ? $input->get('payment_schedule') : '';
+		if (!in_array($payment_schedule, ['eom', 'rgp', 'dba', 'dad']))
+		{
+			return true;
+		}
+
 		if (empty($value))
 		{
-			$payment_schedule = ($input instanceof Registry) ? $input->get('payment_schedule') : '';
-			if (!in_array($payment_schedule, ['eom', 'rgp', 'dba', 'dad']))
-			{
-				return true;
-			}
-
 			KrMethods::message(KrMethods::plain('IBAN must be entered'), 'error');
 			return false;
 		}

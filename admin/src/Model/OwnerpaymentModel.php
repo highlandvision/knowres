@@ -82,7 +82,7 @@ class OwnerpaymentModel extends AdminModel
 	 * @throws Exception
 	 * @since  3.3.1
 	 */
-	protected function prepareTable($table)
+	protected function prepareTable($table): void
 	{
 		if ($table->confirmed && !$table->confirmed_by)
 		{
