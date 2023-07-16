@@ -33,6 +33,16 @@
 					description="MOD_KNOWRES_SLIDESHOW_PROPERTY_DSC">
 					<option value="0">MOD_KNOWRES_SLIDESHOW_SELECT</option>
 				</field>
+				<field name="alt1"
+					   maxlength="150"
+					   type="text"
+					   label="MOD_KNOWRES_SLIDESHOW_ALT_LBL"
+					   description="MOD_KNOWRES_SLIDESHOW_ALT_DSC"/>
+				<field name="description1"
+					   maxlength="256"
+					   type="text"
+					   label="MOD_KNOWRES_SLIDESHOW_DESCRIPTION_LBL"
+					   description="MOD_KNOWRES_SLIDESHOW_DESCRIPTION_DSC"/>
 				<field type="spacer"
 					name="myspacer1"
 					hr="true"/>
@@ -51,6 +61,16 @@
 					description="MOD_KNOWRES_SLIDESHOW_PROPERTY_DSC">
 					<option value="0">MOD_KNOWRES_SLIDESHOW_SELECT</option>
 				</field>
+				<field name="alt2"
+					   maxlength="150"
+					   type="text"
+					   label="MOD_KNOWRES_SLIDESHOW_ALT_LBL"
+					   description="MOD_KNOWRES_SLIDESHOW_ALT_DSC"/>
+				<field name="description2"
+					   maxlength="256"
+					   type="text"
+					   label="MOD_KNOWRES_SLIDESHOW_DESCRIPTION_LBL"
+					   description="MOD_KNOWRES_SLIDESHOW_DESCRIPTION_DSC"/>
 				<field type="spacer"
 					name="myspacer2"
 					hr="true"/>
@@ -69,6 +89,16 @@
 					description="MOD_KNOWRES_SLIDESHOW_PROPERTY_DSC">
 					<option value="0">MOD_KNOWRES_SLIDESHOW_SELECT</option>
 				</field>
+				<field name="alt3"
+					   maxlength="150"
+					   type="text"
+					   label="MOD_KNOWRES_SLIDESHOW_ALT_LBL"
+					   description="MOD_KNOWRES_SLIDESHOW_ALT_DSC"/>
+				<field name="description3"
+					   maxlength="256"
+					   type="text"
+					   label="MOD_KNOWRES_SLIDESHOW_DESCRIPTION_LBL"
+					   description="MOD_KNOWRES_SLIDESHOW_DESCRIPTION_DSC"/>
 				<field type="spacer"
 					name="myspacer3"
 					hr="true"/>
@@ -87,6 +117,16 @@
 					description="MOD_KNOWRES_SLIDESHOW_PROPERTY_DSC">
 					<option value="0">MOD_KNOWRES_SLIDESHOW_SELECT</option>
 				</field>
+				<field name="alt4"
+					   maxlength="150"
+					   type="text"
+					   label="MOD_KNOWRES_SLIDESHOW_ALT_LBL"
+					   description="MOD_KNOWRES_SLIDESHOW_ALT_DSC"/>
+				<field name="description4"
+					   maxlength="256"
+					   type="text"
+					   label="MOD_KNOWRES_SLIDESHOW_DESCRIPTION_LBL"
+					   description="MOD_KNOWRES_SLIDESHOW_DESCRIPTION_DSC"/>
 				<field type="spacer"
 					name="myspacer4"
 					hr="true"/>
@@ -105,6 +145,16 @@
 					description="MOD_KNOWRES_SLIDESHOW_PROPERTY_DSC">
 					<option value="0">MOD_KNOWRES_SLIDESHOW_SELECT</option>
 				</field>
+				<field name="alt5"
+					   maxlength="150"
+					   type="text"
+					   label="MOD_KNOWRES_SLIDESHOW_ALT_LBL"
+					   description="MOD_KNOWRES_SLIDESHOW_ALT_DSC"/>
+				<field name="description5"
+					   maxlength="256"
+					   type="text"
+					   label="MOD_KNOWRES_SLIDESHOW_DESCRIPTION_LBL"
+					   description="MOD_KNOWRES_SLIDESHOW_DESCRIPTION_DSC"/>
 				<field type="spacer"
 					name="myspacer5"
 					hr="true"/>
@@ -123,6 +173,16 @@
 					description="MOD_KNOWRES_SLIDESHOW_PROPERTY_DSC">
 					<option value="0">MOD_KNOWRES_SLIDESHOW_SELECT</option>
 				</field>
+				<field name="alt6"
+					   maxlength="150"
+					   type="text"
+					   label="MOD_KNOWRES_SLIDESHOW_ALT_LBL"
+					   description="MOD_KNOWRES_SLIDESHOW_ALT_DSC"/>
+				<field name="description6"
+					   maxlength="256"
+					   type="text"
+					   label="MOD_KNOWRES_SLIDESHOW_DESCRIPTION_LBL"
+					   description="MOD_KNOWRES_SLIDESHOW_DESCRIPTION_DSC"/>
 			</fieldset>
 			<fieldset name="advanced">
 				<field name="layout"

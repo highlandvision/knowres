@@ -18,21 +18,17 @@ use HighlandVision\KR\SiteHelper;
 <div class="kr-slideshow">
 	<?php foreach ($data as $d): ?>
 		<div>
-			<?php
-			$options = [
-				'src'    => $d['image'],
-				'alt'    => $d['property_name'],
-				'class'  => 'responsive',
-				'width'  => 2700,
-				'height' => 1000
-			];
-			echo KrMethods::render('joomla.html.image', $options);
-			?>
+			<?php $options = ['src'         => $d['image'],
+			                  'alt'         => $d['alt'],
+			                  'description' => $d['description'],
+			                  'class'       => 'responsive',
+			]; ?>
+			<?php echo KrMethods::render('joomla.html.image', $options); ?>
+
 			<?php if (!empty($d['property_id'])): ?>
 				<?php $Itemid = SiteHelper::getItemId('com_knowres', 'property', ['id' => (int) $d['property_id']]); ?>
-				<div class="caption overlay">
-					<?php $plink = KrMethods::route('index.php?option=com_knowres&view=property&Itemid=' . $Itemid
-						. '&id=' . (int) $d['property_id']); ?>
+				<div class="caption">
+					<?php $plink = KrMethods::route('index.php?option=com_knowres&view=property&Itemid=' . $Itemid . '&id=' . (int) $d['property_id']); ?>
 					<?php $text = $d['property_name'] . '<br> ' . $d['region_name'] . ', ' . $d['country_name']; ?>
 					<a href="<?php echo $plink; ?>"><?php echo $text; ?></a>
 				</div>

@@ -20,48 +20,46 @@ $wa->getRegistry()->addExtensionRegistryFile('com_knowres');
 $wa->useScript('com_knowres.site-modules');
 
 $properties = [];
-for ($i = 1; $i <= 6; $i++)
-{
-	if ($params->get('image' . $i) && $params->get('property' . $i))
-	{
+for ($i = 1; $i <= 6; $i++) {
+	if ($params->get('image' . $i) && $params->get('property' . $i)) {
 		$properties[] = $params->get('property' . $i);
 	}
 }
 
-$names        = KrFactory::getListSiteModel('properties')->getNames($properties);
-$Translations = new Translations();
+if (!empty($properties)) {
+	$names        = KrFactory::getListSiteModel('properties')->getNames($properties);
+	$Translations = new Translations();
 
-$properties = [];
-foreach ($names as $n)
-{
-	$properties[$n->id] = [
-		'property_name' => $n->property_name,
-		'region_name'   => $Translations->getText('region', $n->region_id),
-		'country_name'  => $Translations->getText('country', $n->country_id)
-	];
+	$properties = [];
+	foreach ($names as $n) {
+		$properties[$n->id] = ['property_name' => $n->property_name,
+		                       'region_name'   => $Translations->getText('region', $n->region_id),
+		                       'country_name'  => $Translations->getText('country', $n->country_id),
+		                       'alt'           => $p['property_name'] . ' ' . $p['region_name'] . ' ' . $p['country_name'],
+		                       'description'   => $p['property_name'] . ' ' . $p['region_name'] . ' ' . $p['country_name']
+		];
+	}
 }
 
 $data = [];
-for ($i = 1; $i <= 6; $i++)
-{
-	if ($params->get('image' . $i))
-	{
-		if ($params->get('property' . $i))
-		{
+for ($i = 1; $i <= 6; $i++) {
+	if ($params->get('image' . $i)) {
+		if ($params->get('property' . $i)) {
 			$p        = $properties[$params->get('property' . $i)];
-			$data[$i] = [
-				'image'         => $params->get('image' . $i),
-				'property_id'   => $params->get('property' . $i),
-				'property_name' => $p['property_name'],
-				'region_name'   => $p['region_name'],
-				'country_name'  => $p['country_name']
+			$data[$i] = ['image'         => $params->get('image' . $i),
+			             'property_id'   => $params->get('property' . $i),
+			             'property_name' => $p['property_name'],
+			             'region_name'   => $p['region_name'],
+			             'country_name'  => $p['country_name'],
+			             'alt'           => $params->get('alt' . $i) ? $params->get('alt' . $i) : $p['alt'],
+			             'description'   => $params->get('description' . $i) ? $params->get('description' . $i) : $p['description']
 			];
 		}
-		else
-		{
-			$data[$i] = [
-				'image'         => $params->get('image' . $i),
-				'property_name' => $params->get('image' . $i)
+		else {
+			$data[$i] = ['image'         => $params->get('image' . $i),
+			             'property_name' => '',
+			             'alt'           => $params->get('alt' . $i),
+			             'description'   => $params->get('description' . $i),
 			];
 		}
 	}
