@@ -27,6 +27,16 @@
 					label="MOD_KNOWRES_SEARCH_SHOW_TEXT"
 					description="MOD_KNOWRES_SEARCH_SHOW_TEXT_DSC">
 				</field>
+				<field name="hero-position"
+					class="btn-group"
+					default="middle"
+					type="radio"
+					label="MOD_KNOWRES_SEARCH_HERO-POSITION"
+					description="MOD_KNOWRES_SEARCH_HERO-POSITION_DSC">
+					<option value="top">MOD_KNOWRES_SEARCH_TOP</option>
+					<option value="middle">MOD_KNOWRES_SEARCH_MIDDLE</option>
+					<option value="bottom">MOD_KNOWRES_SEARCH_BOTTOM</option>
+				</field>
 				<field name="show_regions"
 					class="btn-group btn-group-yesno"
 					default="1"
