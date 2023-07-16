@@ -17,11 +17,11 @@ use HighlandVision\KR\Framework\KrMethods;
 		<h3 class="h2">
 			<?php if (!$title): ?>
 				<?php echo KrMethods::plain('MOD_KNOWRES_FEATURED_FEATURED'); ?>
-				<span class="color-secondary">
+				<span class="color-accent">
 					<?php echo KrMethods::plain('MOD_KNOWRES_FEATURED_VILLAS'); ?>
 				</span>
 				<?php echo KrMethods::plain('MOD_KNOWRES_FEATURED_BEST'); ?>
-				<span class="color-secondary">
+				<span class="color-accent">
 					<?php echo KrMethods::plain('MOD_KNOWRES_FEATURED_QUALITY'); ?>
 				</span>
 			<?php else: ?>
