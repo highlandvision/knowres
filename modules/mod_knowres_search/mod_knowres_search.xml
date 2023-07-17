@@ -9,7 +9,7 @@
 	<description>MOD_KNOWRES_SEARCH_DSC</description>
 	<license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
 	<namespace path="src">Knowres\Module\Search</namespace>
-	<version>4.1.0</version>
+	<version>4.2.0</version>
 	<files>
 		<folder module="mod_knowres_search">services</folder>
 		<folder>forms</folder>

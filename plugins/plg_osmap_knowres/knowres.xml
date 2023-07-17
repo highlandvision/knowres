@@ -7,7 +7,7 @@
 	<authorEmail>hazel@highlandvision.com</authorEmail>
 	<copyright>2022 Highland Vision. All rights reserved.</copyright>
 	<license>https://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
-	<version>4.1.0</version>
+	<version>4.2.0</version>
 	<description>Know Reservations OsMap plugin</description>
 	<files>
 		<folder>language</folder>
