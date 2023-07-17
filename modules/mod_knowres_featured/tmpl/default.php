@@ -9,7 +9,11 @@
 
 defined('_JEXEC') or die;
 
+use HighlandVision\KR\Currency;
 use HighlandVision\KR\Framework\KrMethods;
+use Joomla\CMS\Helper\ModuleHelper;
+
+$Currency = new Currency();
 ?>
 
 <div class="row">
@@ -34,12 +38,8 @@ use HighlandVision\KR\Framework\KrMethods;
 	</div>
 </div>
 
-<div class="row kr-featured" data-equalizer data-slick='{"slidesToShow": <?php echo $slidestoshow; ?>}'>
-	<?php foreach ($data as $p => $d): ?>
-		<?php echo KrMethods::render('modules.featured.default',
-			['id'   => $p,
-			 'data' => $d]
-		);
-		?>
+<div class="kr-featured" data-equalizer data-slick='{"slidesToShow": <?php echo $slidestoshow; ?>}'>
+	<?php foreach ($data as $id => $item): ?>
+		<?php require ModuleHelper::getLayoutPath('mod_knowres_featured', $params->get('layout', 'default') . '_item'); ?>
 	<?php endforeach; ?>
 </div>

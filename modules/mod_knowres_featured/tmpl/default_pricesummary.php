@@ -15,19 +15,12 @@ use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Utility;
 
-extract($displayData);
-/**
- * Layout variables
- *
- * @var float  $minrate  Minimum rate.
- * @var float  $maxrate  Maximum rate.
- * @var float  $netrate  Net rate.
- * @var float  $markup   Rate markup.
- * @var string $summary  Summary text.
- * @var string $currency Rates / property currency.
- */
-
-$Currency = new Currency();
+$minrate  = $item['minrate'];
+$maxrate  = $item['maxrate'];
+$netrate  = $item['netrate'];
+$markup   = $item['markup'];
+$summary  = $item['summary'];
+$currency = $item['currency'];
 ?>
 
 <div class="price">
@@ -50,9 +43,11 @@ $Currency = new Currency();
 				<?php $min = $minrate; ?>
 			<?php endif; ?>
 
-			<?php echo KrMethods::sprintf('MOD_KNOWRES_FEATURED_FROM_PRICE', $Currency->getSimpleValue($min, $currency)); ?>
+			<?php echo KrMethods::sprintf('MOD_KNOWRES_FEATURED_FROM_PRICE',
+				$Currency->getSimpleValue($min, $currency)); ?>
 		<?php endif; ?>
 	<?php elseif ($summary): ?>
-		<?php echo KrMethods::sprintf('MOD_KNOWRES_FEATURED_FROM_PRICE', $Currency->getSimpleValue($summary, $currency)); ?>
+		<?php echo KrMethods::sprintf('MOD_KNOWRES_FEATURED_FROM_PRICE',
+			$Currency->getSimpleValue($summary, $currency)); ?>
 	<?php endif; ?>
 </div>

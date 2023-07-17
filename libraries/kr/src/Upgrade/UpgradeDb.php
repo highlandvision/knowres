@@ -20,12 +20,9 @@ use RuntimeException;
 use stdClass;
 
 use function array_key_exists;
-use function count;
 use function defined;
-use function explode;
 use function in_array;
 use function is_numeric;
-use function str_replace;
 
 if (!defined('KRFRAMEWORK'))
 {

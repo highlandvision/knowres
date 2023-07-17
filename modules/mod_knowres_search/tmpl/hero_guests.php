@@ -11,14 +11,6 @@ defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrMethods;
 
-extract($displayData);
-/**
- * Layout variables
- *
- * @var object $defaults Default values.
- * @var bool   $collapse True to collapse row.
- */
-
 $tadults   = KrMethods::plain('MOD_KNOWRES_SEARCH_ADULTS');
 $tchildren = KrMethods::plain('MOD_KNOWRES_SEARCH_CHILDREN');
 ?>

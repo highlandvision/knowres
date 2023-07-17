@@ -27,9 +27,9 @@ class ConfirmModel extends AdminModel
 	 * Get the form data from session as no item.
 	 *
 	 * @since  1.0.0
-	 * @return false|object Session data
+	 * @return object|false Session data
 	 */
-	public function getItem($pk = null): object|bool
+	public function getItem($pk = null): object|false
 	{
 		return $this->state->get('formdata');
 	}

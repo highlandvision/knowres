@@ -11,6 +11,7 @@ defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\TickTock;
+use Joomla\CMS\Helper\ModuleHelper;
 
 $wa = $app->getDocument()->getWebAssetManager();
 $wa->getRegistry()->addExtensionRegistryFile('com_knowres');
@@ -66,10 +67,11 @@ $action = KrMethods::getRoot() . 'index.php?option=com_knowres&task=properties.s
 			</div>
 		</div>
 
-		<?php echo KrMethods::render('modules.search.pane.guests', ['defaults' => $defaults, 'collapse' => '']); ?>
+		<?php $collapse = ''; ?>
+		<?php require ModuleHelper::getLayoutPath('mod_knowres_search', $params->get('layout', 'hero') . '_guests'); ?>
 	</form>
 
 	<?php if ($params->get('show_regions_expanded', 0)): ?>
-		<?php echo KrMethods::render('modules.search.pane.regions', ['regions' => $regions]); ?>
+		<?php require ModuleHelper::getLayoutPath('mod_knowres_search', $params->get('layout', 'hero') . '_regions'); ?>
 	<?php endif; ?>
 </div>

@@ -12,13 +12,6 @@ defined('_JEXEC') or die;
 use HighlandVision\KR\Framework\KrMethods;
 
 $KRparams = KrMethods::getParams();
-
-extract($displayData);
-/**
- * Layout variables
- *
- * @var array $regions Regions data.
- */
 ?>
 
 <?php $columns = count($regions); ?>
