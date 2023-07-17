@@ -19,7 +19,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 $KRparams = KrMethods::getParams();
 ?>
 
-<div class="small-12 columns" data-equalizer-watch>
+<div class="small-12 columns">
 	<a href="<?php echo $item['plink']; ?>" class="property text-left" title="<?php echo $item['property_name']; ?>">
 		<div class="image-wrapper">
 			<?php echo HTMLHelper::_('image', Media\Images::getImagePath($id, 'solo', $item['image']),
@@ -33,7 +33,7 @@ $KRparams = KrMethods::getParams();
 			<?php endif; ?>
 		</div>
 
-		<div class="content gray no-margin-bottom">
+		<div class="content no-margin-bottom">
 			<h3 class="h4"><?php echo $item['property_name']; ?></h3>
 			<p>
 				<?php echo $item['text']; ?>
