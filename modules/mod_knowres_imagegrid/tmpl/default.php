@@ -47,13 +47,11 @@ if ($texthorizontalalign == "center") {
     .kr-imagegrid .gitem {
         flex: <?php echo '1 1 ' . $small_cc; ?>;
     }
-
     @media screen and (min-width: 40em) {
         .kr-imagegrid .gitem {
             flex: <?php echo '1 1 ' . $medium_cc; ?>;
         }
     }
-
     @media screen and (min-width: 64em) {
         .kr-imagegrid .gitem {
             flex: <?php echo '1 1 ' .  $large_cc; ?>;
@@ -80,12 +78,9 @@ if ($texthorizontalalign == "center") {
 				        title="<?php echo KrMethods::plain('MOD_KNOWRES_IMAGEGRID_CLICK_TO_VIEW'); ?>">
 				<?php endif; ?>
 
-				<?php list($width, $height) = getimagesize($d['image']); ?>
 				<?php $options = ['src'    => $d['image'],
-				                  'alt'    => $d['name'],
-				                  'class'  => 'th responsive',
-				                  'width'  => $width,
-				                  'height' => $height
+				                  'alt'    => $d['text'],
+				                  'class'  => 'th responsive'
 					];
 				?>
 				<?php echo KrMethods::render('joomla.html.image', $options); ?>

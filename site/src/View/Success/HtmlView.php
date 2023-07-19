@@ -60,6 +60,9 @@ class HtmlView extends KrHtmlView\Site
 
 		KrMethods::cleanCache('com_knowres_contracts');
 
+		$contractSession = new KrSession\Contract();
+		$contractSession->resetData();
+
 		$this->request          = (bool)$this->contract->on_request;
 		$this->meta_title       = KrMethods::plain('COM_KNOWRES_TITLE_CONFIRM_SUCCESS');
 		$this->meta_description = KrMethods::plain('COM_KNOWRES_PAGE_TITLE');
@@ -75,7 +78,7 @@ class HtmlView extends KrHtmlView\Site
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected function prepareDocument()
+	protected function prepareDocument(): void
 	{
 		$this->prepareDefaultDocument($this->meta_title, $this->meta_description);
 		$this->setMyPathway();
@@ -87,7 +90,7 @@ class HtmlView extends KrHtmlView\Site
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	protected function setMyPathway()
+	protected function setMyPathway(): void
 	{
 		$pathway = Factory::getApplication()->getPathway();
 		$pathway->setPathway([]);

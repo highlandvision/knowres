@@ -32,11 +32,14 @@ if (!empty($properties)) {
 
 	$properties = [];
 	foreach ($names as $n) {
+		$region_name   = $Translations->getText('region', $n->region_id);
+		$country_name  = $Translations->getText('country', $n->country_id);
+
 		$properties[$n->id] = ['property_name' => $n->property_name,
-		                       'region_name'   => $Translations->getText('region', $n->region_id),
-		                       'country_name'  => $Translations->getText('country', $n->country_id),
-		                       'alt'           => $p['property_name'] . ' ' . $p['region_name'] . ' ' . $p['country_name'],
-		                       'description'   => $p['property_name'] . ' ' . $p['region_name'] . ' ' . $p['country_name']
+		                       'region_name'   => $region_name,
+		                       'country_name'  => $country_name,
+		                       'alt'           => $n->property_name . ' ' . $region_name . ' ' . $country_name,
+		                       'description'   => $n->property_name . ' ' . $region_name . ' ' . $country_name
 		];
 	}
 }

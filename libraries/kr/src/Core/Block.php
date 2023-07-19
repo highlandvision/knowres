@@ -50,9 +50,6 @@ class Block
 	 *
 	 * @throws Exception
 	 * @throws RuntimeException
-	 * @throws Exception
-	 * @throws Exception
-	 * @throws Exception
 	 * @since  1.0.0
 	 * @return bool
 	 */

@@ -26,7 +26,7 @@ if (!is_countable($this->alternatives) || !count($this->alternatives))
 <div id="kr-alternatives" class="moduletable">
 	<div class="row">
 		<div class="small-9 columns">
-			<h3><?php echo KrMethods::plain('COM_KNOWRES_PROPERTY_HEADER_ALTERNATIVES'); ?></h3>
+			<h3 class="h4"><?php echo KrMethods::plain('COM_KNOWRES_PROPERTY_HEADER_ALTERNATIVES'); ?></h3>
 		</div>
 		<div class="small-3 pull-right columns">
 			<div class="kr-double-arrows"></div>

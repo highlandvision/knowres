@@ -768,9 +768,6 @@ class ContractController extends FormController
 		$contractSession->resetData();
 		KrMethods::cleanCache('com_knowres_contracts');
 
-		$contractSession->resetData();
-		KrMethods::cleanCache('com_knowres_contracts');
-
 		$wrapper             = [];
 		$wrapper['redirect'] = $this->setReturn($Hub);
 		echo new JsonResponse($wrapper);
