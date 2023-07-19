@@ -43,7 +43,6 @@ if ($this->contract->room_total_gross != $this->contract->room_total)
 	}
 }
 
-// TODO-v4.1 Add for JSA
 //		$notes        = '';
 //		$booking      = $this->getContractNotes("owner");
 //		if (count($booking))

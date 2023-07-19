@@ -49,7 +49,7 @@ $termsurl = KrMethods::route('index.php?option=com_knowres&task=property.terms&i
 					</div>
 				<?php else: ?>
 					<?php echo $this->loadTemplate('payments'); ?>
-					<!--				// TODO-v4.1 Delete related code-->
+					<!--				// TODO-v4.3 Delete related code-->
 					<!--					<h4>-->
 					<!--						--><?php //echo KrMethods::plain('COM_KNOWRES_ACCOUNT_SUMMARY'); ?>
 					<!--					</h4>-->

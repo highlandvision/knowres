@@ -95,7 +95,7 @@ class Discount
 				$this->Hub->setValue('discount_system', $discount);
 			}
 
-			// TODO-v4.1 Test this works for RU where discounts are sent separately
+			// TODO-v4.3 Test this works for RU where discounts are sent separately
 			if ($this->Hub->getValue('agent_value') > 0 && $this->Hub->getValue('adjustmentsRq'))
 			{
 				$this->Hub->setAdjustments('Discount', 0, '', $discount * -1);

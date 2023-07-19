@@ -17,8 +17,6 @@ defined('_JEXEC') or die;
 //
 //use function defined;
 
-//TODO-v4.1 JSA
-
 /**
  * Enquiry quote requests
  *

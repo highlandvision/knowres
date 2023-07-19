@@ -24,7 +24,7 @@ use Joomla\CMS\Table\ContentType;
 use RuntimeException;
 use stdClass;
 
-//TODO-v4.1 Will need tested at some point but not used live
+//TODO-v4.3 Will need tested at some point but not used live
 /**
  * Content history extends base via KR plugin.
  *

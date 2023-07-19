@@ -13,7 +13,7 @@ use Joomla\Database\DatabaseAwareTrait;
 
 defined('_JEXEC') or die;
 
-// TODO-v4.1 No idea what this is but doesn't work without it?
+// TODO-v4.3 No idea what this is but doesn't work without it?
 /**
  * Knowres HTML class.
  *

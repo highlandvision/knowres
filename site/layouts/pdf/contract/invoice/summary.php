@@ -75,7 +75,6 @@ extract($displayData);
 		</td>
 	</tr>
 
-	<!-- TODO-v4.1 Sort for JSA-->
 	<!-- // Check for a booking note-->
 	<!-- 	$notes = $this->getContractNotes(('owner'));-->
 	<!--		if (count($notes))-->

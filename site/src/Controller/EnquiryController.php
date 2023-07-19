@@ -20,8 +20,6 @@ use HighlandVision\KR\Joomla\Extend\FormController;
 //use ReCaptcha\ReCaptcha;
 //use ReCaptcha\RequestMethod\CurlPost;
 
-//TODO-v4.1
-
 /**
  * Enquiry form controller
  *

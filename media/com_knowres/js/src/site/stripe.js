@@ -8,7 +8,7 @@
 
 "use strict";
 
-//TODO-v4.1 Replace inline code with this file
+//TODO-v4.3 Replace inline code with this file
 
 if (!window.location.origin)
 	window.location.origin = window.location.protocol + "//" + window.location.host;

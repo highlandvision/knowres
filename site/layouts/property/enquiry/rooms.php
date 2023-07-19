@@ -18,7 +18,6 @@ extract($displayData);
  * @var array $value Field value.
  */
 
-//TODO-v4.1 All JSA stuff to be finished and tested
 $Translations = new Translations();
 $count        = 0;
 ?>

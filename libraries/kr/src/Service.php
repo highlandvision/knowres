@@ -136,7 +136,7 @@ abstract class Service
 		// 0 - service type
 		// 1 - 0 = free, 1 = paid, 2 = proprietary
 		// 2 - 0 = not installed, 1 = not enabled 2 = unpublished 3 = all good
-		// TODO-v4.1 Reinstate Xero
+		// TODO-v4.3 Reinstate Xero
 		$services = [
 			'iCal'          => ['i', 0, 1],
 			'RU'            => ['c', 1, 0],

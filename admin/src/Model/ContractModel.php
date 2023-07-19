@@ -402,7 +402,7 @@ class ContractModel extends AdminModel
 			$table->qkey = hash('ripemd160', $hash);
 
 			// Convert all values to 2dp
-			// TODO-v4.2 Change to match with currency
+			// TODO-v4.3 Change to match with currency
 			$table->agent_value             = Utility::displayMoney((float) $table->agent_value);
 			$table->agent_commission        = Utility::displayMoney((float) $table->agent_commission);
 			$table->contract_total          = Utility::displayMoney((float) $table->contract_total);

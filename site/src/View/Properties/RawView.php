@@ -87,7 +87,7 @@ class RawView extends KrHtmlView
 
 			// Get the properties for the favourites
 			$this->state->set('filter.id', $fids);
-			//TODO-v4.1 display favourites on map only when displayed in list
+			//TODO-v4.3 display favourites on map only when displayed in list
 			$this->items              = $this->get('items');
 			$this->Search->data->view = 'favs';
 		}

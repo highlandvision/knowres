@@ -36,7 +36,7 @@ use function count;
 use function jexit;
 use function method_exists;
 
-//TODO-v4.2 Reinstate Xero II
+//TODO-v4.3 Reinstate Xero II
 //use HighlandVision\XERO\Xero\Payments;
 //use XeroPHP\Exception as XeroPHPException;
 //use XeroPHP\Remote\Exception\NotFoundException;
@@ -87,7 +87,7 @@ class CronserviceController extends BaseController
 			{
 				foreach ($queue as $q)
 				{
-					//TODO-v4.1 Pass all queues to class
+					//TODO-v4.3 Pass all queues to class
 					$PushRates->processQueue($q);
 
 					$actioned             = new stdClass();
@@ -414,8 +414,8 @@ class CronserviceController extends BaseController
 	//		$services = KrFactory::getListModel('services')->getServicesByPlugin('xero');
 	//		foreach ($services as $s)
 	//		{
-	//			//TODO-v4.1 check for cancels xero Phase II
-	//			//TODO-v4.1 check for edits xero Phase II
+	//			//TODO-v4.3 check for cancels xero Phase II
+	//			//TODO-v4.3 check for edits xero Phase II
 	//
 	//			// Process any unactioned payments
 	//			$queue = KrFactory::getListModel('contractpayments')->getPaymentQueue($s->agency_id);

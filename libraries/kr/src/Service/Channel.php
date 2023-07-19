@@ -62,7 +62,7 @@ class Channel extends Service
 	protected array $range = [];
 	/** @var array Service property xrefs */
 	protected array $xrefs;
-	//TODO-v4.1 Check what is used and not used
+	//TODO-v4.3 Check what is used and not used
 
 	/**
 	 * Constructor

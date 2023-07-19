@@ -322,7 +322,7 @@ class Search
 		}
 		else if ($field === 'currency')
 		{
-			// TODO-v4.1 Pricing by currency
+			// TODO-v4.3 Pricing by currency
 			// Set currency, get updated dropdown and refresh current page
 			//			$currency                                                  = $value;
 			//			$tmpBookingHandler->user_settings['current_exchange_rate'] = $currency;
@@ -392,7 +392,7 @@ class Search
 				{
 					$filterPrice = $this->checkSelection($filterPrice, $value);
 				}
-				// TODO-v4.1 Filter by rating
+				// TODO-v4.3 Filter by rating
 				// elseif ($field == 'rating')
 				// {
 				//     $filterRating = $this->checkSelection($filterRating, $value);

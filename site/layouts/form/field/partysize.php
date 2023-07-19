@@ -31,7 +31,7 @@ extract($displayData);
 	<div class="small-12 medium-3 columns">
 		<?php echo $form->renderField('child'); ?>
 	</div>
-	<!--TODO-v4.1 Remove infants for tax and child ages-->
+	<!--TODO-v4.3 Remove infants for tax and child ages-->
 	<div class="small-12 medium-3 columns">
 		<?php echo $form->renderField('infants'); ?>
 	</div>

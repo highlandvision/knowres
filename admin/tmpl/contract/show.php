@@ -89,7 +89,6 @@ $wa->useScript('keepalive')
 	<?php endif; ?>
 <?php endif; ?>
 
-	<!--TODO-v4.1 reinstate-->
 <?php if ($this->xero): ?>
 	<?php echo $this->loadTemplate('xero'); ?>
 <?php endif; ?>

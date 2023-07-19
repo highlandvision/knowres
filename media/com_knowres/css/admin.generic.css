@@ -1,4 +1,3 @@
-@charset "UTF-8";
 .big {
   font-size: 120%;
 }
@@ -37,7 +36,7 @@ div.divider hr, div.row-fluid hr {
 }
 
 .icon-back:before {
-  content: "";
+  content: "\e008";
 }
 
 img.ordering {
@@ -189,12 +188,12 @@ span.divider {
   font-family: "Font Awesome 5 Free", sans-serif;
   font-size: 1.2rem;
   font-weight: 900;
-  content: "";
+  content: "\f146";
   padding-right: 10px;
 }
 .content .card.kr-card .card-header a.showbefore.collapsed:before {
   color: #cc0000;
-  content: "";
+  content: "\f0fe";
 }
 .content .card.kr-daily {
   margin-bottom: 0.5rem;
@@ -211,12 +210,12 @@ span.divider {
   font-family: "Font Awesome 5 Free", sans-serif;
   font-size: 1rem;
   font-weight: 900;
-  content: "";
+  content: "\f146";
   padding-right: 10px;
 }
 .content .card.kr-daily .card-header a.showbefore.collapsed:before {
   color: #cc0000;
-  content: "";
+  content: "\f0fe";
 }
 .content .card.kr-daily .card-body {
   padding: 0 1rem !important;
