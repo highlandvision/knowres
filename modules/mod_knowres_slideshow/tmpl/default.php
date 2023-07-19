@@ -32,6 +32,13 @@ use HighlandVision\KR\SiteHelper;
 					<?php $text = $d['property_name'] . '<br> ' . $d['region_name'] . ', ' . $d['country_name']; ?>
 					<a href="<?php echo $plink; ?>"><?php echo $text; ?></a>
 				</div>
+			<?php else: ?>
+				<?php if ($d['description']): ?>
+					<div class="caption">
+						<?php $text = $d['description']; ?>
+						<?php echo $text; ?>
+					</div>
+				<?php endif; ?>
 			<?php endif; ?>
 		</div>
 	<?php endforeach; ?>

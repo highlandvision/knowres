@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="component" version="4.0" method="upgrade">
+<extension type="component" method="upgrade">
 	<name>com_knowres</name>
 	<creationDate>February 2022</creationDate>
 	<author>Highland Vision</author>
@@ -35,14 +35,6 @@
 			<schemapath type="mysql">queries/updates/mysql</schemapath>
 		</schemas>
 	</update>
-	<media folder="media/com_knowres" destination="com_knowres">
-		<folder>css</folder>
-		<folder>images</folder>
-		<folder>js</folder>
-		<folder>scss</folder>
-		<folder>vendor</folder>
-		<file>joomla.asset.json</file>
-	</media>
 	<files folder="site">
 		<folder>forms</folder>
 		<folder>language</folder>
@@ -50,6 +42,9 @@
 		<folder>src</folder>
 		<folder>tmpl</folder>
 	</files>
+	<media folder="media">
+		<folder>com_knowres</folder>
+	</media>
 	<administration>
 		<menu img="class:sun">com_knowres</menu>
 		<submenu>
@@ -79,6 +74,8 @@
 			</menu>
 		</submenu>
 		<files folder="admin">
+			<filename>access.xml</filename>
+			<filename>config.xml</filename>
 			<folder>forms</folder>
 			<folder>language</folder>
 			<folder>layouts</folder>
@@ -87,8 +84,6 @@
 			<folder>services</folder>
 			<folder>src</folder>
 			<folder>tmpl</folder>
-			<file>access.xml</file>
-			<file>config.xml</file>
 		</files>
 	</administration>
 </extension>

@@ -56,7 +56,7 @@ class PropertyIcs
 		$this->property_name = $property_name;
 		$this->custom        = $custom;
 
-		if ($this->custom == 'breezeway') {
+		if ($this->custom == 'split') {
 			$this->amalgamate = false;
 		}
 	}
