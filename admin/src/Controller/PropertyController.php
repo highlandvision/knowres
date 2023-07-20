@@ -63,10 +63,8 @@ class PropertyController extends FormController
 		$address         = urlencode($address);
 		$url             = 'https://maps.googleapis.com/maps/api/geocode/json?address=' . $address . '&key=' . $key;
 		$geocodeResponse = Utility::decodeJson(file_get_contents($url));
-		if ($geocodeResponse->status == 'OK')
-		{
-			foreach ($geocodeResponse->results as $result)
-			{
+		if ($geocodeResponse->status == 'OK') {
+			foreach ($geocodeResponse->results as $result) {
 				$response['lat'] = $result->geometry->location->lat;
 				$response['lng'] = $result->geometry->location->lng;
 			}
@@ -83,18 +81,16 @@ class PropertyController extends FormController
 	 * @throws Exception
 	 * @since  3.0.0
 	 */
-	public function approve()
+	public function approve(): void
 	{
 		$this->checkToken('get');
 
 		$id = $this->input->getInt('id', 0);
-		if (empty($id))
-		{
+		if (empty($id)) {
 			Logger::logme('ID not received for property approval', 'error');
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN'));
 		}
-		else
-		{
+		else {
 			$data           = new stdClass();
 			$data->id       = $id;
 			$data->approved = 1;
@@ -112,16 +108,14 @@ class PropertyController extends FormController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	#[NoReturn] public function calendar()
+	#[NoReturn] public function calendar(): void
 	{
 		$id = KrMethods::inputInt('property_id', 0, 'get');
-		if (empty($id))
-		{
+		if (empty($id)) {
 			Utility::goto('properties');
 		}
 		$item = KrFactory::getAdminModel('property')->getItem($id);
-		if (empty($item->id))
-		{
+		if (empty($item->id)) {
 			KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&view=properties', false));
 		}
 
@@ -138,28 +132,24 @@ class PropertyController extends FormController
 	 * @throws Exception
 	 * @since  3.0.0
 	 */
-	public function checkin()
+	public function checkin(): void
 	{
 		$id = KrMethods::inputInt('id', 0, 'get');
-		if (!$id)
-		{
+		if (!$id) {
 			Logger::logme('ID not received for property checkin', 'error');
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN'));
 			KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&view=properties', false));
 		}
-		else
-		{
+		else {
 			$this->setRedirect(KrMethods::route('index.php?option=com_knowres&task=property.dashboard&id=' . $id,
 				false));
 
 			/** @var PropertyModel $model */
 			$model = $this->getModel();
-			if (!$model->checkin($id))
-			{
+			if (!$model->checkin($id)) {
 				KrMethods::message($model->getError(), 'error');
 			}
-			else
-			{
+			else {
 				KrMethods::message(KrMethods::plain('COM_KNOWRES_ITEM_CHECKED_IN'));
 			}
 		}
@@ -171,7 +161,7 @@ class PropertyController extends FormController
 	 * @throws Exception
 	 * @since  3.0.0
 	 */
-	#[NoReturn] public function cloner()
+	#[NoReturn] public function cloner(): void
 	{
 		$jform         = KrMethods::inputArray('jform');
 		$id            = (int) $jform['id'];
@@ -182,20 +172,16 @@ class PropertyController extends FormController
 		$newid = KrMethods::inputInt('newid');
 
 		$Cloner = new Cloner($id, $property_name);
-		if ($id && !$newid && $type == '')
-		{
+		if ($id && !$newid && $type == '') {
 			$newid = $Cloner->cloneProperty($jform);
-			if (!$newid)
-			{
+			if (!$newid) {
 				echo false;
 			}
-			else
-			{
+			else {
 				echo $newid;
 			}
 		}
-		else if ($id && $newid && $type != '')
-		{
+		else if ($id && $newid && $type != '') {
 			$Cloner->clonePropertyChild($newid, $type, $jform);
 		}
 
@@ -208,19 +194,17 @@ class PropertyController extends FormController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	#[NoReturn] public function combo()
+	#[NoReturn] public function combo(): void
 	{
 		$model     = new PropertyModel();
 		$form      = $model->getForm([], false);
 		$parent_id = KrMethods::inputInt('parent');
 		$target    = KrMethods::inputString('target');
 
-		if ($target == 'region_id')
-		{
+		if ($target == 'region_id') {
 			$form->setValue('country_id', null, $parent_id);
 		}
-		else if ($target == 'town_id')
-		{
+		else if ($target == 'town_id') {
 			$form->setValue('region_id', null, $parent_id);
 		}
 
@@ -237,44 +221,38 @@ class PropertyController extends FormController
 	 * @throws Exception
 	 * @since  3.0.0
 	 */
-	#[NoReturn] public function dashboard()
+	#[NoReturn] public function dashboard(): void
 	{
 		$id = KrMethods::inputInt('id', 0, 'get');
-		if (!$id)
-		{
+		if (!$id) {
 			Utility::goto('properties');
 		}
 
 		/** @var DashboardView $view */
 		$view       = $this->getView('property', 'dashboard');
 		$view->item = KrFactory::getListModel('properties')->getForDashboard($id);
-		/** @var PropertysettingsModel $view- >settings */
+		/** @var PropertysettingsModel $view - >settings */
 		$view->settings = KrFactory::getListModel('propertysettings')->getPropertysettings($id);
 		$view           = $this->setAccess($view);
 
 		$created_at = TickTock::modifyYears('now', 1, '-');
-		/** @var ContractsModel $view- >latest */
+		/** @var ContractsModel $view - >latest */
 		$view->latest = KrFactory::getListModel('contracts')->getLatestForProperty($id, $created_at, $view->today);
-		/** @var ContractsModel $view- >upcoming */
+		/** @var ContractsModel $view - >upcoming */
 		$view->upcoming = KrFactory::getListModel('contracts')->getUpcomingForProperty($id, $view->today);
 
 		$Itemid             = SiteHelper::getItemId('com_knowres', 'property', ['id' => 0]);
-		$view->preview_link = KrMethods::route(
-			KrMethods::getRoot() . 'index.php?option=com_knowres&view=property&layout=preview&id=' . $id . '&Itemid='
-			. $Itemid);
+		$view->preview_link = KrMethods::route(KrMethods::getRoot() . 'index.php?option=com_knowres&view=property&layout=preview&id=' . $id . '&Itemid=' . $Itemid);
 		$view->edit_link    = KrMethods::route('index.php?option=com_knowres&task=property.edit&id=' . $id);
 
-		if ($view->item->owner_id)
-		{
+		if ($view->item->owner_id) {
 			$view->owner = KrFactory::getAdminModel('owner')->getItem($view->item->owner_id);
 		}
-		if ($view->item->ownerpayments)
-		{
-			/** @var OwnerpaymentsModel $view- >ownerpayments */
+		if ($view->item->ownerpayments) {
+			/** @var OwnerpaymentsModel $view - >ownerpayments */
 			$view->ownerpayments = KrFactory::getListModel('services')->getGateways(null, 0, $id);
 		}
-		if ($view->item->channels)
-		{
+		if ($view->item->channels) {
 			$view->channels = KrFactory::getListModel('servicexrefs')->getChannels($id, true);
 		}
 
@@ -288,19 +266,17 @@ class PropertyController extends FormController
 	 * @since        1.0.0
 	 * @noinspection PhpUnused
 	 */
-	public function delpdf()
+	public function delpdf(): void
 	{
 		$this->checkToken();
 
 		$id = $this->input->getInt('id', 0);
-		if (!$id)
-		{
+		if (!$id) {
 			Logger::logme('ID not received for property delete PDF', 'error');
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN'));
 			KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&view=properties', false));
 		}
-		else
-		{
+		else {
 			$this->setRedirect(KrMethods::route('index.php?option=com_knowres&view=media&id=' . $id, false));
 
 			$pdfNameArray = $this->input->get('pdf', [], 'array');
@@ -321,12 +297,11 @@ class PropertyController extends FormController
 	 */
 	public function edit($key = null, $urlVar = null): void
 	{
-		if (!parent::edit())
-		{
+		if (!parent::edit()) {
 			$id = $this->input->get('id', 0, 'integer');
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_PROPERTYDASHBOARD_CHECKIN'), 'error');
-			KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&task=property.dashboard&id='
-				. $id, false));
+			KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&task=property.dashboard&id=' . $id,
+				false));
 		}
 	}
 
@@ -336,23 +311,20 @@ class PropertyController extends FormController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	#[NoReturn] public function geocode()
+	#[NoReturn] public function geocode(): void
 	{
 		$data    = 'null';
 		$address = $this->input->getString('address', '');
 		$address = trim(str_replace(',', ' ', $address));
 		$latlng  = trim($this->input->getString('latlng', ''));
 
-		if ($address)
-		{
+		if ($address) {
 			echo Utility::encodeJson(self::geoCodeAddress($address));
 		}
-		else if ($latlng)
-		{
+		else if ($latlng) {
 			echo Utility::geoCodeLatLng($latlng);
 		}
-		else
-		{
+		else {
 			echo Utility::encodeJson($data);
 		}
 
@@ -365,7 +337,7 @@ class PropertyController extends FormController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function logout()
+	public function logout(): void
 	{
 		KrMethods::logoutUser(KrMethods::getUser()->id);
 	}
@@ -377,13 +349,12 @@ class PropertyController extends FormController
 	 * @since        3.0.0
 	 * @noinspection PhpUnused
 	 */
-	public function saveimage()
+	public function saveimage(): void
 	{
 		$this->checkToken();
 
 		$property_id = KrMethods::inputInt('id');
-		if (!$property_id)
-		{
+		if (!$property_id) {
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_PROPERTY_MEDIA_ERROR1'));
 			Utility::goto('properties');
 		}
@@ -396,22 +367,18 @@ class PropertyController extends FormController
 		$tmp_name = $files['image']['tmp_name'];
 		$error    = $files['image']['error'];
 
-		if (!$name)
-		{
+		if (!$name) {
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_FORM_ERROR_PROPERTY_IMAGE'), 'error');
 
 			return;
 		}
 
 		$ImagesProperty = new Media\Images\Property($property_id, 'solo');
-		try
-		{
+		try {
 			$ImagesProperty->validate($name, $tmp_name, $error);
 			$ImagesProperty->processOriginal();
 			$ImagesProperty->process();
-		}
-		catch (RuntimeException $e)
-		{
+		} catch (RuntimeException $e) {
 			Logger::logMe($e->getMessage());
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN_CHECK'), 'error');
 
@@ -441,13 +408,12 @@ class PropertyController extends FormController
 	 * @since        3.0.0
 	 * @noinspection PhpUnused
 	 */
-	public function savevideo()
+	public function savevideo(): void
 	{
 		$this->checkToken();
 
 		$jform = KrMethods::inputArray('jform');
-		if (empty($jform['id']))
-		{
+		if (empty($jform['id'])) {
 			Logger::logme('ID not received for property save video', 'error');
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN'));
 			KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&view=properties', false));
@@ -470,25 +436,22 @@ class PropertyController extends FormController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	#[NoReturn] public function stats()
+	#[NoReturn] public function stats(): void
 	{
+		/** @var PropertyModel $view */
 		$view = $this->getView('property', 'stats');
 		$id   = $this->input->getInt('id', 0);
-		if (!$id)
-		{
+		if (!$id) {
 			Logger::logme('ID not received for property stats', 'error');
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN'));
 			KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&view=properties', false));
 		}
 
-		/** @var PropertyModel $view- >item */
-		$view->item = KrFactory::getAdminModel('property')->getItem($id);
-		/** @var PropertysettingsModel $view- >settings */
-		$view->settings = KrFactory::getListModel('propertysettings')->getPropertysettings($id);
-		$view->today    = TickTock::getDate();
-		$view->params   = KrMethods::getParams();
-		$created_after  = TickTock::modifyDays('now', 365, '-');
-		/** @var ContractsModel $view- >cpmntracts */
+		$view->item      = KrFactory::getAdminModel('property')->getItem($id);
+		$view->settings  = KrFactory::getListModel('propertysettings')->getPropertysettings($id);
+		$view->today     = TickTock::getDate();
+		$view->params    = KrMethods::getParams();
+		$created_after   = TickTock::modifyDays('now', 365, '-');
 		$view->contracts = KrFactory::getListModel('contracts')->getDataForPropertyStats($id, $created_after);
 
 		$view->display();
@@ -501,13 +464,12 @@ class PropertyController extends FormController
 	 * @since        1.0.0
 	 * @noinspection PhpUnused
 	 */
-	public function uploadpdf()
+	public function uploadpdf(): void
 	{
 		$this->checkToken();
 
 		$id = $this->input->getInt('id', 0);
-		if (!$id)
-		{
+		if (!$id) {
 			Logger::logme('ID not received for property uploadpdf', 'error');
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN'));
 			KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&view=properties', false));
@@ -538,12 +500,10 @@ class PropertyController extends FormController
 		$params       = KrMethods::getParams();
 		$userSession  = new KrSession\User();
 		$access_level = $userSession->getAccessLevel();
-		if ($access_level > 10 || !$params->get('property_add'))
-		{
+		if ($access_level > 10 || !$params->get('property_add')) {
 			return parent::allowAdd();
 		}
-		else if ($access_level == 10 && $params->get('property_add'))
-		{
+		else if ($access_level == 10 && $params->get('property_add')) {
 			return true;
 		}
 	}
@@ -557,27 +517,23 @@ class PropertyController extends FormController
 	 * @throws Exception
 	 * @since  3.1.0
 	 */
-	protected function postSaveHook(BaseDatabaseModel $model, $validData = [])
+	protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
 	{
 		/** @var PropertyModel $model */
 		$id       = $model->getItem()->get('id');
 		$massaged = KrMethods::inputArray('jform');
 
 		$fields = KrFactory::getListModel('propertyfields')->getAllPropertyFields();
-		if (is_countable($fields) && count($fields))
-		{
+		if (is_countable($fields) && count($fields)) {
 			$Translations = new Translations();
-			foreach ($fields as $f)
-			{
+			foreach ($fields as $f) {
 				$label     = 'p' . $f->id;
 				$formlabel = 'p' . $f->id;
-				if ($f->special)
-				{
+				if ($f->special) {
 					$formlabel = KrFactory::getAdminModel('propertyfield')->propertyFieldSpecial($f->special, false);
 				}
 
-				if (isset($massaged[$formlabel]))
-				{
+				if (isset($massaged[$formlabel])) {
 					$text = (string) $massaged[$formlabel];
 					$Translations->updateDefault('property', $id, $label, $text);
 				}
@@ -585,14 +541,12 @@ class PropertyController extends FormController
 		}
 
 		// New property add to manager if owner or limited access
-		if (!(int) $validData['id'])
-		{
+		if (!(int) $validData['id']) {
 			$userSession  = new KrSession\User();
 			$userData     = $userSession->getData();
 			$access_level = $userData->access_level;
 
-			if ($access_level == 10 || $access_level == 20)
-			{
+			if ($access_level == 10 || $access_level == 20) {
 				/** @var ManagerModel $manager */
 				$manager      = KrFactory::getAdminModel('manager')->getItem($userSession['manager_id']);
 				$properties   = $manager->properties;
@@ -607,14 +561,11 @@ class PropertyController extends FormController
 				$userSession->setData($userData);
 			}
 		}
-		else
-		{
+		else {
 			$old_security_amount = KrMethods::inputString('old_security_amount', '0');
 			$old_security_cash   = KrMethods::inputString('old_security_cash', '0');
 
-			if ((isset($validData['security_amount']) && $validData['security_amount'] !== $old_security_amount)
-				|| (isset($validData['security_cash']) && $validData['security_cash'] !== $old_security_cash))
-			{
+			if ((isset($validData['security_amount']) && $validData['security_amount'] !== $old_security_amount) || (isset($validData['security_cash']) && $validData['security_cash'] !== $old_security_cash)) {
 				KrFactory::getAdminModel('propertysetting')->updateSetting('security_changes', $validData['id']);
 			}
 
@@ -635,8 +586,9 @@ class PropertyController extends FormController
 	{
 		$userSession        = new KrSession\User();
 		$userData           = $userSession->getData();
-		$view->access_level = $userData->access_level;
 
+		/** @var CalendarView $view */
+		$view->access_level = $userData->access_level;
 		$view->allow_book  = !($view->access_level == 10 && !KrMethods::getParams()->get('contract_add'));
 		$view->allow_block = !($view->access_level == 10 && !KrMethods::getParams()->get('block_add'));
 

@@ -38,7 +38,7 @@ class GanttController extends FormController
 	 * @throws Exception
 	 * @since  3.2.0
 	 */
-	public function cancel($key = null)
+	public function cancel($key = null): void
 	{
 		$this->setRedirect(KrMethods::route('index.php?option=' . $this->option, false));
 	}
@@ -49,7 +49,7 @@ class GanttController extends FormController
 	 * @throws Exception
 	 * @since  3.2.0
 	 */
-	#[NoReturn] public function data()
+	#[NoReturn] public function data(): void
 	{
 		$this->checkToken();
 

@@ -34,7 +34,7 @@ class BedtypeController extends FormController
 	 * @throws Exception
 	 * @since  2.2.0
 	 */
-	protected function postSaveHook(BaseDatabaseModel $model, $validData = [])
+	protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
 	{
 		/* @var BedtypeModel $model */
 		$id = $model->getItem()->get('id');

@@ -34,7 +34,7 @@ class PropertyfeatureController extends FormController
 	 * @throws Exception
 	 * @since  3.1.0
 	 */
-	protected function postSaveHook(BaseDatabaseModel $model, $validData = [])
+	protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
 	{
 		/** @var PropertyfeatureModel $model */
 		$id   = $model->getItem()->get('id');

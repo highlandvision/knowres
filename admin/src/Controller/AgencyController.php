@@ -38,7 +38,7 @@ class AgencyController extends FormController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	#[NoReturn] public function combo()
+	#[NoReturn] public function combo(): void
 	{
 		$model     = new AgencyModel();
 		$form      = $model->getForm([], false);
@@ -70,7 +70,7 @@ class AgencyController extends FormController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected function postSaveHook(BaseDatabaseModel $model, $validData = [])
+	protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
 	{
 		/** @var AgencyModel $model */
 		$id                   = $model->getItem()->get('id');

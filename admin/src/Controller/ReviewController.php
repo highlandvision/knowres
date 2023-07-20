@@ -34,7 +34,7 @@ class ReviewController extends FormController
 	 * @throws Exception
 	 * @since  3.0.0
 	 */
-	public function save($key = null, $urlVar = null)
+	public function save($key = null, $urlVar = null): void
 	{
 		if (parent::save())
 		{
@@ -58,7 +58,7 @@ class ReviewController extends FormController
 	 *
 	 * @since  3.1
 	 */
-	protected function postSaveHook(BaseDatabaseModel $model, $validData = [])
+	protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
 	{
 		if (isset($validData['contract_id']) && $validData['contract_id'])
 		{

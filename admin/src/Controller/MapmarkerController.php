@@ -36,7 +36,7 @@ class MapmarkerController extends FormController
 	 * @throws Exception
 	 * @since  4.0.0
 	 */
-	#[NoReturn] public function combo()
+	#[NoReturn] public function combo(): void
 	{
 		$model  = new MapmarkerModel();
 		$form      = $model->getForm([], false);
@@ -68,7 +68,7 @@ class MapmarkerController extends FormController
 	 * @throws Exception
 	 * @since  3.1
 	 */
-	protected function postSaveHook(BaseDatabaseModel $model, $validData = [])
+	protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
 	{
 		/** @var MapmarkerModel $model */
 		$id          = $model->getItem()->get('id');

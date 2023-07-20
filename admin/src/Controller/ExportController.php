@@ -53,7 +53,7 @@ class ExportController extends FormController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	#[NoReturn] public function doBalances()
+	#[NoReturn] public function doBalances(): void
 	{
 		$this->checkToken();
 
@@ -72,7 +72,7 @@ class ExportController extends FormController
 	 * @throws Exception
 	 * @since 1.0.0
 	 */
-	#[NoReturn] public function doContracts()
+	#[NoReturn] public function doContracts(): void
 	{
 		$this->checkToken();
 
@@ -91,7 +91,7 @@ class ExportController extends FormController
 	 * @throws Exception
 	 * @since 1.0.0
 	 */
-	#[NoReturn] public function doOwnerPayments()
+	#[NoReturn] public function doOwnerPayments(): void
 	{
 		$this->checkToken();
 
@@ -114,7 +114,7 @@ class ExportController extends FormController
 	 * @throws Exception
 	 * @since 1.0.0
 	 */
-	#[NoReturn] public function doPayments()
+	#[NoReturn] public function doPayments(): void
 	{
 		$this->checkToken();
 
@@ -133,7 +133,7 @@ class ExportController extends FormController
 	 * @throws Exception
 	 * @since  2.5.0
 	 */
-	public function doRegistration()
+	public function doRegistration(): void
 	{
 		$this->checkToken();
 		$data = KrMethods::inputArray('jform');

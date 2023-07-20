@@ -34,7 +34,7 @@ class EmailtemplateController extends FormController
 	 * @throws Exception
 	 * @since  3.1
 	 */
-	protected function postSaveHook(BaseDatabaseModel $model, $validData = [])
+	protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
 	{
 		/* @var EmailtemplateModel $model */
 		$id      = $model->getItem()->get('id');

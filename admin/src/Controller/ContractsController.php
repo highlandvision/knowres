@@ -32,7 +32,7 @@ class ContractsController extends AdminController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	#[NoReturn] public function daily()
+	#[NoReturn] public function daily(): void
 	{
 		$view = $this->getView('contracts', 'daily');
 		$view->display();
@@ -44,7 +44,7 @@ class ContractsController extends AdminController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function delpdf()
+	public function delpdf(): void
 	{
 		$this->checkToken();
 
@@ -88,7 +88,7 @@ class ContractsController extends AdminController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function uploadpdf()
+	public function uploadpdf(): void
 	{
 		$this->checkToken();
 

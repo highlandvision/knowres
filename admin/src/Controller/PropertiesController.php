@@ -55,7 +55,7 @@ class PropertiesController extends AdminController
 	 *
 	 * @since 1.0.0
 	 */
-	public function area()
+	public function area(): void
 	{
 		try
 		{
@@ -96,7 +96,7 @@ class PropertiesController extends AdminController
 	 * @throws Exception
 	 * @since  3.0.0
 	 */
-	public function markAsTrash()
+	public function markAsTrash(): void
 	{
 		$this->checkToken();
 
@@ -126,7 +126,7 @@ class PropertiesController extends AdminController
 	 * @throws RuntimeException
 	 * @since  3.0.0
 	 */
-	public function markForDeletion()
+	public function markForDeletion(): void
 	{
 		$this->checkToken();
 
@@ -154,7 +154,7 @@ class PropertiesController extends AdminController
 	 *
 	 * @since  3.0.0
 	 */
-	public function view()
+	public function view(): void
 	{
 		KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&view=properties', false));
 	}

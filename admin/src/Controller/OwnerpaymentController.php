@@ -32,7 +32,7 @@ class OwnerpaymentController extends FormController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	#[NoReturn] public function modal()
+	#[NoReturn] public function modal(): void
 	{
 		$id = KrMethods::inputInt('id', 0, 'get');
 		if (!$id)
@@ -53,7 +53,7 @@ class OwnerpaymentController extends FormController
 	 * @throws Exception
 	 * @since  3.3.1
 	 */
-	protected function postSaveHook(BaseDatabaseModel $model, $validData = [])
+	protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
 	{
 		if ((int) $validData['contract_id'] && (int) $validData['confirmed'])
 		{

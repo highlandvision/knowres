@@ -34,7 +34,7 @@ class ServicexrefController extends FormController
 	 * @throws Exception
 	 * @since  3.0.0
 	 */
-	public function save($key = null, $urlVar = null)
+	public function save($key = null, $urlVar = null): void
 	{
 		if (parent::save())
 		{
@@ -56,7 +56,7 @@ class ServicexrefController extends FormController
 	 * @throws Exception
 	 * @since  3.1
 	 */
-	protected function postSaveHook(BaseDatabaseModel $model, $validData = [])
+	protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
 	{
 		if ((int) $validData['foreign_key'] == 0 && (int) $validData['property_id'] > 0)
 		{

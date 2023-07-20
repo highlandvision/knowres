@@ -78,7 +78,7 @@ class ServicelogsController extends AdminController
 	 * @throws Exception
 	 * @since  1.0.4
 	 */
-	public function resend()
+	public function resend(): void
 	{
 		$pks = KrMethods::inputArray('cid', [], 'get');
 		ArrayHelper::toInteger($pks);

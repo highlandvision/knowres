@@ -36,7 +36,7 @@ class CurrencyController extends FormController
 	 *
 	 * @since  2.5.0
 	 */
-	public function save($key = null, $urlVar = null)
+	public function save($key = null, $urlVar = null): void
 	{
 		$massaged = $this->input->post->get('jform', [], 'array');
 		if (!isset($massaged['allow_payment']))

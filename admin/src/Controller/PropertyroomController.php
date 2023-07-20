@@ -37,7 +37,7 @@ class PropertyroomController extends FormController
 	 * @throws Exception
 	 * @since   2.5.0
 	 */
-	public function save($key = null, $urlVar = null)
+	public function save($key = null, $urlVar = null): void
 	{
 		$massaged = $this->input->post->get('jform', [], 'array');
 
@@ -75,7 +75,7 @@ class PropertyroomController extends FormController
 	 * @throws Exception
 	 * @since  3.1
 	 */
-	protected function postSaveHook(BaseDatabaseModel $model, $validData = [])
+	protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
 	{
 		/** @var PropertyroomModel $model */
 		$id          = $model->getItem()->get('id');

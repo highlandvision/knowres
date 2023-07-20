@@ -147,7 +147,7 @@ class ContractController extends FormController
 	 * @throws Exception
 	 * @since  3.1.0
 	 */
-	public function batchxero()
+	public function batchxero(): void
 	{
 		$this->checkToken();
 		$this->setRedirect(KrMethods::route('index.php?option=com_knowres&view=contracts', false));
@@ -170,7 +170,7 @@ class ContractController extends FormController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function cancel($key = null)
+	public function cancel($key = null): void
 	{
 		if (parent::cancel($key))
 		{
@@ -209,7 +209,7 @@ class ContractController extends FormController
 	 * @throws Exception
 	 * @since  2.3.0
 	 */
-	#[NoReturn] public function delete()
+	#[NoReturn] public function delete(): void
 	{
 		$this->checkToken();
 
@@ -250,7 +250,7 @@ class ContractController extends FormController
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	#[NoReturn] public function init()
+	#[NoReturn] public function init(): void
 	{
 		$property_id = $this->input->getInt('pid', 0);
 		$edit_id     = $this->input->getInt('edit_id', 0);
@@ -462,7 +462,7 @@ class ContractController extends FormController
 	 * @throws Exception
 	 * @since  3.2.0
 	 */
-	#[NoReturn] public function modalbook()
+	#[NoReturn] public function modalbook(): void
 	{
 		$property_id = KrMethods::inputInt('property_id');
 		$arrival     = KrMethods::inputString('arrival', '');
@@ -609,7 +609,7 @@ class ContractController extends FormController
 	 * @throws Exception
 	 * @since  3.1.0
 	 */
-	#[NoReturn] public function quick()
+	#[NoReturn] public function quick(): void
 	{
 		$this->checkToken();
 
@@ -652,7 +652,7 @@ class ContractController extends FormController
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	#[NoReturn] public function requestapprove()
+	#[NoReturn] public function requestapprove(): void
 	{
 		$this->checkToken();
 
@@ -697,7 +697,7 @@ class ContractController extends FormController
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	#[NoReturn] public function requestreject()
+	#[NoReturn] public function requestreject(): void
 	{
 		$this->checkToken();
 
@@ -735,7 +735,7 @@ class ContractController extends FormController
 	 * @throws Exception
 	 * @since  3.1.0
 	 */
-	#[NoReturn] public function resurrect()
+	#[NoReturn] public function resurrect(): void
 	{
 		$this->checkToken();
 
@@ -787,7 +787,7 @@ class ContractController extends FormController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	#[NoReturn] public function save($key = null, $urlVar = null)
+	#[NoReturn] public function save($key = null, $urlVar = null): void
 	{
 		$this->checkToken();
 
@@ -848,7 +848,7 @@ class ContractController extends FormController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	#[NoReturn] public function show()
+	#[NoReturn] public function show(): void
 	{
 		$id = $this->input->getInt('id', 0);
 		if (!$id)
@@ -878,7 +878,7 @@ class ContractController extends FormController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	#[NoReturn] public function trash()
+	#[NoReturn] public function trash(): void
 	{
 		$id   = $this->validateId();
 		$item = KrFactory::getAdminModel('contract')->getItem($id);
@@ -917,7 +917,7 @@ class ContractController extends FormController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function trigger()
+	public function trigger(): void
 	{
 		$id            = $this->validateId();
 		$email_trigger = $this->input->getInt('email_trigger', 0);
@@ -976,10 +976,10 @@ class ContractController extends FormController
 	 * @throws Exception
 	 * @since  3.1.0
 	 */
-	public function xero()
+	public function xero(): void
 	{
 		$view = $this->getView('contract', 'xero');
-		$view?->display();
+		$view->display();
 	}
 
 	/**
@@ -991,7 +991,7 @@ class ContractController extends FormController
 	 * @throws Exception
 	 * @since  3.2.0
 	 */
-	protected function compute(Hub $Hub, array $computations)
+	protected function compute(Hub $Hub, array $computations): void
 	{
 		try
 		{

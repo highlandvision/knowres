@@ -36,7 +36,7 @@ class AjaxController extends BaseController
 	 * @throws Exception
 	 * @since  2.4.0
 	 */
-	public function editinplace()
+	public function editinplace(): void
 	{
 		$table  = KrMethods::inputString('table');
 		$column = KrMethods::inputString('column');

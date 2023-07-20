@@ -35,8 +35,7 @@ class ServiceController extends FormController
 	 */
 	public function add(): void
 	{
-		if (parent::add())
-		{
+		if (parent::add()) {
 			KrMethods::redirect('index.php?option=com_knowres&task=services.new');
 		}
 	}
@@ -48,7 +47,7 @@ class ServiceController extends FormController
 	 * @throws RuntimeException
 	 * @since  4.0.0
 	 */
-	public function lnm()
+	public function lnm(): void
 	{
 		$service_id = KrFactory::getListModel('services')::checkForSingleService(true, 'ru');
 		$Bookings   = new Bookings();
@@ -67,34 +66,24 @@ class ServiceController extends FormController
 	 * @throws Exception
 	 * @since  3.1.0
 	 */
-	protected function postSaveHook(BaseDatabaseModel $model, $validData = [])
+	protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
 	{
 		// If adding xero then set all payments and fees to actioned
-		if (!(int) $validData['id'] && (string) $validData['plugin'] == 'xero')
-		{
+		if (!(int) $validData['id'] && (string) $validData['plugin'] == 'xero') {
 			KrFactory::getListModel('contractpayments')->updateForXero($validData['agency_id']);
 		}
 
 		// Check for changes to ha service parameters
-		if ((int) $validData['id'] && $validData['type'] == 'c' && $validData['plugin'] == 'vrbo')
-		{
+		if ((int) $validData['id'] && $validData['type'] == 'c' && $validData['plugin'] == 'vrbo') {
 			$existing = Utility::decodeJson(KrMethods::inputString('existing'), true);
 			$new      = Utility::decodeJson($validData['parameters'], true);
-			if ((is_countable($new) && count($new)) && (is_countable($existing) && count($existing)))
-			{
-				if ($new['bookingPolicy'] != $existing['bookingPolicy']
-					|| $new['cancellationPolicy'] != $existing['cancellationPolicy']
-					|| $new['pricingPolicy'] != $existing['pricingPolicy']
-					|| $new['checkInTime'] != $existing['checkInTime']
-					|| $new['checkOutTime'] != $existing['checkOutTime'])
-				{
+			if ((is_countable($new) && count($new)) && (is_countable($existing) && count($existing))) {
+				if ($new['bookingPolicy'] != $existing['bookingPolicy'] || $new['cancellationPolicy'] != $existing['cancellationPolicy'] || $new['pricingPolicy'] != $existing['pricingPolicy'] || $new['checkInTime'] != $existing['checkInTime'] || $new['checkOutTime'] != $existing['checkOutTime']) {
 					KrFactory::getAdminModel('propertysetting')->updateSetting('security_changes', 0);
 				}
 
-				if ($new['markup'] != $existing['markup'])
-				{
-					KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updatePropertyRates', 0, 0,
-						'vrbo');
+				if ($new['markup'] != $existing['markup']) {
+					KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updatePropertyRates', 0, 0, 'vrbo');
 				}
 			}
 		}

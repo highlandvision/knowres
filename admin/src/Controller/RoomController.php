@@ -33,14 +33,15 @@ class RoomController extends FormController
 	/**
 	 * Process additional requirements after save map marker
 	 *
-	 * @param   BaseDatabaseModel  $model      The data model object.
-	 * @param   array              $validData  The validated data.
+	 * @param  BaseDatabaseModel  $model      The data model object.
+	 * @param  array              $validData  The validated data.
 	 *
 	 * @throws Exception
 	 * @since  3.1
 	 */
-	protected function postSaveHook(BaseDatabaseModel $model, $validData = [])
+	protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
 	{
+		/** @var $model RoomModel */
 		$id          = $model->getItem()->get('id');
 		$name        = (string) $validData['name'];
 		$description = (string) $validData['description'];

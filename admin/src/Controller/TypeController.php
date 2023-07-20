@@ -34,7 +34,7 @@ class TypeController extends FormController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function delpdf()
+	public function delpdf(): false|null
 	{
 		$this->checkToken();
 
@@ -52,7 +52,7 @@ class TypeController extends FormController
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_PDF_DELETE'), 'error');
 			$this->setRedirect(Route::_('index.php?option=com_knowres&view=type&layout=edit&id=' . $id, false));
 
-			return;
+			return false;
 		}
 
 		Media::deletePdfs('types', $id, $pdfNameArray);
@@ -65,8 +65,9 @@ class TypeController extends FormController
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
+	 * @return bool|null
 	 */
-	public function uploadpdf()
+	public function uploadpdf(): bool|null
 	{
 		$this->checkToken();
 
@@ -97,7 +98,7 @@ class TypeController extends FormController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected function postSaveHook(BaseDatabaseModel $model, $validData = [])
+	protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
 	{
 		/** @var TypeModel $model */
 		$id           = $model->getItem()->get('id');

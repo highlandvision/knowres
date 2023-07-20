@@ -27,6 +27,10 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
  */
 class CalendarView extends KrHtmlView\Property
 {
+	/* $var bool True to add block */
+	public bool $allow_block = false;
+	/* $var bool True to add booking */
+	public bool $allow_book = false;
 	/* $var array Dates for calendar */
 	protected array $dates = [];
 	/* $var string Current calendar date */

@@ -35,7 +35,7 @@ class RegionController extends FormController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function delpdf()
+	public function delpdf(): void
 	{
 		$this->checkToken();
 
@@ -62,7 +62,7 @@ class RegionController extends FormController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function uploadpdf()
+	public function uploadpdf(): void
 	{
 		$this->checkToken();
 
@@ -90,7 +90,7 @@ class RegionController extends FormController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected function postSaveHook(BaseDatabaseModel $model, $validData = [])
+	protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
 	{
 		$name  = (string) $validData['name'];
 		$blurb = (string) $validData['blurb'];
@@ -99,6 +99,7 @@ class RegionController extends FormController
 			$name = StringHelper::increment($name);
 		}
 
+		/* @var RegionModel $model */
 		$id           = (int) $model->getItem()->get('id');
 		$Translations = new Translations();
 		$Translations->updateDefault('region', $id, 'name', $name);
