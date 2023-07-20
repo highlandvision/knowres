@@ -34,12 +34,10 @@ use Joomla\CMS\HTML\HTMLHelper;
 		<?php echo KrMethods::plain('COM_KNOWRES_IMAGES_THUMBNAIL'); ?>
 	</th>
 	<th scope="col" class="w-30 d-none d-md-table-cell">
-		<?php echo HTMLHelper::_('searchtools.sort', 'COM_KNOWRES_IMAGES_ALT_TEXT', 'alt_text', $this->listDirn,
-			$this->listOrder); ?>
+		<?php echo KrMethods::plain('COM_KNOWRES_IMAGES_ALT_TEXT'); ?>
 	</th>
 	<th scope="col" class="w-35 d-none d-md-table-cell">
-		<?php echo HTMLHelper::_('searchtools.sort', 'COM_KNOWRES_IMAGES_DESCRIPTION', 'description', $this->listDirn,
-			$this->listOrder); ?>
+		<?php echo KrMethods::plain('COM_KNOWRES_IMAGES_DESCRIPTION'); ?>
 	</th>
 	<th scope="col" class="w-5 d-none d-md-table-cell">
 		<?php echo HTMLHelper::_('searchtools.sort', 'JGRID_HEADING_ID', 'a.id', $this->listDirn, $this->listOrder); ?>

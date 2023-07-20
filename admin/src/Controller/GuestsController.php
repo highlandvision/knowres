@@ -34,7 +34,7 @@ class GuestsController extends AdminController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	#[NoReturn] public function email()
+	#[NoReturn] public function email(): void
 	{
 		$query  = KrMethods::inputString('query', '');
 		$emails = KrFactory::getListModel('guests')->getEmails($query);
@@ -69,7 +69,7 @@ class GuestsController extends AdminController
 	 * @since        1.0.0
 	 * @noinspection PhpUnused
 	 */
-	#[NoReturn] public function guestdetails()
+	#[NoReturn] public function guestdetails(): void
 	{
 		$email = KrMethods::inputString('email', '');
 		$guest = KrFactory::getListModel('guests')->checkGuestEmail($email);

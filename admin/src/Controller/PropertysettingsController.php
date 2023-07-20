@@ -6,6 +6,7 @@
  * @license    See the file "LICENSE.txt" for the full license governing this code.
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
+
 /** @noinspection PhpUnused */
 
 namespace HighlandVision\Component\Knowres\Administrator\Controller;
@@ -31,19 +32,17 @@ class PropertysettingsController extends AdminController
 	 * @throws Exception
 	 * @since 1.0.0
 	 */
-	public function apply()
+	public function apply(): void
 	{
 		$property_id = KrMethods::inputInt('property_id');
 		KrFactory::getAdminModel('propertysetting')->saveSettings($property_id);
 
-		if (!$property_id)
-		{
+		if (!$property_id) {
 			$this->setRedirect(KrMethods::route('index.php?option=com_knowres&view=propertysettings', false));
 		}
-		else
-		{
-			$this->setRedirect(KrMethods::route('index.php?option=com_knowres&task=propertysettings.solo&property_id='
-				. $property_id, false));
+		else {
+			$this->setRedirect(KrMethods::route('index.php?option=com_knowres&task=propertysettings.solo&property_id=' . $property_id,
+				false));
 		}
 	}
 
@@ -53,16 +52,14 @@ class PropertysettingsController extends AdminController
 	 * @throws Exception
 	 * @since 1.0.0
 	 */
-	public function cancel()
+	public function cancel(): void
 	{
 		$return = KrMethods::getUserState('com_knowres.gobackto');
-		if ($return)
-		{
+		if ($return) {
 			KrMethods::setUserState('com_knowres.gobackto', null);
 			KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&' . $return, false));
 		}
-		else
-		{
+		else {
 			KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&view=properties', false));
 		}
 	}
@@ -70,9 +67,9 @@ class PropertysettingsController extends AdminController
 	/**
 	 * Proxy for getModel.
 	 *
-	 * @param   string  $name    Model name
-	 * @param   string  $prefix  Model prefix administrator or site (defaults to administrator)
-	 * @param   array   $config  Config options
+	 * @param  string  $name    Model name
+	 * @param  string  $prefix  Model prefix administrator or site (defaults to administrator)
+	 * @param  array   $config  Config options
 	 *
 	 * @since  1.6
 	 * @return bool|BaseDatabaseModel
@@ -89,7 +86,7 @@ class PropertysettingsController extends AdminController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function save()
+	public function save(): void
 	{
 		$property_id = KrMethods::inputInt('property_id');
 		KrFactory::getAdminModel('propertysetting')->saveSettings($property_id);
@@ -104,11 +101,11 @@ class PropertysettingsController extends AdminController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function solo()
+	public function solo(): void
 	{
+		/** @var PropertysettingsView $view */
 		$view = $this->getView('propertysettings', 'html');
-		if ($view)
-		{
+		if ($view) {
 			$view->task = 'solo';
 			$view->display();
 		}

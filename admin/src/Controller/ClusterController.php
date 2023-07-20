@@ -34,7 +34,7 @@ class ClusterController extends FormController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected function postSaveHook(BaseDatabaseModel $model, $validData = [])
+	protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
 	{
 		/* @var ClusterModel $model */
 		$id   = $model->getItem()->get('id');

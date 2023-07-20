@@ -37,11 +37,11 @@ class ServicelogController extends FormController
 		$this->checkToken('get');
 
 		$id = KrMethods::inputInt('id', 0, 'get');
-		if (!$id)
-		{
+		if (!$id) {
 			Utility::goto('servicelogs');
 		}
 
+		/* @var ServiceLog $view */
 		$view       = $this->getView('servicelog', 'modal');
 		$view->id   = $id;
 		$item       = KrFactory::getAdminModel('servicelog')->getItem($id);

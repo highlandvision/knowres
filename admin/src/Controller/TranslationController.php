@@ -23,7 +23,7 @@ use Joomla\CMS\MVC\Model\BaseDatabaseModel;
  */
 class TranslationController extends FormController
 {
-	/** @var    string The prefix to use with controller messages. */
+	/** @var string The prefix to use with controller messages. */
 	protected $text_prefix = 'COM_KNOWRES_TRANSLATION';
 
 	/**
@@ -38,19 +38,19 @@ class TranslationController extends FormController
 		$this->checkToken();
 
 		$view = $this->getView('translation', 'translateme');
-		$view?->display();
+		$view->display();
 	}
 
 	/**
 	 * Function that allows child controller access to model data after the data has been saved.
 	 *
-	 * @param   BaseDatabaseModel  $model      The data model object.
-	 * @param   array              $validData  The validated data.
+	 * @param  BaseDatabaseModel  $model      The data model object.
+	 * @param  array              $validData  The validated data.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected function postSaveHook(BaseDatabaseModel $model, $validData = [])
+	protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
 	{
 		$item = (string) $validData['item'];
 

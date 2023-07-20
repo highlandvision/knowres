@@ -35,7 +35,7 @@ class TaxrateController extends FormController
 	 * @throws Exception
 	 * @since  3.1
 	 */
-	protected function postSaveHook(BaseDatabaseModel $model, $validData = [])
+	protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
 	{
 		/** @var TaxrateModel $model */
 		$id = (int) $model->getItem()->get('id');

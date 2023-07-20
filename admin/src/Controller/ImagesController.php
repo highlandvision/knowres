@@ -73,7 +73,7 @@ class ImagesController extends AdminController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	#[NoReturn] public function upload()
+	#[NoReturn] public function upload(): void
 	{
 		if (!$this->checkToken('post', false))
 		{
@@ -138,7 +138,7 @@ class ImagesController extends AdminController
 	 *
 	 * @since  4.0.0
 	 */
-	#[NoReturn] protected function returnError(string $message = null)
+	#[NoReturn] protected function returnError(string $message = null): void
 	{
 		if (is_null($message))
 		{

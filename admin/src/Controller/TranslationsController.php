@@ -30,7 +30,7 @@ class TranslationsController extends AdminController
 	 * @throws Exception
 	 * @since  2.4.0
 	 */
-	public function clearcache()
+	public function clearcache(): void
 	{
 		$Translations = new Translations();
 		$Translations->cleanTranslationCache();

@@ -78,7 +78,7 @@ class GuestController extends FormController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	#[NoReturn] public function checkin()
+	#[NoReturn] public function checkin(): void
 	{
 		$this->checkToken();
 
@@ -100,7 +100,7 @@ class GuestController extends FormController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	#[NoReturn] public function combo()
+	#[NoReturn] public function combo(): void
 	{
 		$model     = new GuestModel();
 		$form      = $model->getForm([], false);
@@ -140,7 +140,7 @@ class GuestController extends FormController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected function postSaveHook(BaseDatabaseModel $model, $validData = [])
+	protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
 	{
 		if ($this->getTask() != 'apply')
 		{

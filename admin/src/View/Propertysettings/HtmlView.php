@@ -35,6 +35,8 @@ class HtmlView extends KrHtmlView
 	public array $settings = [];
 	/** @var array Current setting IDs. */
 	public array $settings_ids = [];
+	/** @var string Task value. */
+	public string $task = '';
 	/** @var array Taxrate rows. */
 	public array $taxrates = [];
 
@@ -49,12 +51,10 @@ class HtmlView extends KrHtmlView
 	 */
 	public function display($tpl = null): void
 	{
-		if (empty($this->task) || $this->task !== 'solo')
-		{
+		if (empty($this->task) || $this->task !== 'solo') {
 			$user               = new KrSession\User();
 			$this->access_level = $user->getAccessLevel();
-			if ($this->access_level < 40)
-			{
+			if ($this->access_level < 40) {
 				Utility::goto('properties');
 			}
 
@@ -62,8 +62,7 @@ class HtmlView extends KrHtmlView
 			$this->property_name = 'Global';
 			$this->properties    = '';
 		}
-		else
-		{
+		else {
 			$this->getUserSessionData();
 		}
 
@@ -87,7 +86,7 @@ class HtmlView extends KrHtmlView
 	/**
 	 * Add the page title and default toolbar for form view.
 	 *
-	 * @param   string  $name  Name of the form
+	 * @param  string  $name  Name of the form
 	 *
 	 * @throws Exception
 	 * @since  4.0.0
@@ -100,8 +99,7 @@ class HtmlView extends KrHtmlView
 		$Toolbar = Toolbar::getInstance();
 		$this->getActions();
 
-		if ($this->canDo->get('core.edit'))
-		{
+		if ($this->canDo->get('core.edit')) {
 			$Toolbar->apply($name . '.apply');
 			$Toolbar->save($name . '.save');
 			$Toolbar->cancel($name . '.cancel');
@@ -119,8 +117,7 @@ class HtmlView extends KrHtmlView
 	{
 		$this->form = KrFactory::getAdhocForm('propertysettings', 'propertysettings.xml', 'administrator', null);
 		$data       = [];
-		foreach ($this->items as $i)
-		{
+		foreach ($this->items as $i) {
 			$data[$i->akey] = $i->value;
 		}
 
@@ -135,25 +132,19 @@ class HtmlView extends KrHtmlView
 	 */
 	protected function storeSettings()
 	{
-		foreach ($this->items as $item)
-		{
-			if ($this->property_id)
-			{
+		foreach ($this->items as $item) {
+			if ($this->property_id) {
 				$this->settings[$item->akey] = $item->value;
 
-				if ($item->property_id)
-				{
+				if ($item->property_id) {
 					$this->settings_ids[$item->akey] = $item->id;
 				}
-				else
-				{
+				else {
 					$this->settings_ids[$item->akey] = 0;
 				}
 			}
-			else
-			{
-				if (!$item->property_id)
-				{
+			else {
+				if (!$item->property_id) {
 					$this->settings_ids[$item->akey] = $item->id;
 					$this->settings[$item->akey]     = $item->value;
 				}

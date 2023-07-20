@@ -62,13 +62,14 @@ class ContractguestdataController extends FormController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	#[NoReturn] public function checkin()
+	#[NoReturn] public function checkin(): void
 	{
 		Session::checkToken() or jexit(KrMethods::plain('JINVALID_TOKEN'));
 
 		$guestdata_id = $this->input->post->getInt('guestdata_id', 0);
 		if ($guestdata_id)
 		{
+			/** @var $model ContractguestdataModel */
 			$model = $this->getModel();
 			$model->checkin($guestdata_id);
 		}

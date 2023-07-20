@@ -12,6 +12,7 @@ namespace HighlandVision\Component\Knowres\Administrator\Controller;
 defined('_JEXEC') or die;
 
 use Exception;
+use HighlandVision\Component\Knowres\Administrator\Model\ReferralModel;
 use HighlandVision\KR\Joomla\Extend\FormController;
 use HighlandVision\KR\Translations;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
@@ -33,10 +34,10 @@ class ReferralController extends FormController
 	 * @throws Exception
 	 * @since  3.1
 	 */
-	protected function postSaveHook(BaseDatabaseModel $model, $validData = [])
+	protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
 	{
+		/* @var ReferralModel $model */
 		$id = $model->getItem()->get('id');
-
 		$name = (string) $validData['name'];
 		if ($this->input->get('task') == 'save2copy')
 		{
