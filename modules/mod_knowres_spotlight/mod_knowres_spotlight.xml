@@ -18,6 +18,10 @@
     <config>
         <fields name="params">
             <fieldset name="Basic">
+                <field name="height"
+                       type="text"
+                       label="MOD_KNOWRES_SPOTLIGHT_HEIGHT"
+                       description="MOD_KNOWRES_SPOTLIGHT_HEIGHT_DSC" />
                 <field name="textcolor"
                        default="#fefefe"
                        type="color"

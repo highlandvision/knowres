@@ -62,11 +62,11 @@ if ($textsize) {
 				<?php endif; ?>
 
 				<?php
+				$height = $params->get('height') . 'px';
 				$options = ['src'    => $d['image'],
 				            'alt'    => $d['text'],
-				            'class'  => 'responsive',
-				            'width'  => $params->get('width'),
-				            'height' => $params->get('height')
+				            'class'  => 'th responsive',
+				            'style'  => 'height:'.$height.';max-height:'.$height.';min-height:'.$height
 				];
 				echo KrMethods::render('joomla.html.image', $options);
 				?>

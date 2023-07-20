@@ -95,7 +95,7 @@ class JsonbedtypesField extends FormField
 		{
 			foreach ($allbedtypes as $b)
 			{
-				$sub[$b->name] = $b->name;
+				$sub[$b->id] = $b->name;
 			}
 			$tmp      = [0, $i, $sub];
 			$values[] = $tmp;
