@@ -25,7 +25,7 @@ use function in_array;
  *
  * @since 1.0.0
  */
-class HtmlView extends KrHtmlView
+class HtmlView extends KrHtmlView\Property
 {
 	/**
 	 * Display the view
@@ -52,7 +52,6 @@ class HtmlView extends KrHtmlView
 		{
 			$this->checkErrors();
 			ToolbarHelper::title(KrMethods::plain('COM_KNOWRES_OWNERS_TITLE'), 'tasks knowres');
-
 			$this->addListToolbar($this->get('name'));
 
 			parent::display($tpl);
