@@ -68,10 +68,10 @@ $action = KrMethods::getRoot() . 'index.php?option=com_knowres&task=properties.s
 		</div>
 
 		<?php $collapse = ''; ?>
-		<?php require ModuleHelper::getLayoutPath('mod_knowres_search', $params->get('layout', 'hero') . '_guests'); ?>
+		<?php require ModuleHelper::getLayoutPath('mod_knowres_search', '_guests'); ?>
 	</form>
 
 	<?php if ($params->get('show_regions_expanded', 0)): ?>
-		<?php require ModuleHelper::getLayoutPath('mod_knowres_search', $params->get('layout', 'hero') . '_regions'); ?>
+		<?php require ModuleHelper::getLayoutPath('mod_knowres_search', '_regions'); ?>
 	<?php endif; ?>
 </div>
