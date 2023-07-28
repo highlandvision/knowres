@@ -18,7 +18,7 @@
     </files>
     <config>
         <fields name="params">
-            <fieldset name="Basic">
+            <fieldset name="basic">
                 <field name="small-column-count"
                        class="w-auto"
                        default="1"
