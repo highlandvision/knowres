@@ -96,7 +96,6 @@ StripeLib::setApiKey($this->paymentData->secret_key);
 			stripe.handleCardSetup(
 				clientSecret, card, {
 					payment_method_data: {
-						billing_details: {name: 'Baldy Bain'}
 					}
 				}
 			).then(function (result) {
