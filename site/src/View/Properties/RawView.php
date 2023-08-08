@@ -44,7 +44,7 @@ class RawView extends KrHtmlView
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function display($tpl = null)
+	public function display($tpl = null): void
 	{
 		$this->setLayout('raw');
 		$this->state  = $this->get('state');

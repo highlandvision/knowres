@@ -28,15 +28,16 @@ class ContractguestdataController extends FormController
 	 * Proxy for getModel
 	 * Includes the admin model to save repetition and not a site model
 	 *
-	 * @param  string  $name
-	 * @param  string  $prefix
-	 * @param  array   $config
+	 * @param  string  $name    Name of model
+	 * @param  string  $prefix  Prefix Admin or Site
+	 * @param  array   $config  Config options
 	 *
 	 * @since  2.5.0
 	 * @return BaseDatabaseModel
 	 */
 	public function getModel($name = 'contractguestdata', $prefix = 'Site',
-		$config = ['ignore_request' => true]): BaseDatabaseModel {
+		$config = ['ignore_request' => true]): BaseDatabaseModel
+	{
 		return parent::getModel($name, $prefix, $config);
 	}
 
@@ -53,8 +54,7 @@ class ContractguestdataController extends FormController
 	{
 		$this->checkToken();
 
-		if (parent::save($key, $urlVar))
-		{
+		if (parent::save($key, $urlVar)) {
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_ITEM_UPDATED_SUCCESSFULLY'));
 			SiteHelper::redirectDashboard();
 

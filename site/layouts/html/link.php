@@ -19,19 +19,15 @@ extract($displayData);
  * @var string       $title    Link title.
  */
 
-if (is_array($query))
-{
-	if ($external)
-	{
+if (is_array($query)) {
+	if ($external) {
 		$url = KrMethods::route(KrMethods::getRoot() . 'index.php?' . http_build_query($query));
 	}
-	else
-	{
+	else {
 		$url = KrMethods::route('index.php?' . http_build_query($query));
 	}
 }
-else
-{
+else {
 	$url = $query;
 }
 

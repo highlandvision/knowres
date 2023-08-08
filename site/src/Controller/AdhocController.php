@@ -67,24 +67,18 @@ class AdhocController extends BaseController
 	public function deleteObsolete(): void
 	{
 		$dir = JPATH_ROOT . '/templates';
-		if (file_exists($dir))
-		{
-			if (!is_dir($dir))
-			{
+		if (file_exists($dir)) {
+			if (!is_dir($dir)) {
 				unlink($dir);
 			}
-			else
-			{
+			else {
 				$it = new RecursiveDirectoryIterator($dir, FilesystemIterator::SKIP_DOTS);
 				$it = new RecursiveIteratorIterator($it, RecursiveIteratorIterator::CHILD_FIRST);
-				foreach ($it as $sub)
-				{
-					if (is_dir($sub))
-					{
+				foreach ($it as $sub) {
+					if (is_dir($sub)) {
 						rmdir($sub->getPathname());
 					}
-					else
-					{
+					else {
 						unlink($sub->getPathname());
 					}
 				}
@@ -157,26 +151,22 @@ class AdhocController extends BaseController
 		$query->select($db->qn('a.guestinfo', 'cd_guestinfo'));
 		$query->from($db->qn('#__knowres_contract', 'c'));
 		$query->join('LEFT',
-			($db->qn('#__knowres_contract_guestdata', 'a') . 'ON' . $db->qn('a.contract_id') . '='
-			 . $db->qn('c.id')));
+			($db->qn('#__knowres_contract_guestdata', 'a') . 'ON' . $db->qn('a.contract_id') . '=' . $db->qn('c.id')));
 		$query->where($db->qn('c.black_booking') . '=0');
 		$db->setQuery($query);
 
 		$rows = $db->loadObjectList();
-		foreach ($rows as $r)
-		{
+		foreach ($rows as $r) {
 			$adults     = !empty($r->cd_adults) ? $r->cd_adults : $r->c_guests;
 			$children   = 0;
 			$infants    = !empty($r->cd_infants) ? $r->cd_infants : 0;
 			$gi_count   = !is_null($r->cd_guestinfo) ? json_decode($r->cd_guestinfo) : 0;
 			$child_ages = [];
-			if (!empty($r->cd_children))
-			{
+			if (!empty($r->cd_children)) {
 				$children   = str_replace('Under 1', 0, $r->cd_children);
 				$child_ages = explode(',', $children);
 
-				for ($i = 1; $i <= $infants; $i++)
-				{
+				for ($i = 1; $i <= $infants; $i++) {
 					$child_ages[] = '0';
 				}
 
@@ -209,26 +199,24 @@ class AdhocController extends BaseController
 		$maxServerWidth  = $params->get('max_upload_width', 2100);
 		$maxServerHeight = $params->get('max_upload_height', 1400);
 
-		$rows = KrFactory::getListModel('properties')->getIds(0);
-		foreach ($rows as $r)
-		{
-			$path  = Media\Images::getImageAbsPath($r->id, 'original');
-			$path  .= "/*.{jpg,gif,png,JPG,GIF,PNG}";
-			$files = glob($path, GLOB_BRACE);
+		$db     = KrFactory::getDatabase();
+		$buffer = file_get_contents($filename);
 
-			if (count($files))
-			{
-				foreach ($files as $f)
-				{
-					$imageinfo = getimagesize($f);
-					if ($imageinfo[0] < $maxServerWidth || $imageinfo[1] < $maxServerHeight)
-					{
-						Media\Images::resizeImage($f, $f, $maxServerWidth, 0, 90);
-					}
-				}
+		$queries = Installer::splitSql($buffer);
+		foreach ($queries as $query) {
+			$queryString = $query;
+			$queryString = str_replace(["\r", "\n"], ['', ' '], substr($queryString, 0, 80));
+
+			try {
+				$db->setQuery($query)->execute();
+			} catch (ExecutionFailureException|PrepareStatementFailureException $e) {
+				$errorMessage = Text::sprintf('JLIB_INSTALLER_ERROR_SQL_ERROR', $e->getMessage());
+				Log::add(Text::sprintf('JLIB_INSTALLER_UPDATE_LOG_QUERY', $filename, $queryString), Log::INFO,
+				         'Update');
+				Log::add($errorMessage, Log::INFO, 'Update');
+				Log::add(Text::_('JLIB_INSTALLER_SQL_END_NOT_COMPLETE'), Log::INFO, 'Update');
+				Log::add($errorMessage, Log::WARNING, 'jerror');
 			}
-
-			break;
 		}
 	}
 
@@ -243,21 +231,17 @@ class AdhocController extends BaseController
 	public function fkToService(): void
 	{
 		$factura = KrFactory::getAdminModel('services')->getServicesByPlugin('factura');
-		if (!is_countable($factura) || !count($factura))
-		{
+		if (!is_countable($factura) || !count($factura)) {
 			return;
 		}
 
-		foreach ($factura as $f)
-		{
+		foreach ($factura as $f) {
 			$service_id = $f->id;
 		}
 
 		$guests = KrFactory::getListModel('guests')->getForeignKeys();
-		foreach ($guests as $g)
-		{
-			try
-			{
+		foreach ($guests as $g) {
+			try {
 				$db = KrFactory::getDatabase();
 				$db->transactionStart();
 
@@ -275,19 +259,15 @@ class AdhocController extends BaseController
 				KrFactory::update('guest', $update);
 
 				$db->transactionCommit();
-			}
-			catch (Exception)
-			{
+			} catch (Exception) {
 				$db->transactionRollback();
 				echo "Failure for guest id $g->id - please update manually";
 			}
 		}
 
 		$owners = KrFactory::getListModel('owners')->getForeignKeys();
-		foreach ($owners as $o)
-		{
-			try
-			{
+		foreach ($owners as $o) {
+			try {
 				$db = KrFactory::getDatabase();
 				$db->transactionStart();
 
@@ -305,9 +285,7 @@ class AdhocController extends BaseController
 				KrFactory::update('owner', $update);
 
 				$db->transactionCommit();
-			}
-			catch (Exception)
-			{
+			} catch (Exception) {
 				$db->transactionRollback();
 				echo "Failure for owner id $g->id - please update manually";
 			}
@@ -331,30 +309,24 @@ class AdhocController extends BaseController
 		$test = KrMethods::inputInt('test', 1, 'get');
 
 		$ids = KrFactory::getListModel('properties')->getIds();
-		if (!is_countable($ids) || !count($ids))
-		{
+		if (!is_countable($ids) || !count($ids)) {
 			jexit('no properties found');
 		}
 
-		foreach ($ids as $id)
-		{
+		foreach ($ids as $id) {
 			$rates = KrFactory::getListModel('properties')->getRatesToCopy($id, $old);
 
-			if ($test)
-			{
+			if ($test) {
 				var_dump($rates);
 			}
 
-			foreach ($rates as $r)
-			{
-				if ($r->valid_to >= $new)
-				{
+			foreach ($rates as $r) {
+				if ($r->valid_to >= $new) {
 					echo 'Property ' . $id . ' has new rates';
 					break;
 				}
 
-				if ($r->state == 1)
-				{
+				if ($r->state == 1) {
 					$new              = new stdClass();
 					$new->id          = 0;
 					$new->property_id = $r->property_id;
@@ -372,23 +344,19 @@ class AdhocController extends BaseController
 					$new->created_at  = TickTock::getTS();
 					$new->created_by  = 0;
 
-					if ($test)
-					{
+					if ($test) {
 						var_dump($new);
 					}
-					else
-					{
+					else {
 						KrFactory::insert('rate', $new);
-						if (!is_null($r->name))
-						{
+						if (!is_null($r->name)) {
 							$Translations->updateDefault('rate', $new->id, 'name', $r->name);
 						}
 					}
 				}
 			}
 
-			if ($test)
-			{
+			if ($test) {
 				break;
 			}
 		}

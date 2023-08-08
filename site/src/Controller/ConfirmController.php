@@ -48,7 +48,7 @@ class ConfirmController extends FormController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function compute()
+	public function compute(): void
 	{
 		$this->checkToken();
 
@@ -126,7 +126,7 @@ class ConfirmController extends FormController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	#[NoReturn] public function payment()
+	#[NoReturn] public function payment(): void
 	{
 		$this->checkToken();
 
@@ -208,7 +208,7 @@ class ConfirmController extends FormController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function save($key = null, $urlVar = null)
+	public function save($key = null, $urlVar = null): void
 	{
 		$this->checkToken();
 

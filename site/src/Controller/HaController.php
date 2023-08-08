@@ -110,7 +110,7 @@ class HaController extends BaseController
 	 * @since  3.3.0
 	 * @noinspection PhpUnused
 	 */
-	#[NoReturn] public function bus()
+	#[NoReturn] public function bus(): void
 	{
 		$test = KrMethods::inputInt('test', 0, 'get');
 		$id   = KrMethods::inputInt('id', 0, 'get');
@@ -130,7 +130,7 @@ class HaController extends BaseController
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	#[NoReturn] public function fas()
+	#[NoReturn] public function fas(): void
 	{
 		$test = KrMethods::inputInt('test', 0, 'get');
 		if ($test)
@@ -167,7 +167,7 @@ class HaController extends BaseController
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	#[NoReturn] public function ix()
+	#[NoReturn] public function ix(): void
 	{
 		$test = KrMethods::inputInt('test', 0, 'get');
 		$type = KrMethods::inputString('type', 'properties', 'get');
@@ -235,7 +235,7 @@ class HaController extends BaseController
 	 * @since  3.3.0
 	 * @noinspection PhpUnused
 	 */
-	#[NoReturn] public function lodging()
+	#[NoReturn] public function lodging(): void
 	{
 		$test = KrMethods::inputInt('test', 0, 'get');
 		$id   = KrMethods::inputInt('id', 0, 'get');
@@ -256,7 +256,7 @@ class HaController extends BaseController
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	#[NoReturn] public function properties()
+	#[NoReturn] public function properties(): void
 	{
 		$test = KrMethods::inputInt('test', 0, 'get');
 		$id   = KrMethods::inputInt('id', 0, 'get');
@@ -276,7 +276,7 @@ class HaController extends BaseController
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	#[NoReturn] public function rates()
+	#[NoReturn] public function rates(): void
 	{
 		$test = KrMethods::inputInt('test', 0, 'get');
 		$id   = KrMethods::inputInt('id', 0, 'get');
@@ -299,7 +299,7 @@ class HaController extends BaseController
 	 * @since  3.0
 	 * @noinspection PhpUnused
 	 */
-	#[NoReturn] public function termspdf()
+	#[NoReturn] public function termspdf(): void
 	{
 		// TODO-v4.3 Remove October 2024 as all calls to ServiceController
 		try
@@ -322,7 +322,7 @@ class HaController extends BaseController
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	#[NoReturn] protected function logError()
+	#[NoReturn] protected function logError(): void
 	{
 		$message = "\r\n\r\n";
 		if (!empty($this->errors))

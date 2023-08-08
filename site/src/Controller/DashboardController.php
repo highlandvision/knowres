@@ -37,7 +37,7 @@ class DashboardController extends BaseController
 	 * @throws Exception
 	 * @since 2.5.0
 	 */
-	public function cancel()
+	public function cancel(): void
 	{
 		$userSession  = new KrSession\User();
 		$userData     = $userSession->getData();
@@ -71,7 +71,7 @@ class DashboardController extends BaseController
 	 * @throws Exception
 	 * @since  2.5.0
 	 */
-	public function download()
+	public function download(): void
 	{
 		$contract_id  = KrMethods::inputInt('key', 0, 'get');
 		$userSession  = new KrSession\User();
@@ -94,7 +94,7 @@ class DashboardController extends BaseController
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	#[NoReturn] public function guestdata()
+	#[NoReturn] public function guestdata(): void
 	{
 		$userSession  = new KrSession\User();
 		$userData     = $userSession->getData();
@@ -132,7 +132,7 @@ class DashboardController extends BaseController
 	 * @throws Exception
 	 * @since  2.5.0
 	 */
-	#[NoReturn] public function invoice()
+	#[NoReturn] public function invoice(): void
 	{
 		$userSession  = new KrSession\User();
 		$userData     = $userSession->getData();
@@ -170,7 +170,7 @@ class DashboardController extends BaseController
 	 * @throws Exception
 	 * @since 2.5.0
 	 */
-	public function login()
+	public function login(): void
 	{
 		SiteHelper::loginUser();
 		SiteHelper::redirectDashboard();
@@ -183,7 +183,7 @@ class DashboardController extends BaseController
 	 * @throws Exception
 	 * @since 2.5.0
 	 */
-	public function request()
+	public function request(): void
 	{
 		SiteHelper::checkUser();
 
@@ -275,7 +275,7 @@ class DashboardController extends BaseController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function success()
+	public function success(): void
 	{
 		KrMethods::message(KrMethods::plain('COM_KNOWRES_PAYMENT_SUCCESS_POST'));
 		SiteHelper::redirectDashboard();
@@ -287,7 +287,7 @@ class DashboardController extends BaseController
 	 * @throws Exception
 	 * @since  2.5.0
 	 */
-	#[NoReturn] public function voucher()
+	#[NoReturn] public function voucher(): void
 	{
 		$userSession  = new KrSession\User();
 		$userData     = $userSession->getData();

@@ -37,7 +37,7 @@ class ContactController extends FormController
 	/**
 	 * Method to cancel an edit.
 	 *
-	 * @param   string  $key  The name of the primary key of the URL variable.
+	 * @param  string  $key  The name of the primary key of the URL variable.
 	 *
 	 * @throws Exception
 	 * @since  1.6
@@ -46,12 +46,10 @@ class ContactController extends FormController
 	public function cancel($key = null): bool
 	{
 		$id = KrMethods::inputInt('id');
-		if ($id)
-		{
+		if ($id) {
 			KrMethods::redirect(SiteHelper::buildPropertyLink($id));
 		}
-		else
-		{
+		else {
 			$Itemid = SiteHelper::getItemId('com_knowres', 'properties');
 			KrMethods::redirect(KrMethods::route('index.php?Itemid=' . $Itemid, false));
 		}
@@ -60,17 +58,19 @@ class ContactController extends FormController
 	}
 
 	/**
-	 * @param   string  $name
-	 * @param   string  $prefix
-	 * @param   array   $config
+	 * Proxy for getModel
+	 *
+	 * @param  string  $name    Name of model
+	 * @param  string  $prefix  Prefix Admin or Site
+	 * @param  array   $config  Config options
 	 *
 	 * @since  1.0.0
 	 * @return BaseDatabaseModel
 	 */
-	public function getModel($name = 'Contact', $prefix = 'KnowresModel',
+	public function getModel($name = 'contact', $prefix = 'Site',
 		$config = ['ignore_request' => true]): BaseDatabaseModel
 	{
-		return parent::getModel($name, $prefix);
+		return parent::getModel($name, $prefix, $config);
 	}
 
 	/**
@@ -89,30 +89,28 @@ class ContactController extends FormController
 
 		$params    = KrMethods::getParams();
 		$Itemid    = SiteHelper::getItemId('com_knowres', 'contact');
-		$return    = KrMethods::route('index.php?option=com_knowres&view=contact&Itemid=' . $Itemid . '&id=' . $id,
-			false);
-		$return_ok = KrMethods::route('index.php?option=com_knowres&view=contact&sent=1&Itemid='
-			. $Itemid . '&id=' . $id, false);
+		$return    =
+			KrMethods::route('index.php?option=com_knowres&view=contact&Itemid=' . $Itemid . '&id=' . $id, false);
+		$return_ok =
+			KrMethods::route('index.php?option=com_knowres&view=contact&sent=1&Itemid=' . $Itemid . '&id=' . $id,
+			                 false);
 
 		$session = Factory::getSession();
-		if ($session->getState() !== 'active')
-		{
+		if ($session->getState() !== 'active') {
 			KrMethods::setUserState('com_knowres.contact.data', $data);
 			KrMethods::redirect($return);
 		}
 
 		$model = KrFactory::getSiteModel('contact');
 		$form  = $model->getForm();
-		if (!$model->validate($form, $data))
-		{
+		if (!$model->validate($form, $data)) {
 			Utility::pageErrors($model->getErrors());
 			KrMethods::setUserState('com_knowres.contact.data', $data);
 			KrMethods::redirect($return);
 		}
 
 		$errors = $this->checkReCaptcha($params);
-		if (is_countable($errors) && count($errors))
-		{
+		if (is_countable($errors) && count($errors)) {
 			Utility::pageErrors($errors);
 			KrMethods::setUserState('com_knowres.contact.data', $data);
 			KrMethods::redirect($return);
@@ -128,7 +126,7 @@ class ContactController extends FormController
 	/**
 	 * Check the recaptcha box
 	 *
-	 * @param   Registry  $params  KR params
+	 * @param  Registry  $params  KR params
 	 *
 	 * @throws RuntimeException
 	 * @since  1.2.0
@@ -138,19 +136,15 @@ class ContactController extends FormController
 	{
 		$errors    = [];
 		$gresponse = $this->input->post->getString('g-recaptcha-response', '');
-		if (!$gresponse)
-		{
+		if (!$gresponse) {
 			$errors[] = KrMethods::plain('Please complete the ReCaptcha entry box');
 		}
-		else
-		{
+		else {
 			$recaptcha = new ReCaptcha($params->get('grsecretkey'));
 			$resp      = $recaptcha->verify($gresponse, $_SERVER['REMOTE_ADDR']);
-			if (!$resp->isSuccess())
-			{
+			if (!$resp->isSuccess()) {
 				$errors[] = KrMethods::plain('Please check the ReCaptcha entry box');
-				foreach ($resp->getErrorCodes() as $code)
-				{
+				foreach ($resp->getErrorCodes() as $code) {
 					$errors[] = $code;
 				}
 			}
@@ -160,29 +154,26 @@ class ContactController extends FormController
 	}
 
 	/**
-	 * @param   array  $data  Input from form data
-	 * @param   int    $id    ID of property
+	 * @param  array  $data  Input from form data
+	 * @param  int    $id    ID of property
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	private function sendEmail(array $data, int $id = 0)
+	private function sendEmail(array $data, int $id = 0): void
 	{
 		$arrival = '--';
 		$day     = $data['day'];
 		$month   = $data['month'];
-		if ($month)
-		{
+		if ($month) {
 			$year  = substr($month, 0, 4);
 			$month = substr($month, 4, 2);
 			$day   = $day ?: 0;
-			if ($day)
-			{
+			if ($day) {
 				$arrival = $year . '-' . $month . '-' . $day;
 				$arrival = TickTock::displayDate($arrival);
 			}
-			else
-			{
+			else {
 				$arrival = $year . '-' . $month;
 				$arrival = TickTock::parseString($arrival, 'F Y');
 			}

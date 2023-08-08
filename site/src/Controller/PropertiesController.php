@@ -49,7 +49,7 @@ class PropertiesController extends BaseController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	#[NoReturn] public function favourite()
+	#[NoReturn] public function favourite(): void
 	{
 		$property_id = KrMethods::inputInt('property_id', 0, 'get');
 		$view        = KrMethods::inputString('view', '', 'get');
@@ -117,7 +117,7 @@ class PropertiesController extends BaseController
 	 * @throws Exception
 	 * @since  3.2.0
 	 */
-	public function mapdata()
+	public function mapdata(): void
 	{
 		$pid                 = $this->input->getInt('pid', 0);
 		$display_map_markers = false;
@@ -194,7 +194,7 @@ class PropertiesController extends BaseController
 	 * @throws Exception
 	 * @since   2.2.0
 	 */
-	#[NoReturn] public function mapsession()
+	#[NoReturn] public function mapsession(): void
 	{
 		$searchSession         = new KrSession\Search();
 		$searchData            = $searchSession->getData();
@@ -212,7 +212,7 @@ class PropertiesController extends BaseController
 	 * @throws Exception
 	 * @since   1.0.0
 	 */
-	#[NoReturn] public function options()
+	#[NoReturn] public function options(): void
 	{
 		$options = [];
 
@@ -263,7 +263,7 @@ class PropertiesController extends BaseController
 	 * @since        3.3.0
 	 * @noinspection PhpUnused
 	 */
-	public function refreshmap()
+	public function refreshmap(): void
 	{
 		try
 		{
@@ -291,7 +291,7 @@ class PropertiesController extends BaseController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	#[NoReturn] public function search()
+	#[NoReturn] public function search(): void
 	{
 		$input                  = [];
 		$input['property_area'] = KrMethods::inputString('property_area');

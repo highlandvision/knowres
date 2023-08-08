@@ -58,7 +58,7 @@ class CronserviceController extends BaseController
 	 * @throws Exception
 	 * @since  2.4.0
 	 */
-	#[NoReturn] public function beyondpullrates()
+	#[NoReturn] public function beyondpullrates(): void
 	{
 		$this->checkSecret();
 

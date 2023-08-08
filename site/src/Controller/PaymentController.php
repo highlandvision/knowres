@@ -35,16 +35,14 @@ class PaymentController extends FormController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function router()
+	public function router(): void
 	{
 		$this->checkToken();
 
-		try
-		{
+		try {
 			$paymentSession = new KrSession\Payment();
 			$paymentData    = $paymentSession->getData();
-			if (!$paymentData->contract_id)
-			{
+			if (!$paymentData->contract_id) {
 				$paymentSession->resetData();
 				throw new RuntimeException('Session was not active');
 			}
@@ -58,8 +56,7 @@ class PaymentController extends FormController
 			$service_id   = KrMethods::inputInt($service);
 			$contract_id  = KrMethods::inputInt('contract_id');
 
-			if ($contract_id !== (int) $paymentData->contract_id)
-			{
+			if ($contract_id !== (int) $paymentData->contract_id) {
 				$paymentSession->resetData();
 				throw new RuntimeException("Contract ID = $contract_id and Payment Contract ID = $paymentData->contract_id do not match");
 			}
@@ -69,16 +66,14 @@ class PaymentController extends FormController
 			$paymentData = $Gateway->setOutputData();
 			$paymentSession->setData($paymentData);
 
-			/* @var HighlandVision\Component\Knowres\Site\View\Gateway\HtmlView $view **/
+			/* @var HighlandVision\Component\Knowres\Site\View\Gateway\HtmlView $view * */
 			$view               = $this->getView('gateway', 'html', 'site');
 			$view->gateway_name = $gateway_name;
 			$view->payment_type = $paymentData->payment_type;
 			$view->service_id   = $service_id;
 			$view->paymentData  = $paymentData;
 			$view->display();
-		}
-		catch (Exception $e)
-		{
+		} catch (Exception $e) {
 			Logger::logMe($e->getMessage(), 'error');
 			echo new JsonResponse(null, KrMethods::plain('COM_KNOWRES_ERROR_FATAL'), true);
 			jexit();
