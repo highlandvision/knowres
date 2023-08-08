@@ -15,6 +15,7 @@ namespace HighlandVision\Component\Knowres\Site\Controller;
 defined('_JEXEC') or die;
 
 use Exception;
+use HighlandVision\Beyond\Rates;
 use HighlandVision\Factura\Factura;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
@@ -22,7 +23,6 @@ use HighlandVision\KR\Service\Ical;
 use HighlandVision\KR\Session as KrSession;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Utility;
-use HighlandVision\Beyond\Rates;
 use HighlandVision\Ru\Manager as RuManager;
 use HighlandVision\VintageTravel\VintageTravel;
 use HighlandVision\Vrbo\Manager as VrboManager;
@@ -76,17 +76,14 @@ class CronserviceController extends BaseController
 	 * @since  2.4.0
 	 */
 	#[NoReturn] public function beyondpushrates(): void
-    {
+	{
 		$this->checkSecret();
 
 		$PushRates = new Rates\PushRates($this->test);
-		if (method_exists($PushRates, 'processQueue'))
-		{
+		if (method_exists($PushRates, 'processQueue')) {
 			$queue = KrFactory::getListModel('servicequeues')->getQueueByServiceMethod($i->id, 'updateListing');
-			if (is_countable($queue) && count($queue))
-			{
-				foreach ($queue as $q)
-				{
+			if (is_countable($queue) && count($queue)) {
+				foreach ($queue as $q) {
 					//TODO-v4.3 Pass all queues to class
 					$PushRates->processQueue($q);
 
@@ -110,26 +107,21 @@ class CronserviceController extends BaseController
 	 * @since  1.2.2
 	 */
 	#[NoReturn] public function channelavailability(): void
-    {
+	{
 		$this->checkSecret();
 
 		$services = $this->getServicesByType('c');
-		foreach ($services as $s)
-		{
-			$class = match ($s->plugin)
-			{
+		foreach ($services as $s) {
+			$class = match ($s->plugin) {
 				'ru' => 'HighlandVision\Ru\Manager\Availability',
 				'vrbo' => 'HighlandVision\Vrbo\Manager\Availability'
 			};
 
-			if (class_exists($class) && method_exists($class, 'processQueue'))
-			{
-				$queue = KrFactory::getListModel('servicequeues')
-				                  ->getQueueByServiceMethod($s->id, 'updateAvailability');
-				if (is_countable($queue) && count($queue))
-				{
-					$Availability = match ($s->plugin)
-					{
+			if (class_exists($class) && method_exists($class, 'processQueue')) {
+				$queue =
+					KrFactory::getListModel('servicequeues')->getQueueByServiceMethod($s->id, 'updateAvailability');
+				if (is_countable($queue) && count($queue)) {
+					$Availability = match ($s->plugin) {
 						'ru' => new RuManager\Availability($this->test),
 						'vrbo' => new VrboManager\Availability($this->test)
 					};
@@ -151,7 +143,7 @@ class CronserviceController extends BaseController
 	 * @since  3.3.1
 	 */
 	#[NoReturn] public function channelbookings(): void
-    {
+	{
 		self::channelavailability();
 	}
 
@@ -163,46 +155,36 @@ class CronserviceController extends BaseController
 	 * @since  1.2.2
 	 */
 	#[NoReturn] public function channelproperties(): void
-    {
+	{
 		$this->checkSecret();
 
 		$services = self::getServicesByType('c');
-		foreach ($services as $s)
-		{
-			$class = match ($s->plugin)
-			{
+		foreach ($services as $s) {
+			$class = match ($s->plugin) {
 				'ru' => 'HighlandVision\Ru\Manager\Properties',
 				'vrbo' => 'HighlandVision\Vrbo\Manager\Properties'
 			};
 
-			if (class_exists($class))
-			{
-				if (method_exists($class, 'processNew'))
-				{
+			if (class_exists($class)) {
+				if (method_exists($class, 'processNew')) {
 					$newbies = KrFactory::getListModel('servicexrefs')->getPropertiesForService($s->id, true);
-					if (is_countable($newbies) && count($newbies))
-					{
-						$Properties = match ($s->plugin)
-						{
+					if (is_countable($newbies) && count($newbies)) {
+						$Properties = match ($s->plugin) {
 							'ru' => new RuManager\Properties($this->test),
 							'vrbo' => new VrboManager\Properties($this->test)
 						};
 
-						foreach ($newbies as $n)
-						{
+						foreach ($newbies as $n) {
 							$Properties->processNew($n->property_id, $n->id);
 						}
 					}
 				}
 
-				if (method_exists($class, 'processQueue'))
-				{
-					$queue = KrFactory::getListModel('servicequeues')
-					                  ->getQueueByServiceMethod($s->id, 'updateProperty');
-					if (is_countable($queue) && count($queue))
-					{
-						$Properties = match ($s->plugin)
-						{
+				if (method_exists($class, 'processQueue')) {
+					$queue =
+						KrFactory::getListModel('servicequeues')->getQueueByServiceMethod($s->id, 'updateProperty');
+					if (is_countable($queue) && count($queue)) {
+						$Properties = match ($s->plugin) {
 							'ru' => new RuManager\Properties($this->test),
 							'vrbo' => new VrboManager\Properties($this->test)
 						};
@@ -223,25 +205,21 @@ class CronserviceController extends BaseController
 	 * @since  1.2.2
 	 */
 	#[NoReturn] public function channelrates(): void
-    {
+	{
 		$this->checkSecret();
 
 		$services = self::getServicesByType('c');
-		foreach ($services as $s)
-		{
-			$class = match ($s->plugin)
-			{
+		foreach ($services as $s) {
+			$class = match ($s->plugin) {
 				'ru' => 'HighlandVision\Ru\Manager\Rates',
 				'vrbo' => 'HighlandVision\Vrbo\Manager\Rates'
 			};
 
-			if (class_exists($class) && method_exists($class, 'processQueue'))
-			{
-				$queue = KrFactory::getListModel('servicequeues')
-				                  ->getQueueByServiceMethod($s->id, 'updatePropertyRates');
+			if (class_exists($class) && method_exists($class, 'processQueue')) {
+				$queue =
+					KrFactory::getListModel('servicequeues')->getQueueByServiceMethod($s->id, 'updatePropertyRates');
 
-				$Rates = match ($s->plugin)
-				{
+				$Rates = match ($s->plugin) {
 					'ru' => new RuManager\Rates($this->test),
 					'vrbo' => new VrboManager\Rates($this->test)
 				};
@@ -260,21 +238,17 @@ class CronserviceController extends BaseController
 	 * @since  1.2.2
 	 */
 	#[NoReturn] public function channelsync(): void
-    {
+	{
 		$this->checkSecret();
 
 		$services = self::getServicesByType('c');
-		foreach ($services as $s)
-		{
-			$class = match ($s->plugin)
-			{
+		foreach ($services as $s) {
+			$class = match ($s->plugin) {
 				'ru' => 'HighlandVision\Ru\Manager\Sync',
 			};
 
-			if (class_exists($class) && method_exists($class, 'doSync'))
-			{
-				$Sync = match ($s->plugin)
-				{
+			if (class_exists($class) && method_exists($class, 'doSync')) {
+				$Sync = match ($s->plugin) {
 					'ru' => new RuManager\Sync($this->test),
 				};
 				$Sync->doSync();
@@ -292,14 +266,12 @@ class CronserviceController extends BaseController
 	 * @since  2.2.0
 	 */
 	#[NoReturn] public function factura(): void
-    {
+	{
 		$this->checkSecret();
 
 		$services = self::getServicesByType('s');
-		foreach ($services as $s)
-		{
-			if ($s->plugin == 'factura')
-			{
+		foreach ($services as $s) {
+			if ($s->plugin == 'factura') {
 				$Factura = new Factura($s->id, $this->test);
 				$Factura->processQueue();
 			}
@@ -316,7 +288,7 @@ class CronserviceController extends BaseController
 	 * @since  2.1.0
 	 */
 	#[NoReturn] public function icalimport(): void
-    {
+	{
 		$this->checkSecret();
 
 		$userSession            = new KrSession\User();
@@ -325,12 +297,10 @@ class CronserviceController extends BaseController
 		$userSession->setData($userData);
 
 		$services = self::getServicesByType('i');
-		foreach ($services as $s)
-		{
+		foreach ($services as $s) {
 			$schedule   = 24;
 			$parameters = Utility::decodeJson($s->parameters);
-			if (isset($parameters->schedule))
-			{
+			if (isset($parameters->schedule)) {
 				$schedule = $parameters->schedule;
 			}
 
@@ -349,24 +319,21 @@ class CronserviceController extends BaseController
 	 * @since  1.2.2
 	 */
 	#[NoReturn] public function rua(): void
-    {
+	{
 		$this->checkSecret();
 		$method = KrMethods::inputString('method', null, 'get');
-		if (!$method){
+		if (!$method) {
 			echo "Enter a method in the url";
 			jexit();
 		}
 
 		$services = $this->getServicesByType('c');
-		foreach ($services as $s)
-		{
-			if ($s->plugin == 'ru')
-			{
+		foreach ($services as $s) {
+			if ($s->plugin == 'ru') {
 				$class = 'HighlandVision\Ru\Manager';
-				if (class_exists($class) && method_exists($class, $method))
-				{
+				if (class_exists($class) && method_exists($class, $method)) {
 					$Manager = new RuManager($this->test);
-					$data = $Manager->$method();
+					$data    = $Manager->$method();
 				}
 			}
 		}
@@ -382,14 +349,12 @@ class CronserviceController extends BaseController
 	 * @since  3.3.3`
 	 */
 	#[NoReturn] public function vt(): void
-    {
+	{
 		$this->checkSecret();
 
 		$services = self::getServicesByType('s');
-		foreach ($services as $s)
-		{
-			if ($s->plugin == 'vt')
-			{
+		foreach ($services as $s) {
+			if ($s->plugin == 'vt') {
 				$VintageTravel = new VintageTravel($s->id, $this->test);
 				$VintageTravel->updateApi();
 			}
@@ -436,12 +401,11 @@ class CronserviceController extends BaseController
 	 * @since  1.0.0
 	 */
 	private function checkSecret(): void
-    {
+	{
 		$this->test = KrMethods::inputInt('test', 0, 'get');
 		$secret     = KrMethods::inputString('secret', '', 'get');
 
-		if (!$this->test && $secret != KrMethods::getCfg('secret'))
-		{
+		if (!$this->test && $secret != KrMethods::getCfg('secret')) {
 			throw new RuntimeException('Secret does not match');
 		}
 	}
@@ -458,8 +422,7 @@ class CronserviceController extends BaseController
 	private function getServicesByType(string $type): array
 	{
 		$services = KrFactory::getListModel('services')->getServicesByType($type);
-		if (!count($services))
-		{
+		if (!count($services)) {
 			throw new RuntimeException('No services found for type ' . $type);
 		}
 

@@ -18,6 +18,8 @@ use HighlandVision\KR\Search;
 use HighlandVision\KR\Session as KrSession;
 use HighlandVision\KR\SiteHelper;
 
+use function count;
+
 /**
  * Display property search results
  *
@@ -25,6 +27,8 @@ use HighlandVision\KR\SiteHelper;
  */
 class RawView extends KrHtmlView
 {
+	/** @var Search Site search */
+	protected Search $Search;
 	/** @var bool True if favourites selected */
 	protected bool $favs = false;
 	/** @var string Modules output */
@@ -33,8 +37,6 @@ class RawView extends KrHtmlView
 	protected bool $nofavs = false;
 	/** @var array Saved favourites */
 	protected array $saved;
-	/** @var Search Site search */
-	protected Search $Search;
 
 	/**
 	 * Display the view

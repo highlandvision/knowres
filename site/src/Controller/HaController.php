@@ -49,7 +49,7 @@ class HaController extends BaseController
 	 * @since  3.3.0
 	 */
 	#[NoReturn] public function availability(): void
-    {
+	{
 		$test = KrMethods::inputInt('test', 0, 'get');
 		$id   = KrMethods::inputInt('id', 0, 'get');
 		$unit = KrMethods::inputString('unit', '', 'get');
@@ -70,24 +70,20 @@ class HaController extends BaseController
 	 * @since  3.3.0
 	 */
 	#[NoReturn] public function br(): void
-    {
+	{
 		$test = KrMethods::inputInt('test', 0, 'get');
-		if ($test)
-		{
+		if ($test) {
 			$xmlstring = $this->zzTestBr();
 			$xmlstring = str_replace(array("\r", "\n", "\t"), '', $xmlstring);
 			$xml       = simplexml_load_string($xmlstring);
 		}
-		else if ($_SERVER['REQUEST_METHOD'] === 'POST')
-		{
+		else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			$xmlstring = file_get_contents('php://input');
 			$xml       = simplexml_load_string($xmlstring);
 		}
-		else
-		{
+		else {
 			$this->errors[] = 'POST not received';
-			foreach ($_SERVER as $key_name => $key_value)
-			{
+			foreach ($_SERVER as $key_name => $key_value) {
 				$this->errors[] = $key_name . ' = ' . $key_value;
 			}
 
@@ -107,7 +103,7 @@ class HaController extends BaseController
 	 * Request for booking update service
 	 *
 	 * @throws Exception
-	 * @since  3.3.0
+	 * @since        3.3.0
 	 * @noinspection PhpUnused
 	 */
 	#[NoReturn] public function bus(): void
@@ -133,19 +129,15 @@ class HaController extends BaseController
 	#[NoReturn] public function fas(): void
 	{
 		$test = KrMethods::inputInt('test', 0, 'get');
-		if ($test)
-		{
+		if ($test) {
 			$json = $this->zzTestFas();
 		}
-		else if ($_SERVER['REQUEST_METHOD'] === 'POST')
-		{
+		else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			$json = file_get_contents('php://input');
 		}
-		else
-		{
+		else {
 			$this->errors[] = 'POST not received';
-			foreach ($_SERVER as $key_name => $key_value)
-			{
+			foreach ($_SERVER as $key_name => $key_value) {
 				$this->errors[] = $key_name . ' = ' . $key_value;
 			}
 
@@ -172,43 +164,34 @@ class HaController extends BaseController
 		$test = KrMethods::inputInt('test', 0, 'get');
 		$type = KrMethods::inputString('type', 'properties', 'get');
 
-		if ($type === 'properties')
-		{
+		if ($type === 'properties') {
 			$Properties = new Manager\Properties($test);
 			$data       = $Properties->getIx();
 		}
-		else if ($type === 'lodging')
-		{
+		else if ($type === 'lodging') {
 			$Lodging = new Manager\Lodging($test);
 			$data    = $Lodging->getIx();
 		}
-		else if ($type === 'rates')
-		{
+		else if ($type === 'rates') {
 			$Rates = new Manager\Rates($test);
 			$data  = $Rates->getIx();
 		}
-		else if ($type === 'availability')
-		{
+		else if ($type === 'availability') {
 			$Availability = new Manager\Availability($test);
 			$data         = $Availability->getIx();
 		}
-		else if ($type === 'bookings')
-		{
-			if ($test)
-			{
+		else if ($type === 'bookings') {
+			if ($test) {
 				$xmlstring = $this->zzTestBix();
 				$xml       = simplexml_load_string($xmlstring);
 			}
-			else if ($_SERVER['REQUEST_METHOD'] === 'POST')
-			{
+			else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 				$xmlstring = file_get_contents('php://input');
 				$xml       = simplexml_load_string($xmlstring);
 			}
-			else
-			{
+			else {
 				$this->errors[] = 'POST not received';
-				foreach ($_SERVER as $key_name => $key_value)
-				{
+				foreach ($_SERVER as $key_name => $key_value) {
 					$this->errors[] = $key_name . ' = ' . $key_value;
 				}
 
@@ -219,8 +202,7 @@ class HaController extends BaseController
 			$data     = $bookings->getIx($xml);
 		}
 
-		if ($data)
-		{
+		if ($data) {
 			header("Content-type: text/xml");
 			echo $data;
 		}
@@ -232,7 +214,7 @@ class HaController extends BaseController
 	 * Returns a lodging request
 	 *
 	 * @throws Exception
-	 * @since  3.3.0
+	 * @since        3.3.0
 	 * @noinspection PhpUnused
 	 */
 	#[NoReturn] public function lodging(): void
@@ -296,20 +278,17 @@ class HaController extends BaseController
 	 *
 	 * @throws RuntimeException
 	 * @throws Exception
-	 * @since  3.0
+	 * @since        3.0
 	 * @noinspection PhpUnused
 	 */
 	#[NoReturn] public function termspdf(): void
 	{
 		// TODO-v4.3 Remove October 2024 as all calls to ServiceController
-		try
-		{
+		try {
 			$id    = KrMethods::inputInt('id', 0, 'get');
 			$Terms = new Terms('download', $id);
 			$Terms->getPdf();
-		}
-		catch (Exception)
-		{
+		} catch (Exception) {
 			throw new RuntimeException('Error creating PDF, please try again later');
 		}
 
@@ -325,17 +304,14 @@ class HaController extends BaseController
 	#[NoReturn] protected function logError(): void
 	{
 		$message = "\r\n\r\n";
-		if (!empty($this->errors))
-		{
+		if (!empty($this->errors)) {
 			$message .= implode("\r\n", $this->errors);
 		}
-		else
-		{
+		else {
 			$message = 'No errors logged';
 		}
 
-		if (count($this->fields))
-		{
+		if (count($this->fields)) {
 			$message .= "\r\n" . serialize($this->fields);
 		}
 

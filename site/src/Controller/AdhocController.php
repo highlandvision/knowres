@@ -52,7 +52,7 @@ use const SORT_NUMERIC;
 /**
  * Adhoc controller class for browser access
  *
- * @since  1.0.0
+ * @since        1.0.0
  * @noinspection PhpUnused
  */
 class AdhocController extends BaseController
@@ -61,7 +61,7 @@ class AdhocController extends BaseController
 	 * Delete obsolete files and folders
 	 *
 	 * @throws UnexpectedValueException
-	 * @since  4.0.0
+	 * @since        4.0.0
 	 * @noinspection PhpUnused
 	 */
 	public function deleteObsolete(): void
@@ -84,49 +84,6 @@ class AdhocController extends BaseController
 				}
 
 				rmdir($dir);
-			}
-		}
-	}
-
-	/**
-	 * Fix up database for null values etc
-	 *
-	 * @throws InvalidArgumentException
-	 * @throws KeyNotFoundException
-	 * @throws RuntimeException
-	 * @since  4.0.0
-	 * @noinspection PhpUnused
-	 */
-	public function fixupv4db(): bool
-	{
-		$filename = JPATH_ROOT . '/administrator/components/com_knowres/queries/updates/fixupv4.sql';
-		if (!file_exists($filename))
-		{
-			echo "no fixup file exists";
-			jexit();
-		}
-
-		$db     = KrFactory::getDatabase();
-		$buffer = file_get_contents($filename);
-
-		$queries = Installer::splitSql($buffer);
-		foreach ($queries as $query)
-		{
-			$queryString = $query;
-			$queryString = str_replace(["\r", "\n"], ['', ' '], substr($queryString, 0, 80));
-
-			try
-			{
-				$db->setQuery($query)->execute();
-			}
-			catch (ExecutionFailureException|PrepareStatementFailureException $e)
-			{
-				$errorMessage = Text::sprintf('JLIB_INSTALLER_ERROR_SQL_ERROR', $e->getMessage());
-				Log::add(Text::sprintf('JLIB_INSTALLER_UPDATE_LOG_QUERY', $filename, $queryString), Log::INFO,
-					'Update');
-				Log::add($errorMessage, Log::INFO, 'Update');
-				Log::add(Text::_('JLIB_INSTALLER_SQL_END_NOT_COMPLETE'), Log::INFO, 'Update');
-				Log::add($errorMessage, Log::WARNING, 'jerror');
 			}
 		}
 	}
@@ -186,18 +143,21 @@ class AdhocController extends BaseController
 	}
 
 	/**
-	 * Resize original property images
+	 * Fix up database for null values etc
 	 *
+	 * @throws InvalidArgumentException
+	 * @throws KeyNotFoundException
 	 * @throws RuntimeException
-	 * @throws Exception
-	 * @since  3.1.0
+	 * @since        4.0.0
 	 * @noinspection PhpUnused
 	 */
-	public function resizeoriginal(): void
+	public function fixupv4db(): bool
 	{
-		$params          = KrMethods::getParams();
-		$maxServerWidth  = $params->get('max_upload_width', 2100);
-		$maxServerHeight = $params->get('max_upload_height', 1400);
+		$filename = JPATH_ROOT . '/administrator/components/com_knowres/queries/updates/fixupv4.sql';
+		if (!file_exists($filename)) {
+			echo "no fixup file exists";
+			jexit();
+		}
 
 		$db     = KrFactory::getDatabase();
 		$buffer = file_get_contents($filename);
@@ -225,7 +185,7 @@ class AdhocController extends BaseController
 	 * Only for factura users
 	 *
 	 * @throws Exception
-	 * @since  3.4.0
+	 * @since        3.4.0
 	 * @noinspection PhpUnused
 	 */
 	public function fkToService(): void
@@ -293,11 +253,44 @@ class AdhocController extends BaseController
 	}
 
 	/**
+	 * Resize original property images
+	 *
+	 * @throws RuntimeException
+	 * @throws Exception
+	 * @since        3.1.0
+	 * @noinspection PhpUnused
+	 */
+	public function resizeoriginal(): void
+	{
+		$params          = KrMethods::getParams();
+		$maxServerWidth  = $params->get('max_upload_width', 2100);
+		$maxServerHeight = $params->get('max_upload_height', 1400);
+
+		$rows = KrFactory::getListModel('properties')->getIds(0);
+		foreach ($rows as $r) {
+			$path  = Media\Images::getImageAbsPath($r->id, 'original');
+			$path  .= "/*.{jpg,gif,png,JPG,GIF,PNG}";
+			$files = glob($path, GLOB_BRACE);
+
+			if (count($files)) {
+				foreach ($files as $f) {
+					$imageinfo = getimagesize($f);
+					if ($imageinfo[0] < $maxServerWidth || $imageinfo[1] < $maxServerHeight) {
+						Media\Images::resizeImage($f, $f, $maxServerWidth, 0, 90);
+					}
+				}
+			}
+
+			break;
+		}
+	}
+
+	/**
 	 * Copy rates year to year
 	 *
 	 * @throws RuntimeException
 	 * @throws Exception
-	 * @since  2.4.0
+	 * @since        2.4.0
 	 * @noinspection PhpUnused
 	 */
 	public function xxcopyrates(): void

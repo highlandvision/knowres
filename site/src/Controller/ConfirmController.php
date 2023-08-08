@@ -60,20 +60,20 @@ class ConfirmController extends FormController
 		$guests          = $contractData->guests;
 		$wrapper         = [];
 
-		if (!$property_id || !$arrival || !$departure || !$guests)
-		{
+		if (!$property_id || !$arrival || !$departure || !$guests) {
 			$searchSession       = new KrSession\Search();
 			$searchData          = $searchSession->getData();
 			$region_id           = $searchData->region_id ?? 0;
 			$Itemid              = SiteHelper::getItemId('com_knowres', 'properties', ['region_id' => $region_id]);
-			$wrapper['redirect'] = KrMethods::route(KrMethods::getRoot()
-				. 'index.php?option=com_knowres&view=properties&retain=2&Itemid=' . $Itemid);
+			$wrapper['redirect'] =
+				KrMethods::route(KrMethods::getRoot() .
+				                 'index.php?option=com_knowres&view=properties&retain=2&Itemid=' .
+				                 $Itemid);
 			echo new JsonResponse($wrapper);
 			jexit();
 		}
 
-		try
-		{
+		try {
 			$jform                          = KrMethods::inputArray('jform');
 			$contractData                   = $contractSession->updateData($jform);
 			$contractData->deposit          = 0;
@@ -84,25 +84,23 @@ class ConfirmController extends FormController
 			$Hub = new Hub($contractData);
 			$Hub->setExtras();
 
-			$computations = [
-				'base',
-				'dow',
-				'seasons',
-				'shortstay',
-				'longstay',
-				'ratemarkup',
-				'discount',
-				'coupon',
-				'tax',
-				'extras',
-				'deposit',
-				'paymentdates',
-				'commission'
+			$computations = ['base',
+			                 'dow',
+			                 'seasons',
+			                 'shortstay',
+			                 'longstay',
+			                 'ratemarkup',
+			                 'discount',
+			                 'coupon',
+			                 'tax',
+			                 'extras',
+			                 'deposit',
+			                 'paymentdates',
+			                 'commission'
 			];
 
 			$Hub->compute($computations);
-			if (!$Hub->getValue('room_total'))
-			{
+			if (!$Hub->getValue('room_total')) {
 				echo new JsonResponse(null, KrMethods::plain('COM_KNOWRES_ERROR_FATAL'), true);
 				jexit();
 			}
@@ -111,9 +109,7 @@ class ConfirmController extends FormController
 			$wrapper['response'] = $this->formatOutput($Hub);
 			echo new JsonResponse($wrapper);
 			jexit();
-		}
-		catch (Exception $e)
-		{
+		} catch (Exception $e) {
 			echo new JsonResponse(null, KrMethods::plain('COM_KNOWRES_ERROR_FATAL'), true);
 			Logger::logMe($e->getMessage());
 			jexit();
@@ -132,24 +128,22 @@ class ConfirmController extends FormController
 
 		$contractSession = new KrSession\Contract();
 		$contractData    = $contractSession->getData();
-		if (!$contractData->contract_total)
-		{
+		if (!$contractData->contract_total) {
 			$contractSession->resetData();
 			SiteHelper::expiredSession(0, true);
 		}
 
 		$jform = KrMethods::inputArray('jform');
-		if ($jform['property_id'] != $contractData->property_id || $jform['arrival'] != $contractData->arrival
-			|| $jform['room_total'] != $contractData->room_total)
-		{
+		if ($jform['property_id'] != $contractData->property_id ||
+			$jform['arrival'] != $contractData->arrival ||
+			$jform['room_total'] != $contractData->room_total) {
 			$contractSession->resetData();
 			SiteHelper::expiredSession($jform['property_id'], true);
 		}
 
 		if (!KrFactory::getListModel('contracts')
 		              ->isPropertyAvailable($contractData->property_id, $contractData->arrival,
-			              $contractData->departure))
-		{
+		                                    $contractData->departure)) {
 			$contractSession->resetData();
 			SiteHelper::expiredSession($jform['property_id'], true);
 		}
@@ -166,8 +160,7 @@ class ConfirmController extends FormController
 		$Hub->setData($guestData, 'guestData');
 		$actions = ['confirm'];
 		$success = $this->core($Hub, $actions);
-		if (!$success)
-		{
+		if (!$success) {
 			Utility::pageErrors($Hub->errors);
 			$Itemid = SiteHelper::getItemId('com_knowres', 'confirm');
 			$link   = KrMethods::route('index.php?option=com_knowres&view=confirm&Itemid=' . $Itemid, false);
@@ -183,14 +176,11 @@ class ConfirmController extends FormController
 		$view->guestData    = $Hub->getData('guestData');
 		$view->property     = KrFactory::getAdminModel('property')->getItem($contractData->property_id);
 
-		try
-		{
+		try {
 			$prePayment        = new PrePayment();
 			$view->paymentData = $prePayment->constructNew($contractData);
 			$view->gateways    = $view->paymentData->gateways;
-		}
-		catch (Exception $e)
-		{
+		} catch (Exception $e) {
 			Logger::logMe($e->getMessage());
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_FATAL'), 'error');
 			SiteHelper::redirectProperty($view->property->id);
@@ -214,8 +204,7 @@ class ConfirmController extends FormController
 
 		$contractSession = new KrSession\Contract();
 		$contractData    = $contractSession->getData();
-		if (!$contractData->contract_total)
-		{
+		if (!$contractData->contract_total) {
 			$contractSession->resetData();
 			SiteHelper::expiredSession(0, true);
 		}
@@ -225,15 +214,13 @@ class ConfirmController extends FormController
 		$paymentSession = new KrSession\Payment();
 		$paymentData    = $paymentSession->getData();
 
-		try
-		{
+		try {
 			$Hub = new Hub($contractData);
 			$Hub->setData($guestData, 'guestData');
 			$Hub->setData($paymentData, 'paymentData');
 
 			$actions = ['guest'];
-			if (!$this->core($Hub, $actions))
-			{
+			if (!$this->core($Hub, $actions)) {
 				$errors = Utility::ajaxErrors($Hub->errors);
 				echo new JsonResponse(null, implode('<br>', $errors), true);
 				jexit();
@@ -258,9 +245,7 @@ class ConfirmController extends FormController
 			$view->service_id   = $service_id;
 			$view->paymentData  = $paymentData;
 			$view->display();
-		}
-		catch (Exception $e)
-		{
+		} catch (Exception $e) {
 			Logger::logMe($e->getMessage(), 'info');
 			Utility::ajaxErrors($e);
 		}
@@ -278,12 +263,9 @@ class ConfirmController extends FormController
 	 */
 	protected function core(Hub $Hub, array $actions): bool
 	{
-		try
-		{
+		try {
 			return $Hub->action($actions);
-		}
-		catch (Exception $e)
-		{
+		} catch (Exception $e) {
 			Logger::logMe($e->getMessage());
 			echo new JsonResponse(null, KrMethods::plain('COM_KNOWRES_TRY_LATER'), true);
 			jexit();
@@ -305,25 +287,25 @@ class ConfirmController extends FormController
 		$Translations = new Translations();
 		$display      = '';
 
-		foreach ($Hub->getValue('extras') as $k => $v)
-		{
+		foreach ($Hub->getValue('extras') as $k => $v) {
 			$name     = $Translations->getText('extra', $k);
 			$quantity = $v['quantity'];
 			$value    = $v['value'];
 
-			if ($quantity > 1)
-			{
+			if ($quantity > 1) {
 				$name .= " x " . $quantity;
 			}
 
 			$valueDsp = '';
-			if ($value > 0)
-			{
+			if ($value > 0) {
 				$valueDsp = $Hub->currencyDisplay($value);
 			}
 
-			$display .= '<div class="row"><span class="small-8 columns">' . $name
-				. '</span><span class="small-4 columns text-right">' . $valueDsp . '</span></div>';
+			$display .= '<div class="row"><span class="small-8 columns">' .
+				$name .
+				'</span><span class="small-4 columns text-right">' .
+				$valueDsp .
+				'</span></div>';
 		}
 
 		return $display;
@@ -347,15 +329,13 @@ class ConfirmController extends FormController
 		$output->hilite_total = $Hub->currencyDisplay($Hub->getValue('contract_total'));
 
 		$output->room_total_gross = $Hub->currencyDisplay($Hub->getValue('room_total_gross'));
-		if ((float) $Hub->getValue('discount') > 0 || (float) $Hub->getValue('coupon_discount') > 0)
-		{
+		if ((float) $Hub->getValue('discount') > 0 || (float) $Hub->getValue('coupon_discount') > 0) {
 			$output->room_total_gross_text = KrMethods::plain('COM_KNOWRES_CONFIRM_ROOM_TOTAL_GROSS');
 			$output->hr                    = '<hr>';
 			$output->room_total_text       = KrMethods::plain('COM_KNOWRES_CONFIRM_ROOM_TOTAL');
 			$output->room_total            = $Hub->currencyDisplay($Hub->getValue('room_total'));
 		}
-		else
-		{
+		else {
 			$output->room_total_gross_text = KrMethods::plain('COM_KNOWRES_CONFIRM_ROOM_TOTAL');
 			$output->room_total_text       = '';
 			$output->room_total            = '';
@@ -364,16 +344,14 @@ class ConfirmController extends FormController
 
 		$output->discount_text = '';
 		$output->discount      = '';
-		if ((float) $Hub->getValue('discount') > 0)
-		{
+		if ((float) $Hub->getValue('discount') > 0) {
 			$output->discount_text = KrMethods::plain('COM_KNOWRES_CONFIRM_DISCOUNT_LBL');
 			$output->discount      = '-' . $Hub->currencyDisplay($Hub->getValue('discount'));
 		}
 
 		$output->coupon_text     = '';
 		$output->coupon_discount = '';
-		if ((float) $Hub->getValue('coupon_discount') > 0)
-		{
+		if ((float) $Hub->getValue('coupon_discount') > 0) {
 			$output->coupon_text     = KrMethods::plain('COM_KNOWRES_CONFIRM_COUPON_DISCOUNT');
 			$output->coupon_discount = '-' . $Hub->currencyDisplay($Hub->getValue('coupon_discount'));
 		}
@@ -383,8 +361,7 @@ class ConfirmController extends FormController
 		$output->taxbreakdown3 = $this->taxDisplay($Hub, 3);
 
 		$output->extrasbreakdown = $this->extrasBreakdown($Hub);
-		if (!empty($output->extrasbreakdown))
-		{
+		if (!empty($output->extrasbreakdown)) {
 			$output->extra_total_text = KrMethods::plain('COM_KNOWRES_CONTRACT_EXTRA_TOTAL_LBL');
 			$output->extra_total      = $Hub->currencyDisplay($Hub->getValue('extra_total'));
 		}
@@ -392,46 +369,42 @@ class ConfirmController extends FormController
 		$output->contract_total = $Hub->currencyDisplay($Hub->getValue('contract_total'));
 		$output->deposit        = $Hub->currencyDisplay($Hub->getValue('deposit'));
 
-		if ($Hub->getValue('booking_type') == 1)
-		{
+		if ($Hub->getValue('booking_type') == 1) {
 			$Hub->setValue('on_request', $Hub->params->get('booking_request_hold'));
-			if ($Hub->getValue('contract_total') == $Hub->getValue('deposit'))
-			{
-				$output->deposit_date = KrMethods::sprintf('COM_KNOWRES_CONFIRM_REQUEST_FULL_PAYMENT',
-					TickTock::displayDate($Hub->getValue('expiry_date')));
+			if ($Hub->getValue('contract_total') == $Hub->getValue('deposit')) {
+				$output->deposit_date =
+					KrMethods::sprintf('COM_KNOWRES_CONFIRM_REQUEST_FULL_PAYMENT',
+					                   TickTock::displayDate($Hub->getValue('expiry_date')));
 			}
-			else
-			{
-				$output->deposit_date = KrMethods::sprintf('COM_KNOWRES_CONFIRM_REQUEST_DEPOSIT_DUE',
-					TickTock::displayDate($Hub->getValue('expiry_date')));
+			else {
+				$output->deposit_date =
+					KrMethods::sprintf('COM_KNOWRES_CONFIRM_REQUEST_DEPOSIT_DUE',
+					                   TickTock::displayDate($Hub->getValue('expiry_date')));
 			}
 
 			$output->request_note = KrMethods::plain('COM_KNOWRES_CONFIRM_REQUEST_NOTE');
 		}
-		else
-		{
-			if ($Hub->getValue('contract_total') == $Hub->getValue('deposit'))
-			{
+		else {
+			if ($Hub->getValue('contract_total') == $Hub->getValue('deposit')) {
 				$output->deposit_date = KrMethods::sprintf('COM_KNOWRES_CONFIRM_BOOK_FULL_PAYMENT');
 			}
-			else
-			{
-				$output->deposit_date = KrMethods::plain('COM_KNOWRES_DEPOSIT') . ' '
-					. KrMethods::plain('COM_KNOWRES_CONFIRM_BOOK_PAYABLE_NOW');
+			else {
+				$output->deposit_date =
+					KrMethods::plain('COM_KNOWRES_DEPOSIT') .
+					' ' .
+					KrMethods::plain('COM_KNOWRES_CONFIRM_BOOK_PAYABLE_NOW');
 			}
 		}
 
-		if ($Hub->getValue('contract_total') - $Hub->getValue('deposit') > 0)
-		{
+		if ($Hub->getValue('contract_total') - $Hub->getValue('deposit') > 0) {
 			$output->balance = $Hub->currencyDisplay($Hub->getValue('contract_total') - $Hub->getValue('deposit'));
-			if (!(int) $Hub->getValue('balance_days'))
-			{
+			if (!(int) $Hub->getValue('balance_days')) {
 				$output->balance_date = KrMethods::plain('COM_KNOWRES_CONTRACTS_BOOKING_STATUS_39');
 			}
-			else
-			{
-				$output->balance_date = KrMethods::sprintf('COM_KNOWRES_CONFIRM_BALANCE_DUE',
-					TickTock::displayDate($Hub->getValue('balance_date')));
+			else {
+				$output->balance_date =
+					KrMethods::sprintf('COM_KNOWRES_CONFIRM_BALANCE_DUE',
+					                   TickTock::displayDate($Hub->getValue('balance_date')));
 			}
 		}
 
@@ -451,29 +424,22 @@ class ConfirmController extends FormController
 	protected function taxDisplay(Hub $Hub, int $tax_type = 0): string
 	{
 		$display = '';
-		foreach ($Hub->getValue('taxes') as $code => $v)
-		{
-			if ((float) $v['value'] <= 0)
-			{
+		foreach ($Hub->getValue('taxes') as $code => $v) {
+			if ((float) $v['value'] <= 0) {
 				continue;
 			}
-			if (isset($v['gross']))
-			{
-				if ($tax_type == 1 && ((int) $v['gross'] || (int) $v['pay_arrival']))
-				{
+			if (isset($v['gross'])) {
+				if ($tax_type == 1 && ((int) $v['gross'] || (int) $v['pay_arrival'])) {
 					continue;
 				}
-				if ($tax_type == 2 && !(int) $v['gross'])
-				{
+				if ($tax_type == 2 && !(int) $v['gross']) {
 					continue;
 				}
-				if ($tax_type == 3 && !(int) $v['pay_arrival'])
-				{
+				if ($tax_type == 3 && !(int) $v['pay_arrival']) {
 					continue;
 				}
 			}
-			else
-			{
+			else {
 				$tax_type = isset($v['type']) ?? 0;
 				$tax_type += 1;
 			}
@@ -481,11 +447,10 @@ class ConfirmController extends FormController
 			// Check for when type wasn't included in the output
 			//			if ($tax_type == 2 && (int) $type)
 			//			{
-			$display .= KrMethods::render('confirm.summary.taxbreakdown', [
-				'type'  => $tax_type,
-				'value' => $Hub->currencyDisplay($v['value']),
-				'code'  => $code,
-				'id'    => $v['id'] ?? 0
+			$display .= KrMethods::render('confirm.summary.taxbreakdown', ['type'  => $tax_type,
+			                                                               'value' => $Hub->currencyDisplay($v['value']),
+			                                                               'code'  => $code,
+			                                                               'id'    => $v['id'] ?? 0
 			]);
 			//			}
 		}
@@ -504,25 +469,21 @@ class ConfirmController extends FormController
 	 */
 	protected function validateCoupon(stdClass $data): stdClass
 	{
-		if ($data->coupon_code)
-		{
+		if ($data->coupon_code) {
 			$coupon = KrFactory::getListModel('coupons')->getCoupon($data->property_id, $data->coupon_code);
-			if (isset($coupon->id) && $coupon->id > 0)
-			{
+			if (isset($coupon->id) && $coupon->id > 0) {
 				$data->coupon_id            = $coupon->id;
 				$data->coupon_amount        = $coupon->amount;
 				$data->coupon_is_percentage = $coupon->is_percentage;
 				$data->coupon_discount      = 0;
 			}
-			else
-			{
+			else {
 				$error = KrMethods::sprintf('COM_KNOWRES_CONFIRM_COUPON_INVALID', $data->coupon_code);
 				echo new JsonResponse(null, $error, true);
 				jexit();
 			}
 		}
-		else
-		{
+		else {
 			$data->coupon_code          = '';
 			$data->coupon_id            = 0;
 			$data->coupon_amount        = 0;

@@ -26,14 +26,14 @@ use UnexpectedValueException;
  */
 class Translations
 {
-	/** @var array Translations retrieved from cache */
-	protected array $Translations = [];
 	/** @var Cache Cache */
 	protected Cache $cache;
 	/** @var string Default site language code */
 	protected string $default_language = '';
 	/** @var string Current user language */
 	protected string $language = '';
+	/** @var array Translations retrieved from cache */
+	protected array $translations = [];
 
 	/**
 	 * Manage translations
@@ -45,30 +45,25 @@ class Translations
 	 */
 	public function __construct(string $language = '')
 	{
-		if ($language)
-		{
+		if ($language) {
 			$this->setLanguage($language);
 		}
-		else
-		{
+		else {
 			$this->setLanguage(KrMethods::getLanguageTag());
 		}
 
 		$user = KrMethods::getUser();
-		if ($user->guest)
-		{
+		if ($user->guest) {
 			$this->default_language = KrMethods::getDefaultLanguage('site');
 		}
-		else
-		{
+		else {
 			$this->default_language = KrMethods::getDefaultLanguage();
 		}
 
-		$cache_options = [
-			'cachebase'    => JPATH_ADMINISTRATOR . '/cache',
-			'lifetime'     => 86400,
-			'caching'      => true,
-			'defaultgroup' => 'com_knowres_translations'
+		$cache_options = ['cachebase'    => JPATH_ADMINISTRATOR . '/cache',
+		                  'lifetime'     => 86400,
+		                  'caching'      => true,
+		                  'defaultgroup' => 'com_knowres_translations'
 		];
 
 		$this->cache = KrMethods::getCache($cache_options);
@@ -85,11 +80,30 @@ class Translations
 	 */
 	public static function getCountryName(?int $country_id): string
 	{
-		if (!empty($country_id))
-		{
+		if (!empty($country_id)) {
 			$Translations = new Translations();
 
 			return $Translations->getText('country', $country_id);
+		}
+
+		return '';
+	}
+
+	/**
+	 * Get country name
+	 *
+	 * @param  ?int  $town_id  ID of town
+	 *
+	 * @throws RuntimeException
+	 * @since  1.0.0
+	 * @return string
+	 */
+	public static function getTownName(?int $town_id): string
+	{
+		if (!empty($town_id)) {
+			$Translations = new Translations();
+
+			return $Translations->getText('town', $town_id);
 		}
 
 		return '';
@@ -112,21 +126,17 @@ class Translations
 	public function addTranslationToObject(array $items, string $item, string $key = 'id', string $field = 'name',
 		string $new = 'name', bool $sort = true): array
 	{
-		if (is_countable($this->Translations))
-		{
-			if (!count($this->Translations) || !array_key_exists($item, $this->Translations))
-			{
+		if (is_countable($this->translations)) {
+			if (!count($this->translations) || !array_key_exists($item, $this->translations)) {
 				$this->checkCache($item);
 			}
 		}
 
-		foreach ($items as $i)
-		{
+		foreach ($items as $i) {
 			$i->$new = $this->setText($item, $i->$key, $field);
 		}
 
-		if ($sort)
-		{
+		if ($sort) {
 			usort($items, function ($a, $b) use (&$new) {
 				return strcmp($a->{$new}, $b->{$new});
 			});
@@ -144,12 +154,10 @@ class Translations
 	 */
 	public function cleanTranslationCache(string $item = ''): void
 	{
-		if ($item)
-		{
+		if ($item) {
 			$this->cache->remove($item);
 		}
-		else
-		{
+		else {
 			$this->cache->clean();
 		}
 	}
@@ -199,27 +207,22 @@ class Translations
 	public function getArray(array $items, string $item, string $field, bool $sort = true): array
 	{
 		$values = [];
-		if (is_countable($this->Translations))
-		{
-			if (!count($this->Translations) || !array_key_exists($item, $this->Translations))
-			{
+		if (is_countable($this->translations)) {
+			if (!count($this->translations) || !array_key_exists($item, $this->translations)) {
 				$this->checkCache($item);
 			}
 		}
 
 		$list = [];
-		foreach ($items as $i)
-		{
+		foreach ($items as $i) {
 			$list[$i->id] = $this->setText($item, $i->id, $field);
 		}
 
-		if ($sort)
-		{
+		if ($sort) {
 			asort($list);
 		}
 
-		foreach ($list as $k => $v)
-		{
+		foreach ($list as $k => $v) {
 			$values[$k] = $v;
 		}
 
@@ -263,10 +266,8 @@ class Translations
 	 */
 	public function getText(string $item, ?int $item_id, string $field = 'name'): string
 	{
-		if (is_countable($this->Translations))
-		{
-			if (!count($this->Translations) || !array_key_exists($item, $this->Translations))
-			{
+		if (is_countable($this->translations)) {
+			if (!count($this->translations) || !array_key_exists($item, $this->translations)) {
 				$this->checkCache($item);
 			}
 		}
@@ -361,7 +362,7 @@ class Translations
 		if ($data === false)
 		{
 			$this->setTranslations($item);
-			$this->cache->store(Utility::encodeJson($this->Translations[$item]), $item);
+			$this->cache->store(Utility::encodeJson($this->translations[$item]), $item);
 		}
 		else
 		{
@@ -370,7 +371,7 @@ class Translations
 				$data = Utility::decodeJson($data, true);
 			}
 
-			$this->Translations[$item] = $data;
+			$this->translations[$item] = $data;
 		}
 	}
 
@@ -467,6 +468,6 @@ class Translations
 			$data[$key] = $row->text;
 		}
 
-		$this->Translations[$item] = $data;
+		$this->translations[$item] = $data;
 	}
 }

@@ -44,16 +44,13 @@ class DashboardController extends BaseController
 		$guest_id     = $userData->db_guest_id;
 		$db_contracts = $userData->db_contracts;
 
-		if ($guest_id)
-		{
+		if ($guest_id) {
 			$guestForm = KrFactory::getSiteModel('guest');
 			$guestForm->checkin($guest_id);
 		}
 
-		foreach ($db_contracts as $c)
-		{
-			if ($c['guestdata_id'])
-			{
+		foreach ($db_contracts as $c) {
+			if ($c['guestdata_id']) {
 				$ContractguestdataForm = KrFactory::getSiteModel('contractguestdata');
 				$ContractguestdataForm->checkin($c['guestdata_id']);
 			}
@@ -78,8 +75,7 @@ class DashboardController extends BaseController
 		$userData     = $userSession->getData();
 		$db_contracts = $userData->db_contracts;
 
-		if (!$userData->db_guest_id || !isset($db_contracts[$contract_id]))
-		{
+		if (!$userData->db_guest_id || !isset($db_contracts[$contract_id])) {
 			SiteHelper::badUser();
 		}
 
@@ -101,26 +97,23 @@ class DashboardController extends BaseController
 		$db_contracts = $userData->db_contracts;
 		$contract_id  = $this->input->getInt('id', 0);
 
-		if (!$userData->db_guest_id || !isset($db_contracts[$contract_id]))
-		{
+		if (!$userData->db_guest_id || !isset($db_contracts[$contract_id])) {
 			SiteHelper::badUser();
 		}
 
 		$item = KrFactory::getAdminModel('contract')->getItem($contract_id);
-		if (!$item->id)
-		{
+		if (!$item->id) {
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_FATAL_CONFIRM'));
 			SiteHelper::redirectDashboard();
 		}
 
 		$GuestData = new Pdf\Contract\GuestData('download', $contract_id);
 		$result    = $GuestData->getPdf();
-		if (!$result)
-		{
+		if (!$result) {
 			$Itemid = SiteHelper::getItemId('com_knowres', 'dashboard');
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_FATAL'), 'error');
 			KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&view=dashboard&Itemid=' . $Itemid),
-				false);
+			                    false);
 		}
 
 		jexit();
@@ -139,26 +132,23 @@ class DashboardController extends BaseController
 		$db_contracts = $userData->db_contracts;
 		$contract_id  = KrMethods::inputInt('id', 0, ' get');
 
-		if (!$userData->db_guest_id || !isset($db_contracts[$contract_id]))
-		{
+		if (!$userData->db_guest_id || !isset($db_contracts[$contract_id])) {
 			SiteHelper::badUser();
 		}
 
 		$item = KrFactory::getAdminModel('contract')->getItem($contract_id);
-		if (!$item->id)
-		{
+		if (!$item->id) {
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_FATAL_CONFIRM'));
 			SiteHelper::redirectDashboard();
 		}
 
 		$invoice = new Pdf\Contract\Invoice('download', $contract_id);
 		$result  = $invoice->getPdf(true);
-		if (!$result)
-		{
+		if (!$result) {
 			$Itemid = SiteHelper::getItemId('com_knowres', 'dashboard');
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_FATAL'), 'error');
 			KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&view=dashboard&Itemid=' . $Itemid),
-				false);
+			                    false);
 		}
 
 		jexit();
@@ -193,36 +183,28 @@ class DashboardController extends BaseController
 		$guest_id    = 0;
 
 		$key = KrMethods::inputString('key', '', 'get');
-		try
-		{
-			if (empty($key))
-			{
+		try {
+			if (empty($key)) {
 				throw new Exception('Dashboard key was not received');
 			}
 
 			list($contract_id, $guest_id, $qkey, $view) = Cryptor::decrypt($key);
-			if (!$guest_id || !$qkey)
-			{
+			if (!$guest_id || !$qkey) {
 				throw new Exception('Dashboard key was invalid');
 			}
-		}
-		catch (Exception $e)
-		{
+		} catch (Exception $e) {
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_DASHBOARD_ACCESS'));
 			SiteHelper::badUser();
 		}
 
 		//TODO-v4.3 Can be deleted after 1 year
-		if ($view == 'guestdataform')
-		{
+		if ($view == 'guestdataform') {
 			$view = 'contractguestdataform';
 		}
 
-		if ($view == 'reviewform')
-		{
+		if ($view == 'reviewform') {
 			$contract = KrFactory::getAdminModel('contract')->getItem($contract_id);
-			if (!$contract->id || $contract->qkey != $qkey || $contract->guest_id != $guest_id)
-			{
+			if (!$contract->id || $contract->qkey != $qkey || $contract->guest_id != $guest_id) {
 				SiteHelper::redirectHome();
 			}
 
@@ -231,35 +213,29 @@ class DashboardController extends BaseController
 
 			SiteHelper::redirectView($view);
 		}
-		else if ($view !== 'dashboard')
-		{
+		else if ($view !== 'dashboard') {
 			$contract = KrFactory::getAdminModel('contract')->getItem($contract_id);
-			if (!$contract->id || $contract->qkey != $qkey || $contract->guest_id != $guest_id)
-			{
+			if (!$contract->id || $contract->qkey != $qkey || $contract->guest_id != $guest_id) {
 				SiteHelper::redirectHome();
 			}
-			if (!is_countable($userData->db_contracts) || !count($userData->db_contracts))
-			{
+			if (!is_countable($userData->db_contracts) || !count($userData->db_contracts)) {
 				SiteHelper::redirectDashboard();
 			}
 
 			$userData->db_guest_id    = $guest_id;
 			$userData->db_contract_id = $contract_id;
-			if ($view == 'guestupdate')
-			{
+			if ($view == 'guestupdate') {
 				$userData->db_guest_update = true;
 				$view                      = 'guestform';
 			}
-			else if ($view == 'contractguestdataform')
-			{
+			else if ($view == 'contractguestdataform') {
 				$userData->db_guest_update = false;
 			}
 
 			$userSession->setData($userData);
 			SiteHelper::redirectView($view);
 		}
-		else
-		{
+		else {
 			$userData->db_guest_id    = $guest_id;
 			$userData->db_contracts   = [];
 			$userData->db_contract_id = 0;
@@ -294,26 +270,23 @@ class DashboardController extends BaseController
 		$db_contracts = $userData->db_contracts;
 		$contract_id  = KrMethods::inputInt('id', 0, 'get');
 
-		if (!$userData->db_guest_id || !isset($db_contracts[$contract_id]))
-		{
+		if (!$userData->db_guest_id || !isset($db_contracts[$contract_id])) {
 			SiteHelper::badUser();
 		}
 
 		$item = KrFactory::getAdminModel('contract')->getItem($contract_id);
-		if (!$item->id)
-		{
+		if (!$item->id) {
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_FATAL_CONFIRM'));
 			SiteHelper::redirectDashboard();
 		}
 
 		$voucher = new Pdf\Contract\Voucher('download', $contract_id,);
 		$result  = $voucher->getPdf();
-		if (!$result)
-		{
+		if (!$result) {
 			$Itemid = SiteHelper::getItemId('com_knowres', 'dashboard');
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_FATAL'), 'error');
 			KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&view=dashboard&Itemid=' . $Itemid),
-				false);
+			                    false);
 		}
 
 		jexit();

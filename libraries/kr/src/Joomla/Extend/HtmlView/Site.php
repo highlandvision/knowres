@@ -27,10 +27,10 @@ use stdClass;
  */
 class Site extends KrHtmlView
 {
-	/** @var stdClass Guest data. */
-	public stdClass $guestData;
 	/** @var int Joomla Itemid. */
 	public int $Itemid = 0;
+	/** @var stdClass Guest data. */
+	public stdClass $guestData;
 	/** @var string Meta description. */
 	public string $meta_description = '';
 	/** @var string Meta title. */
@@ -64,7 +64,7 @@ class Site extends KrHtmlView
 	public static function confirmPathway(Pathway $pathway, ?int $Itemid): Pathway
 	{
 		$pathway->addItem(Krmethods::plain('COM_KNOWRES_CONFIRM_TITLE'),
-			KrMethods::route('index.php?option=com_knowres&view=confirm&Itemid=' . $Itemid));
+		                  KrMethods::route('index.php?option=com_knowres&view=confirm&Itemid=' . $Itemid));
 
 		return $pathway;
 	}
@@ -81,7 +81,7 @@ class Site extends KrHtmlView
 	public static function dashboardPathway(Pathway $pathway): Pathway
 	{
 		$pathway->addItem(KrMethods::plain('COM_KNOWRES_TITLE_DASHBOARD'),
-			KrMethods::route('index.php?option=com_knowres&task=dashboard.cancel'));
+		                  KrMethods::route('index.php?option=com_knowres&task=dashboard.cancel'));
 
 		return $pathway;
 	}
@@ -102,11 +102,11 @@ class Site extends KrHtmlView
 		int $Itemid = 0): Pathway
 	{
 		$pathway = self::setPathwayBase($pathway);
-		if ($Itemid)
-		{
-			$pathway->addItem($region_name,
-				KrMethods::route('index.php?option=com_knowres&view=properties&Itemid=' . $Itemid . '&region_id='
-					. $region_id));
+		if ($Itemid) {
+			$pathway->addItem($region_name, KrMethods::route('index.php?option=com_knowres&view=properties&Itemid=' .
+			                                                 $Itemid .
+			                                                 '&region_id=' .
+			                                                 $region_id));
 		}
 
 		return $pathway;
@@ -143,8 +143,12 @@ class Site extends KrHtmlView
 	 */
 	public static function searchPathway(Pathway $pathway, ?int $region_id, ?int $Itemid): Pathway
 	{
-		$backlink = KrMethods::route('index.php?option=com_knowres&view=properties&Itemid=' . $Itemid . '&region_id='
-			. $region_id . '&retain=1');
+		$backlink =
+			KrMethods::route('index.php?option=com_knowres&view=properties&Itemid=' .
+			                 $Itemid .
+			                 '&region_id=' .
+			                 $region_id .
+			                 '&retain=1');
 		$pathway->addItem(KrMethods::plain('COM_KNOWRES_SEARCH_RESULTS'), $backlink);
 
 		return $pathway;
@@ -162,8 +166,7 @@ class Site extends KrHtmlView
 	public static function setPathwayBase(Pathway $pathway): Pathway
 	{
 		$base = KrMethods::getParams()->get('search_breadcrumbs', '');
-		if (!$base)
-		{
+		if (!$base) {
 			return $pathway;
 		}
 
@@ -172,23 +175,18 @@ class Site extends KrHtmlView
 		$def         = KrMethods::getParams('com_languages')->get('site');
 		$langs[$def] = $base;
 
-		if ($tag != $def)
-		{
+		if ($tag != $def) {
 			$associations = MenusHelper::getAssociations($base);
-			foreach ($associations as $tag => $Itemid)
-			{
+			foreach ($associations as $tag => $Itemid) {
 				$langs[$tag] = $Itemid;
 			}
 		}
 
-		if (isset($langs[$tag]))
-		{
+		if (isset($langs[$tag])) {
 			$link = KrMethods::route('index.php?Itemid=' . $langs[$tag]);
-			if (isset (Factory::getApplication()->getMenu()->getItem($langs[$tag])->title))
-			{
+			if (isset (Factory::getApplication()->getMenu()->getItem($langs[$tag])->title)) {
 				$title = Factory::getApplication()->getMenu()->getItem($langs[$tag])->title;
-				if ($link && $title)
-				{
+				if ($link && $title) {
 					$pathway->addItem($title, $link);
 				}
 			}
@@ -206,7 +204,7 @@ class Site extends KrHtmlView
 	 * @throws Exception
 	 * @since 3.3.0
 	 */
-	protected function prepareDefaultDocument(string $title, string $description)
+	protected function prepareDefaultDocument(string $title, string $description): void
 	{
 		$app              = Factory::getApplication();
 		$menu_title       = '';
@@ -214,8 +212,7 @@ class Site extends KrHtmlView
 		$menu_robots      = '';
 
 		$menu = $app->getMenu()->getActive();
-		if ($menu)
-		{
+		if ($menu) {
 			$menu_params      = $menu->getParams();
 			$menu_title       = $menu_params->get('page_title');
 			$menu_description = $menu_params->get('menu-meta_description');
@@ -223,21 +220,17 @@ class Site extends KrHtmlView
 		}
 
 		$title = $menu_title <> '' ? $menu_title : $app->get('page_title', $title);
-		if ($app->getCfg('sitename_pagetitles', 0) == 1)
-		{
+		if ($app->getCfg('sitename_pagetitles', 0) == 1) {
 			$title = KrMethods::sprintf('JPAGETITLE', $app->getCfg('sitename'), $title);
 		}
-		else if ($app->getCfg('sitename_pagetitles', 0) == 2)
-		{
+		else if ($app->getCfg('sitename_pagetitles', 0) == 2) {
 			$title = KrMethods::sprintf('JPAGETITLE', $title, $app->getCfg('sitename'));
 		}
 
 		$document = Factory::getDocument();
 		$document->setTitle($title);
-		$document->setDescription($menu_description <> ''
-			? $menu_description
-			: $app->get('meta_description',
-				$description));
+		$document->setDescription($menu_description <> '' ? $menu_description :
+			                          $app->get('meta_description', $description));
 		$document->setMetaData('robots', $menu_robots <> '' ? $menu_robots : $app->get('robots'));
 	}
 }
