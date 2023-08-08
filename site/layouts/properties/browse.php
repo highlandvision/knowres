@@ -16,7 +16,6 @@ use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\SiteHelper;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Translations;
-use HighlandVision\KR\Utility;
 
 extract($displayData);
 /**
@@ -31,13 +30,13 @@ extract($displayData);
  * @var bool   $byAvailability Search by availability.
  * @var array  $net            Net rates.
  * @var array  $discount       Discount value.
+ * @var array  $rating         Review value.
  */
 
 $Translations = new Translations();
 $weekly       = KrFactory::getListModel('propertysettings')->getOneSetting('tariffChargesStoredWeeklyYesNo');
 $new          = $params->get('search_new', 0);
-if ($new)
-{
+if ($new) {
 	$created = TickTock::modifyMonths('now', $new, '-');
 }
 ?>
@@ -55,11 +54,13 @@ if ($new)
 							<?php echo KrMethods::render('properties.slideshow', ['item'         => $item,
 							                                                      'params'       => $params,
 							                                                      'plink'        => $plink,
-							                                                      'Translations' => $Translations]); ?>
+							                                                      'Translations' => $Translations
+							]); ?>
 							<?php if ($favicon): ?>
 								<?php echo KrMethods::render('properties.favicon', ['item'  => $item,
 								                                                    'saved' => $saved,
-								                                                    'view'  => $view]); ?>
+								                                                    'view'  => $view
+								]); ?>
 							<?php endif; ?>
 							<?php if ($new && $item->created_at >= $created): ?>
 								<?php echo KrMethods::render('properties.badge'); ?>
@@ -95,19 +96,16 @@ if ($new)
 							<?php echo $Translations->getText('property', $item->id, 'p10'); ?>
 						</h3>
 
-						<p class="property-description">
-							<?php echo Utility::cutString($Translations->getText('property', $item->id, 'p1'), 150); ?>
-						</p>
 						<div class="kr-relative-pricing">
 							<?php echo KrMethods::render('properties.pricedisplay',
-								['item'           => $item,
-								 'currency'       => $currency,
-								 'byAvailability' => $byAvailability,
-								 'net'            => $net[$item->id] ?? 0,
-								 'discount'       => $discount[$item->id] ?? 0,
-								 'weekly'         => $weekly[$item->id] ?? $weekly[0],
-								 'plink'          => $plink
-								]);
+							                             ['item'           => $item,
+							                              'currency'       => $currency,
+							                              'byAvailability' => $byAvailability,
+							                              'net'            => $net[$item->id] ?? 0,
+							                              'discount'       => $discount[$item->id] ?? 0,
+							                              'weekly'         => $weekly[$item->id] ?? $weekly[0],
+							                              'plink'          => $plink
+							                             ]);
 							?>
 						</div>
 					</div>

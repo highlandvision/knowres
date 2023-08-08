@@ -9,7 +9,7 @@
 	<description>MOD_KNOWRES_SEARCH_DSC</description>
 	<license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
 	<namespace path="src">Knowres\Module\Search</namespace>
-	<version>4.2.0</version>
+	<version>4.3.0</version>
 	<files>
 		<folder module="mod_knowres_search">services</folder>
 		<folder>forms</folder>
@@ -19,17 +19,17 @@
 	</files>
 	<config>
 		<fields name="params">
-			<fieldset name="Basic">
-				<field name="search_text"
-					default=""
-					filter="raw"
-					type="text"
-					label="MOD_KNOWRES_SEARCH_SHOW_TEXT"
-					description="MOD_KNOWRES_SEARCH_SHOW_TEXT_DSC">
-				</field>
+			<fieldset name="basic">
+				<field name="layout"
+					   class="form-select w-auto"
+					   type="modulelayout"
+					   validate="moduleLayout"
+					   label="JFIELD_ALT_LAYOUT_LABEL"
+					   description="MOD_KNOWRES_SEARCH_LAYOUT_DSC"/>
 				<field name="hero-position"
 					class="btn-group"
 					default="middle"
+					showon="layout:_:hero"
 					type="radio"
 					label="MOD_KNOWRES_SEARCH_HERO-POSITION"
 					description="MOD_KNOWRES_SEARCH_HERO-POSITION_DSC">
@@ -38,29 +38,30 @@
 					<option value="bottom">MOD_KNOWRES_SEARCH_BOTTOM</option>
 				</field>
 				<field name="show_regions"
-					class="btn-group btn-group-yesno"
+					class="btn-group"
 					default="1"
+				    filter="int"
 					type="radio"
 					label="MOD_KNOWRES_SEARCH_SHOW_REGION"
 					description="MOD_KNOWRES_SEARCH_SHOW_REGION_DSC">
-					<option value="0">JNO</option>
-					<option value="1">JYES</option>
+					<option class="btn btn-outline-danger" value="0">JNO</option>
+					<option class="btn btn-outline-success" value="1">MOD_KNOWRES_SEARCH_SHOW_REGION_SINGLE</option>
+					<option class="btn btn-outline-primary" value="2">MOD_KNOWRES_SEARCH_SHOW_REGION_MULTI</option>
 				</field>
-				<field name="show_regions_expanded"
-					class="btn-group btn-group-yesno"
-					default="1"
-					type="radio"
-					label="MOD_KNOWRES_SEARCH_SHOW_REGION_EXPANDED"
-					description="MOD_KNOWRES_SEARCH_SHOW_REGION_EXPANDED_DSC">
-					<option value="0">JNO</option>
-					<option value="1">JYES</option>
+				<field name="search_text"
+					   default=""
+					   filter="raw"
+					   showon="show_regions:0[AND]layout:_:hero"
+					   type="text"
+					   label="MOD_KNOWRES_SEARCH_SHOW_TEXT"
+					   description="MOD_KNOWRES_SEARCH_SHOW_TEXT_DSC">
 				</field>
 				<field name="show_datepickers"
 					class="btn-group btn-group-yesno"
 					default="1"
 					type="radio"
 					label="MOD_KNOWRES_SEARCH_SHOW_DATEPICKERS"
-					description="MOD_KNOWRES_SEARCH_SHOW_DATEPICKERSP_DSC">
+					description="MOD_KNOWRES_SEARCH_SHOW_DATEPICKERS_DSC">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
 				</field>
@@ -82,31 +83,8 @@
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
 				</field>
-				<field name="show_types"
-					class="btn-group btn-group-yesno"
-					default="0"
-					type="radio"
-					label="MOD_KNOWRES_SEARCH_SHOW_TYPES"
-					description="MOD_KNOWRES_SEARCH_SHOW_TYPES_DSC">
-					<option value="0">JNO</option>
-					<option value="1">JYES</option>
-				</field>
-				<field name="show_bedrooms"
-					class="btn-group btn-group-yesno"
-					default="0"
-					type="radio"
-					label="MOD_KNOWRES_SEARCH_SHOW_BEDROOMS"
-					description="MOD_KNOWRES_SEARCH_SHOW_BEDROOMS_DSC">
-					<option value="0">JNO</option>
-					<option value="1">JYES</option>
-				</field>
 			</fieldset>
 			<fieldset name="advanced">
-				<field name="layout"
-					class="form-select"
-					type="modulelayout"
-					validate="moduleLayout"
-					label="JFIELD_ALT_LAYOUT_LABEL"/>
 				<field name="moduleclass_sfx"
 					type="textarea"
 					rows="1"

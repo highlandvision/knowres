@@ -11,6 +11,7 @@
 
 defined('_JEXEC') or die;
 
+use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Media;
 use HighlandVision\KR\Translations;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -32,7 +33,7 @@ $image_order    = explode(',', $item->imageorder);
 $path           = Media\Images::getImagePath($item->id) . '/';
 $width          = $params->get('max_slideshow_width');
 $height         = $params->get('max_slideshow_height');
-$title          = 'View ' . $item->property_name;
+$title          = KrMethods::plain('COM_KNOWRES_VIEW') . ' ' . $item->property_name;
 $count          = 0;
 $slick_id       = "kr-lazy-" . $item->id;
 
@@ -48,7 +49,7 @@ ksort($display);
 
 <div class="kr-properties-slideshow" id="<?php echo $slick_id; ?>">
 	<?php foreach ($display as $order => $image): ?>
-		<a href="<?php echo $plink; ?>" title="<?php echo $title; ?>">
+		<a href="<?php echo $plink; ?>" title="<?php echo $title; ?>" target="_blank">
 			<?php $alt = $Translations->getText('image', $image['id'], 'alt_text'); ?>
 			<?php if (!$count): ?>
 				<?php echo HTMLHelper::_('image', $path . $image['name'], $alt, [

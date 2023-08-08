@@ -28,20 +28,18 @@ class FdatepickerField extends FormField
 	/**
 	 * Wrapper method for getting attributes from the form element
 	 *
-	 * @param   string  $name     Attribute name
-	 * @param   mixed   $default  Optional value to return if attribute not found
+	 * @param  string  $name     Attribute name
+	 * @param  mixed   $default  Optional value to return if attribute not found
 	 *
 	 * @since  3.2.0
 	 * @return mixed The value of the attribute if it exists, null otherwise
 	 */
 	public function getAttribute($name, $default = null): mixed
 	{
-		if (!empty($this->element[$name]))
-		{
+		if (!empty($this->element[$name])) {
 			return $this->element[$name];
 		}
-		else
-		{
+		else {
 			return $default;
 		}
 	}
@@ -55,18 +53,37 @@ class FdatepickerField extends FormField
 	 */
 	protected function getInput(): string
 	{
-		if ($this->name == 'jform[arrival]')
-		{
-			$this->value = TickTock::getDate('now', "d/m/Y");
+		$this->dataAttributes = $this->setDataAttributes();
+
+		return parent::getInput();
+	}
+
+	/**
+	 * Field data attributes.
+	 *
+	 * @since  4.0.0
+	 * @return array    The field input markup.
+	 */
+	protected function setDataAttributes(): array
+	{
+		if ($this->name == 'jform[arrival]') {
+			$value = TickTock::getDate('now', "d/m/Y");
 		}
-		else
-		{
-			$this->value = TickTock::modifyDays(TickTock::getDate(), 7, '+', "d/m/Y");
+		else {
+			$value = TickTock::modifyDays(TickTock::getDate(), 7, '+', "d/m/Y");
 		}
 
-		return '<input type="text" class="' . $this->class . '" name="' . $this->name . '" 
-			id="' . $this->id . '" value="' . $this->value . '" . data-date-format="dd/mm/yyyy" 
-			data-language="en" data-pickTime="false" data-closeButton="true" 
-			data-disableDblClickSelection="true" . >';
+		$attributes                                  = [];
+		$attributes['class']                         = $this->class;
+		$attributes['name']                          = $this->name;
+		$attributes['id']                            = $this->id;
+		$attributes['value']                         = $value;
+		$attributes['data-date-format']              = "dd/mm/yyyy";
+		$attributes['data-language']                 = 'en';
+		$attributes['data-pickTime']                 = false;
+		$attributes['data-closeButton']              = true;
+		$attributes['data-disableDblClickSelection'] = true;
+
+		return $attributes;
 	}
 }

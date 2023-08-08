@@ -27,6 +27,8 @@ use Joomla\Registry\Registry;
 use RuntimeException;
 use stdClass;
 
+use function array_slice;
+use function implode;
 use function substr;
 
 /**
@@ -36,6 +38,8 @@ use function substr;
  */
 class HtmlView extends KrHtmlView\Site
 {
+	/** @var Search Site search */
+	protected Search $Search;
 	/** @var string Category blurb */
 	protected string $category_blurb = '';
 	/** @var int Category ID */
@@ -50,8 +54,6 @@ class HtmlView extends KrHtmlView\Site
 	public Registry $params;
 	/** @var bool True if property search */
 	protected bool $property_search = false;
-	/** @var Search Site search */
-	protected Search $Search;
 
 	/**
 	 * Display the view
@@ -59,7 +61,7 @@ class HtmlView extends KrHtmlView\Site
 	 * @param  null  $tpl  Default template.
 	 *
 	 * @throws Exception
-	 * @since        1.0.0
+	 * @since  1.0.0
 	 * @return void
 	 * @noinspection PhpLoopNeverIteratesInspection
 	 */
@@ -139,12 +141,13 @@ class HtmlView extends KrHtmlView\Site
 				$searchData->ordercustom = $ordercustom;
 
 				$searchSession->setData($searchData);
-
 				$searchData = $this->setInput($searchData, $searchSession);
 
 				$today = TickTock::getDate();
 				if (!empty($searchData->arrival) && !empty($searchData->departure)) {
-					if ($searchData->arrival < $today || $searchData->departure < $today || $searchData->departure <= $searchData->arrival) {
+					if ($searchData->arrival < $today ||
+						$searchData->departure < $today ||
+						$searchData->departure <= $searchData->arrival) {
 						$searchData = $searchSession->resetData();
 						SiteHelper::redirectHome();
 					}
@@ -158,11 +161,17 @@ class HtmlView extends KrHtmlView\Site
 				$this->Search->doBaseSearch();
 			}
 
-			$this->header           = $this->Search->data->region_name . ', ' . KrMethods::getCfg('sitename');
-			$this->meta_title       = KrMethods::sprintf('COM_KNOWRES_SEO_TITLE_PROPERTIES',
-				$this->Search->data->region_name, $this->Search->data->country_name);
-			$this->meta_description = KrMethods::sprintf('COM_KNOWRES_SEO_DSC_PROPERTIES',
-				$this->Search->data->region_name, $this->Search->data->country_name);
+			$names = array_values($this->Search->data->region_name);
+			$rn    = implode(', ', array_slice($names, 0, -1)) . ' & ' . end($names);
+
+			$this->header           =
+				KrMethods::sprintf('COM_KNOWRES_SEARCH_HEADER', $rn, count($this->Search->data->baseIds));
+			$this->meta_title       =
+				KrMethods::sprintf('COM_KNOWRES_SEO_TITLE_PROPERTIES', $this->Search->data->region_name,
+					$this->Search->data->country_name);
+			$this->meta_description =
+				KrMethods::sprintf('COM_KNOWRES_SEO_DSC_PROPERTIES', $this->Search->data->region_name,
+					$this->Search->data->country_name);
 
 			if ($this->params->get('search_grid', 0)) {
 				$this->layouts['grid'] = true;
@@ -208,6 +217,37 @@ class HtmlView extends KrHtmlView\Site
 	}
 
 	/**
+	 * Set the canonical URL for the search.
+	 *
+	 * @throws Exception
+	 * @since  1.0.0
+	 */
+	protected function setCanonical(): void
+	{
+		if (count($this->Search->data->region_id) == 1) {
+			$Itemid =
+				SiteHelper::getItemId('com_knowres', 'properties', ['region_id' => $this->Search->data->region_id[0]]);
+			$link   =
+				'index.php?option=com_knowres&view=properties&region_id=' .
+				$this->Search->data->region_id[0] .
+				'&Itemid=' .
+				$Itemid;
+		}
+		else {
+			$default = KrMethods::getParams('default_region');
+			$Itemid  = SiteHelper::getItemId('com_knowres', 'properties', ['region_id' => $default]);
+			$link    = 'index.php?option=com_knowres&view=properties&region_id=' . $default . '&Itemid=' . $Itemid;
+		}
+
+		if ($this->category_id) {
+			$link .= '&category_id=' . $this->category_id;
+		}
+
+		$canonical_url = substr(KrMethods::route($link, false), 1);
+		$this->document->addHeadLink(KrMethods::getRoot() . $canonical_url, 'canonical');
+	}
+
+	/**
 	 * Get request search data and store in session
 	 *
 	 * @param  stdClass          $searchData     Session search data
@@ -220,7 +260,7 @@ class HtmlView extends KrHtmlView\Site
 	protected function setInput(stdClass $searchData, KrSession\Search $searchSession): stdClass
 	{
 		try {
-			$searchData->region_id = KrMethods::inputInt('region_id', $this->params->get('default_region'), 'get');
+			$searchData->region_id = KrMethods::inputArray('region_id', [$this->params->get('default_region')], 'get');
 			$searchData->area      = KrMethods::inputString('area', '', 'get');
 			$searchData->town      = KrMethods::inputString('town', '', 'get');
 			$searchData->arrival   = KrMethods::inputString('arrival', '', 'get');
@@ -254,26 +294,12 @@ class HtmlView extends KrHtmlView\Site
 	protected function setPathway(): void
 	{
 		$pathway = Factory::getApplication()->getPathway();
-		$pathway = self::propertiesPathway($pathway, $this->Search->data->region_id, $this->Search->data->region_name);
-		$pathway->addItem(KrMethods::plain('COM_KNOWRES_SEARCH_RESULTS'));
-	}
+		if (count($this->Search->data->region_id) == 1) {
+			foreach ($this->Search->data->region_id as $k => $v) {
+				$pathway = self::propertiesPathway($pathway, $k, $v);
+			}
 
-	/**
-	 * Set the canonical URL for the search.
-	 *
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
-	protected function setCanonical(): void
-	{
-		$Itemid = SiteHelper::getItemId('com_knowres', 'properties', ['region_id' => $this->Search->data->region_id]);
-		$link   = 'index.php?option=com_knowres&view=properties&region_id=' . $this->Search->data->region_id . '&Itemid=' . $Itemid;
-
-		if ($this->category_id) {
-			$link .= '&category_id=' . $this->category_id;
+			$pathway->addItem(KrMethods::plain('COM_KNOWRES_SEARCH_RESULTS'));
 		}
-
-		$canonical_url = substr(KrMethods::route($link, false), 1);
-		$this->document->addHeadLink(KrMethods::getRoot() . $canonical_url, 'canonical');
 	}
 }

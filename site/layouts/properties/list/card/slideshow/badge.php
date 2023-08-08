@@ -8,10 +8,14 @@
  */
 
 defined('_JEXEC') or die;
+
+use HighlandVision\KR\Framework\KrMethods;
 ?>
 
-<div class="badge">
+<div class="topcorner">
 	<div class="triangle">
-		<div class="text notsobig">NEW</div>
+		<div class="text">
+			<?php echo KrMethods::plain('COM_KNOWRES_NEW'); ?>
+		</div>
 	</div>
 </div>

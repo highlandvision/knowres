@@ -15,7 +15,6 @@ use Carbon\Carbon;
 use Exception;
 use HighlandVision\KR\ExceptionHandling;
 use HighlandVision\KR\Framework\KrFactory;
-use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\SiteHelper;
 use Joomla\CMS\Dispatcher\AbstractModuleDispatcher;
 use Knowres\Module\Search\Site\Helper\SearchHelper;
@@ -38,10 +37,9 @@ class Dispatcher extends AbstractModuleDispatcher
 	 * @throws Exception
 	 * @since  4.0.0
 	 */
-	public function dispatch()
+	public function dispatch(): void
 	{
-		if (is_dir(JPATH_ROOT . '/media/com_knowres/vendor'))
-		{
+		if (is_dir(JPATH_ROOT . '/media/com_knowres/vendor')) {
 			require_once(JPATH_ROOT . '/media/com_knowres/vendor/autoload.php');
 		}
 
@@ -60,13 +58,16 @@ class Dispatcher extends AbstractModuleDispatcher
 	 */
 	protected function getLayoutData(): array
 	{
-		$data             = parent::getLayoutData();
-		$moduleParams     = $data['params'];
-		$data['regions']  = SearchHelper::getRegions((bool) $moduleParams->get('show_regions', 0));
-		$data['defaults'] = SearchHelper::getDefaultValues();
-		$data['max_days'] = 730;
-		$data['Itemid']   = SiteHelper::getItemId('com_knowres', 'properties');
-		$data['form']     = KrFactory::getAdhocForm('mod_knowres_search', 'mod_knowres_search.xml', 'module', null);
+		$data = parent::getLayoutData();
+		if ($data && !empty($data['params'])) {
+			$moduleParams     = $data['params'];
+			$show_regions     = (int)$moduleParams->get('show_regions', 0);
+			$data['regions']  = SearchHelper::getRegions($show_regions);
+			$data['initial']  = SearchHelper::getDefaultValues();
+			$data['max_days'] = 730;
+			$data['Itemid']   = SiteHelper::getItemId('com_knowres', 'properties');
+			$data['form']     = KrFactory::getAdhocForm('mod_knowres_search', 'mod_knowres_search.xml', 'module', null);
+		}
 
 		return $data;
 	}

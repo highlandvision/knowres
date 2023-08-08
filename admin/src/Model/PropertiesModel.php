@@ -484,8 +484,8 @@ class PropertiesModel extends ListModel
 		$subQueryType = $db->getQuery(true);
 		$subQueryType->select('sub.text')
 		             ->from($db->qn('#__knowres_translation', 'sub'))
-		             ->where($db->qn('sub.item') . ' = ' . $db->q($item))
-		             ->where($db->qn('sub.item_id') . ' = ' . $db->qn('a.type_id'))
+		             ->where($db->qn('sub.item') . '=' . $db->q($item))
+		             ->where($db->qn('sub.item_id') . '=' . $db->qn('a.type_id'))
 		             ->order('(CASE WHEN ' . $db->qn('sub.language') . ' = ' . $db->q($lang) . ' THEN 1 ELSE 2 END )')
 		             ->setLimit(1);
 

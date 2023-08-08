@@ -12,8 +12,9 @@ namespace HighlandVision\Component\Knowres\Site\Field;
 defined('_JEXEC') or die;
 
 use Exception;
-use HighlandVision\KR\Framework\KrMethods;
-use HighlandVision\KR\Session as KrSession;
+use Highlandvision\KR\Framework\KrMethods;
+use Highlandvision\KR\Session as KnowresSession;
+use Joomla\CMS\Factory;
 use Joomla\CMS\Form\FormField;
 
 /**
@@ -23,6 +24,9 @@ use Joomla\CMS\Form\FormField;
  */
 class MobisearchField extends FormField
 {
+	/** @var string The form field type. */
+	protected $type = 'Mobisearch';
+
 	/**
 	 * Method to get the field input markup.
 	 *
@@ -32,32 +36,31 @@ class MobisearchField extends FormField
 	 */
 	protected function getInput(): string
 	{
-		$this->type = 'mobisearch';
-
 		$html = '<div class="datepicker-wrapper">';
 		if ($this->name == 'arrivaldsp')
 		{
 			$params        = KrMethods::getParams();
-			$searchSession = new KrSession\Search();
+			$searchSession = new KnowresSession\Search();
 			$searchData    = $searchSession->getData();
-			$arrival       = KrMethods::inputString('arrival', $searchData->arrival, 'get');
-			$departure     = KrMethods::inputString('departure', $searchData->departure, 'get');
+			$input         = Factory::getApplication()->input;
+			$arrival       = $input->get('arrival', $searchData->arrival, 'string');
+			$departure     = $input->get('departure', $searchData->departure, 'string');
 			$atext         = KrMethods::plain("MOD_KNOWRES_SEARCH_CHECK_IN");
 			$dtext         = KrMethods::plain("MOD_KNOWRES_SEARCH_CHECK_OUT");
 
-			$html .= '<input type="text" name="' . $this->name . '" id="' . $this->id . '" class="' . $this->class . '" 
-			placeholder="' . KrMethods::plain($this->hint) . '" data-arrival="' . $arrival . '" 
-			data-departure="' . $departure . '" data-days="' . $params->get('search_days') . '" data-maxdays="730" 
-			data-atext="' . $atext . '" data-dtext="' . $dtext . '">';
+			$html .= '<input type="text" name="'.$this->name.'" id="'.$this->id.'" class="'.$this->class.'" 
+			placeholder="'.KrMethods::plain($this->hint).'" data-arrival="'.$arrival.'" 
+			data-departure="'.$departure.'" data-days="'.$params->get('search_days').'" data-maxdays="730" 
+			data-atext="'.$atext.'" data-dtext="'.$dtext.'">';
 		}
 		else
 		{
-			$html .= '<input type="text" name="' . $this->name . '" id="' . $this->id . '" class="' . $this->class . '" 
-				placeholder="' . KrMethods::plain($this->hint) . '">';
+			$html .= '<input type="text" name="'.$this->name.'" id="'.$this->id.'" class="'.$this->class.'" 
+				placeholder="'.KrMethods::plain($this->hint).'">';
 		}
 
-		$html .= '<label for="' . $this->id . '">';
-		$html .= '<i class="fas fa-calendar-alt"></i>';
+		$html .= '<label for="'.$this->id.'">';
+		$html .= '<i class="fas fa-calendar-alt" aria-label="'.KrMethods::plain($this->hint).'"></i>';
 		$html .= '</label>';
 		$html .= '</div>';
 

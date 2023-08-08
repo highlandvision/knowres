@@ -25,7 +25,7 @@ use HighlandVision\KR\Framework\KrMethods;
 	<?php if ($this->favs): ?>
 		<?php echo $this->loadTemplate($this->params->get('default_view', 'list')); ?>
 	<?php else: ?>
-		<?php echo $this->loadTemplate($this->Search->data->view); ?>
+		<?php echo $this->loadTemplate('list'); ?>
 	<?php endif; ?>
 <?php else : ?>
 	<?php echo $this->loadTemplate('sorry'); ?>

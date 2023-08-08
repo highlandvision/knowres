@@ -66,6 +66,12 @@ const livesite = window.location.origin + '/';
 					$modal.open();
 				}
 			});
+		}).on('show.zf.dropdown', '#kr-searchregion-drop', function () {
+			$("#kr-searchregion-drop").css('opacity', '1');
+		}).on('show.zf.dropdown', '#kr-searchguest-drop', function () {
+			$('#kr-searchguest-drop').css('opacity', '1');
+		}).on('hide.zf.dropdown', '#kr-searchregion-drop, #kr-searchguest-drop', function () {
+			$('body').css('opacity', '1');
 		}).on('hide.zf.dropdown', '#kr-quote-form', function () {
 			$('#guests').trigger('change');
 		}).on('open.zf.reveal', '.kr-ajax-modal[data-reveal]', function (e) {
@@ -234,9 +240,8 @@ const livesite = window.location.origin + '/';
 				setSearchData(searchdata, field);
 				$('.has-tip').foundation();
 				$('.dropdown-pane').foundation();
-				if (!large && field === 'order') {
-					$('#sortby').trigger('click');
-				}
+				$('.kr-property .card').foundation();
+				$('#kr-order-close').trigger('click');
 				searchDone = true;
 			}
 		});
@@ -246,22 +251,9 @@ const livesite = window.location.origin + '/';
 		if (response) {
 			$('#kr-properties-data').empty().fadeIn('slow').html(response['items']).foundation();
 			$('.kr-pager').html(response['pagination']);
-
-			if (large === true) {
-				$("#kr-properties-search-off-canvas").html('');
-				$("#kr-properties-filters-off-canvas").html('');
-				$("#kr-properties-sortby-off-canvas").html('');
-				$("#kr-sidebar-search").empty().html(response['search']);
-				$('#kr-properties-filters').empty().html(response['filters']);
-				$('#kr-properties-sortby').empty().html(response['sortby']).addClass('hideme');
-			} else {
-				$('#kr-properties-filters').html('');
-				$('#kr-properties-sortby').html('');
-				$("#kr-sidebar-search").html('');
-				$("#kr-properties-filters-off-canvas").html(response['filters']);
-				$("#kr-properties-sortby-off-canvas").html(response['sortby']);
-				$("#kr-properties-search-off-canvas").html(response['search']);
-			}
+			$("#kr-properties-filters-off-canvas").html(response['filters']);
+			$("#kr-properties-sortby-off-canvas").html(response['sortby']);
+			$("#kr-properties-search-off-canvas").html(response['search']);
 
 			if (response['search'].length && $('#arrivaldsp').length) {
 				$('body').trigger('initajaxsearch');

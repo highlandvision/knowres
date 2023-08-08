@@ -241,14 +241,12 @@ class Translations
 	public function getProperty(int $property_id): string
 	{
 		$property = KrFactory::getAdminModel('property')->getItem($property_id);
-		if (empty($property->id))
-		{
+		if (empty($property->id)) {
 			Logger::logMe('Translations property does not exist for ID ' . $property_id);
 
 			return '';
 		}
-		else
-		{
+		else {
 			return $property->property_name;
 		}
 	}
@@ -291,25 +289,21 @@ class Translations
 	public function updateDefault(string $item, int $item_id, string $field, string $text, bool $remove_cache = true,
 		string $language = '')
 	{
-		if (!$language)
-		{
+		if (!$language) {
 			$language = $this->language;
 		}
 
 		$row = KrFactory::getListModel('translations')->getIdText($item, $item_id, $field, $language);
-		if (!is_null($row) && $row->id && $row->text == $text)
-		{
+		if (!is_null($row) && $row->id && $row->text == $text) {
 			return true;
 		}
 
-		if (is_null($row) && !$text)
-		{
+		if (is_null($row) && !$text) {
 			return true;
 		}
 
 		$data = new stdClass();
-		if (is_null($row))
-		{
+		if (is_null($row)) {
 			$data->id            = 0;
 			$data->item          = $item;
 			$data->item_id       = $item_id;
@@ -328,8 +322,7 @@ class Translations
 			$data->version       = 0;
 			KrFactory::insert('translation', $data);
 		}
-		else
-		{
+		else {
 			$data->id         = $row->id;
 			$data->item       = $item;
 			$data->item_id    = $item_id;
@@ -342,8 +335,7 @@ class Translations
 			KrFactory::update('translation', $data);
 		}
 
-		if ($remove_cache)
-		{
+		if ($remove_cache) {
 			$this->cache->remove($item);
 		}
 	}
@@ -359,15 +351,12 @@ class Translations
 	protected function checkCache(string $item): void
 	{
 		$data = $this->cache->get($item);
-		if ($data === false)
-		{
+		if ($data === false) {
 			$this->setTranslations($item);
 			$this->cache->store(Utility::encodeJson($this->translations[$item]), $item);
 		}
-		else
-		{
-			if (!is_array($data))
-			{
+		else {
+			if (!is_array($data)) {
 				$data = Utility::decodeJson($data, true);
 			}
 
@@ -384,12 +373,10 @@ class Translations
 	 */
 	protected function setLanguage(string $language): void
 	{
-		if (!$language)
-		{
+		if (!$language) {
 			$this->language = KrMethods::getLanguageTag();
 		}
-		else
-		{
+		else {
 			$this->language = $language;
 		}
 	}
@@ -409,35 +396,27 @@ class Translations
 		$string = '';
 		$data   = [];
 
-		if (array_key_exists($item, $this->Translations))
-		{
-			$data = $this->Translations[$item];
+		if (array_key_exists($item, $this->translations)) {
+			$data = $this->translations[$item];
 		}
 
 		$key = $this->language . $item_id . $field;
-		if (array_key_exists($key, $data))
-		{
+		if (array_key_exists($key, $data)) {
 			$string = $data[$key];
 		}
 
-		if (!$string && ($this->language != $this->default_language))
-		{
+		if (!$string && ($this->language != $this->default_language)) {
 			$key = $this->default_language . $item_id . $field;
-			if (array_key_exists($key, $data))
-			{
+			if (array_key_exists($key, $data)) {
 				$string = $data[$key];
 			}
 		}
-		else if (!$string)
-		{
+		else if (!$string) {
 			$languages = KrMethods::getLanguages();
-			foreach ($languages as $l)
-			{
-				if ($l->published && $l->lang_code != $this->language)
-				{
+			foreach ($languages as $l) {
+				if ($l->published && $l->lang_code != $this->language) {
 					$key = $l->lang_code . $item_id . $field;
-					if (array_key_exists($key, $data))
-					{
+					if (array_key_exists($key, $data)) {
 						$string = $data[$key];
 
 						break;
@@ -462,8 +441,7 @@ class Translations
 		$data = [];
 
 		$rows = KrFactory::getListModel('translations')->getByItem($item);
-		foreach ($rows as $row)
-		{
+		foreach ($rows as $row) {
 			$key        = $row->language . $row->item_id . $row->field;
 			$data[$key] = $row->text;
 		}

@@ -12,7 +12,6 @@ namespace HighlandVision\KR\Session;
 defined('_JEXEC') or die;
 
 use Exception;
-use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Session;
 use stdClass;
 
@@ -111,7 +110,7 @@ class Search extends Session
 		$data->category_id    = 0;
 		$data->children       = 0;
 		$data->child_ages     = [];
-		$data->country_name   = '';
+		$data->country_name   = [];
 		$data->currency       = '';
 		$data->departure      = '';
 		$data->direction      = '';
@@ -121,6 +120,7 @@ class Search extends Session
 		$data->filterBook     = [];
 		$data->filterCategory = [];
 		$data->filterFeature  = [];
+		$data->filterPets     = [];
 		$data->filterPrice    = [];
 		$data->filterType     = [];
 		$data->filterTown     = [];
@@ -136,8 +136,9 @@ class Search extends Session
 		$data->ordering       = '';
 		$data->rateNet        = [];
 		$data->rateDiscount   = [];
-		$data->region_id      = KrMethods::getParams()->get('default_region');
-		$data->region_name    = '';
+		$data->rating         = 0;
+		$data->region_id      = [];
+		$data->region_name    = [];
 		$data->start          = 0;
 		$data->town           = '';
 		$data->type_id        = 0;

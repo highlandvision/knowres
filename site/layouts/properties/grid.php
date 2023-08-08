@@ -32,7 +32,7 @@ extract($displayData);
 $Translations = new Translations();
 ?>
 
-<div class="kr-property row small-up-1 medium-up-2 large-up-3">
+<div class="kr-property row small-up-1 medium-up-2 large-up-2">
 	<?php foreach ($items as $item) : ?>
 		<?php $plink = SiteHelper::buildPropertyLink($item->id); ?>
 		<?php $title = 'View ' . $item->property_name; ?>
