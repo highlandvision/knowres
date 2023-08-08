@@ -29,7 +29,7 @@ import {ResponsiveMenu} from '../../../../../../node_modules/foundation-sites/js
 import {Reveal}         from '../../../../../../node_modules/foundation-sites/js/foundation.reveal';
 //import { Slider } from 'foundation.slider';
 //import { SmoothScroll } from 'foundation.smoothScroll';
-//import { Sticky } from 'foundation.sticky';
+import {Sticky}         from '../../../../../../node_modules/foundation-sites/js/foundation.sticky';
 import {Tabs}           from '../../../../../../node_modules/foundation-sites/js/foundation.tabs';
 import {Toggler}        from '../../../../../../node_modules/foundation-sites/js/foundation.toggler';
 import {Tooltip}        from '../../../../../../node_modules/foundation-sites/js/foundation.tooltip';
@@ -77,7 +77,7 @@ Foundation.plugin(ResponsiveMenu, 'ResponsiveMenu');
 Foundation.plugin(Reveal, 'Reveal');
 //Foundation.plugin(Slider, 'Slider');
 //Foundation.plugin(SmoothScroll, 'SmoothScroll');
-//Foundation.plugin(Sticky, 'Sticky');
+Foundation.plugin(Sticky, 'Sticky');
 Foundation.plugin(Tabs, 'Tabs');
 Foundation.plugin(Toggler, 'Toggler');
 Foundation.plugin(Tooltip, 'Tooltip');

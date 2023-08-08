@@ -55,52 +55,44 @@ class PropertiesController extends BaseController
 		$view        = KrMethods::inputString('view', '', 'get');
 		$saved       = SiteHelper::getFavourites();
 
-		if ($property_id)
-		{
-			if (in_array($property_id, $saved))
-			{
-				foreach ($saved as $k => $id)
-				{
-					if ($id == $property_id)
-					{
+		if ($property_id) {
+			if (in_array($property_id, $saved)) {
+				foreach ($saved as $k => $id) {
+					if ($id == $property_id) {
 						unset($saved[$k]);
 					}
 				}
 
-				if ($view !== 'favs')
-				{
+				if ($view !== 'favs') {
 					$action = KrMethods::plain('COM_KNOWRES_FAVORITES_ADD');
 				}
-				else
-				{
+				else {
 					$action = 'hideme';
 				}
 			}
-			else
-			{
+			else {
 				$saved[] = $property_id;
 				$action  = KrMethods::plain('COM_KNOWRES_FAVORITES_REMOVE');
 			}
 
 			$lifetime = 3600 * 24 * 30;
-			if (count($saved))
-			{
+			if (count($saved)) {
 				Factory::getApplication()->input->cookie->set('krsaved', implode('xx', $saved), time() + $lifetime,
-					Factory::getApplication()->get('cookie_path', '/'), Factory::getApplication()->get('cookie_domain'),
-					Factory::getApplication()->isSSLConnection());
+				                                              Factory::getApplication()->get('cookie_path', '/'),
+				                                              Factory::getApplication()->get('cookie_domain'),
+				                                              Factory::getApplication()->isSSLConnection());
 			}
-			else
-			{
+			else {
 				Factory::getApplication()->input->cookie->set('krsaved', '', time() - $lifetime,
-					Factory::getApplication()->get('cookie_path', '/'), Factory::getApplication()->get('cookie_domain'),
-					Factory::getApplication()->isSSLConnection());
+				                                              Factory::getApplication()->get('cookie_path', '/'),
+				                                              Factory::getApplication()->get('cookie_domain'),
+				                                              Factory::getApplication()->isSSLConnection());
 			}
 
 			$wrapper           = [];
 			$wrapper['action'] = $action;
 		}
-		else
-		{
+		else {
 			$wrapper           = [];
 			$wrapper['action'] = 'none';
 		}
@@ -121,12 +113,10 @@ class PropertiesController extends BaseController
 	{
 		$pid                 = $this->input->getInt('pid', 0);
 		$display_map_markers = false;
-		if ($pid && (int) KrMethods::getParams()->get('property_map_markers', 0))
-		{
+		if ($pid && (int) KrMethods::getParams()->get('property_map_markers', 0)) {
 			$display_map_markers = true;
 		}
-		else if (!$pid && (int) KrMethods::getParams()->get('search_map_markers', 0))
-		{
+		else if (!$pid && (int) KrMethods::getParams()->get('search_map_markers', 0)) {
 			$display_map_markers = true;
 		}
 
@@ -137,26 +127,20 @@ class PropertiesController extends BaseController
 		$searchSession = new KrSession\Search();
 		$searchData    = $searchSession->getData();
 
-		try
-		{
-			if ($pid)
-			{
+		try {
+			if ($pid) {
 				$item      = KrFactory::getAdminModel('property')->getItem($pid);
 				$region_id = $item->region_id;
 
-				if ((float) $item->lat && (float) $item->lng)
-				{
+				if ((float) $item->lat && (float) $item->lng) {
 					$property_markers[] = $this->setMarker($item, 'solo');
 				}
 			}
-			else
-			{
+			else {
 				$region_id = $searchData->region_id;
 				$items     = KrFactory::getListSiteModel('properties')->mapMarkers($searchData->baseIds);
-				foreach ($items as $item)
-				{
-					if ((float) $item->lat && (float) $item->lng)
-					{
+				foreach ($items as $item) {
+					if ((float) $item->lat && (float) $item->lng) {
 						$property_markers[] = $this->setMarker($item);
 					}
 				}
@@ -164,8 +148,7 @@ class PropertiesController extends BaseController
 				$filter_ids = $this->setFilters($searchData);
 			}
 
-			if ($display_map_markers)
-			{
+			if ($display_map_markers) {
 				$map_markers = $this->setMapMarkers($region_id);
 			}
 
@@ -178,9 +161,7 @@ class PropertiesController extends BaseController
 
 			echo new JsonResponse($wrapper);
 			jexit();
-		}
-		catch (Exception $e)
-		{
+		} catch (Exception $e) {
 			Logger::logMe($e->getMessage(), 'error');
 			echo new JsonResponse(null, KrMethods::plain('COM_KNOWRES_TRY_LATER'), true);
 		}
@@ -218,35 +199,31 @@ class PropertiesController extends BaseController
 
 		$type  = KrMethods::inputString('type', 'prefetch', 'get');
 		$query = KrMethods::inputString('query', '', 'get');
-		if ($type == 'prefetch')
-		{
+		if ($type == 'prefetch') {
 			$regions = KrFactory::getListModel('regions')->getDistinctRegions();
-			foreach ($regions as $r)
-			{
-				$Itemid = SiteHelper::getItemId('com_knowres', 'properties',
-					['region_id' => $r->region_id]);
+			foreach ($regions as $r) {
+				$Itemid = SiteHelper::getItemId('com_knowres', 'properties', ['region_id' => $r->region_id]);
 
-				$link = KrMethods::route('index.php?option=com_knowres&view=properties&Itemid=' . $Itemid
-					. '&region_id=' . $r->region_id, false);
+				$link =
+					KrMethods::route('index.php?option=com_knowres&view=properties&Itemid=' .
+					                 $Itemid .
+					                 '&region_id=' .
+					                 $r->region_id, false);
 
-				$options[] = [
-					'icon'   => 'fas fa-map-marker-alt',
-					'name'   => $r->name,
-					'link'   => $link,
-					'region' => KrMethods::plain('COM_KNOWRES_REGION')
+				$options[] = ['icon'   => 'fas fa-map-marker-alt',
+				              'name'   => $r->name,
+				              'link'   => $link,
+				              'region' => KrMethods::plain('COM_KNOWRES_REGION')
 				];
 			}
 		}
-		else
-		{
+		else {
 			$properties = KrFactory::getListModel('properties')->getAutosearch($query);
-			foreach ($properties as $p)
-			{
-				$options[] = [
-					'icon'   => 'fas fa-home',
-					'name'   => $p->property_name,
-					'link'   => SiteHelper::buildPropertyLink($p->id),
-					'region' => $p->region_name
+			foreach ($properties as $p) {
+				$options[] = ['icon'   => 'fas fa-home',
+				              'name'   => $p->property_name,
+				              'link'   => SiteHelper::buildPropertyLink($p->id),
+				              'region' => $p->region_name
 				];
 			}
 		}
@@ -265,8 +242,7 @@ class PropertiesController extends BaseController
 	 */
 	public function refreshmap(): void
 	{
-		try
-		{
+		try {
 			$searchSession = new KrSession\Search();
 			$searchData    = $searchSession->getData();
 			$filter_ids    = $this->setFilters($searchData);
@@ -275,9 +251,7 @@ class PropertiesController extends BaseController
 			$wrapper['filterIds'] = $filter_ids;
 
 			echo new JsonResponse($wrapper);
-		}
-		catch (Exception)
-		{
+		} catch (Exception) {
 			Logger::logMe($e->getMessage(), 'error');
 			echo new JsonResponse(null, KrMethods::plain('COM_KNOWRES_TRY_LATER'), true);
 		}
@@ -293,7 +267,18 @@ class PropertiesController extends BaseController
 	 */
 	#[NoReturn] public function search(): void
 	{
+		$region_id = KrMethods::inputArray('region_id');
+		if (!count($region_id)) {
+			$region_id = [KrMethods::getParams()->get('default_region')];
+		}
+
+		$a = [];
+		foreach ($region_id as $k => $v) {
+			$a[$k] = $v;
+		}
+
 		$input                  = [];
+		$input['region_id']     = $a;
 		$input['property_area'] = KrMethods::inputString('property_area');
 		$input['town']          = KrMethods::inputString('town');
 		$input['arrival']       = KrMethods::inputString('arrival');
@@ -308,19 +293,18 @@ class PropertiesController extends BaseController
 		$input['children']      = KrMethods::inputInt('children');
 		$input['child_ages']    = KrMethods::inputArray('child_ages');
 
-		foreach ($input as $k => $v)
-		{
-			if (empty($v))
-			{
+		foreach ($input as $k => $v) {
+			if (empty($v)) {
 				unset($input[$k]);
 			}
 		}
 
-		$region_id = KrMethods::inputInt('region_id', KrMethods::getParams()->get('default_region'));
-		$Itemid    = SiteHelper::getItemId('com_knowres', 'properties');
-		$route     = KrMethods::route('index.php?option=com_knowres&view=properties&region_id=' . $region_id
-			. '&Itemid=' . $Itemid . '&' . http_build_query($input), false);
-
+		$Itemid = SiteHelper::getItemId('com_knowres', 'properties');
+		$route  =
+			KrMethods::route('index.php?option=com_knowres&view=properties&Itemid=' .
+			                 $Itemid .
+			                 '&' .
+			                 http_build_query($input, false));
 		KrMethods::redirect($route);
 	}
 
@@ -337,19 +321,15 @@ class PropertiesController extends BaseController
 	protected function setAFilter(mixed $model, ?array $filter, ?string $name): mixed
 	{
 		$tmp = [];
-		if (is_countable($filter))
-		{
-			foreach ($filter as $k => $f)
-			{
-				if ($f[2])
-				{
+		if (is_countable($filter)) {
+			foreach ($filter as $k => $f) {
+				if ($f[2]) {
 					$tmp[] = $k;
 				}
 			}
 		}
 
-		if (is_countable($tmp) && count($tmp))
-		{
+		if (is_countable($tmp) && count($tmp)) {
 			$model->setState($name, $tmp);
 		}
 
@@ -373,15 +353,11 @@ class PropertiesController extends BaseController
 		// compare against the generated search prices and
 		// reduce the base property filter sent to the search
 		$uids = [];
-		foreach ($data->baseIds as $p)
-		{
-			foreach ($data->filterPrice as $k => $f)
-			{
-				if ($f[2])
-				{
+		foreach ($data->baseIds as $p) {
+			foreach ($data->filterPrice as $k => $f) {
+				if ($f[2]) {
 					$price = $data->rateNet[$p];
-					if ((int) $price >= (int) $k && (int) $price <= (int) $f[0])
-					{
+					if ((int) $price >= (int) $k && (int) $price <= (int) $f[0]) {
 						$uids[] = $p;
 					}
 				}
@@ -390,8 +366,7 @@ class PropertiesController extends BaseController
 
 		// If search by price has reduced the base search then
 		// set this as the base filter
-		if (count($uids))
-		{
+		if (count($uids)) {
 			$uids = array_unique($uids);
 			$model->setState('filter.id', $uids);
 		}
@@ -401,6 +376,7 @@ class PropertiesController extends BaseController
 		$model = $this->setAFilter($model, $data->filterBook, 'filter.booking_type');
 		$model = $this->setAFilter($model, $data->filterCategory, 'filter.category');
 		$model = $this->setAFilter($model, $data->filterFeature, 'filter.feature');
+		$model = $this->setAFilter($model, $data->filterPets, 'filter.pets');
 		$model = $this->setAFilter($model, $data->filterType, 'filter.type_id');
 		$model = $this->setAFilter($model, $data->filterTown, 'filter.town');
 
@@ -421,34 +397,28 @@ class PropertiesController extends BaseController
 		$markers = false;
 
 		// set 90 day cache for markers
-		$cache_options = [
-			'cachebase'    => JPATH_ADMINISTRATOR . '/cache',
-			'lifetime'     => 129600,
-			'caching'      => true,
-			'defaultgroup' => 'com_knowres_map'
+		$cache_options = ['cachebase'    => JPATH_ADMINISTRATOR . '/cache',
+		                  'lifetime'     => 129600,
+		                  'caching'      => true,
+		                  'defaultgroup' => 'com_knowres_map'
 		];
 
 		$cache       = KrMethods::getCache($cache_options);
 		$map_markers = $cache->get($region_id);
-		if ($map_markers)
-		{
+		if ($map_markers) {
 			$map_markers = Utility::decodeJson($map_markers);
 			$markers     = true;
 		}
 
-		if (!$markers)
-		{
+		if (!$markers) {
 			$map_markers = [];
 			$markers     = KrFactory::getListModel('mapmarkers')->getAll($region_id);
-			foreach ($markers as $m)
-			{
-				if ($m->lat && $m->lng)
-				{
+			foreach ($markers as $m) {
+				if ($m->lat && $m->lng) {
 					$image   = Media\Images::getMarkerImageLink($m->id);
-					$content = KrMethods::render('properties.mapmarker', [
-						'image' => $image,
-						'name'  => $m->name,
-						'text'  => $m->description
+					$content = KrMethods::render('properties.mapmarker', ['image' => $image,
+					                                                      'name'  => $m->name,
+					                                                      'text'  => $m->description
 					]);
 
 					$tmp            = [];
@@ -462,8 +432,7 @@ class PropertiesController extends BaseController
 				}
 			}
 
-			if (is_countable($map_markers) && count($map_markers))
-			{
+			if (is_countable($map_markers) && count($map_markers)) {
 				$cache->store(Utility::encodeJson($map_markers), $region_id);
 			}
 		}
@@ -491,20 +460,23 @@ class PropertiesController extends BaseController
 		$tmp['id']      = 'kr-property-' . $item->id;
 		$tmp['pid']     = $item->id;
 
-		if ($type === 'solo')
-		{
+		if ($type === 'solo') {
 			$tmp['title'] = $item->property_name;
 			$tmp['html']  = $item->property_name;
 			$tmp['link']  = '';
 		}
-		else
-		{
+		else {
 			$tmp['title'] = KrMethods::plain('COM_KNOWRES_CLICK_FOR_DETAILS');
 
 			$link        = SiteHelper::buildPropertyLink($item->id);
-			$tmp['html'] = '<div style="margin-bottom:10px;font-size:1rem;line-height:1.5;">' . $item->property_name . '</div>
-							<div class="text-center"><a href="' . $link . '" class="button small no-margin-bottom">'
-				. KrMethods::plain('COM_KNOWRES_SEE_DETAILS') . '</a></div>';
+			$tmp['html'] = '<div style="margin-bottom:10px;font-size:1rem;line-height:1.5;">' .
+				$item->property_name .
+				'</div>
+							<div class="text-center"><a href="' .
+				$link .
+				'" class="button small no-margin-bottom">' .
+				KrMethods::plain('COM_KNOWRES_SEE_DETAILS') .
+				'</a></div>';
 			$tmp['link'] = SiteHelper::buildPropertyLink($item->id, null, true);
 		}
 

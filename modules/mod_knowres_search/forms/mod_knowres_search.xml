@@ -4,10 +4,12 @@
 		<field name="region_id"
 			addfieldprefix="HighlandVision\Component\Knowres\Site\Field"
 			aria-label="MOD_KNOWRES_SEARCH_REGIONS_LBL_ARIA"
+			class="select-pane"
 			hiddenLabel="true"
 			type="listgroupedregions"
 			hint="MOD_KNOWRES_SEARCH_REGIONS_LBL"
-			label="MOD_KNOWRES_SEARCH_REGIONS"/>
+			label="MOD_KNOWRES_SEARCH_REGIONS"
+		    placeholder="MOD_KNOWRES_SEARCH_DESTINATION"/>
 		<field name="arrivaldsp"
 			addfieldprefix="HighlandVision\Component\Knowres\Site\Field"
 			class="notranslate datepicker"
@@ -26,30 +28,12 @@
 			label="MOD_KNOWRES_SEARCH_DEPARTURE"/>
 		<field name="guests"
 			addfieldprefix="HighlandVision\Component\Knowres\Site\Field"
+		    class="select-pane"
 			default="2"
 			hiddenLabel="true"
 			type="listpartysize"
 			label="MOD_KNOWRES_SEARCH_GUESTS">
 		</field>
-		<field name="bedrooms"
-			default="0"
-			hiddenLabel="true"
-			type="list"
-			label="MOD_KNOWRES_SEARCH_BEDROOMS_LBL_ARIA">
-			<option value="0">MOD_KNOWRES_SEARCH_BEDROOMS_LABEL</option>
-			<option value="1">MOD_KNOWRES_SEARCH_BEDROOMS_1, 1</option>
-			<option value="2">MOD_KNOWRES_SEARCH_BEDROOMS, 2</option>
-			<option value="3">MOD_KNOWRES_SEARCH_BEDROOMS, 3</option>
-			<option value="4">MOD_KNOWRES_SEARCH_BEDROOMS, 4</option>
-			<option value="5">MOD_KNOWRES_SEARCH_BEDROOMS, 5</option>
-			<option value="6">MOD_KNOWRES_SEARCH_BEDROOMS, 6</option>
-		</field>
-		<field name="type_id"
-			addfieldprefix="HighlandVision\Component\Knowres\Site\Field"
-			default="0"
-			hiddenLabel="true"
-			type="listpropertytypes"
-			label="MOD_KNOWRES_SEARCH_TYPES"/>
 		<field name="flexible"
 			default="0"
 			hiddenLabel="true"

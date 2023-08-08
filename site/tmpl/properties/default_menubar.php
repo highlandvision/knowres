@@ -12,67 +12,54 @@ defined('_JEXEC') or die;
 use HighlandVision\KR\Framework\KrMethods;
 ?>
 
-<div class="row">
+<div class="row kr-searchbar">
 	<div class="small-12 medium-8 columns">
-		<ul class="kr-searchbar menu icons icon-top expanded align-center">
-			<li class="sort show-for-large">
-				<a class="item" id="kr-show-sortby" title="<?php echo KrMethods::plain('COM_KNOWRES_SORT_LIST'); ?>">
-					<i class="fas fa-sort"></i>
-					<span aria-label="<?php echo KrMethods::plain('COM_KNOWRES_SORT_LIST'); ?>">
-						<?php echo KrMethods::plain('COM_KNOWRES_SORT_LIST'); ?>
-					</span>
-				</a>
-			</li>
-			<?php if (isset($this->layouts["thumb"])): ?>
-				<li class="thumb show-for-medium">
-					<a class="item view-type getResponseSearch thumb" data-field="view" data-value="thumb">
-						<i class="fas fa-th"></i>
-						<span aria-label="<?php echo KrMethods::plain('COM_KNOWRES_VIEW_THUMB'); ?>">
-							<?php echo KrMethods::plain('COM_KNOWRES_VIEW_THUMB'); ?>
-						</span>
-					</a>
-				</li>
-			<?php endif; ?>
-			<?php if (isset($this->layouts["grid"])): ?>
-				<li class="grid show-for-medium">
-					<a class="item view-type getResponseSearch grid" data-field="view" data-value="grid">
-						<i class="fas fa-th-large"></i>
-						<span aria-label="<?php echo KrMethods::plain('COM_KNOWRES_VIEW_GRID'); ?>">
-							<?php echo KrMethods::plain('COM_KNOWRES_VIEW_GRID'); ?>
-						</span>
-					</a>
-				</li>
-			<?php endif; ?>
+		<div class="small button-group">
+			<button type="button" class="button left-off-canvas-toggle"
+			        data-toggle="kr-properties-sortby-off-canvas" id="sortby"
+			        title="<?php echo KrMethods::plain('COM_KNOWRES_SORT_LIST'); ?>"
+			        aria-label="<?php echo KrMethods::plain('COM_KNOWRES_SORT_LIST'); ?>">
+				<i class="fas fa-sort"></i>
+				<span>
+					&nbsp;<?php echo KrMethods::plain('COM_KNOWRES_SORT_LIST'); ?>
+				</span>
+			</button>
+
 			<?php if (isset($this->layouts['list'])): ?>
-				<li class="list">
-					<a class="item view-type getResponseSearch list" data-field="view" data-value="list">
-						<i class="fas fa-th-list"></i>
-						<span aria-label="<?php echo KrMethods::plain('COM_KNOWRES_VIEW_LIST'); ?>">
-							<?php echo KrMethods::plain('COM_KNOWRES_VIEW_LIST'); ?>
-						</span>
-					</a>
-				</li>
+				<a class="button getResponseSearch list" data-field="view" data-value="list">
+					<i class="fas fa-th-list"></i>
+					<span class="show-for-medium">
+						<?php echo KrMethods::plain('COM_KNOWRES_VIEW_LIST'); ?>
+					</span>
+				</a>
 			<?php endif; ?>
-			<li class="map">
-				<a class="item map map-trigger" data-zoom="<?php echo $this->Search->data->map_zoom; ?>"
-				   data-zoommax="<?php echo $this->Search->data->map_zoom_max; ?>" data-target="kr-search-map-full"
-				   data-type="cluster" data-forcemap="<?php echo $this->Search->data->map_modal; ?>"
-				   data-maptypeid="<?php echo $this->params->get('property_map_type', ''); ?>">
-					<i class="fas fa-map-marker"></i>
-					<span aria-label="<?php echo KrMethods::plain('COM_KNOWRES_VIEW_MAP'); ?>">
-						<?php echo KrMethods::plain('COM_KNOWRES_VIEW_MAP'); ?>
-					</span>
-				</a>
-			</li>
-			<li class="favs">
-				<a class="item view-type getResponseSearch favs" data-field="favs" data-value="favs">
-					<i class="fas fa-heart"></i>
-					<span aria-label="<?php echo KrMethods::plain('COM_KNOWRES_VIEW_FAVOURITES'); ?>">
-						<?php echo KrMethods::plain('COM_KNOWRES_VIEW_FAVOURITES'); ?>
-					</span>
-				</a>
-			</li>
-		</ul>
+
+			<a class="button map map-trigger" data-zoom="<?php echo $this->Search->data->map_zoom; ?>"
+			   data-zoommax="<?php echo $this->Search->data->map_zoom_max; ?>" data-target="kr-search-map-full"
+			   data-type="cluster" data-forcemap="<?php echo $this->Search->data->map_modal; ?>"
+			   data-maptypeid="<?php echo $this->params->get('property_map_type', ''); ?>">
+				<i class="fas fa-map-marker"></i>
+				<span class="show-for-medium">
+					<?php echo KrMethods::plain('COM_KNOWRES_VIEW_MAP'); ?>
+				</span>
+			</a>
+			<a class="button getResponseSearch favs" data-field="favs" data-value="favs">
+				<i class="fas fa-heart"></i>
+				<span class="show-for-medium">
+					<?php echo KrMethods::plain('COM_KNOWRES_VIEW_FAVOURITES'); ?>
+				</span>
+			</a>
+
+			<button type="button" class="button right-off-canvas-toggle"
+			        data-toggle="kr-properties-filters-off-canvas"
+			        title="<?php echo KrMethods::plain('COM_KNOWRES_FILTER'); ?>"
+			        aria-label="<?php echo KrMethods::plain('COM_KNOWRES_FILTER'); ?>">
+				<i class="fas fa-filter"></i>
+				<span class="show-for-medium">
+					&nbsp;<?php echo KrMethods::plain('COM_KNOWRES_FILTER'); ?>
+				</span>
+			</button>
+		</div>
 	</div>
 	<div class="medium-4 show-for-medium columns">
 		<div class="kr-pager"></div>

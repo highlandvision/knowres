@@ -55,8 +55,7 @@ class RawView extends KrHtmlView
 
 		$searchSession = new KrSession\Search();
 		$searchData    = $searchSession->getData();
-		if (!is_countable($searchData->baseIds) || !count($searchData->baseIds))
-		{
+		if (!is_countable($searchData->baseIds) || !count($searchData->baseIds)) {
 			$this->items      = [];
 			$this->modules    = KrMethods::loadInternal('{loadposition propertiesview}');
 			$this->pagination = $this->get('pagination');
@@ -67,23 +66,20 @@ class RawView extends KrHtmlView
 
 		$this->Search = new Search($searchData);
 
-		$field      = KrMethods::inputString('field', '');
-		$value      = KrMethods::inputString('value', '');
+		$field = KrMethods::inputString('field', '');
+		$value = KrMethods::inputString('value', '');
 
-		if ($value == 'favs' && !count($this->saved))
-		{
+		if ($value == 'favs' && !count($this->saved)) {
 			$this->nofavs = true;
 			$field        = 'view';
 			$value        = $this->params->get('default_view', 'list');
 		}
 
-		if ($value == 'favs' && count($this->saved))
-		{
+		if ($value == 'favs' && count($this->saved)) {
 			// Favourites requested leave everything as is and just get the saved ones
 			$this->favs = true;
 			$fids       = [];
-			foreach ($this->saved as $s)
-			{
+			foreach ($this->saved as $s) {
 				$fids[] = $s;
 			}
 
@@ -93,17 +89,13 @@ class RawView extends KrHtmlView
 			$this->items              = $this->get('items');
 			$this->Search->data->view = 'favs';
 		}
-		else
-		{
-			if ($value == 'initial')
-			{
+		else {
+			if ($value == 'initial') {
 				$value = $this->params->get('default_view', 'list');
 			}
-			else if ($field == 'view' && !$value)
-			{
+			else if ($field == 'view' && !$value) {
 				$value = $this->Search->data->view;
-				if (!$value)
-				{
+				if (!$value) {
 					$value = $this->params->get('default_view', 'list');
 				}
 			}
@@ -116,15 +108,11 @@ class RawView extends KrHtmlView
 			// if price filters exist compare against the generated search prices and
 			// reduce the base property filter sent to the search
 			$uids = [];
-			foreach ($this->Search->data->baseIds as $p)
-			{
-				foreach ($this->Search->data->filterPrice as $k => $f)
-				{
-					if ($f[2])
-					{
+			foreach ($this->Search->data->baseIds as $p) {
+				foreach ($this->Search->data->filterPrice as $k => $f) {
+					if ($f[2]) {
 						$price = $this->Search->data->rateNet[$p];
-						if ((int) $price >= (int) $k && (int) $price <= (int) $f[0])
-						{
+						if ((int) $price >= (int) $k && (int) $price <= (int) $f[0]) {
 							$uids[] = $p;
 						}
 					}
@@ -132,98 +120,86 @@ class RawView extends KrHtmlView
 			}
 
 			// If search by price has reduced the base search then set this as the base filter
-			if (count($uids))
-			{
+			if (count($uids)) {
 				$uids = array_unique($uids);
 				$this->state->set('filter.id', $uids);
 			}
 
 			$filter = [];
-			foreach ($this->Search->data->filterArea as $k => $f)
-			{
-				if ($f[2])
-				{
+			foreach ($this->Search->data->filterArea as $k => $f) {
+				if ($f[2]) {
 					$filter[] = $k;
 				}
 			}
-			if (count($filter))
-			{
+			if (count($filter)) {
 				$this->state->set('filter.area', $filter);
 			}
 
 			$last   = array_key_last($this->Search->data->filterBedrooms);
 			$filter = [];
-			foreach ($this->Search->data->filterBedrooms as $k => $f)
-			{
-				if ($f[2])
-				{
-					if ($k == $last)
-					{
-						for ($i = 0; $i < 10; $i++)
-						{
+			foreach ($this->Search->data->filterBedrooms as $k => $f) {
+				if ($f[2]) {
+					if ($k == $last) {
+						for ($i = 0; $i < 10; $i++) {
 							$filter[] = $k + $i;
 						}
 					}
-					else
-					{
+					else {
 						$filter[] = $k;
 					}
 				}
 			}
-			if (is_countable($filter) && count($filter))
-			{
+			if (is_countable($filter) && count($filter)) {
 				$this->state->set('filter.bedrooms', $filter);
 			}
 
 			$filter = [];
-			foreach ($this->Search->data->filterBook as $k => $f)
-			{
-				if ($f[2])
-				{
+			foreach ($this->Search->data->filterBook as $k => $f) {
+				if ($f[2]) {
 					$filter[] = $k;
 				}
 			}
-			if (count($filter))
-			{
+			if (count($filter)) {
 				$this->state->set('filter.booking_type', $filter);
 			}
 
 			$filter = [];
-			foreach ($this->Search->data->filterCategory as $k => $f)
-			{
-				if ($f[2])
-				{
+			foreach ($this->Search->data->filterCategory as $k => $f) {
+				if ($f[2]) {
 					$filter[] = $k;
 				}
 			}
-			if (count($filter))
-			{
+			if (count($filter)) {
 				$this->state->set('filter.category', $filter);
 			}
 
 			$filter = [];
-			foreach ($this->Search->data->filterFeature as $k => $f)
-			{
-				if ($f[2])
-				{
+			foreach ($this->Search->data->filterFeature as $k => $f) {
+				if ($f[2]) {
 					$filter[] = $k;
 				}
 			}
-			if (count($filter))
-			{
+			if (count($filter)) {
 				$this->state->set('filter.feature', $filter);
 			}
 
 			$filter = [];
-			foreach ($this->Search->data->filterType as $k => $f)
-			{
-				if ($f[2])
-				{
+			foreach ($this->Search->data->filterPets as $k => $f) {
+				if ($f[2]) {
 					$filter[] = $k;
 				}
 			}
-			if (count($filter))
-			{
+			if (count($filter)) {
+				$this->state->set('filter.pets', $filter);
+			}
+
+			$filter = [];
+			foreach ($this->Search->data->filterType as $k => $f) {
+				if ($f[2]) {
+					$filter[] = $k;
+				}
+			}
+			if (count($filter)) {
 				$this->state->set('filter.type_id', $filter);
 			}
 
@@ -239,12 +215,12 @@ class RawView extends KrHtmlView
 			$this->items = $this->get('items');
 			$result      = $this->get('countitems');
 			$this->Search->countAjaxFilters($result[0], $result[1], $result[2], $result[3], $result[4], $result[5],
-				$result[6], $result[7]);
+			                                $result[6], $result[7], $result[8]);
 		}
 
 		$this->modules    = KrMethods::loadInternal('{loadposition propertiesview}');
-		$this->order      = $this->Search->data->order != '' ? $this->Search->data->order
-			: $this->params->get('order_default');
+		$this->order      =
+			$this->Search->data->order != '' ? $this->Search->data->order : $this->params->get('order_default');
 		$this->pagination = $this->get('pagination');
 		$this->Itemid     = SiteHelper::getItemId('com_knowres', 'property', ['id' => 0]);
 

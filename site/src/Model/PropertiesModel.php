@@ -29,7 +29,11 @@ use Joomla\Database\QueryInterface;
 use Joomla\DI\Exception\KeyNotFoundException;
 use RuntimeException;
 
+use function array_map;
+use function count;
 use function date;
+use function implode;
+use function is_array;
 
 /**
  * Site properties model used for search
@@ -98,7 +102,7 @@ class PropertiesModel extends ListModel
 
 		$query->select($this->getState('list.select', 'a.id, a.bedrooms, a.categories, a.type_id, a.town_id,
 				a.property_area, a.property_town, a.property_features, a.booking_type, a.created_at,
-				a.sleeps, a.sleeps_extra, a.sleeps_infant_max, a.sleeps_infant_age, 
+				a.sleeps, a.sleeps_extra, a.sleeps_infant_max, a.sleeps_infant_age, a.pets, r.rating, 
 				SUM(a.sleeps + a.sleeps_extra + a.sleeps_infant_max) AS allsleeps'));
 
 		$query->from($db->qn('#__knowres_property', 'a'))
@@ -106,9 +110,12 @@ class PropertiesModel extends ListModel
 		      ->where($db->qn('a.private') . '=0')
 		      ->where($db->qn('a.approved') . '=1');
 
-		if ((int) $data->region_id)
-		{
-			$query->where($db->qn('a.region_id') . '=' . (int) $data->region_id);
+		$query->join('LEFT',
+			$db->qn('#__knowres_review', 'r') . 'ON' . $db->qn('r.property_id') . '=' . $db->qn('a.id') . ' AND '
+			. $db->qn('r.state') . '=1 AND ' . $db->qn('r.held') . '=0');
+
+		if (count($data->region_id)) {
+			$query->where($db->qn('a.region_id') . ' IN (' . implode(',', array_keys($data->region_id)) . ')');
 		}
 
 		if ((int) $data->byAvailability && !(int) $data->flexible)
@@ -225,11 +232,12 @@ class PropertiesModel extends ListModel
 		$type     = $this->getCountQuery('a.type_id');
 		$town     = $this->getCountQuery('a.property_town');
 		$area     = $this->getCountQuery('a.property_area');
+		$pets     = $this->getCountQuery('a.pets');
 		$price    = $this->getCountQuery();
 		$feature  = $this->getCountFeatureQuery();
 		$category = $this->getCountCategoryQuery();
 
-		return [$bedrooms, $book, $feature, $type, $town, $area, $category, $price];
+		return [$bedrooms, $book, $feature, $type, $town, $area, $pets, $category, $price];
 	}
 
 	/**
@@ -318,33 +326,34 @@ class PropertiesModel extends ListModel
 		return $db->loadObjectList();
 	}
 
-	/**
-	 * Get max values for guests and bedrooms per region
-	 *
-	 * @param  int  $region_id  The property region for the select
-	 *
-	 * @throws RuntimeException
-	 * @throws InvalidArgumentException
-	 * @return mixed
-	 */
-	public function getMaxBedsSleeps(int $region_id): mixed
-	{
-		$db    = KrFactory::getDatabase();
-		$query = $db->getQuery(true);
-
-		$query->select('MAX(' . $db->qn('a.bedrooms') . ')  as ' . $db->qn('bedrooms'))
-		      ->select('MAX(' . $db->qn('a.sleeps') . '+' . $db->qn('a.sleeps_extra') . ') as ' . $db->qn('guests'))
-		      ->from($db->qn('#__knowres_property', 'a'))
-		      ->where($db->qn('a.state') . '=1')
-		      ->where($db->qn('a.approved') . '=1')
-		      ->where($db->qn('a.private') . '=0')
-		      ->where($db->qn('a.region_id') . '=' . $region_id)
-		      ->setLimit(1);
-
-		$db->setQuery($query);
-
-		return $db->loadObject();
-	}
+	//TODO 4.3 delete if no issues
+//	/**
+//	 * Get max values for guests and bedrooms per region
+//	 *
+//	 * @param  int  $region_id  The property region for the select
+//	 *
+//	 * @throws RuntimeException
+//	 * @throws InvalidArgumentException
+//	 * @return mixed
+//	 */
+//	public function getMaxBedsSleeps(int $region_id): mixed
+//	{
+//		$db    = KrFactory::getDatabase();
+//		$query = $db->getQuery(true);
+//
+//		$query->select('MAX(' . $db->qn('a.bedrooms') . ')  as ' . $db->qn('bedrooms'))
+//		      ->select('MAX(' . $db->qn('a.sleeps') . '+' . $db->qn('a.sleeps_extra') . ') as ' . $db->qn('guests'))
+//		      ->from($db->qn('#__knowres_property', 'a'))
+//		      ->where($db->qn('a.state') . '=1')
+//		      ->where($db->qn('a.approved') . '=1')
+//		      ->where($db->qn('a.private') . '=0')
+//		      ->where($db->qn('a.region_id') . '=' . $region_id)
+//		      ->setLimit(1);
+//
+//		$db->setQuery($query);
+//
+//		return $db->loadObject();
+//	}
 
 	/**
 	 * Get the minimum and maximum rate for one or more properties
@@ -548,6 +557,7 @@ class PropertiesModel extends ListModel
 		$query = self::intFilter($db, $query, 'a.bedrooms', $this->state->get('filter.bedrooms'));
 		$query = self::intFilter($db, $query, 'a.booking_type', $this->state->get('filter.booking_type'));
 		$query = self::intFilter($db, $query, 'a.type_id', $this->state->get('filter.type_id'));
+		$query = self::intFilter($db, $query, 'a.pets', $this->state->get('filter.pets'));
 		$query = self::stringFilter($db, $query, 'a.property_area', $this->state->get('filter.area'));
 		$query = self::jsonFindInSet($db, $query, $this->state->get('filter.feature'), 'property_features');
 
@@ -813,7 +823,7 @@ class PropertiesModel extends ListModel
 		      ->select('(' . self::transSQ($db, 'region', 'a.region_id') . ') AS ' . $db->q('region_name'))
 		      ->select('(' . self::transSQ($db, 'type', 'a.type_id') . ') AS ' . $db->q('type_name'));
 
-		$query->select('IFNULL( ROUND(AVG(r.rating),0), 0) AS avgrating');
+		$query->select('IFNULL( ROUND(AVG(r.rating),1), 0) AS avgrating');
 		$query->select('COUNT(DISTINCT r.id) as numreviews');
 		$query->join('LEFT',
 			$db->qn('#__knowres_review', 'r') . 'ON' . $db->qn('r.property_id') . '=' . $db->qn('a.id') . ' AND '
@@ -913,6 +923,8 @@ class PropertiesModel extends ListModel
 			$this->getUserStateFromRequest($this->context . '.filter.category', 'filter_category', '', 'string'));
 		$this->setState('filter.feature',
 			$this->getUserStateFromRequest($this->context . '.filter.feature', 'filter_feature', '', 'string'));
+		$this->setState('filter.pets',
+		                $this->getUserStateFromRequest($this->context . '.filter.pets', 'filter_pets', '', 'string'));
 		$this->setState('filter.region_id',
 			$this->getUserStateFromRequest($this->context . '.filter.region_id', 'filter_region_id', '', 'string'));
 		$this->setState('filter.type_id',

@@ -27,7 +27,7 @@ use function array_merge;
  */
 class ListpropertiesField extends ListField
 {
-	/** @var string $type The form field type. */
+	/** @var string The form field type. */
 	protected $type = 'Listproperties';
 
 	/**

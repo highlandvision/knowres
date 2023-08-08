@@ -90,7 +90,7 @@ class Site extends KrHtmlView
 	 * Build properties / property pathway
 	 *
 	 * @param  Pathway  $pathway      Current pathway
-	 * @param  ?int     $region_id    ID of seach region
+	 * @param  ?int     $region_id    ID of search region
 	 * @param  ?string  $region_name  Name of seach region
 	 * @param  int      $Itemid       Memu item id for search region page for multi region sites
 	 *

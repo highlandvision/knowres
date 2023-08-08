@@ -16,7 +16,6 @@ use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\SiteHelper;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Translations;
-use HighlandVision\KR\Utility;
 
 extract($displayData);
 /**
@@ -31,88 +30,103 @@ extract($displayData);
  * @var bool   $byAvailability Search by availability.
  * @var array  $net            Net rates.
  * @var array  $discount       Discount value.
+ * @var array  $rating         Review value.
  */
 
 $Translations = new Translations();
 $weekly       = KrFactory::getListModel('propertysettings')->getOneSetting('tariffChargesStoredWeeklyYesNo');
 $new          = $params->get('search_new', 0);
-if ($new)
-{
+if ($new) {
 	$created = TickTock::modifyMonths('now', $new, '-');
 }
 ?>
-
+<br><br>
 <div class="kr-property">
-	<?php foreach ($items as $item) : ?>
-		<?php $plink = SiteHelper::buildPropertyLink($item->id); ?>
-		<?php $id = 'kr-property-' . $item->id; ?>
-
-		<div id="<?php echo $id; ?>" class="<?php echo $view; ?>">
-			<div class="row">
-				<div class="small-12 medium-6 columns slider">
-					<?php if ($item->imagefilename) : ?>
-						<div class="image-wrapper">
-							<?php echo KrMethods::render('properties.slideshow', ['item'         => $item,
-							                                                      'params'       => $params,
-							                                                      'plink'        => $plink,
-							                                                      'Translations' => $Translations]); ?>
-							<?php if ($favicon): ?>
-								<?php echo KrMethods::render('properties.favicon', ['item'  => $item,
-								                                                    'saved' => $saved,
-								                                                    'view'  => $view]); ?>
-							<?php endif; ?>
-							<?php if ($new && $item->created_at >= $created): ?>
-								<?php echo KrMethods::render('properties.badge'); ?>
-							<?php endif; ?>
-						</div>
-					<?php endif; ?>
-				</div>
-
-				<div class="small-12 medium-6 columns">
-					<div class="top-section">
-						<a href="<?php echo $plink; ?>" title="<?php echo $item->property_name; ?>">
-							<h2 class="h3">
-								<?php echo $item->property_name; ?>
-							</h2>
-						</a>
-						<p class="color-dark">
-							<?php echo $item->property_area . ', ' . $item->region_name; ?>
-							<br>
-							<?php echo KrMethods::plain('COM_KNOWRES_SLEEPS'); ?>
-							<?php echo $item->sleeps; ?>
-							<?php if ($item->sleeps_extra): ?>
-								+ <?php echo $item->sleeps_extra; ?>
-							<?php endif; ?>
-							<?php echo ' / '; ?>
-							<?php echo KrMethods::plain('COM_KNOWRES_BEDROOMS'); ?>
-							<?php echo $item->bedrooms; ?>
-							<?php echo ' / '; ?>
-							<?php echo KrMethods::plain('COM_KNOWRES_BATHROOMS'); ?>
-							<?php echo $item->bathrooms; ?>
-						</p>
-
-						<h3 class="h4 tagline hide-for-medium-only">
-							<?php echo $Translations->getText('property', $item->id, 'p10'); ?>
-						</h3>
-
-						<p class="property-description">
-							<?php echo Utility::cutString($Translations->getText('property', $item->id, 'p1'), 150); ?>
-						</p>
-						<div class="kr-relative-pricing">
-							<?php echo KrMethods::render('properties.pricedisplay',
-								['item'           => $item,
-								 'currency'       => $currency,
-								 'byAvailability' => $byAvailability,
-								 'net'            => $net[$item->id] ?? 0,
-								 'discount'       => $discount[$item->id] ?? 0,
-								 'weekly'         => $weekly[$item->id] ?? $weekly[0],
-								 'plink'          => $plink
-								]);
-							?>
+	<div class="row">
+		<?php foreach ($items as $item) : ?>
+			<div class="small-12 medium-6 columns slider">
+				<?php $plink = SiteHelper::buildPropertyLink($item->id); ?>
+				<?php $id = 'kr-property-' . $item->id; ?>
+				<div id="<?php echo $id; ?>" class="<?php echo $view; ?>">
+					<div class="card">
+						<?php if ($item->imagefilename) : ?>
+							<div class="slideshow">
+								<?php echo KrMethods::render('properties.slideshow', ['item'         => $item,
+								                                                      'params'       => $params,
+								                                                      'plink'        => $plink,
+								                                                      'Translations' => $Translations
+								]); ?>
+								<?php if ($favicon): ?>
+									<?php echo KrMethods::render('properties.favicon', ['item'  => $item,
+									                                                    'saved' => $saved,
+									                                                    'view'  => $view
+									]); ?>
+								<?php endif; ?>
+								<?php if ($new && $item->created_at >= $created): ?>
+									<?php echo KrMethods::render('properties.badge'); ?>
+								<?php endif; ?>
+								<div class="pricing">
+									<?php echo KrMethods::render('properties.pricing',
+									                             ['item'           => $item,
+									                              'currency'       => $currency,
+									                              'byAvailability' => $byAvailability,
+									                              'net'            => $net[$item->id] ?? 0,
+									                              'discount'       => $discount[$item->id] ?? 0,
+									                              'weekly'         => $weekly[$item->id] ?? $weekly[0],
+									                              'plink'          => $plink
+									                             ]);
+									?>
+								</div>
+							</div>
+						<?php endif; ?>
+						<div class="card-section">
+							<a href="<?php echo $plink; ?>" style="cursor:pointer" title="<?php echo $item->property_name; ?>">
+								<div class="row">
+									<div class="medium-10 columns">
+										<h2 class="h4">
+											<?php echo $item->property_name; ?>
+										</h2>
+										<div class="info">
+											<div class="location">
+												<?php echo Translations::getCountryName($item->country_id) .  ' / ' .
+													$item->region_name . ' / ' .
+													Translations::getTownName($item->town_id) . ' / ' .
+													$item->property_area; ?>
+											</div>
+											<div class="size">
+												<?php echo KrMethods::plain('COM_KNOWRES_SLEEPS'); ?>
+												<?php echo $item->sleeps; ?>
+												<?php if ($item->sleeps_extra): ?>
+													+ <?php echo $item->sleeps_extra; ?>
+												<?php endif; ?>
+												<?php echo ' / '; ?>
+												<?php echo KrMethods::plain('COM_KNOWRES_BEDROOMS'); ?>
+												<?php echo $item->bedrooms; ?>
+												<?php echo ' / '; ?>
+												<?php echo KrMethods::plain('COM_KNOWRES_BATHROOMS'); ?>
+												<?php echo $item->bathrooms; ?>
+												<?php echo ' / '; ?>
+												<?php echo KrMethods::plain('COM_KNOWRES_PETS'); ?>
+												<?php echo $item->pets; ?>
+											</div>
+										</div>
+									</div>
+									<div class="medium-2 columns">
+										<?php if ($item->avgrating > 0): ?>
+											<div class="rating">
+												<div>
+													<p><?php echo $item->avgrating; ?>&nbsp
+														<i class="fas fa-star"></i></p>
+												</div>
+											</div>
+										<?php endif; ?>
+									</div>
+								</div>
+							</a>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	<?php endforeach; ?>
+		<?php endforeach; ?>
+	</div>
 </div>

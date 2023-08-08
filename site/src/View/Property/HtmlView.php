@@ -180,7 +180,7 @@ class HtmlView extends KrHtmlView\Site
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected function prepareDocument()
+	protected function prepareDocument(): void
 	{
 		$this->prepareDefaultDocument($this->meta_title, $this->meta_description);
 		$this->setMyPathway($this->item->region_id, $this->item->region_name);
@@ -192,7 +192,7 @@ class HtmlView extends KrHtmlView\Site
 	 * @throws Exception
 	 * @since  4.0.0
 	 */
-	protected function setReviewData()
+	protected function setReviewData(): void
 	{
 		$this->list_limit = $this->params->get('list_limit', 10);
 		$this->ratings    = new stdClass();
@@ -224,7 +224,7 @@ class HtmlView extends KrHtmlView\Site
 	 * @throws Exception
 	 * @since  4.0.0
 	 */
-	protected function setDisplayData()
+	protected function setDisplayData(): void
 	{
 		$fields = KrFactory::getListModel('propertyfields')->getAllPropertyFields();
 		if (is_countable($this->item->property_alternatives) && count($this->item->property_alternatives))
@@ -280,7 +280,7 @@ class HtmlView extends KrHtmlView\Site
 	 * @throws Exception
 	 * @since 1.0.0
 	 */
-	protected function quoteData()
+	protected function quoteData(): void
 	{
 		$this->form = KrFactory::getAdhocForm('quote', 'quote.xml', 'site', null);
 
@@ -342,7 +342,7 @@ class HtmlView extends KrHtmlView\Site
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	protected function redirectToSearch()
+	protected function redirectToSearch(): void
 	{
 		$Itemid = SiteHelper::getItemId('com_knowres', 'properties', [
 			'layout'    => 'search',
@@ -368,7 +368,7 @@ class HtmlView extends KrHtmlView\Site
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected function setMyPathway(int $region_id, string $region_name)
+	protected function setMyPathway(int $region_id, string $region_name): void
 	{
 		$pathway = Factory::getApplication()->getPathway();
 		$pathway->setPathway([]);

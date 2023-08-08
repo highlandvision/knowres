@@ -20,5 +20,6 @@ echo KrMethods::render('properties.list', ['items'          => $this->items,
                                            'view'           => $this->Search->data->view,
                                            'byAvailability' => $this->Search->data->byAvailability,
                                            'net'            => $this->Search->data->rateNet,
-                                           'discount'       => $this->Search->data->rateDiscount
+                                           'discount'       => $this->Search->data->rateDiscount,
+                                           'rating'         => $this->Search->data->rating
 ]);

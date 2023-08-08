@@ -139,7 +139,6 @@ class HtmlView extends KrHtmlView\Site
 				$searchData->ordercustom = $ordercustom;
 
 				$searchSession->setData($searchData);
-
 				$searchData = $this->setInput($searchData, $searchSession);
 
 				$today = TickTock::getDate();
@@ -220,7 +219,7 @@ class HtmlView extends KrHtmlView\Site
 	protected function setInput(stdClass $searchData, KrSession\Search $searchSession): stdClass
 	{
 		try {
-			$searchData->region_id = KrMethods::inputInt('region_id', $this->params->get('default_region'), 'get');
+			$searchData->region_id = KrMethods::inputArray('region_id', [$this->params->get('default_region')], 'get');
 			$searchData->area      = KrMethods::inputString('area', '', 'get');
 			$searchData->town      = KrMethods::inputString('town', '', 'get');
 			$searchData->arrival   = KrMethods::inputString('arrival', '', 'get');
@@ -254,8 +253,13 @@ class HtmlView extends KrHtmlView\Site
 	protected function setPathway(): void
 	{
 		$pathway = Factory::getApplication()->getPathway();
-		$pathway = self::propertiesPathway($pathway, $this->Search->data->region_id, $this->Search->data->region_name);
-		$pathway->addItem(KrMethods::plain('COM_KNOWRES_SEARCH_RESULTS'));
+		if (count($this->Search->data->region_id) == 1) {
+			foreach($this->Search->data->region_id as $k => $v) {
+				$pathway = self::propertiesPathway($pathway, $k, $v);
+			}
+
+			$pathway->addItem(KrMethods::plain('COM_KNOWRES_SEARCH_RESULTS'));
+		}
 	}
 
 	/**
@@ -266,8 +270,16 @@ class HtmlView extends KrHtmlView\Site
 	 */
 	protected function setCanonical(): void
 	{
-		$Itemid = SiteHelper::getItemId('com_knowres', 'properties', ['region_id' => $this->Search->data->region_id]);
-		$link   = 'index.php?option=com_knowres&view=properties&region_id=' . $this->Search->data->region_id . '&Itemid=' . $Itemid;
+		if (count($this->Search->data->region_id) == 1) {
+			$Itemid = SiteHelper::getItemId('com_knowres', 'properties',
+				['region_id' => $this->Search->data->region_id[0]]);
+			$link   = 'index.php?option=com_knowres&view=properties&region_id=' . $this->Search->data->region_id[0] . '&Itemid=' . $Itemid;
+		}
+		else {
+			$default = KrMethods::getParams('default_region');
+			$Itemid  = SiteHelper::getItemId('com_knowres', 'properties', ['region_id' => $default]);
+			$link    = 'index.php?option=com_knowres&view=properties&region_id=' . $default . '&Itemid=' . $Itemid;
+		}
 
 		if ($this->category_id) {
 			$link .= '&category_id=' . $this->category_id;
