@@ -18,11 +18,11 @@ $width  = $this->params->get('max_slideshow_width');
 $height = $this->params->get('max_slideshow_height');
 ?>
 
-<div class="kr-infowindow-slideshow">
+<div class="kr-infowindow-slideshow kr-slick">
 	<?php foreach ($this->images as $image): ?>
 		<div>
 			<?php echo HTMLHelper::_('image', $path . $image->filename, $image->alt_text,
-				array('width' => $width, 'height' => $height)); ?>
+				['width' => $width, 'height' => $height]); ?>
 		</div>
 	<?php endforeach; ?>
 </div>

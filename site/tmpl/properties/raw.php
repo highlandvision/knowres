@@ -12,23 +12,25 @@ use HighlandVision\KR\Utility;
 defined('_JEXEC') or die;
 
 $pagination = $this->pagination->getPagesLinks(true);
-if (!$pagination)
-{
+if (!$pagination) {
 	$pagination = '&nbsp;';
 }
 
 $data = [];
 
-if (count($this->items))
-{
-	$data['view']       = $this->Search->data->view;
-	$data['items']      = $this->loadTemplate('items');
+if (count($this->items)) {
+	$data['view'] = $this->Search->data->view;
+	if ($this->Search->data->layout) {
+		$data['items'] = $this->loadTemplate('browse');
+	}
+	else {
+		$data['items'] = $this->loadTemplate('items');
+	}
 	$data['filters']    = $this->favs ? '' : $this->loadTemplate('filters');
 	$data['sortby']     = $this->loadTemplate('sortby');
 	$data['pagination'] = $pagination;
 }
-else
-{
+else {
 	$data['items']   = $this->loadTemplate('sorry');
 	$data['sortby']  = '';
 	$data['filters'] = '';

@@ -123,9 +123,12 @@ class Search extends Session
 		$data->filterPets     = [];
 		$data->filterPrice    = [];
 		$data->filterType     = [];
+		$data->filterCountry  = [];
+		$data->filterRegion   = [];
 		$data->filterTown     = [];
 		$data->filterArea     = [];
 		$data->guests         = 2;
+		$data->layout         = '';
 		$data->limitstart     = 0;
 		$data->map_modal      = 0;
 		$data->map_zoom       = 20;

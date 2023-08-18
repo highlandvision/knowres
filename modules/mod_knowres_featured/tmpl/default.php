@@ -38,7 +38,7 @@ $Currency = new Currency();
 	</div>
 </div>
 
-<div class="row kr-featured" data-slick='{"slidesToShow": <?php echo $slidestoshow; ?>}'>
+<div class="row kr-featured kr-slick" data-slick='{"slidesToShow": <?php echo $slidestoshow; ?>}'>
 	<?php foreach ($data as $id => $item): ?>
 		<?php require ModuleHelper::getLayoutPath('mod_knowres_featured',
 			$params->get('layout', 'default') . '_item'); ?>

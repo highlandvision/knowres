@@ -16,7 +16,7 @@ use HighlandVision\KR\Framework\KrMethods;
 	<a href="<?php echo KrMethods::route('index.php?Itemid=' . $params->get('url')); ?>" title="<?php echo ''; ?>">
 <?php endif; ?>
 
-	<div class="kr-carousel"
+	<div class="kr-carousel kr-slick"
 	     data-slick='{"autoplaySpeed": <?php echo $params->get('autoPlaySpeed',
 		     '5000'); ?>,"speed": <?php echo $params->get('speed', '50'); ?>}'>
 

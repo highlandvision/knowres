@@ -14,7 +14,6 @@ defined('_JEXEC') or die;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\SiteHelper;
-use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Translations;
 
 extract($displayData);
@@ -38,8 +37,6 @@ extract($displayData);
 $Translations = new Translations();
 
 $weekly  = KrFactory::getListModel('propertysettings')->getOneSetting('tariffChargesStoredWeeklyYesNo');
-$new     = $params->get('search_new', 0);
-$created = $new ? TickTock::modifyMonths('now', $new, '-') : false;
 ?>
 
 <div class="row" data-equalizer data-equalize-by-row="true">
@@ -47,17 +44,17 @@ $created = $new ? TickTock::modifyMonths('now', $new, '-') : false;
 		<?php $plink = SiteHelper::buildPropertyLink($item->id); ?>
 		<?php $id = 'kr-property-' . $item->id; ?>
 		<?php $title = KrMethods::plain('COM_KNOWRES_VIEW') . ' ' . $item->property_name; ?>
-		<div class="small-12 medium-6 columns">
+		<div class="small-6 medium-4 columns">
 			<div id="<?php echo $id; ?>" class="kr-list-property card">
 				<?php if ($item->imagefilename) : ?>
 					<div class="kr-slideshow-wrapper">
-						<?php echo KrMethods::render('properties.list.card.slideshow.images',
+						<?php echo KrMethods::render('properties.browse.card.slideshow.images',
 						                             ['item'         => $item,
 						                              'params'       => $params,
 						                              'plink'        => $plink,
 						                              'Translations' => $Translations
 						                             ]); ?>
-						<?php echo KrMethods::render('properties.list.card.slideshow.pricing',
+						<?php echo KrMethods::render('properties.browse.card.slideshow.pricing',
 						                             ['item'           => $item,
 						                              'currency'       => $currency,
 						                              'byAvailability' => $byAvailability,
@@ -68,27 +65,25 @@ $created = $new ? TickTock::modifyMonths('now', $new, '-') : false;
 						                             ]);
 						?>
 						<?php if ($favicon): ?>
-							<?php echo KrMethods::render('properties.list.card.slideshow.favicon',
+							<?php echo KrMethods::render('properties.browse.card.slideshow.favicon',
 							                             ['item'  => $item,
 							                              'saved' => $saved,
 							                              'view'  => $view
 							                             ]); ?>
-						<?php endif; ?>
-						<?php if ($new && $item->created_at >= $created): ?>
-							<?php echo KrMethods::render('properties.list.card.slideshow.badge'); ?>
 						<?php endif; ?>
 					</div>
 				<?php endif; ?>
 
 				<a href="<?php echo $plink; ?>" target="_blank" data-equalizer-watch>
 					<div class="card-section">
-						<?php echo KrMethods::render('properties.list.card.section', ['item'         => $item,
-						                                                              'params'       => $params,
-						                                                              'plink'        => $plink,
-						                                                              'one_region'   => $one_region,
-						                                                              'key_features' => $key_features,
-						                                                              'Translations' => $Translations
-						]); ?>
+						<?php echo KrMethods::render('properties.browse.card.section',
+						                             ['item'         => $item,
+						                              'params'       => $params,
+						                              'plink'        => $plink,
+						                              'one_region'   => $one_region,
+						                              'key_features' => $key_features,
+						                              'Translations' => $Translations
+						                             ]); ?>
 					</div>
 				</a>
 			</div>

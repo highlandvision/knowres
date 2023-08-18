@@ -26,7 +26,7 @@ if ($thumbs)
 }
 ?>
 
-	<div id="kr-property-slideshow" class="<?php echo $type; ?>" data-type="<?php echo $type; ?>"
+	<div id="kr-property-slideshow" class="kr-slick <?php echo $type; ?>" data-type="<?php echo $type; ?>"
 	     data-thumbs="<?php echo $thumbs; ?>">
 		<?php foreach ($this->images as $image): ?>
 			<div>
@@ -43,7 +43,7 @@ if ($thumbs)
 	</div>
 
 <?php if ($thumbs): ?>
-	<div id="kr-property-thumbs" class="show-for-large" data-twidth="<?php echo $thumb_width; ?>">
+	<div id="kr-property-thumbs" class="kr-slick show-for-large" data-twidth="<?php echo $thumb_width; ?>">
 		<?php foreach ($this->images as $image): ?>
 			<div>
 				<?php echo HTMLHelper::_('image', $thumbpath . $image->filename, $image->alt_text, array(

@@ -15,7 +15,7 @@ use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\SiteHelper;
 ?>
 
-<div class="kr-slideshow">
+<div class="kr-slideshow kr-slick">
 	<?php foreach ($data as $d): ?>
 		<div>
 			<?php $options = ['src'         => $d['image'],

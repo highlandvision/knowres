@@ -23,7 +23,7 @@ if (!is_countable($this->alternatives) || !count($this->alternatives))
 }
 ?>
 
-<div id="kr-alternatives" class="moduletable">
+<div id="kr-alternatives" class="kr-slick moduletable">
 	<div class="row">
 		<div class="small-9 columns">
 			<h3 class="h4"><?php echo KrMethods::plain('COM_KNOWRES_PROPERTY_HEADER_ALTERNATIVES'); ?></h3>
