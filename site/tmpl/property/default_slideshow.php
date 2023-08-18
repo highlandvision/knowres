@@ -26,24 +26,24 @@ if ($thumbs)
 }
 ?>
 
-	<div id="kr-property-slideshow" class="<?php echo $type; ?>" data-type="<?php echo $type; ?>"
-	     data-thumbs="<?php echo $thumbs; ?>">
-		<?php foreach ($this->images as $image): ?>
-			<div>
-				<?php echo HTMLHelper::_('image', $path . $image->filename, $image->alt_text, array(
-					'width'  => $width,
-					'height' => $height
-				)); ?>
+<div id="kr-property-slideshow" class="kr-slick <?php echo $type; ?>" data-type="<?php echo $type; ?>"
+     data-thumbs="<?php echo $thumbs; ?>">
+	<?php foreach ($this->images as $image): ?>
+		<div>
+			<?php echo HTMLHelper::_('image', $path . $image->filename, $image->alt_text, array(
+				'width'  => $width,
+				'height' => $height
+			)); ?>
 
-				<?php if (trim($image->description)): ?>
-					<p><?php echo $image->description; ?></p>
-				<?php endif; ?>
-			</div>
-		<?php endforeach; ?>
-	</div>
+			<?php if (trim($image->description)): ?>
+				<p><?php echo $image->description; ?></p>
+			<?php endif; ?>
+		</div>
+	<?php endforeach; ?>
+</div>
 
 <?php if ($thumbs): ?>
-	<div id="kr-property-thumbs" class="hide-for-medium-down" data-twidth="<?php echo $thumb_width; ?>">
+	<div id="kr-property-thumbs" class="kr-slick hide-for-medium-down" data-twidth="<?php echo $thumb_width; ?>">
 		<?php foreach ($this->images as $image): ?>
 			<div>
 				<?php echo HTMLHelper::_('image', $thumbpath . $image->filename, $image->alt_text, array(

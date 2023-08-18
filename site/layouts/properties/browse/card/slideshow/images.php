@@ -26,7 +26,6 @@ extract($displayData);
  * @var string       $plink        Property link.
  * @var Translations $Translations Translations object.
  */
-
 $image_filename = explode(',', $item->imagefilename);
 $image_id       = explode(',', $item->imageid);
 $image_order    = explode(',', $item->imageorder);

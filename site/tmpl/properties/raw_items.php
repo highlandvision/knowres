@@ -21,12 +21,7 @@ use HighlandVision\KR\Framework\KrMethods;
 			</button>
 		</div>
 	<?php endif; ?>
-
-	<?php if ($this->favs): ?>
-		<?php echo $this->loadTemplate($this->params->get('default_view', 'list')); ?>
-	<?php else: ?>
-		<?php echo $this->loadTemplate('list'); ?>
-	<?php endif; ?>
+	<?php echo $this->loadTemplate('list'); ?>
 <?php else : ?>
 	<?php echo $this->loadTemplate('sorry'); ?>
 <?php endif; ?>

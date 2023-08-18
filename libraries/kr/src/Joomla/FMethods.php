@@ -549,7 +549,6 @@ class FMethods
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return bool
 	 */
 	public static function isAdmin(): bool
 	{

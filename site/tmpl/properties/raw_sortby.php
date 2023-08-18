@@ -27,16 +27,16 @@ if (!$this->params->get('order_ordering') &&
 }
 ?>
 
-	<div class="actions">
-		<div class="small button-group expanded">
-			<a id="kr-order-close" class="button clear small" data-close>
-			<span aria-hidden="true">
-				<i class="fas fa-times-circle"
-				   aria-hidden="true"></i>&nbsp;<?php echo KrMethods::plain('COM_KNOWRES_CLOSE'); ?>
-			</span>
-			</a>
-		</div>
+<div class="actions">
+	<div class="small button-group expanded">
+		<a id="kr-order-close" class="button clear small" data-close>
+		<span aria-hidden="true">
+			<i class="fas fa-times-circle"
+			   aria-hidden="true"></i>&nbsp;<?php echo KrMethods::plain('COM_KNOWRES_CLOSE'); ?>
+		</span>
+		</a>
 	</div>
+</div>
 
 <?php if ($this->params->get('order_ordering')): ?>
 	<?php echo KrMethods::render('properties.filtersort', ['order'    => $this->order,

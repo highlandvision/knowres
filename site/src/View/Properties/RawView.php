@@ -74,16 +74,13 @@ class RawView extends KrHtmlView
 			$field        = 'view';
 			$value        = $this->params->get('default_view', 'list');
 		}
-
-		if ($value == 'favs' && count($this->saved)) {
-			// Favourites requested leave everything as is and just get the saved ones
+		elseif ($value == 'favs') {
 			$this->favs = true;
 			$fids       = [];
 			foreach ($this->saved as $s) {
 				$fids[] = $s;
 			}
 
-			// Get the properties for the favourites
 			$this->state->set('filter.id', $fids);
 			//TODO-v4.3 display favourites on map only when displayed in list
 			$this->items              = $this->get('items');
@@ -215,7 +212,7 @@ class RawView extends KrHtmlView
 			$this->items = $this->get('items');
 			$result      = $this->get('countitems');
 			$this->Search->countAjaxFilters($result[0], $result[1], $result[2], $result[3], $result[4], $result[5],
-			                                $result[6], $result[7], $result[8]);
+				$result[6], $result[7], $result[8]);
 		}
 
 		$this->modules    = KrMethods::loadInternal('{loadposition propertiesview}');

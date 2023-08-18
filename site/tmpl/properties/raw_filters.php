@@ -58,28 +58,17 @@ for ($i = 0; $i < 8; $i++): ?>
 
 	<?php if (is_countable($filter_data) && count($filter_data) > 1): ?>
 		<?php if ($first) : ?>
-			<div class="sidebar-only show-for-large clearfix">
-				<h3 class="color-dark"><?php echo strtoupper(KrMethods::plain('COM_KNOWRES_FILTER_BY')); ?></h3>
-				<button aria-label="<?php echo KrMethods::plain('COM_KNOWRES_FILTER_CLEAR'); ?>"
-				        class="kr-filters-reset button clear small float-right getResponseSearch" data-field="clear"
-				        type="button">
+			<div class="actions small button-group expanded">
+				<button class="kr-filters-reset button clear small getResponseSearch" data-field="clear">
 					<i class="fas fa-sync" aria-hidden="true"></i>&nbsp;
 					<?php echo KrMethods::plain('COM_KNOWRES_FILTER_RESET'); ?>
 				</button>
-			</div>
-			<div class="kr-filters-close top-only show-for-large"></div>
-			<div class="actions hide-for-large">
-				<div class="small button-group expanded">
-					<button class="kr-filters-reset button clear small getResponseSearch" data-field="clear">
-						<i class="fas fa-sync" aria-hidden="true"></i>&nbsp;
-						<?php echo KrMethods::plain('COM_KNOWRES_FILTER_RESET'); ?>
-					</button>
-					<button class="button clear small" data-close>
+				<button class="button clear small" data-close>
 					<span aria-hidden="true">
-						<i class="fas fa-times-circle" aria-hidden="true"></i> Close
+						<i class="fas fa-times-circle" aria-hidden="true"></i>
+						<?php echo KrMethods::plain('COM_KNOWRES_CLOSE'); ?>
 					</span>
-					</button>
-				</div>
+				</button>
 			</div>
 			<?php $first = false; ?>
 		<?php endif; ?>
@@ -93,7 +82,7 @@ for ($i = 0; $i < 8; $i++): ?>
 		<?php endforeach; ?>
 
 		<ul class="filter-sort-list">
-			<li class="head button hollow expanded <?php echo $active; ?>"><?php echo $name; ?></li>
+			<li class="head <?php echo $active; ?>"><?php echo $name; ?></li>
 			<?php foreach ($filter_data as $k => $v) : ?>
 				<?php $id = str_replace(' ', '-', $type); ?>
 				<?php $id .= ':' . $k; ?>

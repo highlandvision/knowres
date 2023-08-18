@@ -24,10 +24,12 @@ use HighlandVision\KR\Utility;
 use JetBrains\PhpStorm\NoReturn;
 use Joomla\CMS\Factory;
 use Joomla\Registry\Registry;
-use RuntimeException;
 use stdClass;
 
 use function array_slice;
+use function array_values;
+use function count;
+use function end;
 use function implode;
 use function substr;
 
@@ -38,6 +40,8 @@ use function substr;
  */
 class HtmlView extends KrHtmlView\Site
 {
+	/** @var Registry KR parameters */
+	public Registry $params;
 	/** @var Search Site search */
 	protected Search $Search;
 	/** @var string Category blurb */
@@ -50,8 +54,6 @@ class HtmlView extends KrHtmlView\Site
 	protected string $header = '';
 	/** @var array Allowable page layouts */
 	protected array $layouts = [];
-	/** @var Registry KR parameters */
-	public Registry $params;
 	/** @var bool True if property search */
 	protected bool $property_search = false;
 
@@ -61,9 +63,8 @@ class HtmlView extends KrHtmlView\Site
 	 * @param  null  $tpl  Default template.
 	 *
 	 * @throws Exception
-	 * @since  1.0.0
+	 * @since        1.0.0
 	 * @return void
-	 * @noinspection PhpLoopNeverIteratesInspection
 	 */
 	#[NoReturn] public function display($tpl = null): void
 	{
@@ -72,78 +73,57 @@ class HtmlView extends KrHtmlView\Site
 		$this->state  = $model->getState();
 		$this->params = KrMethods::getParams();
 		$layout       = KrMethods::inputString('layout', 'default', 'get');
+		$today        = TickTock::getDate();
+		$header       = false;
 
-		while (true) {
-			$this->category_id = KrMethods::inputInt('category_id', 0, 'get');
-			if ($this->category_id) {
-				/** @var CategoryModel $category */
-				$category = KrFactory::getAdminModel('category')->getItem($this->category_id);
-				if (!$category->id) {
-					throw new RuntimeException('Category not found for Category ID ' . $this->category_id);
+		$searchSession = new KrSession\Search();
+		$searchData    = $searchSession->getData();
+
+		$retain = KrMethods::inputInt('retain', 0, 'get');
+		if ($retain == 2) {
+			KrMethods::message(KrMethods::plain('COM_KNOWRES_EXPIRED_SESSION'));
+			$retain = 1;
+		}
+
+		$new = false;
+		if (!$retain || !count($searchData->baseIds)) {
+			$searchData = $searchSession->resetData();
+			$new        = true;
+		}
+
+		if ($new) {
+			$this->property_search = true;
+			if ($layout == 'category') {
+				$this->category_id = KrMethods::inputInt('category_id', 0, 'get');
+				if (!$this->category_id) {
+					$searchData = $searchSession->resetData();
+					SiteHelper::redirectHome();
 				}
 
-				$this->header         = KrMethods::sprintf('COM_KNOWRES_BROWSE_CATEGORY', $category->name);
-				$this->category_blurb = $category->blurb;
+				/** @var CategoryModel $category */
+				$category                = KrFactory::getAdminModel('category')->getItem($this->category_id);
+				$searchData->layout      = $layout;
+				$searchData->category_id = $this->category_id;
+				$header                  = $category->name;
+				$this->meta_title        = KrMethods::sprintf('COM_KNOWRES_BROWSE_CATEGORY', $category->name);
+				$this->meta_description  = KrMethods::sprintf('COM_KNOWRES_BROWSE_CATEGORY_DSC', $category->name);
 			}
-
-			if ($this->category_id && $layout === 'category') {
-				$this->items            = KrFactory::getListSiteModel('properties')->getByCategory($this->category_id);
-				$this->meta_title       = KrMethods::sprintf('COM_KNOWRES_BROWSE_CATEGORY', $category->name);
-				$this->meta_description = KrMethods::sprintf('COM_KNOWRES_BROWSE_CATEGORY_DSC', $category->name);
-				$this->setLayout('category');
-
-				break;
-			}
-
-			if ($layout === 'new') {
-				$this->items            = KrFactory::getListSiteModel('properties')->getNew();
+			else if ($layout === 'new') {
+				$searchData->layout     = $layout;
+				$header                 = KrMethods::plain('COM_KNOWRES_BROWSE_DISCOUNTS');
 				$this->meta_title       = KrMethods::plain('COM_KNOWRES_BROWSE_NEW_VILLAS');
 				$this->meta_description = KrMethods::plain('COM_KNOWRES_BROWSE_NEW_VILLAS_DSC');
-				$this->setLayout('new');
-
-				break;
 			}
-
-			if ($layout === 'discount') {
-				$this->items            = KrFactory::getListSiteModel('properties')->getDiscount();
-				$this->currencies       = KrFactory::getListModel('propertysettings')->getOneSetting('currency');
+			else if ($layout === 'discount') {
+				$searchData->layout     = $layout;
+				$header                 = KrMethods::plain('COM_KNOWRES_BROWSE_DISCOUNTS');
 				$this->meta_title       = KrMethods::plain('COM_KNOWRES_BROWSE_DISCOUNTS');
 				$this->meta_description = KrMethods::plain('COM_KNOWRES_BROWSE_DISCOUNTS_DSC');
-				$this->setLayout('discount');
-
-				break;
 			}
-
-			// The real deal!
-			$this->property_search = true;
-			$retain                = KrMethods::inputInt('retain', 0, 'get');
-			if ($retain == 2) {
-				KrMethods::message(KrMethods::plain('COM_KNOWRES_EXPIRED_SESSION'));
-				$retain = 1;
-			}
-
-			$searchSession = new KrSession\Search();
-			$searchData    = $searchSession->getData();
-
-			// Either retain is not set or no base properties so
-			// reset the search session data and start again
-			$new = false;
-			if (!$retain || !count($searchData->baseIds)) {
-				$order       = $searchData->order;
-				$ordering    = $searchData->ordering;
-				$direction   = $searchData->direction;
-				$ordercustom = $searchData->ordercustom;
-
-				$searchData              = $searchSession->resetData();
-				$searchData->order       = $order;
-				$searchData->ordering    = $ordering;
-				$searchData->direction   = $direction;
-				$searchData->ordercustom = $ordercustom;
-
-				$searchSession->setData($searchData);
+			else {
+				// Input from search module!
 				$searchData = $this->setInput($searchData, $searchSession);
 
-				$today = TickTock::getDate();
 				if (!empty($searchData->arrival) && !empty($searchData->departure)) {
 					if ($searchData->arrival < $today ||
 						$searchData->departure < $today ||
@@ -152,44 +132,40 @@ class HtmlView extends KrHtmlView\Site
 						SiteHelper::redirectHome();
 					}
 				}
-
-				$new = true;
 			}
-
-			$this->Search = new Search($searchData);
-			if ($new) {
-				$this->Search->doBaseSearch();
-			}
-
-			$names = array_values($this->Search->data->region_name);
-			$rn    = implode(', ', array_slice($names, 0, -1)) . ' & ' . end($names);
-
-			$this->header           =
-				KrMethods::sprintf('COM_KNOWRES_SEARCH_HEADER', $rn, count($this->Search->data->baseIds));
-			$this->meta_title       =
-				KrMethods::sprintf('COM_KNOWRES_SEO_TITLE_PROPERTIES', $this->Search->data->region_name,
-					$this->Search->data->country_name);
-			$this->meta_description =
-				KrMethods::sprintf('COM_KNOWRES_SEO_DSC_PROPERTIES', $this->Search->data->region_name,
-					$this->Search->data->country_name);
-
-			if ($this->params->get('search_grid', 0)) {
-				$this->layouts['grid'] = true;
-			}
-			if ($this->params->get('search_list', 0)) {
-				$this->layouts['list'] = true;
-			}
-			if ($this->params->get('search_solo', 0)) {
-				$this->layouts['solo'] = true;
-			}
-			if ($this->params->get('search_thumb', 0)) {
-				$this->layouts['thumb'] = true;
-			}
-
-			$searchSession->setData($this->Search->data);
-
-			break;
 		}
+
+		$this->Search = new Search($searchData);
+		if ($new) {
+			$this->Search->doBaseSearch();
+		}
+
+		if (!$header) {
+			$names = array_values($this->Search->data->region_name);
+			if (count($names) > 1) {
+				$header = implode(', ', array_slice($names, 0, -1)) . ' & ' . end($names);
+			}
+			else {
+				$header = $names[0];
+			}
+			$this->meta_title       = KrMethods::sprintf('COM_KNOWRES_SEO_TITLE_PROPERTIES',
+			                                             $this->Search->data->region_name,
+			                                             $this->Search->data->country_name);
+			$this->meta_description = KrMethods::sprintf('COM_KNOWRES_SEO_DSC_PROPERTIES',
+			                                             $this->Search->data->region_name,
+			                                             $this->Search->data->country_name);
+		}
+
+		$this->header = KrMethods::sprintf('COM_KNOWRES_SEARCH_HEADER', $header, count($this->Search->data->baseIds));
+
+		if ($this->params->get('search_list', 0)) {
+			$this->layouts['list'] = true;
+		}
+		if ($this->params->get('search_solo', 0)) {
+			$this->layouts['solo'] = true;
+		}
+
+		$searchSession->setData($this->Search->data);
 
 		$errors = $this->get('errors');
 		if (is_countable($errors) && count($errors)) {

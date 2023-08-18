@@ -1164,7 +1164,7 @@ class Search
 	 */
 	private function validateRegion(): void
 	{
-		if (!count($this->data->region_id)) {
+		if (!count($this->data->region_id) && !$this->data->layout ) {
 			$id                         = $this->params->get('default_region');
 			$this->data->region_id[$id] = $this->Translations->getText('region', $id);
 		}
