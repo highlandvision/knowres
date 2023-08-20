@@ -18,6 +18,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 $wa = $this->document->getWebAssetManager();
 $wa->useScript('keepalive')
    ->useScript('form.validate')
+   ->useScript('com_knowres.admin-property')
    ->useScript('com_knowres.admin-gmap')
    ->useScript('com_knowres.admin-combogeo');
 ?>

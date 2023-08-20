@@ -31,7 +31,6 @@ if (!$this->item->map_max_zoom)
 }
 
 $this->form->setFieldAttribute('property_area', 'autocomplete', "off");
-$this->form->setFieldAttribute('property_area', 'class', "areatypeahead");
 $this->form->setFieldAttribute('region_id', 'required', "true");
 $this->form->setFieldAttribute('town_id', 'required', "true");
 ?>

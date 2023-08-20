@@ -168,6 +168,44 @@ span.divider {
   color: #fefefe;
 }
 
+.tt-input.typeahead::placeholder {
+  color: #c9c9c9;
+  font-size: 1rem;
+}
+
+.tt-menu {
+  width: 350px;
+  margin: 0;
+  padding: 0.5rem;
+  background-color: #fefefe;
+  text-align: left;
+  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+.tt-menu .tt-dataset {
+  font-size: 13px;
+  line-height: 16px;
+}
+.tt-menu .tt-dataset .tt-suggestion {
+  padding: 0.25rem 0.4rem;
+}
+.tt-menu .tt-dataset .tt-suggestion:hover {
+  background: #e1e1e1;
+  cursor: pointer;
+}
+.tt-menu .tt-dataset .tt-suggestion a {
+  font-size: 13px;
+}
+.tt-menu .tt-dataset .tt-suggestion a:hover {
+  cursor: pointer;
+  text-decoration: none;
+}
+.tt-menu .tt-dataset .tt-suggestion a span {
+  color: #999;
+  padding: 0 5px;
+}
+
 .choices__input::placeholder {
   opacity: 1 !important;
   font-style: normal !important;
