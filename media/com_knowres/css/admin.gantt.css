@@ -209,44 +209,6 @@
   z-index: 1;
 }
 
-.tt-input.typeahead::placeholder {
-  color: #c9c9c9;
-  font-size: 1rem;
-}
-
-.tt-menu {
-  width: 350px;
-  margin: 0;
-  padding: 8px 7px;
-  background-color: #fff;
-  font-size: 15px;
-  text-align: left;
-  border: 1px solid #ccc;
-  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-  -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-}
-
-.tt-suggestion {
-  font-size: 16px;
-  line-height: 20px;
-  padding-bottom: 5px;
-}
-.tt-suggestion:hover {
-  background: #f1f1f1;
-}
-.tt-suggestion a {
-  padding: 0 5px;
-}
-.tt-suggestion a:hover {
-  text-decoration: none;
-}
-.tt-suggestion a span {
-  font-size: 15px;
-  color: #999;
-  padding: 0 5px;
-}
-
 div.tooltip {
   width: 300px;
   height: auto;

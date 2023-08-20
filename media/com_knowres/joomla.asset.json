@@ -225,6 +225,18 @@
       ]
     },
     {
+      "name": "com_knowres.admin-property",
+      "type": "script",
+      "uri": "com_knowres/admin.property.min.js",
+      "attributes": {
+        "defer": true
+      },
+      "dependencies": [
+        "jquery",
+        "com_knowres.vendor-typeahead"
+      ]
+    },
+    {
       "name": "com_knowres.admin-propertydashboard",
       "type": "script",
       "uri": "com_knowres/admin.propertydashboard.min.js",
