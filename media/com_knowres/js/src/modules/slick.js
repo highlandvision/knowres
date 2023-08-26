@@ -87,21 +87,21 @@
     }
 
     $(function () {
-        $('body').on('mouseenter', '.kr-properties-slideshow', function (e) {
+        $('body').on('mouseenter', '.kr-list-property.card', function (e) {
             e.preventDefault();
-            const id = '#' + $(this).attr('id');
-            //$(id).removeClass('kr-properties-slideshow');
-            // $(id).slick({
-            $(id).not('.slick-initialized').slick({
-                prevArrow: '<button type="button" class="slick-nav prev slick-btn" title="Back">' +
-                    '<i class="fas fa-chevron-left"></i></button>',
-                nextArrow: '<button type="button" class="slick-nav next slick-btn" title="Forward">' +
-                    '<i class="fas fa-chevron-right"></i></button>',
-                lazyLoad: 'ondemand',
-                slidesToShow: 1,
-                slidesToScroll: 1,
-                infinite: true
-            });
+            let id = '#kr-lazy-' + $(this).attr('data-id');
+            if (!$(id).hasClass('slick-initialized')) {
+                $(id).slick({
+                    prevArrow: '<button type="button" class="slick-nav prev slick-btn" title="Back">' +
+                        '<i class="fas fa-chevron-left"></i></button>',
+                    nextArrow: '<button type="button" class="slick-nav next slick-btn" title="Forward">' +
+                        '<i class="fas fa-chevron-right"></i></button>',
+                    lazyLoad: 'ondemand',
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    infinite: true
+                });
+            }
         });
 
         $('.kr-slideshow').slick({

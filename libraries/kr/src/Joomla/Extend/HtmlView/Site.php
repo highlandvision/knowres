@@ -227,10 +227,9 @@ class Site extends KrHtmlView
 			$title = KrMethods::sprintf('JPAGETITLE', $title, $app->getCfg('sitename'));
 		}
 
-		$document = Factory::getDocument();
-		$document->setTitle($title);
-		$document->setDescription($menu_description <> '' ? $menu_description :
+		$this->document->setTitle($title);
+		$this->document->setDescription($menu_description <> '' ? $menu_description :
 			                          $app->get('meta_description', $description));
-		$document->setMetaData('robots', $menu_robots <> '' ? $menu_robots : $app->get('robots'));
+		$this->document->setMetaData('robots', $menu_robots <> '' ? $menu_robots : $app->get('robots'));
 	}
 }

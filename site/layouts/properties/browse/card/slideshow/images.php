@@ -11,7 +11,6 @@
 
 defined('_JEXEC') or die;
 
-use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Media;
 use HighlandVision\KR\Translations;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -32,9 +31,8 @@ $image_order    = explode(',', $item->imageorder);
 $path           = Media\Images::getImagePath($item->id) . '/';
 $width          = $params->get('max_slideshow_width');
 $height         = $params->get('max_slideshow_height');
-$count          = 0;
-$slick_id       = "kr-lazy-" . $item->id;
 
+$slick_id       = "kr-lazy-" . $item->id;
 $display = [];
 $index   = 0;
 foreach ($image_order as $order)
@@ -45,21 +43,14 @@ foreach ($image_order as $order)
 ksort($display);
 ?>
 
-<div id="<?php echo $slick_id; ?>" class="kr-properties-slideshow">
+<div class="kr-properties-slideshow" id="<?php echo $slick_id; ?>" >
 	<?php foreach ($display as $order => $image): ?>
 		<?php $alt = $Translations->getText('image', $image['id'], 'alt_text'); ?>
-		<a href="<?php echo $plink; ?>" target="_blank">
-			<?php if (!$count): ?>
-				<?php echo HTMLHelper::_('image', $path . $image['name'], $alt, [
+		<a href="<?php echo $plink; ?>" target="_blank" title="View">
+			<?php echo HTMLHelper::_('image', $path . $image['name'], $alt, [
 					'width'  => $width,
 					'height' => $height
 				]); ?>
-				<?php $count++; ?>
-			<?php else: ?>
-				<!--suppress RequiredAttributes -->
-				<img data-lazy="<?php echo "/" . $path . $image['name']; ?>" width="<?php echo $width; ?>"
-				     height="<?php echo $height; ?>" alt="<?php echo $alt; ?>">
-			<?php endif; ?>
 		</a>
 	<?php endforeach; ?>
 </div>

@@ -37,7 +37,6 @@ class DisplayController extends BaseController
 	public function display($cachable = false, $urlparams = false): DisplayController
 	{
 		$view         = KrMethods::inputString('view', 'properties', 'get');
-		//$this->layout = KrMethods::inputString('layout', 'default');
 		$Itemid       = KrMethods::inputInt('Itemid', 0, 'get');
 
 		if (!$view)
