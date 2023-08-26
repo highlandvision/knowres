@@ -31,7 +31,6 @@ use function array_values;
 use function count;
 use function end;
 use function implode;
-use function substr;
 
 /**
  * View properties
@@ -44,12 +43,12 @@ class HtmlView extends KrHtmlView\Site
 	public Registry $params;
 	/** @var Search Site search */
 	protected Search $Search;
-	/** @var string Category blurb */
-	protected string $category_blurb = '';
 	/** @var int Category ID */
 	protected int $category_id = 0;
 	/** @var array Property currencies */
 	protected array $currencies = [];
+	/** @var int Default region */
+	protected int $default_region = 0;
 	/** @var string Page header */
 	protected string $header = '';
 	/** @var array Allowable page layouts */
@@ -69,12 +68,13 @@ class HtmlView extends KrHtmlView\Site
 	#[NoReturn] public function display($tpl = null): void
 	{
 		/** @var PropertiesModel $model */
-		$model        = $this->getModel();
-		$this->state  = $model->getState();
-		$this->params = KrMethods::getParams();
-		$layout       = KrMethods::inputString('layout', 'default', 'get');
-		$today        = TickTock::getDate();
-		$header       = false;
+		$model                = $this->getModel();
+		$this->state          = $model->getState();
+		$this->params         = KrMethods::getParams();
+		$layout               = KrMethods::inputString('layout', 'default', 'get');
+		$today                = TickTock::getDate();
+		$header               = false;
+		$this->default_region = $this->params->get('default_region', 0);
 
 		$searchSession = new KrSession\Search();
 		$searchData    = $searchSession->getData();
@@ -141,7 +141,7 @@ class HtmlView extends KrHtmlView\Site
 		}
 
 		if (!$header) {
-			$names = array_values($this->Search->data->region_name);
+			$names = array_values($this->Search->searchData->region_name);
 			if (count($names) > 1) {
 				$header = implode(', ', array_slice($names, 0, -1)) . ' & ' . end($names);
 			}
@@ -149,14 +149,19 @@ class HtmlView extends KrHtmlView\Site
 				$header = $names[0];
 			}
 			$this->meta_title       = KrMethods::sprintf('COM_KNOWRES_SEO_TITLE_PROPERTIES',
-			                                             $this->Search->data->region_name,
-			                                             $this->Search->data->country_name);
+			                                             implode(', ',
+			                                                     array_slice($this->Search->searchData->region_name, 0,
+			                                                                 -1)) .
+			                                             ' & ' .
+			                                             end($this->Search->searchData->region_name));
 			$this->meta_description = KrMethods::sprintf('COM_KNOWRES_SEO_DSC_PROPERTIES',
-			                                             $this->Search->data->region_name,
-			                                             $this->Search->data->country_name);
+			                                             implode(', ',
+			                                                     array_slice($this->Search->searchData->region_name, 0, -1)) .
+			                                             ' & ' .
+			                                             end($this->Search->searchData->region_name));
 		}
 
-		$this->header = KrMethods::sprintf('COM_KNOWRES_SEARCH_HEADER', $header, count($this->Search->data->baseIds));
+		$this->header = KrMethods::sprintf('COM_KNOWRES_SEARCH_HEADER', $header, count($this->Search->searchData->baseIds));
 
 		if ($this->params->get('search_list', 0)) {
 			$this->layouts['list'] = true;
@@ -165,7 +170,7 @@ class HtmlView extends KrHtmlView\Site
 			$this->layouts['solo'] = true;
 		}
 
-		$searchSession->setData($this->Search->data);
+		$searchSession->setData($this->Search->searchData);
 
 		$errors = $this->get('errors');
 		if (is_countable($errors) && count($errors)) {
@@ -198,28 +203,14 @@ class HtmlView extends KrHtmlView\Site
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected function setCanonical(): void
+	#[NoReturn] protected function setCanonical(): void
 	{
-		if (count($this->Search->data->region_id) == 1) {
-			$Itemid =
-				SiteHelper::getItemId('com_knowres', 'properties', ['region_id' => $this->Search->data->region_id[0]]);
-			$link   =
-				'index.php?option=com_knowres&view=properties&region_id=' .
-				$this->Search->data->region_id[0] .
-				'&Itemid=' .
-				$Itemid;
-		}
-		else {
-			$default = KrMethods::getParams('default_region');
-			$Itemid  = SiteHelper::getItemId('com_knowres', 'properties', ['region_id' => $default]);
-			$link    = 'index.php?option=com_knowres&view=properties&region_id=' . $default . '&Itemid=' . $Itemid;
-		}
+		//TODO v4.3 when region URls are finalised
+		$Itemid = SiteHelper::getItemId('com_knowres', 'properties', ['region_id' => $this->default_region]);
+		$link   = 'index.php?option=com_knowres&view=properties&region_id[]=' . $this->default_region . '&Itemid=' .
+			$Itemid;
 
-		if ($this->category_id) {
-			$link .= '&category_id=' . $this->category_id;
-		}
-
-		$canonical_url = substr(KrMethods::route($link, false), 1);
+		$canonical_url = KrMethods::route($link);
 		$this->document->addHeadLink(KrMethods::getRoot() . $canonical_url, 'canonical');
 	}
 
@@ -269,10 +260,11 @@ class HtmlView extends KrHtmlView\Site
 	 */
 	protected function setPathway(): void
 	{
+		//TODO v4.3 Fix when regions array is finalised
 		$pathway = Factory::getApplication()->getPathway();
-		if (count($this->Search->data->region_id) == 1) {
-			foreach ($this->Search->data->region_id as $k => $v) {
-				$pathway = self::propertiesPathway($pathway, $k, $v);
+		if (count($this->Search->searchData->region_id) == 1) {
+			foreach ($this->Search->searchData->region_id as $k) {
+				$pathway = self::propertiesPathway($pathway, $k, 'tbd region help');
 			}
 
 			$pathway->addItem(KrMethods::plain('COM_KNOWRES_SEARCH_RESULTS'));

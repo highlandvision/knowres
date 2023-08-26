@@ -9,7 +9,7 @@
 			type="listgroupedregions"
 			hint="MOD_KNOWRES_SEARCH_REGIONS_LBL"
 			label="MOD_KNOWRES_SEARCH_REGIONS"
-		    placeholder="MOD_KNOWRES_SEARCH_DESTINATION"/>
+		    placeholder="MOD_KNOWRES_SEARCH_LOCATION"/>
 		<field name="arrivaldsp"
 			addfieldprefix="HighlandVision\Component\Knowres\Site\Field"
 			class="notranslate datepicker"

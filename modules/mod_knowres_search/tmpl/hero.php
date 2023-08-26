@@ -32,7 +32,7 @@ $action = KrMethods::getRoot() . 'index.php?option=com_knowres&task=properties.s
 				<div class="small-12 medium-12 large-3 columns">
 					<?php echo $form->renderField('region_id', null,
 						$params->get('show_regions') < 1 ? $initial->region_id :
-							KrMethods::plain('MOD_KNOWRES_SEARCH_DESTINATION'),
+							KrMethods::plain('MOD_KNOWRES_SEARCH_LOCATION'),
 						['regions' => $regions, 'show_regions' => $params->get('show_regions')
 						]); ?>
 				</div>

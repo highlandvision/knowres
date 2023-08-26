@@ -17,8 +17,8 @@ use HighlandVision\KR\Translations;
 $Translations = new Translations();
 
 $one_region =
-	count($this->Search->data->region_id) == 1 &&
-	KrMethods::getParams('default_region') == $this->Search->data->region_id[0];
+	count($this->Response->searchData->region_id) == 1 &&
+	KrMethods::getParams('default_region') == $this->Response->searchData->region_id[0];
 
 $results = KrFactory::getListModel('propertyfeatures')->getAll(true);
 foreach ($results as $r) {
@@ -28,14 +28,14 @@ foreach ($results as $r) {
 
 <?php echo KrMethods::render('properties.list.list', ['items'          => $this->items,
                                                       'params'         => $this->params,
-                                                      'currency'       => $this->Search->data->currency,
+                                                      'currency'       => $this->Response->searchData->currency,
                                                       'favicon'        => true,
                                                       'saved'          => $this->saved,
-                                                      'view'           => $this->Search->data->view,
-                                                      'byAvailability' => $this->Search->data->byAvailability,
-                                                      'net'            => $this->Search->data->rateNet,
-                                                      'discount'       => $this->Search->data->rateDiscount,
-                                                      'rating'         => $this->Search->data->rating,
+                                                      'view'           => $this->Response->searchData->view,
+                                                      'byAvailability' => $this->Response->searchData->byAvailability,
+                                                      'net'            => $this->Response->searchData->rateNet,
+                                                      'discount'       => $this->Response->searchData->rateDiscount,
+                                                      'rating'         => $this->Response->searchData->rating,
                                                       'one_region'     => $one_region,
                                                       'key_features'   => $key_features
 ]);

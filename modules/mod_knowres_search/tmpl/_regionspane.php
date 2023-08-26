@@ -16,7 +16,7 @@ use HighlandVision\KR\Framework\KrMethods;
      data-close-on-click="true" data-dropdown data-position="bottom" data-v-offset="8">
 
 	<div class="header">
-		<?php echo KrMethods::plain('MOD_KNOWRES_SEARCH_DESTINATIONS'); ?>
+		<?php echo KrMethods::plain('MOD_KNOWRES_SEARCH_LOCATIONS'); ?>
 	</div>
 
 	<div class="dropdown-body">
@@ -31,15 +31,15 @@ use HighlandVision\KR\Framework\KrMethods;
 				</div>
 				<div class="small-6 columns">
 					<?php foreach ($v as $id => $r): ?>
-						<?php if (!empty($initial->region_id[$id])) : ?>
+						<?php if (in_array($id, $initial->region_id)) : ?>
 							<input type="checkbox" checked="checked" class="checkover region"
-							       name="region_id[<?php echo $id; ?>]" id="<?php echo $id; ?>"
-							       value="<?php echo $r; ?>"
+							       name="region_id[]" id="<?php echo $id; ?>"
+							       value="<?php echo $id; ?>"
 							       data-field="<?php echo $id; ?>" data-country="<?php echo $k; ?>"
 							       data-value="<?php echo $id; ?>">
 						<?php else : ?>
-							<input type="checkbox" class="checkover region" name="region_id[<?php echo $id; ?>]"
-							       id="<?php echo $id; ?>" value="<?php echo $r; ?>" data-value="<?php echo $id; ?>"
+							<input type="checkbox" class="checkover region" name="region_id[]"
+							       id="<?php echo $id; ?>" value="<?php echo $id; ?>" data-value="<?php echo $id; ?>"
 							       data-country="<?php echo $k; ?>">
 						<?php endif; ?>
 

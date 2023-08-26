@@ -121,7 +121,7 @@ const livesite = window.location.origin + '/';
 			e.preventDefault();
 			$('.kr-filters.top').addClass('hideme');
 			$(this).removeClass('active');
-		}).on('click', '.sidebar .kr-filters ul.filter-sort-list li.head', function (e) {
+		}).on('click', '.kr-filters ul.filter-sort-list li.head', function (e) {
 			e.preventDefault();
 			$(this).parent().children('li.checkbox').toggle();
 			$(this).toggleClass('active');

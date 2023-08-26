@@ -115,7 +115,10 @@ class Search extends Session
 		$data->departure      = '';
 		$data->direction      = '';
 		$data->feature_id     = 0;
+		$data->field          = '';
 		$data->flexible       = 0;
+		$data->filterRegion   = [];
+		$data->filterArea     = [];
 		$data->filterBedrooms = [];
 		$data->filterBook     = [];
 		$data->filterCategory = [];
@@ -123,10 +126,6 @@ class Search extends Session
 		$data->filterPets     = [];
 		$data->filterPrice    = [];
 		$data->filterType     = [];
-		$data->filterCountry  = [];
-		$data->filterRegion   = [];
-		$data->filterTown     = [];
-		$data->filterArea     = [];
 		$data->guests         = 2;
 		$data->layout         = '';
 		$data->limitstart     = 0;
@@ -143,7 +142,6 @@ class Search extends Session
 		$data->region_id      = [];
 		$data->region_name    = [];
 		$data->start          = 0;
-		$data->town           = '';
 		$data->type_id        = 0;
 		$data->view           = '';
 

@@ -48,6 +48,7 @@ class PropertiesController extends BaseController
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
+	 * @noinspection PhpUnused
 	 */
 	#[NoReturn] public function favourite(): void
 	{
@@ -77,14 +78,20 @@ class PropertiesController extends BaseController
 
 			$lifetime = 3600 * 24 * 30;
 			if (count($saved)) {
-				Factory::getApplication()->input->cookie->set('krsaved', implode('xx', $saved), time() + $lifetime,
-					Factory::getApplication()->get('cookie_path', '/'), Factory::getApplication()->get('cookie_domain'),
-					Factory::getApplication()->isSSLConnection());
+				Factory::getApplication()->input->cookie->set('krsaved',
+				                                              implode('xx', $saved),
+				                                              time() + $lifetime,
+				                                              Factory::getApplication()->get('cookie_path', '/'),
+				                                              Factory::getApplication()->get('cookie_domain'),
+				                                              Factory::getApplication()->isSSLConnection());
 			}
 			else {
-				Factory::getApplication()->input->cookie->set('krsaved', '', time() - $lifetime,
-					Factory::getApplication()->get('cookie_path', '/'), Factory::getApplication()->get('cookie_domain'),
-					Factory::getApplication()->isSSLConnection());
+				Factory::getApplication()->input->cookie->set('krsaved',
+				                                              '',
+				                                              time() - $lifetime,
+				                                              Factory::getApplication()->get('cookie_path', '/'),
+				                                              Factory::getApplication()->get('cookie_domain'),
+				                                              Factory::getApplication()->isSSLConnection());
 			}
 
 			$wrapper           = [];
@@ -100,12 +107,13 @@ class PropertiesController extends BaseController
 	}
 
 	/**
-	 * An ajax request to get markers for the Google map
+	 * Ajax request to get markers for the Google map
 	 * if pid is set then solo map for property page
 	 * otherwise search page map
 	 *
 	 * @throws Exception
 	 * @since  3.2.0
+	 * @noinspection PhpUnused
 	 */
 	public function mapdata(): void
 	{
@@ -172,6 +180,7 @@ class PropertiesController extends BaseController
 	 *
 	 * @throws Exception
 	 * @since   2.2.0
+	 * @noinspection PhpUnused
 	 */
 	#[NoReturn] public function mapsession(): void
 	{
@@ -204,12 +213,15 @@ class PropertiesController extends BaseController
 
 				$link =
 					KrMethods::route('index.php?option=com_knowres&view=properties&Itemid=' .
-						$Itemid .
-						'&region_id=' .
-						$r->region_id, false);
+					                 $Itemid .
+					                 '&region_id=' .
+					                 $r->region_id,
+					                 false);
 
 				$options[] =
-					['icon'   => 'fas fa-map-marker-alt', 'name' => $r->name, 'link' => $link,
+					['icon'   => 'fas fa-map-marker-alt',
+					 'name'   => $r->name,
+					 'link'   => $link,
 					 'region' => KrMethods::plain('COM_KNOWRES_REGION')
 					];
 			}
@@ -218,8 +230,10 @@ class PropertiesController extends BaseController
 			$properties = KrFactory::getListModel('properties')->getAutosearch($query);
 			foreach ($properties as $p) {
 				$options[] =
-					['icon' => 'fas fa-home', 'name' => $p->property_name,
-					 'link' => SiteHelper::buildPropertyLink($p->id), 'region' => $p->region_name
+					['icon'   => 'fas fa-home',
+					 'name'   => $p->property_name,
+					 'link'   => SiteHelper::buildPropertyLink($p->id),
+					 'region' => $p->region_name
 					];
 			}
 		}
@@ -264,16 +278,17 @@ class PropertiesController extends BaseController
 	#[NoReturn] public function search(): void
 	{
 		$region_id = KrMethods::inputArray('region_id');
-		if (!count($region_id)) {
-			$region_id = [KrMethods::getParams()->get('default_region')];
+		if (count($region_id) == 1 && (int)$region_id[0] == 0 ) {
+			$region_id[0] = KrMethods::getParams()->get('default_region');
 		}
 
 		$a = [];
-		foreach ($region_id as $k => $v) {
-			$a[$k] = $v;
+		foreach ($region_id as $id) {
+			$a[] = $id;
 		}
 
 		$input                  = [];
+		$input['Itemid']        = SiteHelper::getItemId('com_knowres', 'properties');
 		$input['region_id']     = $a;
 		$input['property_area'] = KrMethods::inputString('property_area');
 		$input['town']          = KrMethods::inputString('town');
@@ -295,11 +310,9 @@ class PropertiesController extends BaseController
 			}
 		}
 
-		$input['Itemid'] = SiteHelper::getItemId('com_knowres', 'properties');
+		$route = KrMethods::route('index.php?option=com_knowres&view=properties&' .
+			                 urlencode(http_build_query($input)), false);
 
-		$route =
-			KrMethods::route('index.php?option=com_knowres&view=properties&' . http_build_query($input, false, '&'),
-				false);
 		KrMethods::redirect($route);
 	}
 
@@ -373,7 +386,6 @@ class PropertiesController extends BaseController
 		$model = $this->setAFilter($model, $data->filterFeature, 'filter.feature');
 		$model = $this->setAFilter($model, $data->filterPets, 'filter.pets');
 		$model = $this->setAFilter($model, $data->filterType, 'filter.type_id');
-		$model = $this->setAFilter($model, $data->filterTown, 'filter.town');
 
 		return $model->currentlyDisplayed();
 	}
@@ -393,7 +405,9 @@ class PropertiesController extends BaseController
 
 		// set 90 day cache for markers
 		$cache_options =
-			['cachebase'    => JPATH_ADMINISTRATOR . '/cache', 'lifetime' => 129600, 'caching' => true,
+			['cachebase'    => JPATH_ADMINISTRATOR . '/cache',
+			 'lifetime'     => 129600,
+			 'caching'      => true,
 			 'defaultgroup' => 'com_knowres_map'
 			];
 
@@ -412,8 +426,10 @@ class PropertiesController extends BaseController
 					$image   = Media\Images::getMarkerImageLink($m->id);
 					$content =
 						KrMethods::render('properties.mapmarker',
-							['image' => $image, 'name' => $m->name, 'text' => $m->description
-							]);
+						                  ['image' => $image,
+						                   'name'  => $m->name,
+						                   'text'  => $m->description
+						                  ]);
 
 					$tmp            = [];
 					$tmp['lat']     = trim($m->lat);

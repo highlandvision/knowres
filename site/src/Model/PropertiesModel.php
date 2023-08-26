@@ -104,8 +104,8 @@ class PropertiesModel extends ListModel
 
 		$query->select($this->getState('list.select', 'a.id, a.bedrooms, a.categories, a.type_id, a.town_id,
 				a.property_area, a.property_town, a.property_features, a.booking_type, a.created_at,
-				a.sleeps, a.sleeps_extra, a.sleeps_infant_max, a.sleeps_infant_age, a.pets, r.rating, 
-				SUM(a.sleeps + a.sleeps_extra + a.sleeps_infant_max) AS allsleeps'));
+				a.sleeps, a.sleeps_extra, a.sleeps_infant_max, a.sleeps_infant_age, a.pets, r.rating, a.region_id, 
+				a.country_id, SUM(a.sleeps + a.sleeps_extra + a.sleeps_infant_max) AS allsleeps'));
 
 		if ($data->layout == 'discount') {
 			$query->select($this->getState('list.select', 'd.id, d.valid_from, d.valid_to, d.discount, d.is_pc,
@@ -149,7 +149,7 @@ class PropertiesModel extends ListModel
 			'=0');
 
 		if (count($data->region_id)) {
-			$query->where($db->qn('a.region_id') . 'IN (' . implode(',', array_keys($data->region_id)) . ')');
+			$query->where($db->qn('a.region_id') . 'IN (' . implode(',', array_values($data->region_id)) . ')');
 		}
 
 		if ($data->layout == 'category' && $data->category_id) {
@@ -274,17 +274,17 @@ class PropertiesModel extends ListModel
 	 */
 	public function getCountItems(): array
 	{
+		$region   = $this->getCountQuery('a.region_id');
+		$area     = $this->getCountQuery('a.property_area');
 		$bedrooms = $this->getCountQuery('a.bedrooms');
 		$book     = $this->getCountQuery('a.booking_type');
-		$type     = $this->getCountQuery('a.type_id');
-		$town     = $this->getCountQuery('a.property_town');
-		$area     = $this->getCountQuery('a.property_area');
+		$category = $this->getCountCategoryQuery();
+		$feature  = $this->getCountFeatureQuery();
 		$pets     = $this->getCountQuery('a.pets');
 		$price    = $this->getCountQuery();
-		$feature  = $this->getCountFeatureQuery();
-		$category = $this->getCountCategoryQuery();
+		$type     = $this->getCountQuery('a.type_id');
 
-		return [$bedrooms, $book, $feature, $type, $town, $area, $pets, $category, $price];
+		return [$region, $area, $bedrooms, $book, $category, $feature, $pets, $price, $type];
 	}
 
 	/**
@@ -637,6 +637,7 @@ class PropertiesModel extends ListModel
 		$query = self::intFilter($db, $query, 'a.type_id', $this->state->get('filter.type_id'));
 		$query = self::intFilter($db, $query, 'a.pets', $this->state->get('filter.pets'));
 		$query = self::stringFilter($db, $query, 'a.property_area', $this->state->get('filter.area'));
+		$query = self::intFilter($db, $query, 'a.region_id', $this->state->get('filter.region'));
 		$query = self::jsonFindInSet($db, $query, $this->state->get('filter.feature'), 'property_features');
 
 		return self::jsonFindInSet($db, $query, $this->state->get('filter.category'), 'categories');
@@ -841,6 +842,9 @@ class PropertiesModel extends ListModel
 		if ($name != 'a.property_area') {
 			$query = self::stringFilter($db, $query, 'a.property_area', $this->state->get('filter.area'));
 		}
+		if ($name != 'a.pets') {
+			$query = self::stringFilter($db, $query, 'a.pets', $this->state->get('filter.pets'));
+		}
 
 		$query = self::jsonFindInSet($db, $query, $this->state->get('filter.feature'), 'property_features');
 		$query = self::jsonFindInSet($db, $query, $this->state->get('filter.category'), 'categories');
@@ -980,7 +984,7 @@ class PropertiesModel extends ListModel
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected function populateState($ordering = 'a.ordering', $direction = 'asc')
+	protected function populateState($ordering = 'a.ordering', $direction = 'asc'): void
 	{
 		$this->setState('filter.state',
 			$this->getUserStateFromRequest($this->context . '.filter.state', 'filter_state', '', 'string'));
