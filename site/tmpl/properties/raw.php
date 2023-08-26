@@ -19,8 +19,8 @@ if (!$pagination) {
 $data = [];
 
 if (count($this->items)) {
-	$data['view'] = $this->Search->data->view;
-	if ($this->Search->data->layout) {
+	$data['view'] = $this->Response->searchData->view;
+	if ($this->Response->searchData->layout) {
 		$data['items'] = $this->loadTemplate('browse');
 	}
 	else {

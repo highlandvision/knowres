@@ -25,12 +25,8 @@ use RuntimeException;
 use stdClass;
 
 use function array_key_exists;
-use function array_keys;
-use function array_values;
-use function arsort;
 use function asort;
 use function count;
-use function implode;
 use function in_array;
 use function max;
 use function min;
@@ -44,10 +40,10 @@ class Search
 {
 	/* @var Filter Search filters */
 	public Filter $Filter;
-	/* @var AjaxResponse Output ajax data */
-	public AjaxResponse $Response;
+	/* @var Response Output ajax data */
+	public Response $Response;
 	/** @var stdClass Search session data. */
-	public stdClass $data;
+	public stdClass $searchData;
 	/** @var Translations Translations object. */
 	protected Translations $Translations;
 	/** @var array Price ranges. */
@@ -65,121 +61,10 @@ class Search
 	 */
 	public function __construct(stdClass $data)
 	{
-		$this->data         = clone $data;
+		$this->searchData   = clone $data;
 		$this->params       = KrMethods::getParams();
 		$this->Translations = new Translations();
 		$this->Filter       = new Filter($this->params, $this->Translations);
-		$this->Response = new AjaxResponse($this->params, $this->Translations);
-	}
-
-	/**
-	 * Check if filter value is selected
-	 *
-	 * @param  array  $selected  Current counts and selections
-	 * @param  mixed  $value     Value to increment
-	 * @param  bool   $reset     FALSE will not reset any selected items with zero count
-	 *
-	 * @since  1.0.0
-	 * @return array
-	 */
-	public static function checkSelection(array $selected, mixed $value, bool $reset = true): array
-	{
-		$checked = 0;
-		if (isset($selected[$value][2])) {
-			$checked = $selected[$value][2];
-		}
-		$selected[$value][2] = $checked ? 0 : 1;
-
-		if ($reset) {
-			foreach ($selected as $k => $v) {
-				if (!isset($v[1]) || !$v[1]) {
-					$selected[$k][2] = 0;
-				}
-			}
-		}
-
-		return $selected;
-	}
-
-	/**
-	 * Set count for the displayed filters
-	 *
-	 * @param  array  $totalBedrooms
-	 * @param  array  $totalBook
-	 * @param  array  $totalFeature
-	 * @param  array  $totalType
-	 * @param  array  $totalTown
-	 * @param  array  $totalArea
-	 * @param  array  $totalPets
-	 * @param  array  $totalCategory
-	 * @param  array  $idPrice
-	 *
-	 * @since 1.0.0
-	 */
-	public function countAjaxFilters(array $totalBedrooms = [],
-	                                 array $totalBook = [],
-	                                 array $totalFeature = [],
-	                                 array $totalType = [],
-	                                 array $totalTown = [],
-	                                 array $totalArea = [],
-	                                 array $totalPets = [],
-	                                 array $totalCategory = [],
-	                                 array $idPrice = []): void
-	{
-		if ($this->params->get('filter_area')) {
-			$this->data->filterArea = $this->presetFilterCount($this->data->filterArea, $totalArea);
-		}
-
-		if ($this->params->get('filter_bedrooms')) {
-			$this->data->filterBedrooms = $this->zeroFilterCount($this->data->filterBedrooms);
-			$max_bedrooms               = $this->params->get('search_maxbedrooms', 6);
-			foreach ($totalBedrooms as $t) {
-				if ($t->id >= $max_bedrooms) {
-					$this->data->filterBedrooms =
-						$this->setFilterCount($this->data->filterBedrooms, $max_bedrooms, $t->total);
-				}
-				else {
-					$this->data->filterBedrooms =
-						$this->setFilterCount($this->data->filterBedrooms, (int) $t->id, $t->total);
-				}
-			}
-		}
-
-		if ($this->params->get('filter_book')) {
-			$this->data->filterBook = $this->presetFilterCount($this->data->filterBook, $totalBook);
-		}
-
-		if ($this->params->get('filter_category')) {
-			$this->data->filterCategory = $this->zeroFilterCount($this->data->filterCategory);
-			foreach ($totalCategory as $t) {
-				$this->data->filterCategory = $this->setFilterCount($this->data->filterCategory, (int) $t[0], $t[1]);
-			}
-		}
-
-		if ($this->params->get('filter_property_feature')) {
-			$this->data->filterFeature = $this->zeroFilterCount($this->data->filterFeature);
-			foreach ($totalFeature as $t) {
-				$this->data->filterFeature = $this->setFilterCount($this->data->filterFeature, (int) $t[0], $t[1]);
-			}
-		}
-
-		if ($this->params->get('filter_pets')) {
-			$this->data->filterPets = $this->presetFilterCount($this->data->filterPets, $totalPets);
-		}
-
-		if ($this->params->get('filter_price')) {
-			$this->data->filterPrice = $this->zeroFilterCount($this->data->filterPrice);
-			foreach ($idPrice as $t) {
-				if (isset($this->data->rateNet[$t->id])) {
-					$price                   = $this->data->rateNet[$t->id];
-					$this->data->filterPrice = $this->setFilterPriceCount($this->data->filterPrice, $price);
-				}
-			}
-		}
-
-		if ($this->params->get('filter_type')) {
-			$this->data->filterType = $this->presetFilterCount($this->data->filterType, $totalType);
-		}
 	}
 
 	/**
@@ -194,181 +79,29 @@ class Search
 		$this->setInputAvailability();
 		$this->setInputOrdering();
 
-		$this->data->baseIds = [];
-		$baseItems           = KrFactory::getListSiteModel('properties')->getBaseItems($this->data);
+		$this->searchData->baseIds = [];
+		$baseItems                 = KrFactory::getListSiteModel('properties')->getBaseItems($this->searchData);
 		if (is_countable($baseItems) && count($baseItems)) {
-			$this->data->baseIds = array_column($baseItems, 'id');
+			$this->searchData->baseIds = array_column($baseItems, 'id');
 			$this->setCurrency();
 			$this->checkGuestNumbers($baseItems);
 
-			if (!count($this->data->baseIds)) {
+			if (!count($this->searchData->baseIds)) {
 				return;
 			}
 
-			if ($this->data->byAvailability) {
+			if ($this->searchData->byAvailability) {
 				$this->setActualRates();
 			}
 			else {
 				$this->setMinRates();
 			}
 
-			if (count($this->data->baseIds)) {
-				$this->data = $this->Filter->setFilters($baseItems, $this->data);
+			if (count($this->searchData->baseIds)) {
+				$this->searchData = $this->Filter->setFilters($baseItems, $this->searchData);
 			}
 
 			$this->setView();
-		}
-	}
-
-	/**
-	 * Get ajax request data
-	 *
-	 * @param  string  $field  Input type field
-	 * @param  string  $value  Input value field
-	 *
-	 * @throws Exception
-	 * @since        1.0.0
-	 * @noinspection PhpStatementHasEmptyBodyInspection
-	 */
-	public function getAjaxData(string $field, string $value): void
-	{
-		if ($field == 'view' && $this->data->limitstart > 0) {
-			$this->data->start      = $this->data->limitstart;
-			$this->data->limitstart = 0;
-		}
-
-		if ($field == 'page') {
-			$this->data->start = $value;
-		}
-		else if ($field == 'order') {
-			// Ordering requested
-			// Set pagination to beginning
-			$this->data->start = 0;
-
-			if ($value == '01' || $value == '02') {
-				$this->data->ordercustom = '';
-				$this->data->ordering    = 'ordering';
-				$this->data->direction   = $value == '01' ? 'asc' : 'desc';
-			}
-			else if ($value == '11' || $value == '12') {
-				$this->data->ordercustom = '';
-				$this->data->ordering    = 'property_name';
-				$this->data->direction   = $value == '11' ? 'asc' : 'desc';
-			}
-			else if ($value == '21' || $value == '22') {
-				$this->data->ordercustom = $value == '21' ? 'sleeps asc, allsleeps asc' : 'sleeps desc, allsleeps desc';
-				$this->data->ordering    = '';
-				$this->data->direction   = '';
-			}
-			else if ($value == '31' || $value == '32') {
-				$this->data->ordercustom = '';
-				$this->data->ordering    = 'bedrooms';
-				$this->data->direction   = $value == '31' ? 'asc' : 'desc';
-			}
-			else if ($value == '41' || $value == '42') {
-				$value == '41' ? asort($this->data->rateNet) : arsort($this->data->rateNet);
-				$ids                     = array_keys($this->data->rateNet);
-				$ids                     = array_values($ids);
-				$ids                     = implode(',', $ids);
-				$this->data->ordercustom = "field ( a.id, " . $ids . ")";
-				$this->data->ordering    = '';
-				$this->data->direction   = '';
-			}
-			else if ($value == '51' || $value == '52') {
-				$this->data->ordercustom = '';
-				$this->data->ordering    = 'property_area';
-				$this->data->direction   = $value == '51' ? 'asc' : 'desc';
-			}
-			else if ($value == '61' || $value == '62') {
-				$this->data->ordercustom = '';
-				$this->data->ordering    = 'rating';
-				$this->data->direction   = $value == '61' ? 'asc' : 'desc';
-			}
-
-			$this->data->order = $value;
-		}
-		else if ($field === 'view') {
-			//Toggle from map to view
-			$this->data->view = $value;
-		}
-		else if ($field === 'currency') {
-			// TODO-v4.3 Pricing by currency
-			// Set currency, get updated dropdown and refresh current page
-			//			$currency                                                  = $value;
-			//			$tmpBookingHandler->user_settings['current_exchange_rate'] = $currency;
-			//
-			//			if ( is_null( $tmpBookingHandler->user_settings['current_exchange_rate'] ) )
-			//				$tmpBookingHandler->user_settings['current_exchange_rate'] = '';
-			//
-			//			jr_import( 'jomres_currency_conversion' );
-			//			$conversion = new jomres_currency_conversion();
-			//
-			//			if ( !$conversion->check_currency_code_valid( $tmpBookingHandler->user_settings['current_exchange_rate'] ) )
-			//				$tmpBookingHandler->user_settings['current_exchange_rate'] = '';
-			//
-			//			$componentArgs               = [];
-			//			$componentArgs['returnData'] = true;
-			//
-			//			$cDropdown = $MiniComponents->specificEvent( '06000', 'exchange_rate_conversion_selector', $componentArgs );
-			//
-			//			$uids           = $filter_results;
-			//			$num_properties = count( $uids );
-		}
-		else {
-			if ($field === 'clear' || $field === 'toggle') {
-				$filterArea     = $this->clearFilter($this->data->filterArea);
-				$filterBedrooms = $this->clearFilter($this->data->filterBedrooms);
-				$filterBook     = $this->clearFilter($this->data->filterBook);
-				$filterCategory = $this->clearFilter($this->data->filterCategory);
-				$filterFeature  = $this->clearFilter($this->data->filterFeature);
-				$filterPets     = $this->clearFilter($this->data->filterPets);
-				$filterPrice    = $this->clearFilter($this->data->filterPrice);
-				$filterType     = $this->clearFilter($this->data->filterType);
-			}
-			else {
-				$filterArea     = $this->data->filterArea;
-				$filterBedrooms = $this->data->filterBedrooms;
-				$filterBook     = $this->data->filterBook;
-				$filterCategory = $this->data->filterCategory;
-				$filterFeature  = $this->data->filterFeature;
-				$filterPets     = $this->data->filterPets;
-				$filterPrice    = $this->data->filterPrice;
-				$filterType     = $this->data->filterType;
-
-				if ($field == 'area') {
-					$filterArea = self::checkSelection($filterArea, $value);
-				}
-				else if ($field == 'bedrooms') {
-					$filterBedrooms = self::checkSelection($filterBedrooms, $value);
-				}
-				else if ($field == 'book') {
-					$filterBook = self::checkSelection($filterBook, $value);
-				}
-				else if ($field == 'category') {
-					$filterCategory = self::checkSelection($filterCategory, $value);
-				}
-				else if ($field == 'feature') {
-					$filterFeature = self::checkSelection($filterFeature, $value);
-				}
-				else if ($field == 'pets') {
-					$filterPets = self::checkSelection($filterPets, $value);
-				}
-				else if ($field == 'price') {
-					$filterPrice = self::checkSelection($filterPrice, $value);
-				}
-				else if ($field == 'type') {
-					$filterType = self::checkSelection($filterType, $value);
-				}
-			}
-
-			$this->data->filterBedrooms = $filterBedrooms;
-			$this->data->filterBook     = $filterBook;
-			$this->data->filterCategory = $filterCategory;
-			$this->data->filterFeature  = $filterFeature;
-			$this->data->filterPets     = $filterPets;
-			$this->data->filterPrice    = $filterPrice;
-			$this->data->filterType     = $filterType;
-			$this->data->filterArea     = $filterArea;
 		}
 	}
 
@@ -382,9 +115,13 @@ class Search
 	private function checkCalendarData(array $rates): void
 	{
 		$valid = [];
-		foreach ($this->data->baseIds as $id) {
+		foreach ($this->searchData->baseIds as $id) {
 			try {
-				$Calendar = new Calendar\Search($id, $this->data->arrival, $this->data->departure, $rates[$id] ?? []);
+				$Calendar =
+					new Calendar\Search($id,
+					                    $this->searchData->arrival,
+					                    $this->searchData->departure,
+					                    $rates[$id] ?? []);
 				if ($Calendar->checkSearchDates()) {
 					$valid[] = $id;
 				}
@@ -393,7 +130,7 @@ class Search
 			}
 		}
 
-		$this->data->baseIds = $valid;
+		$this->searchData->baseIds = $valid;
 	}
 
 	/**
@@ -408,21 +145,24 @@ class Search
 		$valid = [];
 
 		foreach ($items as $item) {
-			if (!in_array($item->id, $this->data->baseIds)) {
+			if (!in_array($item->id, $this->searchData->baseIds)) {
 				continue;
 			}
 
 			$free =
-				SiteHelper::setFreeGuests($item->sleeps_infant_max, $item->sleeps_infant_age, $this->data->child_ages);
+				SiteHelper::setFreeGuests($item->sleeps_infant_max,
+				                          $item->sleeps_infant_age,
+				                          $this->searchData->child_ages);
 
-			if ($this->data->guests > $item->sleeps + $item->sleeps_extra + $free) {
-				if ($this->data->guests > $item->sleeps + $item->sleeps_extra) {
+			if ($this->searchData->guests > $item->sleeps + $item->sleeps_extra + $free) {
+				if ($this->searchData->guests > $item->sleeps + $item->sleeps_extra) {
 					continue;
 				}
 			}
 
-			if ($this->data->children > 0 && is_countable($this->data->child_ages)) {
-				if (count($this->data->child_ages) > 0 && count($this->data->child_ages) < $this->data->children) {
+			if ($this->searchData->children > 0 && is_countable($this->searchData->child_ages)) {
+				if (count($this->searchData->child_ages) > 0 &&
+					count($this->searchData->child_ages) < $this->searchData->children) {
 					continue;
 				}
 			}
@@ -430,44 +170,7 @@ class Search
 			$valid[] = $item->id;
 		}
 
-		$this->data->baseIds = $valid;
-	}
-
-	/**
-	 * Clear the filter count and selected filters
-	 *
-	 * @param  array  $selected  Selected filters
-	 *
-	 * @since  1.0.0
-	 * @return mixed
-	 */
-	private function clearFilter(array $selected): array
-	{
-		foreach ($selected as $k => $v) {
-			$selected[$k][1] = 0;
-			$selected[$k][2] = 0;
-		}
-
-		return $selected;
-	}
-
-	/**
-	 * Clear and reset the filter data
-	 *
-	 * @param  array  $saved  Saved filter
-	 * @param  array  $new    New filters
-	 *
-	 * @since  3.3.0
-	 * @return array
-	 */
-	private function presetFilterCount(array $saved, array $new): array
-	{
-		$saved = $this->zeroFilterCount($saved);
-		foreach ($new as $t) {
-			$saved = $this->setFilterCount($saved, $t->id, $t->total);
-		}
-
-		return $saved;
+		$this->searchData->baseIds = $valid;
 	}
 
 	/**
@@ -481,34 +184,35 @@ class Search
 	{
 		$rates =
 			$this->setForProperty(KrFactory::getListModel('rates')
-			                               ->getRatesForProperty($this->data->baseIds,
-			                                                     $this->data->arrival,
-			                                                     $this->data->departure));
+			                               ->getRatesForProperty($this->searchData->baseIds,
+			                                                     $this->searchData->arrival,
+			                                                     $this->searchData->departure));
 		$this->checkCalendarData($rates);
-		if (!count($this->data->baseIds)) {
+		if (!count($this->searchData->baseIds)) {
 			return;
 		}
 
 		$discounts   =
-			$this->setForProperty(KrFactory::getListModel('discounts')->getDiscounts($this->data->baseIds));
+			$this->setForProperty(KrFactory::getListModel('discounts')->getDiscounts($this->searchData->baseIds));
 		$extras      =
-			$this->setForProperty(KrFactory::getListModel('extras')->getPricingExtras($this->data->baseIds, true));
+			$this->setForProperty(KrFactory::getListModel('extras')
+			                               ->getPricingExtras($this->searchData->baseIds, true));
 		$ratemarkups =
-			$this->setForProperty(KrFactory::getListModel('ratemarkups')->getMarkups($this->data->baseIds));
+			$this->setForProperty(KrFactory::getListModel('ratemarkups')->getMarkups($this->searchData->baseIds));
 		$seasons     = KrFactory::getListModel('seasons')->getSeasons();
 
 		$contractSession = new KrSession\Contract;
-		foreach ($this->data->baseIds as $property_id) {
+		foreach ($this->searchData->baseIds as $property_id) {
 			$contractData                = $contractSession->resetData();
 			$contractData->adjustmentsRq = false;
-			$contractData->adults        = $this->data->adults;
-			$contractData->arrival       = $this->data->arrival;
-			$contractData->children      = $this->data->children;
-			$contractData->child_ages    = $this->data->child_ages;
-			$contractData->departure     = $this->data->departure;
+			$contractData->adults        = $this->searchData->adults;
+			$contractData->arrival       = $this->searchData->arrival;
+			$contractData->children      = $this->searchData->children;
+			$contractData->child_ages    = $this->searchData->child_ages;
+			$contractData->departure     = $this->searchData->departure;
 			$contractData->discountsDb   = $discounts[$property_id] ?? [];
 			$contractData->extrasDb      = $extras[$property_id] ?? [];
-			$contractData->guests        = $this->data->guests;
+			$contractData->guests        = $this->searchData->guests;
 			$contractData->property_id   = $property_id;
 			$contractData->ratesDb       = $rates[$property_id] ?? [];
 			$contractData->ratemarkupsDb = $ratemarkups[$property_id] ?? [];
@@ -530,15 +234,15 @@ class Search
 			$contract_total = $Hub->getValue('contract_total');
 			$discount       = $Hub->getValue('discount');
 			if (!$contract_total) {
-				$this->data->rateNet[$property_id]      = $this->highval;
-				$this->data->rateDiscount[$property_id] = 0;
+				$this->searchData->rateNet[$property_id]      = $this->highval;
+				$this->searchData->rateDiscount[$property_id] = 0;
 			}
 			else {
-				$this->data->rateNet[$property_id]      = $contract_total;
-				$this->data->rateDiscount[$property_id] = $discount;
+				$this->searchData->rateNet[$property_id]      = $contract_total;
+				$this->searchData->rateDiscount[$property_id] = $discount;
 			}
 
-			$this->data->currency = $Hub->getValue('currency');
+			$this->searchData->currency = $Hub->getValue('currency');
 		}
 
 		$contractSession->resetData();
@@ -553,51 +257,9 @@ class Search
 	 */
 	private function setCurrency(): void
 	{
-		$settings             =
-			KrFactory::getListModel('propertysettings')->getPropertysettings($this->data->baseIds[0], 'currency');
-		$this->data->currency = $settings['currency'];
-	}
-
-	/**
-	 * Increase the filter count if a matching record is found
-	 *
-	 * @param  array  $selected  Current counts and selections
-	 * @param  mixed  $id        Current item
-	 * @param  int    $value     Value to increment
-	 *
-	 * @since  1.0.0
-	 * @return array
-	 */
-	private function setFilterCount(array $selected, mixed $id, int $value): array
-	{
-		foreach ($selected as $k => $v) {
-			if ($k == $id) {
-				$selected[$k][1] += $value;
-			}
-		}
-
-		return $selected;
-	}
-
-	/**
-	 * Increase the filter count for prices if a record is found
-	 *
-	 * @param  array  $selected  Current counts and selections
-	 * @param  int    $price     Price of current item
-	 *
-	 * @since  1.2.2
-	 * @return array
-	 */
-	private function setFilterPriceCount(array $selected, int $price): array
-	{
-		foreach ($selected as $k => $v) {
-			if ($price >= (int) $k && $price <= (int) $v[0]) {
-				$selected[$k][1]++;
-				break;
-			}
-		}
-
-		return $selected;
+		$settings                   =
+			KrFactory::getListModel('propertysettings')->getPropertysettings($this->searchData->baseIds[0], 'currency');
+		$this->searchData->currency = $settings['currency'];
 	}
 
 	/**
@@ -626,16 +288,17 @@ class Search
 	 */
 	private function setInputAvailability(): void
 	{
-		if (!empty($this->data->arrival)) {
-			if (!empty($this->data->departure)) {
-				$this->data->nights = TickTock::differenceDays($this->data->arrival, $this->data->departure);
+		if (!empty($this->searchData->arrival)) {
+			if (!empty($this->searchData->departure)) {
+				$this->searchData->nights =
+					TickTock::differenceDays($this->searchData->arrival, $this->searchData->departure);
 			}
 			else {
-				$this->data->departure = TickTock::modifyDays($this->data->arrival, 7);
-				$this->data->nights    = 7;
+				$this->searchData->departure = TickTock::modifyDays($this->searchData->arrival, 7);
+				$this->searchData->nights    = 7;
 			}
 
-			$this->data->byAvailability = true;
+			$this->searchData->byAvailability = true;
 		}
 	}
 
@@ -647,37 +310,37 @@ class Search
 	 */
 	private function setInputOrdering(): void
 	{
-		if (!empty($this->data->order)) {
+		if (!empty($this->searchData->order)) {
 			return;
 		}
 
-		$default               = $this->params->get('order_default', '01');
-		$this->data->direction = 'asc';
+		$default                     = $this->params->get('order_default', '01');
+		$this->searchData->direction = 'asc';
 
 		switch ($default) {
 			case '01':
-				$this->data->ordercustom = '';
-				$this->data->ordering    = 'a.ordering';
+				$this->searchData->ordercustom = '';
+				$this->searchData->ordering    = 'a.ordering';
 				break;
 			case '11':
-				$this->data->ordercustom = '';
-				$this->data->ordering    = 'property_name';
+				$this->searchData->ordercustom = '';
+				$this->searchData->ordering    = 'property_name';
 				break;
 			case '21':
-				$this->data->ordercustom = 'sleeps asc, allsleeps asc';
-				$this->data->ordering    = '';
+				$this->searchData->ordercustom = 'sleeps asc, allsleeps asc';
+				$this->searchData->ordering    = '';
 				break;
 			case '31':
-				$this->data->ordercustom = '';
-				$this->data->ordering    = 'bedrooms';
+				$this->searchData->ordercustom = '';
+				$this->searchData->ordering    = 'bedrooms';
 				break;
 			case '51':
-				$this->data->ordercustom = '';
-				$this->data->ordering    = 'property_area';
+				$this->searchData->ordercustom = '';
+				$this->searchData->ordering    = 'property_area';
 				break;
 			case '61':
-				$this->data->ordercustom = '';
-				$this->data->ordering    = 'rating';
+				$this->searchData->ordercustom = '';
+				$this->searchData->ordering    = 'rating';
 				break;
 		}
 	}
@@ -692,11 +355,11 @@ class Search
 	private function setMinRates(): void
 	{
 		$prices = [];
-		foreach ($this->data->baseIds as $p) {
+		foreach ($this->searchData->baseIds as $p) {
 			$prices[$p] = $this->highval;
 		}
 
-		$rates = KrFactory::getListModel('rates')->getMinRates($this->data->baseIds, TickTock::getDate(), 1);
+		$rates = KrFactory::getListModel('rates')->getMinRates($this->searchData->baseIds, TickTock::getDate(), 1);
 		if (is_countable($rates) && count($rates)) {
 			$net_rates  = KrFactory::getListModel('propertysettings')->getOneSetting('net_rates');
 			$net_markup = KrFactory::getListModel('propertysettings')->getOneSetting('net_markup');
@@ -715,8 +378,8 @@ class Search
 		}
 
 		asort($prices);
-		$this->data->rateNet      = $prices;
-		$this->data->rateDiscount = [];
+		$this->searchData->rateNet      = $prices;
+		$this->searchData->rateDiscount = [];
 	}
 
 	/**
@@ -727,12 +390,12 @@ class Search
 	 */
 	private function setView(): void
 	{
-		$view = $this->data->view;
+		$view = $this->searchData->view;
 		if (!$view) {
 			$view = $this->params->get('default_view', 'list');
 		}
 
-		$this->data->view = $view;
+		$this->searchData->view = $view;
 	}
 
 	/**
@@ -743,39 +406,22 @@ class Search
 	 */
 	private function validateRegion(): void
 	{
-		if (!count($this->data->region_id) && !$this->data->layout) {
-			$id                         = $this->params->get('default_region');
-			$this->data->region_id[$id] = $this->Translations->getText('region', $id);
+		if (!count($this->searchData->region_id) && !$this->searchData->layout) {
+			$id                            = $this->params->get('default_region');
+			$this->searchData->region_id[] = $id;
 		}
 
-		foreach ($this->data->region_id as $id => $region_name) {
+		foreach ($this->searchData->region_id as $id) {
 			$region = KrFactory::getAdminModel('region')->getItem($id);
 			if (empty($region->id) || $region->state != 1) {
-				unset($this->data->region_id[$id]);
+				unset($this->searchData->region_id[$id]);
 				continue;
 			}
 
-			$this->data->region_name[$id]  = $region_name;
-			$this->data->country_name[$id] = $this->Translations->getText('country', $region->country_id);
-			$this->data->map_zoom          = min($region->map_zoom, $this->data->map_zoom);
-			$this->data->map_zoom_max      = max($region->map_zoom_max, $this->data->map_zoom_max);
+			$this->searchData->region_name[$id]  = $this->Translations->getText('region', $region->id);
+			$this->searchData->country_name[$id] = $this->Translations->getText('country', $region->country_id);
+			$this->searchData->map_zoom          = min($region->map_zoom, $this->searchData->map_zoom);
+			$this->searchData->map_zoom_max      = max($region->map_zoom_max, $this->searchData->map_zoom_max);
 		}
-	}
-
-	/**
-	 * Zeroise the filter count
-	 *
-	 * @param  array  $selected  Selected items
-	 *
-	 * @since  1.0.0
-	 * @return array
-	 */
-	private function zeroFilterCount(array $selected): array
-	{
-		foreach ($selected as $k => $v) {
-			$selected[$k][1] = 0;
-		}
-
-		return $selected;
 	}
 }

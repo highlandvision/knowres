@@ -14,7 +14,7 @@ defined('_JEXEC') or die;
 use Exception;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\HtmlView\Site as KrHtmlView;
-use HighlandVision\KR\Search\Search;
+use HighlandVision\KR\Search\Response;
 use HighlandVision\KR\Session as KrSession;
 use HighlandVision\KR\SiteHelper;
 
@@ -27,8 +27,8 @@ use function count;
  */
 class RawView extends KrHtmlView
 {
-	/** @var Search Site search */
-	protected Search $Search;
+	/** @var Response Site search */
+	protected Response $Response;
 	/** @var bool True if favourites selected */
 	protected bool $favs = false;
 	/** @var string Modules output */
@@ -64,11 +64,10 @@ class RawView extends KrHtmlView
 			parent::display($tpl);
 		}
 
-		$this->Search = new Search($searchData);
+		$this->Response = new Response($searchData);
 
 		$field = KrMethods::inputString('field', '');
 		$value = KrMethods::inputString('value', '');
-
 		if ($value == 'favs' && !count($this->saved)) {
 			$this->nofavs = true;
 			$field        = 'view';
@@ -84,31 +83,31 @@ class RawView extends KrHtmlView
 			$this->state->set('filter.id', $fids);
 			//TODO-v4.3 display favourites on map only when displayed in list
 			$this->items              = $this->get('items');
-			$this->Search->data->view = 'favs';
+			$this->Response->data->view = 'favs';
 		}
 		else {
 			if ($value == 'initial') {
 				$value = $this->params->get('default_view', 'list');
 			}
 			else if ($field == 'view' && !$value) {
-				$value = $this->Search->data->view;
+				$value = $this->Response->data->view;
 				if (!$value) {
 					$value = $this->params->get('default_view', 'list');
 				}
 			}
 
-			$this->Search->getAjaxData($field, $value);
-			$searchSession->setData($this->Search->data);
-			$this->state->set('filter.id', $this->Search->data->baseIds);
+			$this->Response->getAjaxData($field, $value);
+			$searchSession->setData($this->Response->searchData);
+			$this->state->set('filter.id', $this->Response->searchData->baseIds);
 
 			// Prices are a bit different as can't be filtered by the db
 			// if price filters exist compare against the generated search prices and
 			// reduce the base property filter sent to the search
 			$uids = [];
-			foreach ($this->Search->data->baseIds as $p) {
-				foreach ($this->Search->data->filterPrice as $k => $f) {
+			foreach ($this->Response->searchData->baseIds as $p) {
+				foreach ($this->Response->searchData->filterPrice as $k => $f) {
 					if ($f[2]) {
-						$price = $this->Search->data->rateNet[$p];
+						$price = $this->Response->searchData->rateNet[$p];
 						if ((int) $price >= (int) $k && (int) $price <= (int) $f[0]) {
 							$uids[] = $p;
 						}
@@ -123,7 +122,17 @@ class RawView extends KrHtmlView
 			}
 
 			$filter = [];
-			foreach ($this->Search->data->filterArea as $k => $f) {
+			foreach ($this->Response->searchData->filterRegion as $k => $f) {
+				if ($f[2]) {
+					$filter[] = $k;
+				}
+			}
+			if (count($filter)) {
+				$this->state->set('filter.region', $filter);
+			}
+
+			$filter = [];
+			foreach ($this->Response->searchData->filterArea as $k => $f) {
 				if ($f[2]) {
 					$filter[] = $k;
 				}
@@ -132,9 +141,9 @@ class RawView extends KrHtmlView
 				$this->state->set('filter.area', $filter);
 			}
 
-			$last   = array_key_last($this->Search->data->filterBedrooms);
+			$last   = array_key_last($this->Response->searchData->filterBedrooms);
 			$filter = [];
-			foreach ($this->Search->data->filterBedrooms as $k => $f) {
+			foreach ($this->Response->searchData->filterBedrooms as $k => $f) {
 				if ($f[2]) {
 					if ($k == $last) {
 						for ($i = 0; $i < 10; $i++) {
@@ -151,7 +160,7 @@ class RawView extends KrHtmlView
 			}
 
 			$filter = [];
-			foreach ($this->Search->data->filterBook as $k => $f) {
+			foreach ($this->Response->searchData->filterBook as $k => $f) {
 				if ($f[2]) {
 					$filter[] = $k;
 				}
@@ -161,7 +170,7 @@ class RawView extends KrHtmlView
 			}
 
 			$filter = [];
-			foreach ($this->Search->data->filterCategory as $k => $f) {
+			foreach ($this->Response->searchData->filterCategory as $k => $f) {
 				if ($f[2]) {
 					$filter[] = $k;
 				}
@@ -171,7 +180,7 @@ class RawView extends KrHtmlView
 			}
 
 			$filter = [];
-			foreach ($this->Search->data->filterFeature as $k => $f) {
+			foreach ($this->Response->searchData->filterFeature as $k => $f) {
 				if ($f[2]) {
 					$filter[] = $k;
 				}
@@ -181,7 +190,7 @@ class RawView extends KrHtmlView
 			}
 
 			$filter = [];
-			foreach ($this->Search->data->filterPets as $k => $f) {
+			foreach ($this->Response->searchData->filterPets as $k => $f) {
 				if ($f[2]) {
 					$filter[] = $k;
 				}
@@ -191,7 +200,7 @@ class RawView extends KrHtmlView
 			}
 
 			$filter = [];
-			foreach ($this->Search->data->filterType as $k => $f) {
+			foreach ($this->Response->searchData->filterType as $k => $f) {
 				if ($f[2]) {
 					$filter[] = $k;
 				}
@@ -203,21 +212,21 @@ class RawView extends KrHtmlView
 			$this->state->set('filter.state', 1);
 			$this->state->set('filter.approved', 1);
 			$this->state->set('filter.private', 0);
-			$this->state->set('list.start', $this->Search->data->start);
-			$this->state->set('list.ordercustom', $this->Search->data->ordercustom);
-			$this->state->set('list.ordering', $this->Search->data->ordering);
-			$this->state->set('list.direction', $this->Search->data->direction);
+			$this->state->set('list.start', $this->Response->searchData->start);
+			$this->state->set('list.ordercustom', $this->Response->searchData->ordercustom);
+			$this->state->set('list.ordering', $this->Response->searchData->ordering);
+			$this->state->set('list.direction', $this->Response->searchData->direction);
 			$this->state->set('list.limit', $this->params->get('list_limit'));
 
 			$this->items = $this->get('items');
 			$result      = $this->get('countitems');
-			$this->Search->countAjaxFilters($result[0], $result[1], $result[2], $result[3], $result[4], $result[5],
+			$this->Response->countAjaxFilters($result[0], $result[1], $result[2], $result[3], $result[4], $result[5],
 				$result[6], $result[7], $result[8]);
 		}
 
 		$this->modules    = KrMethods::loadInternal('{loadposition propertiesview}');
 		$this->order      =
-			$this->Search->data->order != '' ? $this->Search->data->order : $this->params->get('order_default');
+			$this->Response->searchData->order != '' ? $this->Response->searchData->order : $this->params->get('order_default');
 		$this->pagination = $this->get('pagination');
 		$this->Itemid     = SiteHelper::getItemId('com_knowres', 'property', ['id' => 0]);
 
