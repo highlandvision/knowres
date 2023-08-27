@@ -28,7 +28,7 @@ use HighlandVision\KR\Utility;
 		</h4>
 		<p style="margin-bottom:0.5rem;">
 			<?php echo KrMethods::plain("COM_KNOWRES_COLON_AREA"); ?>
-			<strong><?php echo $this->item->property_area . ', ' . $this->item->town_name; ?></strong>
+			<strong><?php echo $this->item->property_area . ', ' . $this->item->region_name; ?></strong>
 			<br>
 			<?php echo KrMethods::plain("COM_KNOWRES_COLON_BEDROOMS"); ?>
 			<strong><?php echo $this->item->bedrooms; ?></strong>

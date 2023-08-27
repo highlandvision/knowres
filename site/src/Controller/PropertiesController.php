@@ -20,10 +20,12 @@ use HighlandVision\KR\Session as KrSession;
 use HighlandVision\KR\SiteHelper;
 use HighlandVision\KR\Utility;
 use JetBrains\PhpStorm\NoReturn;
+use Joomla\CMS\Cache\Cache;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Response\JsonResponse;
 
+use function array_push;
 use function array_unique;
 use function count;
 use function header;
@@ -47,7 +49,7 @@ class PropertiesController extends BaseController
 	 * Ajax add / remove favorite
 	 *
 	 * @throws Exception
-	 * @since  1.0.0
+	 * @since        1.0.0
 	 * @noinspection PhpUnused
 	 */
 	#[NoReturn] public function favourite(): void
@@ -112,7 +114,7 @@ class PropertiesController extends BaseController
 	 * otherwise search page map
 	 *
 	 * @throws Exception
-	 * @since  3.2.0
+	 * @since        3.2.0
 	 * @noinspection PhpUnused
 	 */
 	public function mapdata(): void
@@ -179,7 +181,7 @@ class PropertiesController extends BaseController
 	 * Ajax set default view for map modal
 	 *
 	 * @throws Exception
-	 * @since   2.2.0
+	 * @since        2.2.0
 	 * @noinspection PhpUnused
 	 */
 	#[NoReturn] public function mapsession(): void
@@ -278,7 +280,7 @@ class PropertiesController extends BaseController
 	#[NoReturn] public function search(): void
 	{
 		$region_id = KrMethods::inputArray('region_id');
-		if (count($region_id) == 1 && (int)$region_id[0] == 0 ) {
+		if (count($region_id) == 1 && (int) $region_id[0] == 0) {
 			$region_id[0] = KrMethods::getParams()->get('default_region');
 		}
 
@@ -311,7 +313,8 @@ class PropertiesController extends BaseController
 		}
 
 		$route = KrMethods::route('index.php?option=com_knowres&view=properties&' .
-			                 urlencode(http_build_query($input)), false);
+		                          urlencode(http_build_query($input)),
+		                          false);
 
 		KrMethods::redirect($route);
 	}
@@ -393,15 +396,15 @@ class PropertiesController extends BaseController
 	/**
 	 * Find and set the map markers
 	 *
-	 * @param  int  $region_id  ID of region
+	 * @param  array  $region_id  ID of region
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
 	 * @return array
 	 */
-	protected function setMapMarkers(int $region_id): array
+	protected function setMapMarkers(array $region_id): array
 	{
-		$markers = false;
+		$markers = [];
 
 		// set 90 day cache for markers
 		$cache_options =
@@ -411,43 +414,18 @@ class PropertiesController extends BaseController
 			 'defaultgroup' => 'com_knowres_map'
 			];
 
-		$cache       = KrMethods::getCache($cache_options);
-		$map_markers = $cache->get($region_id);
-		if ($map_markers) {
-			$map_markers = Utility::decodeJson($map_markers);
-			$markers     = true;
-		}
-
-		if (!$markers) {
-			$map_markers = [];
-			$markers     = KrFactory::getListModel('mapmarkers')->getAll($region_id);
-			foreach ($markers as $m) {
-				if ($m->lat && $m->lng) {
-					$image   = Media\Images::getMarkerImageLink($m->id);
-					$content =
-						KrMethods::render('properties.mapmarker',
-						                  ['image' => $image,
-						                   'name'  => $m->name,
-						                   'text'  => $m->description
-						                  ]);
-
-					$tmp            = [];
-					$tmp['lat']     = trim($m->lat);
-					$tmp['lng']     = trim($m->lng);
-					$tmp['title']   = trim($m->mapcategory_name);
-					$tmp['html']    = $content;
-					$tmp['icon']    = KrMethods::getRoot() . KrMethods::route($m->mapcategory_mapicon);
-					$tmp['boxinfo'] = '';
-					$map_markers[]  = $tmp;
-				}
+		$cache = KrMethods::getCache($cache_options);
+		foreach ($region_id as $id) {
+			$cache_markers = $cache->get($id);
+			if ($cache_markers) {
+				$count = array_push($markers, Utility::decodeJson($cache_markers));
 			}
-
-			if (is_countable($map_markers) && count($map_markers)) {
-				$cache->store(Utility::encodeJson($map_markers), $region_id);
+			else {
+				$count = array_push($markers, $this->getMapMarkers($id, $cache));
 			}
 		}
 
-		return $map_markers;
+		return $markers;
 	}
 
 	/**
@@ -482,14 +460,55 @@ class PropertiesController extends BaseController
 			$tmp['html'] = '<div style="margin-bottom:10px;font-size:1rem;line-height:1.5;">' .
 				$item->property_name .
 				'</div>
-							<div class="text-center"><a href="' .
-				$link .
-				'" class="button small no-margin-bottom">' .
+				<div class="text-center">
+				<a href="' . $link . '" class="button small no-margin-bottom">' .
 				KrMethods::plain('COM_KNOWRES_SEE_DETAILS') .
 				'</a></div>';
 			$tmp['link'] = SiteHelper::buildPropertyLink($item->id, null, true);
 		}
 
 		return $tmp;
+	}
+
+	/**
+	 * Get map markers for region
+	 *
+	 * @param  int    $region_id  ID of region
+	 * @param  Cache  $cache      Cache instance
+	 *
+	 * @throws Exception
+	 * @since  4.3.0
+	 * @return array
+	 */
+	private function getMapMarkers(int $region_id, Cache $cache): array
+	{
+		$map_markers = [];
+		$markers     = KrFactory::getListModel('mapmarkers')->getAll($region_id);
+		foreach ($markers as $m) {
+			if ($m->lat && $m->lng) {
+				$image   = Media\Images::getMarkerImageLink($m->id);
+				$content =
+					KrMethods::render('properties.mapmarker',
+					                  ['image' => $image,
+					                   'name'  => $m->name,
+					                   'text'  => $m->description
+					                  ]);
+
+				$tmp            = [];
+				$tmp['lat']     = trim($m->lat);
+				$tmp['lng']     = trim($m->lng);
+				$tmp['title']   = trim($m->mapcategory_name);
+				$tmp['html']    = $content;
+				$tmp['icon']    = KrMethods::getRoot() . KrMethods::route($m->mapcategory_mapicon);
+				$tmp['boxinfo'] = '';
+				$map_markers[]  = $tmp;
+			}
+		}
+
+		if (is_countable($map_markers) && count($map_markers)) {
+			$cache->store(Utility::encodeJson($map_markers), $region_id);
+		}
+
+		return $map_markers;
 	}
 }
