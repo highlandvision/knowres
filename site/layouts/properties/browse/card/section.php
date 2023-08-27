@@ -33,8 +33,7 @@ extract($displayData);
 <div class="info small">
 	<?php echo strtoupper($item->property_area); ?>
 	<?php if (!$one_region) : ?>
-		<?php echo ' / '; ?>
-		<?php echo $item->region_name . ' / '; ?>
+		<?php echo ', ' . $item->region_name . ', '; ?>
 		<?php echo Translations::getCountryName($item->country_id); ?>
 	<?php endif; ?>
 	<br>

@@ -15,7 +15,7 @@ use HighlandVision\KR\Framework\KrMethods;
 <div class="row kr-searchbar">
 	<div class="small-12 medium-8 columns">
 		<div class="small button-group">
-			<button type="button" class="button left-off-canvas-toggle"
+			<button type="button" class="button sort left-off-canvas-toggle" data-value="sort"
 			        data-toggle="kr-properties-sortby-off-canvas" id="sortby"
 			        title="<?php echo KrMethods::plain('COM_KNOWRES_SORT_LIST'); ?>"
 			        aria-label="<?php echo KrMethods::plain('COM_KNOWRES_SORT_LIST'); ?>">
@@ -36,7 +36,7 @@ use HighlandVision\KR\Framework\KrMethods;
 
 			<a class="button map map-trigger" data-zoom="<?php echo $this->Search->data->map_zoom; ?>"
 			   data-zoommax="<?php echo $this->Search->data->map_zoom_max; ?>" data-target="kr-search-map-full"
-			   data-type="cluster" data-forcemap="<?php echo $this->Search->data->map_modal; ?>"
+			   data-value="map" data-type="cluster" data-forcemap="<?php echo $this->Search->data->map_modal; ?>"
 			   data-maptypeid="<?php echo $this->params->get('property_map_type', ''); ?>">
 				<i class="fas fa-map-marker"></i>
 				<span class="show-for-medium">
@@ -50,7 +50,7 @@ use HighlandVision\KR\Framework\KrMethods;
 				</span>
 			</a>
 
-			<button type="button" class="button right-off-canvas-toggle"
+			<button type="button" class="button filter right-off-canvas-toggle" data-value="filter"
 			        data-toggle="kr-properties-filters-off-canvas"
 			        title="<?php echo KrMethods::plain('COM_KNOWRES_FILTER'); ?>"
 			        aria-label="<?php echo KrMethods::plain('COM_KNOWRES_FILTER'); ?>">
