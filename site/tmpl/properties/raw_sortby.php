@@ -48,6 +48,16 @@ if (!$this->params->get('order_ordering') &&
 	?>
 <?php endif; ?>
 
+<?php if ($this->params->get('order_area')): ?><?php
+	echo KrMethods::render('properties.filtersort', ['order'    => $this->order,
+	                                                 'heading'  => KrMethods::plain('COM_KNOWRES_SORTBY_AREA'),
+	                                                 'value1'   => '51',
+	                                                 'value2'   => '52',
+	                                                 'sorttype' => 'a'
+	]);
+	?>
+<?php endif; ?>
+
 <?php if ($this->params->get('order_name')): ?>
 	<?php echo KrMethods::render('properties.filtersort', ['order'    => $this->order,
 	                                                       'heading'  => KrMethods::plain('COM_KNOWRES_SORTBY_NAME'),
@@ -84,16 +94,6 @@ if (!$this->params->get('order_ordering') &&
 	                                                       'value1'   => '41',
 	                                                       'value2'   => '42',
 	                                                       'sorttype' => 'n'
-	]);
-	?>
-<?php endif; ?>
-
-<?php if ($this->params->get('order_area')): ?><?php
-	echo KrMethods::render('properties.filtersort', ['order'    => $this->order,
-	                                                 'heading'  => KrMethods::plain('COM_KNOWRES_SORTBY_AREA'),
-	                                                 'value1'   => '51',
-	                                                 'value2'   => '52',
-	                                                 'sorttype' => 'a'
 	]);
 	?>
 <?php endif; ?>

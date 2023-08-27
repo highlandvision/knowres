@@ -52,12 +52,12 @@ extract($displayData);
 <?php endif; ?>
 
 <div class="info">
+	<?php echo strtoupper($item->property_area); ?>
 	<?php if (!$one_region) : ?>
-		<?php echo Translations::getCountryName($item->country_id) . ' / '; ?>
+		<?php echo ' / '; ?>
 		<?php echo $item->region_name . ' / '; ?>
+		<?php echo Translations::getCountryName($item->country_id); ?>
 	<?php endif; ?>
-	<?php echo Translations::getTownName($item->town_id) . ' / '; ?>
-	<?php echo $item->property_area; ?>
 	<br>
 	<?php echo KrMethods::plain('COM_KNOWRES_SLEEPS'); ?>
 	<?php echo $item->sleeps; ?>
