@@ -82,7 +82,7 @@ class RawView extends KrHtmlView
 
 			$this->state->set('filter.id', $fids);
 			//TODO-v4.3 display favourites on map only when displayed in list
-			$this->items              = $this->get('items');
+			$this->items                      = $this->get('items');
 			$this->Response->searchData->view = 'favs';
 		}
 		else {
@@ -220,13 +220,21 @@ class RawView extends KrHtmlView
 
 			$this->items = $this->get('items');
 			$result      = $this->get('countitems');
-			$this->Response->countAjaxFilters($result[0], $result[1], $result[2], $result[3], $result[4], $result[5],
-				$result[6], $result[7], $result[8]);
+			$this->Response->countAjaxFilters($result[0],
+			                                  $result[1],
+			                                  $result[2],
+			                                  $result[3],
+			                                  $result[4],
+			                                  $result[5],
+			                                  $result[6],
+			                                  $result[7],
+			                                  $result[8]);
 		}
 
 		$this->modules    = KrMethods::loadInternal('{loadposition propertiesview}');
 		$this->order      =
-			$this->Response->searchData->order != '' ? $this->Response->searchData->order : $this->params->get('order_default');
+			$this->Response->searchData->order != '' ? $this->Response->searchData->order :
+				$this->params->get('order_default');
 		$this->pagination = $this->get('pagination');
 		$this->Itemid     = SiteHelper::getItemId('com_knowres', 'property', ['id' => 0]);
 

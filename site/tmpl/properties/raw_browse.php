@@ -16,10 +16,9 @@ use HighlandVision\KR\Framework\KrMethods;
 $one_region = count($this->Response->searchData->region_id) == 1 &&
 	KrMethods::getParams('default_region') == $this->Response->searchData->region_id[0];
 
-// TODO-v43 what is this
-$results = KrFactory::getListModel('propertyfeatures')->getAll(true);
-foreach ($results as $r) {
-	$key_features[$r->id] = $r->name;
+$kf = KrFactory::getListModel('propertyfeatures')->getAll(true);
+foreach ($kf as $f) {
+	$key_features[$f->id] = $f->name;
 }
 ?>
 

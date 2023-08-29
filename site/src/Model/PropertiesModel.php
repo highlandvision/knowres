@@ -924,8 +924,7 @@ class PropertiesModel extends ListModel
 			$db->qn('i.state') .
 			'=1');
 
-		$private = $this->state->get('filter.private', 0);
-		$query->where($db->qn('a.private') . '=' . (int) $private)
+		$query->where($db->qn('a.private') . '=' . (int) $this->state->get('filter.private', 0))
 		      ->where($db->qn('a.state') . '=1')
 		      ->where($db->qn('a.approved') . '=1');
 

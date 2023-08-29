@@ -68,7 +68,6 @@ const lang = "en";
 
 		static closeKrInfowindow() {
 			$('#kr-infowindow').hide();
-//			"#kr-infowindow".style.display = 'none';
 			infoWindow.close();
 			infoWindow2.close();
 		}
@@ -262,7 +261,7 @@ const lang = "en";
 						},
 						success: function (data) {
 							$('#kr-infowindow').fadeIn(400).html(data).show();
-							$(".kr-infowindow-slideshow").not('.slick-initialized').slick({
+							$('.kr-infowindow-slideshow').not('.slick-initialized').slick({
 								nextArrow: '<i class="slick-nav next fas fa-chevron-right "></i>',
 								prevArrow: '<i class="slick-nav prev fas fa-chevron-left "></i>',
 								autoplay:  true
