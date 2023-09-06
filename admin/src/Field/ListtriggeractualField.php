@@ -49,10 +49,7 @@ class ListtriggeractualField extends ListField
 		$options['BOOKAUTHENTICATE']         = 'BOOKAUTHENTICATE (SCA Authentication Required for Payment)';
 		$options['BOOKREQUESTCANCEL']        = 'BOOKREQUESTCANCEL (Request Cancelled Owner Declined)';
 		$options['BOOKREQUESTCANCELEXPIRED'] = 'BOOKREQUESTCANCELEXPIRED (Request Cancelled No Owner Response)';
-		if (KrMethods::getParams()->get('property_rooms', 0))
-		{
 			$options['GUESTENQUIRY'] = 'GUESTENQUIRY (Guest Enquiry)';
-		}
 		$options['MANUALBOOK']         = 'MANUALBOOK (Manual Guest Update)';
 		$options['MANUALBOOKOWNER']    = 'MANUALBOOKOWNER (Manual Owner Update)';
 		$options['CUSTOMBYDATE']       = 'CUSTOMBYDATE (Custom Emails by Date and Status)';
@@ -63,8 +60,7 @@ class ListtriggeractualField extends ListField
 		$options['REVIEWREQUEST']      = 'REVIEWREQUEST (Review Request)';
 		$options['REVIEWREMINDER']     = 'REVIEWREMINDER (Review Reminder)';
 
-		if (KrMethods::getParams()->get('create_user', 0))
-		{
+		if (KrMethods::getParams()->get('create_user', 0)) {
 			$options['USERREGISTRATION'] = 'USERREGISTRATION (Send User Registration)';
 		}
 
@@ -85,8 +81,7 @@ class ListtriggeractualField extends ListField
 		$options = [];
 
 		$values = self::getValues();
-		foreach ($values as $k => $v)
-		{
+		foreach ($values as $k => $v) {
 			$options[] = HTMLHelper::_('select.option', $k, $v);
 		}
 

@@ -6,6 +6,7 @@
  * @license    See the file "LICENSE.txt" for the full license governing this code.
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
+/** @noinspection PhpUnhandledExceptionInspection */
 
 defined('_JEXEC') or die;
 
@@ -37,6 +38,9 @@ if (!count($properties))
 
 $slidestoshow = $params->get('slidestoshow', '3');
 $title        = $params->get('title', '');
+if (!$title) {
+	$title    = $module->title;
+}
 $price        = $params->get('price', true);
 $items        = KrFactory::getListSiteModel('properties')->getMinMaxRates($properties);
 $currencies   = KrFactory::getListModel('propertysettings')->getOneSetting('currency');

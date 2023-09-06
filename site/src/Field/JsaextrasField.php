@@ -17,7 +17,7 @@ use Joomla\CMS\Form\FormField;
  *
  * @since 3.2.0
  */
-class Jsaextras extends FormField
+class JsaextrasField extends FormField
 {
 	/**
 	 * Method to get the field input markup.

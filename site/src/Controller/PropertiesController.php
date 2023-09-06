@@ -382,7 +382,7 @@ class PropertiesController extends BaseController
 			$model->setState('filter.id', $uids);
 		}
 
-		$model = $this->setAFilter($model, $data->filterArea, 'filter.area');
+		$model = $this->setAFilter($model, $data->filterArea, 'filter.property_area');
 		$model = $this->setAFilter($model, $data->filterBedrooms, 'filter.bedrooms');
 		$model = $this->setAFilter($model, $data->filterBook, 'filter.booking_type');
 		$model = $this->setAFilter($model, $data->filterCategory, 'filter.category');
@@ -457,7 +457,13 @@ class PropertiesController extends BaseController
 			$tmp['title'] = KrMethods::plain('COM_KNOWRES_CLICK_FOR_DETAILS');
 
 			$link        = SiteHelper::buildPropertyLink($item->id);
-			$tmp['html'] = '<div class="kr-map-bubble">' . $item->property_name . '</div>';
+			$tmp['html'] = '<div style="margin-bottom:10px;font-size:1rem;line-height:1.5;">' .
+				$item->property_name .
+				'</div>
+				<div class="text-center">
+				<a href="' . $link . '" class="button small no-margin-bottom">' .
+				KrMethods::plain('COM_KNOWRES_SEE_DETAILS') .
+				'</a></div>';
 			$tmp['link'] = SiteHelper::buildPropertyLink($item->id, null, true);
 		}
 

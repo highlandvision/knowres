@@ -25,7 +25,6 @@ use RuntimeException;
  */
 class DiscountsModel extends ListModel
 {
-
 	/**
 	 * Constructor.
 	 *

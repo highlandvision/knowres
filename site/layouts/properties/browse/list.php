@@ -23,7 +23,7 @@ extract($displayData);
  * @var array  $items          Properties
  * @var mixed  $params         KR params.
  * @var string $currency       Default currency.
- * @var bool   $favicon        Display favourites icon.
+ * @var bool   $favicon        Property is favourite.
  * @var bool   $saved          Property is favourite.
  * @var string $view           Selected view.
  * @var bool   $byAvailability Search by availability.

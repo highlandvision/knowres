@@ -7,7 +7,6 @@
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
 
-const livesite = window.location.origin + '/';
 let Bloodhound = require('bloodhound-js');
 
 (function ($) {
@@ -31,11 +30,11 @@ let Bloodhound = require('bloodhound-js');
 				queryTokenizer: Bloodhound.tokenizers.whitespace,
 				limit:          10,
 				prefetch:       {
-					url:      livesite + 'index.php?option=com_knowres&task=properties.options&type=prefetch',
+					url:      'index.php?option=com_knowres&task=properties.options&type=prefetch',
 					cacheKey: cache
 				},
 				remote:         {
-					url:      livesite + 'index.php?option=com_knowres&task=properties.options&type=remote&query=%QUERY',
+					url:      'index.php?option=com_knowres&task=properties.options&type=remote&query=%QUERY',
 					wildcard: '%QUERY'
 				}
 			});

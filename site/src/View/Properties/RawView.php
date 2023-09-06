@@ -18,7 +18,9 @@ use HighlandVision\KR\Search\Response;
 use HighlandVision\KR\Session as KrSession;
 use HighlandVision\KR\SiteHelper;
 
+use function array_unique;
 use function count;
+use function explode;
 
 /**
  * Display property search results
@@ -103,6 +105,8 @@ class RawView extends KrHtmlView
 			// Prices are a bit different as can't be filtered by the db
 			// if price filters exist compare against the generated search prices and
 			// reduce the base property filter sent to the search
+			if (is_countable($this->Response->searchData->filterPrice) &&
+				count($this->Response->searchData->filterPrice)) {
 			$uids = [];
 			foreach ($this->Response->searchData->baseIds as $p) {
 				foreach ($this->Response->searchData->filterPrice as $k => $f) {
@@ -120,26 +124,25 @@ class RawView extends KrHtmlView
 				$uids = array_unique($uids);
 				$this->state->set('filter.id', $uids);
 			}
-
-			$filter = [];
-			foreach ($this->Response->searchData->filterRegion as $k => $f) {
-				if ($f[2]) {
-					$filter[] = $k;
-				}
-			}
-			if (count($filter)) {
-				$this->state->set('filter.region', $filter);
 			}
 
+			$this->state->set('filter.booking_type', $this->setSelected($this->Response->searchData->filterBook));
+			$this->state->set('filter.category', $this->setSelected($this->Response->searchData->filterCategory));
+			$this->state->set('filter.feature', $this->setSelected($this->Response->searchData->filterFeature));
+			$this->state->set('filter.pets', $this->setSelected($this->Response->searchData->filterPets));
+			$this->state->set('filter.type_id', $this->setSelected($this->Response->searchData->filterType));
+
+			$filter0 = [];
 			$filter = [];
 			foreach ($this->Response->searchData->filterArea as $k => $f) {
 				if ($f[2]) {
-					$filter[] = $k;
+					$parts     = explode('^', $k);
+					$filter0[] = $parts[0];
+					$filter[]  = $parts[1];
 				}
 			}
-			if (count($filter)) {
-				$this->state->set('filter.area', $filter);
-			}
+			$this->state->set('filter.region_id', $filter0);
+			$this->state->set('filter.property_area', $filter);
 
 			$last   = array_key_last($this->Response->searchData->filterBedrooms);
 			$filter = [];
@@ -155,59 +158,7 @@ class RawView extends KrHtmlView
 					}
 				}
 			}
-			if (is_countable($filter) && count($filter)) {
 				$this->state->set('filter.bedrooms', $filter);
-			}
-
-			$filter = [];
-			foreach ($this->Response->searchData->filterBook as $k => $f) {
-				if ($f[2]) {
-					$filter[] = $k;
-				}
-			}
-			if (count($filter)) {
-				$this->state->set('filter.booking_type', $filter);
-			}
-
-			$filter = [];
-			foreach ($this->Response->searchData->filterCategory as $k => $f) {
-				if ($f[2]) {
-					$filter[] = $k;
-				}
-			}
-			if (count($filter)) {
-				$this->state->set('filter.category', $filter);
-			}
-
-			$filter = [];
-			foreach ($this->Response->searchData->filterFeature as $k => $f) {
-				if ($f[2]) {
-					$filter[] = $k;
-				}
-			}
-			if (count($filter)) {
-				$this->state->set('filter.feature', $filter);
-			}
-
-			$filter = [];
-			foreach ($this->Response->searchData->filterPets as $k => $f) {
-				if ($f[2]) {
-					$filter[] = $k;
-				}
-			}
-			if (count($filter)) {
-				$this->state->set('filter.pets', $filter);
-			}
-
-			$filter = [];
-			foreach ($this->Response->searchData->filterType as $k => $f) {
-				if ($f[2]) {
-					$filter[] = $k;
-				}
-			}
-			if (count($filter)) {
-				$this->state->set('filter.type_id', $filter);
-			}
 
 			$this->state->set('filter.state', 1);
 			$this->state->set('filter.approved', 1);
@@ -227,8 +178,7 @@ class RawView extends KrHtmlView
 			                                  $result[4],
 			                                  $result[5],
 			                                  $result[6],
-			                                  $result[7],
-			                                  $result[8]);
+			                                  $result[7]);
 		}
 
 		$this->modules    = KrMethods::loadInternal('{loadposition propertiesview}');
@@ -239,5 +189,24 @@ class RawView extends KrHtmlView
 		$this->Itemid     = SiteHelper::getItemId('com_knowres', 'property', ['id' => 0]);
 
 		parent::display($tpl);
+	}
+
+	/**
+	 * Set the filter state
+	 *
+	 * @param  array  $selected  Selected filters
+	 *
+	 * @since  4.3.0
+	 */
+	private function setSelected(array $selected): array
+	{
+		$filter = [];
+		foreach ($selected as $k => $f) {
+			if ($f[2]) {
+				$filter[] = $k;
+			}
+		}
+
+		return $filter;
 	}
 }

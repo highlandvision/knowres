@@ -7,6 +7,7 @@
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
 
+use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Utility;
 
 defined('_JEXEC') or die;
@@ -20,13 +21,23 @@ $data = [];
 
 if (count($this->items)) {
 	$data['view'] = $this->Response->searchData->view;
+	if (count($this->items) > 1) {
+		$data['heading'] = KrMethods::sprintf('COM_KNOWRES_SEARCH_HEADER',
+		                                      $this->Response->searchData->description,
+		                                      count($this->items));
+	}
+	else {
+		$data['heading'] = KrMethods::sprintf('COM_KNOWRES_SEARCH_HEADER_1', $this->Response->searchData->description);
+	}
+
 	if ($this->Response->searchData->layout) {
 		$data['items'] = $this->loadTemplate('browse');
 	}
 	else {
 		$data['items'] = $this->loadTemplate('items');
 	}
-	$data['filters']    = $this->favs ? '' : $this->loadTemplate('filters');
+	$data['filters']     = $this->favs ? '' : $this->loadTemplate('filters_offcanvas');
+	$data['filters_top'] = $this->favs ? '' : $this->loadTemplate('filters_top');
 	$data['sortby']     = $this->loadTemplate('sortby');
 	$data['pagination'] = $pagination;
 }

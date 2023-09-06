@@ -11,11 +11,11 @@ defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Translations;
-
 ?>
 
 <div class="row collapse">
-	<button class="close-button" aria-label="Close" type="button" data-close>
+	<button class="close-button" aria-label="<?php echo KrMethods::plain('COM_KNOWRES_CLOSE'); ?>" type="button"
+	        data-close>
 		<span aria-hidden="true">&times;</span>
 	</button>
 

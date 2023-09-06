@@ -21,9 +21,11 @@ $wa->useScript('com_knowres.site')
 HTMLHelper::_('script', trim(Utility::getGmapsURL()), ['async' => 'async', 'defer' => 'defer']);
 ?>
 
-<h1 class="h3 show-for-medium">
+<h1 id="kr-properties-filter-heading" class="h3 show-for-medium">
 	<?php echo $this->header; ?>
 </h1>
+
+<div id="kr-properties-filters-top"></div>
 
 <div class="kr-properties" data-view="<?php echo $this->Search->data->view; ?>">
 	<div class="row kr-properties-header">
@@ -36,7 +38,6 @@ HTMLHelper::_('script', trim(Utility::getGmapsURL()), ['async' => 'async', 'defe
 	<div class="row">
 		<div class="small-12 columns">
 			<div id="kr-properties-data"></div>
-
 			<div class="small-only-text-center">
 				<div class="kr-pager"></div>
 			</div>

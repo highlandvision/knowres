@@ -21,7 +21,6 @@ use function array_keys;
 use function array_values;
 use function arsort;
 use function asort;
-use function count;
 use function implode;
 
 /**
@@ -54,22 +53,39 @@ class Response
 	}
 
 	/**
+	 * Check if a region is selected
+	 *
+	 * @param  array  $regions    Selected regions
+	 * @param  int    $region_id  ID of region to check
+	 *
+	 * @since  4.3.0
+	 * @return bool
+	 */
+	// TODO v4.3 Delete if OK
+//	private static function regionIsSelected(array $regions, int $region_id): bool
+//	{
+//		foreach ($regions as $id => $values) {
+//			if ($id == $region_id) {
+//				return $values[2];
+//			}
+//		}
+//	}
+
+	/**
 	 * Set count for the displayed filters
 	 *
-	 * @param  array  $totalRegions
-	 * @param  array  $totalAreas
-	 * @param  array  $totalBedrooms
-	 * @param  array  $totalBook
-	 * @param  array  $totalCategory
-	 * @param  array  $totalFeature
-	 * @param  array  $totalPets
-	 * @param  array  $totalPrice
-	 * @param  array  $totalTypes
+	 * @param  array  $totalAreas     Areas
+	 * @param  array  $totalBedrooms  Bedrooms
+	 * @param  array  $totalBook      Booking type
+	 * @param  array  $totalCategory  Categories
+	 * @param  array  $totalFeature   Features
+	 * @param  array  $totalPets      Pets
+	 * @param  array  $totalPrice     Prices
+	 * @param  array  $totalTypes     Property types
 	 *
 	 * @since 1.0.0
 	 */
-	public function countAjaxFilters(array $totalRegions = [],
-	                                 array $totalAreas = [],
+	public function countAjaxFilters(array $totalAreas = [],
 	                                 array $totalBedrooms = [],
 	                                 array $totalBook = [],
 	                                 array $totalCategory = [],
@@ -78,13 +94,8 @@ class Response
 	                                 array $totalPrice = [],
 	                                 array $totalTypes = []): void
 	{
-		if ($this->params->get('filter_area') && count($this->searchData->region_id) > 1) {
-			$this->presetFilterCount($this->searchData->filterRegion, $totalRegions);
-		}
-
-		if ($this->params->get('filter_area') && (count($this->searchData->region_id) == 1 ||
-				$this->regionIsSelected($this->searchData->filterRegion))) {
-			$this->presetFilterCount($this->searchData->filterArea, $totalAreas);
+		if ($this->params->get('filter_area')) {
+			$this->presetFilterCountArea($this->searchData->filterArea, $totalAreas);
 		}
 
 		if ($this->params->get('filter_bedrooms')) {
@@ -124,6 +135,7 @@ class Response
 
 		if ($this->params->get('filter_price')) {
 //			$this->zeroFilterCount($this->searchData->filterPrice);
+			//TODO v4.3 Test price filter
 			foreach ($totalPrice as $t) {
 				if (isset($this->searchData->rateNet[$t->id])) {
 					$this->setFilterPriceCount($this->searchData->filterPrice, $this->searchData->rateNet[$t->id]);
@@ -152,7 +164,6 @@ class Response
 			$this->searchData->start      = $this->searchData->limitstart;
 			$this->searchData->limitstart = 0;
 		}
-
 		if ($field == 'page') {
 			$this->searchData->start = $value;
 		}
@@ -188,7 +199,6 @@ class Response
 		}
 		else {
 			if ($field === 'clear' || $field === 'toggle') {
-				$this->clearFilter($this->searchData->filterRegion);
 				$this->clearFilter($this->searchData->filterArea);
 				$this->clearFilter($this->searchData->filterBedrooms);
 				$this->clearFilter($this->searchData->filterBook);
@@ -200,33 +210,16 @@ class Response
 			}
 			else {
 				$this->searchData->field = $field;
-				if ($field == 'region') {
-					$this->checkSelection($this->searchData->filterRegion, $value, false);
-				}
-				if ($field == 'area') {
-					$this->checkSelection($this->searchData->filterArea, $value, false);
-				}
-				else if ($field == 'bedrooms') {
-					$this->checkSelection($this->searchData->filterBedrooms, $value, false);
-				}
-				else if ($field == 'book') {
-					$this->checkSelection($this->searchData->filterBook, $value, false);
-				}
-				else if ($field == 'category') {
-					$this->checkSelection($this->searchData->filterCategory, $value, false);
-				}
-				else if ($field == 'feature') {
-					$this->checkSelection($this->searchData->filterFeature, $value, false);
-				}
-				else if ($field == 'pets') {
-					$this->checkSelection($this->searchData->filterPets, $value, false);
-				}
-				else if ($field == 'price') {
-					$this->checkSelection($this->searchData->filterPrice, $value, false);
-				}
-				else if ($field == 'type') {
-					$this->checkSelection($this->searchData->filterType, $value, false);
-				}
+				match ($field) {
+					'property_area' => $this->checkSelection($this->searchData->filterArea, $value, false),
+					'bedrooms'      => $this->checkSelection($this->searchData->filterBedrooms, $value, false),
+					'book'          => $this->checkSelection($this->searchData->filterBook, $value, false),
+					'category'      => $this->checkSelection($this->searchData->filterCategory, $value, false),
+					'feature'       => $this->checkSelection($this->searchData->filterFeature, $value, false),
+					'pets'          => $this->checkSelection($this->searchData->filterPets, $value, false),
+					'price'         => $this->checkSelection($this->searchData->filterPrice, $value, false),
+					'type'          => $this->checkSelection($this->searchData->filterType, $value, false)
+				};
 			}
 		}
 	}
@@ -289,16 +282,18 @@ class Response
 	}
 
 	/**
-	 * Check if any region is selected
+	 * Clear and reset the filter data for area allowing check for selected region
 	 *
-	 * @param  array  $selected  Selected regions
+	 * @param  array  $saved  Saved filter (by reference)
+	 * @param  array  $new    New filters
 	 *
-	 * @since  4.3.0
-	 * @return bool
+	 * @since  3.3.0
 	 */
-	private function regionIsSelected(array $selected): bool
+	private function presetFilterCountArea(array &$saved, array $new): void
 	{
-		return isset($selected[$value][2]);
+		foreach ($new as $k => $v) {
+			$saved[$k][1] = $v[1];
+		}
 	}
 
 	/**
@@ -347,49 +342,68 @@ class Response
 	private function setOrder(int $order): void
 	{
 		$this->searchData->start = 0;
-
-		if ($order == '01' || $order == '02') {
 			$this->searchData->ordercustom = '';
-			$this->searchData->ordering    = 'ordering';
-			$this->searchData->direction   = $order == '01' ? 'asc' : 'desc';
-		}
-		else if ($order == '11' || $order == '12') {
-			$this->searchData->ordercustom = '';
-			$this->searchData->ordering    = 'property_name';
-			$this->searchData->direction   = $order == '11' ? 'asc' : 'desc';
-		}
-		else if ($order == '21' || $order == '22') {
-			$this->searchData->ordercustom =
-				$order == '21' ? 'sleeps asc, allsleeps asc' : 'sleeps desc, allsleeps desc';
 			$this->searchData->ordering    = '';
 			$this->searchData->direction   = '';
-		}
-		else if ($order == '31' || $order == '32') {
-			$this->searchData->ordercustom = '';
+		$this->searchData->order       = $order;
+
+		switch ($order) {
+			case '01':
+				$this->searchData->ordering  = 'ordering';
+				$this->searchData->direction = 'asc';
+				break;
+			case '02':
+				$this->searchData->ordering  = 'ordering';
+				$this->searchData->direction = 'desc';
+				break;
+			case '11':
+				$this->searchData->ordering  = 'property_name';
+				$this->searchData->direction = 'asc';
+				break;
+			case '12':
+				$this->searchData->ordering  = 'property_name';
+				$this->searchData->direction = 'desc';
+				break;
+			case '21':
+				$this->searchData->ordercustom = 'sleeps asc, allsleeps asc';
+				break;
+			case '22':
+				$this->searchData->ordercustom = 'sleeps desc, allsleeps desc';
+				break;
+			case '31':
 			$this->searchData->ordering    = 'bedrooms';
-			$this->searchData->direction   = $order == '31' ? 'asc' : 'desc';
-		}
-		else if ($order == '41' || $order == '42') {
-			$order == '41' ? asort($this->searchData->rateNet) : arsort($this->searchData->rateNet);
-			$ids                           = array_keys($this->searchData->rateNet);
-			$ids                           = array_values($ids);
-			$ids                           = implode(',', $ids);
+				$this->searchData->direction = 'asc';
+				break;
+			case '32':
+				$this->searchData->ordering  = 'bedrooms';
+				$this->searchData->direction = 'desc';
+				break;
+			case '41':
+				asort($this->searchData->rateNet);
+				$ids                           = implode(',', array_values(array_keys($this->searchData->rateNet)));
+				$this->searchData->ordercustom = "field ( a.id, " . $ids . ")";
+				break;
+			case '42':
+				arsort($this->searchData->rateNet);
+				$ids                           = implode(',', array_values(array_keys($this->searchData->rateNet)));
 			$this->searchData->ordercustom = "field ( a.id, " . $ids . ")";
-			$this->searchData->ordering    = '';
-			$this->searchData->direction   = '';
-		}
-		else if ($order == '51' || $order == '52') {
-			$this->searchData->ordercustom = '';
+				break;
+			case '51':
+				$this->searchData->ordering  = 'property_area';
+				$this->searchData->direction = 'asc';
+				break;
+			case '52':
 			$this->searchData->ordering    = 'property_area';
-			$this->searchData->direction   = $order == '51' ? 'asc' : 'desc';
-		}
-		else if ($order == '61' || $order == '62') {
-			$this->searchData->ordercustom = '';
+				$this->searchData->direction = 'desc';
+				break;
+			case '61':
 			$this->searchData->ordering    = 'rating';
-			$this->searchData->direction   = $order == '61' ? 'asc' : 'desc';
+				$this->searchData->direction = 'asc';
+				break;
+			case '62':
+				$this->searchData->ordering  = 'rating';
+				$this->searchData->direction = 'desc';
 		}
-
-		$this->searchData->order = $order;
 	}
 
 	/**

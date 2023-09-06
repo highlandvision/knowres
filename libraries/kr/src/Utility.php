@@ -45,33 +45,25 @@ class Utility
 	{
 		$messages = [];
 
-		if (is_a($errors, 'Exception') || is_subclass_of($errors, 'Exception'))
-		{
-			if (KrMethods::isAdmin())
-			{
+		if (is_a($errors, 'Exception') || is_subclass_of($errors, 'Exception')) {
+			if (KrMethods::isAdmin()) {
 				$messages[] = $errors->getMessage();
 			}
-			else
-			{
+			else {
 				$messages[] = KrMethods::plain('COM_KNOWRES_ERROR_FATAL');
 			}
 		}
-		else if (is_countable($errors) && count($errors))
-		{
-			for ($i = 0, $n = count($errors); $i < $n && $i < 3; $i++)
-			{
-				if (is_a($errors[$i], 'Exception'))
-				{
+		else if (is_countable($errors) && count($errors)) {
+			for ($i = 0, $n = count($errors); $i < $n && $i < 3; $i++) {
+				if (is_a($errors[$i], 'Exception')) {
 					$messages[] = $errors[$i]->getMessage();
 				}
-				else
-				{
+				else {
 					$messages[] = $errors[$i];
 				}
 			}
 		}
-		else
-		{
+		else {
 			$messages[] = KrMethods::plain('COM_KNOWRES_ERROR_FATAL');
 		}
 
@@ -118,8 +110,7 @@ class Utility
 	public static function cutString(string $string, int $length): string
 	{
 		$text = $string;
-		if (strlen($string) > $length)
-		{
+		if (strlen($string) > $length) {
 			$text = substr($string, 0, strpos($string, ' ', $length));
 			$text .= ".....";
 		}
@@ -138,19 +129,15 @@ class Utility
 	 */
 	public static function decodeJson(?string $data, bool $array = false): mixed
 	{
-		if ($array)
-		{
+		if ($array) {
 			$data = json_decode($data, true);
-			if (!is_countable($data))
-			{
+			if (!is_countable($data)) {
 				$data = [];
 			}
 		}
-		else
-		{
+		else {
 			$data = json_decode($data);
-			if (is_null($data))
-			{
+			if (is_null($data)) {
 				$data = new stdClass();
 			}
 		}
@@ -186,12 +173,10 @@ class Utility
 	public static function displayMoney(?float $value, int $dp = 2, string $separator = '.'): string
 	{
 		$params = KrMethods::getParams();
-		if ($params->get('decimal_comma') && !$separator)
-		{
+		if ($params->get('decimal_comma') && !$separator) {
 			return number_format($value, $dp, ',', '');
 		}
-		else
-		{
+		else {
 			return number_format($value, $dp, '.', '');
 		}
 	}
@@ -207,24 +192,23 @@ class Utility
 	 * @since  3.5.0
 	 * @return string
 	 */
-	public static function displayValue(mixed $value, string $currency, bool $decimals = true,
-		string $lang_code = ''): string
+	public static function displayValue(mixed  $value,
+	                                    string $currency,
+	                                    bool   $decimals = true,
+	                                    string $lang_code = ''): string
 	{
-		if (empty($value))
-		{
+		if (empty($value)) {
 			$value = 0;
 		}
 
-		if (!$lang_code)
-		{
+		if (!$lang_code) {
 			$lang_code = KrMethods::getLanguageTag();
 		}
 
 		$fmt = new NumberFormatter($lang_code, NumberFormatter::CURRENCY);
 		$fmt->setTextAttribute(NumberFormatter::CURRENCY_CODE, $currency);
 
-		if (!$decimals)
-		{
+		if (!$decimals) {
 			$fmt->setAttribute(NumberFormatter::FRACTION_DIGITS, 0);
 		}
 
@@ -242,14 +226,11 @@ class Utility
 	 */
 	public static function encodeJson(mixed $data, bool $numeric = false): string
 	{
-		if (is_array($data) || is_object($data))
-		{
-			if ($numeric)
-			{
+		if (is_array($data) || is_object($data)) {
+			if ($numeric) {
 				return json_encode($data, JSON_NUMERIC_CHECK);
 			}
-			else
-			{
+			else {
 				return json_encode($data);
 			}
 		}
@@ -272,8 +253,13 @@ class Utility
 	 * @since  3.3.0
 	 * @return ?string
 	 */
-	public static function formatAddress(?string $address1, ?string $address2, ?string $postcode, ?string $town,
-		mixed $region, mixed $country, ?string $string): ?string
+	public static function formatAddress(?string $address1,
+	                                     ?string $address2,
+	                                     ?string $postcode,
+	                                     ?string $town,
+	                                     mixed   $region,
+	                                     mixed   $country,
+	                                     ?string $string): ?string
 	{
 		$Translations = new Translations();
 
@@ -303,8 +289,7 @@ class Utility
 	public static function formatPhoneNumber(string $number, int $country_id = 0, bool $paypal = false): string
 	{
 		$code = '';
-		if ($country_id)
-		{
+		if ($country_id) {
 			$code = self::getDialCode($country_id, $paypal);
 		}
 
@@ -339,8 +324,7 @@ class Utility
 		$url    = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" . $latlng . '&key=' . $key;
 		$data   = self::decodeJson(file_get_contents($url));
 
-		if (isset($data->results[0]->formatted_address))
-		{
+		if (isset($data->results[0]->formatted_address)) {
 			return $data->results[0]->formatted_address;
 		}
 
@@ -359,8 +343,10 @@ class Utility
 	 * @since  3.3.0
 	 * @return array|string
 	 */
-	public static function getAddressValue(Translations $Translations, string $item, mixed $value,
-		string $field = 'name'): array|string
+	public static function getAddressValue(Translations $Translations,
+	                                       string       $item,
+	                                       mixed        $value,
+	                                       string       $field = 'name'): array|string
 	{
 		return is_numeric($value) ? $Translations->getText($item, $value, $field) : $value;
 	}
@@ -376,33 +362,29 @@ class Utility
 	 */
 	public static function getBookingStatus(int $booking_status, bool $short = false): string
 	{
-		if (!$short)
-		{
-			return match ($booking_status)
-			{
-				1 => KrMethods::plain('COM_KNOWRES_CONTRACTS_BOOKING_STATUS_1'),
-				5 => KrMethods::plain('COM_KNOWRES_CONTRACTS_BOOKING_STATUS_5'),
-				10 => KrMethods::plain('COM_KNOWRES_CONTRACTS_BOOKING_STATUS_10'),
-				30 => KrMethods::plain('COM_KNOWRES_CONTRACTS_BOOKING_STATUS_30'),
-				35 => KrMethods::plain('COM_KNOWRES_CONTRACTS_BOOKING_STATUS_35'),
-				39 => KrMethods::plain('COM_KNOWRES_CONTRACTS_BOOKING_STATUS_39'),
-				40 => KrMethods::plain('COM_KNOWRES_CONTRACTS_BOOKING_STATUS_40'),
-				99 => KrMethods::plain('COM_KNOWRES_CONTRACTS_BOOKING_STATUS_99'),
+		if (!$short) {
+			return match ($booking_status) {
+				1       => KrMethods::plain('COM_KNOWRES_CONTRACTS_BOOKING_STATUS_1'),
+				5       => KrMethods::plain('COM_KNOWRES_CONTRACTS_BOOKING_STATUS_5'),
+				10      => KrMethods::plain('COM_KNOWRES_CONTRACTS_BOOKING_STATUS_10'),
+				30      => KrMethods::plain('COM_KNOWRES_CONTRACTS_BOOKING_STATUS_30'),
+				35      => KrMethods::plain('COM_KNOWRES_CONTRACTS_BOOKING_STATUS_35'),
+				39      => KrMethods::plain('COM_KNOWRES_CONTRACTS_BOOKING_STATUS_39'),
+				40      => KrMethods::plain('COM_KNOWRES_CONTRACTS_BOOKING_STATUS_40'),
+				99      => KrMethods::plain('COM_KNOWRES_CONTRACTS_BOOKING_STATUS_99'),
 				default => KrMethods::plain('COM_KNOWRES_CONTRACTS_BOOKING_STATUS_0'),
 			};
 		}
-		else
-		{
-			return match ($booking_status)
-			{
-				1 => KrMethods::plain('COM_KNOWRES_CONTRACTS_BOOKING_STATUS_SHORT_1'),
-				5 => KrMethods::plain('COM_KNOWRES_CONTRACTS_BOOKING_STATUS_SHORT_5'),
-				10 => KrMethods::plain('COM_KNOWRES_CONTRACTS_BOOKING_STATUS_SHORT_10'),
-				30 => KrMethods::plain('COM_KNOWRES_CONTRACTS_BOOKING_STATUS_SHORT_30'),
-				35 => KrMethods::plain('COM_KNOWRES_CONTRACTS_BOOKING_STATUS_SHORT_35'),
-				39 => KrMethods::plain('COM_KNOWRES_CONTRACTS_BOOKING_STATUS_SHORT_39'),
-				40 => KrMethods::plain('COM_KNOWRES_CONTRACTS_BOOKING_STATUS_SHORT_40'),
-				99 => KrMethods::plain('COM_KNOWRES_CONTRACTS_BOOKING_STATUS_SHORT_99'),
+		else {
+			return match ($booking_status) {
+				1       => KrMethods::plain('COM_KNOWRES_CONTRACTS_BOOKING_STATUS_SHORT_1'),
+				5       => KrMethods::plain('COM_KNOWRES_CONTRACTS_BOOKING_STATUS_SHORT_5'),
+				10      => KrMethods::plain('COM_KNOWRES_CONTRACTS_BOOKING_STATUS_SHORT_10'),
+				30      => KrMethods::plain('COM_KNOWRES_CONTRACTS_BOOKING_STATUS_SHORT_30'),
+				35      => KrMethods::plain('COM_KNOWRES_CONTRACTS_BOOKING_STATUS_SHORT_35'),
+				39      => KrMethods::plain('COM_KNOWRES_CONTRACTS_BOOKING_STATUS_SHORT_39'),
+				40      => KrMethods::plain('COM_KNOWRES_CONTRACTS_BOOKING_STATUS_SHORT_40'),
+				99      => KrMethods::plain('COM_KNOWRES_CONTRACTS_BOOKING_STATUS_SHORT_99'),
 				default => KrMethods::plain('COM_KNOWRES_CONTRACTS_BOOKING_STATUS_SHORT_0'),
 			};
 		}
@@ -421,12 +403,10 @@ class Utility
 	public static function getDialCode(int $country_id, bool $paypal = false): string
 	{
 		$country = KrFactory::getAdminModel('country')->getItem($country_id);
-		if (isset($country->id) && $country->dial_code)
-		{
+		if (isset($country->id) && $country->dial_code) {
 			return $paypal ? '' : '+' . $country->dial_code;
 		}
-		else
-		{
+		else {
 			return '';
 		}
 	}
@@ -443,8 +423,7 @@ class Utility
 
 		$params = KrMethods::getParams();
 		$key    = $params->get('gmapkey', '');
-		if ($key)
-		{
+		if ($key) {
 			$url .= '?key=' . $key;
 		}
 
@@ -463,17 +442,14 @@ class Utility
 	public static function getGoBackTo(): bool|string
 	{
 		$gobackto = KrMethods::getUserState('com_knowres.gobackto');
-		if (!empty($gobackto))
-		{
+		if (!empty($gobackto)) {
 			KrMethods::setUserState('com_knowres.gobackto', null);
 		}
 
-		if (is_null($gobackto))
-		{
+		if (is_null($gobackto)) {
 			return false;
 		}
-		else
-		{
+		else {
 			return $gobackto;
 		}
 	}
@@ -488,8 +464,7 @@ class Utility
 	 */
 	public static function getPath(string $type): false|string
 	{
-		if ($type == 'root')
-		{
+		if ($type == 'root') {
 			return JPATH_SITE;
 		}
 
@@ -537,32 +512,24 @@ class Utility
 	 */
 	public static function pageErrors(string|array $errors, string $type = 'error'): void
 	{
-		if (is_string($errors))
-		{
+		if (is_string($errors)) {
 			$errors = [$errors];
 		}
 
-		if (is_a($errors, 'Exception') || is_subclass_of($errors, 'Exception'))
-		{
-			if (KrMethods::isAdmin())
-			{
+		if (is_a($errors, 'Exception') || is_subclass_of($errors, 'Exception')) {
+			if (KrMethods::isAdmin()) {
 				KrMethods::message($errors->getMessage(), 'error');
 			}
-			else
-			{
+			else {
 				KrMethods::plain('COM_KNOWRES_ERROR_FATAL');
 			}
 		}
-		else
-		{
-			for ($i = 0, $n = count($errors); $i < $n && $i < 3; $i++)
-			{
-				if (is_a($errors[$i], 'Exception') || is_subclass_of($errors[$i], 'Exception'))
-				{
+		else {
+			for ($i = 0, $n = count($errors); $i < $n && $i < 3; $i++) {
+				if (is_a($errors[$i], 'Exception') || is_subclass_of($errors[$i], 'Exception')) {
 					KrMethods::message($errors[$i]->getMessage(), $type);
 				}
-				else
-				{
+				else {
 					KrMethods::message($errors[$i], $type);
 				}
 			}
@@ -597,14 +564,12 @@ class Utility
 	 */
 	public static function roundValue(float $value, string $iso = '', int $decimals = 0): float
 	{
-		if ($iso && !$decimals)
-		{
+		if ($iso && !$decimals) {
 			$decimals = KrFactory::getListModel('currencies')->getDp($iso);
 		}
 
 		$value = round($value, $decimals);
-		if (!$value)
-		{
+		if (!$value) {
 			$value = abs($value);
 		}
 
@@ -622,10 +587,8 @@ class Utility
 	public static function validateInputDate(string $date): void
 	{
 		//TODO-v4.3 Use this for all site input date fields
-		if ($date)
-		{
-			if (!TickTock::isValidDate($date))
-			{
+		if ($date) {
+			if (!TickTock::isValidDate($date)) {
 				throw new RuntimeException ('Invalid date was received', 400);
 			}
 		}

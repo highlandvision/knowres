@@ -125,16 +125,13 @@ class Filter
 		$this->searchData->filterType     = [];
 
 		if ($this->params->get('filter')) {
-			$max_bedrooms = $this->params->get('search_maxbedrooms', 6);
-
 			foreach ($items as $item) {
 				if (!in_array($item->id, $this->searchData->baseIds)) {
 					continue;
 				}
 
-				$this->setFilterRegion($item);
 				$this->setFilterArea($item);
-				$this->setFilterBedrooms($item, $max_bedrooms);
+				$this->setFilterBedrooms($item, $this->params->get('search_maxbedrooms', 6));
 				$this->setFilterBook($item);
 				$this->setFilterCategory($item);
 				$this->setFilterFeature($item);
@@ -143,13 +140,8 @@ class Filter
 				$this->setFilterType($item);
 			}
 
-			if ($this->params->get('filter_area') && count($this->searchData->region_id) > 1) {
-				foreach($this->searchData->region_id as $id) {
-					$this->checkSelection($this->searchData->filterRegion, $id, false);
-				}
-			}
-			if ($this->params->get('filter_area') && !empty($this->searchData->area)) {
-				$this->checkSelection($this->searchData->filterArea, $this->searchData->area, false);
+			if ($this->params->get('filter_area') && $this->searchData->property_area) {
+				$this->checkSelection($this->searchData->filterArea, $this->searchData->property_area, false);
 			}
 			if ($this->params->get('filter_bedrooms') && $this->searchData->bedrooms) {
 				$this->checkSelection($this->searchData->filterBedrooms, $this->searchData->bedrooms, false);
@@ -167,8 +159,7 @@ class Filter
 				$this->checkSelection($this->searchData->filterType, $data->type_id, false);
 			}
 
-			uasort($this->searchData->filterRegion, ['HighlandVision\KR\Search\Filter', 'cmp']);
-			ksort($this->searchData->filterArea);
+			uasort($this->searchData->filterArea, ['HighlandVision\KR\Search\Filter', 'cmp']);
 			ksort($this->searchData->filterBedrooms);
 			uasort($this->searchData->filterCategory, ['HighlandVision\KR\Search\Filter', 'cmp']);
 			uasort($this->searchData->filterFeature, ['HighlandVision\KR\Search\Filter', 'cmp']);
@@ -270,18 +261,16 @@ class Filter
 	 *
 	 * @param  mixed  $item  Property item.
 	 *
+	 * @throws RuntimeException
 	 * @since  4.3.0
 	 */
 	private function setFilterArea(mixed $item): void
 	{
 		if ($this->params->get('filter_area')) {
-			$filter_this = $item->property_area;
+			$filter_this = $item->region_id . '^' . $item->property_area;
 			if (!array_key_exists($filter_this, $this->searchData->filterArea)) {
-				$this->searchData->filterArea[$filter_this] = [$filter_this,
-				                                         0,
-				                                         0,
-				                                         $item->property_area
-				];
+				$text =  $this->Translations->getText('region', $item->region_id) . ': ' . $item->property_area;
+				$this->searchData->filterArea[$filter_this] = [$filter_this, 0, 0, $text];
 			}
 		}
 	}
@@ -305,11 +294,7 @@ class Filter
 				else {
 					$text = KrMethods::plural('COM_KNOWRES_BEDROOMS_COUNT', $item->bedrooms);
 				}
-				$this->searchData->filterBedrooms[$filter_this] = [$filter_this,
-				                                             0,
-				                                             0,
-				                                             $text
-				];
+				$this->searchData->filterBedrooms[$filter_this] = [$filter_this, 0, 0, $text];
 			}
 		}
 	}
@@ -429,28 +414,6 @@ class Filter
 					$this->searchData->filterPrice[$filter_this] =
 						[$this->ranges[$filter_this]['high'], 0, 0, $this->ranges[$filter_this]['text']];
 				}
-			}
-		}
-	}
-
-	/**
-	 * Set area filter
-	 *
-	 * @param  mixed  $item  Property item.
-	 *
-	 * @throws RuntimeException
-	 * @since  4.3.0
-	 */
-	private function setFilterRegion(mixed $item): void
-	{
-		if ($this->params->get('filter_area')) {
-			$filter_this = $item->region_id;
-			if (!array_key_exists($filter_this, $this->searchData->filterRegion)) {
-				$this->searchData->filterRegion[$filter_this] = [$filter_this,
-				                                           0,
-				                                           0,
-				                                           $this->Translations->getText('region', $item->region_id)
-				];
 			}
 		}
 	}

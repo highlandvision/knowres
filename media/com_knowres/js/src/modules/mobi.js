@@ -13,7 +13,6 @@
 		window.location.origin = window.location.protocol + "//" + window.location.host;
 	}
 
-	const livesite = window.location.origin + '/';
 	let initQuote = true;
 	let lang = $("#kr-lang").data('krlang');
 	let maxDeparture;
@@ -162,14 +161,14 @@
 			$.ajax({
 				type:    'POST',
 				cache:   false,
-				url:     livesite + 'index.php?option=com_knowres&task=property.quote&lang=' + lang,
+				url:     'index.php?option=com_knowres&task=property.quote&lang=' + lang,
 				data:    $element.serialize(),
 				success: function (response) {
 					if (response) {
 						$('#kr-bookmodule').hide().slideDown(600).html(response);
 						$('#kr-date-warning').empty();
 					} else {
-						window.location.href = livesite;
+						window.location.href = window.location.origin;
 					}
 				}
 			});
@@ -183,7 +182,7 @@
 			$.ajax({
 				type:     'POST',
 				cache:    false,
-				url:      livesite + 'index.php?option=com_knowres&task=property.mobi&lang=' + lang,
+				url:      'index.php?option=com_knowres&task=property.mobi&lang=' + lang,
 				dataType: 'json',
 				data:     {
 					'pid':   self.quoteoptions.mqPid,

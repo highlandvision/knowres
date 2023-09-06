@@ -16,10 +16,6 @@ let savedwidth = false;
 let large;
 let resized = false;
 
-if (!window.location.origin)
-    window.location.origin = window.location.protocol + "//" + window.location.host;
-const livesite = window.location.origin + '/';
-
 (function ($) {
     $(function () {
         Foundation.addToJquery();
@@ -52,7 +48,7 @@ const livesite = window.location.origin + '/';
                         if (result.data) {
                             formResponse($form.attr('id'), result.data);
                         } else {
-                            window.location.href = livesite;
+                            window.location.href = '/';
                         }
                     } else {
                         $('.kr-ajax-modal-error-message').html(result.message);
@@ -198,7 +194,7 @@ const livesite = window.location.origin + '/';
     function loadCalendar(pid) {
         $.ajax({
             type: 'POST',
-            url: livesite + 'index.php?option=com_knowres&task=property.geriatric&lang=' + lang,
+            url: 'index.php?option=com_knowres&task=property.geriatric&lang=' + lang,
             dataType: 'html',
             data: {
                 'pid': pid
@@ -218,7 +214,7 @@ const livesite = window.location.origin + '/';
                 $modal.html(data.html).trigger('resizeme.zf.reveal');
                 $modal.foundation('open');
             } else {
-                window.location.href = livesite;
+                window.location.href = '/';
             }
         } else if (id === 'kr-form-mailchimp') {
             $('#response2').html(data);
@@ -227,7 +223,7 @@ const livesite = window.location.origin + '/';
 
     function getProperties(field, value) {
         $.ajax({
-            url: livesite + 'index.php?option=com_knowres&view=properties&format=raw&lang=' + lang,
+            url: 'index.php?option=com_knowres&view=properties&format=raw&lang=' + lang,
             type: 'POST',
             data: {'field': field, 'value': value},
             dataType: 'json',
@@ -256,8 +252,10 @@ const livesite = window.location.origin + '/';
     function setSearchData(response, field = '') {
         if (response) {
             $('#kr-properties-data').empty().fadeIn('slow').html(response['items']).foundation();
+            $('#kr-properties-filter-heading').html(response['heading']);
             $('.kr-pager').html(response['pagination']);
             $("#kr-properties-filters-off-canvas").html(response['filters']);
+            $("#kr-properties-filters-top").html(response['filters_top']);
             $("#kr-properties-sortby-off-canvas").html(response['sortby']);
             $("#kr-properties-search-off-canvas").html(response['search']);
 

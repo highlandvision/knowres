@@ -102,7 +102,6 @@ class Search extends Session
 	{
 		$data                 = new stdClass();
 		$data->adults         = 2;
-		$data->area           = '';
 		$data->arrival        = '';
 		$data->baseIds        = [];
 		$data->bedrooms       = 0;
@@ -113,11 +112,11 @@ class Search extends Session
 		$data->country_name   = [];
 		$data->currency       = '';
 		$data->departure      = '';
+		$data->description    = '';
 		$data->direction      = '';
 		$data->feature_id     = 0;
 		$data->field          = '';
 		$data->flexible       = 0;
-		$data->filterRegion   = [];
 		$data->filterArea     = [];
 		$data->filterBedrooms = [];
 		$data->filterBook     = [];
@@ -136,6 +135,8 @@ class Search extends Session
 		$data->order          = '';
 		$data->ordercustom    = '';
 		$data->ordering       = '';
+		$data->pets           = 0;
+		$data->property_area  = '';
 		$data->rateNet        = [];
 		$data->rateDiscount   = [];
 		$data->rating         = 0;

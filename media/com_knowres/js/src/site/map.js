@@ -8,10 +8,6 @@
 
 "use strict";
 
-if (!window.location.origin) {
-	window.location.origin = window.location.protocol + "//" + window.location.host;
-}
-const livesite = window.location.origin + '/';
 const lang = "en";
 
 (function ($) {
@@ -68,6 +64,7 @@ const lang = "en";
 
 		static closeKrInfowindow() {
 			$('#kr-infowindow').hide();
+//			"#kr-infowindow".style.display = 'none';
 			infoWindow.close();
 			infoWindow2.close();
 		}
@@ -255,13 +252,13 @@ const lang = "en";
 
 					$.ajax({
 						type:    "POST",
-						url:     livesite + 'index.php?option=com_knowres&task=property.mapinfowindow&lang=' + lang,
+						url:     'index.php?option=com_knowres&task=property.mapinfowindow&lang=' + lang,
 						data:    {
 							id: parseInt(boxinfo)
 						},
 						success: function (data) {
 							$('#kr-infowindow').fadeIn(400).html(data).show();
-							$('.kr-infowindow-slideshow').not('.slick-initialized').slick({
+							$(".kr-infowindow-slideshow").not('.slick-initialized').slick({
 								nextArrow: '<i class="slick-nav next fas fa-chevron-right "></i>',
 								prevArrow: '<i class="slick-nav prev fas fa-chevron-left "></i>',
 								autoplay:  true
@@ -301,7 +298,7 @@ const lang = "en";
 
 			let self = this;
 			jQuery.ajax({
-				url:      livesite + 'index.php?option=com_knowres&task=properties.refreshmap&lang=' + lang,
+				url:      'index.php?option=com_knowres&task=properties.refreshmap&lang=' + lang,
 				type:     "POST",
 				dataType: "json",
 				success:  function (result) {
@@ -463,7 +460,7 @@ const lang = "en";
 			$mapmodal.foundation('close');
 			$.ajax({
 				type:    "POST",
-				url:     livesite + 'index.php?option=com_knowres&task=properties.mapsession&lang=' + lang,
+				url:     'index.php?option=com_knowres&task=properties.mapsession&lang=' + lang,
 				success: function () {
 					return true;
 				}
@@ -474,7 +471,7 @@ const lang = "en";
 			google.maps.event.trigger(map, "resize");
 			$.ajax({
 				type:    "POST",
-				url:     livesite + 'index.php?option=com_knowres&task=properties.mapsession&lang=' + lang,
+				url:     'index.php?option=com_knowres&task=properties.mapsession&lang=' + lang,
 				data:    {map_modal: '1'},
 				success: function () {
 					return true;
@@ -508,7 +505,7 @@ const lang = "en";
 			}
 
 			jQuery.ajax({
-				url:      livesite + 'index.php?option=com_knowres&task=properties.mapdata&pid=' + pid + '&lang=' + lang,
+				url:      'index.php?option=com_knowres&task=properties.mapdata&pid=' + pid + '&lang=' + lang,
 				type:     "POST",
 				dataType: "json",
 				success:  function (result) {

@@ -69,7 +69,7 @@ class PaymentView extends KrHtmlView\Site
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected function prepareDocument()
+	protected function prepareDocument(): void
 	{
 		$meta_title       = KrMethods::plain('COM_KNOWRES_PAY_NOW');
 		$meta_description = KrMethods::plain('COM_KNOWRES_PAGE_TITLE');

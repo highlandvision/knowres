@@ -36,7 +36,7 @@ class GuestController extends FormController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	#[NoReturn] public function combo()
+	#[NoReturn] public function combo(): void
 	{
 		$model     = new GuestModel();
 		$form      = $model->getForm([], false);
@@ -71,9 +71,9 @@ class GuestController extends FormController
 	 * Proxy for getModel
 	 * Includes the admin model to save repetition and not a site model
 	 *
-	 * @param  string  $name
-	 * @param  string  $prefix
-	 * @param  array   $config
+	 * @param  string  $name        Name of model
+	 * @param  string  $prefix      Prefix Admin or Site
+	 * @param  array   $config      Config options
 	 *
 	 * @since  2.5.0
 	 * @return BaseDatabaseModel
