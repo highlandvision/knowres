@@ -77,7 +77,7 @@ if (!is_countable($this->alternatives) || !count($this->alternatives))
 					</div>
 
 					<div class="content">
-						<h3 class="h4"><?php echo $item->property_name; ?></h3>
+						<h4><?php echo $item->property_name; ?></h4>
 						<p><?php echo Utility::cutString($item->p1, 140); ?></p>
 						<i class="fas fa-female fa-lg color-accent"></i>
 						<i class="fas fa-male fa-lg color-accent"></i> &nbsp;

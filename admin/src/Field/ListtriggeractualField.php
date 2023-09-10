@@ -81,7 +81,8 @@ class ListtriggeractualField extends ListField
 		$options = [];
 
 		$values = self::getValues();
-		foreach ($values as $k => $v) {
+		foreach ($values as $k => $v)
+		{
 			$options[] = HTMLHelper::_('select.option', $k, $v);
 		}
 
