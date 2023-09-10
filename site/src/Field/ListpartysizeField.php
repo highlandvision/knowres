@@ -103,7 +103,6 @@ class ListpartysizeField extends ListField
 		$attributes['data-adults'] = $this->max - $this->sleeps_infant_max;
 		$attributes['data-toggle'] = 'kr-searchguest-drop';
 		$attributes['onmousedown'] = "(function(e){ e.preventDefault(); })(event, this)";
-		$attributes['onclick']     = "$('#kr-searchregion-drop').foundation('close');";
 
 		return $attributes;
 	}

@@ -283,7 +283,6 @@ class PropertiesController extends BaseController
 		if (count($region_id) == 1 && (int) $region_id[0] == 0) {
 			$region_id[0] = KrMethods::getParams()->get('default_region');
 		}
-
 		$a = [];
 		foreach ($region_id as $id) {
 			$a[] = $id;
@@ -303,8 +302,8 @@ class PropertiesController extends BaseController
 		$input['flexible']      = KrMethods::inputInt('flexible');
 		$input['guests']        = KrMethods::inputInt('guests', 2);
 		$input['adults']        = KrMethods::inputInt('adults', 2);
-		$input['children']      = KrMethods::inputInt('children');
 		$input['child_ages']    = KrMethods::inputArray('child_ages');
+		$input['children']      = KrMethods::inputInt('children');
 
 		foreach ($input as $k => $v) {
 			if (empty($v)) {
@@ -312,8 +311,8 @@ class PropertiesController extends BaseController
 			}
 		}
 
-		$route = KrMethods::route('index.php?option=com_knowres&view=properties&' .
-		                          urlencode(http_build_query($input)),
+		$route = KrMethods::route('index.php?option=com_knowres&amp;view=properties&amp;' .
+		                          urlencode(trim(http_build_query($input))),
 		                          false);
 
 		KrMethods::redirect($route);

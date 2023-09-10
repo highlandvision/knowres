@@ -18,7 +18,7 @@ $Currency = new Currency();
 
 <div class="row">
 	<div class="small-12 text-center medium-text-left large-10 columns">
-		<h3 class="h2">
+		<h3>
 			<?php if (!$title): ?>
 				<?php echo KrMethods::plain('MOD_KNOWRES_FEATURED_FEATURED'); ?>
 				<span class="color-accent">
@@ -40,7 +40,6 @@ $Currency = new Currency();
 
 <div class="row kr-featured kr-slick" data-slick='{"slidesToShow": <?php echo $slidestoshow; ?>}'>
 	<?php foreach ($data as $id => $item): ?>
-		<?php require ModuleHelper::getLayoutPath('mod_knowres_featured',
-			$params->get('layout', 'default') . '_item'); ?>
+		<?php require ModuleHelper::getLayoutPath('mod_knowres_featured', $params->get('layout', 'default') . '_item'); ?>
 	<?php endforeach; ?>
 </div>

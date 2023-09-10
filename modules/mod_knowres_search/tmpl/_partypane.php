@@ -15,12 +15,8 @@ $tadults   = KrMethods::plain('MOD_KNOWRES_SEARCH_ADULTS');
 $tchildren = KrMethods::plain('MOD_KNOWRES_SEARCH_CHILDREN');
 ?>
 
-<div class="dropdown-pane medium" id="kr-searchguest-drop" data-alignment="center" data-closable
-     data-close-on-click="true" data-dropdown data-position="bottom" data-v-offset="8">
-
-	<div class="header">
-		<?php echo KrMethods::plain('MOD_KNOWRES_SEARCH_GUESTS_LBL_ARIA'); ?>
-	</div>
+<div class="dropdown-pane large" id="kr-searchguest-drop" data-alignment="left" data-closable
+     data-close-on-click="true" data-dropdown data-position="bottom" data-v-offset="0">
 
 	<div class="dropdown-body">
 		<div class="row">
@@ -85,7 +81,7 @@ $tchildren = KrMethods::plain('MOD_KNOWRES_SEARCH_CHILDREN');
 	</div>
 
 	<div class="footer">
-		<button class="primary" aria-label="<?php echo KrMethods::plain('COM_KNOWRES_CLOSE'); ?>" type="button"
+		<button class="primary" aria-label="<?php echo KrMethods::plain('MOD_KNOWRES_SEARCH_CLOSE'); ?>" type="button"
 		        data-close>
 			<?php echo KrMethods::plain('MOD_KNOWRES_SEARCH_CLOSE'); ?>
 		</button>

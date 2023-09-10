@@ -13,11 +13,19 @@ use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Translations;
 use Joomla\CMS\Helper\ModuleHelper;
 
-$app->bootComponent('com_knowres')->getMVCFactory()->createModel('Slideshow', 'Site', ['ignore_request' => true]);
+if ($params->get('layout', 'default') == 'default')
+{
+	$app->bootComponent('com_knowres')->getMVCFactory()->createModel('Slideshow', 'Site', ['ignore_request' => true]);
+}
 
 $wa = $app->getDocument()->getWebAssetManager();
 $wa->getRegistry()->addExtensionRegistryFile('com_knowres');
 $wa->useScript('com_knowres.site-modules');
+
+if ($params->get('layout') == 'solid') {
+	require ModuleHelper::getLayoutPath('mod_knowres_slideshow', 'solid');
+	return;
+}
 
 $properties = [];
 for ($i = 1; $i <= 6; $i++) {
@@ -32,8 +40,8 @@ if (!empty($properties)) {
 
 	$properties = [];
 	foreach ($names as $n) {
-		$region_name   = $Translations->getText('region', $n->region_id);
-		$country_name  = $Translations->getText('country', $n->country_id);
+		$region_name  = $Translations->getText('region', $n->region_id);
+		$country_name = $Translations->getText('country', $n->country_id);
 
 		$properties[$n->id] = ['property_name' => $n->property_name,
 		                       'region_name'   => $region_name,
@@ -55,7 +63,8 @@ for ($i = 1; $i <= 6; $i++) {
 			             'region_name'   => $p['region_name'],
 			             'country_name'  => $p['country_name'],
 			             'alt'           => $params->get('alt' . $i) ? $params->get('alt' . $i) : $p['alt'],
-			             'description'   => $params->get('description' . $i) ? $params->get('description' . $i) : $p['description']
+			             'description'   => $params->get('description' . $i) ? $params->get('description' . $i) :
+				             $p['description']
 			];
 		}
 		else {

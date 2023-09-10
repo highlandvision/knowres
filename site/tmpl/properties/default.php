@@ -31,7 +31,8 @@ HTMLHelper::_('script', trim(Utility::getGmapsURL()), ['async' => 'async', 'defe
 	<div class="row kr-properties-header">
 		<div class="small-12 columns">
 			<?php echo $this->loadTemplate('menubar'); ?>
-			<?php echo $this->loadTemplate('mobilebar'); ?>
+<!--			TODO-v43 Delete if not required-->
+<!--			--><?php //echo $this->loadTemplate('mobilebar'); ?>
 			<div id="kr-properties-sortby" class="kr-sortby top show-for-large flexbox-inline hideme"></div>
 		</div>
 	</div>

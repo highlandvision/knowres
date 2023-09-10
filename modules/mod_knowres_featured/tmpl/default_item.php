@@ -34,7 +34,7 @@ $KRparams = KrMethods::getParams();
 		</div>
 
 		<div class="content no-margin-bottom">
-			<h3 class="h4"><?php echo $item['property_name']; ?></h3>
+			<h4><?php echo $item['property_name']; ?></h4>
 			<p>
 				<?php echo $item['text']; ?>
 			</p>

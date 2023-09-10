@@ -9,7 +9,7 @@
 
 "use strict";
 
-export function guestIncrement(updown, target, atext, ctext, quote) {
+export function guestIncrement(updown, target, atext, ctext) {
 	let cac = document.getElementById('child-ages-container');
 	let aci = document.getElementById(target);
 	let value = parseInt(aci.value);

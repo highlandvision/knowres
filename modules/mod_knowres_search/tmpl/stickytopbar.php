@@ -17,10 +17,12 @@ $wa = $app->getDocument()->getWebAssetManager();
 $wa->getRegistry()->addExtensionRegistryFile('com_knowres');
 $wa->useScript('com_knowres.site-modules');
 
-$action = KrMethods::getRoot() . 'index.php?option=com_knowres&task=properties.search';
+$action       = 'index.php?option=com_knowres&task=properties.search';
+$show_regions = $params->get('show_regions', 0);
+$show_guests  = $params->get('show_guests', 0);
 ?>
 
-<div class="kr-search">
+<div class="kr-search show-for-large">
 	<form action="<?php echo $action; ?>" method="post" name="search-default">
 		<div class="row">
 			<?php if (!empty($params->get('search_text', '') && $params->get('show_regions') < 1)): ?>
@@ -28,14 +30,14 @@ $action = KrMethods::getRoot() . 'index.php?option=com_knowres&task=properties.s
 					<h3><?php echo $params->get('search_text'); ?></h3>
 				</div>
 			<?php endif; ?>
-			<?php if ($params->get('show_regions', 0)): ?>
+			<?php if ($show_regions): ?>
 				<div class="small-12 medium-12 large-3 columns">
 					<?php echo $form->renderField('region_id',
 					                              null,
-					                              $params->get('show_regions') < 1 ? $initial->region_id :
+					                              $show_regions < 1 ? $initial->region_id :
 						                              KrMethods::plain('MOD_KNOWRES_SEARCH_LOCATION'),
 					                              ['regions'      => $regions,
-					                               'show_regions' => $params->get('show_regions')
+					                               'show_regions' => $show_regions
 					                              ]); ?>
 				</div>
 			<?php endif; ?>
@@ -53,7 +55,7 @@ $action = KrMethods::getRoot() . 'index.php?option=com_knowres&task=properties.s
 				<input type="hidden" id="arrival" name="arrival" value="">
 				<input type="hidden" id="departure" name="departure" value="">
 			<?php endif; ?>
-			<?php if ($params->get('show_guests', 1)): ?>
+			<?php if ($show_guests): ?>
 				<div class="small-12 medium-12 large-3 columns">
 					<?php echo $form->renderField('guests',
 					                              null,
@@ -77,10 +79,9 @@ $action = KrMethods::getRoot() . 'index.php?option=com_knowres&task=properties.s
 		</div>
 
 		<?php $collapse = ''; ?>
-		<?php if ($params->get('show_guests')): ?>
+		<?php if ($show_guests): ?>
 			<?php require ModuleHelper::getLayoutPath('mod_knowres_search', '_partypane'); ?>
 		<?php endif; ?>
-		<?php $show_regions = $params->get('show_regions', 0); ?>
 		<?php if ($show_regions == 1): ?>
 			<?php require ModuleHelper::getLayoutPath('mod_knowres_search', '_regionpane'); ?>
 		<?php elseif ($show_regions == 2): ?>

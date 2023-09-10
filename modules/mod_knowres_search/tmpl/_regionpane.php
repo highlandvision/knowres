@@ -15,7 +15,6 @@ $count   = 0;
 
 <div class="dropdown-pane" id="kr-searchregion-drop" data-dropdown data-position="bottom"
      data-alignment="left" data-h-offset="-16" data-v-offset="1000" data-close-on-click="true">
-
 	<?php $c = 0; ?>
 	<?php foreach ($regions as $k => $v): ?>
 		<div class="row">

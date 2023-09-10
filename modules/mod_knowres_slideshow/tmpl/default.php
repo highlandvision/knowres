@@ -15,31 +15,51 @@ use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\SiteHelper;
 ?>
 
-<div class="kr-slideshow kr-slick">
-	<?php foreach ($data as $d): ?>
-		<div>
-			<?php $options = ['src'         => $d['image'],
-			                  'alt'         => $d['alt'],
-			                  'description' => $d['description'],
-			                  'class'       => 'responsive',
-			]; ?>
-			<?php echo KrMethods::render('joomla.html.image', $options); ?>
+<div class="show-for-small show-for-medium hide-for-large">
+	<div style="height:300px;">
+		<?php foreach ($data as $d): ?>
+			<div>
+				<?php $options = ['src'         => $d['image'],
+				                  'alt'         => $d['alt'],
+				                  'description' => $d['description'],
+				                  'class'       => 'responsive',
+				                  'style'       => 'height:300px'
+				]; ?>
+				<?php echo KrMethods::render('joomla.html.image', $options); ?>
+			</div>
+			<?php break; ?>
+		<?php endforeach; ?>
+	</div>
+</div>
+<div class="show-for-large">
+	<?php $height  = $params->get('height') . 'px'; ?>
+	<div class="kr-slideshow kr-slick" style="height:<?php echo $height; ?>">
+		<?php foreach ($data as $d): ?>
+			<div>
+				<?php $options = ['src'         => $d['image'],
+				                  'alt'         => $d['alt'],
+				                  'description' => $d['description'],
+				                  'class'       => 'responsive',
+				                  'style'       => 'height:' . $height
+				]; ?>
+				<?php echo KrMethods::render('joomla.html.image', $options); ?>
 
-			<?php if (!empty($d['property_id'])): ?>
-				<?php $Itemid = SiteHelper::getItemId('com_knowres', 'property', ['id' => (int) $d['property_id']]); ?>
-				<div class="caption">
-					<?php $plink = KrMethods::route('index.php?option=com_knowres&view=property&Itemid=' . $Itemid . '&id=' . (int) $d['property_id']); ?>
-					<?php $text = $d['property_name'] . '<br> ' . $d['region_name'] . ', ' . $d['country_name']; ?>
-					<a href="<?php echo $plink; ?>"><?php echo $text; ?></a>
-				</div>
-			<?php else: ?>
-				<?php if ($d['description']): ?>
+				<?php if (!empty($d['property_id'])): ?>
+					<?php $Itemid = SiteHelper::getItemId('com_knowres', 'property', ['id' => (int) $d['property_id']]); ?>
 					<div class="caption">
-						<?php $text = $d['description']; ?>
-						<?php echo $text; ?>
+						<?php $plink = KrMethods::route('index.php?option=com_knowres&view=property&Itemid=' . $Itemid . '&id=' . (int) $d['property_id']); ?>
+						<?php $text = $d['property_name'] . ' ' . $d['region_name'] . ', ' . $d['country_name']; ?>
+						<a href="<?php echo $plink; ?>"><?php echo $text; ?></a>
 					</div>
+				<?php else: ?>
+					<?php if ($d['description']): ?>
+						<div class="caption">
+							<?php $text = $d['description']; ?>
+							<?php echo $text; ?>
+						</div>
+					<?php endif; ?>
 				<?php endif; ?>
-			<?php endif; ?>
-		</div>
-	<?php endforeach; ?>
+			</div>
+		<?php endforeach; ?>
+	</div>
 </div>

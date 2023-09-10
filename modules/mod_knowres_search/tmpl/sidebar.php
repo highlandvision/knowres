@@ -44,6 +44,7 @@ $action = KrMethods::getRoot() . 'index.php?option=com_knowres&task=properties.s
 					'sleeps_infant_max' => 0,
 					'sleeps_infant_age' => 0,
 				]);
+				require ModuleHelper::getLayoutPath('mod_knowres_search', '_partypane');
 				?>
 			<?php endif; ?>
 			<?php if ($params->get('show_flexible', 1)): ?>
@@ -57,6 +58,4 @@ $action = KrMethods::getRoot() . 'index.php?option=com_knowres&task=properties.s
 			</button>
 		</div>
 	</div>
-
-	<?php require ModuleHelper::getLayoutPath('mod_knowres_search', '_partypane'); ?>
 </form>
