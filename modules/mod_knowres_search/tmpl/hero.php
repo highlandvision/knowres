@@ -24,7 +24,7 @@ $show_guests  = $params->get('show_guests', 0);
 
 <div class="kr-search <?php echo $params->get('hero-position'); ?>">
 	<form action="<?php echo $action; ?>" method="post" name="search-default">
-		<div class="row">
+		<div class="row adjust-padding">
 			<?php if (!empty($params->get('search_text', '') && $params->get('show_regions') < 1)): ?>
 				<div class="small-12 medium-12 large-3 columns">
 					<h3><?php echo $params->get('search_text'); ?></h3>

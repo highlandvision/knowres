@@ -13,7 +13,7 @@ use HighlandVision\KR\Framework\KrMethods;
 ?>
 
 <div class="dropdown-pane large" id="kr-searchregion-drop" data-alignment="left" data-auto-focus="true"  data-closable
-     data-close-on-click="true" data-dropdown data-position="bottom" data-v-offset="0">
+     data-close-on-click="true" data-dropdown data-position="bottom" data-h-offset="-16" data-v-offset="0">
 
 	<div class="dropdown-body">
 		<?php $c = 0; ?>
