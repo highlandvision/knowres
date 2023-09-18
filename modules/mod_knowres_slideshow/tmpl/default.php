@@ -13,26 +13,21 @@ defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\SiteHelper;
+
 ?>
 
-<div class="show-for-small show-for-medium hide-for-large">
-	<div style="height:300px;">
-		<?php foreach ($data as $d): ?>
-			<div>
-				<?php $options = ['src'         => $d['image'],
-				                  'alt'         => $d['alt'],
-				                  'description' => $d['description'],
-				                  'class'       => 'responsive',
-				                  'style'       => 'height:300px'
-				]; ?>
-				<?php echo KrMethods::render('joomla.html.image', $options); ?>
-			</div>
-			<?php break; ?>
-		<?php endforeach; ?>
-	</div>
+<div class="show-for-small hide-for-large">
+	<?php foreach ($data as $d): ?>
+		<?php $options = ['src'         => $d['image'],
+		                  'alt'         => $d['alt'],
+		                  'description' => $d['description'],
+		]; ?>
+		<?php echo KrMethods::render('joomla.html.image', $options); ?>
+		<?php break; ?>
+	<?php endforeach; ?>
 </div>
 <div class="show-for-large">
-	<?php $height  = $params->get('height') . 'px'; ?>
+	<?php $height = $params->get('height') . 'px'; ?>
 	<div class="kr-slideshow kr-slick" style="height:<?php echo $height; ?>">
 		<?php foreach ($data as $d): ?>
 			<div>
@@ -45,9 +40,14 @@ use HighlandVision\KR\SiteHelper;
 				<?php echo KrMethods::render('joomla.html.image', $options); ?>
 
 				<?php if (!empty($d['property_id'])): ?>
-					<?php $Itemid = SiteHelper::getItemId('com_knowres', 'property', ['id' => (int) $d['property_id']]); ?>
+					<?php $Itemid =
+						SiteHelper::getItemId('com_knowres', 'property', ['id' => (int) $d['property_id']]); ?>
 					<div class="caption">
-						<?php $plink = KrMethods::route('index.php?option=com_knowres&view=property&Itemid=' . $Itemid . '&id=' . (int) $d['property_id']); ?>
+						<?php $plink =
+							KrMethods::route('index.php?option=com_knowres&view=property&Itemid=' .
+							                 $Itemid .
+							                 '&id=' .
+							                 (int) $d['property_id']); ?>
 						<?php $text = $d['property_name'] . ' ' . $d['region_name'] . ', ' . $d['country_name']; ?>
 						<a href="<?php echo $plink; ?>"><?php echo $text; ?></a>
 					</div>

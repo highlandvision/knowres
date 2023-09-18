@@ -20,7 +20,7 @@ $text   = KrMethods::sprintf('MOD_KNOWRES_DESTINATION_VIEW_PROPERTIES', $destina
 
 <div class="kr-property kr-destinations" style="margin-bottom:20px;">
 	<div class="row">
-		<div class="small-12 text-center medium-text-left columns">
+		<div class="small-12 columns">
 			<h2><?php echo $destination; ?></h2>
 
 			<?php

@@ -17,7 +17,7 @@ $Currency = new Currency();
 ?>
 
 <div class="row">
-	<div class="small-12 text-center medium-text-left large-10 columns">
+	<div class="small-12 large-10 columns">
 		<h3>
 			<?php if (!$title): ?>
 				<?php echo KrMethods::plain('MOD_KNOWRES_FEATURED_FEATURED'); ?>

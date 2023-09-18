@@ -11,7 +11,7 @@ defined('_JEXEC') or die;
 ?>
 
 <div class="row">
-	<div class="small-12 text-center medium-text-left columns">
+	<div class="small-12 columns">
 		<div id="kr-map-solo"></div>
 	</div>
 	<div class="small-12 columns">

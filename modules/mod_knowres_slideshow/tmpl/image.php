@@ -19,8 +19,8 @@ $height = $params->get('height') . 'px';
 	<?php $options = ['src'         => $d['image'],
 	                  'alt'         => $d['alt'],
 	                  'description' => $d['description'],
-	                  'class'       => 'responsive',
-	                  'style'       => 'height:' . $height
+	                  'height'       => $height,
+	                  'min_height'   => $height
 	]; ?>
 	<?php echo KrMethods::render('joomla.html.image', $options); ?>
 	<?php break; ?>
