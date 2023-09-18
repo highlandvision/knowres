@@ -8,28 +8,24 @@
  */
 
 use HighlandVision\KR\Framework\KrMethods;
+use Joomla\CMS\Helper\ModuleHelper;
 
 defined('_JEXEC') or die;
 
-$class = match ($count) {
-	1 => 'small-up-1',
-	2 => 'small-up-1 medium-up-2',
-	default => 'small-up-1 medium-up-3 large-up-3'
-};
-
-$textalign     = $params->get('textalign');
-$textbg        = $params->get('textbg');
-$textbold      = $params->get('textbold');
-$textcolor     = $params->get('textcolor');
-$textsize      = $params->get('textsize') . 'px';
-$verticalalign = $params->get('verticalalign');
+$textbg    = $params->get('textbg');
+$textbold  = $params->get('textbold');
+$textcolor = $params->get('textcolor');
+$textsize  = $params->get('textsize') . 'px';
+$height    = $params->get('height') . 'px';
+$count     = count($data);
 
 $pstyle   = '';
-$pclass[] = $textalign;
-$pclass[] = $verticalalign;
+$pclass[] = $params->get('horizontal');
 if ($textbg) {
-	$pstyle   .= 'background:' . $textbg . ';';
-	$pclass[] = 'withbg';
+	$pstyle .= 'background:' . $textbg . ';';
+}
+else {
+	$pclass[] = 'nobg';
 }
 if ($textbold) {
 	$pclass[] = 'strong';
@@ -38,49 +34,40 @@ if ($textcolor) {
 	$pstyle .= 'color:' . $textcolor . ';';
 }
 if ($textsize) {
-	$pstyle .= 'font-size:' . $textsize;
+	$pstyle .= 'font-size:' . $textsize . ';';
 }
 ?>
 
 <div class="kr-spotlight">
-    <div class="row <?php echo $class; ?>">
-		<?php foreach ($data as $d): ?>
-			<?php $link = ''; ?>
+	<div class="row">
+		<?php
+			$num = 0;
+			foreach ($data as $d) {
+				echo match ($count) {
+					3       => '<div class="small-12 medium-4 columns">',
+					2       => '<div class="small-6 columns">',
+					default => '<div class="small-12 columns">',
+				};
 
-            <div class="column column-block text-center">
-	            <?php if ($d['link'] != -1): ?>
-	                <?php $link = KrMethods::route('index.php?Itemid=' . $d['link']); ?>
-	                <?php $external = ''; ?>
-	            <?php elseif (!empty($d['url'])): ?>
-	                <?php $link = $d['url']; ?>
-	                <?php $external = 'target="_blank"'; ?>
-	            <?php endif; ?>
+				if (count($data) - 1 == $num) {
+					$pclass[] = 'last';
+				}
 
-	            <?php if ($link): ?>
-		            <a href="<?php echo $link; ?>" style="cursor:pointer;" <?php echo $external; ?>
-		               title="<?php echo $d['text'];; ?>">
-				<?php endif; ?>
+				$link = '';
+				if ($d['link'] != -1) {
+					$link     = KrMethods::route('index.php?Itemid=' . $d['link']);
+					$external = '';
+				}
+				elseif (!empty($d['url'])) {
+					$link     = $d['url'];
+					$external = 'target="_blank"';
+				}
 
-				<?php
-				$height = $params->get('height') . 'px';
-				$options = ['src'    => $d['image'],
-				            'alt'    => $d['text'],
-				            'class'  => 'th responsive',
-				            'style'  => 'height:'.$height.';max-height:'.$height.';min-height:'.$height
-				];
-				echo KrMethods::render('joomla.html.image', $options);
-				?>
+				require ModuleHelper::getLayoutPath('mod_knowres_spotlight', '_item');
 
-				<?php if ($d['text']): ?>
-                    <p class="<?php echo implode(' ', $pclass); ?>" style="<?php echo $pstyle; ?>">
-						<?php echo $d['text']; ?>
-                    </p>
-				<?php endif; ?>
-
-	            <?php if ($link): ?>
-		            <?php echo '</a>'; ?>
-	            <?php endif; ?>
-            </div>
-		<?php endforeach; ?>
-    </div>
+				echo '</div>';
+				$num++;
+			}
+		?>
+	</div>
 </div>

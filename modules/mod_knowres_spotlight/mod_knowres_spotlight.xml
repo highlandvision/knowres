@@ -49,24 +49,14 @@
                        max="30"
                        label="MOD_KNOWRES_SPOTLIGHT_TEXTSIZE"
                        description="MOD_KNOWRES_SPOTLIGHT_TEXTSIZE_DSC"/>
-                <field name="textalign"
+                <field name="horizontal"
                        class="btn-group"
                        default="center"
                        type="radio"
-                       label="MOD_KNOWRES_SPOTLIGHT_TEXTALIGN"
-                       description="MOD_KNOWRES_SPOTLIGHT_TEXTALIGN_DSC">
+                       label="MOD_KNOWRES_SPOTLIGHT_HORIZONTAL"
+                       description="MOD_KNOWRES_SPOTLIGHT_HORIZONTAL_DSC">
                     <option value="left">MOD_KNOWRES_SPOTLIGHT_LEFT</option>
                     <option value="center">MOD_KNOWRES_SPOTLIGHT_CENTER</option>
-                </field>
-                <field name="verticalalign"
-                       class="btn-group"
-                       default="center"
-                       type="radio"
-                       label="MOD_KNOWRES_SPOTLIGHT_VERTICAL_ALIGN"
-                       description="MOD_KNOWRES_SPOTLIGHT_VERTICAL_ALIGN_DSC">
-                    <option value="top">MOD_KNOWRES_SPOTLIGHT_TOP</option>
-                    <option value="middle">MOD_KNOWRES_SPOTLIGHT_MIDDLE</option>
-                    <option value="bottom">MOD_KNOWRES_SPOTLIGHT_BOTTOM</option>
                 </field>
                 <field type="spacer"
                        name="spacer1"
