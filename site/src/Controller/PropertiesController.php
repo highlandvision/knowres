@@ -453,17 +453,8 @@ class PropertiesController extends BaseController
 			$tmp['link']  = '';
 		}
 		else {
-			$tmp['title'] = KrMethods::plain('COM_KNOWRES_CLICK_FOR_DETAILS');
-
-			$link        = SiteHelper::buildPropertyLink($item->id);
-			$tmp['html'] = '<div style="margin-bottom:10px;font-size:1rem;line-height:1.5;">' .
-				$item->property_name .
-				'</div>
-				<div class="text-center">
-				<a href="' . $link . '" class="button small no-margin-bottom">' .
-				KrMethods::plain('COM_KNOWRES_SEE_DETAILS') .
-				'</a></div>';
-			$tmp['link'] = SiteHelper::buildPropertyLink($item->id, null, true);
+			$tmp['html'] = '<div style="color:#fefefe;padding:0.3rem;font-size:1rem;line-height:1;">' .
+				$item->property_name . '</div>';
 		}
 
 		return $tmp;

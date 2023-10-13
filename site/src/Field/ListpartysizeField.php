@@ -27,38 +27,18 @@ class ListpartysizeField extends ListField
 {
 	/** @var int $adults The number of adults. */
 	protected int $adults = 2;
-	/** @var int $children The number of children. */
-	protected int $children = 0;
 	/** @var array $child_gaes Child ages */
 	protected array $child_ages = [];
+	/** @var int $children The number of children. */
+	protected int $children = 0;
 	/** @var int The max number of guests. */
 	protected int $max = 0;
-	/** @var int The max number of free infants. */
-	protected int $sleeps_infant_max = 0;
 	/** @var int Free infant age limit. */
 	protected int $sleeps_infant_age = 0;
+	/** @var int The max number of free infants. */
+	protected int $sleeps_infant_max = 0;
 	/** @var string The form field type. */
 	protected $type = 'Listpartysize';
-
-	/**
-	 * Render the field with custom options if sent.
-	 *
-	 * @since  1.6
-	 * @return string The field input markup.
-	 */
-	public function renderField($options = []): string
-	{
-		$this->adults            = $options['adults'];
-		$this->children          = $options['children'];
-		$this->child_ages        = $options['child_ages'];
-		$this->max               = $options['max'];
-		$this->sleeps_infant_max = $options['sleeps_infant_max'];
-		$this->sleeps_infant_age = $options['sleeps_infant_age'];
-
-		$this->dataAttributes = $this->setDataAttributes();
-
-		return parent::renderField();
-	}
 
 	/**
 	 * Form field options for select from form xml or build your own
@@ -90,6 +70,26 @@ class ListpartysizeField extends ListField
 	}
 
 	/**
+	 * Render the field with custom options if sent.
+	 *
+	 * @since  1.6
+	 * @return string The field input markup.
+	 */
+	public function renderField($options = []): string
+	{
+		$this->adults            = $options['adults'];
+		$this->children          = $options['children'];
+		$this->child_ages        = $options['child_ages'];
+		$this->max               = $options['max'];
+		$this->sleeps_infant_max = $options['sleeps_infant_max'];
+		$this->sleeps_infant_age = $options['sleeps_infant_age'];
+
+		$this->dataAttributes = $this->setDataAttributes();
+
+		return parent::renderField();
+	}
+
+	/**
 	 * Field data attributes.
 	 *
 	 * @since  4.0.0
@@ -101,8 +101,9 @@ class ListpartysizeField extends ListField
 		$attributes['aria-label']  = KrMethods::plain('MOD_KNOWRES_SEARCH_GUESTS_LBL_ARIA');
 		$attributes['data-max']    = $this->max ?: KrMethods::getParams()->get('search_maxguests', 16);
 		$attributes['data-adults'] = $this->max - $this->sleeps_infant_max;
-		$attributes['data-toggle'] = 'kr-searchguest-drop';
-		$attributes['onmousedown'] = "(function(e){ e.preventDefault(); })(event, this)";
+//		$attributes['data-toggle'] = 'kr-searchguest-drop';
+		$attributes['onmousedown'] = "(function(e){ e.preventDefault(); })(event, this);";
+		$attributes['data-open']   = 'kr-searchguest-drop';
 
 		return $attributes;
 	}

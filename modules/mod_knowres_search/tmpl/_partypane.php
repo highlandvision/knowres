@@ -15,12 +15,11 @@ $tadults   = KrMethods::plain('MOD_KNOWRES_SEARCH_ADULTS');
 $tchildren = KrMethods::plain('MOD_KNOWRES_SEARCH_CHILDREN');
 ?>
 
-<div class="dropdown-pane large" id="kr-searchguest-drop" data-alignment="left" data-closable
-     data-close-on-click="true" data-dropdown data-position="bottom" data-h-offset="-16" data-v-offset="0">
-
+<div class="dropdown-pane large" id="kr-searchguest-drop" data-alignment="left" data-auto-focus="true" data-closable
+     data-close-on-click="true" data-dropdown data-position="bottom" data-h-offset="-4" data-v-offset="18">
 	<div class="dropdown-body">
 		<div class="row">
-			<div class="small-12 columns">
+			<div class="small-6 columns">
 				<label for="adults">
 					<?php echo KrMethods::plain('MOD_KNOWRES_SEARCH_SHOW_GUESTS_ADULTS'); ?>
 				</label>
@@ -41,7 +40,7 @@ $tchildren = KrMethods::plain('MOD_KNOWRES_SEARCH_CHILDREN');
 					</div>
 				</div>
 			</div>
-			<div class="small-12 columns">
+			<div class="small-6 columns">
 				<label for="children">
 					<?php echo KrMethods::sprintf('MOD_KNOWRES_SEARCH_SHOW_GUESTS_CHILDREN', '2 - 17'); ?>
 				</label>

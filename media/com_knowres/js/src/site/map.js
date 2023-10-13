@@ -64,7 +64,6 @@ const lang = "en";
 
 		static closeKrInfowindow() {
 			$('#kr-infowindow').hide();
-//			"#kr-infowindow".style.display = 'none';
 			infoWindow.close();
 			infoWindow2.close();
 		}
@@ -282,8 +281,6 @@ const lang = "en";
 		//Initialise map
 		initMap() {
 			this.createMap();
-//			this.setMarkerIcons();
-
 			if (this.settings.mapType === 'cluster') {
 				this.clusterMap();
 			} else {
@@ -462,6 +459,8 @@ const lang = "en";
 				type:    "POST",
 				url:     'index.php?option=com_knowres&task=properties.mapsession&lang=' + lang,
 				success: function () {
+					$( '.kr-searchbar .button.map').removeClass('is-active');
+					$( '.kr-searchbar .button.list').addClass('is-active');
 					return true;
 				}
 			});

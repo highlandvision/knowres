@@ -19,3 +19,18 @@ for (let c = 0; c < cboxes.length; c++) {
         }
     });
 }
+
+
+let observer = new MutationObserver(function (mutations) {
+    mutations.forEach(function (mutation) {
+        if (mutation.target.classList.contains('is-open')) {
+            document.getElementById("dd-overlay").style.display = "block";
+        } else {
+            document.getElementById("dd-overlay").style.display = "none";
+        }
+    });
+});
+observer.observe(document.querySelector(".dropdown-pane"), {
+    attributes: true,
+    attributeFilter: ['class']
+});

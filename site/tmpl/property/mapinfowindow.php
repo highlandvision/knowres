@@ -50,7 +50,7 @@ use HighlandVision\KR\Translations;
 
 		<a href="<?php echo $this->link; ?>" class="button expanded no-margin-bottom" target="_blank" title="<?php echo
 		$this->item->property_name; ?>">
-			<?php echo KrMethods::plain('COM_KNOWRES_VIEW_PROPERTY'); ?>
+			<?php echo KrMethods::plain('COM_KNOWRES_VIEW_DETAILS'); ?>
 		</a>
 	</div>
 </div>

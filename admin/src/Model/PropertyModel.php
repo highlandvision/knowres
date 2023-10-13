@@ -69,7 +69,7 @@ class PropertyModel extends AdminModel
 		}
 		else {
 			return match ($booking_type) {
-				0 => KrMethods::plain('COM_KNOWRES_SEE_DETAILS'),
+				0 => KrMethods::plain('COM_KNOWRES_VIEW_DETAILS'),
 				1 => KrMethods::plain('COM_KNOWRES_REQUEST_BOOKING'),
 				2 => KrMethods::plain('COM_KNOWRES_BOOK_NOW')
 			};
