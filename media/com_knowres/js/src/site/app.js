@@ -103,7 +103,8 @@ let resized = false;
                             const element = "#" + $this.find('.has-tip').data('toggle');
                             $(element).remove();
                             $(krproperty).fadeOut(1200, function() {
-                                $(krproperty).parent().css('display', 'none')});
+                                $(krproperty).parent().css('display', 'none');
+                            });
                         } else if (result.data.action !== 'none') {
                             const $target = $this.find('i.fa-heart');
                             $target.toggleClass('in');

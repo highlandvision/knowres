@@ -30,7 +30,10 @@ let observer = new MutationObserver(function (mutations) {
         }
     });
 });
-observer.observe(document.querySelector(".dropdown-pane"), {
-    attributes: true,
-    attributeFilter: ['class']
+let panes = document.querySelectorAll('.dropdown-pane');
+panes.forEach(function(pane) {
+    observer.observe(pane, {
+        attributes: true,
+        attributeFilter: ['class']
+    });
 });

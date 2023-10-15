@@ -85,8 +85,9 @@ class ListgroupedregionsField extends GroupedlistField
 	protected function setDataAttributes(): array
 	{
 		$attributes                = [];
-		$attributes['onmousedown'] = "(function(e){ e.preventDefault(); })(event, this)";
-		$attributes['data-toggle'] = "kr-searchregion-drop";
+		$attributes['aria-label']  = KrMethods::plain('MOD_KNOWRES_SEARCH_LOCATIONS_LBL_ARIA');
+		$attributes['onmousedown'] = "(function(e){ e.preventDefault(); })(event, this);";
+		$attributes['data-open']   = 'kr-searchregion-drop';
 
 		return $attributes;
 	}

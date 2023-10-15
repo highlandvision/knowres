@@ -101,7 +101,6 @@ class ListpartysizeField extends ListField
 		$attributes['aria-label']  = KrMethods::plain('MOD_KNOWRES_SEARCH_GUESTS_LBL_ARIA');
 		$attributes['data-max']    = $this->max ?: KrMethods::getParams()->get('search_maxguests', 16);
 		$attributes['data-adults'] = $this->max - $this->sleeps_infant_max;
-//		$attributes['data-toggle'] = 'kr-searchguest-drop';
 		$attributes['onmousedown'] = "(function(e){ e.preventDefault(); })(event, this);";
 		$attributes['data-open']   = 'kr-searchguest-drop';
 
