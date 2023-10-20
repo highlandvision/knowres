@@ -7,7 +7,7 @@
 	<authorEmail>hazel@highlandvision.com</authorEmail>
 	<copyright>2023 Highland Vision, all rights reserved.</copyright>
 	<license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
-	<version>4.2.0</version>
+	<version>4.3.0</version>
 	<description>MOD_KNOWRES_SLIDESHOW_DSC</description>
 	<files>
 		<filename module="mod_knowres_slideshow">mod_knowres_slideshow.php</filename>

@@ -7,7 +7,7 @@
 	<authorEmail>hazel@highlandvision.com</authorEmail>
 	<copyright>2023 Highland Vision. All rights reserved.</copyright>
 	<license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
-	<version>4.2.0</version>
+	<version>4.3.0</version>
 	<description>PLG_SYSTEM_KNOWRESREDIRECT_DESCRIPTION</description>
 	<scriptfile>installation.script.php</scriptfile>
 	<files>
