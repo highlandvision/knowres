@@ -223,7 +223,7 @@ span.divider {
 }
 .content .card.kr-card .card-header a.showbefore:before {
   float: left !important;
-  font-family: "Font Awesome 5 Free", sans-serif;
+  font-family: "Font Awesome 6 Free", sans-serif;
   font-size: 1.2rem;
   font-weight: 900;
   content: "\f146";
@@ -245,7 +245,7 @@ span.divider {
 }
 .content .card.kr-daily .card-header a.showbefore:before {
   float: left !important;
-  font-family: "Font Awesome 5 Free", sans-serif;
+  font-family: "Font Awesome 6 Free", sans-serif;
   font-size: 1rem;
   font-weight: 900;
   content: "\f146";
