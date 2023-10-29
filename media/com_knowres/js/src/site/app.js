@@ -99,18 +99,7 @@ let resized = false;
                 dataType: 'json',
                 success: function (result) {
                     if (result.success) {
-                        if (result.data.action === 'hideme') {
-                            const element = "#" + $this.find('.has-tip').data('toggle');
-                            $(element).remove();
-                            $(krproperty).fadeOut(1200, function() {
-                                $(krproperty).parent().css('display', 'none');
-                            });
-                        } else if (result.data.action !== 'none') {
-                            const $target = $this.find('i.fa-heart');
-                            $target.toggleClass('in');
-                            const val1 = '#' + $target.data('toggle');
-                            $(val1).text(result.data.action).hide();
-                        }
+                        getProperties('favs', 'view');
                     }
                 }
             });
@@ -221,9 +210,9 @@ let resized = false;
                     return;
                 }
 
-                // noinspection OverlyComplexBooleanExpressionJS
-                if (field === 'order' || field === 'view' || field === 'favs' || field === 'map') {
-                    setActiveMenu(searchdata['view']);
+                const vals = ['order', 'view', 'favs', 'map'];
+                if (vals.includes(field)) {
+                    setActiveMenu(field);
                 }
 
                 setSearchData(searchdata, field);
@@ -268,7 +257,7 @@ let resized = false;
         $.each(bar, function (index, bar) {
             $(bar).removeClass('is-active');
         });
-        $( '.kr-searchbar .button.' + value).addClass('is-active');
+        $('.kr-searchbar .button.' + value).addClass('is-active');
     }
 
     // Return true if width has changed

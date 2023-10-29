@@ -35,10 +35,6 @@ class RawView extends KrHtmlView
 	protected bool $favs = false;
 	/** @var string Modules output */
 	protected string $modules;
-	/** @var bool True if favourites requested but none saved */
-	protected bool $nofavs = false;
-	/** @var array Saved favourites */
-	protected array $saved;
 
 	/**
 	 * Display the view
@@ -53,7 +49,6 @@ class RawView extends KrHtmlView
 		$this->setLayout('raw');
 		$this->state  = $this->get('state');
 		$this->params = KrMethods::getParams();
-		$this->saved  = SiteHelper::getFavourites();
 
 		$searchSession = new KrSession\Search();
 		$searchData    = $searchSession->getData();
@@ -70,22 +65,14 @@ class RawView extends KrHtmlView
 
 		$field = KrMethods::inputString('field', '');
 		$value = KrMethods::inputString('value', '');
-		if ($value == 'favs' && !count($this->saved)) {
-			$this->nofavs = true;
-			$field        = 'view';
-			$value        = $this->params->get('default_view', 'list');
-		}
-		elseif ($value == 'favs') {
-			$this->favs = true;
-			$fids       = [];
-			foreach ($this->saved as $s) {
-				$fids[] = $s;
-			}
 
-			$this->state->set('filter.id', $fids);
-			//TODO-v4.3 display favourites on map only when displayed in list
-			$this->items                      = $this->get('items');
-			$this->Response->searchData->view = 'favs';
+		if ($field == 'favs' && !count($searchData->favs)) {
+			$field = 'view';
+			$value = 'list';
+		}
+
+		if ($field == 'favs' && count($searchData->favs)) {
+			$this->setFavs($searchData->favs);
 		}
 		else {
 			if ($value == 'initial') {
@@ -101,68 +88,8 @@ class RawView extends KrHtmlView
 			$this->Response->getAjaxData($field, $value);
 			$searchSession->setData($this->Response->searchData);
 			$this->state->set('filter.id', $this->Response->searchData->baseIds);
+			$this->doFiltering();
 
-			// Prices are a bit different as can't be filtered by the db
-			// if price filters exist compare against the generated search prices and
-			// reduce the base property filter sent to the search
-			if (is_countable($this->Response->searchData->filterPrice) &&
-				count($this->Response->searchData->filterPrice)) {
-			$uids = [];
-			foreach ($this->Response->searchData->baseIds as $p) {
-				foreach ($this->Response->searchData->filterPrice as $k => $f) {
-					if ($f[2]) {
-						$price = $this->Response->searchData->rateNet[$p];
-						if ((int) $price >= (int) $k && (int) $price <= (int) $f[0]) {
-							$uids[] = $p;
-						}
-					}
-				}
-			}
-
-			// If search by price has reduced the base search then set this as the base filter
-			if (count($uids)) {
-				$uids = array_unique($uids);
-				$this->state->set('filter.id', $uids);
-			}
-			}
-
-			$this->state->set('filter.booking_type', $this->setSelected($this->Response->searchData->filterBook));
-			$this->state->set('filter.category', $this->setSelected($this->Response->searchData->filterCategory));
-			$this->state->set('filter.feature', $this->setSelected($this->Response->searchData->filterFeature));
-			$this->state->set('filter.pets', $this->setSelected($this->Response->searchData->filterPets));
-			$this->state->set('filter.type_id', $this->setSelected($this->Response->searchData->filterType));
-
-			$filter0 = [];
-			$filter = [];
-			foreach ($this->Response->searchData->filterArea as $k => $f) {
-				if ($f[2]) {
-					$parts     = explode('^', $k);
-					$filter0[] = $parts[0];
-					$filter[]  = $parts[1];
-				}
-			}
-			$this->state->set('filter.region_id', $filter0);
-			$this->state->set('filter.property_area', $filter);
-
-			$last   = array_key_last($this->Response->searchData->filterBedrooms);
-			$filter = [];
-			foreach ($this->Response->searchData->filterBedrooms as $k => $f) {
-				if ($f[2]) {
-					if ($k == $last) {
-						for ($i = 0; $i < 10; $i++) {
-							$filter[] = $k + $i;
-						}
-					}
-					else {
-						$filter[] = $k;
-					}
-				}
-			}
-				$this->state->set('filter.bedrooms', $filter);
-
-			$this->state->set('filter.state', 1);
-			$this->state->set('filter.approved', 1);
-			$this->state->set('filter.private', 0);
 			$this->state->set('list.start', $this->Response->searchData->start);
 			$this->state->set('list.ordercustom', $this->Response->searchData->ordercustom);
 			$this->state->set('list.ordering', $this->Response->searchData->ordering);
@@ -189,6 +116,125 @@ class RawView extends KrHtmlView
 		$this->Itemid     = SiteHelper::getItemId('com_knowres', 'property', ['id' => 0]);
 
 		parent::display($tpl);
+	}
+
+	/**
+	 * Do property filtering
+	 *
+	 * @since  4.4.0
+	 */
+	private function doFiltering(): void
+	{
+		$this->filterPrice();
+		$this->state->set('filter.booking_type', $this->setSelected($this->Response->searchData->filterBook));
+		$this->state->set('filter.category', $this->setSelected($this->Response->searchData->filterCategory));
+		$this->state->set('filter.feature', $this->setSelected($this->Response->searchData->filterFeature));
+		$this->state->set('filter.pets', $this->setSelected($this->Response->searchData->filterPets));
+		$this->state->set('filter.type_id', $this->setSelected($this->Response->searchData->filterType));
+		$this->filterLocation();
+		$this->filterBedrooms();
+
+		$this->state->set('filter.state', 1);
+		$this->state->set('filter.approved', 1);
+		$this->state->set('filter.private', 0);
+	}
+
+	/**
+	 * Filter bedrooms
+	 *
+	 * @since  4.4.0
+	 */
+	private function filterBedrooms(): void
+	{
+		$last   = array_key_last($this->Response->searchData->filterBedrooms);
+		$filter = [];
+		foreach ($this->Response->searchData->filterBedrooms as $k => $f) {
+			if ($f[2]) {
+				if ($k == $last) {
+					for ($i = 0; $i < 10; $i++) {
+						$filter[] = $k + $i;
+					}
+				}
+				else {
+					$filter[] = $k;
+				}
+			}
+		}
+
+		$this->state->set('filter.bedrooms', $filter);
+	}
+
+	/**
+	 * Filter location
+	 *
+	 * @since  4.4.0
+	 */
+	private function filterLocation(): void
+	{
+		$filter0 = [];
+		$filter  = [];
+		foreach ($this->Response->searchData->filterArea as $k => $f) {
+			if ($f[2]) {
+				$parts     = explode('^', $k);
+				$filter0[] = $parts[0];
+				$filter[]  = $parts[1];
+			}
+		}
+		$this->state->set('filter.region_id', $filter0);
+		$this->state->set('filter.property_area', $filter);
+	}
+
+	/**
+	 * Filter prices can't be filtered by the db
+	 * If price filters exist compare against the generated search prices and
+	 * reduce the base property filter sent to the search
+	 *
+	 * @since  4.4.0
+	 */
+	private function filterPrice(): void
+	{
+		if (is_countable($this->Response->searchData->filterPrice) &&
+			count($this->Response->searchData->filterPrice)) {
+			$uids = [];
+			foreach ($this->Response->searchData->baseIds as $p) {
+				foreach ($this->Response->searchData->filterPrice as $k => $f) {
+					if ($f[2]) {
+						$price = $this->Response->searchData->rateNet[$p];
+						if ((int) $price >= (int) $k && (int) $price <= (int) $f[0]) {
+							$uids[] = $p;
+						}
+					}
+				}
+			}
+
+			// If search by price has reduced the base search then set this as the base filter
+			if (count($uids)) {
+				$this->state->set('filter.id', array_unique($uids));
+			}
+		}
+	}
+
+	/**
+	 * Set the data for favourites display
+	 *
+	 * @param  array  $favourites Selected favourite properties
+	 *
+	 * @since  4.4.0
+	 */
+	private function setFavs(array $favourites): void
+	{
+		$this->favs                        = true;
+		$this->Response->searchData->field = 'favs';
+		$this->Response->searchData->value = 'favs';
+
+		$fids = [];
+		foreach ($favourites as $s) {
+			$fids[] = $s;
+		}
+
+		//TODO-v4.3 display favourites on map only when displayed in list
+		$this->state->set('filter.id', $fids);
+		$this->items = $this->get('items');
 	}
 
 	/**

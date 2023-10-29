@@ -9,6 +9,7 @@
 
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Utility;
+use Joomla\CMS\Factory;
 
 defined('_JEXEC') or die;
 
@@ -19,7 +20,7 @@ if (!$pagination) {
 
 $data = [];
 
-if (count($this->items)) {
+if (!empty($this->items) && count($this->items)) {
 	$data['view'] = $this->Response->searchData->view;
 	if (count($this->items) > 1) {
 		$data['heading'] = KrMethods::sprintf('COM_KNOWRES_SEARCH_HEADER',
@@ -34,10 +35,9 @@ if (count($this->items)) {
 		$data['items'] = $this->loadTemplate('browse');
 	}
 	else {
-		$data['items'] = $this->loadTemplate('items');
+		$data['items'] = $this->loadTemplate('list');
 	}
-	$data['filters']     = $this->favs ? '' : $this->loadTemplate('filters_offcanvas');
-	$data['filters_top'] = $this->favs ? '' : $this->loadTemplate('filters_top');
+	$data['filters']    = $this->favs ? '' : $this->loadTemplate('filters_offcanvas');
 	$data['sortby']     = $this->loadTemplate('sortby');
 	$data['pagination'] = $pagination;
 }
@@ -50,4 +50,21 @@ else {
 $data['search'] = $this->modules;
 
 echo Utility::encodeJson($data);
+
+$lifetime = 3600 * 24 * 30;
+if (count($this->Response->searchData->favs)) {
+	Factory::getApplication()->getInput()->cookie->set('krsaved',
+	                                                   implode('xx', $this->Response->searchData->favs),
+	                                                   time() + $lifetime,
+	                                                   Factory::getApplication()->get('cookie_path', '/'),
+	                                                   Factory::getApplication()->get('cookie_domain'));
+}
+else {
+	Factory::getApplication()->getInput()->cookie->set('krsaved',
+	                                                   '',
+	                                                   time() - $lifetime,
+	                                                   Factory::getApplication()->get('cookie_path', '/'),
+	                                                   Factory::getApplication()->get('cookie_domain'));
+}
+
 jexit();

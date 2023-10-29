@@ -61,10 +61,10 @@ class Search
 	 */
 	public function __construct(stdClass $data)
 	{
-		$this->searchData   = clone $data;
-		$this->params       = KrMethods::getParams();
-		$this->Translations = new Translations();
-		$this->Filter       = new Filter($this->params, $this->Translations);
+		$this->searchData       = clone $data;
+		$this->params           = KrMethods::getParams();
+		$this->Translations     = new Translations();
+		$this->Filter           = new Filter($this->params, $this->Translations);
 	}
 
 	/**

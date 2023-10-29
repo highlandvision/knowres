@@ -24,8 +24,7 @@ extract($displayData);
  * @var array  $items          Properties
  * @var mixed  $params         KR params.
  * @var string $currency       Default currency.
- * @var bool   $favicon        Property is favourite.
- * @var bool   $saved          Property is favourite.
+ * @var array  $favs           Favourite properties.
  * @var string $view           Selected view.
  * @var bool   $byAvailability Search by availability.
  * @var array  $net            Net rates.
@@ -40,15 +39,23 @@ $Translations = new Translations();
 $weekly  = KrFactory::getListModel('propertysettings')->getOneSetting('tariffChargesStoredWeeklyYesNo');
 $new     = $params->get('search_new', 0);
 $created = $new ? TickTock::modifyMonths('now', $new, '-') : false;
+$total   = count($items);
+$count   = 0;
 ?>
 
-<div class="row" data-equalizer data-equalize-by-row="true">
+<div class="row">
 	<?php foreach ($items as $item) : ?>
 		<?php $plink = SiteHelper::buildPropertyLink($item->id); ?>
 		<?php $id = 'kr-property-' . $item->id; ?>
 		<?php $title = KrMethods::plain('COM_KNOWRES_VIEW') . ' ' . $item->property_name; ?>
-		<div class="small-12 medium-6 columns">
-			<div id="<?php echo $id; ?>" class="kr-list-property card" data-id="<?php echo $item->id; ?>">
+		<?php $count++; ?>
+		<?php $end = $count < $total ? '' : 'end'; ?>
+<!--		--><?php //if ($end): ?>
+		<div class="small-12 medium-6 columns flex-container">
+<!--		--><?php //else: ?>
+<!--			<div class="small-12 medium-6 columns flex-container">-->
+<!--		--><?php //endif; ?>
+			<div id="<?php echo $id; ?>" class="card kr-list-property" data-id="<?php echo $item->id; ?>">
 				<?php if ($item->imagefilename) : ?>
 					<div class="kr-slideshow-wrapper">
 						<?php echo KrMethods::render('properties.list.card.slideshow.images',
@@ -67,21 +74,19 @@ $created = $new ? TickTock::modifyMonths('now', $new, '-') : false;
 						                              'plink'          => $plink
 						                             ]);
 						?>
-						<?php if ($favicon): ?>
-							<?php echo KrMethods::render('properties.list.card.slideshow.favicon',
-							                             ['item'  => $item,
-							                              'saved' => $saved,
-							                              'view'  => $view
-							                             ]); ?>
-						<?php endif; ?>
+						<?php echo KrMethods::render('properties.list.card.slideshow.favicon',
+						                             ['item'  => $item,
+						                              'favs'  => $favs,
+						                              'view'  => $view
+						                             ]); ?>
 						<?php if ($new && $item->created_at >= $created): ?>
 							<?php echo KrMethods::render('properties.list.card.slideshow.badge'); ?>
 						<?php endif; ?>
 					</div>
 				<?php endif; ?>
 
-				<a href="<?php echo $plink; ?>" target="_blank" data-equalizer-watch>
-					<div class="card-section">
+				<div class="card-section">
+					<a href="<?php echo $plink; ?>" target="_blank">
 						<?php echo KrMethods::render('properties.list.card.section', ['item'         => $item,
 						                                                              'params'       => $params,
 						                                                              'plink'        => $plink,
@@ -89,8 +94,8 @@ $created = $new ? TickTock::modifyMonths('now', $new, '-') : false;
 						                                                              'key_features' => $key_features,
 						                                                              'Translations' => $Translations
 						]); ?>
-					</div>
-				</a>
+					</a>
+				</div>
 			</div>
 		</div>
 	<?php endforeach; ?>

@@ -25,7 +25,7 @@ HTMLHelper::_('script', trim(Utility::getGmapsURL()), ['async' => 'async', 'defe
 	<?php echo $this->header; ?>
 </h1>
 
-<div class="kr-properties" data-view="<?php echo $this->Search->data->view; ?>">
+<div class="kr-properties" data-view="<?php echo $this->Search->searchData->view; ?>">
 	<div class="row kr-properties-header">
 		<div class="small-12 columns">
 			<?php echo $this->loadTemplate('menubar'); ?>

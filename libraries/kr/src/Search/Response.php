@@ -174,6 +174,10 @@ class Response
 			// Toggle from map to view
 			$this->searchData->view = $value;
 		}
+		else if ($field === 'favs') {
+			// Toggle from map to view
+			$this->searchData->view = $value;
+		}
 		else if ($field === 'currency') {
 			// TODO-v4.3 Pricing by currency
 			// Set currency, get updated dropdown and refresh current page

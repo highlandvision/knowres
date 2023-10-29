@@ -21,7 +21,6 @@ use HighlandVision\KR\SiteHelper;
 use HighlandVision\KR\Utility;
 use JetBrains\PhpStorm\NoReturn;
 use Joomla\CMS\Cache\Cache;
-use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Response\JsonResponse;
 
@@ -30,12 +29,10 @@ use function array_unique;
 use function count;
 use function header;
 use function http_build_query;
-use function implode;
 use function in_array;
 use function is_countable;
 use function jexit;
 use function json_encode;
-use function time;
 use function trim;
 
 /**
@@ -54,15 +51,19 @@ class PropertiesController extends BaseController
 	 */
 	#[NoReturn] public function favourite(): void
 	{
+		$searchSession = new KrSession\Search();
+		$searchData    = $searchSession->getData();
+
 		$property_id = KrMethods::inputInt('property_id', 0, 'get');
 		$view        = KrMethods::inputString('view', '', 'get');
-		$saved       = SiteHelper::getFavourites();
+		$favs        = $searchData->favs;
+		$wrapper     = [];
 
 		if ($property_id) {
-			if (in_array($property_id, $saved)) {
-				foreach ($saved as $k => $id) {
+			if (in_array($property_id, $favs)) {
+				foreach ($favs as $k => $id) {
 					if ($id == $property_id) {
-						unset($saved[$k]);
+						unset($favs[$k]);
 					}
 				}
 
@@ -74,35 +75,17 @@ class PropertiesController extends BaseController
 				}
 			}
 			else {
-				$saved[] = $property_id;
-				$action  = KrMethods::plain('COM_KNOWRES_FAVORITES_REMOVE');
+				$favs[] = (string) $property_id;
+				$action = KrMethods::plain('COM_KNOWRES_FAVORITES_REMOVE');
 			}
-
-			$lifetime = 3600 * 24 * 30;
-			if (count($saved)) {
-				Factory::getApplication()->input->cookie->set('krsaved',
-				                                              implode('xx', $saved),
-				                                              time() + $lifetime,
-				                                              Factory::getApplication()->get('cookie_path', '/'),
-				                                              Factory::getApplication()->get('cookie_domain'),
-				                                              Factory::getApplication()->isSSLConnection());
-			}
-			else {
-				Factory::getApplication()->input->cookie->set('krsaved',
-				                                              '',
-				                                              time() - $lifetime,
-				                                              Factory::getApplication()->get('cookie_path', '/'),
-				                                              Factory::getApplication()->get('cookie_domain'),
-				                                              Factory::getApplication()->isSSLConnection());
-			}
-
-			$wrapper           = [];
-			$wrapper['action'] = $action;
 		}
-		else {
-			$wrapper           = [];
-			$wrapper['action'] = 'none';
-		}
+
+
+		$wrapper['field'] = 'favs';
+		$wrapper['value'] = 'favs';
+
+		$searchData->favs = $favs;
+		$searchSession->setData($searchData);
 
 		echo new JsonResponse($wrapper);
 		jexit();

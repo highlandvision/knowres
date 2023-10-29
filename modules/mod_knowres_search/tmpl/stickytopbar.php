@@ -17,7 +17,7 @@ $wa = $app->getDocument()->getWebAssetManager();
 $wa->getRegistry()->addExtensionRegistryFile('com_knowres');
 $wa->useScript('com_knowres.site-modules');
 
-$action       = 'index.php?option=com_knowres&task=properties.search';
+$action       = KrMethods::getRoot() . 'index.php?option=com_knowres&task=properties.search';
 $show_regions = $params->get('show_regions', 0);
 $show_guests  = $params->get('show_guests', 0);
 ?>

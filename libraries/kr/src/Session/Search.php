@@ -93,7 +93,7 @@ class Search extends Session
 	}
 
 	/**
-	 * Initialise quote session
+	 * Initialise search session
 	 *
 	 * @since  3.3.0
 	 * @return stdClass
@@ -114,6 +114,7 @@ class Search extends Session
 		$data->departure      = '';
 		$data->description    = '';
 		$data->direction      = '';
+		$data->favs           = [];
 		$data->feature_id     = 0;
 		$data->field          = '';
 		$data->flexible       = 0;

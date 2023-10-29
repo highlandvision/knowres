@@ -16,7 +16,7 @@ extract($displayData);
  * Layout variables
  *
  * @var false|object $item  Property Item.
- * @var array        $saved Saved favourites.
+ * @var array        $favs  Favourite properties.
  * @var mixed        $view  Current view.
  */
 ?>
@@ -24,7 +24,7 @@ extract($displayData);
 <span class="favspan" data-view="<?php echo $view; ?>" data-property="<?php echo $item->id; ?>">
     <span class="fa-stack fa-lg">
         <i class="favicon-base fas fa-circle fa-stack-2x"></i>
-	    <?php if (in_array($item->id, $saved)): ?>
+	    <?php if (in_array($item->id, $favs)): ?>
 		    <i class="favicon-top fas fa-heart fa-stack-1x favorite in has-tip" data-tooltip data-position="left"
 		       data-alignment="center" title="<?php echo KrMethods::plain('COM_KNOWRES_FAVORITES_REMOVE'); ?>">
             </i>

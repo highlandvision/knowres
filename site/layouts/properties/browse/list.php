@@ -23,8 +23,7 @@ extract($displayData);
  * @var array  $items          Properties
  * @var mixed  $params         KR params.
  * @var string $currency       Default currency.
- * @var bool   $favicon        Property is favourite.
- * @var bool   $saved          Property is favourite.
+ * @var bool   $favs           Favourite properties.
  * @var string $view           Selected view.
  * @var bool   $byAvailability Search by availability.
  * @var array  $net            Net rates.
@@ -36,15 +35,15 @@ extract($displayData);
 
 $Translations = new Translations();
 
-$weekly  = KrFactory::getListModel('propertysettings')->getOneSetting('tariffChargesStoredWeeklyYesNo');
+$weekly = KrFactory::getListModel('propertysettings')->getOneSetting('tariffChargesStoredWeeklyYesNo');
 ?>
 
-<div class="row" data-equalizer data-equalize-by-row="true">
+<div class="row">
 	<?php foreach ($items as $item) : ?>
 		<?php $plink = SiteHelper::buildPropertyLink($item->id); ?>
 		<?php $id = 'kr-property-' . $item->id; ?>
 		<?php $title = KrMethods::plain('COM_KNOWRES_VIEW') . ' ' . $item->property_name; ?>
-		<div class="small-6 medium-4 columns">
+		<div class="small-6 medium-4 columns flex-container">
 			<div id="<?php echo $id; ?>" class="kr-list-property card" data-id="<?php echo $item->id; ?>">
 				<?php if ($item->imagefilename) : ?>
 					<div class="kr-slideshow-wrapper">
@@ -64,17 +63,15 @@ $weekly  = KrFactory::getListModel('propertysettings')->getOneSetting('tariffCha
 						                              'plink'          => $plink
 						                             ]);
 						?>
-						<?php if ($favicon): ?>
-							<?php echo KrMethods::render('properties.browse.card.slideshow.favicon',
-							                             ['item'  => $item,
-							                              'saved' => $saved,
-							                              'view'  => $view
-							                             ]); ?>
-						<?php endif; ?>
+						<?php echo KrMethods::render('properties.browse.card.slideshow.favicon',
+						                             ['item' => $item,
+						                              'favs' => $favs,
+						                              'view' => $view
+						                             ]); ?>
 					</div>
 				<?php endif; ?>
 
-				<a href="<?php echo $plink; ?>" target="_blank" data-equalizer-watch>
+				<a href="<?php echo $plink; ?>" target="_blank">
 					<div class="card-section">
 						<?php echo KrMethods::render('properties.browse.card.section',
 						                             ['item'         => $item,

@@ -93,6 +93,7 @@ class HtmlView extends KrHtmlView\Site
 
 		if ($new) {
 			$this->property_search = true;
+
 			if ($layout == 'category') {
 				$this->category_id = KrMethods::inputInt('category_id', 0, 'get');
 				if (!$this->category_id) {
@@ -134,6 +135,7 @@ class HtmlView extends KrHtmlView\Site
 			}
 		}
 
+		$searchData->favs = SiteHelper::getFavourites();
 		$this->Search = new Search($searchData);
 		if ($new) {
 			$this->Search->doBaseSearch();
