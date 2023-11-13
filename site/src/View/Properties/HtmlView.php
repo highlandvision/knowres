@@ -136,7 +136,7 @@ class HtmlView extends KrHtmlView\Site
 		}
 
 		$searchData->favs = SiteHelper::getFavourites();
-		$this->Search = new Search($searchData);
+		$this->Search     = new Search($searchData);
 		if ($new) {
 			$this->Search->doBaseSearch();
 		}
@@ -151,8 +151,8 @@ class HtmlView extends KrHtmlView\Site
 		if ($this->params->get('search_list', 0)) {
 			$this->layouts['list'] = true;
 		}
-		if ($this->params->get('search_solo', 0)) {
-			$this->layouts['solo'] = true;
+		if ($this->params->get('search_thumb', 0)) {
+			$this->layouts['thumb'] = true;
 		}
 
 		$this->Search->searchData->description = $description;

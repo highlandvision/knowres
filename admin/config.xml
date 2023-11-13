@@ -438,18 +438,8 @@
                    type="list"
                    label="COM_KNOWRES_CONFIG_SEARCH_VIEW_DEFAULT"
                    description="COM_KNOWRES_CONFIG_SEARCH_VIEW_DEFAULT_DSC">
-                <option value="grid">COM_KNOWRES_CONFIG_SEARCH_VIEW_GRID</option>
                 <option value="list">COM_KNOWRES_CONFIG_SEARCH_VIEW_LIST</option>
                 <option value="thumb">COM_KNOWRES_CONFIG_SEARCH_VIEW_THUMB</option>
-            </field>
-            <field name="search_grid"
-                   type="radio"
-                   default="0"
-                   class="btn-group btn-group-yesno"
-                   label="COM_KNOWRES_CONFIG_SEARCH_VIEW_SHOW_GRID"
-                   description="COM_KNOWRES_CONFIG_SEARCH_VIEW_SHOW_GRID_DSC">
-                <option value="1">JYES</option>
-                <option value="0">JNO</option>
             </field>
             <field name="search_list"
                    type="radio"
