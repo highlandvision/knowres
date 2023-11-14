@@ -79,7 +79,7 @@ if ($displayData['active'])
 	else if ($app->isClient('site'))
 	{
 		$region_id = $searchData->region_id;
-
+		// TODO v4.3 check why en-gb is hardcoded
 		$Itemid    = SiteHelper::getItemId('com_knowres', 'properties', ['region_id' => $region_id]);
 		$link      = 'index.php?option=com_knowres&view=properties&lang=en-gb&Itemid=' . $Itemid . '&limitstart='
 			. $item->base;
@@ -101,7 +101,7 @@ else
 	<?php $class = 'page-link'; ?>
 	<?php if ($ajax) : ?>
 		<?php $class = $class . ' getResponseSearch'; ?>
-		<?php $data = 'data-field="page" data-value="' . $item->base . '"' ?>
+		<?php $data = 'data-action="page" data-action-value="' . $item->base . '"' ?>
 	<?php endif; ?>
 	<?php $td = ''; ?>
 	<?php if ($title) : ?>

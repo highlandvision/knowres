@@ -53,11 +53,8 @@ class PropertiesController extends BaseController
 	{
 		$searchSession = new KrSession\Search();
 		$searchData    = $searchSession->getData();
-
-		$property_id = KrMethods::inputInt('property_id', 0, 'get');
-		$view        = KrMethods::inputString('view', '', 'get');
-		$favs        = $searchData->favs;
-		$wrapper     = [];
+		$favs          = $searchData->favs;
+		$property_id   = KrMethods::inputInt('property_id');
 
 		if ($property_id) {
 			if (in_array($property_id, $favs)) {
@@ -66,28 +63,16 @@ class PropertiesController extends BaseController
 						unset($favs[$k]);
 					}
 				}
-
-				if ($view !== 'favs') {
-					$action = KrMethods::plain('COM_KNOWRES_FAVORITES_ADD');
-				}
-				else {
-					$action = 'hideme';
-				}
 			}
 			else {
 				$favs[] = (string) $property_id;
-				$action = KrMethods::plain('COM_KNOWRES_FAVORITES_REMOVE');
 			}
 		}
-
-
-		$wrapper['field'] = 'favs';
-		$wrapper['value'] = 'favs';
 
 		$searchData->favs = $favs;
 		$searchSession->setData($searchData);
 
-		echo new JsonResponse($wrapper);
+		echo new JsonResponse([]);
 		jexit();
 	}
 
@@ -294,9 +279,8 @@ class PropertiesController extends BaseController
 			}
 		}
 
-		$route = KrMethods::route('index.php?option=com_knowres&amp;view=properties&amp;' .
-		                          urlencode(trim(http_build_query($input))),
-		                          false);
+		$route = KrMethods::route('index.php?option=com_knowres&view=properties&' .
+		                          urlencode(trim(http_build_query($input))));
 
 		KrMethods::redirect($route);
 	}

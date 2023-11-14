@@ -134,8 +134,7 @@ class Response
 		}
 
 		if ($this->params->get('filter_price')) {
-//			$this->zeroFilterCount($this->searchData->filterPrice);
-			//TODO v4.3 Test price filter
+			$this->zeroFilterCount($this->searchData->filterPrice);
 			foreach ($totalPrice as $t) {
 				if (isset($this->searchData->rateNet[$t->id])) {
 					$this->setFilterPriceCount($this->searchData->filterPrice, $this->searchData->rateNet[$t->id]);
@@ -149,36 +148,30 @@ class Response
 	}
 
 	/**
-	 * Get ajax request data
+	 * Set search data options for action fields
 	 *
-	 * @param  string  $field  Input type field
-	 * @param  string  $value  Input value field
+	 * @param  string  $bar           Menu bar selection
+	 * @param  string  $action        Action for filters or sort
+	 * @param  string  $action_value  Action value for filters or sort
 	 *
 	 * @throws Exception
 	 * @since        1.0.0
 	 * @noinspection PhpStatementHasEmptyBodyInspection
 	 */
-	public function getAjaxData(string $field, string $value): void
+	public function setSearchData(string $bar, string $action = '', string $action_value = ''): void
 	{
-		if ($field == 'view' && $this->searchData->limitstart > 0) {
+		$this->searchData->bar = $bar;
+		if ($bar && $this->searchData->limitstart > 0) {
 			$this->searchData->start      = $this->searchData->limitstart;
 			$this->searchData->limitstart = 0;
 		}
-		if ($field == 'page') {
-			$this->searchData->start = $value;
+		if ($action == 'page') {
+			$this->searchData->start = $action_value;
 		}
-		else if ($field == 'order') {
-			$this->setOrder($value);
+		else if ($action == 'order') {
+			$this->setOrder($action_value);
 		}
-		else if ($field === 'view') {
-			// Toggle from map to view
-			$this->searchData->view = $value;
-		}
-		else if ($field === 'favs') {
-			// Toggle from map to view
-			$this->searchData->view = $value;
-		}
-		else if ($field === 'currency') {
+		else if ($action === 'currency') {
 			// TODO-v4.3 Pricing by currency
 			// Set currency, get updated dropdown and refresh current page
 			//			$currency                                                  = $value;
@@ -201,30 +194,30 @@ class Response
 			//			$uids           = $filter_results;
 			//			$num_properties = count( $uids );
 		}
+		else if ($action === 'clear' || $action === 'toggle') {
+			$this->clearFilter($this->searchData->filterArea);
+			$this->clearFilter($this->searchData->filterBedrooms);
+			$this->clearFilter($this->searchData->filterBook);
+			$this->clearFilter($this->searchData->filterCategory);
+			$this->clearFilter($this->searchData->filterFeature);
+			$this->clearFilter($this->searchData->filterPets);
+			$this->clearFilter($this->searchData->filterPrice);
+			$this->clearFilter($this->searchData->filterType);
+		}
+		else if ($action) {
+			match ($action) {
+				'property_area' => $this->checkSelection($this->searchData->filterArea, $action_value, false),
+				'bedrooms'      => $this->checkSelection($this->searchData->filterBedrooms, $action_value, false),
+				'book'          => $this->checkSelection($this->searchData->filterBook, $action_value, false),
+				'category'      => $this->checkSelection($this->searchData->filterCategory, $action_value, false),
+				'feature'       => $this->checkSelection($this->searchData->filterFeature, $action_value, false),
+				'pets'          => $this->checkSelection($this->searchData->filterPets, $action_value, false),
+				'price'         => $this->checkSelection($this->searchData->filterPrice, $action_value, false),
+				'type'          => $this->checkSelection($this->searchData->filterType, $action_value, false)
+			};
+		}
 		else {
-			if ($field === 'clear' || $field === 'toggle') {
-				$this->clearFilter($this->searchData->filterArea);
-				$this->clearFilter($this->searchData->filterBedrooms);
-				$this->clearFilter($this->searchData->filterBook);
-				$this->clearFilter($this->searchData->filterCategory);
-				$this->clearFilter($this->searchData->filterFeature);
-				$this->clearFilter($this->searchData->filterPets);
-				$this->clearFilter($this->searchData->filterPrice);
-				$this->clearFilter($this->searchData->filterType);
-			}
-			else {
-				$this->searchData->field = $field;
-				match ($field) {
-					'property_area' => $this->checkSelection($this->searchData->filterArea, $value, false),
-					'bedrooms'      => $this->checkSelection($this->searchData->filterBedrooms, $value, false),
-					'book'          => $this->checkSelection($this->searchData->filterBook, $value, false),
-					'category'      => $this->checkSelection($this->searchData->filterCategory, $value, false),
-					'feature'       => $this->checkSelection($this->searchData->filterFeature, $value, false),
-					'pets'          => $this->checkSelection($this->searchData->filterPets, $value, false),
-					'price'         => $this->checkSelection($this->searchData->filterPrice, $value, false),
-					'type'          => $this->checkSelection($this->searchData->filterType, $value, false)
-				};
-			}
+			$this->searchData->action = $action;
 		}
 	}
 
@@ -345,10 +338,10 @@ class Response
 	 */
 	private function setOrder(int $order): void
 	{
-		$this->searchData->start = 0;
-			$this->searchData->ordercustom = '';
-			$this->searchData->ordering    = '';
-			$this->searchData->direction   = '';
+		$this->searchData->start       = 0;
+		$this->searchData->ordercustom = '';
+		$this->searchData->ordering    = '';
+		$this->searchData->direction   = '';
 		$this->searchData->order       = $order;
 
 		switch ($order) {
@@ -375,7 +368,7 @@ class Response
 				$this->searchData->ordercustom = 'sleeps desc, allsleeps desc';
 				break;
 			case '31':
-			$this->searchData->ordering    = 'bedrooms';
+				$this->searchData->ordering  = 'bedrooms';
 				$this->searchData->direction = 'asc';
 				break;
 			case '32':
@@ -390,18 +383,18 @@ class Response
 			case '42':
 				arsort($this->searchData->rateNet);
 				$ids                           = implode(',', array_values(array_keys($this->searchData->rateNet)));
-			$this->searchData->ordercustom = "field ( a.id, " . $ids . ")";
+				$this->searchData->ordercustom = "field ( a.id, " . $ids . ")";
 				break;
 			case '51':
 				$this->searchData->ordering  = 'property_area';
 				$this->searchData->direction = 'asc';
 				break;
 			case '52':
-			$this->searchData->ordering    = 'property_area';
+				$this->searchData->ordering  = 'property_area';
 				$this->searchData->direction = 'desc';
 				break;
 			case '61':
-			$this->searchData->ordering    = 'rating';
+				$this->searchData->ordering  = 'rating';
 				$this->searchData->direction = 'asc';
 				break;
 			case '62':

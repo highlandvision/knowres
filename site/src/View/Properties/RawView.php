@@ -63,29 +63,37 @@ class RawView extends KrHtmlView
 
 		$this->Response = new Response($searchData);
 
-		$field = KrMethods::inputString('field', '');
-		$value = KrMethods::inputString('value', '');
+		$bar          = KrMethods::inputString('bar', $searchData->bar);
+		$action       = KrMethods::inputString('action', '');
+		$action_value = KrMethods::inputString('action_value', '');
 
-		if ($field == 'favs' && !count($searchData->favs)) {
-			$field = 'view';
-			$value = 'list';
+		$favs = false;
+		if ($bar == 'favs' && !count($searchData->favs)) {
+			$bar = $this->params->get('default_view', 'list');
 		}
 
-		if ($field == 'favs' && count($searchData->favs)) {
+		if ($bar == 'favs' && count($searchData->favs)) {
 			$this->setFavs($searchData->favs);
+			$favs = true;
 		}
 		else {
-			if ($value == 'initial') {
-				$value = $this->params->get('default_view', 'list');
-			}
-			else if ($field == 'view' && !$value) {
-				$value = $this->Response->data->view;
-				if (!$value) {
-					$value = $this->params->get('default_view', 'list');
-				}
-			}
+//			else if ($bar == 'view' && !$value) {
+//				$value = $this->Response->data->view;
+//				if (!$value) {
+//					$value = $this->params->get('default_view', 'list');
+//				}
+//			}
 
-			$this->Response->getAjaxData($field, $value);
+//			$this->Response->searchData->bar = $bar;
+
+//			if ($bar && !$favs) {
+//				if ($this->Response->searchData->limitstart > 0) {
+//					$this->Response->searchData->start      = $this->searchData->limitstart;
+//					$this->Response->searchData->limitstart = 0;
+//				}
+//			}
+
+			$this->Response->setSearchData($bar, $action, $action_value);
 			$searchSession->setData($this->Response->searchData);
 			$this->state->set('filter.id', $this->Response->searchData->baseIds);
 			$this->doFiltering();
@@ -109,9 +117,8 @@ class RawView extends KrHtmlView
 		}
 
 		$this->modules    = KrMethods::loadInternal('{loadposition propertiesview}');
-		$this->order      =
-			$this->Response->searchData->order != '' ? $this->Response->searchData->order :
-				$this->params->get('order_default');
+		$this->order      = $this->Response->searchData->order != '' ? $this->Response->searchData->order :
+			$this->params->get('order_default');
 		$this->pagination = $this->get('pagination');
 		$this->Itemid     = SiteHelper::getItemId('com_knowres', 'property', ['id' => 0]);
 
@@ -217,15 +224,14 @@ class RawView extends KrHtmlView
 	/**
 	 * Set the data for favourites display
 	 *
-	 * @param  array  $favourites Selected favourite properties
+	 * @param  array  $favourites  Selected favourite properties
 	 *
 	 * @since  4.4.0
 	 */
 	private function setFavs(array $favourites): void
 	{
-		$this->favs                        = true;
-		$this->Response->searchData->field = 'favs';
-		$this->Response->searchData->value = 'favs';
+		$this->favs                      = true;
+		$this->Response->searchData->bar = 'favs';
 
 		$fids = [];
 		foreach ($favourites as $s) {

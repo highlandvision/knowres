@@ -24,7 +24,7 @@ extract($displayData);
  * @var mixed  $params         KR params.
  * @var string $currency       Default currency.
  * @var bool   $favs           Favourite properties.
- * @var string $view           Selected view.
+ * @var string $bar            Selected menu bar.
  * @var bool   $byAvailability Search by availability.
  * @var array  $net            Net rates.
  * @var array  $discount       Discount value.
@@ -38,7 +38,7 @@ $Translations = new Translations();
 $weekly = KrFactory::getListModel('propertysettings')->getOneSetting('tariffChargesStoredWeeklyYesNo');
 ?>
 
-<div class="row">
+<div class="row" id="kr-browse">
 	<?php foreach ($items as $item) : ?>
 		<?php $plink = SiteHelper::buildPropertyLink($item->id); ?>
 		<?php $id = 'kr-property-' . $item->id; ?>
@@ -66,7 +66,7 @@ $weekly = KrFactory::getListModel('propertysettings')->getOneSetting('tariffChar
 						<?php echo KrMethods::render('properties.browse.card.slideshow.favicon',
 						                             ['item' => $item,
 						                              'favs' => $favs,
-						                              'view' => $view
+						                              'bar'  => $bar
 						                             ]); ?>
 					</div>
 				<?php endif; ?>

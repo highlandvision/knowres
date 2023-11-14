@@ -14,14 +14,14 @@ extract($displayData);
 /**
  * Layout variables
  *
- * @var string $field Filter field.
- * @var array  $data  Filter data [0 => Filter value, 2 => Selected, 3 => Display value].
+ * @var string $action Filter field.
+ * @var array  $data   Filter data [0 => Filter value, 2 => Selected, 3 => Display value].
  */
 ?>
 
 <?php if ($data[2]): ?>
-	<span class="badge checkover getResponseSearch" data-field="<?php echo $field; ?>"
-	      data-value="<?php echo $data[0]; ?>">
+	<span class="badge checkover getResponseSearch" data-action="<?php echo $action; ?>"
+	      data-action-value="<?php echo $data[0]; ?>">
 		<?php echo $data[3]; ?>
 		<span>
 			<i class="close far fa-times-circle"></i>

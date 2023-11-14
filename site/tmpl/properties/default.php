@@ -25,21 +25,11 @@ HTMLHelper::_('script', trim(Utility::getGmapsURL()), ['async' => 'async', 'defe
 	<?php echo $this->header; ?>
 </h1>
 
-<div class="kr-properties" data-view="<?php echo $this->Search->searchData->view; ?>">
-	<div class="row kr-properties-header">
-		<div class="small-12 columns">
-			<?php echo $this->loadTemplate('menubar'); ?>
-<!--			TODO-v43 Delete if not required-->
-<!--			--><?php //echo $this->loadTemplate('mobilebar'); ?>
-		</div>
-	</div>
-	<div class="row">
-		<div class="small-12 columns">
-			<div id="kr-properties-data"></div>
-			<div class="small-only-text-center">
-				<div class="kr-pager"></div>
-			</div>
-		</div>
+<div class="kr-properties">
+	<?php echo $this->loadTemplate('searchbar'); ?>
+	<div id="kr-properties-data"></div>
+	<div class="small-only-text-center">
+		<div class="kr-pager"></div>
 	</div>
 </div>
 

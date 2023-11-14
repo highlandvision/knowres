@@ -12,6 +12,7 @@ namespace HighlandVision\KR\Session;
 defined('_JEXEC') or die;
 
 use Exception;
+use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Session;
 use stdClass;
 
@@ -46,8 +47,7 @@ class Search extends Session
 	public function getData(): stdClass
 	{
 		$data = $this->getSession();
-		if (is_null($data))
-		{
+		if (is_null($data)) {
 			$data = $this->init();
 		}
 
@@ -79,10 +79,8 @@ class Search extends Session
 	public function updateData(array|object $item): stdClass
 	{
 		$data = $this->getData();
-		foreach ($item as $key => $value)
-		{
-			if (property_exists($data, $key))
-			{
+		foreach ($item as $key => $value) {
+			if (property_exists($data, $key)) {
 				$data->$key = $value;
 			}
 		}
@@ -101,8 +99,11 @@ class Search extends Session
 	private function init(): stdClass
 	{
 		$data                 = new stdClass();
+		$data->action         = '';
+		$data->action_value   = '';
 		$data->adults         = 2;
 		$data->arrival        = '';
+		$data->bar            = KrMethods::getParams()->get('default_view', 'list');
 		$data->baseIds        = [];
 		$data->bedrooms       = 0;
 		$data->byAvailability = false;
@@ -116,7 +117,6 @@ class Search extends Session
 		$data->direction      = '';
 		$data->favs           = [];
 		$data->feature_id     = 0;
-		$data->field          = '';
 		$data->flexible       = 0;
 		$data->filterArea     = [];
 		$data->filterBedrooms = [];
@@ -145,7 +145,7 @@ class Search extends Session
 		$data->region_name    = [];
 		$data->start          = 0;
 		$data->type_id        = 0;
-		$data->view           = '';
+		$data->value          = '';
 
 		return $data;
 	}

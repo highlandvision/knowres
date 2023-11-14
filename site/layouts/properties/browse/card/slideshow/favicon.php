@@ -17,11 +17,11 @@ extract($displayData);
  *
  * @var false|object $item  Property Item.
  * @var array        $favs  Saved favourites.
- * @var mixed        $view  Current view.
+ * @var mixed        $bar   Current active search bar.
  */
 ?>
 
-<span class="favspan" data-view="<?php echo $view; ?>" data-property="<?php echo $item->id; ?>">
+<span class="favspan" data-property="<?php echo $item->id; ?>">
     <span class="fa-stack fa-lg">
         <i class="favicon-base fas fa-circle fa-stack-2x"></i>
 	    <?php if (in_array($item->id, $favs)): ?>

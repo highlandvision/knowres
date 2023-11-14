@@ -9,7 +9,7 @@
 "use strict";
 
 let lang;
-let searchdata = [];
+let searchData = [];
 let searchDone = false;
 let calendarLoaded = false;
 let savedwidth = false;
@@ -88,24 +88,26 @@ let resized = false;
             }
         }).on('click', '.favspan', function (e) {
             e.preventDefault();
-            const $this = $(this);
-            const pid = $this.data('property');
-            const krproperty = '#kr-property-' + pid;
-
+            const pid = $(this).data('property');
+            const bar = $('.kr-searchbar a.is-active').data('bar');
             $.ajax({
                 type: 'POST',
                 url: 'index.php?option=com_knowres&task=properties.favourite&lang=' + lang,
-                data: {'property_id': pid, 'view': $this.data('view')},
+                data: {'property_id': pid},
                 dataType: 'json',
                 success: function (result) {
                     if (result.success) {
-                        getProperties('favs', 'view');
+                        getProperties(bar);
                     }
                 }
             });
         }).on('click', '.getResponseSearch', function (e) {
             e.preventDefault();
-            getProperties($(this).data('field'), $(this).data('value'));
+            if ($(this).data('action') === undefined) {
+                getProperties($(this).data('bar'));
+            } else {
+                getProperties($(this).data('bar'), $(this).data('action'),  $(this).data('action-value'));
+            }
         }).on('click', '.kr-filters-close', function (e) {
             e.preventDefault();
             $('.kr-filters.top').addClass('hideme');
@@ -117,9 +119,9 @@ let resized = false;
         }).on('click', '#showgateways', function (e) {
             e.preventDefault();
             $('#kr-gateways').toggleClass('hideme');
-        }).on('click', '.kr-searchbar .button', function (e) {
+        }).on('click', 'a.kr-searchbar', function (e) {
             e.preventDefault();
-            setActiveMenu($(this).data('value'));
+            setActiveMenu($(this).data('bar'));
         }).on('click', '.toggleother', function (e) {
             e.preventDefault();
             $(this).data('other').toggle();
@@ -130,10 +132,17 @@ let resized = false;
                 loadCalendar(pid);
                 calendarLoaded = true;
             }
+        }).on('mouseover', '#kr-thumb img', function() {
+            let property = $(this).parent().data('id');
+            if (property) {
+                let target = '.thumboverview' + property;
+                $('#pinfo').html($(target).html());
+            }
         });
 
-        if ($('.kr-properties').length && !searchDone) {
-            getProperties('view', $(this).data('view'));
+        let $props = $('.kr-properties');
+        if ($props.length && !searchDone) {
+            getProperties($props.data('bar'));
         }
 
         let $tabs = $('.tabs');
@@ -197,25 +206,24 @@ let resized = false;
         }
     }
 
-    function getProperties(field, value) {
+    function getProperties(bar, action = '', action_value = ''){
         $.ajax({
             url: 'index.php?option=com_knowres&view=properties&format=raw&lang=' + lang,
             type: 'POST',
-            data: {'field': field, 'value': value},
+            data: {'bar': bar, 'action': action, 'action_value': action_value },
             dataType: 'json',
             success: function (data) {
-                searchdata = data;
-                if (!searchdata) {
+                if (!data) {
                     window.location.reload();
                     return;
                 }
 
-                const vals = ['order', 'view', 'favs', 'map'];
-                if (vals.includes(field)) {
-                    setActiveMenu(field);
+                const vals = ['list', 'grid', 'thumb', 'favs', 'map'];
+                if (vals.includes(data.bar)) {
+                    setActiveMenu(data.bar);
                 }
 
-                setSearchData(searchdata, field);
+                setSearchData(data, data.bar);
                 $('.has-tip').foundation();
                 $('.dropdown-pane').foundation();
                 $('.kr-property .card').foundation();
@@ -225,7 +233,7 @@ let resized = false;
         });
     }
 
-    function setSearchData(response, field = '') {
+    function setSearchData(response, action = '') {
         if (response) {
             $('#kr-properties-data').empty().fadeIn('slow').html(response['items']).foundation();
             $('#kr-properties-filter-heading').html(response['heading']);
@@ -246,18 +254,18 @@ let resized = false;
                 }
             });
 
-            if (field === 'page') {
+            if (action === 'page') {
                 window.scrollTo(0, 0);
             }
         }
     }
 
-    function setActiveMenu(value) {
-        const bar = $('.kr-searchbar').find('.button');
-        $.each(bar, function (index, bar) {
-            $(bar).removeClass('is-active');
+    function setActiveMenu(bar) {
+        const searchbar = $('.kr-searchbar').find('.button');
+        $.each(searchbar, function (index, searchbar) {
+            $(searchbar).removeClass('is-active');
         });
-        $('.kr-searchbar .button.' + value).addClass('is-active');
+        $('.kr-searchbar .button.' + bar).addClass('is-active');
     }
 
     // Return true if width has changed
@@ -272,8 +280,8 @@ let resized = false;
 
     function checkScreenWidth() {
         resized = false;
-        if (screenWidthHasChanged() && searchdata['items'] && !resized) {
-            setSearchData(searchdata);
+        if (screenWidthHasChanged() && searchData['items'] && !resized) {
+            setSearchData(searchData);
             resized = true;
         }
     }

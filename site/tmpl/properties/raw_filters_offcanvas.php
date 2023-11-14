@@ -30,42 +30,42 @@ if (empty($this->Response->searchData->filterArea) &&
 echo KrMethods::render('properties.raw.filters.offcanvas.heading');
 
 echo KrMethods::render('properties.raw.filters.offcanvas.filter',
-                       ['field' => 'property_area',
+                       ['action' => 'property_area',
                         'data'  => $this->Response->searchData->filterArea,
                         'name'  => KrMethods::plain('COM_KNOWRES_FILTER_HEAD_AREA')
                        ]);
 echo KrMethods::render('properties.raw.filters.offcanvas.filter',
-                       ['field' => 'bedrooms',
+                       ['action' => 'bedrooms',
                         'data'  => $this->Response->searchData->filterBedrooms,
                         'name'  => KrMethods::plain('COM_KNOWRES_FILTER_HEAD_BEDROOMS')
                        ]);
 echo KrMethods::render('properties.raw.filters.offcanvas.filter',
-                       ['field' => 'book',
+                       ['action' => 'book',
                         'data'  => $this->Response->searchData->filterBook,
                         'name'  => KrMethods::plain('COM_KNOWRES_FILTER_HEAD_BOOK')
                        ]);
 echo KrMethods::render('properties.raw.filters.offcanvas.filter',
-                       ['field' => 'category',
+                       ['action' => 'category',
                         'data'  => $this->Response->searchData->filterCategory,
                         'name'  => KrMethods::plain('COM_KNOWRES_FILTER_HEAD_CATEGORY')
                        ]);
 echo KrMethods::render('properties.raw.filters.offcanvas.filter',
-                       ['field' => 'feature',
+                       ['action' => 'feature',
                         'data'  => $this->Response->searchData->filterFeature,
                         'name'  => KrMethods::plain('COM_KNOWRES_FILTER_HEAD_FEATURE')
                        ]);
 echo KrMethods::render('properties.raw.filters.offcanvas.filter',
-                       ['field' => 'pets',
+                       ['action' => 'pets',
                         'data'  => $this->Response->searchData->filterPets,
                         'name'  => KrMethods::plain('COM_KNOWRES_FILTER_HEAD_PETS')
                        ]);
 echo KrMethods::render('properties.raw.filters.offcanvas.filter',
-                       ['field' => 'price',
+                       ['action' => 'price',
                         'data'  => $this->Response->searchData->filterPrice,
                         'name'  => KrMethods::plain('COM_KNOWRES_FILTER_HEAD_PRICE')
                        ]);
 echo KrMethods::render('properties.raw.filters.offcanvas.filter',
-                       ['field' => 'type',
+                       ['action' => 'type',
                         'data'  => $this->Response->searchData->filterType,
                         'name'  => KrMethods::plain('COM_KNOWRES_FILTER_HEAD_TYPE')
                        ]);

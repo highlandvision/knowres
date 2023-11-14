@@ -49,6 +49,8 @@ class Filter
 	protected int $highval = 9999999;
 	/** @var Registry KR paramaters. */
 	private Registry $params;
+	/** @var array Price ranges. */
+	private array $ranges = [];
 
 	/**
 	 * Constructor
@@ -114,7 +116,6 @@ class Filter
 			$this->setPriceRanges($this->searchData->rateNet, $this->searchData->currency);
 		}
 
-		$this->searchData->filterRegion   = [];
 		$this->searchData->filterArea     = [];
 		$this->searchData->filterBedrooms = [];
 		$this->searchData->filterBook     = [];
@@ -269,7 +270,8 @@ class Filter
 		if ($this->params->get('filter_area')) {
 			$filter_this = $item->region_id . '^' . $item->property_area;
 			if (!array_key_exists($filter_this, $this->searchData->filterArea)) {
-				$text =  $this->Translations->getText('region', $item->region_id) . ': ' . $item->property_area;
+				$text                                       =
+					$this->Translations->getText('region', $item->region_id) . ': ' . $item->property_area;
 				$this->searchData->filterArea[$filter_this] = [$filter_this, 0, 0, $text];
 			}
 		}
@@ -432,9 +434,9 @@ class Filter
 			$filter_this = $item->type_id;
 			if (!array_key_exists($filter_this, $this->searchData->filterType)) {
 				$this->searchData->filterType[$filter_this] = [$filter_this,
-				                                         0,
-				                                         0,
-				                                         $this->Translations->getText('type', $item->type_id)
+				                                               0,
+				                                               0,
+				                                               $this->Translations->getText('type', $item->type_id)
 				];
 			}
 		}
@@ -450,9 +452,10 @@ class Filter
 	 */
 	private function setPriceRanges(array $rates, string $currency): void
 	{
-		$ranges  = [];
-		$highest = 0;
-		$lowest  = 0;
+		$this->ranges = [];
+		$ranges       = [];
+		$highest      = 0;
+		$lowest       = 0;
 
 		sort($rates);
 		foreach ($rates as $r) {

@@ -259,7 +259,7 @@ class Translations
 	 * @param  string  $field    Name of the field (column)
 	 *
 	 * @throws RuntimeException
-	 * @since        1.0.0
+	 * @since  1.0.0
 	 * @return string
 	 */
 	public function getText(string $item, ?int $item_id, string $field = 'name'): string

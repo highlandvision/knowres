@@ -48,7 +48,7 @@ else
 	<li>
 		<input type="radio" id="<?php echo $id1; ?>" class="radioover getResponseSearch"
 		       name="ordering" <?php echo $order == $value1 ? 'checked="checked"' : ''; ?>
-		       value="<?php echo $value1; ?>" data-field="order" data-value="<?php echo $value1; ?>">
+		       value="<?php echo $value1; ?>" data-action="order" data-action-value="<?php echo $value1; ?>">
 		<label class="radiolabel" for="<?php echo $id1; ?>">
 			<?php echo $label1; ?>
 		</label>
@@ -56,7 +56,7 @@ else
 	<li>
 		<input type="radio" id="<?php echo $id2; ?>" class="radioover getResponseSearch"
 		       name="ordering" <?php echo $order == $value2 ? 'checked="checked"' : ''; ?>
-		       value="<?php echo $value2; ?>" data-field="order" data-value="<?php echo $value2; ?>">
+		       value="<?php echo $value2; ?>" data-action="order" data-action-value="<?php echo $value2; ?>">
 		<label class="radiolabel" for="<?php echo $id2; ?>">
 			<?php echo $label2; ?>
 		</label>

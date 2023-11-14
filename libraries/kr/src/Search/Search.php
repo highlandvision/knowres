@@ -101,7 +101,7 @@ class Search
 				$this->searchData = $this->Filter->setFilters($baseItems, $this->searchData);
 			}
 
-			$this->setView();
+			$this->setBar();
 		}
 	}
 
@@ -249,11 +249,24 @@ class Search
 	}
 
 	/**
+	 * Set default view
+	 *
+	 * @throws Exception
+	 * @since  3.3.0
+	 */
+	private function setBar(): void
+	{
+		if (!$this->searchData->bar) {
+			$this->searchData->bar = $this->params->get('default_view', 'list');
+		}
+	}
+
+	/**
 	 * Set the currency for the search from a property
 	 * as all properties in the search have the same currency
 	 *
 	 * @throws RuntimeException
-	 * @since 3.3.0
+	 * @since  3.3.0
 	 */
 	private function setCurrency(): void
 	{
@@ -380,22 +393,6 @@ class Search
 		asort($prices);
 		$this->searchData->rateNet      = $prices;
 		$this->searchData->rateDiscount = [];
-	}
-
-	/**
-	 * Set default view
-	 *
-	 * @throws Exception
-	 * @since  3.3.0
-	 */
-	private function setView(): void
-	{
-		$view = $this->searchData->view;
-		if (!$view) {
-			$view = $this->params->get('default_view', 'list');
-		}
-
-		$this->searchData->view = $view;
 	}
 
 	/**

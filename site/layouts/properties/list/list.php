@@ -6,7 +6,6 @@
  * @license    See the file "LICENSE.txt" for the full license governing this code.
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
-
 /** @noinspection PhpUnhandledExceptionInspection */
 
 defined('_JEXEC') or die;
@@ -25,7 +24,7 @@ extract($displayData);
  * @var mixed  $params         KR params.
  * @var string $currency       Default currency.
  * @var array  $favs           Favourite properties.
- * @var string $view           Selected view.
+ * @var string $bar            Selected menu bar.
  * @var bool   $byAvailability Search by availability.
  * @var array  $net            Net rates.
  * @var array  $discount       Discount value.
@@ -43,18 +42,14 @@ $total   = count($items);
 $count   = 0;
 ?>
 
-<div class="row">
+<div class="row" id="kr-list">
 	<?php foreach ($items as $item) : ?>
 		<?php $plink = SiteHelper::buildPropertyLink($item->id); ?>
 		<?php $id = 'kr-property-' . $item->id; ?>
 		<?php $title = KrMethods::plain('COM_KNOWRES_VIEW') . ' ' . $item->property_name; ?>
 		<?php $count++; ?>
 		<?php $end = $count < $total ? '' : 'end'; ?>
-<!--		--><?php //if ($end): ?>
 		<div class="small-12 medium-6 columns flex-container">
-<!--		--><?php //else: ?>
-<!--			<div class="small-12 medium-6 columns flex-container">-->
-<!--		--><?php //endif; ?>
 			<div id="<?php echo $id; ?>" class="card kr-list-property" data-id="<?php echo $item->id; ?>">
 				<?php if ($item->imagefilename) : ?>
 					<div class="kr-slideshow-wrapper">
@@ -77,7 +72,7 @@ $count   = 0;
 						<?php echo KrMethods::render('properties.list.card.slideshow.favicon',
 						                             ['item'  => $item,
 						                              'favs'  => $favs,
-						                              'view'  => $view
+						                              'bar'   => $bar
 						                             ]); ?>
 						<?php if ($new && $item->created_at >= $created): ?>
 							<?php echo KrMethods::render('properties.list.card.slideshow.badge'); ?>

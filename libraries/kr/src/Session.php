@@ -45,7 +45,7 @@ class Session
 	}
 
 	/**
-	 * Get the stored session data
+	 * Set the session data
 	 *
 	 * @param  stdClass  $data  Data to be saved
 	 *

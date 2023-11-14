@@ -10,13 +10,12 @@
 defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrMethods;
-
 ?>
 
 <div class="row kr-searchbar">
 	<div class="small-12 medium-8 columns">
 		<div class="small button-group">
-			<button type="button" class="button sort left-off-canvas-toggle" data-value="sort"
+			<button type="button" class="button sort left-off-canvas-toggle"
 			        data-toggle="kr-properties-sortby-off-canvas" id="sortby"
 			        title="<?php echo KrMethods::plain('COM_KNOWRES_SORT_LIST'); ?>"
 			        aria-label="<?php echo KrMethods::plain('COM_KNOWRES_SORT_LIST'); ?>">
@@ -27,7 +26,7 @@ use HighlandVision\KR\Framework\KrMethods;
 			</button>
 
 			<?php if (isset($this->layouts['list'])): ?>
-				<a class="button getResponseSearch list" data-field="view" data-value="list"
+				<a class="button getResponseSearch list" data-bar="list"
 				   title="<?php echo KrMethods::plain('COM_KNOWRES_VIEW_LIST'); ?>"
 				   aria-label="<?php echo KrMethods::plain('COM_KNOWRES_VIEW_LIST'); ?>">
 					<i class="fas fa-th-list"></i>
@@ -37,9 +36,20 @@ use HighlandVision\KR\Framework\KrMethods;
 				</a>
 			<?php endif; ?>
 
+			<?php if (isset($this->layouts['thumb'])): ?>
+				<a class="button getResponseSearch thumb" data-bar="thumb"
+				   title="<?php echo KrMethods::plain('COM_KNOWRES_VIEW_THUMB'); ?>"
+				   aria-label="<?php echo KrMethods::plain('COM_KNOWRES_VIEW_THUMB'); ?>">
+					<i class="fas fa-table-cells"></i>
+					<span class="show-for-large">
+						<?php echo KrMethods::plain('COM_KNOWRES_VIEW_THUMB'); ?>
+					</span>
+				</a>
+			<?php endif; ?>
+
 			<a class="button map map-trigger" data-zoom="<?php echo $this->Search->searchData->map_zoom; ?>"
 			   data-zoommax="<?php echo $this->Search->searchData->map_zoom_max; ?>" data-target="kr-search-map-full"
-			   data-value="map" data-type="cluster" data-forcemap="<?php echo $this->Search->searchData->map_modal; ?>"
+			   data-bar="map" data-type="cluster" data-forcemap="<?php echo $this->Search->searchData->map_modal; ?>"
 			   data-maptypeid="<?php echo $this->params->get('property_map_type', ''); ?>"
 			   title="<?php echo KrMethods::plain('COM_KNOWRES_VIEW_MAP'); ?>"
 			   aria-label="<?php echo KrMethods::plain('COM_KNOWRES_VIEW_MAP'); ?>">
@@ -49,7 +59,7 @@ use HighlandVision\KR\Framework\KrMethods;
 				</span>
 			</a>
 
-			<a class="button getResponseSearch favs" data-field="favs" data-value="favs"
+			<a class="button getResponseSearch favs" data-bar="favs"
 			   title="<?php echo KrMethods::plain('COM_KNOWRES_VIEW_FAVOURITES'); ?>"
 			   aria-label="<?php echo KrMethods::plain('COM_KNOWRES_VIEW_FAVOURITES'); ?>">
 				<i class="fas fa-heart"></i>
@@ -58,17 +68,7 @@ use HighlandVision\KR\Framework\KrMethods;
 				</span>
 			</a>
 
-			<button type="button" class="button search top-off-canvas-toggle hide-for-large" data-value="search"
-			        data-toggle="kr-properties-search-off-canvas"
-			        title="<?php echo KrMethods::plain('COM_KNOWRES_SEARCH'); ?>"
-			        aria-label="<?php echo KrMethods::plain('COM_KNOWRES_SEARCH'); ?>">
-				<i class="fas fa-search"></i>
-				<span class="show-for-large">
-					&nbsp;<?php echo KrMethods::plain('COM_KNOWRES_SEARCH'); ?>
-				</span>
-			</button>
-
-			<button type="button" class="button filter right-off-canvas-toggle" data-value="filter"
+			<button type="button" class="button filter right-off-canvas-toggle"
 			        data-toggle="kr-properties-filters-off-canvas"
 			        title="<?php echo KrMethods::plain('COM_KNOWRES_FILTER'); ?>"
 			        aria-label="<?php echo KrMethods::plain('COM_KNOWRES_FILTER'); ?>">

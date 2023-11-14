@@ -45,33 +45,31 @@ $count   = 0;
 ?>
 
 <div class="row" id="kr-thumb">
-	<div class="large-4 show-for-large columns" id="pinfo">
-		<p><?php echo KrMethods::plain('COM_KNOWRES_VIEW_THUMB_DEFAULT1'); ?></p>
-		<p><?php echo KrMethods::plain('COM_KNOWRES_VIEW_THUMB_DEFAULT2'); ?></p>
-		<p><?php echo KrMethods::plain('COM_KNOWRES_VIEW_THUMB_DEFAULT3'); ?></p>
-	</div>
-	<div class="small-12 large-8 columns">
-		<div class="thumbs">
-			<?php foreach ($items as $item) : ?>
-				<div>
-					<?php $plink = SiteHelper::buildPropertyLink($item->id); ?>
-					<?php $image = Media\Images::getPropertyImageName($item->id); ?>
-					<a href="<?php echo $plink; ?>" data-id="<?php echo $item->id; ?>" class="container">
-						<?php echo HTMLHelper::_('image', Media\Images::getImagePath($item->id, 'solo', $image),
-						                         $item->property_name, [
-							                         'width'  => $params->get('max_property_width'),
-							                         'height' => $params->get('max_property_height')
-						                         ]);
-						?>
-					</a>
-				</div>
-				<div style="display:none;">
-					<div class="thumboverview<?php echo $item->id; ?>">
-						<h4><?php echo $item->property_name; ?></h4>
-						<p><?php echo nl2br($Translations->getText('property', $item->id, 'p1')); ?></p>
-					</div>
-				</div>
-			<?php endforeach; ?>
+	<div class="large-4 show-for-large columns" style="padding-right:0;">
+		<div id="pinfo">
+			<p><?php echo KrMethods::plain('COM_KNOWRES_VIEW_THUMB_DEFAULT1'); ?></p>
+			<p><?php echo KrMethods::plain('COM_KNOWRES_VIEW_THUMB_DEFAULT2'); ?></p>
+			<p><?php echo KrMethods::plain('COM_KNOWRES_VIEW_THUMB_DEFAULT3'); ?></p>
 		</div>
+	</div>
+	<div class="small-12 large-8 columns thumbs" style="padding-left:6px;">
+		<?php foreach ($items as $item) : ?>
+			<?php $plink = SiteHelper::buildPropertyLink($item->id); ?>
+			<?php $image = Media\Images::getPropertyImageName($item->id); ?>
+			<a href="<?php echo $plink; ?>" data-id="<?php echo $item->id; ?>" class="container">
+				<?php echo HTMLHelper::_('image', Media\Images::getImagePath($item->id, 'solo', $image),
+				                         $item->property_name, [
+					                         'width'  => $params->get('max_property_width'),
+					                         'height' => $params->get('max_property_height')
+				                         ]);
+				?>
+			</a>
+			<div style="display:none;">
+				<div class="thumboverview<?php echo $item->id; ?>">
+					<h4><?php echo $item->property_name; ?></h4>
+					<p><?php echo nl2br($Translations->getText('property', $item->id, 'p1')); ?></p>
+				</div>
+			</div>
+		<?php endforeach; ?>
 	</div>
 </div>

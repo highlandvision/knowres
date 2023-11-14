@@ -26,7 +26,7 @@ foreach ($results as $r) {
                                                         'params'         => $this->params,
                                                         'currency'       => $this->Response->searchData->currency,
                                                         'favs'           => $this->Response->searchData->favs,
-                                                        'view'           => $this->Response->searchData->view,
+                                                        'bar'            => $this->Response->searchData->bar,
                                                         'byAvailability' => $this->Response->searchData->byAvailability,
                                                         'net'            => $this->Response->searchData->rateNet,
                                                         'discount'       => $this->Response->searchData->rateDiscount,

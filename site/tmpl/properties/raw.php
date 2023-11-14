@@ -21,7 +21,7 @@ if (!$pagination) {
 $data = [];
 
 if (!empty($this->items) && count($this->items)) {
-	$data['view'] = $this->Response->searchData->view;
+	$data['bar'] = $this->Response->searchData->bar;
 	if (count($this->items) > 1) {
 		$data['heading'] = KrMethods::sprintf('COM_KNOWRES_SEARCH_HEADER',
 		                                      $this->Response->searchData->description,
@@ -35,7 +35,7 @@ if (!empty($this->items) && count($this->items)) {
 		$data['items'] = $this->loadTemplate('browse');
 	}
 	else {
-		$data['items'] = $this->loadTemplate('list');
+		$data['items'] = $this->loadTemplate($this->Response->searchData->bar);
 	}
 	$data['filters']    = $this->favs ? '' : $this->loadTemplate('filters_offcanvas');
 	$data['sortby']     = $this->loadTemplate('sortby');
