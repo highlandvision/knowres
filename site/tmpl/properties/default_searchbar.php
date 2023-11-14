@@ -26,17 +26,22 @@ use HighlandVision\KR\Framework\KrMethods;
 			</button>
 
 			<?php if (isset($this->layouts['list'])): ?>
+				<?php $text =  KrMethods::plain('COM_KNOWRES_VIEW_LIST'); ?>
+				<?php if ($this->Search->searchData->layout): ?>
+					<?php $text =  KrMethods::plain('COM_KNOWRES_VIEW_BROWSE'); ?>
+				<?php endif; ?>
+
 				<a class="button getResponseSearch list" data-bar="list"
-				   title="<?php echo KrMethods::plain('COM_KNOWRES_VIEW_LIST'); ?>"
-				   aria-label="<?php echo KrMethods::plain('COM_KNOWRES_VIEW_LIST'); ?>">
+				   title="<?php echo $text; ?>"
+				   aria-label="<?php echo $text; ?>">
 					<i class="fas fa-th-list"></i>
 					<span class="show-for-large">
-						<?php echo KrMethods::plain('COM_KNOWRES_VIEW_LIST'); ?>
+						<?php echo $text; ?>
 					</span>
 				</a>
 			<?php endif; ?>
 
-			<?php if (isset($this->layouts['thumb'])): ?>
+			<?php if (isset($this->layouts['thumb']) && !$this->Search->searchData->layout): ?>
 				<a class="button getResponseSearch thumb" data-bar="thumb"
 				   title="<?php echo KrMethods::plain('COM_KNOWRES_VIEW_THUMB'); ?>"
 				   aria-label="<?php echo KrMethods::plain('COM_KNOWRES_VIEW_THUMB'); ?>">
@@ -47,17 +52,19 @@ use HighlandVision\KR\Framework\KrMethods;
 				</a>
 			<?php endif; ?>
 
-			<a class="button map map-trigger" data-zoom="<?php echo $this->Search->searchData->map_zoom; ?>"
-			   data-zoommax="<?php echo $this->Search->searchData->map_zoom_max; ?>" data-target="kr-search-map-full"
-			   data-bar="map" data-type="cluster" data-forcemap="<?php echo $this->Search->searchData->map_modal; ?>"
-			   data-maptypeid="<?php echo $this->params->get('property_map_type', ''); ?>"
-			   title="<?php echo KrMethods::plain('COM_KNOWRES_VIEW_MAP'); ?>"
-			   aria-label="<?php echo KrMethods::plain('COM_KNOWRES_VIEW_MAP'); ?>">
-				<i class="fas fa-map-marker"></i>
-				<span class="show-for-large">
-					<?php echo KrMethods::plain('COM_KNOWRES_VIEW_MAP'); ?>
-				</span>
-			</a>
+			<?php if (!$this->Search->searchData->layout): ?>
+				<a class="button map map-trigger" data-zoom="<?php echo $this->Search->searchData->map_zoom; ?>"
+				   data-zoommax="<?php echo $this->Search->searchData->map_zoom_max; ?>" data-target="kr-search-map-full"
+				   data-bar="map" data-type="cluster" data-forcemap="<?php echo $this->Search->searchData->map_modal; ?>"
+				   data-maptypeid="<?php echo $this->params->get('property_map_type', ''); ?>"
+				   title="<?php echo KrMethods::plain('COM_KNOWRES_VIEW_MAP'); ?>"
+				   aria-label="<?php echo KrMethods::plain('COM_KNOWRES_VIEW_MAP'); ?>">
+					<i class="fas fa-map-marker"></i>
+					<span class="show-for-large">
+						<?php echo KrMethods::plain('COM_KNOWRES_VIEW_MAP'); ?>
+					</span>
+				</a>
+			<?php endif; ?>
 
 			<a class="button getResponseSearch favs" data-bar="favs"
 			   title="<?php echo KrMethods::plain('COM_KNOWRES_VIEW_FAVOURITES'); ?>"
