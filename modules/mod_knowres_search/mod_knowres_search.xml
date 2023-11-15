@@ -29,7 +29,7 @@
                 <field name="hero-position"
 					class="btn-group"
 					default="middle"
-                       showon="layout:_:hero"
+                    showon="layout:_:hero"
 					type="radio"
 					label="MOD_KNOWRES_SEARCH_HERO-POSITION"
 					description="MOD_KNOWRES_SEARCH_HERO-POSITION_DSC">
@@ -76,6 +76,7 @@
                 <field name="show_flexible"
                        class="btn-group btn-group-yesno"
                        default="0"
+                       showon="layout:_:sidebar[OR]layout:_:searchresults"
                        type="radio"
                        label="MOD_KNOWRES_SEARCH_SHOW_FLEXIBLE"
                        description="MOD_KNOWRES_SEARCH_SHOW_FLEXIBLE_DSC">

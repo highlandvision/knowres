@@ -17,7 +17,6 @@ use HighlandVision\KR\ExceptionHandling;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\SiteHelper;
 use Joomla\CMS\Dispatcher\AbstractModuleDispatcher;
-use Joomla\CMS\Factory;
 use Knowres\Module\Search\Site\Helper\SearchHelper;
 
 use function defined;
