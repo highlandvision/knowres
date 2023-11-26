@@ -9,20 +9,15 @@
 
 defined('_JEXEC') or die;
 
+use HighlandVision\KR\Framework\KrMethods;
+use HighlandVision\KR\Translations;
+
 extract($displayData);
 /**
  * Layout variables
  *
- * @var array $features Property features.
+ * @var mixed $description Property description name.
  */
-?>
 
-<?php if (count($features)): ?>
-	<div class="amenities grid-x grid-margin-x small-up-2 large-up-3">
-		<?php foreach ($features as $f): ?>
-			<div class="cell">
-				<?php echo $f->name; ?>
-			</div>
-		<?php endforeach; ?>
-	</div>
-<?php endif; ?>
+$Translations = new Translations();
+?>

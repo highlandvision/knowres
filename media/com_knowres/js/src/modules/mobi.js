@@ -13,6 +13,7 @@
 		window.location.origin = window.location.protocol + "//" + window.location.host;
 	}
 
+	const livesite = window.location.origin + '/';
 	let initQuote = true;
 	let lang = $("#kr-lang").data('krlang');
 	let maxDeparture;
@@ -161,7 +162,7 @@
 			$.ajax({
 				type:    'POST',
 				cache:   false,
-				url:     'index.php?option=com_knowres&task=property.quote&lang=' + lang,
+				url:     livesite + 'index.php?option=com_knowres&task=property.quote&lang=' + lang,
 				data:    $element.serialize(),
 				success: function (response) {
 					if (response) {
@@ -182,7 +183,7 @@
 			$.ajax({
 				type:     'POST',
 				cache:    false,
-				url:      'index.php?option=com_knowres&task=property.mobi&lang=' + lang,
+				url:      livesite + 'index.php?option=com_knowres&task=property.mobi&lang=' + lang,
 				dataType: 'json',
 				data:     {
 					'pid':   self.quoteoptions.mqPid,

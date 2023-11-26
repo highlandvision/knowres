@@ -175,12 +175,15 @@
     <fieldset name="property"
               label="COM_KNOWRES_CONFIG_SITE"
               description="COM_KNOWRES_CONFIG_SITE_DSC">
-        <field name="property_template_width"
-               addonAfter="px"
-               class="w-auto"
-               default="960"
-               label="COM_KNOWRES_CONFIG_SITE_TEMPLATE_WIDTH"
-               description="COM_KNOWRES_CONFIG_SITE_TEMPLATE_WIDTH_DSC"/>
+        <field name="property_tabs"
+               type="radio"
+               default="0"
+               class="btn-group btn-group-yesno"
+               label="COM_KNOWRES_CONFIG_SITE_TEMPLATE_TABS"
+               description="COM_KNOWRES_CONFIG_SITE_TEMPLATE_TABS_DSC">
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+        </field>
         <field name="property_template"
                default="custom"
                type="hidden"

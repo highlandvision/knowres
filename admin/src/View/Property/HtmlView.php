@@ -89,7 +89,7 @@ class HtmlView extends KrHtmlView
 	 *
 	 * @since  1.0.0
 	 */
-	protected function setTitle()
+	protected function setTitle(): void
 	{
 		if (empty($this->item->id))
 		{

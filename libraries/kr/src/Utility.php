@@ -502,13 +502,28 @@ class Utility
 	}
 
 	/**
+	 * Convert new lines to paragraph tags
+	 *
+	 * @param  string  $string String to convert
+	 *
+	 * @since  4.3.0
+	 * @return string
+	 */
+	public static function nl2p(string $string): string
+	{
+		$string = str_replace(['<p>', '</p>', '<br>', '<br />'], '', $string);
+
+		return  '<p>' . preg_replace('/[\r\n]+/', '</p><p>', $string) . '</p>';
+	}
+
+	/**
 	 * Format errors for page
 	 *
 	 * @param  string|array  $errors  Error messages or Exception
 	 * @param  string        $type    Message type
 	 *
 	 * @throws Exception
-	 * @since   3.3.0
+	 * @since  3.3.0
 	 */
 	public static function pageErrors(string|array $errors, string $type = 'error'): void
 	{

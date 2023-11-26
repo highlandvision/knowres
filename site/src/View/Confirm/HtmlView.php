@@ -100,12 +100,12 @@ class HtmlView extends KrHtmlView\Site
 	}
 
 	/**
-	 * Prepares the document
+	 * Check the session data is valid
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected function checkSession()
+	protected function checkSession(): void
 	{
 		if (!$this->contractData->contract_total)
 		{
@@ -138,7 +138,7 @@ class HtmlView extends KrHtmlView\Site
 	 * @throws Exception
 	 * @since   1.0.0
 	 */
-	protected function prepareDocument()
+	protected function prepareDocument(): void
 	{
 		$this->prepareDefaultDocument($this->meta_title, $this->meta_description);
 		$this->setMyPathway();
@@ -150,7 +150,7 @@ class HtmlView extends KrHtmlView\Site
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	protected function setMyPathway()
+	protected function setMyPathway(): void
 	{
 		$pathway = Factory::getApplication()->getPathway();
 		$pathway->setPathway([]);
