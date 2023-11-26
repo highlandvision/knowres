@@ -42,14 +42,14 @@ $total   = count($items);
 $count   = 0;
 ?>
 
-<div class="row" id="kr-list">
+<div class="grid-x grid-margin-x" id="kr-list">
 	<?php foreach ($items as $item) : ?>
 		<?php $plink = SiteHelper::buildPropertyLink($item->id); ?>
 		<?php $id = 'kr-property-' . $item->id; ?>
 		<?php $title = KrMethods::plain('COM_KNOWRES_VIEW') . ' ' . $item->property_name; ?>
 		<?php $count++; ?>
 		<?php $end = $count < $total ? '' : 'end'; ?>
-		<div class="small-12 medium-6 columns flex-container">
+		<div class="small-12 medium-6 cell flex-container">
 			<div id="<?php echo $id; ?>" class="card kr-list-property" data-id="<?php echo $item->id; ?>">
 				<?php if ($item->imagefilename) : ?>
 					<div class="kr-slideshow-wrapper">

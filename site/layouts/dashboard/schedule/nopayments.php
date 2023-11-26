@@ -27,26 +27,26 @@ $balance_amount = Utility::roundValue($contract->contract_total - $contract->dep
 ?>
 
 <?php if ($contract->deposit > 0): ?>
-	<div class="row summary">
-		<div class="small-3 columns">
+	<div class="grid-x grid-margin-x summary">
+		<div class="small-3 cell">
 			<?php if ($balance_amount > 0): ?>
 				<?php echo KrMethods::plain('COM_KNOWRES_DEPOSIT'); ?>
 			<?php else: ?>
 				<?php echo KrMethods::plain('COM_KNOWRES_FULL_PAYMENT'); ?>
 			<?php endif; ?>
 		</div>
-		<div class="small-6 columns">
+		<div class="small-6 cell">
 			<?php if ($contract->booking_status == 1): ?>
 				<?php echo KrMethods::plain('COM_KNOWRES_DUE_NOW'); ?>
 			<?php endif; ?>
 		</div>
-		<div class="small-3 columns text-right">
+		<div class="small-3 cell text-right">
 			<?php echo Utility::displayValue($contract->deposit, $contract->currency); ?>
 		</div>
 	</div>
 <?php elseif ($contract->agent_id > 0): ?>
-	<div class="row summary">
-		<div class="small-4 columns">
+	<div class="grid-x grid-margin-x summary">
+		<div class="small-4 cell">
 			<?php echo KrMethods::sprintf('COM_KNOWRES_DEPOSIT_PAID_AGENT', $contract->agent->name); ?>
 		</div>
 	</div>
@@ -69,14 +69,14 @@ $balance_amount = Utility::roundValue($contract->contract_total - $contract->dep
 	}
 	?>
 
-	<div class="row summary">
-		<div class="small-3 columns">
+	<div class="grid-x grid-margin-x summary">
+		<div class="small-3 cell">
 			<?php echo KrMethods::plain('COM_KNOWRES_BALANCE'); ?>
 		</div>
-		<div class="small-6 columns">
+		<div class="small-6 cell">
 			<?php echo $due; ?>
 		</div>
-		<div class="small-3 columns text-right">
+		<div class="small-3 cell text-right">
 			<?php echo Utility::displayValue($balance_amount, $contract->currency); ?>
 		</div>
 	</div>

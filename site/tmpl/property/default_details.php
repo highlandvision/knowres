@@ -7,14 +7,12 @@
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
 
+/** @noinspection PhpUnhandledExceptionInspection */
+
 defined('_JEXEC') or die;
+
+use HighlandVision\KR\Framework\KrMethods;
 ?>
 
-<div class="grid-x grid-margin-x ">
-	<div class="small-12 cell">
-		<div id="kr-map-solo"></div>
-	</div>
-	<div class="small-12 cell">
-		<p><?php echo $this->item->p2; ?></p>
-	</div>
-</div>
+<?php echo KrMethods::render('property.rooms', ['rooms' => $this->rooms]); ?>
+<?php echo KrMethods::render('property.features', ['features' => $this->features]); ?>

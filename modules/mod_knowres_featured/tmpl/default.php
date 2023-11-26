@@ -16,8 +16,8 @@ use Joomla\CMS\Helper\ModuleHelper;
 $Currency = new Currency();
 ?>
 
-<div class="row">
-	<div class="small-12 large-10 columns">
+<div class="grid-x">
+	<div class="small-12 large-10 cell">
 		<h3>
 			<?php if (!$title): ?>
 				<?php echo KrMethods::plain('MOD_KNOWRES_FEATURED_FEATURED'); ?>
@@ -33,12 +33,12 @@ $Currency = new Currency();
 			<?php endif; ?>
 		</h3>
 	</div>
-	<div class="show-for-large large-2 columns">
+	<div class="show-for-large large-2 cell">
 		<div class="kr-double-arrows"></div>
 	</div>
 </div>
 
-<div class="row kr-featured kr-slick" data-slick='{"slidesToShow": <?php echo $slidestoshow; ?>}'>
+<div class="grid-x kr-featured kr-slick" data-slick='{"slidesToShow": <?php echo $slidestoshow; ?>}'>
 	<?php foreach ($data as $id => $item): ?>
 		<?php require ModuleHelper::getLayoutPath('mod_knowres_featured', $params->get('layout', 'default') . '_item'); ?>
 	<?php endforeach; ?>

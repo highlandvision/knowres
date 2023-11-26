@@ -18,8 +18,8 @@ $tchildren = KrMethods::plain('MOD_KNOWRES_SEARCH_CHILDREN');
 <div class="dropdown-pane large" id="kr-searchguest-drop" data-alignment="left" data-auto-focus="true" data-closable
      data-close-on-click="true" data-dropdown data-position="bottom" data-h-offset="-4" data-v-offset="18">
 	<div class="dropdown-body">
-		<div class="row">
-			<div class="small-6 columns">
+		<div class="grid-x grid-margin-x">
+			<div class="small-6 cell">
 				<label for="adults">
 					<?php echo KrMethods::plain('MOD_KNOWRES_SEARCH_SHOW_GUESTS_ADULTS'); ?>
 				</label>
@@ -40,7 +40,7 @@ $tchildren = KrMethods::plain('MOD_KNOWRES_SEARCH_CHILDREN');
 					</div>
 				</div>
 			</div>
-			<div class="small-6 columns">
+			<div class="small-6 cell">
 				<label for="children">
 					<?php echo KrMethods::sprintf('MOD_KNOWRES_SEARCH_SHOW_GUESTS_CHILDREN', '2 - 17'); ?>
 				</label>
@@ -61,7 +61,7 @@ $tchildren = KrMethods::plain('MOD_KNOWRES_SEARCH_CHILDREN');
 					</div>
 				</div>
 			</div>
-			<div class="small-12 columns">
+			<div class="small-12 cell">
 				<?php $hideme = $initial->children == 0 ? 'hidden' : ''; ?>
 				<p id="age-help" <?php echo $hideme; ?>>
 					<?php echo KrMethods::plain('MOD_KNOWRES_SEARCH_SHOW_GUESTS_AGES'); ?>

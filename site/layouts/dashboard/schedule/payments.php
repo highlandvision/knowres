@@ -25,22 +25,22 @@ extract($displayData);
 ?>
 
 <?php if ($contract->deposit > 0): ?>
-	<div class="row summary">
-		<div class="small-4 columns">
+	<div class="grid-x grid-margin-x summary">
+		<div class="small-4 cell">
 			<?php if ($contract->deposit != $contract->contract_total): ?>
 				<?php echo KrMethods::plain('COM_KNOWRES_DEPOSIT'); ?>
 			<?php else: ?>
 				<?php echo KrMethods::plain('COM_KNOWRES_FULL_PAYMENT'); ?>
 			<?php endif; ?>
 		</div>
-		<div class="small-4 columns">
+		<div class="small-4 cell">
 			<?php if ($contract->booking_status > 9): ?>
 				<?php echo KrMethods::plain('COM_KNOWRES_PAID_IN_FULL'); ?>
 			<?php else: ?>
 				<?php echo KrMethods::plain('COM_KNOWRES_PENDING'); ?>
 			<?php endif; ?>
 		</div>
-		<div class="small-4 columns text-right">
+		<div class="small-4 cell text-right">
 			<?php echo Utility::displayValue($contract->deposit, $contract->currency); ?>
 		</div>
 	</div>
@@ -56,26 +56,26 @@ extract($displayData);
 	<?php else: ?>
 		<?php $due = KrMethods::plain('COM_KNOWRES_DUE_NOW'); ?>
 	<?php endif; ?>
-	<div class="row summary">
-		<div class="small-4 columns">
+	<div class="grid-x grid-margin-x summary">
+		<div class="small-4 cell">
 			<?php echo KrMethods::plain('COM_KNOWRES_BALANCE'); ?>
 		</div>
-		<div class="small-4 columns">
+		<div class="small-4 cell">
 			<?php echo $due; ?>
 		</div>
-		<div class="small-4 columns text-right">
+		<div class="small-4 cell text-right">
 			<?php echo Utility::displayValue($balance, $contract->currency); ?>
 		</div>
 	</div>
 <?php elseif ($contract->deposit != $contract->contract_total): ?>
-	<div class="row summary">
-		<div class="small-4 columns">
+	<div class="grid-x grid-margin-x summary">
+		<div class="small-4 cell">
 			<?php echo KrMethods::plain('COM_KNOWRES_PAID_IN_FULL'); ?>
 		</div>
-		<div class="small-4 columns">
+		<div class="small-4 cell">
 			<?php echo $due; ?>
 		</div>
-		<div class="small-4 columns text-right">
+		<div class="small-4 cell text-right">
 			<?php echo Utility::displayValue($balance, $contract->currency); ?>
 		</div>
 	</div>

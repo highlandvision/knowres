@@ -33,13 +33,13 @@ $count = 1;
 ?>
 
 <?php foreach ($values as $k => $v): ?>
-	<div class="row">
-		<div class="small-8 columns">
+	<div class="grid-x grid-margin-x">
+		<div class="small-8 cell">
 			<div style="font-size:24px;">
 				<?php echo $count . '. ' . $v['name']; ?>
 			</div>
 		</div>
-		<div class="small-4 columns text-right">
+		<div class="small-4 cell text-right">
 			<button type="button" class="button" tabindex="-1" style="margin-bottom:0.7rem;"
 			        data-toggle="guest_<?php echo $count; ?>">
 				<?php echo KrMethods::plain('COM_KNOWRES_SHOW_HIDE'); ?>
@@ -48,7 +48,7 @@ $count = 1;
 	</div>
 
 	<div id="guest_<?php echo $count; ?>" class="callout small" data-toggler="hideme">
-		<div class="row" id="<?php echo $group . $k; ?>">
+		<div class="grid-x grid-margin-x" id="<?php echo $group . $k; ?>">
 			<!-- Loop each fieldset - one fieldset per form item so each column can have a width-->
 			<?php foreach ($form->getFieldsets() as $fieldset) : ?>
 				<?php $hidden = ""; ?>

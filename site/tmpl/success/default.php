@@ -21,8 +21,8 @@ $wa->useScript('com_knowres.site')
    ->useScript('keepalive');
 ?>
 
-<div class="row">
-	<div class="small-12 medium-8 large-9 columns">
+<div class="grid-x grid-margin-x">
+	<div class="small-12 medium-8 large-9 cell">
 		<?php if (!$this->request): ?>
 			<h1><?php echo KrMethods::plain('COM_KNOWRES_SUCCESS_CONFIRMED'); ?></h1>
 			<h2 class="color-dark">
@@ -47,7 +47,7 @@ $wa->useScript('com_knowres.site')
 			</p>
 		<?php endif; ?>
 	</div>
-	<div id="sidebar-right" class="small-12 medium-4 large-3 columns">
+	<div id="sidebar-right" class="small-12 medium-4 large-3 cell">
 		<?php echo KrMethods::loadInternal('{loadposition carhireform}'); ?>
 		<?php echo KrMethods::loadInternal('{loadposition propertyview}'); ?>
 	</div>

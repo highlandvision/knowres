@@ -23,21 +23,21 @@ if ($this->guest->id)
 }
 ?>
 
-<div class="row" data-equalizer data-equalize-on="medium">
-	<div class="small-12 medium-7 columns">
+<div class="grid-x grid-margin-x" data-equalizer data-equalize-on="medium">
+	<div class="small-12 medium-7 cell">
 		<div class="callout success" data-equalizer-watch>
 			<h5><?php echo KrMethods::plain('COM_KNOWRES_WELCOME') . ' ' . $this->firstname; ?></h5>
 			<p><?php echo KrMethods::plain('COM_KNOWRES_DASHBOARD_WELCOME'); ?></p>
 		</div>
 	</div>
-	<div class="small-12 medium-4 medium-offset-1 columns">
+	<div class="small-12 medium-4 medium-offset-1 cell">
 		<div class="callout success" data-equalizer-watch>
-			<div class="row">
-				<div class="small-6 columns">
+			<div class="grid-x grid-margin-x">
+				<div class="small-6 cell">
 					<h5><?php echo KrMethods::plain('COM_KNOWRES_YOUR_DETAILS'); ?></h5>
 				</div>
 				<?php if ($guestformlink): ?>
-					<div class="small-6 columns text-right">
+					<div class="small-6 cell text-right">
 						<a class="button small" style="margin-bottom:0;" href="<?php echo $guestformlink; ?>">
 							<?php echo KrMethods::plain('COM_KNOWRES_DASHBOARD_UPDATE_ITEM'); ?>
 							&nbsp;<i style="color:#fefefe;" class="fas fa-user-edit"></i>

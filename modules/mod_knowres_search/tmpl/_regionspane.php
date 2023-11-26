@@ -17,8 +17,8 @@ use HighlandVision\KR\Framework\KrMethods;
 	<div class="dropdown-body">
 		<?php $c = 0; ?>
 		<?php foreach ($regions as $k => $v): ?>
-			<div class="row">
-				<div class="small-6 columns">
+			<div class="grid-x grid-margin-x">
+				<div class="small-6 cell">
 					<div class="regionspane-item">
 						<input type="checkbox" class="checkover country" name="<?php echo $k; ?>"
 						       id="<?php echo $k; ?>" data-value="<?php echo $k; ?>">
@@ -26,7 +26,7 @@ use HighlandVision\KR\Framework\KrMethods;
 							<?php echo $k; ?></label>
 					</div>
 				</div>
-				<div class="small-6 columns">
+				<div class="small-6 cell">
 					<?php foreach ($v as $id => $r): ?>
 						<div class="regionspane-item">
 							<?php if (in_array($id, $initial->region_id)) : ?>

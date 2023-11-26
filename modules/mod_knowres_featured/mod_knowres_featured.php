@@ -41,12 +41,12 @@ $title        = $params->get('title', '');
 if (!$title) {
 	$title    = $module->title;
 }
+
 $price        = $params->get('price', true);
 $items        = KrFactory::getListSiteModel('properties')->getMinMaxRates($properties);
 $currencies   = KrFactory::getListModel('propertysettings')->getOneSetting('currency');
 $net_rates    = KrFactory::getListModel('propertysettings')->getOneSetting('net_rates');
 $net_markup   = KrFactory::getListModel('propertysettings')->getOneSetting('net_markup');
-$saved        = SiteHelper::getFavourites();
 
 $data = [];
 foreach ($properties as $p)

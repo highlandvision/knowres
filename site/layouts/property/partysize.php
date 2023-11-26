@@ -25,19 +25,19 @@ $tchildren = KrMethods::plain('MOD_KNOWRES_SEARCH_CHILDREN');
 
 <div class="dropdown-pane" id="kr-searchguest-drop" data-position="bottom" data-alignment="center"
      data-close-on-click="true" data-dropdown>
-	<div class="row collapse">
-		<div class="small-12 columns text-center">
+	<div class="grid-x grid-margin-x collapse">
+		<div class="small-12 cell text-center">
 			<p style="line-height:1.1;">
 				<?php echo KrMethods::plain('MOD_KNOWRES_SEARCH_SHOW_GUESTS_TEXT'); ?>
 			</p>
 		</div>
 
-		<div class="small-12 columns">
+		<div class="small-12 cell">
 			<label for="adults" class="text-center">
 				<?php echo KrMethods::plain('MOD_KNOWRES_SEARCH_SHOW_GUESTS_ADULTS'); ?>
 			</label>
 		</div>
-		<div class="small-12 columns">
+		<div class="small-12 cell">
 			<div class="input-group input-number-group">
 				<div class="input-group-button">
 					<button type="button" id="aminus" class="input-number-decrement"
@@ -53,12 +53,12 @@ $tchildren = KrMethods::plain('MOD_KNOWRES_SEARCH_CHILDREN');
 			</div>
 		</div>
 
-		<div class="small-12 columns">
+		<div class="small-12 cell">
 			<label for="children" class="text-center">
 				<?php echo KrMethods::sprintf('MOD_KNOWRES_SEARCH_SHOW_GUESTS_CHILDREN', '2 - 17'); ?>
 			</label>
 		</div>
-		<div class="small-12 columns">
+		<div class="small-12 cell">
 			<div class="input-group input-number-group">
 				<div class="input-group-button">
 					<button type="button" id="cminus" class="input-number-decrement"
@@ -73,7 +73,7 @@ $tchildren = KrMethods::plain('MOD_KNOWRES_SEARCH_CHILDREN');
 				</div>
 			</div>
 		</div>
-		<div class="small-12 columns">
+		<div class="small-12 cell">
 			<?php $hideme = $defaults->children == 0 ? 'hidden' : ''; ?>
 			<p class="text-center" id="age-help" style="line-height:1.1;" <?php echo $hideme; ?>>
 				<?php echo KrMethods::plain('MOD_KNOWRES_SEARCH_SHOW_GUESTS_AGES'); ?>
@@ -88,7 +88,7 @@ $tchildren = KrMethods::plain('MOD_KNOWRES_SEARCH_CHILDREN');
 				<?php endforeach; ?>
 			</div>
 		</div>
-		<div class="small-12 columns">
+		<div class="small-12 cell">
 			<a href="#" class="button small expanded no-margin-bottom kr-quote-auto-click" data-close>
 				<?php echo KrMethods:: plain('MOD_KNOWRES_SEARCH_APPLY'); ?>
 			</a>

@@ -19,21 +19,21 @@ use Joomla\CMS\HTML\HTMLHelper;
 </h3>
 <div class="kr-quote no-margin-bottom" style="margin-top:0;">
 	<form action="#" method="post" id="kr-quote-form">
-		<div class="small-12 columns text-center">
+		<div class="small-12 cell text-center">
 			<p class="smaller">
 				<?php echo KrMethods::plain('COM_KNOWRES_QUOTE_INSTRUCTIONS'); ?>
 			</p>
 		</div>
-		<div class="row">
-			<div class="small-12 columns">
+		<div class="grid-x grid-margin-x ">
+			<div class="small-12 cell">
 				<?php echo $this->form->renderField('qarrivaldsp', null,
 					TickTock::getDate($this->arrival, 'j M Y')); ?>
 			</div>
-			<div class="small-12 columns">
+			<div class="small-12 cell">
 				<?php echo $this->form->renderField('qdeparturedsp', null,
 					TickTock::getDate($this->departure, 'j M Y')); ?>
 			</div>
-			<div class="small-12 columns">
+			<div class="small-12 cell">
 				<?php echo $this->form->renderField('guests', null, $this->searchData->guests, [
 					'adults'            => $this->searchData->adults ?: 2,
 					'children'          => $this->searchData->children ?: 0,

@@ -2,7 +2,7 @@
 <form>
 	<fields group="telephone">
 		<fieldset name="f1"
-			class="small-12 medium-6 large-4 columns">
+			class="small-12 medium-6 large-4 cell">
 			<field name="country"
 				addfieldprefix="HighlandVision\Component\Knowres\Administrator\Field"
 				filter="integer"
@@ -16,7 +16,7 @@
 			</field>
 		</fieldset>
 		<fieldset name="f2"
-			class="small-12 medium-6 large-4 columns">
+			class="small-12 medium-6 large-4 cell">
 			<field name="number"
 				filter="integer"
 				hiddenDescription="true"
@@ -28,7 +28,7 @@
 				hint="COM_KNOWRES_GUEST_MOBILE_DSC"/>
 		</fieldset>
 		<fieldset name="f3"
-			class="small-12 medium-6 large-4 columns">
+			class="small-12 medium-6 large-4 cell">
 			<field name="type"
 				filter="int"
 				hiddenDescription="true"

@@ -17,8 +17,8 @@ $this->checked       = 'checked';
 $surcharge_displayed = false;
 ?>
 
-<div class="row hideme" id="kr-gateways">
-	<div class="small-12 columns">
+<div class="grid-x grid-margin-x hideme" id="kr-gateways">
+	<div class="small-12 cell">
 		<?php if (count($this->gateways) > 1) : ?>
 			<h6>
 				<?php echo KrMethods::plain('COM_KNOWRES_PAYMENT_SELECT'); ?>

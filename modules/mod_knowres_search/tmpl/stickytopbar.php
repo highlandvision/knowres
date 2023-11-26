@@ -22,16 +22,16 @@ $show_regions = $params->get('show_regions', 0);
 $show_guests  = $params->get('show_guests', 0);
 ?>
 
-<div class="kr-search show-for-large">
+<div class="kr-search grid-container show-for-large">
 	<form action="<?php echo $action; ?>" method="post" name="search-default">
-		<div class="row">
+		<div class="grid-x grid-margin-x">
 			<?php if (!empty($params->get('search_text', '') && $params->get('show_regions') < 1)): ?>
-				<div class="small-12 medium-12 large-3 columns">
+				<div class="small-12 medium-12 large-3 cell">
 					<h3><?php echo $params->get('search_text'); ?></h3>
 				</div>
 			<?php endif; ?>
 			<?php if ($show_regions): ?>
-				<div class="small-12 medium-12 large-3 columns">
+				<div class="small-12 medium-12 large-3 cell">
 					<?php echo $form->renderField('region_id',
 					                              null,
 					                              $show_regions < 1 ? $initial->region_id :
@@ -42,12 +42,12 @@ $show_guests  = $params->get('show_guests', 0);
 				</div>
 			<?php endif; ?>
 			<?php if ($params->get('show_datepickers', 1)): ?>
-				<div class="small-12 medium-12 large-2 columns">
+				<div class="small-12 medium-12 large-2 cell">
 					<?php echo $form->renderField('arrivaldsp',
 					                              null,
 					                              TickTock::getDate((string) $initial->arrival, 'j M Y')); ?>
 				</div>
-				<div class="small-12 medium-12 large-2 columns">
+				<div class="small-12 medium-12 large-2 cell">
 					<?php echo $form->renderField('departuredsp',
 					                              null,
 					                              TickTock::getDate((string) $initial->departure, 'j M Y')); ?>
@@ -56,7 +56,7 @@ $show_guests  = $params->get('show_guests', 0);
 				<input type="hidden" id="departure" name="departure" value="">
 			<?php endif; ?>
 			<?php if ($show_guests): ?>
-				<div class="small-12 medium-12 large-3 columns">
+				<div class="small-12 medium-12 large-3 cell">
 					<?php echo $form->renderField('guests',
 					                              null,
 					                              $initial->guests,
@@ -70,7 +70,7 @@ $show_guests  = $params->get('show_guests', 0);
 					                              ]); ?>
 				</div>
 			<?php endif; ?>
-			<div class="small-12 medium-12 large-2 columns">
+			<div class="small-12 medium-12 large-2 cell">
 				<button type="submit" class="button expanded">
 					<?php echo KrMethods::plain('MOD_KNOWRES_SEARCH_BUTTON'); ?>
 					&nbsp;&nbsp;<i class="fas fa-search"></i>

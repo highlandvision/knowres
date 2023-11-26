@@ -23,8 +23,8 @@ $wa->useScript('com_knowres.site')
    ->useScript('keepalive');
 ?>
 
-<div class="row">
-	<div class="small-12 medium-8 medium-offset-2 columns">
+<div class="grid-x grid-margin-x">
+	<div class="small-12 medium-8 medium-offset-2 cell">
 		<?php if (!$this->contract_id): ?>
 			<h1 class="h3"><?php echo KrMethods::plain('COM_KNOWRES_DASHBOARD_EDIT_GUEST'); ?></h1>
 			<div class="callout small alert">
@@ -42,32 +42,32 @@ $wa->useScript('com_knowres.site')
 				<legend><?php echo KrMethods::plain('COM_KNOWRES_LEAD_GUEST'); ?></legend>
 
 				<div class="callout formbg small">
-					<div class="row">
-						<div class="small-12 medium-6 columns">
+					<div class="grid-x grid-margin-x">
+						<div class="small-12 medium-6 cell">
 							<?php echo $this->form->renderField('firstname'); ?>
 						</div>
-						<div class="small-12 medium-6 columns">
+						<div class="small-12 medium-6 cell">
 							<?php echo $this->form->renderField('surname'); ?>
 						</div>
-						<div class="small-12 medium-6 columns">
+						<div class="small-12 medium-6 cell">
 							<?php echo $this->form->renderField('mobile_country_id'); ?>
 						</div>
-						<div class="small-12 medium-6 columns">
+						<div class="small-12 medium-6 cell">
 							<?php echo $this->form->renderField('mobile'); ?>
 						</div>
 					</div>
 
 					<?php if ($this->params->get('guestdata_document', 0)) : ?>
-						<div class="row">
-							<div class="small-12 medium-6 columns">
+						<div class="grid-x grid-margin-x">
+							<div class="small-12 medium-6 cell">
 								<?php echo $this->form->getLabel('document_type'); ?>
 								<?php echo $this->form->getInput('document_type'); ?>
 							</div>
-							<div class="small-12 medium-6 columns">
+							<div class="small-12 medium-6 cell">
 								<?php echo $this->form->getLabel('document_id'); ?>
 								<?php echo $this->form->getInput('document_id'); ?>
 							</div>
-							<div class="small-12 columns">
+							<div class="small-12 cell">
 								<div class="callout success small">
 									<div class="smaller">
 										<p><?php echo KrMethods::plain('COM_KNOWRES_DOCUMENT_TYPE_TEXT_DSC'); ?></p>
@@ -92,11 +92,11 @@ $wa->useScript('com_knowres.site')
 						<p class="vsmall"><?php echo KrMethods::plain('COM_KNOWRES_ARRIVAL_EMAIL_CHANGE'); ?></p>
 					</div>
 
-					<div class="row">
-						<div class="small-12 medium-6 columns">
+					<div class="grid-x grid-margin-x">
+						<div class="small-12 medium-6 cell">
 							<?php echo $this->form->renderField('email_2'); ?>
 						</div>
-						<div class="small-12 medium-6 columns">
+						<div class="small-12 medium-6 cell">
 							<?php echo $this->form->renderField('email_3'); ?>
 						</div>
 					</div>
@@ -108,41 +108,41 @@ $wa->useScript('com_knowres.site')
 			<fieldset class="fieldset">
 				<legend><?php echo KrMethods::plain('COM_KNOWRES_MAILING_ADDRESS'); ?></legend>
 				<div class="callout formbg small">
-					<div class="row">
+					<div class="grid-x grid-margin-x">
 						<?php if ((int) $settings['bookingform_requiredfields_address1'] == 1) : ?>
 							<?php $this->form->setFieldAttribute('address1', 'required', 'true'); ?>
 						<?php endif; ?>
-						<div class="small-12 medium-6 columns end">
+						<div class="small-12 medium-6 cell end">
 							<?php echo $this->form->renderField('address1'); ?>
 						</div>
-						<div class="small-12 medium-6 columns end">
+						<div class="small-12 medium-6 cell end">
 							<?php echo $this->form->renderField('address2'); ?>
 						</div>
 					</div>
-					<div class="row">
+					<div class="grid-x grid-margin-x">
 						<?php if ((int) $settings['bookingform_requiredfields_town'] == 1) : ?>
 							<?php $this->form->setFieldAttribute('town', 'required', 'true'); ?>
 						<?php endif; ?>
-						<div class="small-12 medium-6 columns end">
+						<div class="small-12 medium-6 cell end">
 							<?php echo $this->form->renderField('town'); ?>
 						</div>
 
 						<?php if ((int) $settings['bookingform_requiredfields_postcode'] == 1) : ?>
 							<?php $this->form->setFieldAttribute('postcode', 'required', 'true'); ?>
 						<?php endif; ?>
-						<div class="small-12 medium-6 columns end">
+						<div class="small-12 medium-6 cell end">
 							<?php echo $this->form->renderField('postcode'); ?>
 						</div>
 					</div>
-					<div class="row">
+					<div class="grid-x grid-margin-x">
 						<?php if ((int) $settings['bookingform_requiredfields_region'] == 1) : ?>
 							<?php $this->form->setFieldAttribute('region_id', 'required', 'true'); ?>
 							<?php $this->form->setFieldAttribute('country_id', 'required', 'true'); ?>
 						<?php endif; ?>
-						<div class="small-12 medium-6 columns end">
+						<div class="small-12 medium-6 cell end">
 							<?php echo $this->form->renderField('country_id'); ?>
 						</div>
-						<div class="small-12 medium-6 columns end">
+						<div class="small-12 medium-6 cell end">
 							<?php echo $this->form->renderField('region_id'); ?>
 						</div>
 					</div>
@@ -155,32 +155,32 @@ $wa->useScript('com_knowres.site')
 				</legend>
 
 				<div class="callout formbg small">
-					<div class="row">
-						<div class="small-12 medium-6 columns" style="margin-bottom:10px;">
+					<div class="rgrid-x grid-margin-xow">
+						<div class="small-12 medium-6 cell" style="margin-bottom:10px;">
 							<?php echo $this->form->renderField('billing'); ?>
 						</div>
 					</div>
-					<div class="row">
-						<div class="small-12 medium-6 columns">
+					<div class="grid-x grid-margin-x">
+						<div class="small-12 medium-6 cell">
 							<?php echo $this->form->renderField('b_address1'); ?>
 						</div>
-						<div class="small-12 medium-6 columns">
+						<div class="small-12 medium-6 cell">
 							<?php echo $this->form->renderField('b_address2'); ?>
 						</div>
 					</div>
-					<div class="row">
-						<div class="small-12 medium-6 columns">
+					<div class="grid-x grid-margin-x">
+						<div class="small-12 medium-6 cell">
 							<?php echo $this->form->renderField('b_town'); ?>
 						</div>
-						<div class="small-12 medium-6 columns">
+						<div class="small-12 medium-6 cell">
 							<?php echo $this->form->renderField('b_postcode'); ?>
 						</div>
 					</div>
-					<div class="row">
-						<div class="small-12 medium-6 columns">
+					<div class="grid-x grid-margin-x">
+						<div class="small-12 medium-6 cell">
 							<?php echo $this->form->renderField('b_country_id'); ?>
 						</div>
-						<div class="small-12 medium-6 columns">
+						<div class="small-12 medium-6 cell">
 							<?php echo $this->form->renderField('b_region_id'); ?>
 						</div>
 					</div>

@@ -12,8 +12,8 @@ defined('_JEXEC') or die;
 use HighlandVision\KR\Framework\KrMethods;
 ?>
 
-<div class="row">
-	<div class="small-12 columns">
+<div class="grid-x grid-margin-x">
+	<div class="small-12 cell">
 		<div id="howtoarrive" data-means="<?php echo $this->form->getValue('arrival_means'); ?>"></div>
 		<?php echo $this->loadTemplate('arrivalinfo_tabs'); ?>
 
@@ -23,35 +23,35 @@ use HighlandVision\KR\Framework\KrMethods;
 		</div>
 
 		<div id="train-data" class="callout small gray">
-			<div class="row">
-				<div class="small-12 medium-4 columns">
+			<div class="grid-x grid-margin-x">
+				<div class="small-12 medium-4 cell">
 					<?php echo $this->form->renderField('arrival_from'); ?>
 				</div>
-				<div class="small-12 medium-4 columns">
+				<div class="small-12 medium-4 cell">
 					<?php echo $this->form->renderField('arrival_place'); ?>
 				</div>
-				<div class="small-12 medium-4 columns">
+				<div class="small-12 medium-4 cell">
 					<?php echo $this->form->renderField('arrival_time'); ?>
 				</div>
 			</div>
 		</div>
 		<div id="auto-data" class="callout small gray">
-			<div class="row">
-				<div class="small-12 medium-4 columns">
+			<div class="grid-x grid-margin-x">
+				<div class="small-12 medium-4 cell">
 					<?php $this->form->setValue('auto_arrival_from', '', $this->item->arrival_from); ?>
 					<?php echo $this->form->renderField('auto_arrival_from'); ?>
 				</div>
-				<div class="small-12 medium-4 columns">
+				<div class="small-12 medium-4 cell">
 					<?php $this->form->setValue('auto_arrival_time', '', $this->item->arrival_time); ?>
 					<?php echo $this->form->renderField('auto_arrival_time'); ?>
 				</div>
-				<div class="small-12 medium-4 columns">
+				<div class="small-12 medium-4 cell">
 				</div>
 			</div>
 		</div>
 		<div id="other-data" class="callout small gray">
-			<div class="row">
-				<div class="small-12 medium-9 columns end">
+			<div class="grid-x grid-margin-x">
+				<div class="small-12 medium-9 cell end">
 					<?php echo $this->form->renderField('other_information'); ?>
 				</div>
 			</div>

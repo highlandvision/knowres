@@ -19,7 +19,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 $KRparams = KrMethods::getParams();
 ?>
 
-<div class="small-12 columns">
+<div class="small-12 medium-4 cell">
 	<a href="<?php echo $item['plink']; ?>" class="property text-left" title="<?php echo $item['property_name']; ?>">
 		<div class="image-wrapper">
 			<?php echo HTMLHelper::_('image', Media\Images::getImagePath($id, 'solo', $item['image']),
@@ -35,16 +35,14 @@ $KRparams = KrMethods::getParams();
 
 		<div class="content no-margin-bottom">
 			<h4><?php echo $item['property_name']; ?></h4>
-			<p>
-				<?php echo $item['text']; ?>
-			</p>
-
-			<div class="occupancy">
+			<?php $clean = strip_tags($item['text']); ?>
+			<p><?php echo $clean; ?></p>
+			<p class="occupancy">
 				<i class="fas fa-female fa-lg font-hilite"></i>
 				<i class="fas fa-male fa-lg font-hilite"></i>
 				<?php echo '&nbsp;' . ($item['sleeps']) . ' ' . KrMethods::plain('MOD_KNOWRES_FEATURED_PERSONS'); ?>
 				<?php echo ' | ' . ($item['bedrooms']) . ' ' . KrMethods::plain('MOD_KNOWRES_FEATURED_BEDROOMS'); ?>
-			</div>
+			</p>
 		</div>
 	</a>
 </div>

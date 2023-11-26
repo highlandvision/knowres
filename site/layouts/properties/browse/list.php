@@ -38,12 +38,12 @@ $Translations = new Translations();
 $weekly = KrFactory::getListModel('propertysettings')->getOneSetting('tariffChargesStoredWeeklyYesNo');
 ?>
 
-<div class="row" id="kr-browse">
+<div class="grid-x grid-margin-x" id="kr-browse">
 	<?php foreach ($items as $item) : ?>
 		<?php $plink = SiteHelper::buildPropertyLink($item->id); ?>
 		<?php $id = 'kr-property-' . $item->id; ?>
 		<?php $title = KrMethods::plain('COM_KNOWRES_VIEW') . ' ' . $item->property_name; ?>
-		<div class="small-6 medium-4 columns flex-container">
+		<div class="small-6 medium-4 cell flex-container">
 			<div id="<?php echo $id; ?>" class="kr-list-property card" data-id="<?php echo $item->id; ?>">
 				<?php if ($item->imagefilename) : ?>
 					<div class="kr-slideshow-wrapper">

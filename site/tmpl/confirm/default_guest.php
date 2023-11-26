@@ -17,63 +17,63 @@ $this->form->setFieldAttribute('guest_note', 'hiddenLabel', false);
 <fieldset class="fieldset">
 	<legend><?php echo KrMethods::plain('COM_KNOWRES_CONFIRM_CONTACT_DETAILS'); ?></legend>
 	<div class="callout formbg small">
-		<div class="row">
-			<div class="small-12 medium-6 columns">
+		<div class="grid-x grid-margin-x">
+			<div class="small-12 medium-6 cell">
 				<?php echo $this->guestForm->renderField('email'); ?>
 			</div>
 		</div>
 
 		<?php if ($this->guestForm->getFieldAttribute('firstname', 'type', 'hidden') != 'hidden'
 			|| $this->guestForm->getFieldAttribute('surname', 'type', 'hidden') != 'hidden'): ?>
-			<div class="row">
-				<div class="medium-6 columns">
+			<div class="grid-x grid-margin-x">
+				<div class="medium-6 cell">
 					<?php echo $this->guestForm->renderField('firstname'); ?>
 				</div>
-				<div class="medium-6 columns">
+				<div class="medium-6 cell">
 					<?php echo $this->guestForm->renderField('surname'); ?>
 				</div>
 			</div>
 		<?php endif; ?>
 
 		<?php if ($this->guestForm->getFieldAttribute('mobile', 'type', 'hidden') != 'hidden'): ?>
-			<div class="row">
-				<div class="medium-6 columns">
+			<div class="grid-x grid-margin-x">
+				<div class="medium-6 cell">
 					<?php echo $this->guestForm->renderField('mobile_country_id'); ?>
 				</div>
-				<div class="medium-6 columns">
+				<div class="medium-6 cell">
 					<?php echo $this->guestForm->renderField('mobile'); ?>
 				</div>
 			</div>
 		<?php endif; ?>
 
 		<?php if ($this->guestForm->getFieldAttribute('address1', 'type', 'hidden') != 'hidden'): ?>
-			<div class="row">
-				<div class="medium-6 columns">
+			<div class="grid-x grid-margin-x">
+				<div class="medium-6 cell">
 					<?php echo $this->guestForm->renderField('address1'); ?>
 				</div>
-				<div class="medium-6 columns">
+				<div class="medium-6 cell">
 					<?php echo $this->guestForm->renderField('address2'); ?>
 				</div>
 			</div>
 		<?php endif; ?>
 
 		<?php if ($this->guestForm->getFieldAttribute('town', 'type', 'hidden') != 'hidden'): ?>
-			<div class="row">
-				<div class="medium-6 columns">
+			<div class="grid-x grid-margin-x">
+				<div class="medium-6 cell">
 					<?php echo $this->guestForm->renderField('town'); ?>
 				</div>
-				<div class="medium-6 columns">
+				<div class="medium-6 cell">
 					<?php echo $this->guestForm->renderField('postcode'); ?>
 				</div>
 			</div>
 		<?php endif; ?>
 
 		<?php if ($this->guestForm->getFieldAttribute('region_id', 'type', 'hidden') != 'hidden'): ?>
-			<div class="row">
-				<div class="medium-6 columns">
+			<div class="grid-x grid-margin-x">
+				<div class="medium-6 cell">
 					<?php echo $this->guestForm->renderField('country_id'); ?>
 				</div>
-				<div class="medium-6 columns">
+				<div class="medium-6 cell">
 					<?php echo $this->guestForm->renderField('region_id'); ?>
 				</div>
 			</div>
@@ -84,8 +84,8 @@ $this->form->setFieldAttribute('guest_note', 'hiddenLabel', false);
 <fieldset class="fieldset">
 	<legend><?php echo KrMethods::plain('COM_KNOWRES_CONFIRM_ADDITIONAL_INFO'); ?></legend>
 	<div class="callout formbg small">
-		<div class="row">
-			<div class="small-12 columns">
+		<div class="grid-x grid-margin-x">
+			<div class="small-12 cell">
 				<?php echo $this->form->renderField('guest_note'); ?>
 			</div>
 		</div>

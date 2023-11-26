@@ -12,13 +12,13 @@ defined('_JEXEC') or die;
 use Highlandvision\KR\Framework\KrMethods;
 ?>
 
-<div class="row">
+<div class="grid-x grid-margin-x">
 	<button class="close-button" data-close aria-label="Close modal" type="button">
 		<span aria-hidden="true">&times;</span>
 	</button>
 </div><br>
-<div class="row">
-	<div class="small-12 columns text-center">
+<div class="grid-x grid-margin-x">
+	<div class="small-12 cell text-center">
 		<h5><?php echo KrMethods::plain('COM_KNOWRES_ERROR_FATAL'); ?></h5>
 	</div>
 </div>

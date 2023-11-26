@@ -54,12 +54,12 @@ $wa->useScript('com_knowres.site')
 			<?php $pdfs = SiteHelper::getPdfs($this->item); ?>
 
 			<div class="callout small gray">
-				<div class="row">
-					<div class="small-12 medium-8 columns">
+				<div class="grid-x grid-margin-x">
+					<div class="small-12 medium-8 cell">
 						<?php echo KrMethods::render('dashboard.header', ['contract' => $this->item,
 						                                                  'times'    => true]); ?>
 					</div>
-					<div class="small-12 medium-4 columns">
+					<div class="small-12 medium-4 cell">
 						<?php if ($this->item->booking_status > 1): ?>
 							<?php echo $this->loadTemplate('confirmed'); ?>
 						<?php else: ?>

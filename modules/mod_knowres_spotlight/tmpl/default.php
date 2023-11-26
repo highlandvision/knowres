@@ -38,36 +38,34 @@ if ($textsize) {
 }
 ?>
 
-<div class="kr-spotlight">
-	<div class="row">
-		<?php
-			$num = 0;
-			foreach ($data as $d) {
-				echo match ($count) {
-					3       => '<div class="small-12 medium-4 columns">',
-					2       => '<div class="small-6 columns">',
-					default => '<div class="small-12 columns">',
-				};
+<div class="kr-spotlight grid-x grid-margin-x">
+	<?php
+		$num = 0;
+		foreach ($data as $d) {
+			echo match ($count) {
+				3       => '<div class="small-12 medium-4 cell">',
+				2       => '<div class="small-6 cell">',
+				default => '<div class="small-12 cell">',
+			};
 
-				if (count($data) - 1 == $num) {
-					$pclass[] = 'last';
-				}
-
-				$link = '';
-				if ($d['link'] != -1) {
-					$link     = KrMethods::route('index.php?Itemid=' . $d['link']);
-					$external = '';
-				}
-				elseif (!empty($d['url'])) {
-					$link     = $d['url'];
-					$external = 'target="_blank"';
-				}
-
-				require ModuleHelper::getLayoutPath('mod_knowres_spotlight', '_item');
-
-				echo '</div>';
-				$num++;
+			if (count($data) - 1 == $num) {
+				$pclass[] = 'last';
 			}
-		?>
-	</div>
+
+			$link = '';
+			if ($d['link'] != -1) {
+				$link     = KrMethods::route('index.php?Itemid=' . $d['link']);
+				$external = '';
+			}
+			elseif (!empty($d['url'])) {
+				$link     = $d['url'];
+				$external = 'target="_blank"';
+			}
+
+			require ModuleHelper::getLayoutPath('mod_knowres_spotlight', '_item');
+
+			echo '</div>';
+			$num++;
+		}
+	?>
 </div>

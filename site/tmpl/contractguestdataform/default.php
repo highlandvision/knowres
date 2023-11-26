@@ -34,8 +34,8 @@ $wa->useScript('com_knowres.site')
 
 	<fieldset>
 		<legend><?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATAFORM_LEGEND_GUESTINFO'); ?></legend>
-		<div class="row">
-			<div class="small-12 columns">
+		<div class="grid-x grid-margin-x">
+			<div class="small-12 cell">
 				<div class="callout formbg small">
 					<?php echo $this->form->renderField('guestinfo'); ?>
 				</div>
@@ -64,16 +64,16 @@ $wa->useScript('com_knowres.site')
 	<h3><?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATAFORM_PREFERENCES'); ?></h3>
 	<fieldset>
 		<legend><?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATAFORM_LEGEND_PREFERENCES'); ?></legend>
-		<div class="row">
-			<div class="small-12 medium-12 large-6 columns">
+		<div class="grid-x grid-margin-x">
+			<div class="small-12 medium-12 large-6 cell">
 				<?php echo $this->form->renderField('preferences'); ?>
 			</div>
 		</div>
 	</fieldset>
 
 	<fieldset>
-		<div class="row">
-			<div class="small-12 columns text-right">
+		<div class="grid-x grid-margin-x">
+			<div class="small-12 cell text-right">
 				<button type="submit" class="button validate">
 					<span><?php echo KrMethods::plain('COM_KNOWRES_DASHBOARD_UPDATE_ITEM'); ?></span>
 				</button>

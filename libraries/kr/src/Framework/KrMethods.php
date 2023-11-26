@@ -13,6 +13,7 @@ defined('_JEXEC') or die;
 
 use Exception;
 use HighlandVision\KR\Joomla\FMethods as FNS;
+use HighlandVision\KR\Logger;
 use HighlandVision\KR\SiteHelper;
 use InvalidArgumentException;
 use Joomla\CMS\Cache\Cache;
@@ -49,8 +50,11 @@ class KrMethods
 	 *
 	 * @since 3.7.0
 	 */
-	public static function addLog(mixed $entry, int $priority = 64, string $category = 'com_knowres',
-		?string $date = null, array $context = []): void
+	public static function addLog(mixed   $entry,
+	                              int     $priority = 64,
+	                              string  $category = 'com_knowres',
+	                              ?string $date = null,
+	                              array   $context = []): void
 	{
 		FNS::addLogLog($entry, $priority, $category, $date, $context);
 	}
@@ -228,18 +232,6 @@ class KrMethods
 	}
 
 	/**
-	 * Get Joomla session
-	 *
-	 * @throws Exception
-	 * @since  3.3.0
-	 * @return SessionInterface
-	 */
-	public static function getSession(): SessionInterface
-	{
-		return FNS::getSession();
-	}
-
-	/**
 	 * Get uri instance
 	 *
 	 * @since  1.0.0
@@ -296,18 +288,15 @@ class KrMethods
 	 */
 	public static function getLayout(string $name): FileLayout
 	{
-		if (self::isAdmin())
-		{
+		if (self::isAdmin()) {
 			$paths[] = JPATH_COMPONENT_ADMINISTRATOR . '/layouts';
 
 			$site_template = SiteHelper::getSiteTemplate();
-			if ($site_template)
-			{
+			if ($site_template) {
 				$paths[] = JPATH_SITE . '/templates/' . $site_template . '/html/layouts/' . OPTION;
 			}
 		}
-		else
-		{
+		else {
 			$template = self::getTemplate();
 			$paths[]  = JPATH_SITE . '/templates/' . $template . '/html/layouts/' . OPTION;
 		}
@@ -356,6 +345,18 @@ class KrMethods
 	public static function getRoot(): string
 	{
 		return FNS::getRoot();
+	}
+
+	/**
+	 * Get Joomla session
+	 *
+	 * @throws Exception
+	 * @since  3.3.0
+	 * @return SessionInterface
+	 */
+	public static function getSession(): SessionInterface
+	{
+		return FNS::getSession();
 	}
 
 	/**
@@ -625,13 +626,17 @@ class KrMethods
 	 * @param  string             $name  Dot separated path to the layout file, relative to base path
 	 * @param  object|array|null  $data  Display fields in array
 	 *
-	 * @throws Exception
 	 * @since  3.1.0
 	 * @return string
 	 */
 	public static function render(string $name, object|array|null $data = []): string
 	{
-		$layout = self::getLayout($name);
+		try {
+			$layout = self::getLayout($name);
+		} catch (Exception $e) {
+			Logger::logMe($e->getMessage());
+			return '';
+		}
 
 		return $layout->render($data);
 	}
@@ -670,11 +675,29 @@ class KrMethods
 	 * @since  2.3.0
 	 */
 	public static function sendEmail(
-		mixed $from, mixed $fromName, mixed $to, mixed $subject, mixed $body, bool $html = true, mixed $cc = null,
-		mixed $bcc = null, mixed $reply = null, mixed $replyName = null, mixed $attachment = null): void
+		mixed $from,
+		mixed $fromName,
+		mixed $to,
+		mixed $subject,
+		mixed $body,
+		bool  $html = true,
+		mixed $cc = null,
+		mixed $bcc = null,
+		mixed $reply = null,
+		mixed $replyName = null,
+		mixed $attachment = null): void
 	{
-		FNS::sendEmail($from, $fromName, $to, $subject, $body, $html, $cc, $bcc, $reply, $replyName,
-			$attachment);
+		FNS::sendEmail($from,
+		               $fromName,
+		               $to,
+		               $subject,
+		               $body,
+		               $html,
+		               $cc,
+		               $bcc,
+		               $reply,
+		               $replyName,
+		               $attachment);
 	}
 
 	/**

@@ -12,18 +12,16 @@ defined('_JEXEC') or die;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\SiteHelper;
 use HighlandVision\KR\TickTock;
-
-if (!is_countable($this->reviews) || !count($this->reviews))
-{
-	return;
-}
 ?>
 
 <div class="kr-reviews">
+	<p class="smaller">
+		<?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_HEADER_GUEST_REVIEW_INFO"); ?>
+	</p>
+
 	<?php if (isset($this->ratings->avgcount) && $this->ratings->avgrating > 0) : ?>
-		<h2 style="margin-bottom:0;"><?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_HEADER_GUEST_REVIEW"); ?></h2>
-		<div class="row">
-			<div class="small-12 large-9 columns">
+		<div class="grid-x grid-margin-x ">
+			<div class="small-12 large-9 cell">
 				<dl class="chart">
 					<?php for ($i = 0; $i < 7; $i++) : ?>
 						<?php $param = "review_rating" . ($i + 1); ?>
@@ -40,7 +38,7 @@ if (!is_countable($this->reviews) || !count($this->reviews))
 				</dl>
 				<br>
 			</div>
-			<div class="small-12 large-3 text-center columns">
+			<div class="small-12 large-3 text-center cell">
 				<?php if (isset($this->ratings->avgrating) && $this->ratings->avgrating > 0) : ?>
 					<div class="review-score">
 						<span class="strong xbig color-accent">
@@ -57,22 +55,11 @@ if (!is_countable($this->reviews) || !count($this->reviews))
 		</div>
 	<?php endif; ?>
 
-	<div class="row">
-		<div class="small-12 columns">
-			<h3 style="margin-bottom:0;">
-				<?php echo KrMethods::sprintf("COM_KNOWRES_TITLE_REVIEWS", $this->item->property_name); ?>
-			</h3>
-			<p class="smaller">
-				<?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_HEADER_GUEST_REVIEW_INFO"); ?>
-			</p>
-		</div>
-	</div>
-
 	<?php foreach ($this->reviews as $r) : ?>
-		<div class="kr-areview callout success small">
-			<div class="row">
+		<div class="kr-areview callout small">
+			<div class="grid-x grid-margin-x ">
 				<?php if (isset($this->ratings->avgrating)): ?>
-					<div class="small-12 medium-10 columns">
+					<div class="small-12 medium-10 cell">
 						<?php if ($r->title): ?>
 							<h4 class="color-accent">
 								<?php echo $r->title; ?>
@@ -84,7 +71,7 @@ if (!is_countable($this->reviews) || !count($this->reviews))
 							</p>
 						<?php endif; ?>
 					</div>
-					<div class="small-12 text-right medium-2 columns">
+					<div class="small-12 text-right medium-2 cell">
 						<?php $rating = $r->rating1 + $r->rating2 + $r->rating3 + $r->rating4 + $r->rating5
 							+ $r->rating6; ?>
 						<?php if ($rating > 0): ?>
@@ -98,7 +85,7 @@ if (!is_countable($this->reviews) || !count($this->reviews))
 						<?php endif; ?>
 					</div>
 				<?php else: ?>
-					<div class="small-12 columns">
+					<div class="small-12 cell">
 						<?php if ($r->title): ?>
 							<h4 class="color-accent"><?php echo $r->title; ?></h4>
 						<?php endif; ?>
@@ -109,7 +96,7 @@ if (!is_countable($this->reviews) || !count($this->reviews))
 						<?php endif; ?>
 					</div>
 				<?php endif; ?>
-				<div class="small-12 columns">
+				<div class="small-12 cell">
 					<p style="font-size:14px;margin-bottom:0;">
 						<?php echo $r->guest_name; ?>
 					</p>

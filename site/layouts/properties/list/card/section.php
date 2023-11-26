@@ -34,16 +34,16 @@ extract($displayData);
 		<?php echo $item->property_name; ?>
 	</h2>
 <?php else: ?>
-	<div class="row">
-		<div class="small-10 columns">
+	<div class="grid-x grid-margin-x">
+		<div class="small-10 cell">
 			<h2 class="h4">
 				<?php echo $item->property_name; ?>
 			</h2>
 		</div>
-		<div class="small-2 columns rating">
+		<div class="small-2 cell rating">
 			<div>
 				<p>
-					<?php echo $item->avgrating; ?>&nbsp
+					<?php echo $item->avgrating; ?>&nbsp;
 					<i class="fas fa-star"></i>
 				</p>
 			</div>

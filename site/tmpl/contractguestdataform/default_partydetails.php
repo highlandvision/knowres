@@ -20,8 +20,8 @@ if (empty($this->contract->adults))
 ?>
 
 <div class="callout small alert">
-	<div class="row">
-		<div class="small-12 columns">
+	<div class="grid-x grid-margin-x">
+		<div class="small-12 cell">
 			<h4>
 				<?php echo KrMethods::sprintf('COM_KNOWRES_CONTRACTGUESTDATA_GUESTS', $this->contract->guests); ?>
 				(<?php if ($this->contract->adults == 1): ?>

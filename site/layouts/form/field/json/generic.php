@@ -23,7 +23,7 @@ extract($displayData);
 
 	<!-- Loop each set of values set up in Field-->
 <?php foreach ($values as $k => $v): ?>
-	<div class="row" id="<?php echo $group . $k; ?>">
+	<div class="grid-x grid-margin-x" id="<?php echo $group . $k; ?>">
 		<!-- Loop each fieldset - one fieldset per form item so each column can have a width-->
 		<?php $count = 0; ?>
 		<?php foreach ($form->getFieldsets() as $fieldset) : ?>

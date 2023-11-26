@@ -30,47 +30,47 @@ extract($displayData);
 ?>
 
 <?php if (!Utility::compareFloat($contract->room_total_gross, $contract->room_total)): ?>
-	<div class="row summary">
-		<div class="small-9 columns">
+	<div class="grid-x grid-margin-x summary">
+		<div class="small-9 cell">
 			<?php echo KrMethods::plain('COM_KNOWRES_FULL_PRICE'); ?>
 		</div>
-		<div class="small-3 columns text-right">
+		<div class="small-3 cell text-right">
 			<?php echo Utility::displayValue($contract->room_total_gross, $contract->currency); ?>
 		</div>
 	</div>
 <?php endif; ?>
 
 <?php if ($contract->discount > 0): ?>
-	<div class="row">
-		<div class="small-6 columns red">
+	<div class="grid-x grid-margin-x">
+		<div class="small-6 cell red">
 			<?php echo KrMethods::plain('COM_KNOWRES_DISCOUNT'); ?>
 		</div>
-		<div class="small-3 columns red text-right">
+		<div class="small-3 cell red text-right">
 			<?php echo Utility::displayValue($contract->discount, $contract->currency); ?>
 		</div>
-		<div class="small-3 columns text-right">
+		<div class="small-3 cell text-right">
 		</div>
 	</div>
 <?php endif; ?>
 
 <?php if ($contract->coupon_discount > 0): ?>
-	<div class="row">
-		<div class="small-6 columns indent red">
+	<div class="grid-x grid-margin-x">
+		<div class="small-6 cell indent red">
 			<?php echo KrMethods::plain('COM_KNOWRES_COUPON_DISCOUNT'); ?>
 		</div>
-		<div class="small-3 columns red text-right">
+		<div class="small-3 cell red text-right">
 			<?php echo Utility::displayValue($contract->coupon_discount, $contract->currency); ?>
 		</div>
-		<div class="small-3 columns text-right">
+		<div class="small-3 cell text-right">
 		</div>
 	</div>
 <?php endif; ?>
 
-	<div class="row">
-		<div class="small-9 columns">
+	<div class="grid-x grid-margin-x">
+		<div class="small-9 cell">
 			<?php echo KrMethods::plain('COM_KNOWRES_RENTAL_PRICE'); ?>
 		</div>
-		<div class="small-3 columns text-right">
+		<div class="small-3 cell text-right">
 			<?php echo Utility::displayValue($contract->room_total, $contract->currency); ?>
 		</div>
 	</div>
@@ -99,19 +99,19 @@ extract($displayData);
 	<!--//		}-->
 
 <?php if ($contract->tax_total > 0): ?>
-	<div class="row">
-		<div class="small-9 columns">
+	<div class="grid-x grid-margin-x">
+		<div class="small-9 cell">
 			<?php echo KrMethods::plain('COM_KNOWRES_TAX'); ?>
 		</div>
-		<div class="small-3 columns text-right">
+		<div class="small-3 cell text-right">
 			<?php echo Utility::displayValue($contract->tax_total, $contract->currency); ?>
 		</div>
 	</div>
 <?php endif; ?>
 
 <?php if (count($contract->extras)): ?>
-	<div class="row" style="margin-top:10px;">
-		<div class="small-6 columns">
+	<div class="grid-x grid-margin-x" style="margin-top:10px;">
+		<div class="small-6 cell">
 			<?php echo KrMethods::plain('COM_KNOWRES_EXTRAS'); ?>
 		</div>
 	</div>
@@ -126,22 +126,22 @@ extract($displayData);
 				<?php $name = $name . ' x ' . $d['quantity']; ?>
 			<?php endif; ?>
 
-			<div class="row">
-				<div class="small-6 columns indent">
+			<div class="grid-x grid-margin-x">
+				<div class="small-6 cell indent">
 					<?php echo $name; ?>
 				</div>
-				<div class="small-3 columns text-right">
+				<div class="small-3 cell text-right">
 					<?php echo Utility::displayValue($value, $contract->currency); ?>
 				</div>
 			</div>
 		<?php endif; ?>
 	<?php endforeach; ?>
 
-	<div class="row">
-		<div class="small-9 columns">
+	<div class="grid-x grid-margin-x">
+		<div class="small-9 cell">
 			<?php echo KrMethods::plain('COM_KNOWRES_EXTRAS_TOTAL'); ?>
 		</div>
-		<div class="small-3 columns text-right">
+		<div class="small-3 cell text-right">
 			<?php echo Utility::displayValue($contract->extra_total, $contract->currency); ?>
 		</div>
 	</div>
@@ -149,18 +149,18 @@ extract($displayData);
 
 <?php $fee_total = 0; ?>
 <?php if (isset($fees) && count($fees)): ?>
-	<div class="row" style="margin-top:5px;">
-		<div class="small-6 columns">
+	<div class="grid-x grid-margin-x" style="margin-top:5px;">
+		<div class="small-6 cell">
 			<?php echo KrMethods::plain('COM_KNOWRES_ADDITIONAL_CHARGES'); ?>
 		</div>
 	</div>
 
 	<?php foreach ($fees as $fee): ?>
-		<div class="row">
-			<div class="small-6 columns indent">
+		<div class="grid-x grid-margin-x">
+			<div class="small-6 cell indent">
 				<?php echo TickTock::displayDate($fee->created_at) . ' - ' . $fee->description; ?>
 			</div>
-			<div class="small-3 columns text-right">
+			<div class="small-3 cell text-right">
 				<?php echo Utility::displayValue($fee->value, $contract->currency); ?>
 			</div>
 		</div>
@@ -170,22 +170,22 @@ extract($displayData);
 <?php endif; ?>
 
 <?php if ($fee_total > 0): ?>
-	<div class="row">
-		<div class="small-9 columns subtotal">
+	<div class="grid-x grid-margin-x">
+		<div class="small-9 cell subtotal">
 			<?php echo KrMethods::plain('COM_KNOWRES_ADDITIONAL_CHARGES_TOTAL'); ?>
 		</div>
-		<div class="small-3 columns text-right">
+		<div class="small-3 cell text-right">
 			<?php echo Utility::displayValue($fee_total, $contract->currency); ?>
 		</div>
 	</div>
 <?php endif; ?>
 
 <?php if ($contract->room_total != $contract->contract_total + $fee_total): ?>
-	<div class="row" style="margin-top:10px;">
-		<div class="small-9 columns">
+	<div class="grid-x grid-margin-x" style="margin-top:10px;">
+		<div class="small-9 cell">
 			<?php echo KrMethods::plain('COM_KNOWRES_RESERVATION_TOTAL'); ?>
 		</div>
-		<div class="small-3 columns heading text-right">
+		<div class="small-3 cell heading text-right">
 			<?php echo Utility::displayValue($contract->contract_total + $fee_total, $contract->currency); ?>
 		</div>
 	</div>
@@ -195,8 +195,8 @@ extract($displayData);
 <?php $pending_total = 0; ?>
 <?php if (isset($payments) && is_countable($payments) && count($payments)): ?>
 	<hr>
-	<div class="row" style="margin-top:10px;">
-		<div class="small-12 columns heading">
+	<div class="grid-x grid-margin-x" style="margin-top:10px;">
+		<div class="small-12 cell heading">
 			<?php echo KrMethods::plain('COM_KNOWRES_PAYMENTS'); ?>
 		</div>
 	</div>
@@ -213,14 +213,14 @@ extract($displayData);
 			<?php $pending_total += $p->base_amount; ?>
 		<?php endif; ?>
 
-		<div class="row">
-			<div class="small-4 large-3 columns">
+		<div class="grid-x grid-margin-x">
+			<div class="small-4 large-3 cell">
 				<?php echo TickTock::displayDate($p->payment_date); ?>
 				<?php if (!$p->confirmed): ?>
 					<?php echo '*'; ?>
 				<?php endif; ?>
 			</div>
-			<div class="small-5 large-6 columns">
+			<div class="small-5 large-6 cell">
 				<?php if ($p->base_amount > 0): ?>
 					<?php if (!empty($fex)): ?>
 						<?php echo $fex . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . Utility::displayValue($p->base_amount,
@@ -234,35 +234,35 @@ extract($displayData);
 				<?php endif; ?>
 				&nbsp;
 			</div>
-			<div class="small-3 columns text-right">
+			<div class="small-3 cell text-right">
 				<?php echo Utility::displayValue(abs($p->base_amount), $contract->currency); ?>
 			</div>
 		</div>
 	<?php endforeach; ?>
 
-	<div class="row">
-		<div class="small-9 columns">
+	<div class="grid-x grid-margin-x">
+		<div class="small-9 cell">
 			<?php echo KrMethods::plain('COM_KNOWRES_PAYMENTS_TOTAL'); ?>
 		</div>
 		<?php if ($payment_total > 0): ?>
-			<div class="small-3 columns text-right">
+			<div class="small-3 cell text-right">
 				<?php echo Utility::displayValue($payment_total, $contract->currency); ?>
 			</div>
 		<?php else: ?>
-			<div class="small-3 columns text-right">
+			<div class="small-3 cell text-right">
 				<?php echo Utility::displayValue($payment_total, $contract->currency); ?>
 			</div>
 		<?php endif; ?>
 	</div>
 
 	<?php if ($pending_total): ?>
-		<div class="small-12 columns">
+		<div class="small-12 cell">
 			<small><?php echo KrMethods::plain('COM_KNOWRES_PAYMENT_UNCONFIRMED'); ?></small>
 		</div>
 	<?php endif; ?>
 	<hr>
 
-	<!--	<div class="row">-->
+	<!--	<div class="grid-x grid-margin-x">-->
 	<!--		<div class="small-5 divider">-->
 	<!--			--><?php //echo KrMethods::plain('COM_KNOWRES_CONTRACT_CONTRACT_TOTAL_LBL'); ?>
 	<!--		</div>-->
@@ -290,11 +290,11 @@ extract($displayData);
 		<?php $due = KrMethods::plain('COM_KNOWRES_BALANCE'); ?>
 	<?php endif; ?>
 
-	<div class="row" style="margin-top:10px;">
-		<div class="small-9 columns heading">
+	<div class="grid-x grid-margin-x" style="margin-top:10px;">
+		<div class="small-9 cell heading">
 			<?php echo $due; ?>
 		</div>
-		<div class="small-3 columns heading strong text-right">
+		<div class="small-3 cell heading strong text-right">
 			<?php echo Utility::displayValue($balance, $contract->currency); ?>
 		</div>
 	</div>

@@ -32,8 +32,8 @@ $params = KrMethods::getParams();
 $image  = Media\Images::getPropertyImageName($contract->property_id);
 ?>
 
-<div class="row">
-	<div class="small-12 columns">
+<div class="grid-x grid-margin-x">
+	<div class="small-12 cell">
 		<h2 class="h4 color-dark no-margin-bottom">
 			<?php echo $contract->property_name; ?>
 			<?php echo trim($contract->property_area); ?>,&nbsp;
@@ -42,8 +42,8 @@ $image  = Media\Images::getPropertyImageName($contract->property_id);
 		<br>
 	</div>
 </div>
-<div class="row">
-	<div class="small-12 medium-6 columns">
+<div class="grid-x grid-margin-x">
+	<div class="small-12 medium-6 cell">
 		<?php
 		$options = [
 			'src'    => Media\Images::getImagePath($contract->property_id, 'solo', $image),
@@ -55,7 +55,7 @@ $image  = Media\Images::getPropertyImageName($contract->property_id);
 		echo KrMethods::render('joomla.html.image', $options);
 		?>
 	</div>
-	<div class="small-12 medium-6 columns">
+	<div class="small-12 medium-6 cell">
 		<dl class="fancylist" style="margin-bottom:0;">
 			<div>
 				<dt><?php echo KrMethods::plain('COM_KNOWRES_REFERENCE'); ?></dt>

@@ -16,8 +16,8 @@ use HighlandVision\KR\Utility;
 ?>
 
 <div id="kr-totals">
-	<div class="row">
-		<div class="small-12 columns">
+	<div class="grid-x grid-margin-x">
+		<div class="small-12 cell">
 			<div class="total-text"><?php echo KrMethods::plain('COM_KNOWRES_CONFIRM_TOTAL'); ?></div>
 			<div id="hilite_total" class="hilite-total"></div>
 			<div class="total-summary">
@@ -32,32 +32,32 @@ use HighlandVision\KR\Utility;
 	</div>
 
 	<div id="kr-guest-totals" data-toggler=".hideme" class="text-left hideme">
-		<div class="row">
-			<div id="room_total_gross_text" class="small-7 columns"></div>
-			<div id="room_total_gross" class="small-5 columns text-right"></div>
+		<div class="grid-x grid-margin-x">
+			<div id="room_total_gross_text" class="small-7 cell"></div>
+			<div id="room_total_gross" class="small-5 cell text-right"></div>
 		</div>
-		<div class="row">
-			<div id="discount_text" class="small-5 columns red"></div>
-			<div id="discount" class="small-4 columns red text-right"></div>
+		<div class="grid-x grid-margin-x">
+			<div id="discount_text" class="small-5 cell red"></div>
+			<div id="discount" class="small-4 cell red text-right"></div>
 		</div>
-		<div class="row">
-			<div id="coupon_text" class="small-5 columns red"></div>
-			<div id="coupon_discount" class="small-4 columns red text-right"></div>
+		<div class="grid-x grid-margin-x">
+			<div id="coupon_text" class="small-5 cell red"></div>
+			<div id="coupon_discount" class="small-4 cell red text-right"></div>
 		</div>
-		<div class="row">
-			<div id="hr" class="small-12 columns"></div>
-			<div id="room_total_text" class="small-7 columns"></div>
-			<div id="room_total" class="small-5 columns text-right"></div>
+		<div class="grid-x grid-margin-x">
+			<div id="hr" class="small-12 cell"></div>
+			<div id="room_total_text" class="small-7 cell"></div>
+			<div id="room_total" class="small-5 cell text-right"></div>
 		</div>
 
 		<div id="taxbreakdown1"></div>
 		<div id="extrasbreakdown"></div>
 
-		<div class="row">
-			<div class="small-7 columns strong">
+		<div class="grid-x grid-margin-x">
+			<div class="small-7 cell strong">
 				<?php echo strtoupper(KrMethods::plain('COM_KNOWRES_CONFIRM_TOTAL')); ?>
 			</div>
-			<div id="contract_total" class="small-5 columns strong text-right"></div>
+			<div id="contract_total" class="small-5 cell strong text-right"></div>
 			<br>
 		</div>
 		<br>
@@ -65,8 +65,8 @@ use HighlandVision\KR\Utility;
 		<div id="taxbreakdown3"></div>
 	</div>
 
-	<div class="row payment-info">
-		<div class="small-12 columns text-center">
+	<div class="grid-x grid-margin-x payment-info">
+		<div class="small-12 cell text-center">
 			<div id="deposit_date"></div>
 			<div id="deposit"></div>
 			<div id="request_note"></div>

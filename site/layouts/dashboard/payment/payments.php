@@ -25,8 +25,8 @@ extract($displayData);
  */
 ?>
 
-<div class="row">
-	<div class="small-6 columns" style="border-right:1px solid #ccc;">
+<div class="grid-x grid-margin-x">
+	<div class="small-6 cell" style="border-right:1px solid #ccc;">
 		<h4 style="margin-bottom:5px;">
 			<?php echo $text . ' ' . Utility::displayValue($value, $currency); ?>
 		</h4>
@@ -34,7 +34,7 @@ extract($displayData);
 			<?php echo $date; ?>
 		</p>
 	</div>
-	<div class="small-6 columns">
+	<div class="small-6 cell">
 		<?php if (!$due): ?>
 			<h4>
 				<?php echo $right; ?>

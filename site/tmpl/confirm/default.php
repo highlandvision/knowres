@@ -26,8 +26,8 @@ $action = KrMethods::route('index.php?option=com_knowres&view=confirm&layout=pay
 ?>
 
 <div id="kr-confirm">
-	<div class="row">
-		<div class="small-12 columns">
+	<div class="grid-x grid-margin-x">
+		<div class="small-12 cell">
 			<?php if ($this->property->booking_type == 2) : ?>
 				<h1><?php echo KrMethods::sprintf('COM_KNOWRES_CONFIRM_BOOK_YOUR_RESERVATION',
 						$this->property->property_name); ?></h1>
@@ -39,8 +39,8 @@ $action = KrMethods::route('index.php?option=com_knowres&view=confirm&layout=pay
 		</div>
 	</div>
 
-	<div class="row">
-		<div class="small-12 medium-7 large-8 columns">
+	<div class="grid-x grid-margin-x">
+		<div class="small-12 medium-7 large-8 cell">
 			<form action="<?php echo $action; ?>" class="form-validate" id="kr-form-confirm" method="post">
 				<?php echo $this->loadTemplate('coupon'); ?>
 				<?php echo $this->loadTemplate('extras'); ?>
@@ -68,7 +68,7 @@ $action = KrMethods::route('index.php?option=com_knowres&view=confirm&layout=pay
 				<input type="hidden" name="task" id="mytask" value="confirm.payment" />
 			</form>
 		</div>
-		<div class="small-12 medium-5 large-4 columns">
+		<div class="small-12 medium-5 large-4 cell">
 			<?php echo $this->loadTemplate('ajaxed'); ?>
 			<?php echo HTMLHelper::_('image', $this->pimage, $this->property->property_name,
 				['width' => $this->params->get('max_property_width', 100)]);

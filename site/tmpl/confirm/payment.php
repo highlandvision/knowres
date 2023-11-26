@@ -26,8 +26,8 @@ $wa->useScript('com_knowres.site')
    ->useScript('keepalive');
 ?>
 
-<div class="row">
-	<div class="small-12 columns">
+<div class="grid-x grid-margin-x">
+	<div class="small-12 cell">
 		<?php if ($this->contractData->booking_type == 2) : ?>
 			<h1>
 				<?php echo KrMethods::plain('COM_KNOWRES_PAY_NOW'); ?>
@@ -42,11 +42,11 @@ $wa->useScript('com_knowres.site')
 	</div>
 </div>
 
-<div class="row" id="kr-payment">
-	<div class="small-12 medium-7 large-8 columns">
+<div class="grid-x grid-margin-x" id="kr-payment">
+	<div class="small-12 medium-7 large-8 cell">
 		<?php echo $this->loadTemplate('form'); ?>
 	</div>
-	<div class="small-12 medium-5 large-4 columns">
+	<div class="small-12 medium-5 large-4 cell">
 		<?php echo $this->loadTemplate('sidebar'); ?>
 	</div>
 </div>

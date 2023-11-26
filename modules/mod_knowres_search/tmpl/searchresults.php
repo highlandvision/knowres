@@ -24,8 +24,8 @@ $show_guests  = $params->get('show_guests', 0);
 
 <div class="kr-search offcanvas vertical">
 	<form action="<?php echo $action; ?>" method="post" name="search-default">
-		<div class="row collapse">
-			<div class="small-12 columns">
+		<div class="grid-x grid-margin-x collapse">
+			<div class="small-12 cell">
 				<?php if ($show_regions): ?>
 					<?php echo $form->renderField('region_id',
 					                              null,
@@ -46,7 +46,7 @@ $show_guests  = $params->get('show_guests', 0);
 					<input type="hidden" id="departure" name="departure">
 				<?php endif; ?>
 				<?php if ($show_guests): ?>
-					<div class="small-12 columns">
+					<div class="small-12 cell">
 						<?php echo $form->renderField('guests',
 						                              null,
 						                              $initial->guests,

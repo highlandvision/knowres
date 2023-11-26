@@ -30,21 +30,21 @@ extract($displayData);
 
 	<div class="callout gray">
 		<?php foreach ($property_options as $po): ?>
-			<div class="row">
-				<div class="small-12 medium-3 columns">
+			<div class="grid-x grid-margin-x">
+				<div class="small-12 medium-3 cell">
 					<?php echo $po->name; ?>
 				</div>
 
 				<?php $id = 'answer_' . $po->id; ?>
 				<?php if ($po->yesno) : ?>
-					<div class="small-12 medium-2 large-1 columns">
+					<div class="small-12 medium-2 large-1 cell">
 						<?php echo HTMLHelper::_('select.genericlist', $yesno, 'answer[]',
 							'class="form-select input-mini"', 'value', 'text',
 							$goptions[$po->id]); ?>
 						<input type=hidden name="oid[]" value="<?php echo $po->id; ?>">
 					</div>
 				<?php else : ?>
-					<div class="small-12 medium-9 columns">
+					<div class="small-12 medium-9 cell">
 						<label class="show-for-sr" for="<?php echo $id; ?>"><?php echo $po->name; ?></label>
 						<input id="<?php echo $id; ?>" type="text" class="form-control" name="answer[]"
 						       value="<?php echo $goptions[$po->id]; ?>">

@@ -22,8 +22,8 @@ $show_regions = $params->get('show_regions', 0);
 $show_guests  = $params->get('show_guests', 0);
 ?>
 
-<div class="row">
-	<div class="small-12 columns">
+<div class="grid-x grid-margin-x">
+	<div class="small-12 cell">
 		<form action="<?php echo $action; ?>" class="kr-search sidebar vertical" method="post" name="search-default">
 			<?php if ($show_regions): ?>
 				<?php echo $form->renderField('region_id',

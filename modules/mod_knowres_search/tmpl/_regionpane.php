@@ -9,7 +9,7 @@
 
 defined('_JEXEC') or die;
 
-$columns = count($regions);
+$cell = count($regions);
 $count   = 0;
 ?>
 
@@ -17,11 +17,11 @@ $count   = 0;
      data-alignment="left" data-h-offset="-16" data-v-offset="1000" data-close-on-click="true">
 	<?php $c = 0; ?>
 	<?php foreach ($regions as $k => $v): ?>
-		<div class="row">
-			<div class="small-6 large-5 columns">
+		<div class="grid-x grid-margin-x">
+			<div class="small-6 large-5 cell">
 				<?php echo $k; ?>
 			</div>
-			<div class="small-6 large-7 columns end">
+			<div class="small-6 large-7 cell end">
 				<?php foreach ($v as $id => $r): ?>
 					<?php if (!empty($initial->region_id[$id])) : ?>
 						<input type="radio" class="radioover region" name="region_id"

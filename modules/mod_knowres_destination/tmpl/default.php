@@ -19,8 +19,8 @@ $text   = KrMethods::sprintf('MOD_KNOWRES_DESTINATION_VIEW_PROPERTIES', $destina
 ?>
 
 <div class="kr-property kr-destinations" style="margin-bottom:20px;">
-	<div class="row">
-		<div class="small-12 columns">
+	<div class="grid-x grid-margin-x">
+		<div class="small-12 cell">
 			<h2><?php echo $destination; ?></h2>
 
 			<?php

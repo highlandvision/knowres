@@ -11,16 +11,16 @@ defined('_JEXEC') or die;
 ?>
 
 <div class="callout small gray">
-	<div class="row">
-		<div class="small-12 medium-4 columns">
+	<div class="grid-x grid-margin-x">
+		<div class="small-12 medium-4 cell">
 			<?php echo $this->form->getLabel('c_name'); ?>
 			<?php echo $this->form->getInput('c_name'); ?>
 		</div>
-		<div class="small-12 medium-4 columns">
+		<div class="small-12 medium-4 cell">
 			<?php echo $this->form->getLabel('c_phone'); ?>
 			<?php echo $this->form->getInput('c_phone'); ?>
 		</div>
-		<div class="small-12 medium-4 columns">
+		<div class="small-12 medium-4 cell">
 			<?php echo $this->form->getLabel('c_email'); ?>
 			<?php echo $this->form->getInput('c_email'); ?>
 		</div>

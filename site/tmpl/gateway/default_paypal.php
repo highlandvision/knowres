@@ -14,14 +14,14 @@ use HighlandVision\KR\Framework\KrMethods;
 $approval_url = KrMethods::route('index.php?option=com_knowres&task=service.paypal');
 ?>
 
-<div class="row">
-	<div class="small-12 medium-10 large-8 medium-offset-1 large-offset-2 columns">
+<div class="grid-x grid-margin-x">
+	<div class="small-12 medium-10 large-8 medium-offset-1 large-offset-2 cell">
 		<div class="text-center">
 			<h4><?php echo $this->paymentData->note; ?></h4>
 			<br><br>
 		</div>
 	</div>
-	<div class="small-12 medium-8 large-6 medium-offset-2 large-offset-3 columns">
+	<div class="small-12 medium-8 large-6 medium-offset-2 large-offset-3 cell">
 		<div class="text-center">
 			<div id="paypal-button-container"></div>
 			<br>

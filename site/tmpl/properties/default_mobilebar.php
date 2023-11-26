@@ -12,8 +12,8 @@ defined('_JEXEC') or die;
 use HighlandVision\KR\Framework\KrMethods;
 ?>
 
-<div class="row hide-for-large">
-	<div class="small-12 columns">
+<div class="grid-x grid-margin-x hide-for-large">
+	<div class="small-12 cell">
 		<ul class="kr-mobilebar menu icons expanded align-center">
 			<li>
 				<button type="button" class="button expanded left-off-canvas-toggle"

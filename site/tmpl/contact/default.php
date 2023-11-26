@@ -22,110 +22,112 @@ $wa->useScript('com_knowres.site')
 $action = KrMethods::route('index.php?option=com_knowres&task=contact.submit');
 ?>
 
-<div class="row">
-	<div>
-		<h1 class="title"><?php echo KrMethods::plain('COM_KNOWRES_CONTACT_TITLE'); ?></h1>
-		<p class="smaller"><?php echo KrMethods::plain('COM_KNOWRES_CONTACT_REQUIRED'); ?></p>
+<div class="grid-container">
+	<div class="grid-x grid-margin-x">
+		<div>
+			<h1 class="title"><?php echo KrMethods::plain('COM_KNOWRES_CONTACT_TITLE'); ?></h1>
+			<p class="smaller"><?php echo KrMethods::plain('COM_KNOWRES_CONTACT_REQUIRED'); ?></p>
 
-		<form action="<?php echo $action; ?>" class="form-validate" id="kr-form-contact"
-		      onsubmit="return verifyEmail();" method="post">
-			<fieldset class="fieldset">
-				<legend><?php echo KrMethods::plain('COM_KNOWRES_YOUR_DETAILS'); ?></legend>
-				<div class="callout formbg small">
-					<div class="row">
-						<div class="small-12 medium-6 columns">
-							<?php echo $this->form->renderField('contact_name'); ?>
+			<form action="<?php echo $action; ?>" class="form-validate" id="kr-form-contact"
+			      onsubmit="return verifyEmail();" method="post">
+				<fieldset class="fieldset">
+					<legend><?php echo KrMethods::plain('COM_KNOWRES_YOUR_DETAILS'); ?></legend>
+					<div class="callout formbg small">
+						<div class="grid-x grid-margin-x">
+							<div class="small-12 medium-6 cell">
+								<?php echo $this->form->renderField('contact_name'); ?>
+							</div>
+						</div>
+						<div class="grid-x grid-margin-x">
+							<div class="small-12 medium-6 cell">
+								<?php echo $this->form->renderField('contact_email'); ?>
+							</div>
+							<div class="small-12 medium-6 cell">
+								<?php echo $this->form->renderField('verify_email'); ?>
+							</div>
+						</div>
+						<div class="grid-x grid-margin-x">
+							<div class="small-12 medium-6 cell end">
+								<?php echo $this->form->renderField('contact_country'); ?>
+							</div>
+							<div class="small-12 medium-6 cell">
+								<?php echo $this->form->renderField('contact_phone'); ?>
+							</div>
 						</div>
 					</div>
-					<div class="row">
-						<div class="small-12 medium-6 columns">
-							<?php echo $this->form->renderField('contact_email'); ?>
+				</fieldset>
+
+				<fieldset class="fieldset">
+					<legend><?php echo KrMethods::plain('Your Property Requirements'); ?></legend>
+					<div class="callout formbg small">
+						<div class="grid-x grid-margin-x">
+							<div class="small-12 medium-4 cell">
+								<?php $this->form->setValue('region', '', $this->region_name); ?>
+								<?php echo $this->form->renderField('region'); ?>
+							</div>
+							<div class="small-12 medium-4 cell">
+								<?php $this->form->setValue('property', '', $this->property_name); ?>
+								<?php echo $this->form->renderField('property'); ?>
+							</div>
+							<div class="small-12 medium-4 cell">
+								<?php echo $this->form->renderField('budget'); ?>
+							</div>
 						</div>
-						<div class="small-12 medium-6 columns">
-							<?php echo $this->form->renderField('verify_email'); ?>
+						<div class="grid-x grid-margin-x">
+							<div class="small-12 medium-4 cell">
+								<?php echo $this->form->renderField('day'); ?>
+							</div>
+							<div class="small-12 medium-4 cell">
+								<?php echo $this->form->renderField('month'); ?>
+							</div>
+							<div class="small-12 medium-4 cell end">
+								<?php echo $this->form->renderField('nights'); ?>
+							</div>
+						</div>
+						<div class="grid-x grid-margin-x">
+							<div class="small-12 medium-4 cell">
+								<?php echo $this->form->renderField('guests'); ?>
+							</div>
+							<div class="small-12 medium-4 cell">
+								<?php echo $this->form->renderField('children'); ?>
+							</div>
+							<div class="small-12 medium-4 cell end">
+								<?php echo $this->form->renderField('ages'); ?>
+							</div>
 						</div>
 					</div>
-					<div class="row">
-						<div class="small-12 medium-6 columns end">
-							<?php echo $this->form->renderField('contact_country'); ?>
+				</fieldset>
+
+				<fieldset class="fieldset">
+					<legend><?php echo KrMethods::plain('Additional information'); ?></legend>
+					<div class="grid-x grid-margin-x">
+						<div class="small-12 medium-12 cell">
+							<?php echo $this->form->renderField('message'); ?>
 						</div>
-						<div class="small-12 medium-6 columns">
-							<?php echo $this->form->renderField('contact_phone'); ?>
-						</div>
+					</div>
+				</fieldset>
+
+				<div class="grid-x grid-margin-x">
+					<div class="small-12 medium-offset-3 medium-6 cell end text-center">
+						<?php echo $this->form->renderField('grecaptcha'); ?>
+					</div>
+					<div class="small-12 cell text-center">
+						<button type="submit" class="button validate expanded no-margin-bottom">
+							<span><?php echo KrMethods::plain('COM_KNOWRES_CONTACT_SEND'); ?></span>
+						</button>
 					</div>
 				</div>
-			</fieldset>
 
-			<fieldset class="fieldset">
-				<legend><?php echo KrMethods::plain('Your Property Requirements'); ?></legend>
-				<div class="callout formbg small">
-					<div class="row">
-						<div class="small-12 medium-4 columns">
-							<?php $this->form->setValue('region', '', $this->region_name); ?>
-							<?php echo $this->form->renderField('region'); ?>
-						</div>
-						<div class="small-12 medium-4 columns">
-							<?php $this->form->setValue('property', '', $this->property_name); ?>
-							<?php echo $this->form->renderField('property'); ?>
-						</div>
-						<div class="small-12 medium-4 columns">
-							<?php echo $this->form->renderField('budget'); ?>
-						</div>
-					</div>
-					<div class="row">
-						<div class="small-12 medium-4 columns">
-							<?php echo $this->form->renderField('day'); ?>
-						</div>
-						<div class="small-12 medium-4 columns">
-							<?php echo $this->form->renderField('month'); ?>
-						</div>
-						<div class="small-12 medium-4 columns end">
-							<?php echo $this->form->renderField('nights'); ?>
-						</div>
-					</div>
-					<div class="row">
-						<div class="small-12 medium-4 columns">
-							<?php echo $this->form->renderField('guests'); ?>
-						</div>
-						<div class="small-12 medium-4 columns">
-							<?php echo $this->form->renderField('children'); ?>
-						</div>
-						<div class="small-12 medium-4 columns end">
-							<?php echo $this->form->renderField('ages'); ?>
-						</div>
-					</div>
-				</div>
-			</fieldset>
-
-			<fieldset class="fieldset">
-				<legend><?php echo KrMethods::plain('Additional information'); ?></legend>
-				<div class="row">
-					<div class="small-12 medium-12 columns">
-						<?php echo $this->form->renderField('message'); ?>
-					</div>
-				</div>
-			</fieldset>
-
-			<div class="row">
-				<div class="small-12 medium-offset-3 medium-6 columns end text-center">
-					<?php echo $this->form->renderField('grecaptcha'); ?>
-				</div>
-				<div class="small-12 columns text-center">
-					<button type="submit" class="button validate expanded no-margin-bottom">
-						<span><?php echo KrMethods::plain('COM_KNOWRES_CONTACT_SEND'); ?></span>
-					</button>
-				</div>
-			</div>
-
-			<?php echo HTMLHelper::_('form.token'); ?>
-			<input type="hidden" name="id" value="<?php echo $this->property_id; ?>">
-			<input type="hidden" name="task" value="contact.submit">
-		</form>
-		<br>
-		<p class="smaller text-center">
-			<?php echo KrMethods::sprintf('COM_KNOWRES_CONTACT_SEND_3RDPARTY',
-				KrMethods::getCfg('sitename')); ?>
-		</p>
+				<?php echo HTMLHelper::_('form.token'); ?>
+				<input type="hidden" name="id" value="<?php echo $this->property_id; ?>">
+				<input type="hidden" name="task" value="contact.submit">
+			</form>
+			<br>
+			<p class="smaller text-center">
+				<?php echo KrMethods::sprintf('COM_KNOWRES_CONTACT_SEND_3RDPARTY',
+					KrMethods::getCfg('sitename')); ?>
+			</p>
+		</div>
 	</div>
 </div>
 

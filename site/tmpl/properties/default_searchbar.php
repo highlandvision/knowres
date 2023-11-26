@@ -12,8 +12,8 @@ defined('_JEXEC') or die;
 use HighlandVision\KR\Framework\KrMethods;
 ?>
 
-<div class="row kr-searchbar">
-	<div class="small-12 medium-8 columns">
+<div class="kr-searchbar grid-x">
+	<div class="small-12 medium-8 cell">
 		<div class="small button-group">
 			<button type="button" class="button sort left-off-canvas-toggle"
 			        data-toggle="kr-properties-sortby-off-canvas" id="sortby"
@@ -86,7 +86,7 @@ use HighlandVision\KR\Framework\KrMethods;
 			</button>
 		</div>
 	</div>
-	<div class="medium-4 show-for-medium columns">
+	<div class="medium-4 show-for-medium cell">
 		<div class="kr-pager"></div>
 	</div>
 </div>

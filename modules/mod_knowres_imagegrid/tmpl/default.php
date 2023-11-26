@@ -59,8 +59,8 @@ if ($texthorizontalalign == "center") {
     }
 </style>
 
-<div class="row">
-	<div class="column kr-imagegrid">
+<div class="grid-x grid-margin-x">
+	<div class="cell kr-imagegrid">
 		<?php foreach ($data as $d): ?>
 			<?php $link = ''; ?>
 

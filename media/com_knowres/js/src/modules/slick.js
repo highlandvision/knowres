@@ -158,6 +158,7 @@
             lazyload: 'ondemand',
             slidesToScroll: 1,
             speed: 300,
+            variableHeight: true
         });
     });
 }(jQuery));

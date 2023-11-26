@@ -131,11 +131,11 @@ if (is_countable($all) && !count($all))
 	<legend><?php echo KrMethods::plain('COM_KNOWRES_CONFIRM_EXTRAS_LBL'); ?></legend>
 	<div class="callout formbg small">
 		<?php foreach ($all as $a) : ?>
-			<div class="row extras">
-				<div class="small-12 medium-3 columns">
+			<div class="grid-x grid-margin-x extras">
+				<div class="small-12 medium-3 cell">
 					<?php echo $a['dropdown'] . $a['hidden']; ?>
 				</div>
-				<div class="price small-9 medium-9 columns">
+				<div class="price small-12 medium-9 cell">
 					<?php echo $a['name']; ?>
 					<?php if (!empty($a['description'])): ?>
 						<i class="fas fa-info-circle has-tip" data-position="right" data-alignment="center"
@@ -143,7 +143,7 @@ if (is_countable($all) && !count($all))
 						</i>
 					<?php endif; ?>
 					<br>
-					<?php echo $a['price']; ?><br>
+					<?php echo $a['price']; ?>
 				</div>
 			</div>
 		<?php endforeach; ?>

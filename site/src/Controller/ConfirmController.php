@@ -301,9 +301,9 @@ class ConfirmController extends FormController
 				$valueDsp = $Hub->currencyDisplay($value);
 			}
 
-			$display .= '<div class="row"><span class="small-8 columns">' .
+			$display .= '<div class="grid-x grid-margin-x"><span class="small-8 cell">' .
 				$name .
-				'</span><span class="small-4 columns text-right">' .
+				'</span><span class="small-4 cell text-right">' .
 				$valueDsp .
 				'</span></div>';
 		}

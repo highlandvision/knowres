@@ -21,8 +21,8 @@ $wa->useScript('com_knowres.site')
 $termsurl = KrMethods::route('index.php?option=com_knowres&task=property.terms&id=' . $this->property->id, false);
 ?>
 
-<div id="kr-payment" class="row">
-	<div class="small-12 medium-10 medium-offset-1 large-8 large-offset-2 columns">
+<div id="kr-payment" class="grid-x grid-margin-x">
+	<div class="small-12 medium-10 medium-offset-1 large-8 large-offset-2 cell">
 		<h1><?php echo KrMethods::plain('COM_KNOWRES_MAKE_A_PAYMENT'); ?></h1>
 
 		<form action="<?php echo KrMethods::route('index.php?option=com_knowres&task=payment.router'); ?>"
@@ -37,8 +37,8 @@ $termsurl = KrMethods::route('index.php?option=com_knowres&task=property.terms&i
 			<fieldset class="fieldset">
 				<?php if ($this->contract->cancelled): ?>
 					<div class="callout formbg small">
-						<div class="row">
-							<div class="small-12 columns">
+						<div class="grid-x grid-margin-x">
+							<div class="small-12 cell">
 								<h4>
 									This reservation has been cancelled and payment cannot be taken.
 									<br><br>

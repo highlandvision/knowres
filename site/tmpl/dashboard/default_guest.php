@@ -12,8 +12,8 @@ defined('_JEXEC') or die;
 use HighlandVision\KR\Utility;
 ?>
 
-<div class="row">
-	<div class="small-12 columns">
+<div class="grid-x grid-margin-x">
+	<div class="small-12 cell">
 		<address>
 			<strong><?php echo $this->guest->firstname . ' ' . $this->guest->surname; ?></strong>
 			<br>
@@ -23,8 +23,8 @@ use HighlandVision\KR\Utility;
 		</address>
 	</div>
 </div>
-<div class="row">
-	<div class="small-12 columns" style="line-height:150%;margin-top:10px;">
+<div class="grid-x grid-margin-x">
+	<div class="small-12 cell" style="line-height:150%;margin-top:10px;">
 		<address>
 			<?php if ($this->guest->mobile) : ?>
 				<i class="fas fa-lg fa-mobile-alt"></i>

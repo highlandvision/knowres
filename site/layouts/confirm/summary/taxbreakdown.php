@@ -33,16 +33,16 @@ if (!$name)
 }
 ?>
 
-<div class="row">
+<div class="grid-x grid-margin-x">
 	<?php if ($type == 1): ?>
-		<div class="small-12 medium-6 columns"><?php echo $name; ?></div>
-		<div class="small-12 medium-6 columns text-right"><?php echo $value; ?></div>
+		<div class="small-12 medium-6 cell"><?php echo $name; ?></div>
+		<div class="small-12 medium-6 cell text-right"><?php echo $value; ?></div>
 	<?php elseif ($type == 2): ?>
-		<div class="small-12 columns">
+		<div class="small-12 cell">
 			<?php echo KrMethods::sprintf('COM_KNOWRES_CONFIRM_TAX_TYPE_INCLUDED', $name, $value); ?>
 		</div>
 	<?php elseif ($type == 3): ?>
-		<div class="small-12 columns">
+		<div class="small-12 cell">
 			<?php echo KrMethods::sprintf('COM_KNOWRES_CONFIRM_TAX_TYPE_ARRIVAL', $name, $value); ?>
 		</div>
 	<?php endif; ?>

@@ -37,7 +37,7 @@ $large  = 'large-up-' . $per_row_large;
 <h1><?php echo $title; ?></h1>
 
 <div class="kr-properties">
-	<div class="row small-up-1 <?php echo $medium; ?> <?php echo $large; ?>">
+	<div class="grid-x grid-margin-x small-up-1 <?php echo $medium; ?> <?php echo $large; ?>">
 		<?php foreach ($items as $item): ?>
 			<?php $plink = SiteHelper::buildPropertyLink($item->property_id); ?>
 			<?php $image = Media\Images::getPropertyImageName($item->property_id); ?>

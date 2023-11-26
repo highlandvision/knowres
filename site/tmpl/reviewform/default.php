@@ -21,21 +21,21 @@ $wa->useScript('com_knowres.site')
 ?>
 
 <div class="narrower">
-	<div class="row">
-		<div class="small-12 large-10 large-offset-1 columns">
+	<div class="grid-x grid-margin-x">
+		<div class="small-12 large-10 large-offset-1 cell">
 			<h1><?php echo KrMethods::sprintf('COM_KNOWRES_REVIEW_REQUEST', $this->contract->property_name); ?></h1>
 		</div>
 	</div>
 
-	<div class="row">
-		<div class="small-12 large-10 large-offset-1 columns">
+	<div class="grid-x grid-margin-x">
+		<div class="small-12 large-10 large-offset-1 cell">
 			<form action="<?php echo 'index.php?option=com_knowres'; ?>"
 			      aria-label="<?php echo $this->form_aria_label; ?>" class="form-validate" id="kr-review-form"
 			      method="post" name="adminForm">
 				<fieldset class="fieldset">
 					<div class="callout">
-						<div class="row">
-							<div class="small-12 columns">
+						<div class="grid-x grid-margin-x">
+							<div class="small-12 cell">
 								<h4>
 									<?php echo KrMethods::sprintf('COM_KNOWRES_HELLO',
 										ucfirst($this->contract->guest_firstname)
@@ -44,8 +44,8 @@ $wa->useScript('com_knowres.site')
 							</div>
 						</div>
 						<?php if ($this->params->get('review_instructions')): ?>
-							<div class="row">
-								<div class="small-12 columns">
+							<div class="grid-x grid-margin-x">
+								<div class="small-12 cell">
 									<p><?php echo nl2br($this->params->get('review_instructions')); ?></p>
 								</div>
 							</div>
@@ -57,23 +57,23 @@ $wa->useScript('com_knowres.site')
 					<fieldset class="fieldset">
 						<div class="callout">
 							<legend><?php echo KrMethods::plain('COM_KNOWRES_YOUR_REVIEW'); ?></legend>
-							<div class="row">
+							<div class="grid-x grid-margin-x">
 								<?php $this->form->setFieldAttribute('guest_name', 'required', true); ?>
 								<?php $this->form->setFieldAttribute('guest_location', 'required', true); ?>
-								<div class="small-12 medium-6 columns end">
+								<div class="small-12 medium-6 cell end">
 									<?php echo $this->form->getLabel('guest_name'); ?>
 									<?php echo $this->form->getInput('guest_name'); ?>
 								</div>
-								<div class="small-12 medium-6 columns">
+								<div class="small-12 medium-6 cell">
 									<?php echo $this->form->getLabel('guest_location'); ?>
 									<?php echo $this->form->getInput('guest_location'); ?>
 								</div>
 							</div>
 
 							<?php if ($this->params->get('review_title')): ?>
-								<div class="row">
+								<div class="grid-x grid-margin-x">
 									<?php $this->form->setFieldAttribute('title', 'required', true); ?>
-									<div class="small-12 medium-12 columns">
+									<div class="small-12 medium-12 cell">
 										<?php echo $this->form->getLabel('title'); ?>
 										<?php echo $this->form->getInput('title'); ?>
 									</div>
@@ -82,9 +82,9 @@ $wa->useScript('com_knowres.site')
 								<input type="hidden" name="jform[title]" value="<?php echo $this->item->title; ?>">
 							<?php endif; ?>
 
-							<div class="row">
+							<div class="grid-x grid-margin-x">
 								<?php $this->form->setFieldAttribute('review', 'required', true); ?>
-								<div class="small-12 medium-12 columns">
+								<div class="small-12 medium-12 cell">
 									<?php echo $this->form->getLabel('review'); ?>
 									<?php echo $this->form->getInput('review'); ?>
 								</div>
@@ -113,48 +113,48 @@ $wa->useScript('com_knowres.site')
 							?>
 
 							<?php if ($this->params->get('review_rating1')): ?>
-								<div class="row">
-									<div class="small-12 columns end input select kr-ratings">
+								<div class="grid-x grid-margin-x">
+									<div class="small-12 cell end input select kr-ratings">
 										<?php echo $this->form->getLabel('rating1'); ?>
 										<?php echo $this->form->getInput('rating1'); ?>
 									</div>
 								</div>
 							<?php endif; ?>
 							<?php if ($this->params->get('review_rating2')): ?>
-								<div class="row">
-									<div class="small-12 columns end input select kr-ratings">
+								<div class="grid-x grid-margin-x">
+									<div class="small-12 cell end input select kr-ratings">
 										<?php echo $this->form->getLabel('rating2'); ?>
 										<?php echo $this->form->getInput('rating2'); ?>
 									</div>
 								</div>
 							<?php endif; ?>
 							<?php if ($this->params->get('review_rating3')): ?>
-								<div class="row">
-									<div class="small-12 columns end input select kr-ratings">
+								<div class="grid-x grid-margin-x">
+									<div class="small-12 cell end input select kr-ratings">
 										<?php echo $this->form->getLabel('rating3'); ?>
 										<?php echo $this->form->getInput('rating3'); ?>
 									</div>
 								</div>
 							<?php endif; ?>
 							<?php if ($this->params->get('review_rating4')): ?>
-								<div class="row">
-									<div class="small-12 columns end input select kr-ratings">
+								<div class="grid-x grid-margin-x">
+									<div class="small-12 cell end input select kr-ratings">
 										<?php echo $this->form->getLabel('rating4'); ?>
 										<?php echo $this->form->getInput('rating4'); ?>
 									</div>
 								</div>
 							<?php endif; ?>
 							<?php if ($this->params->get('review_rating5')): ?>
-								<div class="row">
-									<div class="small-12 columns end input select kr-ratings">
+								<div class="grid-x grid-margin-x">
+									<div class="small-12 cell end input select kr-ratings">
 										<?php echo $this->form->getLabel('rating5'); ?>
 										<?php echo $this->form->getInput('rating5'); ?>
 									</div>
 								</div>
 							<?php endif; ?>
 							<?php if ($this->params->get('review_rating6')): ?>
-							<div class="row">
-								<div class="small-12 columns end input select kr-ratings">
+							<div class="grid-x grid-margin-x">
+								<div class="small-12 cell end input select kr-ratings">
 									<?php echo $this->form->getLabel('rating6'); ?>
 									<?php echo $this->form->getInput('rating6'); ?>
 								</div>
@@ -173,8 +173,8 @@ $wa->useScript('com_knowres.site')
 
 				<?php if ($this->params->get('review_disclaimer')): ?>
 					<fieldset class="fieldset">
-						<div class="row">
-							<div class="small-12 columns">
+						<div class="grid-x grid-margin-x">
+							<div class="small-12 cell">
 								<p class="smaller">
 									<?php echo nl2br($this->params->get('review_disclaimer')); ?>
 								</p>
@@ -184,8 +184,8 @@ $wa->useScript('com_knowres.site')
 				<?php endif; ?>
 
 				<fieldset class="fieldset">
-					<div class="row">
-						<div class="small-12 columns text-right">
+					<div class="grid-x grid-margin-x">
+						<div class="small-12 cell text-right">
 							<button type="submit" class="button validate">
 								<span><?php echo KrMethods::plain('JSUBMIT'); ?></span>
 							</button>

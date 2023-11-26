@@ -16,13 +16,13 @@ use Joomla\CMS\HTML\HTMLHelper;
 
 <form action="<?php echo KrMethods::route('index.php?option=com_knowres&task=service.wireint'); ?>"
       method="post" id="kr-form-gateway" class="form-validate">
-	<div class="row">
+	<div class="grid-x grid-margin-x">
 		<br>
-		<div class="small-12 medium-10 medium-offset-1 large-8 large-offset-2 columns text-center">
+		<div class="small-12 medium-10 medium-offset-1 large-8 large-offset-2 cell text-center">
 			<h4><?php echo $this->paymentData->note; ?></h4>
 		</div>
 		<br><br>
-		<div class="small-12 medium-8 medium-offset-2 columns text-center">
+		<div class="small-12 medium-8 medium-offset-2 cell text-center">
 			<div class="callout small">
 				<h4><?php echo $this->paymentData->gateway_description; ?></h4>
 			</div>

@@ -31,18 +31,18 @@ class PaymentView extends KrHtmlView\Site
 	public string $address;
 	/* @var stdClass Session contract data. */
 	public stdClass $contractData;
-	/* @var array Available payment gateways. */
-	public array $gateways = [];
 	/* @var stdClass Gateway data */
 	public stdClass $gateway;
+	/* @var array Available payment gateways. */
+	public array $gateways = [];
 	/* @var stdClass Session guest data. */
 	public stdClass $guestData;
 	/* @var stdClass Session payment data. */
 	public stdClass $paymentData;
-	/* @var Translations Translations object */
-	protected Translations $Translations;
 	/** @var object Property item */
 	public object $property;
+	/* @var Translations Translations object */
+	protected Translations $Translations;
 
 	/**
 	 * Display the form
@@ -56,7 +56,6 @@ class PaymentView extends KrHtmlView\Site
 	public function display($tpl = null): void
 	{
 		$this->Translations = new Translations();
-
 		$this->prepareDocument();
 
 		$this->setLayout('payment');
@@ -71,9 +70,11 @@ class PaymentView extends KrHtmlView\Site
 	 */
 	protected function prepareDocument(): void
 	{
+		$this->document   = Factory::getDocument();
 		$meta_title       = KrMethods::plain('COM_KNOWRES_PAY_NOW');
 		$meta_description = KrMethods::plain('COM_KNOWRES_PAGE_TITLE');
 		$this->prepareDefaultDocument($meta_title, $meta_description);
+
 		$this->setMyPathway();
 	}
 
@@ -83,19 +84,20 @@ class PaymentView extends KrHtmlView\Site
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	protected function setMyPathway()
+	protected function setMyPathway(): void
 	{
 		$pathway = Factory::getApplication()->getPathway();
 		$pathway->setPathway([]);
 
 		$Itemid  = SiteHelper::getRegionItemid($this->property->region_id);
-		$pathway = self::propertiesPathway($pathway, $this->property->region_id, $this->property->region_name,
-			$Itemid);
+		$pathway = self::propertiesPathway($pathway,
+		                                   $this->property->region_id,
+		                                   $this->property->region_name,
+		                                   $Itemid);
 
 		$searchSession = new KrSession\Search();
 		$searchData    = $searchSession->getData();
-		if (count($searchData->baseIds))
-		{
+		if (count($searchData->baseIds)) {
 			$Itemid = SiteHelper::getItemId('com_knowres', 'properties', [
 				'layout'    => 'search',
 				'region_id' => $this->property->region_id
