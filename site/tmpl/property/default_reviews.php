@@ -15,10 +15,6 @@ use HighlandVision\KR\TickTock;
 ?>
 
 <div class="kr-reviews">
-	<p class="smaller">
-		<?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_HEADER_GUEST_REVIEW_INFO"); ?>
-	</p>
-
 	<?php if (isset($this->ratings->avgcount) && $this->ratings->avgrating > 0) : ?>
 		<div class="grid-x grid-margin-x ">
 			<div class="small-12 large-9 cell">
@@ -117,4 +113,8 @@ use HighlandVision\KR\TickTock;
 		<a href="<?php echo $link; ?>" class="button float-right">
 			<?php echo KrMethods::plain('COM_KNOWRES_READ_MORE'); ?></a>
 	<?php endif; ?>
+
+	<p class="smaller">
+		<?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_HEADER_GUEST_REVIEW_INFO"); ?>
+	</p>
 </div>

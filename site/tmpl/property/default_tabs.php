@@ -84,8 +84,8 @@ use HighlandVision\KR\Framework\KrMethods;
 			   data-maptypeid="<?php echo $this->params->get('property_map_type', "roadmap"); ?>">
 				<i class='fa-solid fa-map hide-for-medium'></i>
 				<span class="show-for-medium">
-			<?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_MAP"); ?>
-		</span>
+					<?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_MAP"); ?>
+				</span>
 			</a>
 		</li>
 	<?php endif; ?>
@@ -105,9 +105,35 @@ use HighlandVision\KR\Framework\KrMethods;
 <div class="tabs-content" data-tabs-content="kr-property-tabs">
 	<div class="tabs-panel is-active" id="overview">
 		<?php echo $this->loadTemplate('overview'); ?>
+		<!--  Amenities -->
+		<?php if (!empty($this->features) && count($this->features)): ?>
+			<h3 class="header"><?php echo KrMethods::plain('COM_KNOWRES_PROPERTY_TAB_AMENITIES'); ?></h3>
+			<div class="rooms">
+				<?php echo KrMethods::render('property.features', ['features' => $this->features]); ?>
+			</div>
+		<?php endif; ?>
 	</div>
 	<div class="tabs-panel" id="details">
-		<?php echo $this->loadTemplate('facilities'); ?>
+		<!--  Rooms -->
+		<?php if (!empty($this->rooms) && count($this->rooms)): ?>
+			<h3 class="header" style="margin-top:0;">
+				<?php echo KrMethods::plain('COM_KNOWRES_PROPERTY_TAB_ROOMS');?>
+			</h3>
+			<div class="rooms">
+				<?php echo KrMethods::render('property.rooms', ['rooms' => $this->rooms]); ?>
+			</div>
+		<?php endif; ?>
+		<!--  Text Fields -->
+		<?php foreach($this->fields as $pf): ?>
+			<?php if (!$pf->special && $pf->id > 1 ): ?>
+				<?php $label = 'hp' . $pf->id; ?>
+				<?php $field = 'p' . $pf->id; ?>
+				<?php if (!empty(strip_tags($this->item->{$field}))): ?>
+					<h3 class="header"><?php echo $this->item->{$label}; ?></h3>
+					<?php echo $this->item->{$field}; ?>
+				<?php endif; ?>
+			<?php endif; ?>
+		<?php endforeach; ?>
 	</div>
 	<div class="tabs-panel" id="phototour">
 		<?php echo $this->loadTemplate('phototour'); ?>
