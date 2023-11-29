@@ -19,6 +19,7 @@ $wa->useScript('com_knowres.site')
    ->useScript('keepalive');
 
 HTMLHelper::_('script', trim(Utility::getGmapsURL()), ['async' => 'async', 'defer' => 'defer']);
+HTMLHelper::_('script', trim(Utility::getMarkerClustererURL()), ['async' => 'async', 'defer' => 'defer']);
 ?>
 
 <h1 id="kr-properties-filter-heading" class="h3 show-for-medium">

@@ -112,8 +112,7 @@ const lang = "en";
 		checkZoom() {
 			if (mapZoom > 0) {
 				let mylistener = map.addListener('idle', function () {
-					const currentZoom = map.getZoom();
-					if (mapZoom > 0 && currentZoom !== mapZoom) {
+					if (mapZoom > 0 && map.getZoom() !== mapZoom) {
 						map.setZoom(mapZoom);
 						mylistener.remove();
 					}
@@ -124,9 +123,8 @@ const lang = "en";
 		clusterMap() {
 			const mcOptions = {
 				gridSize:            20,
-				maxZoom:             this.settings.mapMaxZoom - 1,
-				imagePath:           '/media/com_knowres/images/markerclusterer/m',
-				ignoreHiddenMarkers: true
+				ignoreHiddenMarkers: true,
+				imagePath:           '/media/com_knowres/images/markerclusterer/m'
 			};
 
 			this.setPropertyMarkers();
@@ -150,8 +148,7 @@ const lang = "en";
 			});
 
 			map.fitBounds(bounds);
-
-			this.checkZoom();
+			map.setCenter(bounds.getCenter());
 		}
 
 		// Create the Map
@@ -251,7 +248,7 @@ const lang = "en";
 
 					$.ajax({
 						type:    "POST",
-						url:     'index.php?option=com_knowres&task=property.mapinfowindow&lang=' + lang,
+						url:     '/index.php?option=com_knowres&task=property.mapinfowindow&lang=' + lang,
 						data:    {
 							id: parseInt(boxinfo)
 						},
@@ -295,7 +292,7 @@ const lang = "en";
 
 			let self = this;
 			jQuery.ajax({
-				url:      'index.php?option=com_knowres&task=properties.refreshmap&lang=' + lang,
+				url:      '/index.php?option=com_knowres&task=properties.refreshmap&lang=' + lang,
 				type:     "POST",
 				dataType: "json",
 				success:  function (result) {
@@ -341,7 +338,6 @@ const lang = "en";
 
 			for (let d = 0; d < this.settings.mapMarkers.length; d++) {
 				amark = this.settings.mapMarkers[d];
-
 				let markericon = {
 					url:  amark['icon'],
 					size: new google.maps.Size(32, 37),
@@ -405,7 +401,8 @@ const lang = "en";
 			this.setMapMarkers();
 
 			map.fitBounds(bounds);
-			this.checkZoom();
+			map.setCenter(bounds.getCenter());
+//			this.checkZoom();
 
 			if (this.settings.mapMarkers.length > 0) {
 				const self = this;
@@ -416,13 +413,11 @@ const lang = "en";
 
 					while (!found) {
 						found = Krmap.showVisibleMarkers(self.gmarkers);
-
 						if (found) {
 							myListener.remove();
 							map.setZoom(currentZoom);
 							break;
 						}
-
 						currentZoom = currentZoom - 1;
 						if (currentZoom < 10) {
 							break;
@@ -457,7 +452,7 @@ const lang = "en";
 			$mapmodal.foundation('close');
 			$.ajax({
 				type:    "POST",
-				url:     'index.php?option=com_knowres&task=properties.mapsession&lang=' + lang,
+				url:     '/index.php?option=com_knowres&task=properties.mapsession&lang=' + lang,
 				success: function () {
 					$( '.kr-searchbar .button.map').removeClass('is-active');
 					$( '.kr-searchbar .button.list').addClass('is-active');
@@ -470,7 +465,7 @@ const lang = "en";
 			google.maps.event.trigger(map, "resize");
 			$.ajax({
 				type:    "POST",
-				url:     'index.php?option=com_knowres&task=properties.mapsession&lang=' + lang,
+				url:     '/index.php?option=com_knowres&task=properties.mapsession&lang=' + lang,
 				data:    {map_modal: '1'},
 				success: function () {
 					return true;
@@ -504,7 +499,7 @@ const lang = "en";
 			}
 
 			jQuery.ajax({
-				url:      'index.php?option=com_knowres&task=properties.mapdata&pid=' + pid + '&lang=' + lang,
+				url:      '/index.php?option=com_knowres&task=properties.mapdata&pid=' + pid + '&lang=' + lang,
 				type:     "POST",
 				dataType: "json",
 				success:  function (result) {

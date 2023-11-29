@@ -92,7 +92,7 @@ let resized = false;
             const bar = $('.kr-searchbar a.is-active').data('bar');
             $.ajax({
                 type: 'POST',
-                url: 'index.php?option=com_knowres&task=properties.favourite&lang=' + lang,
+                url: '/index.php?option=com_knowres&task=properties.favourite&lang=' + lang,
                 data: {'property_id': pid},
                 dataType: 'json',
                 success: function (result) {
@@ -179,7 +179,7 @@ let resized = false;
     function loadCalendar(pid) {
         $.ajax({
             type: 'POST',
-            url: 'index.php?option=com_knowres&task=property.geriatric&lang=' + lang,
+            url: '/index.php?option=com_knowres&task=property.geriatric&lang=' + lang,
             dataType: 'html',
             data: {
                 'pid': pid
@@ -208,7 +208,7 @@ let resized = false;
 
     function getProperties(bar, action = '', action_value = ''){
         $.ajax({
-            url: 'index.php?option=com_knowres&view=properties&format=raw&lang=' + lang,
+            url: '/index.php?option=com_knowres&view=properties&format=raw&lang=' + lang,
             type: 'POST',
             data: {'bar': bar, 'action': action, 'action_value': action_value },
             dataType: 'json',

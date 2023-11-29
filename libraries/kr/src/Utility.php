@@ -433,6 +433,17 @@ class Utility
 	}
 
 	/**
+	 * Return URL for Google Maps
+	 *
+	 * @since  2.3.0
+	 * @return string
+	 */
+	public static function getMarkerClustererURL(): string
+	{
+		return 'https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js';
+	}
+
+	/**
 	 * Get session gobackto value
 	 *
 	 * @throws Exception

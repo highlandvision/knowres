@@ -24,6 +24,7 @@ use Joomla\CMS\Cache\Cache;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Response\JsonResponse;
 
+use function array_merge;
 use function array_push;
 use function array_unique;
 use function count;
@@ -106,7 +107,7 @@ class PropertiesController extends BaseController
 		try {
 			if ($pid) {
 				$item      = KrFactory::getAdminModel('property')->getItem($pid);
-				$region_id = $item->region_id;
+				$region_id = [$item->region_id];
 
 				if ((float) $item->lat && (float) $item->lng) {
 					$property_markers[] = $this->setMarker($item, 'solo');
@@ -158,7 +159,6 @@ class PropertiesController extends BaseController
 		$searchData            = $searchSession->getData();
 		$searchData->map_modal = KrMethods::inputInt('map_modal');
 		$searchSession->setData($searchData);
-
 		echo true;
 
 		jexit();
@@ -372,7 +372,7 @@ class PropertiesController extends BaseController
 	{
 		$markers = [];
 
-		// set 90 day cache for markers
+		// 90 day cache for markers
 		$cache_options =
 			['cachebase'    => JPATH_ADMINISTRATOR . '/cache',
 			 'lifetime'     => 129600,
@@ -384,10 +384,10 @@ class PropertiesController extends BaseController
 		foreach ($region_id as $id) {
 			$cache_markers = $cache->get($id);
 			if ($cache_markers) {
-				$count = array_push($markers, Utility::decodeJson($cache_markers));
+				$markers = array_merge($markers, Utility::decodeJson($cache_markers, true));
 			}
 			else {
-				$count = array_push($markers, $this->getMapMarkers($id, $cache));
+				$markers = array_merge($markers, $this->getMapMarkers($id, $cache));
 			}
 		}
 
@@ -416,12 +416,11 @@ class PropertiesController extends BaseController
 
 		if ($type === 'solo') {
 			$tmp['title'] = $item->property_name;
-			$tmp['html']  = $item->property_name;
+			$tmp['html']  = '<div class="kr-gmarker">' . $item->property_name . '</div>';
 			$tmp['link']  = '';
 		}
 		else {
-			$tmp['html'] = '<div style="color:#fefefe;padding:0.3rem;font-size:1rem;line-height:1;">' .
-				$item->property_name . '</div>';
+			$tmp['html'] = '<div class="kr-gmarker">' . $item->property_name . '</div>';
 		}
 
 		return $tmp;

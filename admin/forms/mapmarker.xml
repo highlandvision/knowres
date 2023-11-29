@@ -45,12 +45,6 @@
 			description="COM_KNOWRES_MAPMARKER_REGION_DSC">
 			<option value="0">COM_KNOWRES_SELECT_REGION</option>
 		</field>
-		<field name="marker_image"
-			size="10"
-			accept="image/png, image/jpeg, image/jpg, image/ico"
-			type="file"
-			label="COM_KNOWRES_MAPMARKER_IMAGE_LBL"
-			description="COM_KNOWRES_MAPMARKER_IMAGE_DSC"/>
 	</fieldset>
 	<fieldset name="krmap">
 		<field name="lat"
