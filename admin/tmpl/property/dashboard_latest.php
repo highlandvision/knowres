@@ -22,7 +22,7 @@ use HighlandVision\KR\Translations;
 <?php foreach ($this->latest as $l) : ?>
 	<div class="row-fluid">
 		<div class="span12" style="padding-left:6px;">
-			<i class="fas fa-long-arrow-alt-right" aria-hidden="true"></i>
+			<i class='fa-solid fa-long-arrow-alt-right' aria-hidden="true"></i>
 			<a href="<?php echo KrMethods::route('index.php?option=com_knowres&task=contract.show&id=' . $l->id); ?>">
 				<?php echo KrMethods::sprintf('COM_KNOWRES_PROPERTYDASHBOARD_CONTRACTS_TEXT',
 					TickTock::displayDate($l->arrival, 'd M Y'), TickTock::differenceDays($l->arrival, $l->departure),

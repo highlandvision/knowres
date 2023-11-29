@@ -9,7 +9,7 @@ if (typeof jQuery !== 'undefined') jQuery.noConflict();
 
 (function ($) {
 	const options = {
-		buttonText:        '<i class="fas fa-calendar-alt"></i>',
+		buttonText:        '<i class="fa-solid fa-calendar-alt"></i>',
 		changeMonth:       true,
 		changeYear:        true,
 		dateFormat:        'd M yy',

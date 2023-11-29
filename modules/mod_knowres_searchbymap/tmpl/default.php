@@ -16,5 +16,5 @@ use HighlandVision\KR\Framework\KrMethods;
 	. $Itemid . '&display=map'); ?>"
    class="button">
 	<?php echo KrMethods::plain('MOD_KNOWRES_SEARCHBYMAP_BUTTON'); ?>
-	<i class="fas fa-search"></i>
+	<i class='fa-solid fa-search'></i>
 </a>

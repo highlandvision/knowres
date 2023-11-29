@@ -34,10 +34,10 @@ $picker    = $departure;
 	</div>
 	<input id="ganttpicker1" name="filter_departure" type="hidden" value="<?php echo $picker; ?>">
 	<button aria-label="Backward" class="btn btn-secondary btn-sm ganttchange" data-direction="left" type="button">
-		<i class="fas fa-lg fa-hand-point-left"></i>
+		<i class='fa-solid fa-lg fa-hand-point-left'></i>
 	</button>
 	<button aria-label="Forward" class="btn btn-secondary btn-sm ganttchange" data-direction="right" type="button">
-		<i class="fas fa-lg fa-hand-point-right"></i>
+		<i class='fa-solid fa-lg fa-hand-point-right'></i>
 	</button>
 	<div class="input-group mb-3">
 		<input aria-label="<?php echo KrMethods::plain('COM_KNOWRES_GANTT_SEARCH') ?>"
@@ -45,7 +45,7 @@ $picker    = $departure;
 		       placeholder="<?php echo KrMethods::plain('COM_KNOWRES_GANTT_SEARCH') ?>"
 		       type="text">
 		<span class="input-group-text" style="padding:0 0.5rem;height:40px;">
-            <i class="fas fa-search"></i>
+            <i class='fa-solid fa-search'></i>
 		</span>
 	</div>
 	<div id="ganttselections"></div>

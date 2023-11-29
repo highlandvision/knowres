@@ -81,9 +81,9 @@ if ($dow == 6 || $dow == 0)
 		<?php if ($arrival) : ?>
 			<span class="fa-stack fa-1x">
 			<?php if ($black) : ?>
-				<i class="fas fa-circle fa-stack-2x block"></i>
+				<i class='fa-solid fa-circle fa-stack-2x block'></i>
 			<?php else: ?>
-				<i class="fas fa-circle fa-stack-2x booking"></i>
+				<i class='fa-solid fa-circle fa-stack-2x booking'></i>
 			<?php endif; ?>
 			<span class="fa-stack-1x suitcase-text">
 				<span class="arrival modalshow" data-id="<?php echo $id; ?>" data-ical="<?php echo $ical; ?>">

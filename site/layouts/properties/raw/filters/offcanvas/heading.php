@@ -12,13 +12,13 @@ use HighlandVision\KR\Framework\KrMethods;
 
 <div class="actions small button-group expanded">
 	<button type="button" class="kr-filters-reset button clear small getResponseSearch" data-action="clear">
-		<i class="fas fa-sync" aria-hidden="true"></i>&nbsp;
+		<i class='fa-solid fa-sync' aria-hidden="true"></i>&nbsp;
 		<?php echo KrMethods::plain('COM_KNOWRES_FILTER_RESET'); ?>
 	</button>
 	<button type="button" class="button clear small" data-close
 	        title="<?php echo KrMethods::plain('COM_KNOWRES_CLOSE'); ?>">
 			<span aria-hidden="true">
-				<i class="fas fa-times-circle" aria-hidden="true"></i>
+				<i class='fa-solid fa-times-circle' aria-hidden="true"></i>
 				<?php echo KrMethods::plain('COM_KNOWRES_CLOSE'); ?>
 			</span>
 	</button>

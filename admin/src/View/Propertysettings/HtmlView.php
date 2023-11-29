@@ -77,7 +77,7 @@ class HtmlView extends KrHtmlView
 
 		$this->checkErrors();
 		$title = KrMethods::plain('COM_KNOWRES_PROPERTYSETTINGS_TITLE') . ' - ' . $this->property_name;
-		ToolbarHelper::title($title, 'fas fa-wrench knowres');
+		ToolbarHelper::title($title, 'fa-solid fa-wrench knowres');
 		$this->addFormToolbar('propertysettings');
 
 		parent::display($tpl);

@@ -69,6 +69,8 @@
   float: left;
 }
 .kr-gantt .fn-gantt .fn-content .grow .cell .gantt-label {
+  background: #0088cc;
+  color: #fff;
   text-align: center;
 }
 .kr-gantt .fn-gantt .fn-content .grow.name {

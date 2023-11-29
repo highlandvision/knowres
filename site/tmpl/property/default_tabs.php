@@ -16,7 +16,7 @@ use HighlandVision\KR\Framework\KrMethods;
 	<li class="tabs-title is-active" role="presentation">
 		<a href="#overview"
 		   aria-label="<?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_OVERVIEW"); ?>">
-			<i class="fas fa-eye fa-lg hide-for-medium"></i>
+			<i class='fa-solid fa-eye fa-lg hide-for-medium'></i>
 			<span class="show-for-medium">
 		<?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_OVERVIEW"); ?>
 	</span>
@@ -25,7 +25,7 @@ use HighlandVision\KR\Framework\KrMethods;
 	<li class="tabs-title" role="presentation">
 		<a href="#details" data-tabs-target="details"
 		   aria-label="<?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_DETAILS"); ?>">
-			<i class="fas fa-info-circle fa-lg hide-for-medium"></i>
+			<i class='fa-solid fa-info-circle fa-lg hide-for-medium'></i>
 			<span class="show-for-medium">
 		<?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_DETAILS"); ?>
 	</span>
@@ -34,7 +34,7 @@ use HighlandVision\KR\Framework\KrMethods;
 	<li class="tabs-title" role="presentation">
 		<a href="#phototour" data-tabs-target="phototour"
 		   aria-label="<?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_PHOTO_TOUR"); ?>">
-			<i class="fas fa-camera fa-lg hide-for-medium"></i>
+			<i class='fa-solid fa-camera fa-lg hide-for-medium'></i>
 			<span class="show-for-medium">
 		<?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_PHOTO_TOUR"); ?>
 	</span>
@@ -44,7 +44,7 @@ use HighlandVision\KR\Framework\KrMethods;
 		<li class="tabs-title" role="presentation">
 			<a href="#video" data-tabs-target="video"
 			   aria-label="<?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_VIDEO"); ?>">
-				<i class="fas fa-video fa-lg hide-for-medium"></i>
+				<i class='fa-solid fa-video fa-lg hide-for-medium'></i>
 				<span class="show-for-medium">
 			<?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_VIDEO"); ?>
 		</span>
@@ -56,7 +56,7 @@ use HighlandVision\KR\Framework\KrMethods;
 			<a href="#calendar" id="kr-geriatric-calendar" data-tabs-target="calendar"
 			   data-pid="<?php echo $this->item->id; ?>"
 			   aria-label="<?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_AVAILABILITY_PRICE"); ?>">
-				<i class="fas fa-calendar-alt fa-lg hide-for-medium"></i>
+				<i class='fa-solid fa-calendar-alt fa-lg hide-for-medium'></i>
 				<span class="show-for-medium">
 			<?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_AVAILABILITY_PRICE"); ?>
 		</span>
@@ -67,7 +67,7 @@ use HighlandVision\KR\Framework\KrMethods;
 		<li class="tabs-title" role="presentation">
 			<a href="#units" data-tabs-target="units"
 			   aria-label="<?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_UNITS"); ?>">
-				<i class="fas fa-building fa-lg hide-for-medium"></i>
+				<i class='fa-solid fa-building fa-lg hide-for-medium'></i>
 				<span class="show-for-medium">
 			<?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_UNITS"); ?>
 		</span>
@@ -82,7 +82,7 @@ use HighlandVision\KR\Framework\KrMethods;
 			   data-zoommax="<?php echo $this->item->map_max_zoom; ?>" data-target="kr-map-solo"
 			   data-type="solo" data-pid="<?php echo $this->item->id; ?>"
 			   data-maptypeid="<?php echo $this->params->get('property_map_type', "roadmap"); ?>">
-				<i class="fas fa-map hide-for-medium"></i>
+				<i class='fa-solid fa-map hide-for-medium'></i>
 				<span class="show-for-medium">
 			<?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_MAP"); ?>
 		</span>
@@ -93,7 +93,7 @@ use HighlandVision\KR\Framework\KrMethods;
 		<li class="tabs-title" role="presentation">
 			<a data-link="#reviews" data-tabs-target="reviews"
 			   aria-label="<?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_REVIEWS"); ?>">
-				<i class="fas fa-comments hide-for-medium"></i>
+				<i class='fa-solid fa-comments hide-for-medium'></i>
 				<span class="show-for-medium">
 			<?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_REVIEWS"); ?>
 		</span>

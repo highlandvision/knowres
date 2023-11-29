@@ -20,7 +20,7 @@ use HighlandVision\KR\Framework\KrMethods;
 				        data-toggle="kr-properties-sortby-off-canvas" id="sortby"
 				        title="<?php echo KrMethods::plain('COM_KNOWRES_SORT_LIST'); ?>"
 				        aria-label="<?php echo KrMethods::plain('COM_KNOWRES_SORT_LIST'); ?>">
-					<i class="fas fa-sort"></i>
+					<i class='fa-solid fa-sort'></i>
 					<span>
 						&nbsp;<?php echo KrMethods::plain('COM_KNOWRES_SORT_LIST'); ?>
 					</span>
@@ -30,7 +30,7 @@ use HighlandVision\KR\Framework\KrMethods;
 				<button type="button" class="button expanded top-off-canvas-toggle" data-toggle="kr-properties-search-off-canvas"
 				        title="<?php echo KrMethods::plain('COM_KNOWRES_SEARCH'); ?>"
 				        aria-label="<?php echo KrMethods::plain('COM_KNOWRES_SEARCH'); ?>">
-					<i class="fas fa-search"></i>
+					<i class='fa-solid fa-search'></i>
 					<span>
 						&nbsp;<?php echo KrMethods::plain('COM_KNOWRES_SEARCH'); ?>
 					</span>
@@ -41,7 +41,7 @@ use HighlandVision\KR\Framework\KrMethods;
 				        data-toggle="kr-properties-filters-off-canvas"
 				        title="<?php echo KrMethods::plain('COM_KNOWRES_FILTER'); ?>"
 				        aria-label="<?php echo KrMethods::plain('COM_KNOWRES_FILTER'); ?>">
-					<i class="fas fa-filter"></i>
+					<i class='fa-solid fa-filter'></i>
 					<span>
 						&nbsp;<?php echo KrMethods::plain('COM_KNOWRES_FILTER'); ?>
 					</span>

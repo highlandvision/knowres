@@ -29,26 +29,26 @@ extract($displayData);
 		<ul class="download">
 			<?php if ($invoice): ?>
 				<li>
-					<i class='fas fa-1x fa-file-pdf'></i>
+					<i class='fa-solid fa-1x fa-file-pdf'></i>
 					<?php echo $invoice; ?>
 				</li>
 			<?php endif; ?>
 			<?php if ($voucher): ?>
 				<li>
-					<i class='fas fa-1x fa-file-pdf'></i>
+					<i class='fa-solid fa-1x fa-file-pdf'></i>
 					<?php echo $voucher; ?>
 				</li>
 			<?php endif; ?>
 			<?php if ($guestdata): ?>
 				<li>
-					<i class='fas fa-1x fa-file-pdf'></i>
+					<i class='fa-solid fa-1x fa-file-pdf'></i>
 					<?php echo $guestdata; ?>
 				</li>
 			<?php endif; ?>
 			<?php if (count($pdfs)): ?>
 				<?php foreach ($pdfs as $d) : ?>
 					<li>
-						<i class='fas fa-1x fa-file-pdf'></i>
+						<i class='fa-solid fa-1x fa-file-pdf'></i>
 						<?php echo $d; ?>
 					</li>
 				<?php endforeach; ?>

@@ -118,7 +118,7 @@ class DailyView extends KrHtmlView
 
 		/* @var Toolbar\LinkButton $Toolbar **/
 		$Toolbar->linkButton('refresh')
-		        ->icon('fas fa-redo knowres')
+		        ->icon('fa-solid fa-redo knowres')
 		        ->text('COM_KNOWRES_REFRESH')
 		        ->url(KrMethods::route('index.php?option=com_knowres&task=contracts.daily'));
 
@@ -128,7 +128,7 @@ class DailyView extends KrHtmlView
 
 		/* @var Toolbar\LinkButton $Toolbar **/
 		$Toolbar->linkButton('close')
-		        ->icon('fas fa-times knowres')
+		        ->icon('fa-solid fa-times knowres')
 		        ->text('JTOOLBAR_CLOSE')
 		        ->url(KrMethods::route('index.php?option=com_knowres&task=gantt.cancel'));
 

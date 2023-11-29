@@ -79,7 +79,7 @@ class HtmlView extends KrHtmlView
 			$Toolbar->standardButton('resend')
 			        ->task('servicelogs.resend')
 			        ->text('COM_KNOWRES_RESEND')
-			        ->icon('fas fa-redo knowres')
+			        ->icon('fa-solid fa-redo knowres')
 			        ->listCheck(true);
 		}
 

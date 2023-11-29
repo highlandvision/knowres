@@ -57,7 +57,7 @@ class MobisearchField extends FormField
 		}
 
 		$html .= '<label for="' . $this->id . '">';
-		$html .= '<i class="fas fa-calendar-alt"></i>';
+		$html .= '<i class="fa-solid fa-calendar-alt"></i>';
 		$html .= '</label>';
 		$html .= '</div>';
 

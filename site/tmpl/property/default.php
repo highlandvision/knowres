@@ -23,7 +23,7 @@ $wa->useScript('com_knowres.site')
 		<?php if ($this->backlink): ?>
 			<a href="<?php echo $this->backlink ?>" class="show-for-large button backlink"
 			   title="<?php echo KrMethods::plain('COM_KNOWRES_SEARCH_RESULTS'); ?>">
-				<i class="fas fa-long-arrow-alt-left">&nbsp;</i>
+				<i class='fa-solid fa-long-arrow-alt-left'>&nbsp;</i>
 				<?php echo KrMethods::plain('COM_KNOWRES_SEARCH_RESULTS'); ?>
 			</a>
 		<?php endif; ?>

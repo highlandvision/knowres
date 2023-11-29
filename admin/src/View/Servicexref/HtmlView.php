@@ -51,7 +51,7 @@ class HtmlView extends KrHtmlView
 
 		$this->form_name = KrMethods::plain('COM_KNOWRES_SERVICEXREF_TITLE');
 		$this->getFormAriaLabel();
-		ToolbarHelper::title($this->form_name, 'fas fa-external-link-square-alt knowres');
+		ToolbarHelper::title($this->form_name, 'fa-solid fa-external-link-square-alt knowres');
 		$this->addFormToolbar(strtolower($this->getName()));
 
 		parent::display($tpl);

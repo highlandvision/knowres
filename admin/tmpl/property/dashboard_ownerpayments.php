@@ -29,7 +29,7 @@ use HighlandVision\KR\Framework\KrMethods;
 			</div>
 			<div class="col-md-4">
 				<a href="<?php echo KrMethods::route("index.php?option=com_knowres&task=service.edit&id=$x->id"); ?>">
-					<i class="fas fa-edit"></i> <?php echo KrMethods::plain('COM_KNOWRES_EDIT'); ?>
+					<i class='fa-solid fa-edit'></i> <?php echo KrMethods::plain('COM_KNOWRES_EDIT'); ?>
 				</a>
 			</div>
 		</div>
@@ -39,7 +39,7 @@ use HighlandVision\KR\Framework\KrMethods;
 <div class="row-fluid">
 	<div class="span3">
 		<a href="<?php echo KrMethods::route("index.php?option=com_knowres&view=services&filter[agency_id]=0"); ?>">
-			<i class="fas fa-plus-square"></i> <?php echo KrMethods::plain('COM_KNOWRES_ADD'); ?>
+			<i class='fa-solid fa-plus-square'></i> <?php echo KrMethods::plain('COM_KNOWRES_ADD'); ?>
 		</a>
 	</div>
 </div>

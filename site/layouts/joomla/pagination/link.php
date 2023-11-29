@@ -36,7 +36,7 @@ switch ((string) $item->text)
 	// Check for "Prev" item
 	case Text::_('JPREV'):
 		$item->text = Text::_('JPREVIOUS');
-		$icon       = $app->getLanguage()->isRtl() ? 'fas fa-chevron-right' : 'fas fa-chevron-left';
+		$icon       = $app->getLanguage()->isRtl() ? 'fa-solid fa-chevron-right' : 'fa-solid fa-chevron-left';
 		$aria       = Text::sprintf('JLIB_HTML_GOTO_POSITION', strtolower($item->text));
 		$title      = Text::_('JPREVIOUS');
 		break;
@@ -44,7 +44,7 @@ switch ((string) $item->text)
 	// Check for "Next" item
 	case Text::_('JNEXT'):
 		$item->text = Text::_('JNEXT');
-		$icon       = $app->getLanguage()->isRtl() ? 'fas fa-chevron-left' : 'fas fa-chevron-right';
+		$icon       = $app->getLanguage()->isRtl() ? 'fa-solid fa-chevron-left' : 'fa-solid fa-chevron-right';
 		$aria       = Text::sprintf('JLIB_HTML_GOTO_POSITION', strtolower($item->text));
 		$title      = Text::_('JNEXT');
 		break;

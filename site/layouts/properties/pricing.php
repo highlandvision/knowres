@@ -67,7 +67,7 @@ $params       = KrMethods::getParams();
 
 		<?php if ($full): ?>
 			<span class="center">
-		           &nbsp;&nbsp;<i class="fas fa-cut fa-1x red"></i>
+		           &nbsp;&nbsp;<i class='fa-solid fa-cut fa-1x red'></i>
 		           <del><?php echo Utility::displayValue($full, $currency, false); ?></del>
 		        </span>
 		<?php endif; ?>
@@ -89,5 +89,5 @@ $params       = KrMethods::getParams();
 </a>
 <a class="button viewproperty" href="<?php echo $plink; ?>">
 	<?php echo KrFactory::getAdminModel('property')::bookingTypeText($booking_type); ?>
-	<i class="fas fa-chevron-right"></i>
+	<i class='fa-solid fa-chevron-right'></i>
 </a>

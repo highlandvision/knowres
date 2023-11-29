@@ -94,12 +94,12 @@ class HtmlView extends KrHtmlView
 		if (empty($this->item->id))
 		{
 			ToolbarHelper::title(KrMethods::plain('COM_KNOWRES_FORM_PROPERTY_TITLE') . ' - '
-				. KrMethods::plain('COM_KNOWRES_PROPERTY_NEW'), 'fas fa-home knowres');
+				. KrMethods::plain('COM_KNOWRES_PROPERTY_NEW'), 'fa-solid fa-home knowres');
 		}
 		else
 		{
 			ToolbarHelper::title(KrMethods::plain('COM_KNOWRES_FORM_PROPERTY_TITLE') . ' - '
-				. $this->item->property_name, 'fas fa-home knowres');
+				. $this->item->property_name, 'fa-solid fa-home knowres');
 		}
 	}
 }

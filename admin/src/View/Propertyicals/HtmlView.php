@@ -67,7 +67,7 @@ class HtmlView extends KrHtmlView\Property
 		$dropdown = $Toolbar->dropdownButton('propertyical-manage-group')
 		                    ->text('COM_KNOWRES_PROPERTYICALS_MANAGE')
 		                    ->toggleSplit(false)
-		                    ->icon('fas fa-user')
+		                    ->icon('fa-solid fa-user')
 		                    ->buttonClass('btn btn-action');
 
 		$ChildToolbar = $dropdown->getChildToolbar();

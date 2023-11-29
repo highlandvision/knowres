@@ -56,7 +56,7 @@ class Payments extends KrHtmlView
 			{
 				$link = KrMethods::route('index.php?option=com_knowres&task=contract.edit&id=' . $this->item->id);
 				$Toolbar->linkButton('contract', 'JTOOLBAR_EDIT')
-				        ->icon('fas fa-edit knowres')
+				        ->icon('fa-solid fa-edit knowres')
 				        ->url($link);
 
 				$title = KrMethods::plain('COM_KNOWRES_CONTRACT_QUICK_EDIT');
@@ -73,7 +73,7 @@ class Payments extends KrHtmlView
 				$text = KrMethods::plain('COM_KNOWRES_JS_CONFIRM');
 				/** @noinspection PhpParamsInspection */
 				$Toolbar->standardButton('cancel')
-				        ->icon('fas fa-thumbs-down knowres')
+				        ->icon('fa-solid fa-thumbs-down knowres')
 				        ->onclick("return confirm('" . $text
 					        . "')?Knowres.submitform('contract.trash', document.getElementById('contract-form')):'';")
 				        ->text('JTOOLBAR_CANCEL');
@@ -85,7 +85,7 @@ class Payments extends KrHtmlView
 			$text = KrMethods::plain('COM_KNOWRES_CONTRACT_DELETE_CONFIRM');
 			/** @noinspection PhpParamsInspection */
 			$Toolbar->standardButton('delete')
-			        ->icon('fas fa-exclamation-triangle knowres')
+			        ->icon('fa-solid fa-exclamation-triangle knowres')
 			        ->onclick("return confirm('" . $text
 				        . "')?Knowres.submitform('contract.delete', document.getElementById('contract-form')):'';")
 			        ->text('JTOOLBAR_DELETE');
@@ -116,7 +116,7 @@ class Payments extends KrHtmlView
 
 			$Toolbar->linkButton('guestdashboard', 'COM_KNOWRES_PROPERTYDASHBOARD_TITLE')
 			        ->buttonClass('btn btn-primary')
-			        ->icon('fas fa-user knowres')
+			        ->icon('fa-solid fa-user knowres')
 			        ->target('_blank')
 			        ->url($link);
 		}
@@ -124,7 +124,7 @@ class Payments extends KrHtmlView
 		$link = KrMethods::route('index.php?option=com_knowres&task=property.calendar&property_id='
 			. $this->item->property_id);
 		$Toolbar->linkButton('calendar', 'COM_KNOWRES_TITLE_PROPERTY_CALENDAR')
-		        ->icon('fas fa-calendar knowres')
+		        ->icon('fa-solid fa-calendar knowres')
 		        ->url($link);
 
 		$Toolbar = $this->addConfigToolbar($Toolbar);
@@ -134,7 +134,7 @@ class Payments extends KrHtmlView
 		$link = KrMethods::route('index.php?option=com_knowres&view=contracts');
 		$Toolbar->linkButton('close', 'JTOOLBAR_CLOSE')
 		        ->buttonClass('btn btn-danger')
-		        ->icon('fas fa-times knowres')
+		        ->icon('fa-solid fa-times knowres')
 		        ->url($link);
 
 		if ($this->canDo->get('core.admin'))
@@ -163,20 +163,20 @@ class Payments extends KrHtmlView
 			$link = KrMethods::route('index.php?option=com_knowres&view=ownerpayments');
 			$Toolbar->linkButton('owner-payments', 'COM_KNOWRES_OWNERPAYMENTS_TITLE')
 			        ->url($link)
-			        ->icon('fas fa-house-user knowres');
+			        ->icon('fa-solid fa-house-user knowres');
 
 			if ($this->access_level == 40)
 			{
 				$link = KrMethods::route('index.php?option=com_knowres&view=exchangerates');
 				$Toolbar->linkButton('exchangerates', 'COM_KNOWRES_EXCHANGERATES_TITLE')
 				        ->url($link)
-				        ->icon('fas fa-exchange-alt knowres');
+				        ->icon('fa-solid fa-exchange-alt knowres');
 			}
 
 			$link = KrMethods::route('index.php?option=com_knowres&view=export&layout=payments');
 			$Toolbar->linkButton('export-payments-csv', 'COM_KNOWRES_EXPORT_TITLE_PAYMENTS')
 			        ->url($link)
-			        ->icon('fas fa-file-csv knowres');
+			        ->icon('fa-solid fa-file-csv knowres');
 		}
 
 		$Toolbar = $this->addConfigToolbar($Toolbar);

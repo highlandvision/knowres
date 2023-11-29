@@ -40,11 +40,11 @@ abstract class KnowresHeaderMenuHelper
 		$view = KrMethods::inputString('view', '');
 
 		$menu   = [];
-		$menu[] = ['MOD_KNOWRES_HEADERMENU_GANTT_TITLE', 'view=gantt', $view == 'gantt', 'fas fa-calendar-alt'];
+		$menu[] = ['MOD_KNOWRES_HEADERMENU_GANTT_TITLE', 'view=gantt', $view == 'gantt', 'fa-solid fa-calendar-alt'];
 		$menu[] = ['MOD_KNOWRES_HEADERMENU_CONTRACTS_DAILY_TITLE', 'task=contracts.daily', $view == 'daily',
-		           'fas fa-calendar-day'];
-		$menu[] = ['MOD_KNOWRES_HEADERMENU_PROPERTIES_TITLE', 'view=properties', $view == 'properties', 'fas fa-home'];
-		$menu[] = ['MOD_KNOWRES_HEADERMENU_CONTRACTS_TITLE', 'view=contracts', $view == 'contracts', 'fas fa-calendar'];
+		           'fa-solid fa-calendar-day'];
+		$menu[] = ['MOD_KNOWRES_HEADERMENU_PROPERTIES_TITLE', 'view=properties', $view == 'properties', 'fa-solid fa-home'];
+		$menu[] = ['MOD_KNOWRES_HEADERMENU_CONTRACTS_TITLE', 'view=contracts', $view == 'contracts', 'fa-solid fa-calendar'];
 
 		return $menu;
 	}

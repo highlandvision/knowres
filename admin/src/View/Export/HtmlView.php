@@ -65,7 +65,7 @@ class HtmlView extends KrHtmlView
 
 		$this->form_name       = $this->form->getName();
 		$this->form_aria_label = $title . ' ' . $this->form_name;
-		ToolbarHelper::title($title, 'fas fa-download knowres');
+		ToolbarHelper::title($title, 'fa-solid fa-download knowres');
 		$Toolbar = Toolbar::getInstance();
 		$this->addCustomToolbar($Toolbar);
 		Factory::getApplication()->input->set('hidemainmenu', true);

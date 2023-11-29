@@ -26,19 +26,19 @@ use HighlandVision\KR\Framework\KrMethods;
 			</div>
 			<div class="col-md-2">
 				<a href="<?php echo KrMethods::route("index.php?option=com_knowres&task=servicexref.edit&id=$x->id"); ?>">
-					<i class="fas fa-edit"></i> <?php echo KrMethods::plain('COM_KNOWRES_EDIT'); ?>
+					<i class='fa-solid fa-edit'></i> <?php echo KrMethods::plain('COM_KNOWRES_EDIT'); ?>
 				</a>
 			</div>
 			<div class="col-md-2">
 				<a href="<?php echo KrMethods::route("index.php?option=com_knowres&view=servicequeues&filter[property_id]="
 					. $this->item->id . "&filter[service_id]=$x->service_id"); ?>">
-					<i class="fas fa-fast-forward"></i> <?php echo KrMethods::plain('COM_KNOWRES_QUEUE'); ?>
+					<i class='fa-solid fa-fast-forward'></i> <?php echo KrMethods::plain('COM_KNOWRES_QUEUE'); ?>
 				</a>
 			</div>
 			<div class="col-md-2">
 				<a href="<?php echo KrMethods::route("index.php?option=com_knowres&view=servicelogs&filter[property_id]="
 					. $this->item->id . "&filter[service_id]=$x->service_id"); ?>">
-					<i class="fas fa-eye"></i> <?php echo KrMethods::plain('COM_KNOWRES_LOG'); ?>
+					<i class='fa-solid fa-eye'></i> <?php echo KrMethods::plain('COM_KNOWRES_LOG'); ?>
 				</a>
 			</div>
 		</div>
@@ -48,7 +48,7 @@ use HighlandVision\KR\Framework\KrMethods;
 <div class="row">
 	<div class="col-sm-12">
 		<a href="<?php echo KrMethods::route("index.php?option=com_knowres&task=servicexref.edit"); ?>">
-			<i class="fas fa-plus-square"></i> <?php echo KrMethods::plain('COM_KNOWRES_ADD'); ?>
+			<i class='fa-solid fa-plus-square'></i> <?php echo KrMethods::plain('COM_KNOWRES_ADD'); ?>
 		</a>
 	</div>
 </div>

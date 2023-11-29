@@ -90,7 +90,7 @@ if (typeof jQuery === 'undefined') jQuery.noConflict();
 					const dateFormat = 'mm/dd/yy', $from = $('#jform_arrivaldsp').datepicker({
 						altField:          '#arrival',
 						altFormat:         'yy-mm-dd',
-						buttonText:        '<i class="fas fa-calendar-alt"></i>',
+						buttonText:        '<i class="fa-solid fa-calendar-alt"></i>',
 						changeMonth:       true,
 						changeYear:        true,
 						dateFormat:        'd M yy',
@@ -112,7 +112,7 @@ if (typeof jQuery === 'undefined') jQuery.noConflict();
 					}), $to          = $('#jform_departuredsp').datepicker({
 						altField:          '#departure',
 						altFormat:         'yy-mm-dd',
-						buttonText:        '<i class="fas fa-calendar-alt"></i>',
+						buttonText:        '<i class="fa-solid fa-calendar-alt"></i>',
 						changeMonth:       true,
 						changeYear:        true,
 						defaultDate:       '+1d',
@@ -241,7 +241,7 @@ if (typeof jQuery === 'undefined') jQuery.noConflict();
 
 (function ($) {
 	const ui_options = {
-		buttonText:        '<i class="fas fa-calendar-alt"></i>',
+		buttonText:        '<i class="fa-solid fa-calendar-alt"></i>',
 		changeMonth:       true,
 		changeYear:        true,
 		dateFormat:        'd M yy',

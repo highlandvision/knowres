@@ -194,7 +194,7 @@ class HtmlView extends KrHtmlView\Contract
 			{
 				/** @noinspection PhpParamsInspection */
 				$Toolbar->standardButton('save')
-				        ->icon('fas fa-thumbs-down knowres')
+				        ->icon('fa-solid fa-thumbs-down knowres')
 				        ->onclick("Knowres.submitform('contract.save', document.getElementById('contract-form'));")
 				        ->text('COM_KNOWRES_TOOLBAR_SAVE');
 			}
@@ -202,7 +202,7 @@ class HtmlView extends KrHtmlView\Contract
 			{
 				/** @noinspection PhpParamsInspection */
 				$Toolbar->standardButton('save')
-				        ->icon('fas fa-thumbs-down knowres')
+				        ->icon('fa-solid fa-thumbs-down knowres')
 				        ->onclick("Knowres.submitform('contract.save', document.getElementById('contract-form'));")
 				        ->text('COM_KNOWRES_TOOLBAR_SAVE_SHOW');
 			}
@@ -212,7 +212,7 @@ class HtmlView extends KrHtmlView\Contract
 		{
 			/** @noinspection PhpParamsInspection */
 			$Toolbar->standardButton('save')
-			        ->icon('fas fa-thumbs-down knowres')
+			        ->icon('fa-solid fa-thumbs-down knowres')
 			        ->onclick("Knowres.submitform('contract.save', document.getElementById('contract-form'));")
 			        ->text('JTOOLBAR_SAVE');
 
@@ -225,7 +225,7 @@ class HtmlView extends KrHtmlView\Contract
 
 		/** @noinspection PhpParamsInspection */
 		$Toolbar->standardButton('cancel')
-		        ->icon('fas fa-times knowres')
+		        ->icon('fa-solid fa-times knowres')
 		        ->onclick("Knowres.submitform('contract.cancel', document.getElementById('contract-form'));")
 		        ->text('JTOOLBAR_CANCEL');
 
@@ -404,7 +404,7 @@ class HtmlView extends KrHtmlView\Contract
 					. KrMethods::plain('COM_KNOWRES_NIGHTS');
 			}
 
-			ToolbarHelper::title(implode(' - ', $title), 'fas fa-briefcase knowres');
+			ToolbarHelper::title(implode(' - ', $title), 'fa-solid fa-briefcase knowres');
 		}
 	}
 

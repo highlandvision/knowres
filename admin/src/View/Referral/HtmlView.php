@@ -49,7 +49,7 @@ class HtmlView extends KrHtmlView
 
 		$this->form_name = KrMethods::plain('COM_KNOWRES_REFERRAL_TITLE');
 		$this->getFormAriaLabel();
-		ToolbarHelper::title($this->form_name, 'fas fa-retweet knowres');
+		ToolbarHelper::title($this->form_name, 'fa-solid fa-retweet knowres');
 		$this->addFormToolbar(strtolower($this->getName()));
 
 		parent::display($tpl);

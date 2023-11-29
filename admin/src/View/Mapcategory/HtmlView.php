@@ -47,7 +47,7 @@ class HtmlView extends KrHtmlView
 		$this->checkVersions();
 		$this->checkErrors();
 
-		ToolbarHelper::title(KrMethods::plain('COM_KNOWRES_MAPCATEGORY_TITLE'), 'fas fa-layer-group knowres');
+		ToolbarHelper::title(KrMethods::plain('COM_KNOWRES_MAPCATEGORY_TITLE'), 'fa-solid fa-layer-group knowres');
 		$this->addFormToolbar(strtolower($this->getName()));
 		$this->getFormAriaLabel();
 

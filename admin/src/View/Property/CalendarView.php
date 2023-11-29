@@ -71,7 +71,7 @@ class CalendarView extends KrHtmlView\Property
 
 		Factory::getApplication()->input->set('hidemainmenu', true);
 		$title = KrMethods::plain('COM_KNOWRES_TITLE_PROPERTY_CALENDAR') . ' - ' . $this->property_name;
-		ToolbarHelper::title($title, 'fas fa-calendar knowres');
+		ToolbarHelper::title($title, 'fa-solid fa-calendar knowres');
 		$Toolbar = Toolbar::getInstance();
 		$this->addToolbar($Toolbar, 'calendar');
 

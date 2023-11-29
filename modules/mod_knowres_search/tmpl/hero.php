@@ -79,7 +79,7 @@ $show_guests  = $params->get('show_guests', 0);
 						<div class="small-12 medium-12 large-2 cell">
 							<button type="submit" class="button expanded">
 								<?php echo KrMethods::plain('MOD_KNOWRES_SEARCH_BUTTON'); ?>
-								&nbsp;&nbsp;<i class="fas fa-search"></i>
+								&nbsp;&nbsp;<i class='fa-solid fa-search'></i>
 							</button>
 						</div>
 					</div>

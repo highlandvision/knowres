@@ -44,7 +44,7 @@ extract($displayData);
 			<div>
 				<p>
 					<?php echo $item->avgrating; ?>&nbsp;
-					<i class="fas fa-star"></i>
+					<i class='fa-solid fa-star'></i>
 				</p>
 			</div>
 		</div>

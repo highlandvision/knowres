@@ -67,7 +67,7 @@ class NewView extends KrHtmlView
 		$link = KrMethods::route('index.php?option=com_knowres&view=services');
 		$Toolbar->linkButton('back', 'JTOOLBAR_BACK')
 		        ->buttonClass('btn')
-		        ->icon('fas fa-fast-backward knowres')
+		        ->icon('fa-solid fa-fast-backward knowres')
 		        ->url($link);
 
 		return $Toolbar;

@@ -26,7 +26,7 @@ $paid = 0;
 				<span class="float-end">
 					<a href="<?php echo KrMethods::route('index.php?option=com_knowres&task=contractpayment.edit&layout=edit',
 						false); ?>">
-						<i class="fas fa-plus-square"></i>
+						<i class='fa-solid fa-plus-square'></i>
 						<?php echo KrMethods::plain('COM_KNOWRES_ADD'); ?>
 					</a>
 				</span>

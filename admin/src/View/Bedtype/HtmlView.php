@@ -49,7 +49,7 @@ class HtmlView extends KrHtmlView
 
 		$this->form_name = KrMethods::plain('COM_KNOWRES_BEDTYPE_TITLE');
 		$this->getFormAriaLabel();
-		ToolbarHelper::title($this->form_name, 'fas fa-bed knowres');
+		ToolbarHelper::title($this->form_name, 'fa-solid fa-bed knowres');
 		$this->addFormToolbar(strtolower($this->getName()));
 
 		parent::display($tpl);

@@ -89,7 +89,7 @@ class DashboardView extends KrHtmlView\Property
 
 		Factory::getApplication()->input->set('hidemainmenu', true);
 		$title = KrMethods::plain('COM_KNOWRES_PROPERTYDASHBOARD_TITLE') . ' - ' . $this->property_name;
-		ToolbarHelper::title($title, 'fas fa-home knowres');
+		ToolbarHelper::title($title, 'fa-solid fa-home knowres');
 		$Toolbar = Toolbar::getInstance();
 		$this->addToolbar($Toolbar, 'dashboard');
 		KrMethods::setUserState('com_knowres.gobackto', 'task=property.dashboard&layout=dashboard&id=' . $this->property_id);

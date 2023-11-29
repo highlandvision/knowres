@@ -55,12 +55,12 @@ extract($displayData);
 							<button class="btn btn-success"
 							        onclick="Knowres.submitform('contract.requestapprove', document.getElementById('<?php echo $id; ?>'));"
 							        title="<?php echo KrMethods::plain('COM_KNOWRES_APPROVE'); ?>" type="button">
-								<i class="fas fa-check"></i>
+								<i class='fa-solid fa-check'></i>
 							</button>&nbsp;&nbsp;&nbsp;
 							<button class="btn btn-danger"
 							        onclick="Knowres.submitform('contract.requestreject', document.getElementById('<?php echo $id; ?>'));"
 							        title="<?php echo KrMethods::plain('COM_KNOWRES_REJECT'); ?>" type="button">
-								<i class="fas fa-trash"></i>
+								<i class='fa-solid fa-trash'></i>
 							</button>
 						</div>
 						<?php echo HTMLHelper::_('form.token'); ?>

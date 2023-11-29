@@ -22,7 +22,7 @@ use HighlandVision\KR\Framework\KrMethods;
 		<?php if ($this->access_level > 10): ?>
 			<span class="float-end">
 				<a href="<?php echo KrMethods::route('index.php?option=com_knowres&task=contractnote.edit', false); ?>">
-					<i class="fas fa-plus-square"></i>
+					<i class='fa-solid fa-plus-square'></i>
 					<?php echo KrMethods::plain('COM_KNOWRES_ADD'); ?>
 				</a>
 			</span>

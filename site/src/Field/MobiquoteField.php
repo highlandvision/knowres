@@ -35,7 +35,7 @@ class MobiquoteField extends FormField
 		$html = '<div class="datepicker-wrapper">';
 		$html .= '<input type="text" name="' . $this->name . '" id="' . $this->id . '" class="' . $this->class . '">';
 		$html .= '<label for="' . $this->id . '">';
-		$html .= '<i class="fas fa-calendar-alt"></i>';
+		$html .= '<i class="fa-solid fa-calendar-alt"></i>';
 		$html .= '</label>';
 		$html .= '</div>';
 

@@ -189,7 +189,7 @@ class PropertiesController extends BaseController
 					                 false);
 
 				$options[] =
-					['icon'   => 'fas fa-map-marker-alt',
+					['icon'   => 'fa-solid fa-map-marker-alt',
 					 'name'   => $r->name,
 					 'link'   => $link,
 					 'region' => KrMethods::plain('COM_KNOWRES_REGION')
@@ -200,7 +200,7 @@ class PropertiesController extends BaseController
 			$properties = KrFactory::getListModel('properties')->getAutosearch($query);
 			foreach ($properties as $p) {
 				$options[] =
-					['icon'   => 'fas fa-home',
+					['icon'   => 'fa-solid fa-home',
 					 'name'   => $p->property_name,
 					 'link'   => SiteHelper::buildPropertyLink($p->id),
 					 'region' => $p->region_name

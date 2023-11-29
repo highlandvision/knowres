@@ -68,7 +68,7 @@ class HtmlView extends KrHtmlView
 	protected function addCustomToolbar(Toolbar $Toolbar): Toolbar
 	{
 		$Toolbar->confirmButton('resend')
-		        ->icon('fas fa-redo')
+		        ->icon('fa-solid fa-redo')
 		        ->listCheck(true)
 		        ->task('servicequeues.resend')
 		        ->text('COM_KNOWRES_RESEND');

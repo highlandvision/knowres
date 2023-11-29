@@ -183,7 +183,7 @@ if (typeof jQuery === 'undefined') jQuery.noConflict();
 		}
 
 		createSearchSelection(data) {
-			const selection = $("<a href='#' data-id=" + data.id + "><i class='fas fa-times'></i> " + data.name + "</a>").addClass('remove');
+			const selection = $("<a href='#' data-id=" + data.id + "><i class='fa-solid fa-times'></i> " + data.name + "</a>").addClass('remove');
 			const self = this;
 			selection.click(function (e) {
 				e.preventDefault();
@@ -528,7 +528,7 @@ if (typeof jQuery === 'undefined') jQuery.noConflict();
 			$cal.datepicker({
 				altField:          '#ganttpicker1',
 				altFormat:         'yy-mm-dd',
-				buttonText:        '<i class="fas fa-calendar-alt"></i>',
+				buttonText:        '<i class="fa-solid fa-calendar-alt"></i>',
 				changeMonth:       true,
 				changeYear:        true,
 				dateFormat:        'd M yy',
@@ -604,7 +604,7 @@ if (typeof jQuery === 'undefined') jQuery.noConflict();
 						      $from     = $('#jform_arrivaldsp').datepicker({
 							      altField:          '#arrival',
 							      altFormat:         'yy-mm-dd',
-							      buttonText:        '<i aria-label="Select date" class="fas fa-calendar-alt"></i>',
+							      buttonText:        '<i aria-label="Select date" class="fa-solid fa-calendar-alt"></i>',
 							      changeMonth:       true,
 							      changeYear:        true,
 							      dateFormat:        'd M yy',
@@ -626,7 +626,7 @@ if (typeof jQuery === 'undefined') jQuery.noConflict();
 						      }), $to   = $('#jform_departuredsp').datepicker({
 							      altField:          '#departure',
 							      altFormat:         'yy-mm-dd',
-							      buttonText:        '<i class="fas fa-calendar-alt"></i>',
+							      buttonText:        '<i class="fa-solid fa-calendar-alt"></i>',
 							      changeMonth:       true,
 							      changeYear:        true,
 							      defaultDate:       '+1d',

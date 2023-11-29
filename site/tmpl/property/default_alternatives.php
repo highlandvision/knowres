@@ -74,8 +74,8 @@ use Joomla\CMS\HTML\HTMLHelper;
 						<?php $clean = strip_tags($item->p1); ?>
 						<p><?php echo Utility::cutString($clean, 150); ?></p>
 						<p class="occupancy">
-							<i class="fas fa-female fa-lg color-accent"></i>
-							<i class="fas fa-male fa-lg color-accent"></i>
+							<i class='fa-solid fa-female fa-lg color-accent'></i>
+							<i class='fa-solid fa-male fa-lg color-accent'></i>
 							<?php echo ' ' . ($item->sleeps + $item->sleeps_extra)
 								. ' ' . KrMethods::plain('COM_KNOWRES_FEATURED_PERSONS')
 								.  ' | ' . $item->bedrooms . ' '

@@ -11,7 +11,7 @@ defined('_JEXEC') or die;
 use HighlandVision\KR\Framework\KrMethods;
 
 $title = 'KR';
-$icon  = 'fas fa-link';
+$icon  = 'fa-solid fa-link';
 ?>
 
 <div class="header-item-content dropdown header-profile">

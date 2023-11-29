@@ -58,7 +58,7 @@ use Joomla\CMS\Session\Session;
 				<?php $link = KrMethods::route('index.php?option=com_knowres&task=translation.translateme&tmpl=raw&'
 					. Session::getFormToken() . '=1' . '&id=' . $this->item->id); ?>
 				<a href="<?php echo $link; ?>" class="modal" rel="{handler: 'ajax',size: {x: 600, y: 450}}">
-					<i class="fas fa-language fa-2x"></i>
+					<i class='fa-solid fa-language fa-2x'></i>
 				</a>
 			</td>
 		<?php endif; ?>

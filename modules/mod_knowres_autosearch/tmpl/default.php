@@ -21,7 +21,7 @@ use HighlandVision\KR\Framework\KrMethods;
 		<input id="kr-autosearch" class="kr-autosearch"
 		       placeholder="<?php echo KrMethods::plain('MOD_KNOWRES_AUTOSEARCH_PLACEHOLDER'); ?>" type="text">
 		<span class="input-group-text">
-	        <i class="fas fa-lg fa-search"></i>
+	        <i class='fa-solid fa-lg fa-search'></i>
 		</span>
 	</div>
 </div>

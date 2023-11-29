@@ -31,7 +31,7 @@ use Joomla\CMS\Factory;
 				?>
 				<a class="float-end" href="javascript:void(0);" aria-labelledby="guestdata-checkin-desc" title=""
 				   onclick="return Knowres.submitform('contractguestdata.checkin', document.getElementById('contract-checkin'));">
-					<i class="fas fa-lock"></i> <?php echo KrMethods::plain('JTOOLBAR_CHECKIN'); ?>
+					<i class='fa-solid fa-lock'></i> <?php echo KrMethods::plain('JTOOLBAR_CHECKIN'); ?>
 				</a>
 				<div id="guestdata-checkin-desc" role="tooltip">
 					<?php echo $name; ?><br><?php echo $when; ?>
@@ -41,7 +41,7 @@ use Joomla\CMS\Factory;
 					<div class="float-end">
 						<a href="<?php echo KrMethods::route('index.php?option=com_knowres&task=contractguestdata.edit&id='
 							. $this->item->guestdata_id, false); ?>">
-							<i class="fas fa-edit"></i> <?php echo KrMethods::plain('COM_KNOWRES_EDIT'); ?>
+							<i class='fa-solid fa-edit'></i> <?php echo KrMethods::plain('COM_KNOWRES_EDIT'); ?>
 						</a>
 					</div>
 				<?php endif; ?>

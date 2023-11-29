@@ -68,7 +68,7 @@ $params       = KrMethods::getParams();
 
 				<?php if ($full): ?>
 					<span class="center">
-				           &nbsp;&nbsp;<i class="fas fa-cut fa-1x red"></i>
+				           &nbsp;&nbsp;<i class='fa-solid fa-cut fa-1x red'></i>
 	           <del><?php echo Utility::displayValue($full, $currency, false); ?></del>
 	        </span>
 				<?php endif; ?>

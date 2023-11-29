@@ -138,7 +138,7 @@ if (is_countable($all) && !count($all))
 				<div class="price small-12 medium-9 cell">
 					<?php echo $a['name']; ?>
 					<?php if (!empty($a['description'])): ?>
-						<i class="fas fa-info-circle has-tip" data-position="right" data-alignment="center"
+						<i class='fa-solid fa-info-circle has-tip' data-position="right" data-alignment="center"
 						   data-tooltip title="<?php echo $a['description']; ?>">
 						</i>
 					<?php endif; ?>

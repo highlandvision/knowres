@@ -71,7 +71,7 @@ class HtmlView extends KrHtmlView
 		$link = KrMethods::route('index.php?option=com_knowres&view=export&layout=ownerpayments');
 		$Toolbar->linkButton('export-payments-csv', 'COM_KNOWRES_EXPORT_TITLE_OWNERPAYMENTS')
 		        ->url($link)
-		        ->icon('fas fa-file-csv knowres');
+		        ->icon('fa-solid fa-file-csv knowres');
 
 		return $Toolbar;
 	}

@@ -26,7 +26,7 @@ $params = KrMethods::getParams();
 			<button class="btn btn-primary btn-sm kr-modal-trigger" type="button" data-task="servicelogs.modal"
 			        data-id="<?php echo $this->item->id; ?>" data-bs-target="#kr-ajax-modal" data-bs-toggle="modal"
 			        onclick="return false;">
-				<span class="fas fa-eye" aria-hidden="true"></span>
+				<span class='fa-solid fa-eye' aria-hidden="true"></span>
 			</button>
 		</td>
 		<td>

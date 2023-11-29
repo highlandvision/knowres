@@ -49,7 +49,7 @@ class HtmlView extends KrHtmlView\Property
 
 		Factory::getApplication()->input->set('hidemainmenu', true);
 		$title = KrMethods::plain('COM_KNOWRES_TITLE_PROPERTY_MEDIA') . ' - ' . $this->item->property_name;
-		ToolbarHelper::title($title, 'fas fa-image knowres');
+		ToolbarHelper::title($title, 'fa-solid fa-image knowres');
 		$Toolbar = Toolbar::getInstance();
 		$this->addToolbar($Toolbar, 'media');
 

@@ -51,13 +51,13 @@ $count = 0;
 			<?php else: ?>
 				<a href="<?php echo KrMethods::route('index.php?option=com_knowres&task=contractpayment.edit&id='
 					. $p->id, false); ?>">
-					<i class="fas fa-check"></i>&nbsp<?php echo KrMethods::plain('COM_KNOWRES_CONFIRM'); ?>
+					<i class='fa-solid fa-check'></i>&nbsp<?php echo KrMethods::plain('COM_KNOWRES_CONFIRM'); ?>
 				</a>
 				&nbsp;&nbsp;
 				<a onclick="return Joomla.submitbutton('contractpayments.delete')"
 				   href="<?php echo KrMethods::route('index.php?option=com_knowres&task=contractpayments.delete&cid='
 					   . $p->id . '&' . Session::getFormToken() . '=1', false); ?>">
-					<i class="fas fa-trash"></i>&nbsp;<?php echo KrMethods::plain('COM_KNOWRES_DELETE'); ?>
+					<i class='fa-solid fa-trash'></i>&nbsp;<?php echo KrMethods::plain('COM_KNOWRES_DELETE'); ?>
 				</a>
 			<?php endif; ?>
 		</div>

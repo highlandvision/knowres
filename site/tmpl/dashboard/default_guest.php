@@ -27,7 +27,7 @@ use HighlandVision\KR\Utility;
 	<div class="small-12 cell" style="line-height:150%;margin-top:10px;">
 		<address>
 			<?php if ($this->guest->mobile) : ?>
-				<i class="fas fa-lg fa-mobile-alt"></i>
+				<i class='fa-solid fa-lg fa-mobile-alt'></i>
 				<?php echo Utility::formatPhoneNumber($this->guest->mobile, $this->guest->mobile_country_id); ?>
 			<?php endif; ?>
 		</address>

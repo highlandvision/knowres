@@ -59,7 +59,7 @@ class Gantt
 					{
 						$options[] = [
 							'type'          => 'guest',
-							'icon'          => 'fas fa-calendar-alt',
+							'icon'          => 'fa-solid fa-calendar-alt',
 							'name'          => $booked[$index]['firstname'] . ' ' . $booked[$index]['surname'],
 							'arrival'       => TickTock::displayDate($booked[$index]['arrival']),
 							'arrival_ymd'   => $booked[$index]['arrival'],
@@ -113,7 +113,7 @@ class Gantt
 			$rids[$p->region_id][] = $p->id;
 			$options[]             = [
 				'type'   => 'property',
-				'icon'   => 'fas fa-home',
+				'icon'   => 'fa-solid fa-home',
 				'name'   => $p->property_name,
 				'region' => $Translations->getText('region', $p->region_id),
 				'id'     => $p->id
@@ -124,7 +124,7 @@ class Gantt
 		{
 			$options[] = array(
 				'type' => 'region',
-				'icon' => 'fas fa-map-marker',
+				'icon' => 'fa-solid fa-map-marker',
 				'name' => $Translations->getText('region', $k),
 				'id'   => $v
 			);

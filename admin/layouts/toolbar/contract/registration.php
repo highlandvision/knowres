@@ -18,7 +18,7 @@ extract($displayData);
 
 <joomla-toolbar-button>
 	<button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#registrationModal">
-		<span class="fas fa-download" aria-hidden="true"></span>
+		<span class='fa-solid fa-download' aria-hidden="true"></span>
 		<?php echo $title; ?>
 	</button>
 </joomla-toolbar-button>

@@ -76,7 +76,7 @@ if ($this->item->guestdata_id > 0)
 	<?php if (!empty($link)) : ?>
 		<a class="button secondary" title="<?php echo KrMethods::plain('COM_KNOWRES_PLAN_ROUTE_VIA'); ?>"
 		   href="<?php echo $link; ?>" target="_blank">
-			<?php echo KrMethods::plain('COM_KNOWRES_PLAN_ROUTE'); ?> <i class="fas fa-external-link-alt"></i>
+			<?php echo KrMethods::plain('COM_KNOWRES_PLAN_ROUTE'); ?> <i class='fa-solid fa-external-link-alt'></i>
 		</a>
 	<?php endif; ?>
 </div>

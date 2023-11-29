@@ -93,9 +93,9 @@
             if (!$(id).hasClass('slick-initialized')) {
                 $(id).slick({
                     prevArrow: '<button type="button" class="slick-nav prev slick-btn" title="Back">' +
-                        '<i class="fas fa-chevron-left"></i></button>',
+                        '<i class="fa-solid fa-chevron-left"></i></button>',
                     nextArrow: '<button type="button" class="slick-nav next slick-btn" title="Forward">' +
-                        '<i class="fas fa-chevron-right"></i></button>',
+                        '<i class="fa-solid fa-chevron-right"></i></button>',
                     lazyLoad: 'ondemand',
                     slidesToShow: 1,
                     slidesToScroll: 1,

@@ -19,7 +19,7 @@ use HighlandVision\KR\Framework\KrMethods;
 			        data-toggle="kr-properties-sortby-off-canvas" id="sortby"
 			        title="<?php echo KrMethods::plain('COM_KNOWRES_SORT_LIST'); ?>"
 			        aria-label="<?php echo KrMethods::plain('COM_KNOWRES_SORT_LIST'); ?>">
-				<i class="fas fa-sort"></i>
+				<i class='fa-solid fa-sort'></i>
 				<span class="show-for-large">
 					<?php echo KrMethods::plain('COM_KNOWRES_SORT_LIST'); ?>
 				</span>
@@ -34,7 +34,7 @@ use HighlandVision\KR\Framework\KrMethods;
 				<a class="button getResponseSearch list" data-bar="list"
 				   title="<?php echo $text; ?>"
 				   aria-label="<?php echo $text; ?>">
-					<i class="fas fa-th-list"></i>
+					<i class='fa-solid fa-th-list'></i>
 					<span class="show-for-large">
 						<?php echo $text; ?>
 					</span>
@@ -45,7 +45,7 @@ use HighlandVision\KR\Framework\KrMethods;
 				<a class="button getResponseSearch thumb" data-bar="thumb"
 				   title="<?php echo KrMethods::plain('COM_KNOWRES_VIEW_THUMB'); ?>"
 				   aria-label="<?php echo KrMethods::plain('COM_KNOWRES_VIEW_THUMB'); ?>">
-					<i class="fas fa-table-cells"></i>
+					<i class='fa-solid fa-table-cells'></i>
 					<span class="show-for-large">
 						<?php echo KrMethods::plain('COM_KNOWRES_VIEW_THUMB'); ?>
 					</span>
@@ -59,7 +59,7 @@ use HighlandVision\KR\Framework\KrMethods;
 				   data-maptypeid="<?php echo $this->params->get('property_map_type', ''); ?>"
 				   title="<?php echo KrMethods::plain('COM_KNOWRES_VIEW_MAP'); ?>"
 				   aria-label="<?php echo KrMethods::plain('COM_KNOWRES_VIEW_MAP'); ?>">
-					<i class="fas fa-map-marker"></i>
+					<i class='fa-solid fa-map-marker'></i>
 					<span class="show-for-large">
 						<?php echo KrMethods::plain('COM_KNOWRES_VIEW_MAP'); ?>
 					</span>
@@ -69,7 +69,7 @@ use HighlandVision\KR\Framework\KrMethods;
 			<a class="button getResponseSearch favs" data-bar="favs"
 			   title="<?php echo KrMethods::plain('COM_KNOWRES_VIEW_FAVOURITES'); ?>"
 			   aria-label="<?php echo KrMethods::plain('COM_KNOWRES_VIEW_FAVOURITES'); ?>">
-				<i class="fas fa-heart"></i>
+				<i class='fa-solid fa-heart'></i>
 				<span class="show-for-large">
 					<?php echo KrMethods::plain('COM_KNOWRES_VIEW_FAVOURITES'); ?>
 				</span>
@@ -79,7 +79,7 @@ use HighlandVision\KR\Framework\KrMethods;
 			        data-toggle="kr-properties-filters-off-canvas"
 			        title="<?php echo KrMethods::plain('COM_KNOWRES_FILTER'); ?>"
 			        aria-label="<?php echo KrMethods::plain('COM_KNOWRES_FILTER'); ?>">
-				<i class="fas fa-filter"></i>
+				<i class='fa-solid fa-filter'></i>
 				<span class="show-for-large">
 					&nbsp;<?php echo KrMethods::plain('COM_KNOWRES_FILTER'); ?>
 				</span>

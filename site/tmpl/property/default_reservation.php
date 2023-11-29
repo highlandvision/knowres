@@ -25,7 +25,7 @@ $link   = KrMethods::route('index.php?option=com_knowres&view=contact&Itemid=' .
 	</h4>
 	<br>
 	<div class="custom bold">
-		<i class="fas fa-envelope fa-1x"></i>
+		<i class='fa-solid fa-envelope fa-1x'></i>
 		<a href="<?php echo $link; ?>" title="<?php echo $this->item->property_name; ?>">
 			<?php echo KrMethods::plain('COM_KNOWRES_SEND_REQUEST'); ?>
 		</a>

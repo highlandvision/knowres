@@ -60,7 +60,7 @@ class Contract extends KrHtmlView
 		$dropdown     = $Toolbar->dropdownButton('contract-edit-group')
 		                        ->text('COM_KNOWRES_TOOLBAR_CONTRACTS_DATA')
 		                        ->toggleSplit(false)
-		                        ->icon('fas fa-network-wired')
+		                        ->icon('fa-solid fa-network-wired')
 		                        ->buttonClass('btn btn-action');
 		$ChildToolbar = $dropdown->getChildToolbar();
 
@@ -68,7 +68,7 @@ class Contract extends KrHtmlView
 		{
 			$link = KrMethods::route('index.php?option=com_knowres&view=agencies');
 			$ChildToolbar->linkButton('agencies', 'COM_KNOWRES_AGENCIES_TITLE')
-			             ->icon('fas fa-users knowres')
+			             ->icon('fa-solid fa-users knowres')
 			             ->url($link);
 		}
 
@@ -76,7 +76,7 @@ class Contract extends KrHtmlView
 		{
 			$link = KrMethods::route('index.php?option=com_knowres&view=agents');
 			$ChildToolbar->linkButton('agents', 'COM_KNOWRES_AGENTS_TITLE')
-			             ->icon('fas fa-headphones knowres')
+			             ->icon('fa-solid fa-headphones knowres')
 			             ->url($link);
 		}
 
@@ -84,7 +84,7 @@ class Contract extends KrHtmlView
 		{
 			$link = KrMethods::route('index.php?option=com_knowres&view=emailactions');
 			$ChildToolbar->linkButton('emailactions', 'COM_KNOWRES_EMAILACTIONS_TITLE')
-			             ->icon('fas fa-at knowres')
+			             ->icon('fa-solid fa-at knowres')
 			             ->url($link);
 		}
 
@@ -92,7 +92,7 @@ class Contract extends KrHtmlView
 		{
 			$link = KrMethods::route('index.php?option=com_knowres&view=emailtemplates');
 			$ChildToolbar->linkButton('emailtemplates', 'COM_KNOWRES_EMAILTEMPLATES_TITLE')
-			             ->icon('fas fa-envelope knowres')
+			             ->icon('fa-solid fa-envelope knowres')
 			             ->url($link);
 		}
 
@@ -100,7 +100,7 @@ class Contract extends KrHtmlView
 		{
 			$link = KrMethods::route('index.php?option=com_knowres&view=emailtriggers');
 			$ChildToolbar->linkButton('emailtriggers', 'COM_KNOWRES_EMAILTRIGGERS_TITLE')
-			             ->icon('fas fa-mail-bulk knowres')
+			             ->icon('fa-solid fa-mail-bulk knowres')
 			             ->url($link);
 		}
 
@@ -108,7 +108,7 @@ class Contract extends KrHtmlView
 		{
 			$link = KrMethods::route('index.php?option=com_knowres&view=guests');
 			$ChildToolbar->linkButton('guests', 'COM_KNOWRES_GUESTS_TITLE')
-			             ->icon('fas fa-user knowres')
+			             ->icon('fa-solid fa-user knowres')
 			             ->url($link);
 		}
 
@@ -116,7 +116,7 @@ class Contract extends KrHtmlView
 		{
 			$link = KrMethods::route('index.php?option=com_knowres&view=referrals');
 			$ChildToolbar->linkButton('referrals', 'COM_KNOWRES_REFERRALS_TITLE')
-			             ->icon('fas fa-eye knowres')
+			             ->icon('fa-solid fa-eye knowres')
 			             ->url($link);
 		}
 
@@ -177,7 +177,7 @@ class Contract extends KrHtmlView
 			{
 				$text = KrMethods::plain('COM_KNOWRES_JS_CONFIRM');
 				$ChildToolbar->standardButton('cancel')
-				             ->icon('fas fa-thumbs-down red knowres')
+				             ->icon('fa-solid fa-thumbs-down red knowres')
 				             ->onclick("return confirm('" . $text
 					             . "')?Knowres.submitform('contract.trash', document.getElementById('contract-form')):'';")
 				             ->text('JTOOLBAR_CANCEL');
@@ -188,7 +188,7 @@ class Contract extends KrHtmlView
 		{
 			$text = KrMethods::plain('COM_KNOWRES_CONTRACT_DELETE_CONFIRM');
 			$ChildToolbar->standardButton('delete')
-			             ->icon('fas fa-exclamation-triangle red knowres')
+			             ->icon('fa-solid fa-exclamation-triangle red knowres')
 			             ->onclick("return confirm('" . $text
 				             . "')?Knowres.submitform('contract.delete', document.getElementById('contract-form')):'';")
 			             ->text('JTOOLBAR_DELETE');
@@ -203,7 +203,7 @@ class Contract extends KrHtmlView
 		$link = KrMethods::route('index.php?option=com_knowres&task=property.calendar&property_id='
 			. $this->item->property_id);
 		$Toolbar->linkButton('calendar', 'COM_KNOWRES_TITLE_PROPERTY_CALENDAR')
-		        ->icon('fas fa-calendar knowres')
+		        ->icon('fa-solid fa-calendar knowres')
 		        ->url($link);
 
 		if (!$this->params->get('create_user', 0) && $this->access_level == 40)
@@ -215,7 +215,7 @@ class Contract extends KrHtmlView
 
 			$Toolbar->linkButton('guestdashboard', 'COM_KNOWRES_TITLE_DASHBOARD')
 			        ->buttonClass('btn btn-primary')
-			        ->icon('fas fa-user knowres')
+			        ->icon('fa-solid fa-user knowres')
 			        ->target('_blank')
 			        ->url($link);
 		}
@@ -227,7 +227,7 @@ class Contract extends KrHtmlView
 		$link = KrMethods::route('index.php?option=com_knowres&view=contracts');
 		$Toolbar->linkButton('close', 'JTOOLBAR_CLOSE')
 		        ->buttonClass('btn btn-danger')
-		        ->icon('fas fa-times knowres')
+		        ->icon('fa-solid fa-times knowres')
 		        ->url($link);
 
 		if ($this->canDo->get('core.admin'))
@@ -275,7 +275,7 @@ class Contract extends KrHtmlView
 		$dropdown     = $Toolbar->dropdownButton('contract-pdf-group')
 		                        ->text('COM_KNOWRES_TOOLBAR_PDF')
 		                        ->toggleSplit(false)
-		                        ->icon('fas fa-file-download knowres')
+		                        ->icon('fa-solid fa-file-download knowres')
 		                        ->buttonClass('btn btn-action');
 		$ChildToolbar = $dropdown->getChildToolbar();
 
@@ -285,21 +285,21 @@ class Contract extends KrHtmlView
 		{
 			$ChildToolbar->standardButton('guestdata', 'COM_KNOWRES_CONTRACTGUESTDATAS_PDF')
 			             ->onclick("Joomla.submitform('contractguestdata.pdf', document.getElementById('contractpdf-form'))")
-			             ->icon('fas fa-file-pdf knowres');
+			             ->icon('fa-solid fa-file-pdf knowres');
 		}
 
 		if ($this->item->booking_status >= 39 && !$this->item->black_booking && !$this->item->cancelled)
 		{
 			$ChildToolbar->standardButton('voucher', 'COM_KNOWRES_CONTRACT_VOUCHER')
 			             ->onclick("Joomla.submitform('contract.voucher', document.getElementById('contractpdf-form'))")
-			             ->icon('fas fa-file-pdf knowres');
+			             ->icon('fa-solid fa-file-pdf knowres');
 		}
 
 		if ($this->item->booking_status > 9 && !$this->item->black_booking && !$this->item->cancelled)
 		{
 			$ChildToolbar->standardButton('invoice', 'COM_KNOWRES_CONTRACT_INVOICE_PDF')
 			             ->onclick("Joomla.submitform('contract.invoice', document.getElementById('contractpdf-form'))")
-			             ->icon('fas fa-file-pdf knowres');
+			             ->icon('fa-solid fa-file-pdf knowres');
 		}
 
 		return $Toolbar;
@@ -333,7 +333,7 @@ class Contract extends KrHtmlView
 			{
 				$link = KrMethods::route('index.php?option=com_knowres&view=contracts');
 				$Toolbar->linkButton('contracts', 'COM_KNOWRES_CONTRACTS_TITLE')
-				        ->icon('fas fa-home knowres')
+				        ->icon('fa-solid fa-home knowres')
 				        ->url($link);
 			}
 		}
@@ -345,12 +345,12 @@ class Contract extends KrHtmlView
 				$link = KrMethods::route('index.php?option=com_knowres&view=export&layout=contracts');
 				$Toolbar->linkButton('export-contracts-csv', 'COM_KNOWRES_EXPORT_TITLE_CONTRACTS')
 				        ->url($link)
-				        ->icon('fas fa-file-csv knowres');
+				        ->icon('fa-solid fa-file-csv knowres');
 
 				$link = KrMethods::route('index.php?option=com_knowres&view=export&layout=balances');
 				$Toolbar->linkButton('export-balances-csv', 'COM_KNOWRES_EXPORT_TITLE_BALANCES')
 				        ->url($link)
-				        ->icon('fas fa-file-csv knowres');
+				        ->icon('fa-solid fa-file-csv knowres');
 			}
 		}
 		else if ($list_name == 'contractpayments')
@@ -358,7 +358,7 @@ class Contract extends KrHtmlView
 			$link = KrMethods::route('index.php?option=com_knowres&view=export&layout=payments');
 			$Toolbar->linkButton('export-payments-csv', 'COM_KNOWRES_EXPORT_TITLE_PAYMENTS')
 			        ->url($link)
-			        ->icon('fas fa-file-csv knowres');
+			        ->icon('fa-solid fa-file-csv knowres');
 		}
 
 		$Toolbar = $this->addConfigToolbar($Toolbar);

@@ -38,8 +38,8 @@ $KRparams = KrMethods::getParams();
 			<?php $clean = strip_tags($item['text']); ?>
 			<p><?php echo $clean; ?></p>
 			<p class="occupancy">
-				<i class="fas fa-female fa-lg font-hilite"></i>
-				<i class="fas fa-male fa-lg font-hilite"></i>
+				<i class='fa-solid fa-female fa-lg font-hilite'></i>
+				<i class='fa-solid fa-male fa-lg font-hilite'></i>
 				<?php echo '&nbsp;' . ($item['sleeps']) . ' ' . KrMethods::plain('MOD_KNOWRES_FEATURED_PERSONS'); ?>
 				<?php echo ' | ' . ($item['bedrooms']) . ' ' . KrMethods::plain('MOD_KNOWRES_FEATURED_BEDROOMS'); ?>
 			</p>

@@ -38,16 +38,16 @@ extract($displayData);
 			<div class="col-4">
 				<?php $n->created_at = is_null($n->created_at) ? $item->created_at : $n->created_at; ?>
 				<?php if ($n->updated_by_name) : ?>
-					<i class="fas fa-user-edit grey"></i> <strong><?php echo $n->updated_by_name; ?></strong><br>
+					<i class='fa-solid fa-user-edit grey'></i> <strong><?php echo $n->updated_by_name; ?></strong><br>
 					<?php echo TickTock::displayTS($n->updated_at) . '<br>'; ?>
 				<?php elseif ($n->created_by_name) : ?>
-					<i class="fas fa-user grey"></i> <strong><?php echo $n->created_by_name; ?></strong><br>
+					<i class='fa-solid fa-user grey'></i> <strong><?php echo $n->created_by_name; ?></strong><br>
 					<?php echo TickTock::displayTS($n->created_at); ?>
 				<?php elseif ($item->guest_name && $n->note_type !== '["3"]') : ?>
-					<i class="fas fa-globe grey"></i> <strong><?php echo $item->guest_name; ?></strong><br>
+					<i class='fa-solid fa-globe grey'></i> <strong><?php echo $item->guest_name; ?></strong><br>
 					<?php echo TickTock::displayTS($n->created_at); ?>
 				<?php else : ?>
-					<i class="fas fa-robot grey"></i>
+					<i class='fa-solid fa-robot grey'></i>
 					<strong><?php echo KrMethods::plain('COM_KNOWRES_AUTO'); ?></strong><br>
 					<?php echo TickTock::displayTS($n->created_at); ?>
 				<?php endif; ?>
@@ -70,11 +70,11 @@ extract($displayData);
 	<div class="row summary">
 		<div class="col-4">
 			<?php if ($item->created_by_name): ?>
-				<i class="fas fa-plus grey"></i> <strong><?php echo $item->created_by_name; ?></strong><br>
+				<i class='fa-solid fa-plus grey'></i> <strong><?php echo $item->created_by_name; ?></strong><br>
 			<?php elseif ($item->service_name): ?>
-				<i class="fas fa-plus grey"></i> <strong><?php echo $item->service_name; ?></strong><br>
+				<i class='fa-solid fa-plus grey'></i> <strong><?php echo $item->service_name; ?></strong><br>
 			<?php elseif ($item->guest_name) : ?>
-				<i class="fas fa-plus grey"></i> <strong><?php echo $item->guest_name; ?></strong><br>
+				<i class='fa-solid fa-plus grey'></i> <strong><?php echo $item->guest_name; ?></strong><br>
 			<?php endif; ?>
 			<?php echo TickTock::displayTS($item->created_at); ?>
 		</div>

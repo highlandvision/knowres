@@ -60,7 +60,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 
 		<?php if (!empty($discount)): ?>
 			<p class="discount">
-				<i class="fas fa-cut fa-1x">&nbsp;</i>
+				<i class='fa-solid fa-cut fa-1x'>&nbsp;</i>
 				<?php echo KrMethods::plain('COM_KNOWRES_QUOTE_DISCOUNT_TEXT1'); ?>
 				<del><?php echo $full; ?></del>
 			</p>
@@ -69,7 +69,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 		<?php if (!empty($deposit)): ?>
 			<div class="deposit">
 				<h4 class="h6">
-					<i class="fas fa-credit-card fa-1x">&nbsp;</i><?php echo $deposit_text; ?>
+					<i class='fa-solid fa-credit-card fa-1x'>&nbsp;</i><?php echo $deposit_text; ?>
 				</h4>
 				<?php echo $deposit; ?>
 			</div>

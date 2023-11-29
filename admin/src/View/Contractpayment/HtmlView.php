@@ -64,7 +64,7 @@ class HtmlView extends KrHtmlView
 		$this->setCurrencies();
 		$this->form_name = KrMethods::plain('COM_KNOWRES_CONTRACTPAYMENT_TITLE');
 		$this->getFormAriaLabel();
-		ToolbarHelper::title($this->form_name, 'fas fa-euro-sign knowres');
+		ToolbarHelper::title($this->form_name, 'fa-solid fa-euro-sign knowres');
 		$this->addFormToolbar(strtolower($this->getName()));
 
 		parent::display($tpl);

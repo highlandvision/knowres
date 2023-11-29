@@ -30,13 +30,13 @@ $confirm = KrMethods::plain('COM_KNOWRES_JS_CONFIRM');
 	<div class="row">
 		<div class="col-4">
 			<?php if ($n->updated_by_name) : ?>
-				<i class="fas fa-xs fa-user-edit grey"></i> <?php echo $n->updated_by_name; ?>
+				<i class='fa-solid fa-xs fa-user-edit grey'></i> <?php echo $n->updated_by_name; ?>
 			<?php elseif ($n->created_by_name) : ?>
-				<i class="fas fa-xs fa-user grey"></i> <?php echo $n->created_by_name; ?>
+				<i class='fa-solid fa-xs fa-user grey'></i> <?php echo $n->created_by_name; ?>
 			<?php elseif ($contract->guest_name && $n->note_type !== '["3"]') : ?>
-				<i class="fas fa-xs fa-globe grey"></i> <?php echo $contract->guest_name; ?>
+				<i class='fa-solid fa-xs fa-globe grey'></i> <?php echo $contract->guest_name; ?>
 			<?php else: ?>
-				<i class="fas fa-xs fa-robot grey"></i> Auto
+				<i class='fa-solid fa-xs fa-robot grey'></i> Auto
 			<?php endif; ?>
 		</div>
 		<div class="col-4">
@@ -48,14 +48,14 @@ $confirm = KrMethods::plain('COM_KNOWRES_JS_CONFIRM');
 					<?php if ($n->note_type != '["3"]') : ?>
 						<a href="<?php echo KrMethods::route('index.php?option=com_knowres&task=contractnote.edit&id='
 							. $n->id, false); ?>">
-							<i class="fas fa-edit"></i> <?php echo KrMethods::plain('COM_KNOWRES_EDIT'); ?>
+							<i class='fa-solid fa-edit'></i> <?php echo KrMethods::plain('COM_KNOWRES_EDIT'); ?>
 						</a>&nbsp;&nbsp;
 
 						<?php $href = KrMethods::route('index.php?option=com_knowres&task=contractnotes.delete&cid='
 							. $n->id . '&' . Session::getFormToken() . '=1'); ?>
 
 						<a onclick="return confirm('<?php echo $confirm; ?>')" href="<?php echo $href; ?>">
-							<i class="fas fa-times-circle"></i>
+							<i class='fa-solid fa-times-circle'></i>
 							<?php echo KrMethods::plain('COM_KNOWRES_DELETE'); ?>
 						</a>
 					<?php endif; ?>
@@ -89,11 +89,11 @@ $confirm = KrMethods::plain('COM_KNOWRES_JS_CONFIRM');
 <div class="row">
 	<div class="col-4">
 		<?php if ($contract->created_by_name): ?>
-			<i class="fas fa-xs fa-user grey"></i> <?php echo $contract->created_by_name; ?>
+			<i class='fa-solid fa-xs fa-user grey'></i> <?php echo $contract->created_by_name; ?>
 		<?php elseif ($contract->service_name): ?>
-			<i class="fas fa-xs fa-headphones grey"></i> <?php echo $contract->service_name; ?>
+			<i class='fa-solid fa-xs fa-headphones grey'></i> <?php echo $contract->service_name; ?>
 		<?php elseif ($contract->guest_name) : ?>
-			<i class="fas fa-xs fa-globe grey"></i> <?php echo $contract->guest_name; ?>
+			<i class='fa-solid fa-xs fa-globe grey'></i> <?php echo $contract->guest_name; ?>
 		<?php endif; ?>
 		<br>
 		<?php echo TickTock::displayTS($contract->created_at); ?>

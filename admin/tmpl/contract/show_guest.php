@@ -31,7 +31,7 @@ KrMethods::setUserState('com_knowres.gobackto', 'task=contract.show&id=' . $this
 					<?php $when = TickTock::displayTS($this->guest->checked_out_time); ?>
 					<a class="float-end" href="javascript:void(0);" aria-labelledby="guest-checkin-desc" title=""
 					   onclick="return Knowres.submitform('guest.checkin', document.getElementById('contract-checkin'));">
-						<i class="fas fa-lock"></i> <?php echo KrMethods::plain('JTOOLBAR_CHECKIN'); ?>
+						<i class='fa-solid fa-lock'></i> <?php echo KrMethods::plain('JTOOLBAR_CHECKIN'); ?>
 					</a>
 					<div id="guest-checkin-desc" role="tooltip">
 						<?php echo $name; ?><br><?php echo $when; ?>
@@ -40,7 +40,7 @@ KrMethods::setUserState('com_knowres.gobackto', 'task=contract.show&id=' . $this
 					<?php if ($this->access_level > 10): ?>
 						<div class="float-end">
 							<a href="<?php echo $guest_edit; ?>">
-								<i class="fas fa-edit"></i> <?php echo KrMethods::plain('COM_KNOWRES_EDIT'); ?>
+								<i class='fa-solid fa-edit'></i> <?php echo KrMethods::plain('COM_KNOWRES_EDIT'); ?>
 							</a>
 						</div>
 					<?php endif; ?>

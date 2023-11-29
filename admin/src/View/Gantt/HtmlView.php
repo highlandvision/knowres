@@ -43,7 +43,7 @@ class HtmlView extends KrHtmlView
 		$userSession        = new KrSession\User();
 		$this->access_level = $userSession->getAccessLevel();
 
-		ToolbarHelper::title(KrMethods::plain('COM_KNOWRES_GANTT_TITLE'), 'fas fa-calendar-alt');
+		ToolbarHelper::title(KrMethods::plain('COM_KNOWRES_GANTT_TITLE'), 'fa-solid fa-calendar-alt');
 		$this->addToolbar();
 		KrMethods::setUserState('com_knowres.gobackto', 'view=gantt');
 
@@ -60,15 +60,15 @@ class HtmlView extends KrHtmlView
 	{
 		$Toolbar = Toolbar::getInstance();
 		$Toolbar->linkButton('refresh')
-		        ->icon('fas fa-redo knowres')
+		        ->icon('fa-solid fa-redo knowres')
 		        ->text('COM_KNOWRES_REFRESH')
 		        ->url(KrMethods::route('index.php?option=com_knowres&view=gantt'));
 		$Toolbar->linkButton('contracts')
-		        ->icon('fas fa-list knowres')
+		        ->icon('fa-solid fa-list knowres')
 		        ->text('COM_KNOWRES_CONTRACTS_TITLE')
 		        ->url(KrMethods::route('index.php?option=com_knowres&view=contracts'));
 		$Toolbar->linkButton('properties')
-		        ->icon('fas fa-list knowres')
+		        ->icon('fa-solid fa-list knowres')
 		        ->text('COM_KNOWRES_PROPERTIES_TITLE')
 		        ->url(KrMethods::route('index.php?option=com_knowres&view=properties'));
 
@@ -77,7 +77,7 @@ class HtmlView extends KrHtmlView
 		$Toolbar = $this->addBackLink($Toolbar);
 
 		$Toolbar->linkButton('close')
-		        ->icon('fas fa-times knowres')
+		        ->icon('fa-solid fa-times knowres')
 		        ->text('JTOOLBAR_CLOSE')
 		        ->url(KrMethods::route('index.php?option=com_knowres&task=gantt.cancel'));
 	}

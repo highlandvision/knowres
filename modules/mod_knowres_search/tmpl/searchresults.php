@@ -66,7 +66,7 @@ $show_guests  = $params->get('show_guests', 0);
 
 				<button type="submit" class="button expanded large no-margin-bottom">
 					<?php echo KrMethods::plain("MOD_KNOWRES_SEARCH_BUTTON"); ?>&nbsp;&nbsp;
-					<i class="fas fa-search"></i>
+					<i class='fa-solid fa-search'></i>
 				</button>
 			</div>
 		</div>

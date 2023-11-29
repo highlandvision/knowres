@@ -21,16 +21,16 @@ extract($displayData);
 ?>
 
 <div>
-	<i class="fas fa-lg fa-mobile-alt">&nbsp;</i>
+	<i class='fa-solid fa-lg fa-mobile-alt'>&nbsp;</i>
 	<span><?php echo Utility::formatPhoneNumber($data->mobile, $data->mobile_country_id); ?></span>
 </div>
 <?php if ($data->email): ?>
 	<div>
-		<i class="fas fa-envelope">&nbsp;</i>
+		<i class='fa-solid fa-envelope'>&nbsp;</i>
 		<span><?php echo $data->email; ?></span>
 	</div>
 <?php endif; ?>
 <div>
-	<i class="fas fa-lg fa-calendar-alt">&nbsp;</i>
+	<i class='fa-solid fa-lg fa-calendar-alt'>&nbsp;</i>
 	<?php echo TickTock::displayDate($data->arrival) . ' - ' . TickTock::displayDate($data->departure); ?>
 </div>

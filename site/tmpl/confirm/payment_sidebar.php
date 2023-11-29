@@ -55,14 +55,14 @@ $address = Utility::formatAddress($this->guestData->address1, $this->guestData->
 		<?php if ($this->guestData->email) : ?>
 			<br><br>
 			<span>
-				<i class="fas fa-envelope"></i> <?php echo $this->guestData->email; ?>
+				<i class='fa-solid fa-envelope'></i> <?php echo $this->guestData->email; ?>
 			</span>
 			<br>
 		<?php endif; ?>
 
 		<?php if ($this->guestData->mobile) : ?>
 			<span>
-				<i class="fas fa-mobile-alt"></i>
+				<i class='fa-solid fa-mobile-alt'></i>
 				<?php echo Utility::formatPhoneNumber($this->guestData->mobile,
 					$this->guestData->mobile_country_id); ?>
 			</span>

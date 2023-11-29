@@ -51,7 +51,7 @@ class HtmlView extends KrHtmlView
 
 		$this->form_name = KrMethods::plain('COM_KNOWRES_IMAGE_TITLE');
 		$this->getFormAriaLabel();
-		ToolbarHelper::title($this->form_name . ' - ' . $this->property_name, 'fas fa-image knowres');
+		ToolbarHelper::title($this->form_name . ' - ' . $this->property_name, 'fa-solid fa-image knowres');
 		$this->addFormToolbar(strtolower($this->getName()));
 
 		parent::display($tpl);

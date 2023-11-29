@@ -49,7 +49,7 @@ class HtmlView extends KrHtmlView
 
 		$this->form_name = KrMethods::plain('COM_KNOWRES_COUNTRY_TITLE');
 		$this->getFormAriaLabel();
-		ToolbarHelper::title($this->form_name, 'fas fa-flag knowres');
+		ToolbarHelper::title($this->form_name, 'fa-solid fa-flag knowres');
 		$this->addFormToolbar(strtolower($this->getName()));
 
 		parent::display($tpl);

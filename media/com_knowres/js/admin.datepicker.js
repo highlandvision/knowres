@@ -11,7 +11,7 @@ if (typeof jQuery === 'undefined') jQuery.noConflict();
 	let elem, id, split, new_date, valid_from, valid_to, $to;
 	const ui_options = {
 		altFormat:         'yy-mm-dd',
-		buttonText:        '<i role="button" class="fas fa-calendar-day fa-lg"></i>',
+		buttonText:        '<i role="button" class="fa-solid fa-calendar-day fa-lg"></i>',
 		changeMonth:       true,
 		changeYear:        true,
 		dateFormat:        'd M yy',

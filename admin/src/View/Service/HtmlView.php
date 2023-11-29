@@ -93,7 +93,7 @@ class HtmlView extends KrHtmlView
 
 		$form_name = KrMethods::plain('COM_KNOWRES_SERVICE_TITLE');
 		$this->getFormAriaLabel();
-		ToolbarHelper::title($form_name, 'fas fa-exchange-alt knowres');
+		ToolbarHelper::title($form_name, 'fa-solid fa-exchange-alt knowres');
 		$Toolbar = $this->addFormToolbar(strtolower($this->getName()));
 		if (!empty($this->adhoc->getFieldAttribute('apassword', 'type')))
 		{

@@ -60,7 +60,7 @@ class HtmlView extends KrHtmlView
 
 		$this->form_name = KrMethods::plain('COM_KNOWRES_MAPMARKER_TITLE');
 		$this->getFormAriaLabel();
-		ToolbarHelper::title($this->form_name, 'fas fa-pin knowres');
+		ToolbarHelper::title($this->form_name, 'fa-solid fa-pin knowres');
 		$this->addFormToolbar(strtolower($this->getName()));
 
 		parent::display($tpl);

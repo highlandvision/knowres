@@ -51,7 +51,7 @@ class HtmlView extends KrHtmlView
 
 		$this->form_name = KrMethods::plain('COM_KNOWRES_RATEMARKUP_TITLE');
 		$this->getFormAriaLabel();
-		ToolbarHelper::title($this->form_name . ' - ' . $this->property_name, 'fas fa-chart-line knowres');
+		ToolbarHelper::title($this->form_name . ' - ' . $this->property_name, 'fa-solid fa-chart-line knowres');
 		$this->addFormToolbar(strtolower($this->getName()));
 
 		parent::display($tpl);

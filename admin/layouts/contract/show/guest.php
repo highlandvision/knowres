@@ -49,19 +49,19 @@ extract($displayData);
 	<div class="col-lg-6">
 		<address>
 			<?php if ($guest->email) : ?>
-				<i class="fas fa-envelope"></i>
+				<i class='fa-solid fa-envelope'></i>
 				<a href="mailto:<?php echo $guest->email; ?>">
 					<?php echo $guest->email; ?>
 				</a><br>
 			<?php endif; ?>
 			<?php if ($guest->email_2) : ?>
-				<i class="fas fa-envelope"></i>
+				<i class='fa-solid fa-envelope'></i>
 				<a href="mailto:<?php echo $guest->email_2; ?>">
 					<?php echo $guest->email_2; ?>
 				</a><br>
 			<?php endif; ?>
 			<?php if ($guest->email_3) : ?>
-				<i class="fas fa-envelope"></i>
+				<i class='fa-solid fa-envelope'></i>
 				<a href="mailto:<?php echo $guest->email_3; ?>">
 					<?php echo $guest->email_3; ?>
 				</a><br>
@@ -69,7 +69,7 @@ extract($displayData);
 			<br>
 			<?php if ($guest->mobile) : ?>
 				<?php $mobile = Utility::formatPhoneNumber($guest->mobile, $guest->mobile_country_id); ?>
-				<i class="fas fa-lg fa-mobile-alt"></i>
+				<i class='fa-solid fa-lg fa-mobile-alt'></i>
 				<a href="tel:<?php echo $mobile; ?>">
 					<?php echo $mobile; ?><br>
 				</a>
