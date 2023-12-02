@@ -22,27 +22,30 @@ $KRparams = KrMethods::getParams();
 <div class="small-12 medium-4 cell">
 	<a href="<?php echo $item['plink']; ?>" class="property text-left" title="<?php echo $item['property_name']; ?>">
 		<div class="image-wrapper">
-			<?php echo HTMLHelper::_('image', Media\Images::getImagePath($id, 'solo', $item['image']),
-				$item['property_name'], [
-					'width'  => $KRparams->get('max_property_width'),
-					'height' => $KRparams->get('max_property_height')
-				]);
+			<?php echo HTMLHelper::_('image',
+			                         Media\Images::getImagePath($id, 'solo', $item['image']),
+			                         $item['property_name'],
+			                         [
+				                         'width'  => $KRparams->get('max_property_width'),
+				                         'height' => $KRparams->get('max_property_height')
+			                         ]);
 			?>
 			<?php if ($item['summary']) : ?>
-				<?php require ModuleHelper::getLayoutPath('mod_knowres_featured', $params->get('layout', 'default') . '_pricesummary'); ?>
+				<?php require ModuleHelper::getLayoutPath('mod_knowres_featured',
+				                                          $params->get('layout', 'default') . '_pricesummary'); ?>
 			<?php endif; ?>
 		</div>
 
 		<div class="content no-margin-bottom">
-			<h4><?php echo $item['property_name']; ?></h4>
+			<h4 class="flexible"><?php echo $item['property_name']; ?></h4>
 			<?php $clean = strip_tags($item['text']); ?>
 			<p><?php echo $clean; ?></p>
-			<p class="occupancy">
+			<div class="occupancy">
 				<i class='fa-solid fa-female fa-lg font-hilite'></i>
 				<i class='fa-solid fa-male fa-lg font-hilite'></i>
 				<?php echo '&nbsp;' . ($item['sleeps']) . ' ' . KrMethods::plain('MOD_KNOWRES_FEATURED_PERSONS'); ?>
 				<?php echo ' | ' . ($item['bedrooms']) . ' ' . KrMethods::plain('MOD_KNOWRES_FEATURED_BEDROOMS'); ?>
-			</p>
+			</div>
 		</div>
 	</a>
 </div>

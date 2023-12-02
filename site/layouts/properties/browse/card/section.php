@@ -27,7 +27,7 @@ extract($displayData);
  */
 ?>
 
-<h2 class="h5">
+<h2 class="h5" style="flex-grow:1">
 	<?php echo $item->property_name; ?>
 </h2>
 <div class="info small">

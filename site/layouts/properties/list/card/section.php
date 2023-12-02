@@ -6,7 +6,6 @@
  * @license     See the file "LICENSE.txt" for the full license governing this code.
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
-
 /** @noinspection PhpUnhandledExceptionInspection */
 
 defined('_JEXEC') or die;
@@ -70,7 +69,6 @@ extract($displayData);
 	<?php echo KrMethods::plain('COM_KNOWRES_BATHROOMS'); ?>
 	<?php echo $item->bathrooms; ?>
 	<?php echo ' / '; ?>
-
 	<?php if (!$item->pets): ?>
 		<?php echo KrMethods::plain('COM_KNOWRES_NO_PETS'); ?>
 	<?php else: ?>

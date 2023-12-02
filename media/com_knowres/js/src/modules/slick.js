@@ -150,6 +150,15 @@
         });
         $items.height(tallest);
 
+        tallest = 0;
+        $items =  $('.kr-featured .content p');
+        $items.each(function(){
+            if ($(this).height() > tallest){
+                tallest = $(this).height();
+            }
+        });
+        $items.height(tallest);
+
         $('.kr-alternatives').slick({
             appendArrows: '.kr-double-arrows',
             prevArrow: '<i class="slick-nav prev fas fa-chevron-left"></i>',
