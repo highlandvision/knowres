@@ -33,7 +33,7 @@ class Dispatcher extends ComponentDispatcher
 	 * @throws Exception
 	 * @since  4.0.0
 	 */
-	public function dispatch()
+	public function dispatch(): void
 	{
 		if (is_dir(JPATH_ROOT . '/media/com_knowres/vendor'))
 		{

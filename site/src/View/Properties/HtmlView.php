@@ -245,15 +245,8 @@ class HtmlView extends KrHtmlView\Site
 	 */
 	protected function setPathway(): void
 	{
-		//TODO v4.3 Fix when regions array is finalised
-		$pathway = Factory::getApplication()->getPathway();
-		if (count($this->Search->searchData->region_id) == 1) {
-			foreach ($this->Search->searchData->region_id as $k) {
-				$pathway = self::propertiesPathway($pathway, $k, 'tbd region help');
-			}
-
-			$pathway->addItem(KrMethods::plain('COM_KNOWRES_SEARCH_RESULTS'));
-		}
+		$pathway = self::setPathwayBase();
+		$pathway->addItem(KrMethods::plain('COM_KNOWRES_SEARCH_RESULTS'));
 	}
 
 	/**

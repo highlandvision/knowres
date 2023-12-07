@@ -141,7 +141,7 @@ class HtmlView extends KrHtmlView\Site
 	protected function prepareDocument(): void
 	{
 		$this->prepareDefaultDocument($this->meta_title, $this->meta_description);
-		$this->setMyPathway();
+		$this->setPathway();
 	}
 
 	/**
@@ -150,25 +150,14 @@ class HtmlView extends KrHtmlView\Site
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	protected function setMyPathway(): void
+	protected function setPathway(): void
 	{
-		$pathway = Factory::getApplication()->getPathway();
-		$pathway->setPathway([]);
+		$searchSession      = new KrSession\Search();
+		$searchData   = $searchSession->getData();
 
-		$Itemid  = SiteHelper::getRegionItemid($this->property->region_id);
-		$pathway = self::propertiesPathway($pathway, $this->property->region_id, $this->property->region_name,
-			$Itemid);
-
-		$searchSession = new KrSession\Search();
-		$searchData    = $searchSession->getData();
-		if (count($searchData->baseIds))
-		{
-			$Itemid  = SiteHelper::getItemId('com_knowres', 'properties',
-				['layout' => 'search', 'region_id' => $this->property->region_id]);
-			$pathway = self::searchPathway($pathway, $this->property->region_id, $Itemid);
-		}
-
-		$pathway = self::propertyPathway($pathway, $this->property->id, $this->property->property_name);
+		$pathway = self::setPathwayBase();
+		$pathway = self::propertiesPathway($pathway, $searchData);
+		$pathway = self::propertyPathway($pathway, $searchData, $this->property);
 
 		$pathway->addItem(KrMethods::plain('COM_KNOWRES_CONFIRM_TITLE'));
 	}

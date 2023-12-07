@@ -6,6 +6,7 @@
  * @license    See the file "LICENSE.txt" for the full license governing this code.
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
+/** @noinspection PhpUnhandledExceptionInspection */
 
 defined('_JEXEC') or die;
 
@@ -18,40 +19,31 @@ $link   = KrMethods::route('index.php?option=com_knowres&view=properties&Itemid=
 $text   = KrMethods::sprintf('MOD_KNOWRES_DESTINATION_VIEW_PROPERTIES', $destination);
 ?>
 
-<div class="kr-property kr-destinations" style="margin-bottom:20px;">
+<div class="kr-destinations">
 	<div class="grid-x grid-margin-x">
 		<div class="small-12 cell">
-			<h2><?php echo $destination; ?></h2>
-
-			<?php
-			$options = [
-				'src'    => $params->get('image'),
-				'alt'    => $destination,
-				'class'  => 'responsive',
-				'width'  => $params->get('width'),
-				'height' => $params->get('height')
-			];
-			echo KrMethods::render('joomla.html.image', $options);
+			<?php $options = ['src'    => $params->get('image'),
+			                  'alt'    => $destination,
+			                  'class'  => 'th responsive'
+				];
 			?>
+			<?php echo KrMethods::render('joomla.html.image', $options); ?>
 			<br><br>
 
 			<h3><?php echo $params->get('heading1'); ?></h3>
 			<?php echo $params->get('text1'); ?>
+			<br>
 
 			<h3><?php echo $params->get('heading2'); ?></h3>
 			<?php echo $params->get('text2'); ?>
+			<br>
 
 			<h3><?php echo $params->get('heading3'); ?></h3>
 			<?php echo $params->get('text3'); ?>
+			<br>
 
 			<h3><?php echo $params->get('heading4'); ?></h3>
 			<?php echo $params->get('text4'); ?>
 		</div>
-
-		<h3>
-			<a style="color:black;text-decoration:underline;" title="<?php echo $text; ?>"
-			   href="<?php echo $link; ?>"><?php echo $text; ?></a>
-		</h3>
-		<br>
 	</div>
 </div>

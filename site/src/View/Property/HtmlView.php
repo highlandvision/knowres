@@ -185,7 +185,7 @@ class HtmlView extends KrHtmlView\Site
 	protected function prepareDocument(): void
 	{
 		$this->prepareDefaultDocument($this->meta_title, $this->meta_description);
-		$this->setMyPathway($this->item->region_id, $this->item->region_name);
+		$this->setPathway();
 	}
 
 	/**
@@ -252,10 +252,8 @@ class HtmlView extends KrHtmlView\Site
 	{
 		$Itemid = SiteHelper::getItemId('com_knowres', 'properties', [
 			'layout'    => 'search',
-			'region_id' => $this->item->region_id
 		]);
-
-		$link = 'index.php?Itemid=' . $Itemid;
+		$link = 'index.php?Itemid=' . $Itemid . '&retain=1';
 
 		if (isset($this->item->state) && $this->item->state != 1) {
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_UNPUBLISHED_PROPERTY'));
@@ -314,41 +312,24 @@ class HtmlView extends KrHtmlView\Site
 	}
 
 	/**
-	 * Set the pathway for the property
-	 *
-	 * @param  int     $region_id    ID of property / search region
-	 * @param  string  $region_name  Name of property / search region
+	 * Set pathway for the property
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected function setMyPathway(int $region_id, string $region_name): void
+	protected function setPathway(): void
 	{
-		$pathway = Factory::getApplication()->getPathway();
-		$pathway->setPathway([]);
+		$pathway = self::setPathwayBase();
+		$pathway = self::propertiesPathway($pathway, $this->searchData);
 
-		$regions = KrFactory::getListModel('regions')->getAllRegions(true);
-		$Itemid  = 0;
-		if (is_countable($regions) && count($regions) > 1) {
-			$Itemid = SiteHelper::getItemId('com_knowres',
-			                                'properties',
-			                                ['layout' => 'search', 'region_id' => $region_id]);
+		if (empty($this->searchData->baseIds)) {
+			$pathway = self::propertyRegionPathway($pathway, $this->item->region_id, $this->item->region_name);
 		}
-		$pathway = self::propertiesPathway($pathway, $region_id, $region_name, $Itemid);
-
-		if (count($this->searchData->baseIds)) {
-			$Itemid = SiteHelper::getItemId('com_knowres',
-			                                'properties',
-			                                ['layout' => 'search', 'region_id' => $region_id]);
-
-			$pathway = self::searchPathway($pathway, $region_id, $Itemid);
-		}
-
 		$pathway->addItem($this->item->property_name);
 	}
 
 	/**
-	 * Set review data for property     *
+	 * Set review data for property
 	 *
 	 * @throws Exception
 	 * @since  4.0.0

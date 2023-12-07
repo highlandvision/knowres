@@ -6,7 +6,6 @@
  * @license    See the file "LICENSE.txt" for the full license governing this code.
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
-
 /** @noinspection PhpUnhandledExceptionInspection */
 
 defined('_JEXEC') or die;
@@ -23,7 +22,7 @@ extract($displayData);
  * @var array  $items          Properties
  * @var mixed  $params         KR params.
  * @var string $currency       Default currency.
- * @var bool   $favs           Favourite properties.
+ * @var array  $favs           Favourite properties.
  * @var string $bar            Selected menu bar.
  * @var bool   $byAvailability Search by availability.
  * @var array  $net            Net rates.
@@ -43,7 +42,7 @@ $weekly = KrFactory::getListModel('propertysettings')->getOneSetting('tariffChar
 		<?php $plink = SiteHelper::buildPropertyLink($item->id); ?>
 		<?php $id = 'kr-property-' . $item->id; ?>
 		<?php $title = KrMethods::plain('COM_KNOWRES_VIEW') . ' ' . $item->property_name; ?>
-		<div class="small-6 medium-4 cell flex-container">
+		<div class="small-6 medium-4 cell flex-container" style="flex-direction:column;">
 			<div id="<?php echo $id; ?>" class="kr-list-property card" data-id="<?php echo $item->id; ?>">
 				<?php if ($item->imagefilename) : ?>
 					<div class="kr-slideshow-wrapper">

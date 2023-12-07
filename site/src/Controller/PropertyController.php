@@ -107,7 +107,7 @@ class PropertyController extends BaseController
 	 * Ajax - display properties map infowindow
 	 *
 	 * @throws Exception
-	 * @since        1.0.0
+	 * @since  1.0.0
 	 * @return void
 	 * @noinspection PhpUnused
 	 */

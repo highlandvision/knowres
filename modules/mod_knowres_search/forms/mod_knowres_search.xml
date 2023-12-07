@@ -3,11 +3,11 @@
 	<fieldset>
 		<field name="region_id"
 			addfieldprefix="HighlandVision\Component\Knowres\Site\Field"
-			aria-label="MOD_KNOWRES_SEARCH_REGIONS_LBL_ARIA"
+			aria-label="MOD_KNOWRES_SEARCH_REGIONS"
 			class="select-pane"
 			hiddenLabel="true"
 			type="listgroupedregions"
-			hint="MOD_KNOWRES_SEARCH_REGIONS_LBL"
+			hint="MOD_KNOWRES_SEARCH_REGIONS"
 			label="MOD_KNOWRES_SEARCH_REGIONS"
 		    placeholder="MOD_KNOWRES_SEARCH_LOCATION"/>
 		<field name="arrivaldsp"

@@ -25,7 +25,6 @@ use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Response\JsonResponse;
 
 use function array_merge;
-use function array_push;
 use function array_unique;
 use function count;
 use function header;
@@ -248,9 +247,10 @@ class PropertiesController extends BaseController
 	#[NoReturn] public function search(): void
 	{
 		$region_id = KrMethods::inputArray('region_id');
-		if (count($region_id) == 1 && (int) $region_id[0] == 0) {
+		if (empty($region_id) || count($region_id) == 1 && (int) $region_id[0] == 0) {
 			$region_id[0] = KrMethods::getParams()->get('default_region');
 		}
+
 		$a = [];
 		foreach ($region_id as $id) {
 			$a[] = $id;

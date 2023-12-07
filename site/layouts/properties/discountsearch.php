@@ -30,7 +30,7 @@ $count = 0;
 
 <button aria-label="<?php echo KrMethods::plain('COM_KNOWRES_HOVER_FOR_DISCOUNTS'); ?>"
         class="button expanded secondary" type="button" data-toggle="<?php echo $toggle; ?>">
-	<i class='fa-solid fa-xl fa-scissors'></i>
+	<i class='fa-solid fa-xl fa-tags'></i>
 </button>
 <div class="dropdown-pane" id="<?php echo $toggle; ?>" data-dropdown data-hover="true" data-hover-pane="true"
      data-position="top" data-alignment="left">

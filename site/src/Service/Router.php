@@ -31,7 +31,7 @@ class Router extends RouterBase
 	/**
 	 * Build the route for the com_knowres component
 	 *
-	 * @param   array  &$query  An array of URL arguments
+	 * @param  array  &$query  An array of URL arguments
 	 *
 	 * @throws Exception
 	 * @since  4.0.0
@@ -41,10 +41,8 @@ class Router extends RouterBase
 	{
 		$segments = [];
 
-		if (isset($query['view']))
-		{
-			if ($query['view'] == 'property' && !empty($query['id']))
-			{
+		if (isset($query['view'])) {
+			if ($query['view'] == 'property' && !empty($query['id'])) {
 				$item       = KrFactory::getAdminModel('property')->getItem($query['id']);
 				$segments[] = $item->region_name;
 				$segments[] = $item->town_name . '-' . $item->type_name;
@@ -53,15 +51,13 @@ class Router extends RouterBase
 				unset($query['id']);
 			}
 		}
-		if (isset($query['id']))
-		{
+		if (isset($query['id'])) {
 			$segments[] = $query['id'];
 			unset($query['id']);
 		}
 
 		$total = count($segments);
-		for ($i = 0; $i < $total; $i++)
-		{
+		for ($i = 0; $i < $total; $i++) {
 			$segments[$i] = strtolower(str_replace(' ', '-', $segments[$i]));
 		}
 
@@ -71,7 +67,7 @@ class Router extends RouterBase
 	/**
 	 * Parse the segments of a URL for com_knowres.
 	 *
-	 * @param   array  &$segments  The segments of the URL to parse.
+	 * @param  array  &$segments  The segments of the URL to parse.
 	 *
 	 * @since   4.0.0
 	 * @return  array  The URL attributes to be used by the application.
@@ -81,23 +77,19 @@ class Router extends RouterBase
 		$vars = [];
 
 		$count = count($segments);
-		if ($count)
-		{
+		if ($count) {
 			$count--;
 			$segment = array_pop($segments);
-			if (is_numeric($segment))
-			{
+			if (is_numeric($segment)) {
 				$vars['id'] = $segment;
 			}
-			else
-			{
+			else {
 				$count--;
 				$vars['task'] = array_pop($segments) . '.' . $segment;
 			}
 		}
 
-		if ($count)
-		{
+		if ($count) {
 			$vars['task'] = implode('.', $segments);
 		}
 

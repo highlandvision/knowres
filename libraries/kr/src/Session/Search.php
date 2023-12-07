@@ -102,6 +102,7 @@ class Search extends Session
 		$data->action         = '';
 		$data->action_value   = '';
 		$data->adults         = 2;
+		$data->area           = '';
 		$data->arrival        = '';
 		$data->bar            = KrMethods::getParams()->get('default_view', 'list');
 		$data->baseIds        = [];
@@ -117,7 +118,7 @@ class Search extends Session
 		$data->direction      = '';
 		$data->favs           = [];
 		$data->feature_id     = 0;
-		$data->flexible       = 0;
+		$data->field          = '';
 		$data->filterArea     = [];
 		$data->filterBedrooms = [];
 		$data->filterBook     = [];
@@ -126,6 +127,7 @@ class Search extends Session
 		$data->filterPets     = [];
 		$data->filterPrice    = [];
 		$data->filterType     = [];
+		$data->flexible       = 0;
 		$data->guests         = 2;
 		$data->layout         = '';
 		$data->limitstart     = 0;

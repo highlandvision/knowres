@@ -16,7 +16,7 @@ extract($displayData);
  * Layout variables
  *
  * @var false|object $item  Property Item.
- * @var array        $favs  Saved favourites.
+ * @var array        $favs  Favourite properties.
  * @var mixed        $bar   Current active search bar.
  */
 ?>

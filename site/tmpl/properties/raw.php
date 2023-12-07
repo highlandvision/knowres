@@ -22,10 +22,10 @@ $data = [];
 
 if (!empty($this->items) && count($this->items)) {
 	$data['bar'] = $this->Response->searchData->bar;
-	if (count($this->items) > 1) {
+	if (count($this->Response->searchData->baseIds) > 1) {
 		$data['heading'] = KrMethods::sprintf('COM_KNOWRES_SEARCH_HEADER',
 		                                      $this->Response->searchData->description,
-		                                      count($this->items));
+		                                      count($this->Response->searchData->baseIds));
 	}
 	else {
 		$data['heading'] = KrMethods::sprintf('COM_KNOWRES_SEARCH_HEADER_1', $this->Response->searchData->description);
