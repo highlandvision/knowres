@@ -12,6 +12,9 @@ PHP: version 8.0.0 or greater but less than 8.1.0
 MySQL: version 5.6.0 or greater (>= 5.6.0 recommended)
 The installer will check for minimal version requirements and will abort the install if they are not met.
 
+NOTE: KR site will not function with a standard Joomla template. There is a KR beta template available in the krtheme repository and a final version and quick start package will be available in the 
+next release.   
+
 INSTALLATION
 
 Installation and upgrade are via the Joomla component/extension installer using the download package available on GitHub. Full site backup prior to an install or upgrade is highly recommended)
