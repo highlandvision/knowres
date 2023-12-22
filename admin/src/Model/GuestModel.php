@@ -78,8 +78,8 @@ class GuestModel extends AdminModel
 	 */
 	protected function canEditState($record): bool
 	{
-		//TODO-v4.3 Revisit this Joomla is a bit out with messages
-		// nothing is updated if errors exist but messages sayus that updates are done
+		//TODO-v4.4 Revisit this Joomla is a bit out with messages
+		// nothing is updated if errors exist but messages say that updates are done
 		// Action trying to unpublish guests from listing page when contracts exists
 		if ($record->state == 1)
 		{

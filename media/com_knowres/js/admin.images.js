@@ -30,7 +30,10 @@ document.addEventListener('DOMContentLoaded', function () {
 		previewsContainer:     '#previews',
 		clickable:             '.fileinput-button',
 		parallelUploads:       100,
-		maxFiles:              100
+		maxFiles:              100,
+		error: function(file, response) {
+			alert(response.message);
+		}
 	})
 	myDropzone.on('addedfile', function (file) {
 		file.previewElement.querySelector('.start').onclick = function () {
@@ -53,6 +56,8 @@ document.addEventListener('DOMContentLoaded', function () {
 			window.location.reload();
 		}
 	})
+
+
 	// Set up the buttons for all transfers
 	// The "add files" button doesn't need to be setup because the config
 	// `clickable` has already been specified.

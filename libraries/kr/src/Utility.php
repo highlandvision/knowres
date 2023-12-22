@@ -612,7 +612,7 @@ class Utility
 	 */
 	public static function validateInputDate(string $date): void
 	{
-		//TODO-v4.3 Use this for all site input date fields
+		//TODO-v4.4 Use this for all site input date fields
 		if ($date) {
 			if (!TickTock::isValidDate($date)) {
 				throw new RuntimeException ('Invalid date was received', 400);

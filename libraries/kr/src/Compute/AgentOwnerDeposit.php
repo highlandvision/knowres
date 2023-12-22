@@ -56,7 +56,7 @@ class AgentOwnerDeposit
 			{
 				break;
 			}
-			//TODO-v4.3 Shift owner payments to custom library?
+			//TODO-v4.4 Shift owner payments to custom library?
 			if (!$this->Hub->params->get('owner_payments', false))
 			{
 				break;

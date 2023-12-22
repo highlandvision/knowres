@@ -22,8 +22,8 @@
 			filter="string"
 			required="true"
 			type="url"
-			label="COM_KNOWRES_SERVICE_SERVICE_URL_LBL"
-			description="COM_KNOWRES_SERVICE_SERVICE_URL_DSC"/>
+			label="COM_KNOWRES_SERVICE_URL_LBL"
+			description="COM_KNOWRES_SERVICE_URL_DSC"/>
 		<field name="apikey"
 			required="true"
 			type="text"

@@ -59,8 +59,6 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 	public ?array $items;
 	/** @var string List name */
 	public string $name = '';
-	/** @var bool True if ordering required. */
-	protected bool $ordering = true;
 	/** @var Pagination Pagination object */
 	public Pagination $pagination;
 	/** @var Registry KR params */
@@ -77,6 +75,8 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 	public mixed $state;
 	/** @var string Today's date as yy-mm-dd */
 	public mixed $today;
+	/** @var bool True if ordering required. */
+	protected bool $ordering = true;
 
 	/**
 	 * Constructor
@@ -385,9 +385,9 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 
 			ToolbarHelper::saveGroup($toolbarButtons);
 
-			if (ComponentHelper::isEnabled('com_contenthistory') &&
-				$this->state->params->get('save_history', 0) &&
-				$this->canDo->get('core.edit')) {
+			if (ComponentHelper::isEnabled('com_contenthistory')
+				&& $this->state->params->get('save_history', 0)
+				&& $this->canDo->get('core.edit')) {
 				$Toolbar->versions('com_knowres.' . $name, $this->item->id);
 			}
 

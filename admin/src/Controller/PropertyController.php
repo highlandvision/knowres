@@ -378,27 +378,11 @@ class PropertyController extends FormController
 			$ImagesProperty->validate($name, $tmp_name, $error);
 			$ImagesProperty->processOriginal();
 			$ImagesProperty->process();
+			KrMethods::message(KrMethods::plain('COM_KNOWRES_ACTION_SUCCESS'));
 		} catch (RuntimeException $e) {
 			Logger::logMe($e->getMessage());
-			KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN_CHECK'), 'error');
-
-			return;
+			KrMethods::message($e->getMessage(), 'error');
 		}
-
-		KrMethods::message(KrMethods::plain('COM_KNOWRES_ACTION_SUCCESS'));
-
-		//		$file_data = $ImagesProperty->processUploadedImage($filename, $tmpPath, $uploadError, false);
-		//		if (!$file_data)
-		//		{
-		//			KrMethods::message(KrMethods::plain('COM_KNOWRES_FORM_ERROR_PROPERTY_IMAGE'), 'error');
-		//
-		//			return;
-		//		}
-		//
-		//		if (!$UploadProperty->makeResizedOnUpload($file_data, false))
-		//		{
-		//			KrMethods::message(KrMethods::plain('COM_KNOWRES_FORM_ERROR_PROPERTY_IMAGE'), 'error');
-		//		}
 	}
 
 	/**

@@ -359,9 +359,9 @@ class Property extends KrHtmlView
 			$Toolbar = $this->addPropertiesDropdown($Toolbar);
 		}
 
-		if ($list_name != 'properties') {
-			$Toolbar = $this->addPropertiesLink($Toolbar);
-		}
+//		if ($list_name != 'properties') {
+//			$Toolbar = $this->addPropertiesLink($Toolbar);
+//		}
 
 		$Toolbar = $this->addCustomToolbar($Toolbar);
 		$Toolbar = $this->addConfigToolbar($Toolbar);

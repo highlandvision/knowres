@@ -89,7 +89,7 @@ class PropertyModel extends AdminModel
 	{
 		$item = parent::getItem($pk);
 		if ($item) {
-			//TODO-v4.3 delete bed types
+			//TODO-v4.4 delete bed types
 			$item->bed_types             = Utility::decodeJson($item->bed_types, true);
 			$item->cancellation_penalty  = Utility::decodeJson($item->cancellation_penalty);
 			$item->categories            = Utility::decodeJson($item->categories, true);

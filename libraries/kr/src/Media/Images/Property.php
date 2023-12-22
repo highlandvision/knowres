@@ -152,10 +152,8 @@ class Property extends Images
 	 */
 	public function processOriginal(): void
 	{
-		//TODO-v4.3 needs additional validation for max server size
-		if (!move_uploaded_file($this->tmp_name, $this->original_path . $this->name))
+		if (!move_uploaded_file($this->tmp_name, $this->original_path. $this->name))
 		{
-			//TODO-v4.3 check that this displays try again message
 			throw new RuntimeException(KrMethods::plain("Uploaded file $this->name could not be moved"));
 		}
 	}

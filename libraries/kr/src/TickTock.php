@@ -185,7 +185,7 @@ class TickTock
 	 */
 	public static function getDate(string $string = 'now', string $format = 'Y-m-d', string $tz = 'UTC'): string
 	{
-		//TODO-v4.3 should default timezone be based on agency location
+		//TODO-v4.4 should default timezone be based on agency location
 		$date = new Carbon($string, $tz);
 
 		return $date->format($format);

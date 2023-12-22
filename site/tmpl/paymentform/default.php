@@ -39,20 +39,15 @@ $termsurl = KrMethods::route('index.php?option=com_knowres&task=property.terms&i
 						<div class="grid-x grid-margin-x">
 							<div class="small-12 cell">
 								<h4>
-									This reservation has been cancelled and payment cannot be taken.
+									<?php echo KrMethods::plain('COM_KNOWRES_DASHBOARD_CANCELLED_RESERVATION1'); ?>
 									<br><br>
-									If you would like to proceed with the reservation then please contact us.
+									<?php echo KrMethods::plain('COM_KNOWRES_DASHBOARD_CANCELLED_RESERVATION2'); ?>
 								</h4>
 							</div>
 						</div>
 					</div>
 				<?php else: ?>
 					<?php echo $this->loadTemplate('payments'); ?>
-					<!--				// TODO-v4.3 Delete related code-->
-					<!--					<h4>-->
-					<!--						--><?php //echo KrMethods::plain('COM_KNOWRES_ACCOUNT_SUMMARY'); ?>
-					<!--					</h4>-->
-					<!--					--><?php //echo $this->loadTemplate('summary'); ?>
 				<?php endif; ?>
 			</fieldset>
 

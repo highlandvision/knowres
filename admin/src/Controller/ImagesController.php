@@ -21,6 +21,7 @@ use JetBrains\PhpStorm\NoReturn;
 use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Response\JsonResponse;
+use Joomla\CMS\Utility\Utility as JUtility;
 use RuntimeException;
 
 use function header;
@@ -90,6 +91,7 @@ class ImagesController extends AdminController
 		$name     = $_FILES['file']['name'];
 		$tmp_name = $_FILES['file']['tmp_name'];
 		$error    = $_FILES['file']['error'];
+		$size     = $_FILES['file']['size'];
 
 		$count = count($name);
 		if (!$count)
@@ -147,9 +149,7 @@ class ImagesController extends AdminController
 
 		header('Content-Type: application/json; charset=utf-8');
 		http_response_code(401);
-		$wrapper          = [];
-		$wrapper['error'] = $message;
-		echo new JsonResponse($wrapper);
+		echo new JsonResponse(null, $message, true);
 		jexit();
 	}
 }

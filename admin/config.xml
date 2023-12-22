@@ -124,28 +124,27 @@
                default=""
                label="COM_KNOWRES_CONFIG_ADMIN_GMAPKEY"
                description="COM_KNOWRES_CONFIG_ADMIN_GMAPKEY_DSC"/>
-        <field
-                name="save_history"
-                type="radio"
-                class="btn-group btn-group-yesno"
-                default="0"
-                label="JGLOBAL_SAVE_HISTORY_OPTIONS_LABEL"
-                description="JGLOBAL_SAVE_HISTORY_OPTIONS_DESC">
-            <option value="1">JYES</option>
-            <option value="0">JNO</option>
-        </field>
-        <field
-                class="w-auto"
-                filter="integer"
-                name="history_limit"
-                showon="save_history:1"
-                type="number"
-                min="1"
-                max="10"
-                step="1"
-                label="JGLOBAL_HISTORY_LIMIT_OPTIONS_LABEL"
-                description="JGLOBAL_HISTORY_LIMIT_OPTIONS_DESC"
-                default="5"/>
+<!--        <field name="save_history"-->
+<!--                type="radio"-->
+<!--                class="btn-group btn-group-yesno"-->
+<!--                default="0"-->
+<!--                label="JGLOBAL_SAVE_HISTORY_OPTIONS_LABEL"-->
+<!--                description="JGLOBAL_SAVE_HISTORY_OPTIONS_DESC">-->
+<!--            <option value="1">JYES</option>-->
+<!--            <option value="0">JNO</option>-->
+<!--        </field>-->
+<!--        <field-->
+<!--                class="w-auto"-->
+<!--                filter="integer"-->
+<!--                name="history_limit"-->
+<!--                showon="save_history:1"-->
+<!--                type="number"-->
+<!--                min="1"-->
+<!--                max="10"-->
+<!--                step="1"-->
+<!--                label="JGLOBAL_HISTORY_LIMIT_OPTIONS_LABEL"-->
+<!--                description="JGLOBAL_HISTORY_LIMIT_OPTIONS_DESC"-->
+<!--                default="5"/>-->
         <field name="create_user"
                type="hidden"
                default="0"
