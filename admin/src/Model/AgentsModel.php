@@ -202,7 +202,7 @@ class AgentsModel extends ListModel
 	 *
 	 * @since  1.0.0
 	 */
-	protected function populateState($ordering = 'a.name', $direction = 'desc')
+	protected function populateState($ordering = 'a.name', $direction = 'desc'): void
 	{
 		$this->setState('filter.search',
 			$this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string'));

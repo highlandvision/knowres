@@ -11,8 +11,7 @@ use HighlandVision\KR\Framework\KrMethods;
 
 $params = KrMethods::getParams();
 $Itemid = $params->get('link_cancellation', '0');
-if (!$params->get('email_affiliates', 0) || !$Itemid)
-{
+if (!$params->get('email_affiliates', 0) || !$Itemid) {
 	return;
 }
 
@@ -29,36 +28,29 @@ extract($displayData);
  */
 
 // Override font color
-$font_color = "#fefefe";
-
+$font_color      = "#fefefe";
 $terms           = KrMethods::route(KrMethods::getRoot() . 'index.php?Itemid=' . $Itemid);
 $travelinsurance = $params->get('link_travelinsurance', '');
 $carhire         = $params->get('link_carhire', '');
 $flights         = $params->get('link_flights', '');
 $count           = 1;
 $width           = '100%';
-if (!empty($travelinsurance))
-{
+if (!empty($travelinsurance)) {
 	$count++;
 }
-if (!empty($carhire))
-{
+if (!empty($carhire)) {
 	$count++;
 }
-if (!empty($flights))
-{
+if (!empty($flights)) {
 	$count++;
 }
-if ($count == 2)
-{
+if ($count == 2) {
 	$width = '50%';
 }
-else if ($count == 3)
-{
+else if ($count == 3) {
 	$width = '33.3%';
 }
-else if ($count == 4)
-{
+else if ($count == 4) {
 	$width = '25%';
 }
 ?>
@@ -66,8 +58,10 @@ else if ($count == 4)
 <table class="affiliates" width="100%" style="border:none;border-collapse:collapse;width:100%!important;text-align:center!important;padding:16px 16px 16px 16px;background-color:<?php echo $button_bg; ?>">
 	<tr style="text-align:center">
 		<?php if ($terms): ?>
-			<td class="stack" style="text-align:center!important;color:<?php echo $font_color; ?>;width:<?php echo $width; ?>;font-family:<?php echo $font; ?>;font-size:14px;padding:15px 0 15px 0;">
-				<a href="<?php echo $terms; ?>" style="font-size:14px;padding:15px 0 15px 0;color:<?php echo $font_color; ?>;"
+			<td class="stack"
+			    style="text-align:center!important;color:<?php echo $font_color; ?>;width:<?php echo $width; ?>;font-family:<?php echo $font; ?>;font-size:14px;padding:15px 0 15px 0;">
+				<a href="<?php echo $terms; ?>"
+				   style="font-size:14px;padding:15px 0 15px 0;color:<?php echo $font_color; ?>;"
 				   title="<?php echo KrMethods::plain('COM_KNOWRES_EMAIL_TERMS'); ?>">
 					<?php echo KrMethods::plain('COM_KNOWRES_EMAIL_TERMS'); ?>
 				</a>
@@ -84,15 +78,18 @@ else if ($count == 4)
 		<?php endif; ?>
 		<?php if ($carhire): ?>
 			<td style="text-align:center;width:<?php echo $width; ?>;font-family:<?php echo $font; ?>;color:<?php echo $font_color; ?>;font-size:14px;padding:15px 0 15px 0;">
-				<a href="<?php echo $carhire; ?>" style="text-align:center;font-size:14px;padding:15px 0 15px 0;color:<?php echo $font_color; ?>;"
+				<a href="<?php echo $carhire; ?>"
+				   style="text-align:center;font-size:14px;padding:15px 0 15px 0;color:<?php echo $font_color; ?>;"
 				   title="<?php echo KrMethods::plain('COM_KNOWRES_CAR_HIRE'); ?>">
 					<?php echo KrMethods::plain('COM_KNOWRES_EMAIL_AFFILIATE_CAR_HIRE'); ?>
 				</a>
 			</td>
 		<?php endif; ?>
 		<?php if ($flights): ?>
-			<td class="stack"  style="text-align:center;width:<?php echo $width; ?>;font-family:<?php echo $font; ?>;color:<?php echo $font_color; ?>;font-size:14px;padding:15px 0 15px 0;">
-				<a href="<?php echo $flights; ?>" style="font-size:14px;padding:15px 0 15px 0;color:<?php echo $font_color; ?>;"
+			<td class="stack"
+			    style="text-align:center;width:<?php echo $width; ?>;font-family:<?php echo $font; ?>;color:<?php echo $font_color; ?>;font-size:14px;padding:15px 0 15px 0;">
+				<a href="<?php echo $flights; ?>"
+				   style="font-size:14px;padding:15px 0 15px 0;color:<?php echo $font_color; ?>;"
 				   title="<?php echo KrMethods::plain('COM_KNOWRES_FLIGHTS'); ?>">
 					<?php echo KrMethods::plain('COM_KNOWRES_EMAIL_AFFILIATE_FLIGHT'); ?>
 				</a>

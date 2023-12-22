@@ -1,4 +1,5 @@
-<?php
+<?php /** @noinspection PhpPossiblePolymorphicInvocationInspection */
+
 /**
  * @package         Joomla.Site
  * @subpackage      com_knowres

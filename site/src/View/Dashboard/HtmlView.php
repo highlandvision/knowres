@@ -1,4 +1,5 @@
-<?php
+<?php /** @noinspection PhpPossiblePolymorphicInvocationInspection */
+
 /**
  * @package    Know Reservations
  * @subpackage Site View
@@ -73,7 +74,7 @@ class HtmlView extends KrHtmlView\Site
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected function prepareDocument()
+	protected function prepareDocument(): void
 	{
 		$this->prepareDefaultDocument($this->meta_title, $this->meta_description);
 		$this->setMyPathway();
@@ -85,7 +86,7 @@ class HtmlView extends KrHtmlView\Site
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	protected function setMyPathway()
+	protected function setMyPathway(): void
 	{
 		$pathway = Factory::getApplication()->getPathway();
 		$pathway->setPathway([]);

@@ -134,7 +134,7 @@ class Redsys extends Gateway
 	 *
 	 * @since 3.3.1
 	 */
-	protected function addField(string $field, string $value)
+	protected function addField(string $field, string $value): void
 	{
 		$this->fields["$field"] = $value;
 	}
@@ -383,7 +383,7 @@ class Redsys extends Gateway
 	 * @throws Exception
 	 * @since  3.3.1
 	 */
-	protected function validateResponseData()
+	protected function validateResponseData(): void
 	{
 		$this->readContract();
 		$response    = (string) $this->fields['Ds_Response'];

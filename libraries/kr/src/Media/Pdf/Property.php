@@ -55,7 +55,7 @@ class Property extends Pdf
 	 * @throws Exception
 	 * @since  3.2.0
 	 */
-	public function setAgency()
+	public function setAgency(): void
 	{
 		$settings = KrFactory::getListModel('propertysettings')
 		                     ->getPropertysettings($this->property_id, 'default_manager');

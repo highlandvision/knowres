@@ -35,6 +35,7 @@ for ($i = 1; $i <= 6; $i++)
 {
 	if ($params->get('image' . $i) && $params->get('region' . $i) != -1)
 	{
+		/** @noinspection PhpUnhandledExceptionInspection */
 		$data[$i] = array(
 			'image'  => $params->get('image' . $i),
 			'id'     => $params->get('region' . $i),

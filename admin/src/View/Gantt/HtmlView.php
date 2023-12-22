@@ -56,7 +56,7 @@ class HtmlView extends KrHtmlView
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected function addToolbar()
+	protected function addToolbar(): void
 	{
 		$Toolbar = Toolbar::getInstance();
 		$Toolbar->linkButton('refresh')

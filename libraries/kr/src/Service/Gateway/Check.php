@@ -58,7 +58,7 @@ class Check extends Gateway
 	 * @throws Exception
 	 * @since 3.3.0
 	 */
-	protected function setPayment()
+	protected function setPayment(): void
 	{
 		$this->paymentData->confirmed  = 0;
 		$this->paymentData->service_id = $this->service_id;

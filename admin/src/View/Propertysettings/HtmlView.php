@@ -113,7 +113,7 @@ class HtmlView extends KrHtmlView
 	 *
 	 * @since  4.0.0
 	 */
-	protected function setFormData()
+	protected function setFormData(): void
 	{
 		$this->form = KrFactory::getAdhocForm('propertysettings', 'propertysettings.xml', 'administrator', null);
 		$data       = [];
@@ -130,7 +130,7 @@ class HtmlView extends KrHtmlView
 	 *
 	 * @since  4.0.0
 	 */
-	protected function storeSettings()
+	protected function storeSettings(): void
 	{
 		foreach ($this->items as $item) {
 			if ($this->property_id) {

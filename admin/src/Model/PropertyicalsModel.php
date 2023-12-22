@@ -129,7 +129,7 @@ class PropertyicalsModel extends ListModel
 	 * @throws Exception
 	 * @since 2.0
 	 */
-	public function updateLastUpdated(int $id, ?string $icsdata = null)
+	public function updateLastUpdated(int $id, ?string $icsdata = null): void
 	{
 		$data              = new stdClass();
 		$data->id          = $id;
@@ -233,7 +233,7 @@ class PropertyicalsModel extends ListModel
 	 *
 	 * @since 2.0
 	 */
-	protected function populateState($ordering = 'a.id', $direction = 'asc')
+	protected function populateState($ordering = 'a.id', $direction = 'asc'): void
 	{
 		$this->setState('filter.search',
 			$this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string'));

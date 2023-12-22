@@ -101,7 +101,7 @@ class Images extends Media
 	 *
 	 * @since 3.0.0
 	 */
-	public static function deleteAll(string $dir)
+	public static function deleteAll(string $dir): void
 	{
 		if (is_dir($dir))
 		{
@@ -133,7 +133,7 @@ class Images extends Media
 	 * @throws Exception
 	 * @since  3.0.0
 	 */
-	public static function deletePropertyImages(int $id)
+	public static function deletePropertyImages(int $id): void
 	{
 		$path = self::getImageAbsPath($id);
 		if (Folder::exists($path))
@@ -360,7 +360,7 @@ class Images extends Media
 	 * @since  1.0.0
 	 */
 	public static function resizeImage(string $source, string $target, int $width, int $height, int $quality = 80,
-		int $crop = 0)
+		int $crop = 0): void
 	{
 		if ($crop && $width == 0 && $height == 0)
 		{
@@ -444,7 +444,7 @@ class Images extends Media
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function validate(string $name, string $tmp_name, int $error)
+	public function validate(string $name, string $tmp_name, int $error): void
 	{
 		$this->name     = $this->replaceSpecial($name);
 		$this->tmp_name = $tmp_name;
@@ -466,7 +466,7 @@ class Images extends Media
 	 * @throws InvalidArgumentException
 	 * @since  1.0.0
 	 */
-	protected function checkGDExtension()
+	protected function checkGDExtension(): void
 	{
 		if (!extension_loaded('gd') && !function_exists('gd_info'))
 		{
@@ -480,7 +480,7 @@ class Images extends Media
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected function checkIsImage()
+	protected function checkIsImage(): void
 	{
 		$info = getimagesize($this->tmp_name);
 		if (!is_int($info[0]) || !is_int($info[1]))
@@ -496,7 +496,7 @@ class Images extends Media
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected function checkMaxFilesize()
+	protected function checkMaxFilesize(): void
 	{
 		$max_upload_size = $this->params->get('max_upload_size', 4) * 1000000;
 		$file_size       = filesize($this->tmp_name);
@@ -519,7 +519,7 @@ class Images extends Media
 	 * @throws Exception
 	 * @since 1.0.0
 	 */
-	protected function checkUploadError(int $error)
+	protected function checkUploadError(int $error): void
 	{
 		$message = match ($error)
 		{
@@ -544,7 +544,7 @@ class Images extends Media
 	 * @throws RuntimeException
 	 * @since 1.0.0
 	 */
-	public static function makeFolder(string $folder_path)
+	public static function makeFolder(string $folder_path): void
 	{
 		if (Folder::exists($folder_path))
 		{
@@ -652,7 +652,7 @@ class Images extends Media
 	 *
 	 * @since 1.0.0
 	 */
-	protected function setExists(string $file)
+	protected function setExists(string $file): void
 	{
 		if (File::exists($file))
 		{
@@ -685,7 +685,7 @@ class Images extends Media
 	 * @throws RuntimeException
 	 * @since  1.0.0
 	 */
-	protected function validateExtension()
+	protected function validateExtension(): void
 	{
 		$extension = File::getExt($this->name);
 		if (!in_array($extension, $this->accepted))

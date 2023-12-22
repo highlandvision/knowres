@@ -53,8 +53,7 @@ extract($displayData);
  */
 
 $list = '';
-if ($options)
-{
+if ($options) {
 	$list = 'list="' . $id . '_datalist"';
 }
 
@@ -91,13 +90,9 @@ $addonAfterHtml  = '<span class="input-group-text">' . Text::_($addonAfter) . '<
 	<?php echo $addonBeforeHtml; ?>
 <?php endif; ?>
 
-	<input
-		type="text"
-		name="<?php echo $name; ?>"
-		id="<?php echo $id; ?>"
-		value="<?php echo htmlspecialchars($value, ENT_COMPAT, 'UTF-8'); ?>"
-		<?php echo $dirname; ?>
-		<?php echo implode(' ', $attributes); ?>>
+	<input type="text" name="<?php echo $name; ?>" id="<?php echo $id; ?>"
+	       value="<?php echo htmlspecialchars($value, ENT_COMPAT, 'UTF-8'); ?>"
+		<?php echo $dirname; ?> <?php echo implode(' ', $attributes); ?>>
 
 <?php if (!empty($addonAfter)) : ?>
 	<?php echo $addonAfterHtml; ?>

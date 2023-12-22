@@ -84,7 +84,7 @@ class MapmarkerModel extends AdminModel
 	 * @throws    Exception
 	 * @since    3.2.0
 	 */
-	protected function saveImage(int $id, array $files)
+	protected function saveImage(int $id, array $files): void
 	{
 		$name     = $files['name'];
 		$tmp_name = $files['tmp_name'];

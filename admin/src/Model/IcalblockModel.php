@@ -68,7 +68,7 @@ class IcalblockModel extends AdminModel
 	 * @throws RuntimeException
 	 * @since  3.3.0
 	 */
-	public function deleteExisting(int $property_id, int $service_id = 0, ?DatabaseInterface $db = null)
+	public function deleteExisting(int $property_id, int $service_id = 0, ?DatabaseInterface $db = null): void
 	{
 		if (is_null($db))
 		{
@@ -134,7 +134,7 @@ class IcalblockModel extends AdminModel
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	public function refreshIcalBlocks(int $property_id, array $blocks, int $service_id)
+	public function refreshIcalBlocks(int $property_id, array $blocks, int $service_id): void
 	{
 		$db = $this->getDatabase();
 
@@ -178,7 +178,7 @@ class IcalblockModel extends AdminModel
 	 * @throws RuntimeException
 	 * @since  3.3.0
 	 */
-	protected function deleteOldIcalData(int $property_id, DatabaseInterface $db)
+	protected function deleteOldIcalData(int $property_id, DatabaseInterface $db): void
 	{
 		$query      = $db->getQuery(true);
 		$conditions = [
@@ -201,7 +201,7 @@ class IcalblockModel extends AdminModel
 	 * @throws RuntimeException
 	 * @since  3.3.0
 	 */
-	protected function insertBlocks(array $blocks, DatabaseInterface $db)
+	protected function insertBlocks(array $blocks, DatabaseInterface $db): void
 	{
 		foreach ($blocks as $block)
 		{

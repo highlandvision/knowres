@@ -15,7 +15,6 @@ use Exception;
 use HighlandVision\KR\Cryptor;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\HtmlView as KrHtmlView;
-use HighlandVision\KR\TickTock;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 
@@ -377,7 +376,7 @@ class Contract extends KrHtmlView
 	 *
 	 * @since  4.0.0
 	 */
-	protected function setCustomActions()
+	protected function setCustomActions(): void
 	{
 		if ($this->access_level == 10)
 		{

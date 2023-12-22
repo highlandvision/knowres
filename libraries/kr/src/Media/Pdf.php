@@ -90,7 +90,7 @@ class Pdf extends Media
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected function createPdf(string $title, string $subject, int $margin = 15)
+	protected function createPdf(string $title, string $subject, int $margin = 15): void
 	{
 		$this->pdf = new KrTcpdf($this->agency);
 		$this->pdf->SetCreator(PDF_CREATOR);
@@ -118,7 +118,7 @@ class Pdf extends Media
 	 *
 	 * @since 1.0.0
 	 */
-	protected function setContent(string $content)
+	protected function setContent(string $content): void
 	{
 		$this->pdf->SetFont('dejavusans', '', 9, '', true);
 		$this->pdf->SetTextColorArray([49, 49, 49]);

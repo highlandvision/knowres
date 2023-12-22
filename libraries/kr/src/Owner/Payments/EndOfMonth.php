@@ -46,7 +46,7 @@ class EndOfMonth extends Payments
 	 * @throws Exception
 	 * @since  3.3.1
 	 */
-	public function process()
+	public function process(): void
 	{
 		if ($this->net)
 		{

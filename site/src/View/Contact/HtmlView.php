@@ -1,4 +1,5 @@
-<?php
+<?php /** @noinspection PhpPossiblePolymorphicInvocationInspection */
+
 /**
  * @package    Know Reservations
  * @subpackage Site View
@@ -100,7 +101,7 @@ class HtmlView extends KrHtmlView\Site
 					      'region_id' => $this->region_id));
 			}
 
-			$pathway = HtmlView::propertiesPathway($pathway, $this->region_id, $this->region_name, $Itemid);
+			$pathway = HtmlView::propertiesPathway($pathway);
 
 			$Itemid  = SiteHelper::getItemId('com_knowres', 'properties', array(
 				'layout'    => 'search',

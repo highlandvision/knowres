@@ -87,7 +87,7 @@ class Channel extends Service
 	 * @throws InvalidArgumentException
 	 * @since  3.3.0
 	 */
-	protected function getServiceXrefForProperty(int $property_id)
+	protected function getServiceXrefForProperty(int $property_id): void
 	{
 		if (!$property_id)
 		{
@@ -343,7 +343,7 @@ class Channel extends Service
 	 * @throws Exception
 	 * @since  3.3.1
 	 */
-	protected function setDateRange()
+	protected function setDateRange(): void
 	{
 		$this->range = TickTock::allDatesBetween($this->first, $this->final);
 		$this->dow   = TickTock::allDowBetween($this->first, $this->final);
@@ -359,7 +359,7 @@ class Channel extends Service
 	 * @throws Exception
 	 * @since  3.3.1
 	 */
-	protected function setDates(string $first, int $cbl, int $pbl = 365)
+	protected function setDates(string $first, int $cbl, int $pbl = 365): void
 	{
 		$this->first = $first;
 		$this->final = min(TickTock::modifyDays($this->first, $cbl), TickTock::modifyDays($this->first, $pbl));

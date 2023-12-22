@@ -14,6 +14,7 @@ defined('_JEXEC') or die;
 use Exception;
 use HighlandVision\KR\Joomla\Extend\FormController;
 use HighlandVision\KR\Translations;
+use JetBrains\PhpStorm\NoReturn;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 
 /**
@@ -33,7 +34,7 @@ class TranslationController extends FormController
 	 * @since   3.0
 	 * @return  void
 	 */
-	public function translateme(): void
+	#[NoReturn] public function translateme(): void
 	{
 		$this->checkToken();
 

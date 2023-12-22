@@ -173,7 +173,6 @@ class Channel
 	 *
 	 * @throws Exception
 	 * @since        3.2.0
-	 * @noinspection DuplicatedCode
 	 */
 	protected function savePaymentAgent(): void
 	{

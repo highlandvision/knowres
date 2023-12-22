@@ -71,7 +71,6 @@ class Payments extends KrHtmlView
 			if ($this->allow_cancel)
 			{
 				$text = KrMethods::plain('COM_KNOWRES_JS_CONFIRM');
-				/** @noinspection PhpParamsInspection */
 				$Toolbar->standardButton('cancel')
 				        ->icon('fa-solid fa-thumbs-down knowres')
 				        ->onclick("return confirm('" . $text
@@ -83,7 +82,6 @@ class Payments extends KrHtmlView
 		if ($this->params->get('delete_contracts', 0) && $this->access_level == 40)
 		{
 			$text = KrMethods::plain('COM_KNOWRES_CONTRACT_DELETE_CONFIRM');
-			/** @noinspection PhpParamsInspection */
 			$Toolbar->standardButton('delete')
 			        ->icon('fa-solid fa-exclamation-triangle knowres')
 			        ->onclick("return confirm('" . $text

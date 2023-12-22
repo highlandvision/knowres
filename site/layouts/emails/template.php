@@ -6,7 +6,6 @@
  * @license     See the file "LICENSE.txt" for the full license governing this code.
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
-
 /** @noinspection PhpUnhandledExceptionInspection */
 
 defined('_JEXEC') or die;
@@ -56,9 +55,8 @@ extract($displayData);
 		<?php echo KrMethods::plain('COM_KNOWRES_EMAIL_PREHEADER'); ?>
 	</span>
 
-	<table class="body"
-	       style="text-align:left;width:100%;border:none;background-color:<?php echo $body_bg; ?>;border-collapse:separate;mso-table-lspace:0;mso-table-rspace:0;"
-	       role="presentation">
+	<table class="body" style="text-align:left;width:100%;border:none;background-color:<?php echo $body_bg; ?>;
+		border-collapse:separate;mso-table-lspace:0;mso-table-rspace:0;" role="presentation">
 		<tr>
 			<td>
 				<!--CENTERED CONTAINER-->

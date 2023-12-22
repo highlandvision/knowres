@@ -104,7 +104,7 @@ class DailyView extends KrHtmlView
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected function addToolbar()
+	protected function addToolbar(): void
 	{
 		$Toolbar = Toolbar::getInstance();
 
@@ -144,7 +144,7 @@ class DailyView extends KrHtmlView
 	 * @throws Exception
 	 * @since  4.0.0
 	 */
-	#[NoReturn] protected function setLines()
+	#[NoReturn] protected function setLines(): void
 	{
 		foreach ($this->items as $c)
 		{

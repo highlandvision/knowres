@@ -56,7 +56,7 @@ class MapMarkers extends Images
 	 *
 	 * @since 1.0.0
 	 */
-	public function deleteImage()
+	public function deleteImage(): void
 	{
 		$path = $this->upload_path . $this->name;
 		File::delete($path);
@@ -68,7 +68,7 @@ class MapMarkers extends Images
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function process()
+	public function process(): void
 	{
 		$this->deleteExisting();
 		$this->resize();
@@ -80,7 +80,7 @@ class MapMarkers extends Images
 	 * @throws RuntimeException
 	 * @since 4.0.0
 	 */
-	public function resize()
+	public function resize(): void
 	{
 		$source  = $this->tmp_name;
 		$target  = $this->upload_path . $this->name;
@@ -94,7 +94,7 @@ class MapMarkers extends Images
 	 *
 	 * @since  4.0.0
 	 */
-	protected function deleteExisting()
+	protected function deleteExisting(): void
 	{
 		$path  = $this->upload_path . "*.{jpg,gif,png,JPG,GIF,PNG}";
 		$files = glob($path, GLOB_BRACE);
@@ -110,7 +110,7 @@ class MapMarkers extends Images
 	 * @throws RuntimeException
 	 * @since  4.0.0
 	 */
-	protected function setFolders()
+	protected function setFolders(): void
 	{
 		self::makeFolder($this->upload_path);
 	}
@@ -120,7 +120,7 @@ class MapMarkers extends Images
 	 *
 	 * @since 1.0.0
 	 */
-	protected function setPaths()
+	protected function setPaths(): void
 	{
 		$path   = [];
 		$path[] = 'images';

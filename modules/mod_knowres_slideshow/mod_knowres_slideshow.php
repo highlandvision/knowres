@@ -14,6 +14,7 @@ use HighlandVision\KR\Translations;
 use Joomla\CMS\Helper\ModuleHelper;
 
 if ($params->get('layout', 'default') == 'default') {
+	/** @noinspection PhpPossiblePolymorphicInvocationInspection */
 	$app->bootComponent('com_knowres')->getMVCFactory()->createModel('Slideshow', 'Site', ['ignore_request' => true]);
 }
 

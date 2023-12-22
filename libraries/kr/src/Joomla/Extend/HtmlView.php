@@ -152,7 +152,7 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 	 * @throws Exception
 	 * @since  4.0.0
 	 */
-	public function checkErrors()
+	public function checkErrors(): void
 	{
 		$errors = $this->get('Errors');
 		if (is_countable($errors) && count($errors)) {
@@ -166,7 +166,7 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 	 * @throws Exception
 	 * @since  4.0.0
 	 */
-	public function checkVersions()
+	public function checkVersions(): void
 	{
 		if (!KrMethods::getParams('com_knowres')->get('save_history', 0)) {
 			$this->form->setFieldAttribute('version', 'type', 'hidden');
@@ -182,7 +182,7 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 	 *
 	 * @since  4.0.0
 	 */
-	public function getActions(string $view = '', int $id = 0)
+	public function getActions(string $view = '', int $id = 0): void
 	{
 		$this->canDo = ContentHelper::getActions('com_knowres', $view, $id);
 	}
@@ -367,7 +367,7 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 			ToolbarHelper::apply($name . '.apply');
 			ToolbarHelper::saveGroup([['save', $name . '.save'],
 			                          ['save2new', $name . '.save2new']
-			                         ],);
+			                         ]);
 
 			$Toolbar->cancel($name . '.cancel', 'JTOOLBAR_CANCEL');
 		}
@@ -542,7 +542,7 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 	 *
 	 * @since  4.0.0
 	 */
-	protected function getFormAriaLabel()
+	protected function getFormAriaLabel(): void
 	{
 		$text = empty($this->item->id) ? KrMethods::plain('COM_KNOWRES_ADD') : KrMethods::plain('COM_KNOWRES_EDIT');
 
@@ -557,7 +557,7 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 	 * @throws Exception
 	 * @since  4.0.0
 	 */
-	protected function getUserSessionData(bool $property_required = true)
+	protected function getUserSessionData(bool $property_required = true): void
 	{
 		$userSession = new KrSession\User();
 		$userData    = $userSession->getData();

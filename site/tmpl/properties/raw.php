@@ -6,6 +6,7 @@
  * @license    See the file "LICENSE.txt" for the full license governing this code.
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
+/** @noinspection PhpUnhandledExceptionInspection */
 
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Utility;

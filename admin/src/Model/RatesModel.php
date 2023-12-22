@@ -65,7 +65,7 @@ class RatesModel extends ListModel
 	 * @throws Exception
 	 * @since  2.4.0
 	 */
-	public static function insertUpdateRates(array $updates)
+	public static function insertUpdateRates(array $updates): void
 	{
 		$db  = KrFactory::getDatabase();
 		$sql = [];
@@ -510,7 +510,7 @@ class RatesModel extends ListModel
 	 * @throws Exception
 	 * @since 1.0.0
 	 */
-	protected function populateState($ordering = 'a.valid_from', $direction = 'asc')
+	protected function populateState($ordering = 'a.valid_from', $direction = 'asc'): void
 	{
 		$this->setState('filter.search',
 			$this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string'));

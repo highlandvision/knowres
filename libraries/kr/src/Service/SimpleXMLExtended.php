@@ -21,7 +21,7 @@ class SimpleXMLExtended extends SimpleXMLElement
 	 *
 	 * @since 3.1.0
 	 */
-	public function addCData($cdata_text)
+	public function addCData($cdata_text): void
 	{
 		$node = dom_import_simplexml($this);
 		$no   = $node->ownerDocument;
@@ -36,7 +36,7 @@ class SimpleXMLExtended extends SimpleXMLElement
 	 *
 	 * @since 3.3.0
 	 */
-	public function addChildCData(string $name, string $cdata_text)
+	public function addChildCData(string $name, string $cdata_text): void
 	{
 		$child = $this->addChild($name);
 		$child->addCData($cdata_text);

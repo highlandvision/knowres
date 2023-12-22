@@ -13,6 +13,7 @@ use HighlandVision\KR\Framework\KrMethods;
 use Joomla\CMS\Factory;
 
 /** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
+/** @noinspection PhpUnhandledExceptionInspection */
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useScript('keepalive')
    ->useScript('bootstrap.modal');

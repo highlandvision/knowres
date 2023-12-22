@@ -53,7 +53,7 @@ class PropertysettingModel extends AdminModel
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	public static function updateSetting(string $akey, int $property_id, string $plugin = 'vrbo')
+	public static function updateSetting(string $akey, int $property_id, string $plugin = 'vrbo'): void
 	{
 		if (!$akey)
 		{
@@ -122,7 +122,7 @@ class PropertysettingModel extends AdminModel
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	public function saveSettings(int $property_id)
+	public function saveSettings(int $property_id): void
 	{
 		$old_settings    = KrMethods::inputString('old_settings', 'null');
 		$old_setting_ids = KrMethods::inputString('old_setting_ids', 'null');
@@ -155,7 +155,7 @@ class PropertysettingModel extends AdminModel
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	public function updateSettings(array $settings, int $property_id)
+	public function updateSettings(array $settings, int $property_id): void
 	{
 		$rates_update   = false;
 		$deposit_update = false;

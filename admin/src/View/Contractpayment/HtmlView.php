@@ -75,7 +75,7 @@ class HtmlView extends KrHtmlView
 	 *
 	 * @since 1.0.0
 	 */
-	protected function setCurrencies()
+	protected function setCurrencies(): void
 	{
 		$this->currencies[] = $this->contract->currency;
 

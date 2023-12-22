@@ -40,7 +40,7 @@ class Knowres extends Base
 	 * @throws Exception
 	 * @return array
 	 */
-	#[NoReturn] public function build($uriToBuild, $platformUri, $originalUri)
+	#[NoReturn] public function build($uriToBuild, $platformUri, $originalUri): array
 	{
 		$sefSegments = [];
 		$params      = KrMethods::getParams();
@@ -247,7 +247,7 @@ class Knowres extends Base
 	 *
 	 * @return array
 	 */
-	public function buildNormalizedNonSef($vars)
+	public function buildNormalizedNonSef($vars): array
 	{
 		return $this->nonSefHelper->stripFeedVars(
 			parent::buildNormalizedNonSef(
@@ -264,7 +264,7 @@ class Knowres extends Base
 	 * @throws Exception
 	 * @return bool
 	 */
-	public function shouldLeaveNonSef($uri)
+	public function shouldLeaveNonSef($uri): bool
 	{
 		$user = KrMethods::getUser();
 		if ($user->id)

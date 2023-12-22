@@ -12,6 +12,7 @@ defined('_JEXEC') or die;
 use HighlandVision\KR\Media;
 use Joomla\CMS\Factory;
 
+/** @noinspection PhpUnhandledExceptionInspection */
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useScript('keepalive')
    ->useScript('bootstrap.dropdown')

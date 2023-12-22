@@ -11,6 +11,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Helper\ModuleHelper;
 
+/** @noinspection PhpPossiblePolymorphicInvocationInspection */
 $app->bootComponent('com_knowres')->getMVCFactory()->createModel('Hero', 'Site', ['ignore_request' => true]);
 
 $wa = $app->getDocument()->getWebAssetManager();

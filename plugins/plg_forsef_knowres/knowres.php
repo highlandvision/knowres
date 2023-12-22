@@ -25,14 +25,14 @@ class PlgForsefKnowres extends CMSPlugin
 	/**
 	 * Constructor
 	 *
-	 * @param   DispatcherInterface  &$subject  The object to observe
-	 * @param   array                 $config   An optional associative array of configuration settings.
+	 * @param   DispatcherInterface  $subject  The object to observe
+	 * @param   array                $config   An optional associative array of configuration settings.
 	 *                                          Recognized key values include 'name', 'group', 'params', 'language'
 	 *                                          (this list is not meant to be comprehensive).
 	 *
 	 * @since   4.0.0
 	 */
-	public function __construct(&$subject, $config = array())
+	public function __construct(DispatcherInterface $subject, array $config = [])
 	{
 		parent::__construct($subject, $config);
 

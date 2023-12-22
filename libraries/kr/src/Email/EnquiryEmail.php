@@ -77,7 +77,7 @@ class EnquiryEmail extends Email
 	 * @throws RuntimeException|Exception
 	 * @since 1.0.0
 	 */
-	public function setData()
+	public function setData(): void
 	{
 		$this->guest_email = $this->data['REQEMAIL'];
 		$this->guest_name  = $this->data['REQNAME'];
@@ -99,7 +99,7 @@ class EnquiryEmail extends Email
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected function sendEmails(object $trigger)
+	protected function sendEmails(object $trigger): void
 	{
 		$this->constructEmail($trigger->email_template_id);
 
@@ -159,7 +159,7 @@ class EnquiryEmail extends Email
 	protected function setContactData(?int $agency_id = null): void
 	{
 		$this->setAgency($agency_id);
-		$enquiry_email = KrMethods::getParams('enquiry_email');
+		$enquiry_email = KrMethods::getParams->get('enquiry_email', null);
 
 		if (!empty($this->property))
 		{
@@ -205,7 +205,7 @@ class EnquiryEmail extends Email
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected function setPropertyData()
+	protected function setPropertyData(): void
 	{
 		$this->data['PROPERTYNAME'] = '';
 		$this->owner_email          = '';

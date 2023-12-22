@@ -75,7 +75,7 @@ class Stripe extends Gateway
 	 * @throws ApiErrorException
 	 * @since  1.0.0
 	 */
-	public function processIncoming()
+	public function processIncoming(): void
 	{
 		$this->readTables();
 		if ($this->paymentData->payment_type === 'OBR')
@@ -155,7 +155,7 @@ class Stripe extends Gateway
 	 * @throws ApiErrorException
 	 * @since  2.4.0
 	 */
-	protected function createCustomer()
+	protected function createCustomer(): void
 	{
 		$this->function                  = 'createCustomer';
 		$this->paymentData->customer_ref = '';
@@ -355,7 +355,7 @@ class Stripe extends Gateway
 	 * @throws ApiErrorException
 	 * @since  3.3.0
 	 */
-	protected function paymentIntent()
+	protected function paymentIntent(): void
 	{
 		$this->function = 'paymentIntent';
 		$params         = ['payment_intent_id' => $this->paymentData->payment_intent_id];
@@ -375,7 +375,7 @@ class Stripe extends Gateway
 	 * @throws ApiErrorException
 	 * @since  3.3.0
 	 */
-	protected function paymentMethod()
+	protected function paymentMethod(): void
 	{
 		$this->function = 'paymentMethod';
 
@@ -410,7 +410,7 @@ class Stripe extends Gateway
 	 * @throws RuntimeException|Exception
 	 * @since  1.0.0
 	 */
-	protected function setOutputForPaymentType()
+	protected function setOutputForPaymentType(): void
 	{
 		if ($this->paymentData->payment_type == 'RBD')
 		{
@@ -438,7 +438,7 @@ class Stripe extends Gateway
 	 * @throws RuntimeException
 	 * @since  1.0.0
 	 */
-	protected function setPaymentDataRBD()
+	protected function setPaymentDataRBD(): void
 	{
 		$this->paymentData->amount         = $this->payment->amount;
 		$this->paymentData->base_amount    = $this->payment->base_amount;
@@ -465,7 +465,7 @@ class Stripe extends Gateway
 	 * @throws ApiErrorException
 	 * @since  1.0.0
 	 */
-	protected function setPaymentOBR()
+	protected function setPaymentOBR(): void
 	{
 		$this->function = 'setPaymentOBR';
 
@@ -481,7 +481,7 @@ class Stripe extends Gateway
 	 * @throws ApiErrorException
 	 * @since  1.0.0
 	 */
-	protected function setPaymentOthers()
+	protected function setPaymentOthers(): void
 	{
 		$this->function = 'setPaymentOthers';
 
@@ -502,7 +502,7 @@ class Stripe extends Gateway
 	 * @throws ApiErrorException
 	 * @since  1.0.0
 	 */
-	protected function setPaymentRBD()
+	protected function setPaymentRBD(): void
 	{
 		$this->function = 'setPaymentRBD';
 
@@ -564,7 +564,7 @@ class Stripe extends Gateway
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected function setPaymentRBDFailure()
+	protected function setPaymentRBDFailure(): void
 	{
 		$update                 = new stdClass();
 		$update->id             = $this->contract_id;
@@ -583,7 +583,7 @@ class Stripe extends Gateway
 	 *
 	 * @since 1.0.0
 	 */
-	protected function writeErrors(object $e, mixed $message = null)
+	protected function writeErrors(object $e, mixed $message = null): void
 	{
 		$this->messages[] = 'Stripe call failed see error details below';
 		$this->messages[] = $e->getMessage();

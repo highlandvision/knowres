@@ -221,7 +221,7 @@ class ContractguestdatasModel extends ListModel
 	 *
 	 * @since 1.0.0
 	 */
-	protected function populateState($ordering = 'a.guest_id', $direction = 'asc')
+	protected function populateState($ordering = 'a.guest_id', $direction = 'asc'): void
 	{
 		$search = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
 		$this->setState('filter.search', trim($search));

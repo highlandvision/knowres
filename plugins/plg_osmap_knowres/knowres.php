@@ -110,7 +110,7 @@ class PlgOSMapKnowres extends Base implements ContentInterface
 	 * @throws Exception
 	 * @since  4.0.0
 	 */
-	public static function getTree($collector, $parent, $params)
+	public static function getTree($collector, $parent, $params): void
 	{
 		$priority   = $params->get('priority', $parent->priority);
 		$changefreq = $params->get('changefreq', $parent->changefreq);
@@ -154,7 +154,7 @@ class PlgOSMapKnowres extends Base implements ContentInterface
 	 *
 	 * @throws Exception
 	 */
-	private static function processTreeProperties(Collector $collector, Item $menuItem, object $params)
+	private static function processTreeProperties(Collector $collector, Item $menuItem, object $params): void
 	{
 		static::checkMemory();
 
@@ -252,7 +252,7 @@ class PlgOSMapKnowres extends Base implements ContentInterface
 	 *
 	 * @throws Exception
 	 */
-	private static function processTreeRegions(Collector $collector, Item $menuItem, object $params)
+	private static function processTreeRegions(Collector $collector, Item $menuItem, object $params): void
 	{
 		//TODO v4 Put this into a menu item
 		static::checkMemory();

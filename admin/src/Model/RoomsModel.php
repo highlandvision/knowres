@@ -180,7 +180,7 @@ class RoomsModel extends ListModel
 	 * @throws Exception
 	 * @since  3.2.0
 	 */
-	protected function populateState($ordering = 'name', $direction = 'asc')
+	protected function populateState($ordering = 'name', $direction = 'asc'): void
 	{
 		$app    = Factory::getApplication();
 		$search = $app->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');

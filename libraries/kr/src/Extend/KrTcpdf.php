@@ -44,7 +44,7 @@ class KrTcpdf extends TCPDF
 	 *
 	 * @since   2.2.0
 	 */
-	public function Footer()
+	public function Footer(): void
 	{
 		$this->SetFont('dejavusans', '', 8);
 		$this->SetXY('0', '820');
@@ -61,7 +61,7 @@ class KrTcpdf extends TCPDF
 		$this->Cell(0, 10, 'Page ' . $this->getAliasNumPage(), 0, 0, 'R');
 	}
 
-	public function Header()
+	public function Header(): void
 	{
 		$logo = JPATH_ROOT . '/images/branding/pdflogo.jpg';
 		$this->Image($logo, 30, 20, 240, 60, 'jpg', '', 'T');

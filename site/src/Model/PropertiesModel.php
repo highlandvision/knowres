@@ -36,7 +36,6 @@ use function date;
 use function implode;
 use function is_array;
 use function json_encode;
-use function print_r;
 use function trim;
 
 /**

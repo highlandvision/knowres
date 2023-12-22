@@ -103,7 +103,7 @@ class DashboardView extends KrHtmlView\Property
 	 * @throws Exception
 	 * @since  3.0.0
 	 */
-	protected function initStats()
+	protected function initStats(): void
 	{
 		$this->stats_type    = [];
 		$this->stats_type[0] = KrMethods::plain('COM_KNOWRES_MENU_PROPERTY_STATISTICS_ALL');
@@ -128,7 +128,7 @@ class DashboardView extends KrHtmlView\Property
 	 * @throws Exception
 	 * @since 3.0.0
 	 */
-	protected function setStats()
+	protected function setStats(): void
 	{
 		$year  = TickTock::modifyYears('now', 1, '-');
 		$month = TickTock::modifyDays('now', 30, '-');
@@ -170,7 +170,7 @@ class DashboardView extends KrHtmlView\Property
 	 * @throws Exception
 	 * @since  3.0.0
 	 */
-	protected function updateStats(string $period, object $c)
+	protected function updateStats(string $period, object $c): void
 	{
 		$days = TickTock::differenceDays($c->arrival, $c->departure);
 

@@ -112,7 +112,7 @@ class ShowView extends KrHtmlView\Contract
 	 * @throws Exception
 	 * @since  3.2.0
 	 */
-	protected function setTitle()
+	protected function setTitle(): void
 	{
 		if (!$this->item->black_booking)
 		{
@@ -166,7 +166,7 @@ class ShowView extends KrHtmlView\Contract
 	 * @throws Exception
 	 * @since  4.0.0
 	 */
-	protected function setXero()
+	protected function setXero(): void
 	{
 		$xero = KrFactory::getListModel('services')->getServicesByPlugin('xero');
 		if (is_countable($xero))

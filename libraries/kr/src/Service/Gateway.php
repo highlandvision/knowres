@@ -94,7 +94,7 @@ class Gateway extends Service
 	 * @throws RuntimeException
 	 * @since  1.0.0
 	 */
-	protected function readPayment()
+	protected function readPayment(): void
 	{
 		$this->payment = KrFactory::getListModel('contractpayments')->getPending($this->contract_id, $this->service_id);
 		if (!$this->payment->id) {
@@ -110,7 +110,7 @@ class Gateway extends Service
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected function readTables()
+	protected function readTables(): void
 	{
 		$this->readContract();
 		$this->readGuest();
@@ -125,7 +125,7 @@ class Gateway extends Service
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected function setNote()
+	protected function setNote(): void
 	{
 		if ($this->paymentData->manual) {
 			$this->paymentData->note =
@@ -160,7 +160,7 @@ class Gateway extends Service
 	 * @throws RuntimeException|Exception
 	 * @since  1.0.0
 	 */
-	protected function setOutputForPaymentType()
+	protected function setOutputForPaymentType(): void
 	{
 		$this->setPaymentData();
 	}
@@ -171,7 +171,7 @@ class Gateway extends Service
 	 * @throws Exception
 	 * @since 1.0.0
 	 */
-	protected function setOutputManualDates()
+	protected function setOutputManualDates(): void
 	{
 		$this->paymentData->expiry_date = $this->contract->expiry_date;
 		if ($this->paymentData->payment_type == 'OBD' || $this->paymentData->payment_type == 'PBD') {
@@ -197,7 +197,7 @@ class Gateway extends Service
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected function setPaymentData()
+	protected function setPaymentData(): void
 	{
 		$gateways = $this->paymentData->gateways;
 		$gateway  = $gateways[$this->service_id];
@@ -230,7 +230,7 @@ class Gateway extends Service
 	 * @throws RuntimeException
 	 * @since  1.0.0
 	 */
-	protected function setPaymentDataRBD()
+	protected function setPaymentDataRBD(): void
 	{
 		$this->paymentData->amount         = $this->payment->amount;
 		$this->paymentData->base_amount    = $this->payment->base_amount;

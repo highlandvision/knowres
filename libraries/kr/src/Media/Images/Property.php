@@ -69,7 +69,7 @@ class Property extends Images
 	 *
 	 * @since 1.0.0
 	 */
-	public function deleteImage(string $name)
+	public function deleteImage(string $name): void
 	{
 		$path = $this->original_path . $name;
 		File::delete($path);
@@ -87,7 +87,7 @@ class Property extends Images
 	 * @throws Exception
 	 * @since  4.0.0
 	 */
-	public function resize()
+	public function resize(): void
 	{
 		$quality = $this->params->get('max_upload_quality');
 		$source  = $this->original_path . $this->name;
@@ -118,7 +118,7 @@ class Property extends Images
 	 *
 	 * @since  4.0.0
 	 */
-	protected function deleteExisting()
+	protected function deleteExisting(): void
 	{
 		$path = $this->upload_path . "*.{jpg,gif,png,JPG,GIF,PNG}";
 		if ($this->type == 'solo')
@@ -138,7 +138,7 @@ class Property extends Images
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function process()
+	public function process(): void
 	{
 		$this->deleteExisting();
 		$this->resize();
@@ -150,7 +150,7 @@ class Property extends Images
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function processOriginal()
+	public function processOriginal(): void
 	{
 		//TODO-v4.3 needs additional validation for max server size
 		if (!move_uploaded_file($this->tmp_name, $this->original_path . $this->name))
@@ -185,7 +185,7 @@ class Property extends Images
 	 * @throws RuntimeException
 	 * @since  4.0.0
 	 */
-	protected function setFolders()
+	protected function setFolders(): void
 	{
 		self::makeFolder($this->upload_path);
 		self::makeFolder($this->original_path);
@@ -219,7 +219,7 @@ class Property extends Images
 	 *
 	 * @since 1.0.0
 	 */
-	protected function setPaths()
+	protected function setPaths(): void
 	{
 		$path   = [];
 		$path[] = 'images';

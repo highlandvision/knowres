@@ -96,7 +96,7 @@ class ContractEmail extends Email
 	 * @since  3.3.0
 	 */
 	public function sendTheEmails(int $contract_id, float $payment_amount = 0.00, string $payment_currency = '',
-		int $service_id = 0)
+		int $service_id = 0): void
 	{
 		$this->contract_id      = $contract_id;
 		$this->payment_amount   = $payment_amount;
@@ -111,7 +111,7 @@ class ContractEmail extends Email
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function setData()
+	public function setData(): void
 	{
 		$this->contract = KrFactory::getAdminModel('contract')->getItem($this->contract_id);
 		if (empty($this->contract->id))
@@ -316,7 +316,7 @@ class ContractEmail extends Email
 	 *
 	 * @since 3.3.0
 	 */
-	protected function deleteAttachments()
+	protected function deleteAttachments(): void
 	{
 		if (is_array($this->attachments))
 		{
@@ -341,7 +341,7 @@ class ContractEmail extends Email
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected function formatData()
+	protected function formatData(): void
 	{
 		$this->data['SITENAME'] = KrMethods::getCfg('sitename');
 		$this->data['TODAY']    = TickTock::displayDate(TickTock::getDate());
@@ -375,7 +375,7 @@ class ContractEmail extends Email
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	protected function sendEmailGuest(int $template_id)
+	protected function sendEmailGuest(int $template_id): void
 	{
 		$cc = [];
 		if ($this->guest->email_2)
@@ -422,7 +422,7 @@ class ContractEmail extends Email
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	protected function sendEmailOwner(int $template_id, array $emails)
+	protected function sendEmailOwner(int $template_id, array $emails): void
 	{
 		$count = 0;
 		$cc    = [];
@@ -490,7 +490,7 @@ class ContractEmail extends Email
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected function sendEmails(object $trigger)
+	protected function sendEmails(object $trigger): void
 	{
 		$this->cc         = null;
 		$this->bcc        = null;
@@ -548,7 +548,7 @@ class ContractEmail extends Email
 	 *
 	 * @since 3.3.0
 	 */
-	protected function setAgentData()
+	protected function setAgentData(): void
 	{
 		$this->data['AGENTNAME'] = '';
 		$this->data['AGENTTEXT'] = '';
@@ -575,7 +575,7 @@ class ContractEmail extends Email
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	protected function setButtons()
+	protected function setButtons(): void
 	{
 		$link                       = SiteHelper::buildDashboardLink($this->contract, 'reviewform', true);
 		$this->data['BUTTONREVIEW'] = KrMethods::render('emails.button',
@@ -661,7 +661,7 @@ class ContractEmail extends Email
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	protected function setContractData()
+	protected function setContractData(): void
 	{
 		$this->data['ARRIVALDATE'] = TickTock::displayDate($this->contract->arrival);
 		$this->data['BALANCEDAYS'] = $this->contract->balance_days;
@@ -715,7 +715,7 @@ class ContractEmail extends Email
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	protected function setGuestData()
+	protected function setGuestData(): void
 	{
 		$this->data['GUESTEMAIL']     = $this->guest->email;
 		$this->data['GUESTFIRSTNAME'] = $this->guest->firstname;
@@ -730,7 +730,7 @@ class ContractEmail extends Email
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	protected function setLinks()
+	protected function setLinks(): void
 	{
 		$query                      = [
 			'option' => 'com_knowres',
@@ -831,7 +831,7 @@ class ContractEmail extends Email
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected function setOwner()
+	protected function setOwner(): void
 	{
 		if (empty($this->owner->id))
 		{
@@ -849,7 +849,7 @@ class ContractEmail extends Email
 	 * @throws Exception
 	 * @since 3.3.0
 	 */
-	protected function setPaymentData()
+	protected function setPaymentData(): void
 	{
 		$this->data['PAYMENTAMOUNT']    = Utility::displayValue($this->payment_amount, $this->payment_currency);
 		$this->data['PAYMENTTOTAL']     = Utility::displayValue($this->setPaymentTotal(false),
@@ -888,7 +888,7 @@ class ContractEmail extends Email
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	protected function setPropertyData()
+	protected function setPropertyData(): void
 	{
 		$this->data['CONTACTNAME']  = $this->property->contact_name;
 		$this->data['CONTACTPHONE'] = $this->property->contact_phone;
@@ -962,7 +962,7 @@ class ContractEmail extends Email
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	protected function setService()
+	protected function setService(): void
 	{
 		if ($this->service_id)
 		{

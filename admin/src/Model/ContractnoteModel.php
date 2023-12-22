@@ -90,7 +90,7 @@ class ContractnoteModel extends AdminModel
 	 * @since  2.3.0
 	 */
 	public static function createContractNote(int $contract_id, string $text, string $note_type = '3',
-		bool $created_by = true)
+		bool $created_by = true): void
 	{
 		if ($contract_id && $text)
 		{

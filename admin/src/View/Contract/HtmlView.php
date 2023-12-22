@@ -276,7 +276,7 @@ class HtmlView extends KrHtmlView\Contract
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	protected function checkOwnerAccess()
+	protected function checkOwnerAccess(): void
 	{
 		if ($this->access_level == 10 && !$this->checkOwner())
 		{
@@ -299,7 +299,7 @@ class HtmlView extends KrHtmlView\Contract
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	protected function isEdit()
+	protected function isEdit(): void
 	{
 		$this->property_id = $this->item->property_id;
 		$this->arrival     = $this->item->arrival;
@@ -357,7 +357,7 @@ class HtmlView extends KrHtmlView\Contract
 	 * @since 2.4.0
 	 * @since 1.0.0
 	 */
-	protected function setPageTitle()
+	protected function setPageTitle(): void
 	{
 		$this->property_name = '';
 		if (empty($this->item->id))
@@ -414,7 +414,7 @@ class HtmlView extends KrHtmlView\Contract
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	protected function setSessionData()
+	protected function setSessionData(): void
 	{
 		$contractSession    = new KrSession\Contract();
 		$this->contractData = $contractSession->resetData();

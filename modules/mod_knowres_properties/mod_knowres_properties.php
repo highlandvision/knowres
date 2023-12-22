@@ -20,6 +20,7 @@ $wa->useScript('com_knowres.site-modules');
 $property_select = PropertiesHelper::setOptions();
 if ($property_select)
 {
+	/** @noinspection PhpUnhandledExceptionInspection */
 	$Itemid = SiteHelper::getItemId('com_knowres', 'property', ['id' => 0]);
 	require ModuleHelper::getLayoutPath('mod_knowres_properties', $params->get('layout', 'default'));
 }

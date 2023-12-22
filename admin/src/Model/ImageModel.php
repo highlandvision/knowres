@@ -184,7 +184,7 @@ class ImageModel extends AdminModel
 	 * @throws RuntimeException
 	 * @since  3.3.0
 	 */
-	public function updateOrdering(string $order)
+	public function updateOrdering(string $order): void
 	{
 		$ordering = explode(',', $order);
 

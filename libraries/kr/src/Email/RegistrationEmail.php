@@ -58,7 +58,7 @@ class RegistrationEmail extends Email
 	 * @throws InvalidArgumentException|Exception
 	 * @since  3.3.0
 	 */
-	public function sendTheEmails(string $username, string $password, string $guest_name, string $guest_email)
+	public function sendTheEmails(string $username, string $password, string $guest_name, string $guest_email): void
 	{
 		if (!$username || !$password || !$guest_name || !$guest_email)
 		{
@@ -102,7 +102,7 @@ class RegistrationEmail extends Email
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected function sendEmails(object $trigger)
+	protected function sendEmails(object $trigger): void
 	{
 		$this->constructEmail($trigger->email_template_id);
 

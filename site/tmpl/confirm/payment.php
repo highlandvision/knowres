@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection PhpPossiblePolymorphicInvocationInspection */
 /**
  * @package     Know Reservations
  * @subpackage  Site Controller

@@ -22,7 +22,6 @@ use HighlandVision\KR\Session as KrSession;
 use HighlandVision\KR\SiteHelper;
 use HighlandVision\KR\Translations;
 use JetBrains\PhpStorm\NoReturn;
-use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
 use stdClass;
 

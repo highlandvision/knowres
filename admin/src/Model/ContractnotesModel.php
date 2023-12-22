@@ -188,7 +188,7 @@ class ContractnotesModel extends ListModel
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected function populateState($ordering = 'a.id', $direction = 'desc')
+	protected function populateState($ordering = 'a.id', $direction = 'desc'): void
 	{
 		$this->setState('filter.search',
 			$this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string'));

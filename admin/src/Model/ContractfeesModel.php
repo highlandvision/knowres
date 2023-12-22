@@ -140,7 +140,7 @@ class ContractfeesModel extends ListModel
 	 * @throws RuntimeException
 	 * @since  1.0.0
 	 */
-	public function updateActioned(array $pks, int $value)
+	public function updateActioned(array $pks, int $value): void
 	{
 		if (!is_countable($pks) || !count($pks))
 		{
@@ -168,7 +168,7 @@ class ContractfeesModel extends ListModel
 	 * @throws QueryTypeAlreadyDefinedException
 	 * @since  1.0.0
 	 */
-	public function updatePaidFees(int $contract_id, int $payment_id)
+	public function updatePaidFees(int $contract_id, int $payment_id): void
 	{
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
@@ -274,7 +274,7 @@ class ContractfeesModel extends ListModel
 	 *
 	 * @since 1.0.0
 	 */
-	protected function populateState($ordering = 'a.created_at', $direction = 'asc')
+	protected function populateState($ordering = 'a.created_at', $direction = 'asc'): void
 	{
 		$search = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
 		$this->setState('filter.search', trim($search));

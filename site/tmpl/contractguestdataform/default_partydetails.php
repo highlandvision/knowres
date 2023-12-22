@@ -6,8 +6,6 @@
  * @license         GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-/** @noinspection PhpUnhandledExceptionInspection */
-
 defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrMethods;

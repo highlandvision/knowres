@@ -7,8 +7,6 @@
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
-/** @noinspection PhpUnhandledExceptionInspection */
-
 defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrFactory;
@@ -220,50 +218,51 @@ $wa->useScript('com_knowres.site')
 </div>
 
 <script>
-	function fillBilling(checked) {
-		if (checked) {
-			document.getElementById('jform_b_address1').value = document.getElementById('jform_address1').value;
-			document.getElementById('jform_b_address2').value = document.getElementById('jform_address2').value;
-			document.getElementById('jform_b_town').value = document.getElementById('jform_town').value;
-			document.getElementById('jform_b_postcode').value = document.getElementById('jform_postcode').value;
+    function fillBilling(checked) {
+        if (checked) {
+            document.getElementById('jform_b_address1').value = document.getElementById('jform_address1').value;
+            document.getElementById('jform_b_address2').value = document.getElementById('jform_address2').value;
+            document.getElementById('jform_b_town').value = document.getElementById('jform_town').value;
+            document.getElementById('jform_b_postcode').value = document.getElementById('jform_postcode').value;
 
-			let first = document.getElementById('jform_country_id');
-			let data = first.innerHTML;
-			let second = document.getElementById('jform_b_country_id');
-			second.innerHTML = second.innerHTML + data;
+            let first = document.getElementById('jform_country_id');
+            let data = first.innerHTML;
+            let second = document.getElementById('jform_b_country_id');
+            second.innerHTML = second.innerHTML + data;
 
-			first = document.getElementById('jform_region_id');
-			data = first.innerHTML;
-			second = document.getElementById('jform_b_region_id');
-			second.innerHTML = second.innerHTML + data;
+            first = document.getElementById('jform_region_id');
+            data = first.innerHTML;
+            second = document.getElementById('jform_b_region_id');
+            second.innerHTML = second.innerHTML + data;
 
-			document.getElementById('jform_b_country_id').value = document.getElementById('jform_country_id').value;
-			document.getElementById('jform_b_region_id').value = document.getElementById('jform_region_id').value;
-		} else {
-			document.getElementById('jform_b_address1').value = '';
-			document.getElementById('jform_b_address2').value = '';
-			document.getElementById('jform_b_town').value = '';
-			document.getElementById('jform_b_postcode').value = '';
-			document.getElementById('jform_b_country_id').value = 0;
-			document.getElementById('jform_b_region_id').value = 0;
-		}
-	}
-	async function comboGeo(parentvalue, task, target, childvalue = '0') {
-		let formData = new FormData();
-		formData.append('parent', parentvalue);
-		formData.append('target', target + '_id');
-		formData.append('child', childvalue);
-		let response = await fetch('index.php?option=com_knowres&task=' + task, {
-			method: 'post',
-			body:   formData
-		});
-		let result = await response.json();
-		if (result.success) {
-			let current = document.querySelector('.' + target + 'chain');
-			current.outerHTML = result.data.html;
-		} else {
-			alert(result.message);
-		}
-		return false;
-	}
+            document.getElementById('jform_b_country_id').value = document.getElementById('jform_country_id').value;
+            document.getElementById('jform_b_region_id').value = document.getElementById('jform_region_id').value;
+        } else {
+            document.getElementById('jform_b_address1').value = '';
+            document.getElementById('jform_b_address2').value = '';
+            document.getElementById('jform_b_town').value = '';
+            document.getElementById('jform_b_postcode').value = '';
+            document.getElementById('jform_b_country_id').value = 0;
+            document.getElementById('jform_b_region_id').value = 0;
+        }
+    }
+
+    async function comboGeo(parentvalue, task, target, childvalue = '0') {
+        let formData = new FormData();
+        formData.append('parent', parentvalue);
+        formData.append('target', target + '_id');
+        formData.append('child', childvalue);
+        let response = await fetch('index.php?option=com_knowres&task=' + task, {
+            method: 'post',
+            body: formData
+        });
+        let result = await response.json();
+        if (result.success) {
+            let current = document.querySelector('.' + target + 'chain');
+            current.outerHTML = result.data.html;
+        } else {
+            alert(result.message);
+        }
+        return false;
+    }
 </script>

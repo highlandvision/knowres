@@ -123,7 +123,7 @@ class Mailchimp extends Service
 	 * @throws InvalidArgumentException
 	 * @since 1.0.0
 	 */
-	protected function setEmail(string $email)
+	protected function setEmail(string $email): void
 	{
 		if (!$email)
 		{
@@ -146,7 +146,7 @@ class Mailchimp extends Service
 	 * @throws InvalidArgumentException
 	 * @since 1.0.0
 	 */
-	protected function setName(string $name)
+	protected function setName(string $name): void
 	{
 		if (empty($name))
 		{

@@ -34,8 +34,10 @@ class GuestController extends FormController
 	 *
 	 * @param  BaseDatabaseModel  $model  The model of the component being processed.
 	 *
+	 * @throws Exception*@throws Exception
+	 * @throws Exception
 	 * @since   1.7
-	 * @return  bool  True if successful, false otherwise and internal error is set.
+	 * @return bool  True if successful, false otherwise and internal error is set.
 	 */
 	public function batch($model = null): bool
 	{

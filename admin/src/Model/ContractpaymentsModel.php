@@ -422,7 +422,7 @@ class ContractpaymentsModel extends ListModel
 	 * @throws Exception
 	 * @since  3.2.0
 	 */
-	public function updateActionedPayments(array $ids)
+	public function updateActionedPayments(array $ids): void
 	{
 		if (!is_countable($ids) || !count($ids))
 		{
@@ -460,7 +460,7 @@ class ContractpaymentsModel extends ListModel
 	 * @throws RuntimeException
 	 * @since  1.0.0
 	 */
-	public function unsetPseudoPayments(int $contract_id)
+	public function unsetPseudoPayments(int $contract_id): void
 	{
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
@@ -503,7 +503,7 @@ class ContractpaymentsModel extends ListModel
 	 * @throws RuntimeException
 	 * @since  3.1.0
 	 */
-	public function updateForXero(int $agency_id)
+	public function updateForXero(int $agency_id): void
 	{
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
@@ -767,7 +767,7 @@ class ContractpaymentsModel extends ListModel
 	 * @throws Exception
 	 * @since 1.0.0
 	 */
-	protected function populateState($ordering = 'a.payment_date', $direction = 'asc')
+	protected function populateState($ordering = 'a.payment_date', $direction = 'asc'): void
 	{
 		$this->setState('filter.search',
 			$this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string'));

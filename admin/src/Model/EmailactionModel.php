@@ -43,7 +43,7 @@ class EmailactionModel extends AdminModel
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public static function updateEmailAction(int $contract_id, string $trigger)
+	public static function updateEmailAction(int $contract_id, string $trigger): void
 	{
 		if ($contract_id && $trigger)
 		{

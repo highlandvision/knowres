@@ -1,4 +1,5 @@
-<?php
+<?php /** @noinspection PhpPossiblePolymorphicInvocationInspection */
+
 /**
  * @package    Know Reservations
  * @subpackage Site View
@@ -22,7 +23,6 @@ use HighlandVision\KR\SiteHelper;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Utility;
 use JetBrains\PhpStorm\NoReturn;
-use Joomla\CMS\Factory;
 use Joomla\Registry\Registry;
 use stdClass;
 

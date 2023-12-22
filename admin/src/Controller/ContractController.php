@@ -973,7 +973,7 @@ class ContractController extends FormController
 	 * @throws Exception
 	 * @since  3.1.0
 	 */
-	public function xero(): void
+	#[NoReturn] public function xero(): void
 	{
 		$view = $this->getView('contract', 'xero');
 		$view->display();

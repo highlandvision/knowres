@@ -96,7 +96,7 @@ class Exchange extends Service
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	public function update()
+	public function update(): void
 	{
 		if ($this->from !== $this->to)
 		{
@@ -109,7 +109,7 @@ class Exchange extends Service
 	 *
 	 * @since  3.3.0
 	 */
-	private function checkVariance()
+	private function checkVariance(): void
 	{
 		if (empty($this->current))
 		{
@@ -161,7 +161,7 @@ class Exchange extends Service
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	private function getRateForAll()
+	private function getRateForAll(): void
 	{
 		$this->method = 'latest';
 
@@ -207,7 +207,7 @@ class Exchange extends Service
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	private function insert()
+	private function insert(): void
 	{
 		if ($this->rate > 0)
 		{
@@ -234,7 +234,7 @@ class Exchange extends Service
 	 * @throws RuntimeException
 	 * @since 3.3.0
 	 */
-	private function readCurrent()
+	private function readCurrent(): void
 	{
 		$this->current = KrFactory::getListModel('exchangerates')->getLatest($this->from, $this->to);
 	}
@@ -247,7 +247,7 @@ class Exchange extends Service
 	 * @throws RuntimeException
 	 * @since  3.3.0
 	 */
-	private function setFrom(string $from)
+	private function setFrom(string $from): void
 	{
 		if (!$from)
 		{
@@ -266,7 +266,7 @@ class Exchange extends Service
 	 * @throws RuntimeException
 	 * @since  3.3.0
 	 */
-	private function setTo(string $to)
+	private function setTo(string $to): void
 	{
 		if (!$to)
 		{
@@ -282,7 +282,7 @@ class Exchange extends Service
 	 * @throws Exception
 	 * @since  3.4.0
 	 */
-	private function updateRate()
+	private function updateRate(): void
 	{
 		$this->readCurrent();
 		if (!empty($this->current))

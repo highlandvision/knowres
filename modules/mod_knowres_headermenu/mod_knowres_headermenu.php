@@ -11,6 +11,7 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Helper\ModuleHelper;
 use Knowres\Module\Headermenu\Administrator\Helper\KnowresHeaderMenuHelper;
 
+/** @noinspection PhpUnhandledExceptionInspection */
 $menu = KnowresHeaderMenuHelper::getMenu();
 if (is_countable($menu) && count($menu))
 {

@@ -24,7 +24,7 @@ class JoomlaEmailService implements InterfaceEmailService
 	 * @inheritDoc
 	 * @throws Exception
 	 */
-	public static function dispatchEmail(string $email, string $subject, string $body, array $options)
+	public static function dispatchEmail(string $email, string $subject, string $body, array $options): void
 	{
 		KrMethods::sendEmail(
 			$options['mailfrom'], $options['fromname'], $email, $subject, $body, true,

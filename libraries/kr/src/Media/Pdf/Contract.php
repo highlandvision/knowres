@@ -54,7 +54,7 @@ class Contract extends Pdf
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected function setAgency()
+	protected function setAgency(): void
 	{
 		if (!empty($this->contract->agency_id))
 		{

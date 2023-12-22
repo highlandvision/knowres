@@ -264,7 +264,7 @@ class PropertysettingsModel extends ListModel
 	 *
 	 * @since 1.0.0@param   null  $direction
 	 */
-	protected function populateState($ordering = null, $direction = null)
+	protected function populateState($ordering = null, $direction = null): void
 	{
 		$this->setState('filter.property_id',
 			$this->getUserStateFromRequest($this->context . '.filter.property_id', 'filter_property_id', '', 'string'));
@@ -284,7 +284,7 @@ class PropertysettingsModel extends ListModel
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	public function saveSettings(array $settings, int $property_id)
+	public function saveSettings(array $settings, int $property_id): void
 	{
 		$rates_update   = false;
 		$deposit_update = false;

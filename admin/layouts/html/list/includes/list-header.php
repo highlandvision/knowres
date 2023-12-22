@@ -20,6 +20,7 @@ $wa->useScript('table.columns')
    ->useScript('multiselect');
 
 $this->name      = $this->get('name');
+/** @noinspection PhpUnhandledExceptionInspection */
 $this->user      = KrMethods::getUser();
 $this->userId    = $this->user->get('id');
 $this->listOrder = $this->escape($this->state->get('list.ordering'));

@@ -195,7 +195,7 @@ class TaxesModel extends ListModel
 	 * @throws Exception
 	 * @since  2.5.0
 	 */
-	protected function populateState($ordering = 'a.country_id', $direction = 'asc')
+	protected function populateState($ordering = 'a.country_id', $direction = 'asc'): void
 	{
 		$this->setState('filter.search',
 			$this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string'));

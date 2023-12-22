@@ -47,7 +47,7 @@ class ServicelogModel extends AdminModel
 	 * @throws KeyNotFoundException|InvalidArgumentException
 	 * @since  3.3.0
 	 */
-	public static function deleteOldLogs(string $date, int $success = 1)
+	public static function deleteOldLogs(string $date, int $success = 1): void
 	{
 		$db    = KrFactory::getDatabase();
 		$query = $db->getQuery(true);
@@ -90,7 +90,7 @@ class ServicelogModel extends AdminModel
 	 * @throws RuntimeException
 	 * @since  1.2.0
 	 */
-	public function resend(array $pks)
+	public function resend(array $pks): void
 	{
 		if (!is_countable($pks) || !count($pks))
 		{

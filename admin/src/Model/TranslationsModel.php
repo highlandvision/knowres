@@ -67,7 +67,7 @@ class TranslationsModel extends ListModel
 	 * @throws RuntimeException
 	 * @since  3.0.0
 	 */
-	public function deleteMultipleItemId(string $item, array $pks)
+	public function deleteMultipleItemId(string $item, array $pks): void
 	{
 		if (!is_countable($pks) || !count($pks))
 		{
@@ -370,7 +370,7 @@ class TranslationsModel extends ListModel
 	 *
 	 * @since 1.0.0
 	 */
-	protected function populateState($ordering = 'a.item', $direction = 'asc')
+	protected function populateState($ordering = 'a.item', $direction = 'asc'): void
 	{
 		$this->setState(
 			'filter.search', $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search')

@@ -52,7 +52,7 @@ $params = KrMethods::getParams();
 	<div id="template" class="file-row" style="float:left;margin-right:10px;margin-bottom:10px;">
 		<div>
 			<span class="preview">
-				<!--suppress HtmlRequiredAltAttribute -->
+				<!--suppress RequiredAttributes -->
 				<img data-dz-thumbnail /></span>
 		</div>
 		<div>

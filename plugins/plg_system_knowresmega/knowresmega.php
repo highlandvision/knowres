@@ -29,7 +29,7 @@ class plgSystemKnowresmega extends CMSPlugin
 	 *
 	 * @since 1.0.0
 	 */
-	function __construct(&$subject, $config)
+	function __construct($subject, $config)
 	{
 		parent::__construct($subject, $config);
 

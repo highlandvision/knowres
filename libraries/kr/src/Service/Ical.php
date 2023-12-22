@@ -68,7 +68,7 @@ class Ical extends Service
 	 * @throws Exception
 	 * @since  4.0.0
 	 */
-	public function processManual(int $ical_id, int $property_id, string $link, ?string $icsdata)
+	public function processManual(int $ical_id, int $property_id, string $link, ?string $icsdata): void
 	{
 		try
 		{
@@ -101,7 +101,7 @@ class Ical extends Service
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function processSchedule(int $hours)
+	public function processSchedule(int $hours): void
 	{
 		$due = KrFactory::getListModel('propertyicals')->getByTime($this->service->id, $hours);
 		foreach ($due as $d)

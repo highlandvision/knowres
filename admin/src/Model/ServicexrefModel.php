@@ -50,7 +50,7 @@ class ServicexrefModel extends AdminModel
 	 * @throws Exception
 	 * @since  3.1.0
 	 */
-	public static function insertServiceXref(int $service_id, string $table_name, int $table_id, string $foreign_key)
+	public static function insertServiceXref(int $service_id, string $table_name, int $table_id, string $foreign_key): void
 	{
 		if (empty($service_id) || empty($table_name) || empty($table_id) || empty($foreign_key))
 		{
@@ -89,7 +89,7 @@ class ServicexrefModel extends AdminModel
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	public static function resetNewServiceProperty(int $id, int $service_id, int $property_id)
+	public static function resetNewServiceProperty(int $id, int $service_id, int $property_id): void
 	{
 		$service = KrFactory::getAdminModel('service')->getItem($service_id);
 		if ($service->id && $service->plugin === 'vrbo')

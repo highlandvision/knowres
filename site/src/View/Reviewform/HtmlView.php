@@ -80,7 +80,7 @@ class HtmlView extends KrHtmlView\Site
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected function prepareDocument()
+	protected function prepareDocument(): void
 	{
 		$this->prepareDefaultDocument($this->meta_title, $this->meta_description);
 	}

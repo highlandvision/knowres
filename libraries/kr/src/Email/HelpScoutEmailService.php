@@ -28,7 +28,7 @@ class HelpScoutEmailService implements InterfaceEmailService
 	 * @inheritDoc
 	 * @throws Exception
 	 */
-	public static function dispatchEmail(string $email, string $subject, string $body, array $options)
+	public static function dispatchEmail(string $email, string $subject, string $body, array $options): void
 	{
 		$Email = new Email($email, $subject, $body, $options);
 		$Email->sendEmail();

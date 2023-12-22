@@ -1,4 +1,5 @@
-<?php
+<?php /** @noinspection PhpPossiblePolymorphicInvocationInspection */
+
 /**
  * @package    Know Reservations
  * @subpackage Site View
@@ -86,7 +87,7 @@ class HtmlView extends KrHtmlView\Site
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected function prepareDocument()
+	protected function prepareDocument(): void
 	{
 		parent::prepareDefaultDocument($this->meta_title, $this->meta_description);
 		$this->setMyPathway($this->property->region_id, $this->property->region_name);
@@ -101,14 +102,13 @@ class HtmlView extends KrHtmlView\Site
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected function setMyPathway(int $region_id, string $region_name)
+	protected function setMyPathway(int $region_id, string $region_name): void
 	{
 		$pathway = Factory::getApplication()->getPathway();
 		$pathway->setPathway([]);
 
 		$Itemid  = SiteHelper::getRegionItemid($region_id);
-		$pathway = self::propertiesPathway($pathway, $region_id, $region_name,
-			$Itemid);
+		$pathway = self::propertiesPathway($pathway);
 
 		$searchSession = new KrSession\Search();
 		$searchData    = $searchSession->getData();

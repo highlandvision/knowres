@@ -13,6 +13,8 @@ use HighlandVision\KR\Framework\KrMethods;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 
+/** @noinspection PhpUnhandledExceptionInspection */
+/** @noinspection PhpPossiblePolymorphicInvocationInspection */
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useScript('com_knowres.site')
    ->useScript('form.validate');
