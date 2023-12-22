@@ -8,13 +8,10 @@
  */
 
 defined('_JEXEC') or die;
-
-$cell = count($regions);
-$count   = 0;
 ?>
 
-<div class="dropdown-pane" id="kr-searchregion-drop" data-dropdown data-position="bottom"
-     data-alignment="left" data-h-offset="-16" data-v-offset="1000" data-close-on-click="true">
+<div class="dropdown-pane" id="kr-searchregion-drop" data-auto-focus="true" data-closable
+     data-close-on-click="true" data-dropdown data-h-offset="-2" data-v-offset="8">
 	<?php $c = 0; ?>
 	<?php foreach ($regions as $k => $v): ?>
 		<div class="grid-x grid-margin-x">

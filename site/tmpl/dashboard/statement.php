@@ -11,7 +11,6 @@
 defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrMethods;
-
 ?>
 
 <div class="grid-container">

@@ -20,10 +20,8 @@ $data = [];
 
 //TODO v4.3 Add alt and description fields
 
-foreach ($grid as $g)
-{
-	if (!empty($g->image))
-	{
+foreach ($grid as $g) {
+	if (!empty($g->image)) {
 		$data[] = [
 			'image' => $g->image,
 			'text'  => $g->text,

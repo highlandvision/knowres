@@ -64,7 +64,6 @@ class ListgroupedregionsField extends GroupedlistField
 	protected function getGroups(): array
 	{
 		$groups = [];
-
 		if ($this->show_regions > 0) {
 			$groups[][] = HTMLHelper::_('select.option',
 			                            0,
@@ -87,7 +86,7 @@ class ListgroupedregionsField extends GroupedlistField
 		$attributes                = [];
 		$attributes['aria-label']  = KrMethods::plain('MOD_KNOWRES_SEARCH_LOCATIONS_LBL_ARIA');
 		$attributes['onmousedown'] = "(function(e){ e.preventDefault(); })(event, this);";
-		$attributes['data-open']   = 'kr-searchregion-drop';
+		$attributes['data-toggle'] = 'kr-searchregion-drop';
 
 		return $attributes;
 	}

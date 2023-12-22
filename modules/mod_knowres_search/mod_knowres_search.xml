@@ -45,7 +45,7 @@
                        description="MOD_KNOWRES_SEARCH_SHOW_REGION_DSC">
                     <option class="btn btn-outline-danger" value="0">JNO</option>
                     <option class="btn btn-outline-success" value="1">MOD_KNOWRES_SEARCH_SHOW_REGION_SINGLE</option>
-                    <option class="btn btn-outline-primary" value="2">MOD_KNOWRES_SEARCH_SHOW_REGION_MULTI</option>
+                    <option class="btn btn-outline-info" value="2">MOD_KNOWRES_SEARCH_SHOW_REGION_MULTI</option>
                 </field>
                 <field name="search_text"
                        default=""

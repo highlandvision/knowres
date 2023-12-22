@@ -279,8 +279,8 @@ class PropertiesController extends BaseController
 			}
 		}
 
-		$route = KrMethods::route('index.php?option=com_knowres&view=properties&' .
-		                          urlencode(trim(http_build_query($input))));
+		$route = KrMethods::route('index.php?option=com_knowres&view=properties&'.
+		                          urlencode(trim(http_build_query($input))), false);
 
 		KrMethods::redirect($route);
 	}
