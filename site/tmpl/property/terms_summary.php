@@ -2,7 +2,7 @@
 /**
  * @version     1.0.0
  * @package     com_knowres
- * @copyright   Copyright (C) 2014 Highland Vision Limited. All rights reserved.
+ * @copyright   Copyright (C) 2014 Highland Vision. All rights reserved.
  * @license     http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
  * @author      Hazel Wilson <hazel@highlandvision.com> - https://www.highlandvision.com
  */
