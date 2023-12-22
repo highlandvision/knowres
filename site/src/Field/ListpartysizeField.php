@@ -41,32 +41,16 @@ class ListpartysizeField extends ListField
 	protected $type = 'Listpartysize';
 
 	/**
-	 * Form field options for select from form xml or build your own
+	 * Get the field options.
 	 *
-	 * @throws InvalidArgumentException
-	 * @since  4.0.0
-	 * @return array  The field options.
+	 * @since  1.6
+	 * @return string The field input markup.
 	 */
-	function getOptions(): array
+	public function getInput(): string
 	{
-		$options = [];
+		$this->dataAttributes = $this->setDataAttributes();
 
-		$maxguests = $this->max ?: KrMethods::getParams()->get('search_maxguests', 16);
-
-		for ($i = 1; $i <= $maxguests; $i++) {
-			$options[] = HTMLHelper::_('select.option',
-			                           $i,
-			                           KrMethods::sprintf('MOD_KNOWRES_SEARCH_GUESTS_LBL', $i, 0));
-		}
-
-		$key           = $this->adults + $this->children - 1;
-		$options[$key] = HTMLHelper::_('select.option',
-		                               $key + 1,
-		                               KrMethods::sprintf('MOD_KNOWRES_SEARCH_GUESTS_LBL',
-		                                                  $this->adults,
-		                                                  $this->children));
-
-		return array_merge(parent::getOptions(), $options);
+		return parent::getInput();
 	}
 
 	/**
@@ -90,6 +74,38 @@ class ListpartysizeField extends ListField
 	}
 
 	/**
+	 * Form field options for select from form xml or build your own
+	 *
+	 * @throws InvalidArgumentException
+	 * @since  4.0.0
+	 * @return array  The field options.
+	 */
+	protected function getOptions(): array
+	{
+		$options   = [];
+		$maxguests = $this->max ?: KrMethods::getParams()->get('search_maxguests', 16);
+
+		for ($i = 1; $i <= $maxguests; $i++) {
+			$options[] = HTMLHelper::_('select.option',
+			                           $i,
+			                           KrMethods::sprintf('MOD_KNOWRES_SEARCH_GUESTS_LBL', $i, 0));
+		}
+
+		$key           = $this->adults + $this->children - 1;
+		$options[$key] = HTMLHelper::_('select.option',
+		                               $key + 1,
+		                               $this->children == 1 ?
+			                               KrMethods::sprintf('MOD_KNOWRES_SEARCH_GUESTS_LBL_1',
+			                                                  $this->adults,
+			                                                  $this->children) :
+			                               KrMethods::sprintf('MOD_KNOWRES_SEARCH_GUESTS_LBL',
+			                                                  $this->adults,
+			                                                  $this->children));
+
+		return array_merge(parent::getOptions(), $options);
+	}
+
+	/**
 	 * Field data attributes.
 	 *
 	 * @since  4.0.0
@@ -102,7 +118,7 @@ class ListpartysizeField extends ListField
 		$attributes['data-max']    = $this->max ?: KrMethods::getParams()->get('search_maxguests', 16);
 		$attributes['data-adults'] = $this->max - $this->sleeps_infant_max;
 		$attributes['onmousedown'] = "(function(e){ e.preventDefault(); })(event, this);";
-		$attributes['data-open']   = 'kr-searchguest-drop';
+		$attributes['data-toggle'] = 'kr-searchguest-drop';
 
 		return $attributes;
 	}

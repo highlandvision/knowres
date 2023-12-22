@@ -238,9 +238,9 @@ let resized = false;
             $('#kr-properties-data').empty().fadeIn('slow').html(response['items']).foundation();
             $('#kr-properties-filter-heading').html(response['heading']);
             $('.kr-pager').html(response['pagination']);
-            $("#kr-properties-filters-off-canvas").html(response['filters']);
-            $("#kr-properties-sortby-off-canvas").html(response['sortby']);
-            $("#kr-properties-search-off-canvas").html(response['search']);
+            $("#kr-offcanvas-properties-filter").html(response['filters']);
+            $("#kr-offcanvas-properties-sortby").html(response['sortby']);
+//            $("#kr-offcanvas-top-search").html(response['search']);
 
             if (response['search'].length && $('#arrivaldsp').length) {
                 $('body').trigger('initajaxsearch');

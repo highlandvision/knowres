@@ -61,7 +61,7 @@ class Dispatcher extends AbstractModuleDispatcher
 		$data = parent::getLayoutData();
 		if ($data && !empty($data['params'])) {
 			$moduleParams     = $data['params'];
-			$show_regions     = (int)$moduleParams->get('show_regions', 0);
+			$show_regions     = (int) $moduleParams->get('show_regions', 0);
 			$data['regions']  = SearchHelper::getRegions($show_regions);
 			$data['initial']  = SearchHelper::getDefaultValues();
 			$data['max_days'] = 730;

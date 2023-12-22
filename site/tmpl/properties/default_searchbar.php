@@ -16,7 +16,7 @@ use HighlandVision\KR\Framework\KrMethods;
 	<div class="small-12 medium-8 cell">
 		<div class="small button-group">
 			<button type="button" class="button sort left-off-canvas-toggle"
-			        data-toggle="kr-properties-sortby-off-canvas" id="sortby"
+			        data-toggle="kr-offcanvas-properties-sortby" id="sortby"
 			        title="<?php echo KrMethods::plain('COM_KNOWRES_SORT_LIST'); ?>"
 			        aria-label="<?php echo KrMethods::plain('COM_KNOWRES_SORT_LIST'); ?>">
 				<i class='fa-solid fa-sort'></i>
@@ -24,6 +24,13 @@ use HighlandVision\KR\Framework\KrMethods;
 					<?php echo KrMethods::plain('COM_KNOWRES_SORT_LIST'); ?>
 				</span>
 			</button>
+
+<!--			<button type="button" class="button hide-for-large search"-->
+<!--			        data-toggle="kr-offcanvas-top-search" id="search"-->
+<!--			        title="--><?php //echo KrMethods::plain('COM_KNOWRES_SEARCH'); ?><!--"-->
+<!--			        aria-label="--><?php //echo KrMethods::plain('COM_KNOWRES_SEARCH'); ?><!--">-->
+<!--				<i class='fa-solid fa-search'></i>-->
+<!--			</button>-->
 
 			<?php if (isset($this->layouts['list'])): ?>
 				<?php $text =  KrMethods::plain('COM_KNOWRES_VIEW_LIST'); ?>
@@ -76,7 +83,7 @@ use HighlandVision\KR\Framework\KrMethods;
 			</a>
 
 			<button type="button" class="button filter right-off-canvas-toggle"
-			        data-toggle="kr-properties-filters-off-canvas"
+			        data-toggle="kr-offcanvas-properties-filter"
 			        title="<?php echo KrMethods::plain('COM_KNOWRES_FILTER'); ?>"
 			        aria-label="<?php echo KrMethods::plain('COM_KNOWRES_FILTER'); ?>">
 				<i class='fa-solid fa-filter'></i>

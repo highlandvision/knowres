@@ -8,12 +8,10 @@
  */
 
 defined('_JEXEC') or die;
-
-use HighlandVision\KR\Framework\KrMethods;
 ?>
 
-<div class="dropdown-pane large" id="kr-searchregion-drop" data-alignment="left" data-auto-focus="true"  data-closable
-     data-close-on-click="true" data-dropdown data-position="bottom" data-h-offset="-4" data-v-offset="18">
+<div class="dropdown-pane large" id="kr-searchregion-drop" data-auto-focus="true" data-closable
+     data-close-on-click="true" data-dropdown data-h-offset="-2" data-v-offset="8">
 	<div class="dropdown-body">
 		<?php $c = 0; ?>
 		<?php foreach ($regions as $k => $v): ?>
@@ -51,12 +49,5 @@ use HighlandVision\KR\Framework\KrMethods;
 				</div>
 			</div>
 		<?php endforeach; ?>
-	</div>
-
-	<div class="footer">
-		<button class="primary" aria-label="<?php echo KrMethods::plain('MOD_KNOWRES_SEARCH_CLOSE'); ?>" type="button"
-		        data-close>
-			<?php echo KrMethods::plain('MOD_KNOWRES_SEARCH_CLOSE'); ?>
-		</button>
 	</div>
 </div>

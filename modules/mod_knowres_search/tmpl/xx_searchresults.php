@@ -17,15 +17,15 @@ $wa = $app->getDocument()->getWebAssetManager();
 $wa->getRegistry()->addExtensionRegistryFile('com_knowres');
 $wa->useScript('com_knowres.site-modules');
 
-$action       = KrMethods::getRoot() . 'index.php?option=com_knowres&task=properties.search';
+$action       = '/index.php?option=com_knowres&task=properties.search';
 $show_regions = $params->get('show_regions', 0);
 $show_guests  = $params->get('show_guests', 0);
 ?>
 
-<div class="kr-search offcanvas vertical">
-	<form action="<?php echo $action; ?>" method="post" name="search-default">
-		<div class="grid-x grid-margin-x collapse">
-			<div class="small-12 cell">
+<div class="search-offcanvas">
+	<div class="grid-x grid-margin-x">
+		<div class="small-12 cell">
+			<form action="<?php echo $action; ?>" method="post" name="search-default">
 				<?php if ($show_regions): ?>
 					<?php echo $form->renderField('region_id',
 					                              null,
@@ -68,17 +68,16 @@ $show_guests  = $params->get('show_guests', 0);
 					<?php echo KrMethods::plain("MOD_KNOWRES_SEARCH_BUTTON"); ?>&nbsp;&nbsp;
 					<i class='fa-solid fa-search'></i>
 				</button>
-			</div>
-		</div>
 
-		<?php $collapse = ''; ?>
-		<?php if ($show_guests): ?>
-			<?php require ModuleHelper::getLayoutPath('mod_knowres_search', '_partypane'); ?>
-		<?php endif; ?>
-		<?php if ($show_regions == 1): ?>
-			<?php require ModuleHelper::getLayoutPath('mod_knowres_search', '_regionpane'); ?>
-		<?php elseif ($show_regions == 2): ?>
-			<?php require ModuleHelper::getLayoutPath('mod_knowres_search', '_regionspane'); ?>
-		<?php endif; ?>
-	</form>
+				<?php if ($show_guests): ?>
+					<?php require ModuleHelper::getLayoutPath('mod_knowres_search', '_partypane'); ?>
+				<?php endif; ?>
+				<?php if ($show_regions == 1): ?>
+					<?php require ModuleHelper::getLayoutPath('mod_knowres_search', '_regionpane'); ?>
+				<?php elseif ($show_regions == 2): ?>
+					<?php require ModuleHelper::getLayoutPath('mod_knowres_search', '_regionspane'); ?>
+				<?php endif; ?>
+			</form>
+		</div>
+	</div>
 </div>

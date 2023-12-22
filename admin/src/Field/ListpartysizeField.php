@@ -49,32 +49,6 @@ class ListpartysizeField extends ListField
 	}
 
 	/**
-	 * Get party size list options
-	 *
-	 * @throws InvalidArgumentException
-	 * @since  4.0.0
-	 * @return array  The field options.
-	 */
-	function getOptions(): array
-	{
-		$options = [];
-
-		$maxguests = $this->max ?: KrMethods::getParams()->get('search_maxguests', 16);
-
-		for ($i = 1; $i <= $maxguests; $i++)
-		{
-			$options[] = HTMLHelper::_('select.option', $i,
-				KrMethods::sprintf('COM_KNOWRES_CONTRACT_GUESTS_OPTIONS', $i, 0));
-		}
-
-		$key           = $this->adults + $this->children - 1;
-		$options[$key] = HTMLHelper::_('select.option', $key + 1,
-			KrMethods::sprintf('COM_KNOWRES_CONTRACT_GUESTS_OPTIONS', $this->adults, $this->children));
-
-		return array_merge(parent::getOptions(), $options);
-	}
-
-	/**
 	 * Method to get a control group with label and input.
 	 *
 	 * @param  array  $options  Any options to be passed into the rendering of the field
@@ -84,17 +58,44 @@ class ListpartysizeField extends ListField
 	 */
 	#[NoReturn] public function renderField($options = []): string
 	{
-		if (!empty($options['adults']))
-		{
+		if (!empty($options['adults'])) {
 			$this->adults = $options['adults'];
 		}
 
-		if (!empty($options['children']))
-		{
+		if (!empty($options['children'])) {
 			$this->children = $options['children'];
 		}
 
 		return parent::renderField();
+	}
+
+	/**
+	 * Get party size list options
+	 *
+	 * @throws InvalidArgumentException
+	 * @since  4.0.0
+	 * @return array  The field options.
+	 */
+	protected function getOptions(): array
+	{
+		$options = [];
+
+		$maxguests = $this->max ?: KrMethods::getParams()->get('search_maxguests', 16);
+
+		for ($i = 1; $i <= $maxguests; $i++) {
+			$options[] = HTMLHelper::_('select.option',
+			                           $i,
+			                           KrMethods::sprintf('COM_KNOWRES_CONTRACT_GUESTS_OPTIONS', $i, 0));
+		}
+
+		$key           = $this->adults + $this->children - 1;
+		$options[$key] = HTMLHelper::_('select.option',
+		                               $key + 1,
+		                               KrMethods::sprintf('COM_KNOWRES_CONTRACT_GUESTS_OPTIONS',
+		                                                  $this->adults,
+		                                                  $this->children));
+
+		return array_merge(parent::getOptions(), $options);
 	}
 
 	/**
