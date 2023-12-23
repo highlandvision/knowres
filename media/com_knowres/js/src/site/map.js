@@ -327,8 +327,7 @@ const lang = "en";
 			infoWindow2.close();
 			$('#kr-infowindow').hide();
 			map.fitBounds(bounds);
-
-			this.checkZoom();
+			map.setCenter(bounds.getCenter());
 		}
 
 		// loop to set map markers
