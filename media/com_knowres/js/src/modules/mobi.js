@@ -166,7 +166,7 @@
 				data:    $element.serialize(),
 				success: function (response) {
 					if (response) {
-						$('#kr-bookmodule').hide().slideDown(600).html(response);
+						$('#kr-property-book').hide().slideDown(600).html(response);
 						$('#kr-date-warning').empty();
 					} else {
 						window.location.href = window.location.origin;

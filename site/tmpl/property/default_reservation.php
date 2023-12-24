@@ -19,7 +19,7 @@ $link   = KrMethods::route('index.php?option=com_knowres&view=contact&Itemid=' .
 	. $this->item->id);
 ?>
 
-<div id="kr-bookmodule" class="text-center" style="padding:0.5rem;">
+<div id="kr-property-book" class="text-center" style="padding:0.5rem;">
 	<h4>
 		<?php echo KrMethods::plain('COM_KNOWRES_SEARCH_REQUEST_CONTACT'); ?>
 	</h4>

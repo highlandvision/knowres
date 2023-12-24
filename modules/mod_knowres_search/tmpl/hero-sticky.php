@@ -20,6 +20,7 @@ $wa->useScript('com_knowres.site-modules');
 $action       = '/index.php?option=com_knowres&task=properties.search';
 $show_regions = $params->get('show_regions', 0);
 $show_guests  = $params->get('show_guests', 0);
+$max          = KrMethods::getParams()->get('search_maxguests', 16);
 ?>
 
 <div class="kr-search">
@@ -58,13 +59,11 @@ $show_guests  = $params->get('show_guests', 0);
 						<?php echo $form->renderField('guests',
 						                              null,
 						                              $initial->guests,
-						                              ['adults'            => $initial->adults,
-						                               'children'          => $initial->children,
-						                               'child_ages'        => $initial->child_ages ?: [],
-						                               'max'               => KrMethods::getParams()
-						                                                               ->get('search_maxguests', 16),
-						                               'sleeps_infant_max' => 0,
-						                               'sleeps_infant_age' => 0
+						                              ['format'     => $show_guests,
+						                               'adults'     => $initial->adults,
+						                               'children'   => $initial->children,
+						                               'child_ages' => $initial->child_ages ?: [],
+						                               'max'        => $max
 						                              ]); ?>
 					</div>
 				<?php endif; ?>
