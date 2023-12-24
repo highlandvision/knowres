@@ -46,18 +46,21 @@ $wa->useScript('com_knowres.site')
 			<?php endif; ?>
 
 			<?php $this->item->child_ages = Utility::decodeJson(is_null($this->item->child_ages) ? '[]'
-				: $this->item->child_ages, true); ?>
-
-			<?php $invoice = SiteHelper::getInvoice($this->item); ?>
-			<?php $guestdata = SiteHelper::getGuestdata($this->item); ?>
-			<?php $voucher = SiteHelper::getVoucher($this->params, $this->item); ?>
-			<?php $pdfs = SiteHelper::getPdfs($this->item); ?>
+				                                                    : $this->item->child_ages,
+			                                                    true); ?>
+			<?php
+			$invoice   = SiteHelper::getInvoice($this->item);
+			$guestdata = SiteHelper::getGuestdata($this->item);
+			$voucher   = SiteHelper::getVoucher($this->params, $this->item);
+			$pdfs      = SiteHelper::getPdfs($this->item);
+			?>
 
 			<div class="callout small gray">
 				<div class="grid-x grid-margin-x">
 					<div class="small-12 medium-8 cell">
 						<?php echo KrMethods::render('dashboard.header', ['contract' => $this->item,
-						                                                  'times'    => true]); ?>
+						                                                  'times'    => true
+						]); ?>
 					</div>
 					<div class="small-12 medium-4 cell">
 						<?php if ($this->item->booking_status > 1): ?>

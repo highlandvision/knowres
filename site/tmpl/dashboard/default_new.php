@@ -21,7 +21,7 @@ $overview_url = KrMethods::route('index.php?option=com_knowres&view=dashboard&fo
 
 <div class="stacked button-group">
 	<a href="<?php echo $guestformlink; ?>" class="button alert">
-		<?php echo KrMethods::plain('COM_KNOWRES_CONFIRM_TITLE'); ?>
+		<?php echo KrMethods::plain('COM_KNOWRES_DASHBOARD_PAY_DEPOSIT'); ?>
 	</a>
 	<a class="button" data-open="<?php echo $overview_modal; ?>">
 		<?php echo KrMethods::plain('COM_KNOWRES_DASHBOARD_VIEW_CONTRACT'); ?>

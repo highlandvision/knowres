@@ -53,7 +53,7 @@ if ($this->item->guestdata_id > 0)
 	<?php if ($balance_to_pay) : ?>
 		<?php $class = $balance_due_now ? "button alert" : "button"; ?>
 		<a href="<?php echo $paymentformlink; ?>" class="<?php echo $class ?>">
-			<?php echo KrMethods::sprintf('COM_KNOWRES_DASHBOARD_MAKE_PAYMENT',
+			<?php echo KrMethods::sprintf('COM_KNOWRES_DASHBOARD_PAY_BALANCE',
 				Utility::displayValue($balance, $this->item->currency)); ?>
 		</a>
 	<?php endif; ?>
