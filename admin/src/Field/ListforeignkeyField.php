@@ -39,16 +39,22 @@ class ListforeignkeyField extends ListField
 	{
 		$key_field   = $this->getAttribute('key_field');
 		$value_field = $this->getAttribute('value_field');
+		$prepend      = $this->getAttribute('prepend');
 
 		$db    = KrFactory::getDatabase();
 		$query = $db->getQuery(true);
 
-		$query->select(
-			[
-				$db->qn($key_field, 'value'),
-				$db->qn($value_field, 'text'),
-			]
-		);
+		if (is_null($prepend)) {
+			$query->select(
+				[
+					$db->qn($key_field, 'value'),
+					$db->qn($value_field, 'text'),
+				]
+			);
+		} else {
+			$query->select($db->qn($key_field, 'value'));
+	       	$query->select('CONCAT('. $db->qn($prepend) .', " ", UCASE('. $db->qn($value_field).')) AS text');
+		}
 
 		$query->from($this->getAttribute('table'))
 		      ->order($value_field);
@@ -69,6 +75,9 @@ class ListforeignkeyField extends ListField
 		}
 
 		$db->setQuery($query);
+//		echo $query;exit;
+
+
 		$options = $db->loadObjectList();
 
 		return array_merge(parent::getOptions(), $options);
