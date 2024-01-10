@@ -14,22 +14,34 @@ defined('_JEXEC') || defined('WBLIB_EXEC') || die;
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
-use HighlandVision\KR\Logger;
 use HighlandVision\KR\Translations;
-use JetBrains\PhpStorm\NoReturn;
+use Joomla\CMS\Factory;
 use Joomla\CMS\Uri;
+use RuntimeException;
+use stdClass;
 
+use function count;
 use function defined;
 
 /**
  * Sample plugin to build URL for a com_sample component.
  * - Drop the "com_" at the start from the component to name the class
  * - Below are only the most important methods. For more advanced logic,
- * be sure to check the built-in plugins in
- * /plugins/system/forsef/platform/extensions
+ * - Be sure to check the built-in plugins in /plugins/system/forsef/platform/extensions
  */
 class Knowres extends Base
 {
+	/**
+	 * Stores factory instance.
+	 *
+	 * @param  string  $option   Extension this applies to, in com_xxx format.
+	 * @param  array   $options  Can inject custom factory and platform.
+	 */
+	public function __construct($option, $options = [])
+	{
+		parent::__construct($option, $options);
+	}
+
 	/**
 	 * Builds the SEF URL for a non-sef.
 	 *
@@ -38,200 +50,167 @@ class Knowres extends Base
 	 * @param  Uri\Uri  $originalUri
 	 *
 	 * @throws Exception
-	 * @return array
+	 * @return ?array
 	 */
-	#[NoReturn] public function build($uriToBuild, $platformUri, $originalUri): array
+	public function build($uriToBuild, $platformUri, $originalUri): ?array
 	{
-		$sefSegments = [];
-		$params      = KrMethods::getParams();
+		$sefSegments = parent::build($uriToBuild, $platformUri, $originalUri);
 
-		// Variables required for SEF url.
+		if ($uriToBuild->getVar('format') =='raw') {
+			return [];
+		}
+
+		Factory::getLanguage()->load('com_knowres', JPATH_SITE . '/components/com_knowres');
+		$Translations = new Translations();
+		$params       = KrMethods::getParams();
+
 		$view        = $uriToBuild->getVar('view');
-		$Itemid      = $uriToBuild->getVar('Itemid');
-		$region_id   = $uriToBuild->getVar('region_id');
-		$id          = $uriToBuild->getVar('id');
-		$property_id = $uriToBuild->getVar('property_id');
+		$area        = $uriToBuild->getVar('property_area');
 		$category_id = $uriToBuild->getVar('category_id');
+		$feature_id  = $uriToBuild->getVar('feature_id');
+		$id          = $uriToBuild->getVar('id');
+		$Itemid      = $uriToBuild->getVar('Itemid');
+		$alias       = $this->setAlias($Itemid);
 		$layout      = $uriToBuild->getVar('layout');
+		$property_id = $uriToBuild->getVar('property_id', 0);
+		$region_id   = $uriToBuild->getVar('region_id', 0);
+		$search      = $uriToBuild->getVar('search', 0);
+		$task        = $uriToBuild->getVar('task');
+		$type_id     = $uriToBuild->getVar('type_id');
 
-		// Default alias to use as backup
-		$alias = '';
-		if ($Itemid)
-		{
-			$menu_item = $this->platform->getMenu()->getItem($Itemid);
-			if (!empty($menu_item))
-			{
-				$alias = $menu_item->alias;
+		if ($view == 'property' || $view == 'contact' || $view == 'reviews') {
+			$key = $view == 'property' || $view == 'contact' ? $id : $property_id;
+			if ($key) {
+				$pdata = $this->getPropertyData($key);
 			}
 		}
 
-		if (($view == 'property' && !empty($id)) || ($view == 'contact' && !empty($id))
-			|| ($view == 'reviews' && !empty($property_id)))
-		{
-			$seo_property  = $params->get('seo_property');
-			$property_name = 'property';
-			$area          = 'area';
-			$region        = 'region';
-			$type          = 'type';
-
-			try
-			{
-				$key           = $view == 'property' || $view == 'contact' ? $id : $property_id;
-				$property      = KrFactory::getAdminModel('property')->getItem($key);
-				$property_name = $property->property_name;
-				$area          = $property->property_area;
-				$region        = $property->region_name;
-				$type          = $property->type_abbreviation;
-			}
-			catch (Exception $e)
-			{
-				Logger::logMe($e->getMessage());
-			}
-		}
-
-		switch ($view)
-		{
-			//			case 'guestform':
-			//				$sefSegments[] = KrMethods::plain('COM_KNOWRES_TITLE_DASHBOARD_GUEST');
-			//				$platformUri->delvar('view');
-			//				break;
-			//
-			//			case 'contractguestdataform':
-			//				$sefSegments[] = KrMethods::plain('COM_KNOWRES_DASHBOARD_ADD_CONTRACTGUESTDATA_SEF');
-			//				$platformUri->delvar('view');
-			//				break;
-			//
-			//			case 'reviewform':
-			//				$sefSegments[] = KrMethods::plain('COM_KNOWRES_TITLE_REVIEWFORM');
-			//				$platformUri->delvar('view');
-			//				break;
-			//
-			//			case 'dashboard':
-			//				$sefSegments[] = KrMethods::plain('COM_KNOWRES_TITLE_DASHBOARD');
-			//				$platformUri->delvar('view');
-			//				break;
-
+		$delvar = true;
+		switch ($view) {
 			case 'contact':
 				$sefSegments[] = KrMethods::plain('COM_KNOWRES_SEND_AN_ENQUIRY');
-				$platformUri->delvar('view');
-
-				if ($id)
-				{
-					$sefSegments[] = $property_name;
-					$platformUri->delvar('id');
-				}
+				$sefSegments[] = $pdata->name;
 
 				break;
-
 			case 'property':
-				if ($id)
-				{
-					if ($seo_property == 1)
-					{
-						$sefSegments[] = $region . '-' . $area . '-' . $type;
-						$sefSegments[] = $property_name;
-					}
-					else if ($seo_property == 2)
-					{
-						$sefSegments[] = $region;
-						$sefSegments[] = $area . '-' . $type;
-						$sefSegments[] = $property_name;
-					}
-					else if ($seo_property == 3)
-					{
-						$sefSegments[] = $region;
-						$sefSegments[] = $area;
-						$sefSegments[] = $type;
-						$sefSegments[] = $property_name;
-					}
-					else if ($seo_property == 4)
-					{
-						$sefSegments[] = $property_name . '-' . $area;
-					}
-					else if ($seo_property == 5)
-					{
-						$sefSegments[] = $type;
-						$sefSegments[] = $property_name;
-					}
-
-					$platformUri->delvar('view');
-					$platformUri->delvar('id');
+				switch ($params->get('seo_property', 1)) {
+					case 1:
+						$sefSegments[] = $pdata->region . '-' . $pdata->area . '-' . $pdata->type;
+						$sefSegments[] = $pdata->name;
+						break;
+					case 2:
+						$sefSegments[] = $pdata->region;
+						$sefSegments[] = $pdata->area . '-' . $pdata->type;
+						$sefSegments[] = $pdata->name;
+						break;
+					case 3:
+						$sefSegments[] = $pdata->region;
+						$sefSegments[] = $pdata->area;
+						$sefSegments[] = $pdata->type;
+						$sefSegments[] = $pdata->name;
+						break;
+					case 4:
+						$sefSegments[] = $pdata->name . '-' . $pdata->area;
+						break;
+					case 5:
+						$sefSegments[] = $pdata->type;
+						$sefSegments[] = $pdata->name;
+						break;
+					default:
+						throw new RuntimeException('Invalid value received for KR params seo-property');
 				}
-				break;
 
+				break;
 			case 'reviews':
-				if ($property_id)
-				{
-					if ($seo_property == 1)
-					{
-						$sefSegments[] = $region . '-' . $area . '-' . $type;
-					}
-					else if ($seo_property == 2)
-					{
-						$sefSegments[] = $region;
-						$sefSegments[] = $area . '-' . $type;
-					}
-					else
-					{
-						$sefSegments[] = $region;
-						$sefSegments[] = $area;
-						$sefSegments[] = $type;
-					}
-
-					$sefSegments[] = $property_name;
-					$sefSegments[] = 'reviews';
-
-					$platformUri->delvar('view');
-					$platformUri->delvar('property_id');
+				switch ($params->get('seo_property', 1)) {
+					case 1:
+						$sefSegments[] = $pdata->region . '-' . $pdata->area . '-' . $pdata->type;
+						break;
+					case 2:
+						$sefSegments[] = $pdata->region;
+						$sefSegments[] = $pdata->area . '-' . $pdata->type;
+						break;
+					default:
+						$sefSegments[] = $pdata->region;
+						$sefSegments[] = $pdata->area;
+						$sefSegments[] = $pdata->type;
 				}
+
+				$sefSegments[] = $pdata->name;
+				$sefSegments[] = 'reviews';
+
 				break;
-
 			case 'properties':
-				$Translations = new Translations();
-				if (!$region_id && !$category_id && !$layout)
-				{
-					$region_id = $params->get('default_region');
-				}
+				$Translations = new Translations;
 
-				if ($region_id)
-				{
+				if ($region_id) {
 					$sefSegments[] = $Translations->getText('region', $region_id);
-
-					$platformUri->delvar('region_id');
-					$platformUri->delvar('arrivaldsp');
-					$platformUri->delvar('departuredsp');
 				}
-				else if ($category_id)
-				{
+				elseif ($category_id) {
 					$sefSegments[] = $Translations->getText('category', $category_id);
-
-					$platformUri->delvar('category_id');
-					$platformUri->delvar('layout');
 				}
-				//				else if ($layout)
-				//				{
-				//					$sefSegments[] = $layout;
-				//					$platformUri->delvar('layout');
-				//				}
+				elseif ($layout) {
+					$sefSegments[] = $alias;
+				}
 
-				if (empty($sefSegments))
-				{
+				if (empty($sefSegments)) {
 					$sefSegments[] = $params->get('seo_search') ? $params->get('seo_search') : $alias;
 				}
 
-				$platformUri->delvar('view');
-				break;
+				if ($area) {
+					$sefSegments[] = $area;
+				}
+				if ($type_id) {
+					$sefSegments[] = $Translations->getText('type', $type_id);
+				}
+				if ($feature_id) {
+					$abbv          = $Translations->getText('propertyfeature', $feature_id, 'abbreviation');
+					$sefSegments[] = $abbv . '-' . $feature_id;
+				}
 
+				break;
 			default:
-				if (!$view || !$alias)
-				{
+				if (!$view || !$alias) {
 					$dosef = false;
 				}
-				else
-				{
+				else {
 					$sefSegments[] = $alias;
 					$platformUri->delvar('view');
 				}
+		}
+
+		if (!count($sefSegments) && $alias) {
+			$sefSegments[] = $alias;
+		}
+
+		if (count($sefSegments)) {
+			$platformUri->delvar('arrival');
+			$platformUri->delvar('arrivaldsp');
+			$platformUri->delvar('bedrooms');
+			$platformUri->delvar('category_id');
+			$platformUri->delvar('day');
+			$platformUri->delvar('departure');
+			$platformUri->delvar('departuredsp');
+			$platformUri->delvar('feature_id');
+			$platformUri->delvar('flexible');
+			$platformUri->delvar('guests');
+			$platformUri->delvar('id');
+			$platformUri->delvar('Itemid');
+			$platformUri->delvar('lang');
+			$platformUri->delvar('layout');
+			$platformUri->delvar('limit');
+			$platformUri->delvar('limitstart');
+			$platformUri->delvar('month');
+			$platformUri->delvar('nights');
+			$platformUri->delvar('option');
+			$platformUri->delvar('property_area');
+			$platformUri->delvar('property_id');
+			$platformUri->delvar('region_id');
+			$platformUri->delvar('retain');
+			$platformUri->delvar('search');
+			$platformUri->delvar('task');
+			$platformUri->delvar('type_id');
+			$platformUri->delvar('view');
 		}
 
 		return $sefSegments;
@@ -250,14 +229,12 @@ class Knowres extends Base
 	public function buildNormalizedNonSef($vars): array
 	{
 		return $this->nonSefHelper->stripFeedVars(
-			parent::buildNormalizedNonSef(
-				$vars
-			)
+			parent::buildNormalizedNonSef($vars)
 		);
 	}
 
 	/**
-	 * Check if passed URI is for an extension configured to be left non-sef.
+	 * Check if URI should to be left non-sef.
 	 *
 	 * @param  Uri\Uri  $uri
 	 *
@@ -266,23 +243,60 @@ class Knowres extends Base
 	 */
 	public function shouldLeaveNonSef($uri): bool
 	{
-		$user = KrMethods::getUser();
-		if ($user->id)
-		{
+		if ($uri->getVar('format') == "raw") {
 			return true;
 		}
 
-		$format = $uri->getVar('format');
-		if ($format == "raw")
-		{
+		if ($uri->getVar('task')) {
 			return true;
 		}
 
-		if ($uri->getVar('task'))
-		{
+		if (KrMethods::getUser()->id) {
 			return true;
 		}
 
 		return false;
+	}
+
+	/**
+	 * Get property fields for property, contact or reviews
+	 *
+	 * @param  int  $key  Property ID
+	 *
+	 * @throws Exception
+	 * @return object
+	 */
+	protected function getPropertyData(int $key): object
+	{
+		$property = KrFactory::getAdminModel('property')->getItem($key);
+
+		$data         = new stdClass();
+		$data->name   = $property->property_name;
+		$data->area   = $property->property_area;
+		$data->region = $property->region_name;
+		$data->type   = $property->type_abbreviation;
+
+		return $data;
+	}
+
+	/**
+	 * Set menu alias
+	 *
+	 * @param  ?int  $Itemid  ID of menu item
+	 *
+	 * @throws Exception
+	 * @return string
+	 */
+	protected function setAlias(?int $Itemid): string
+	{
+		$alias = '';
+		if ($Itemid) {
+			$menu = $this->platform->getMenu()->getItem($Itemid);
+			if (!empty($menu)) {
+				$alias = $menu->alias;
+			}
+		}
+
+		return $alias;
 	}
 }
