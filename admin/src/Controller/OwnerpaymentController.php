@@ -34,7 +34,7 @@ class OwnerpaymentController extends FormController
 	 */
 	#[NoReturn] public function modal(): void
 	{
-		$id = KrMethods::inputInt('id', 0, 'get');
+		$id = KrMethods::inputInt('id');
 		if (!$id)
 		{
 			Utility::goto('ownerpayments');

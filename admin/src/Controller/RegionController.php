@@ -39,13 +39,13 @@ class RegionController extends FormController
 	{
 		$this->checkToken();
 
-		$id = KrMethods::inputInt('id', 0, 'get');
+		$id = KrMethods::inputInt('id');
 		if (!$id)
 		{
 			KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&view=regions', false));
 		}
 
-		$pdfNameArray = KrMethods::inputArray('pdf', [], 'get');
+		$pdfNameArray = KrMethods::inputArray('pdf');
 		if (!count($pdfNameArray))
 		{
 			KrMethods::redirect(KrMethods::plain('COM_KNOWRES_PDF_DELETE'), 'error');
@@ -66,7 +66,7 @@ class RegionController extends FormController
 	{
 		$this->checkToken();
 
-		$id = KrMethods::inputInt('id', 0, 'get');
+		$id = KrMethods::inputInt('id');
 		if (!$id)
 		{
 			KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&view=regions', false));
@@ -94,7 +94,7 @@ class RegionController extends FormController
 	{
 		$name  = (string) $validData['name'];
 		$blurb = (string) $validData['blurb'];
-		if (KrMethods::inputString('task', '', 'get') == 'save2copy')
+		if (KrMethods::inputString('task') == 'save2copy')
 		{
 			$name = StringHelper::increment($name);
 		}

@@ -124,8 +124,8 @@ class PropertysettingModel extends AdminModel
 	 */
 	public function saveSettings(int $property_id): void
 	{
-		$old_settings    = KrMethods::inputString('old_settings', 'null');
-		$old_setting_ids = KrMethods::inputString('old_setting_ids', 'null');
+		$old_settings    = KrMethods::inputString('old_settings');
+		$old_setting_ids = KrMethods::inputString('old_setting_ids');
 		$postArray       = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 		$oldSettings     = Utility::decodeJson($old_settings, true);
 		$oldSettingIds   = Utility::decodeJson($old_setting_ids, true);

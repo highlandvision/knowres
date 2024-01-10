@@ -109,7 +109,7 @@ class EnquiryModel extends AdminModel
 	 */
 	public function prepareRooms(array $property_rooms): array
 	{
-		$input = KrMethods::inputArray('rooms', [], 'get');
+		$input = KrMethods::inputArray('rooms');
 
 		$rooms = [];
 		for ($i = 0; $i < count($input); $i++) {

@@ -70,7 +70,7 @@ class DashboardController extends BaseController
 	 */
 	public function download(): void
 	{
-		$contract_id  = KrMethods::inputInt('key', 0, 'get');
+		$contract_id  = KrMethods::inputInt('key');
 		$userSession  = new KrSession\User();
 		$userData     = $userSession->getData();
 		$db_contracts = $userData->db_contracts;
@@ -130,7 +130,7 @@ class DashboardController extends BaseController
 		$userSession  = new KrSession\User();
 		$userData     = $userSession->getData();
 		$db_contracts = $userData->db_contracts;
-		$contract_id  = KrMethods::inputInt('id', 0, ' get');
+		$contract_id  = KrMethods::inputInt('id');
 
 		if (!$userData->db_guest_id || !isset($db_contracts[$contract_id])) {
 			SiteHelper::badUser();
@@ -182,7 +182,7 @@ class DashboardController extends BaseController
 		$contract_id = 0;
 		$guest_id    = 0;
 
-		$key = KrMethods::inputString('key', '', 'get');
+		$key = KrMethods::inputString('key', '');
 		try {
 			if (empty($key)) {
 				throw new Exception('Dashboard key was not received');
@@ -268,7 +268,7 @@ class DashboardController extends BaseController
 		$userSession  = new KrSession\User();
 		$userData     = $userSession->getData();
 		$db_contracts = $userData->db_contracts;
-		$contract_id  = KrMethods::inputInt('id', 0, 'get');
+		$contract_id  = KrMethods::inputInt('id');
 
 		if (!$userData->db_guest_id || !isset($db_contracts[$contract_id])) {
 			SiteHelper::badUser();

@@ -110,7 +110,7 @@ class PropertyController extends FormController
 	 */
 	#[NoReturn] public function calendar(): void
 	{
-		$id = KrMethods::inputInt('property_id', 0, 'get');
+		$id = KrMethods::inputInt('property_id');
 		if (empty($id)) {
 			Utility::goto('properties');
 		}
@@ -134,7 +134,7 @@ class PropertyController extends FormController
 	 */
 	public function checkin(): void
 	{
-		$id = KrMethods::inputInt('id', 0, 'get');
+		$id = KrMethods::inputInt('id');
 		if (!$id) {
 			Logger::logme('ID not received for property checkin', 'error');
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN'));
@@ -223,7 +223,7 @@ class PropertyController extends FormController
 	 */
 	#[NoReturn] public function dashboard(): void
 	{
-		$id = KrMethods::inputInt('id', 0, 'get');
+		$id = KrMethods::inputInt('id');
 		if (!$id) {
 			Utility::goto('properties');
 		}

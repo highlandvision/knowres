@@ -45,12 +45,10 @@ class SiteHelper
 	 */
 	public static function badUser(): void
 	{
-		if (self::userRequired())
-		{
+		if (self::userRequired()) {
 			self::redirectLogin();
 		}
-		else
-		{
+		else {
 			self::redirectHome();
 		}
 	}
@@ -68,24 +66,20 @@ class SiteHelper
 	 */
 	public static function buildDashboardLink(object $contract, ?string $view = null, bool $external = false): string
 	{
-		if (is_null($view))
-		{
+		if (is_null($view)) {
 			$hash = Cryptor::setHash($contract->id, $contract->guest_id, $contract->qkey);
 		}
-		else
-		{
+		else {
 			$hash = Cryptor::setHash($contract->id, $contract->guest_id, $contract->qkey, $view);
 		}
 
 		$key = Cryptor::encrypt($hash);
-		if ($external)
-		{
+		if ($external) {
 			return KrMethods::route(
 				KrMethods::getRoot() . 'index.php?option=com_knowres&task=dashboard.request&key=' . $key
 			);
 		}
-		else
-		{
+		else {
 			return KrMethods::route('index.php?option=com_knowres&task=dashboard.request&key=' . $key);
 		}
 	}
@@ -105,17 +99,14 @@ class SiteHelper
 	{
 		$Itemid = self::getItemId('com_knowres', 'property', ['id' => $id]);
 		$link   = 'index.php?option=com_knowres&view=property&id=' . $id . '&Itemid=' . $Itemid;
-		if (!empty($append))
-		{
+		if (!empty($append)) {
 			$link .= $append;
 		}
 
-		if (!$external)
-		{
+		if (!$external) {
 			return KrMethods::route($link);
 		}
-		else
-		{
+		else {
 			return KrMethods::route(KrMethods::getRoot() . $link);
 		}
 	}
@@ -132,23 +123,19 @@ class SiteHelper
 	 */
 	public static function checkLocks(object $item, GuestModel|ContractguestdataModel $model): void
 	{
-		if (is_int($item->checked_out) && $item->checked_out != KrMethods::getUser()->id)
-		{
+		if (is_int($item->checked_out) && $item->checked_out != KrMethods::getUser()->id) {
 			// Ouch! Record is checked out by admin
-			if ($item->checked_out_time < TickTock::modifyHours('now', 1, '-'))
-			{
+			if ($item->checked_out_time < TickTock::modifyHours('now', 1, '-')) {
 				$model->checkin([$item->id]);
 				KrMethods::logoutUser($item->checked_out);
 			}
-			else
-			{
+			else {
 				KrMethods::message(KrMethods::plain('COM_KNOWRES_LOCKED'));
 				self::redirectDashboard();
 			}
 		}
 
-		if (!$model->checkout($item->id))
-		{
+		if (!$model->checkout($item->id)) {
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_LOCKED'));
 			self::redirectDashboard();
 		}
@@ -162,14 +149,12 @@ class SiteHelper
 	 */
 	public static function checkUser(): void
 	{
-		if (self::userRequired() && !KrMethods::getUser()->id)
-		{
+		if (self::userRequired() && !KrMethods::getUser()->id) {
 			self::redirectLogin();
 		}
 
 		$guest_id = KrFactory::getListModel('guests')->getGuestForUser(KrMethods::getUser()->id);
-		if (empty($guest_id))
-		{
+		if (empty($guest_id)) {
 			SiteHelper::redirectLogin();
 		}
 	}
@@ -185,29 +170,25 @@ class SiteHelper
 	 */
 	public static function expiredSession(?int $property_id = 0, bool $ajax = false): void
 	{
-		if ((int) $property_id && !$ajax)
-		{
+		if ((int) $property_id && !$ajax) {
 			$Itemid = self::getItemId('com_knowres', 'property', array('id' => $property_id));
 			$link   = KrMethods::route(
-				'index.php?option=com_knowres&Itemid=' . $Itemid . '&view=property&id=' . (int) $property_id, false
+				'index.php?option=com_knowres&Itemid=' . $Itemid . '&view=property&id=' . (int) $property_id,
+				false
 			);
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_EXPIRED_SESSION'), 'warning');
 		}
-		else
-		{
+		else {
 			// retain=2 displays expired session message in properties
 			$Itemid = self::getItemId('com_knowres', 'properties', array('region_id' => 0));
-			$link   = KrMethods::route(
-				'index.php?option=com_knowres&Itemid=' . $Itemid . '&view=properties&retain=2', false
-			);
+			$link   = KrMethods::route('index.php?option=com_knowres&Itemid=' . $Itemid . '&view=properties&retain=2',
+			                           false);
 		}
 
-		if (!$ajax)
-		{
+		if (!$ajax) {
 			KrMethods::redirect(KrMethods::route($link, false));
 		}
-		else
-		{
+		else {
 			$wrapper             = [];
 			$wrapper['redirect'] = $link;
 			echo KrMethods::jsonResponse($wrapper);
@@ -228,10 +209,8 @@ class SiteHelper
 	public static function getDates(string $season, array $seasons): string
 	{
 		$dates = [];
-		foreach ($seasons as $s)
-		{
-			if ($s->season == $season)
-			{
+		foreach ($seasons as $s) {
+			if ($s->season == $season) {
 				$dates[] = TickTock::displayDate($s->valid_from) . ' - ' . TickTock::displayDate($s->valid_to);
 			}
 		}
@@ -253,20 +232,18 @@ class SiteHelper
 	{
 		$directions   = '';
 		$Translations = new Translations();
-		if ($params->get('guest_plan_routing', 0) && $contract->booking_status > 35 && $contract->lat && $contract->lng)
-		{
+		if ($params->get('guest_plan_routing', 0) && $contract->booking_status > 35 &&
+			$contract->lat && $contract->lng) {
 			//https://maps.google.com?saddr=airport%20<nearest town/region>+Location&daddr=<address>&sensor=false
 			$base = 'https://maps.google.com';
 			$from = '?saddr=airport%20' . $Translations->getText('region', $contract->region_id) . ' '
 				. $Translations->getText('country', $contract->country_id);
 			$from = str_replace(' ', '+', $from);
 
-			if (!empty($contract->lat_actual) && (int) $contract->lat_actual != 0)
-			{
+			if (!empty($contract->lat_actual) && (int) $contract->lat_actual != 0) {
 				$to = '&daddr=' . $contract->lat_actual . ',' . $contract->lng_actual;
 			}
-			else
-			{
+			else {
 				$to = '&daddr=' . $contract->lat . ',' . $contract->lng;
 			}
 
@@ -284,26 +261,23 @@ class SiteHelper
 	 */
 	public static function getDownloadPdf(): void
 	{
-		$type     = trim(KrMethods::inputString('type', '', 'get'));
-		$id       = trim(KrMethods::inputString('id', '', 'get'));
-		$filename = trim(KrMethods::inputString('filename', '', 'get'));
+		$type     = trim(KrMethods::inputString('type', ''));
+		$id       = trim(KrMethods::inputString('id', ''));
+		$filename = trim(KrMethods::inputString('filename', ''));
 
 		$rootPath = Utility::getPath('root');
 		$upOne    = dirname($rootPath);
 		$folder   = basename($rootPath);
 		$pdfPath  = $upOne . '/uploadedpdfs/' . $folder . '/';
 
-		if ($type)
-		{
+		if ($type) {
 			$file = $pdfPath . $type . '/' . $id . '/' . $filename;
 		}
-		else
-		{
+		else {
 			$file = $pdfPath . $id . '/' . $filename;
 		}
 
-		if (file_exists($file))
-		{
+		if (file_exists($file)) {
 			header('Content-Description: File Transfer');
 			header('Content-Type: application/octet-stream');
 			header('Content-Disposition: attachment; filename=' . basename($file));
@@ -332,8 +306,7 @@ class SiteHelper
 	{
 		$cookie = KrMethods::getCookie('krsaved');
 		$saved  = !empty($cookie) ? explode('xx', $cookie) : [];
-		if (!is_array($saved))
-		{
+		if (!is_array($saved)) {
 			$saved = (array) $saved;
 		}
 
@@ -352,8 +325,7 @@ class SiteHelper
 	public static function getGuestdata(object $item): string
 	{
 		$guestdata = '';
-		if ($item->guestdata_id)
-		{
+		if ($item->guestdata_id) {
 			$dl        = KrMethods::route(
 				'index.php?option=com_knowres&task=dashboard.guestdata&format=pdf&id=' . $item->id
 			);
@@ -378,8 +350,7 @@ class SiteHelper
 	public static function getInvoice(object $item): string
 	{
 		$invoice = '';
-		if ($item->booking_status >= 39)
-		{
+		if ($item->booking_status >= 39) {
 			$dl      = KrMethods::route(
 				'index.php?option=com_knowres&task=dashboard.invoice&format=pdf&id=' . $item->id
 			);
@@ -403,51 +374,43 @@ class SiteHelper
 	 * @since  1.0.0
 	 * @return int
 	 */
-	public static function getItemId(string $component = 'com_knowres', string $view = '', array $variables = [],
-		array $alternatives = []): int
+	public static function getItemId(string $component = 'com_knowres', string $view = '',
+	                                 array  $variables = [], array  $alternatives = []): int
 	{
 		$base = 'index.php?option=' . $component;
-		if ($view)
-		{
+		if ($view) {
 			$base .= '&view=' . $view;
 		}
 
 		// 1st try base plus variables or base only if no variables
 		$link = $base;
-		foreach ($variables as $k => $v)
-		{
+		foreach ($variables as $k => $v) {
 			$link .= '&' . $k . '=' . $v;
 		}
 
 		$menuItem = KrMethods::getMenuItemByLink($link);
-		if ($menuItem)
-		{
+		if ($menuItem) {
 			return $menuItem->id;
 		}
 
 		// 2nd try base with no variables
-		if (is_countable($variables) && count($variables))
-		{
+		if (is_countable($variables) && count($variables)) {
 			$link     = $base;
 			$menuItem = KrMethods::getMenuItemByLink($link);
-			if ($menuItem)
-			{
+			if ($menuItem) {
 				return $menuItem->id;
 			}
 		}
 
 		// 3rd try base plus alternatives
-		if (is_countable($alternatives) && count($alternatives))
-		{
+		if (is_countable($alternatives) && count($alternatives)) {
 			$link = $base;
-			foreach ($alternatives as $k => $v)
-			{
+			foreach ($alternatives as $k => $v) {
 				$link .= '&' . $k . '=' . $v;
 			}
 
 			$menuItem = KrMethods::getMenuItemByLink($link);
-			if ($menuItem)
-			{
+			if ($menuItem) {
 				return $menuItem->id;
 			}
 		}
@@ -469,13 +432,11 @@ class SiteHelper
 		$documents = [];
 		$matches   = [];
 
-		if ($item->booking_status >= 10)
-		{
+		if ($item->booking_status >= 10) {
 			$matches['regions'] = $item->region_id;
 			$matches['types']   = $item->type_id;
 
-			if ($item->booking_status > 35)
-			{
+			if ($item->booking_status > 35) {
 				$matches['propertys'] = $item->property_id;
 				$matches['contracts'] = $item->tag;
 			}
@@ -483,22 +444,17 @@ class SiteHelper
 			$matches = array_unique($matches);
 		}
 
-		if (count($matches))
-		{
+		if (count($matches)) {
 			$files = [];
-			foreach ($matches as $match => $id)
-			{
+			foreach ($matches as $match => $id) {
 				$pdfs = Media\Pdf::listPdfs($match, $id);
-				if (count($pdfs) > 0)
-				{
-					foreach ($pdfs as $pdf)
-					{
+				if (count($pdfs) > 0) {
+					foreach ($pdfs as $pdf) {
 						$path_parts = pathinfo($pdf);
 						$filename   = $path_parts['filename'] . '.' . $path_parts['extension'];
 
 						// No duplicates
-						if (!in_array($path_parts['filename'], $files, true))
-						{
+						if (!in_array($path_parts['filename'], $files, true)) {
 							$dl          = KrMethods::route(
 								'index.php?option=com_knowres&task=dashboard.download&key=' . $item->id . '&type='
 								. $match
@@ -529,11 +485,11 @@ class SiteHelper
 	{
 		$regions = KrFactory::getListModel('regions')->getAllRegions(true);
 		$Itemid  = 0;
-		if (is_countable($regions) && count($regions) > 1)
-		{
+		if (is_countable($regions) && count($regions) > 1) {
 			$Itemid = self::getItemId(
 				'com_knowres', 'properties', array('layout'    => 'search',
-				                                   'region_id' => $region_id)
+				                                   'region_id' => $region_id
+				             )
 			);
 		}
 
@@ -576,8 +532,7 @@ class SiteHelper
 	public static function getVoucher(Registry $params, object $item): string
 	{
 		$voucher = '';
-		if ($params->get('guest_download_voucher', 0) && $item->booking_status > 35)
-		{
+		if ($params->get('guest_download_voucher', 0) && $item->booking_status > 35) {
 			$dl      = KrMethods::route(
 				'index.php?option=com_knowres&task=dashboard.voucher&format=pdf&id=' . $item->id
 			);
@@ -598,14 +553,12 @@ class SiteHelper
 	 */
 	public static function loginUser(): void
 	{
-		if (self::userRequired() && !KrMethods::getUser()->id)
-		{
+		if (self::userRequired() && !KrMethods::getUser()->id) {
 			self::redirectLogin();
 		}
 
 		$guest_id = KrFactory::getListModel('guests')->getGuestForUser(KrMethods::getUser()->id);
-		if (!$guest_id)
-		{
+		if (!$guest_id) {
 			SiteHelper::redirectLogin();
 		}
 
@@ -666,8 +619,8 @@ class SiteHelper
 	{
 		$Itemid = self::getItemId('com_knowres', 'property', ['id' => $id]);
 		KrMethods::redirect(
-			KrMethods::route(
-				'index.php?option=com_knowres&view=property&id=' . $id . '&Itemid=' . $Itemid, false
+			KrMethods::route('index.php?option=com_knowres&view=property&id=' . $id . '&Itemid=' . $Itemid,
+				false
 			)
 		);
 	}
@@ -690,8 +643,7 @@ class SiteHelper
 
 		$link = 'index.php?Itemid=' . $Itemid;
 
-		if ($message)
-		{
+		if ($message) {
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_UNPUBLISHED_PROPERTY'));
 		}
 
@@ -710,7 +662,7 @@ class SiteHelper
 	{
 		$Itemid = self::getItemId('com_knowres', $view);
 		KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&view=' . $view . '&Itemid=' . $Itemid,
-			false));
+		                                     false));
 	}
 
 	/**
@@ -725,16 +677,13 @@ class SiteHelper
 	 */
 	public static function setFreeGuests(int $sleeps_infant_max, int $sleeps_infant_age, array $child_ages): int
 	{
-		if (!$sleeps_infant_max)
-		{
+		if (!$sleeps_infant_max) {
 			return 0;
 		}
 
 		$free = 0;
-		foreach ($child_ages as $age)
-		{
-			if ($age < $sleeps_infant_age && $free < $sleeps_infant_max)
-			{
+		foreach ($child_ages as $age) {
+			if ($age < $sleeps_infant_age && $free < $sleeps_infant_max) {
 				$free++;
 			}
 		}
@@ -754,15 +703,13 @@ class SiteHelper
 	public static function setGuestContracts(int $guest_id): array
 	{
 		$items = KrFactory::getListModel('contracts')->getDashboardContracts($guest_id);
-		if (!is_countable($items) || !count($items))
-		{
+		if (!is_countable($items) || !count($items)) {
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_DASHBOARD_NO_RESERVATIONS'));
 			self::badUser();
 		}
 
 		$stubs = [];
-		foreach ($items as $c)
-		{
+		foreach ($items as $c) {
 			$tmp                 = [];
 			$tmp['contract_id']  = $c->id;
 			$tmp['property_id']  = $c->property_id;
@@ -771,7 +718,8 @@ class SiteHelper
 		}
 
 		return [$items,
-		        $stubs];
+		        $stubs
+		];
 	}
 
 	/**
@@ -788,24 +736,22 @@ class SiteHelper
 		$guest_id     = $userData->db_guest_id;
 		$db_contracts = $userData->db_contracts;
 
-		//TODO v4 no contract_id from url
-		$contract_id = KrMethods::inputInt('key', 0, 'get');
-		if (!$contract_id)
-		{
+		//TODO v4.3 no contract_id from url
+		$contract_id = KrMethods::inputInt('key');
+		if (!$contract_id) {
 			$contract_id = $userData->db_contract_id;
 		}
-		if (!$guest_id)
-		{
+		if (!$guest_id) {
 			throw new RuntimeException('Session data did not verify Dashboard request');
 		}
-		if ($contract_id && $contract_id != 999999999 && !isset($db_contracts[$contract_id]))
-		{
+		if ($contract_id && $contract_id != 999999999 && !isset($db_contracts[$contract_id])) {
 			throw new RuntimeException('Session data did not verify Dashboard request');
 		}
 
 		return [$guest_id,
 		        $contract_id,
-		        $db_contracts];
+		        $db_contracts
+		];
 	}
 
 	/**

@@ -152,7 +152,7 @@ class ContractController extends FormController
 		$this->checkToken();
 		$this->setRedirect(KrMethods::route('index.php?option=com_knowres&view=contracts', false));
 
-		$cid = KrMethods::inputArray('cid', [], 'get');
+		$cid = KrMethods::inputArray('cid');
 		if (is_countable($cid))
 		{
 			if (!KrFactory::getListModel('contractpayments')->updateXeroBatch($cid))
@@ -1164,7 +1164,7 @@ class ContractController extends FormController
 	protected function setReturn(Hub $Hub, string $action = '', bool $success = true): string
 	{
 		$task     = $this->getTask();
-		$gobackto = KrMethods::inputString('gobackto', '');
+		$gobackto = KrMethods::inputString('gobackto');
 		if (empty($gobackto))
 		{
 			$gobackto = Utility::getGoBackTo();

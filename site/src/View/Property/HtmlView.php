@@ -105,7 +105,7 @@ class HtmlView extends KrHtmlView\Site
 	 */
 	public function display($tpl = null): void
 	{
-		$id = KrMethods::inputInt('id', 0, 'get');
+		$id = KrMethods::inputInt('id');
 		if (!$id) {
 			Utility::goto('properties');
 		}
@@ -204,9 +204,9 @@ class HtmlView extends KrHtmlView\Site
 			$contractData = $contractSession->resetData();
 		}
 
-		$this->arrival   = KrMethods::inputString('arrival', '', 'get');
-		$this->departure = KrMethods::inputString('departure', '', 'get');
-		$this->guests    = KrMethods::inputInt('guests', 2, 'get');
+		$this->arrival   = KrMethods::inputString('arrival', '');
+		$this->departure = KrMethods::inputString('departure', '');
+		$this->guests    = KrMethods::inputInt('guests', 2);
 		if ($this->arrival) {
 			$contractData->arrival   = $this->arrival;
 			$contractData->departure = $this->departure;

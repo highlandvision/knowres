@@ -147,7 +147,7 @@ class ImageModel extends AdminModel
 	 */
 	public function store(string $filename): bool
 	{
-		$property_id = KrMethods::inputInt('property_id', 0, 'get');
+		$property_id = KrMethods::inputInt('property_id');
 		$params      = KrMethods::getParams();
 		$ordering    = (int) $params->get('new_ordering');
 

@@ -333,7 +333,7 @@ class ServiceController extends BaseController
 	#[NoReturn] public function termspdf(): void
 	{
 		try {
-			$id    = KrMethods::inputInt('id', 0, 'get');
+			$id    = KrMethods::inputInt('id');
 			$Terms = new Terms('download', $id);
 			$Terms->getPdf();
 		} catch (Exception) {
@@ -447,7 +447,7 @@ class ServiceController extends BaseController
 	 */
 	protected function getServiceId(): int
 	{
-		$service_id = KrMethods::inputInt('service_id', 0, 'get');
+		$service_id = KrMethods::inputInt('service_id');
 		if (!$service_id) {
 			throw new RuntimeException('Service ID was not received via POST');
 		}
@@ -491,7 +491,7 @@ class ServiceController extends BaseController
 	 */
 	protected function processRedsys(): void
 	{
-		$action = KrMethods::inputString('action', '', 'get');
+		$action = KrMethods::inputString('action', '');
 		if (!$action) {
 			throw new RuntimeException('Action field is empty');
 		}
@@ -503,8 +503,8 @@ class ServiceController extends BaseController
 		$signature  = KrMethods::inputString('Ds_Signature', '');
 		if (empty($parameters)) {
 			// Try GET
-			$parameters = KrMethods::inputString('Ds_MerchantParameters', '', 'get');
-			$signature  = KrMethods::inputString('Ds_Signature', '', 'get');
+			$parameters = KrMethods::inputString('Ds_MerchantParameters', '');
+			$signature  = KrMethods::inputString('Ds_Signature', '');
 		}
 
 		if (empty($parameters) || empty($signature)) {

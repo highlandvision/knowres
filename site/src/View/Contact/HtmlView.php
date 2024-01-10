@@ -37,9 +37,8 @@ class HtmlView extends KrHtmlView\Site
 	 */
 	public function display($tpl = null): void
 	{
-		$this->property_id = KrMethods::inputInt('id', 0, 'get');
-		if ($this->property_id)
-		{
+		$this->property_id = KrMethods::inputInt('id');
+		if ($this->property_id) {
 			$property = KrFactory::getAdminModel('property')->getItem($this->property_id);
 			if (empty($property->id)) {
 				SiteHelper::redirectSearch();

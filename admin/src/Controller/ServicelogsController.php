@@ -80,7 +80,7 @@ class ServicelogsController extends AdminController
 	 */
 	public function resend(): void
 	{
-		$pks = KrMethods::inputArray('cid', [], 'get');
+		$pks = KrMethods::inputArray('cid');
 		ArrayHelper::toInteger($pks);
 
 		if (!is_countable($pks) || !count($pks))

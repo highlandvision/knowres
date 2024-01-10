@@ -84,13 +84,13 @@ class PropertyController extends BaseController
 	 */
 	#[NoReturn] public function ics(): void
 	{
-		$id = KrMethods::inputInt('id', 0, 'get');
+		$id = KrMethods::inputInt('id');
 		if (!$id) {
 			exit('Invalid request');
 		}
 
-		$action = KrMethods::inputString('action', '', 'get');
-		$custom = KrMethods::inputString('custom', '', 'get');
+		$action = KrMethods::inputString('action', '');
+		$custom = KrMethods::inputString('custom', '');
 
 		$property = KrFactory::getAdminModel('property')->getItem($id);
 		if (!$property->id || $property->state != 1) {
@@ -263,7 +263,7 @@ class PropertyController extends BaseController
 	 */
 	public function terms(): void
 	{
-		$id = KrMethods::inputInt('id', 0, 'get');
+		$id = KrMethods::inputInt('id');
 		if ($id) {
 			/** @var TermsView $view */
 			$view             = $this->getView('property', 'terms');
@@ -299,7 +299,7 @@ class PropertyController extends BaseController
 	 */
 	public function termspdf(): bool
 	{
-		$id = KrMethods::inputInt('id', 0, 'get');
+		$id = KrMethods::inputInt('id');
 		if (!$id) {
 			throw new RuntimeException('Property ID not received for PDF download');
 		}

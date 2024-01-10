@@ -49,7 +49,7 @@ class ContractsController extends AdminController
 		$this->checkToken();
 
 		$id  = KrMethods::getUserState('com_knowres.current.contract_id', 0);
-		$tag = KrMethods::inputString('tag', '', 'get');
+		$tag = KrMethods::inputString('tag');
 
 		$this->setRedirect(KrMethods::route('index.php?option=com_knowres&task=contract.show&id=' . $id,
 			false));
@@ -61,7 +61,7 @@ class ContractsController extends AdminController
 		}
 		else
 		{
-			$pdfNameArray = KrMethods::inputArray('pdf', [], 'get');
+			$pdfNameArray = KrMethods::inputArray('pdf');
 			Media::deletePdfs('contracts', $tag, $pdfNameArray);
 		}
 	}
@@ -93,7 +93,7 @@ class ContractsController extends AdminController
 		$this->checkToken();
 
 		$id  = KrMethods::getUserState('com_knowres.current.contract_id', 0);
-		$tag = KrMethods::inputString('tag', '', 'get');
+		$tag = KrMethods::inputString('tag');
 		$this->setRedirect(KrMethods::route('index.php?option=com_knowres&task=contract.show&id=' . $id,
 			false));
 

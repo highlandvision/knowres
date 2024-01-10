@@ -117,7 +117,7 @@ class AdminModel extends \Joomla\CMS\MVC\Model\AdminModel
 	 */
 	public function save($data): bool
 	{
-		if (KrMethods::inputString('task', '', 'get') === 'save2copy') {
+		if (KrMethods::inputString('task', '') === 'save2copy') {
 			if (isset($data['name'])) {
 				$data['name'] = Utility::generateNewName($data['name']);
 			}

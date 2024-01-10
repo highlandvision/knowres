@@ -11,7 +11,6 @@ namespace HighlandVision\Component\Knowres\Site\Service;
 defined('_JEXEC') or die;
 
 use Exception;
-use HighlandVision\KR\Framework\KrFactory;
 use Joomla\CMS\Component\Router\RouterBase;
 
 use function array_pop;
@@ -19,7 +18,6 @@ use function count;
 use function implode;
 use function is_numeric;
 use function str_replace;
-use function strtolower;
 
 /**
  * Routing class for com_knowres
@@ -41,24 +39,20 @@ class Router extends RouterBase
 	{
 		$segments = [];
 
-		if (isset($query['view'])) {
-			if ($query['view'] == 'property' && !empty($query['id'])) {
-				$item       = KrFactory::getAdminModel('property')->getItem($query['id']);
-				$segments[] = $item->region_name;
-				$segments[] = $item->town_name . '-' . $item->type_name;
-				$segments[] = $item->property_name;
-				unset($query['view']);
-				unset($query['id']);
-			}
+		if (isset($query['task'])) {
+			$segments[] = $query['task'];
+			unset($query['task']);
 		}
+
 		if (isset($query['id'])) {
 			$segments[] = $query['id'];
 			unset($query['id']);
 		}
 
 		$total = count($segments);
+
 		for ($i = 0; $i < $total; $i++) {
-			$segments[$i] = strtolower(str_replace(' ', '-', $segments[$i]));
+			$segments[$i] = str_replace(':', '-', $segments[$i]);
 		}
 
 		return $segments;

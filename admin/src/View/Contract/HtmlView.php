@@ -80,7 +80,7 @@ class HtmlView extends KrHtmlView\Contract
 		$this->item  = $model->getItem();
 		$this->state = $model->getState();
 
-		$this->task    = KrMethods::inputString('task', 'manager', 'get');
+		$this->task    = KrMethods::inputString('task', 'manager');
 		$this->params  = KrMethods::getParams();
 		$this->maxdate = TickTock::modifyDays($this->today, $this->params->get('advanceBookingsLimit', 365));
 		$this->setLayoutValue();
@@ -107,8 +107,8 @@ class HtmlView extends KrHtmlView\Contract
 			$this->departure   = KrMethods::inputString('departure', '');
 			if (!$this->arrival)
 			{
-				$this->arrival   = KrMethods::inputString('arrival', '', 'get');
-				$this->departure = KrMethods::inputString('departure', '', 'get');
+				$this->arrival   = KrMethods::inputString('arrival', '');
+				$this->departure = KrMethods::inputString('departure', '');
 			}
 			KrMethods::setUserState('com_knowres.preedit.contract', null);
 			KrMethods::setUserState('com_knowres.edit.guest.data', null);
@@ -192,7 +192,6 @@ class HtmlView extends KrHtmlView\Contract
 		{
 			if ($this->getLayout() == 'block')
 			{
-				/** @noinspection PhpParamsInspection */
 				$Toolbar->standardButton('save')
 				        ->icon('fa-solid fa-thumbs-down knowres')
 				        ->onclick("Knowres.submitform('contract.save', document.getElementById('contract-form'));")
@@ -200,7 +199,6 @@ class HtmlView extends KrHtmlView\Contract
 			}
 			else
 			{
-				/** @noinspection PhpParamsInspection */
 				$Toolbar->standardButton('save')
 				        ->icon('fa-solid fa-thumbs-down knowres')
 				        ->onclick("Knowres.submitform('contract.save', document.getElementById('contract-form'));")
@@ -210,7 +208,6 @@ class HtmlView extends KrHtmlView\Contract
 
 		if (!$isNew && !$checkedOut && $this->canDo->get('core.edit'))
 		{
-			/** @noinspection PhpParamsInspection */
 			$Toolbar->standardButton('save')
 			        ->icon('fa-solid fa-thumbs-down knowres')
 			        ->onclick("Knowres.submitform('contract.save', document.getElementById('contract-form'));")
@@ -223,7 +220,6 @@ class HtmlView extends KrHtmlView\Contract
 			}
 		}
 
-		/** @noinspection PhpParamsInspection */
 		$Toolbar->standardButton('cancel')
 		        ->icon('fa-solid fa-times knowres')
 		        ->onclick("Knowres.submitform('contract.cancel', document.getElementById('contract-form'));")
@@ -346,7 +342,7 @@ class HtmlView extends KrHtmlView\Contract
 		}
 		else
 		{
-			$this->setLayout(KrMethods::inputString('layout', '', 'get'));
+			$this->setLayout(KrMethods::inputString('layout', ''));
 		}
 	}
 

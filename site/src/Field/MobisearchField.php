@@ -40,8 +40,8 @@ class MobisearchField extends FormField
 			$params        = KrMethods::getParams();
 			$searchSession = new KrSession\Search();
 			$searchData    = $searchSession->getData();
-			$arrival       = KrMethods::inputString('arrival', $searchData->arrival, 'get');
-			$departure     = KrMethods::inputString('departure', $searchData->departure, 'get');
+			$arrival       = KrMethods::inputString('arrival', $searchData->arrival);
+			$departure     = KrMethods::inputString('departure', $searchData->departure);
 			$atext         = KrMethods::plain("MOD_KNOWRES_SEARCH_CHECK_IN");
 			$dtext         = KrMethods::plain("MOD_KNOWRES_SEARCH_CHECK_OUT");
 

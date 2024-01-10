@@ -67,10 +67,8 @@ class HtmlView extends KrHtmlView
 		if (!empty($this->item->plugin)) {
 			$this->plugin = $this->item->plugin;
 			$this->type   = $this->item->type;
-		}
-		else
-		{
-			$this->plugin = KrMethods::inputString('plugin', null, 'get');
+		} else {
+			$this->plugin = KrMethods::inputString('plugin');
 			$this->type   = $this->plugin == 'ical' ? 'i' : 'g';
 		}
 

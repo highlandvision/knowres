@@ -102,7 +102,7 @@ class PropertiesController extends AdminController
 	{
 		$this->checkToken();
 
-		$cid = KrMethods::inputArray('cid', [], 'get');
+		$cid = KrMethods::inputArray('cid');
 		if (!is_countable($cid) || count($cid) < 1) {
 			KrMethods::addLog(KrMethods::plain($this->text_prefix . '_NO_ITEM_SELECTED'));
 			KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&view=properties', false));
@@ -129,7 +129,7 @@ class PropertiesController extends AdminController
 	{
 		$this->checkToken();
 
-		$cid = KrMethods::inputArray('cid', [], 'get');
+		$cid = KrMethods::inputArray('cid');
 		if (!is_countable($cid) || count($cid) < 1) {
 			KrMethods::addLog(KrMethods::plain($this->text_prefix . '_NO_ITEM_SELECTED'));
 			KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&view=properties', false));

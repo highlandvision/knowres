@@ -44,7 +44,7 @@ class HtmlView extends KrHtmlView\Site
 	 */
 	public function display($tpl = null): void
 	{
-		$property_id = KrMethods::inputInt('property_id', 0, 'get');
+		$property_id = KrMethods::inputInt('property_id');
 		if (empty($property_id))
 		{
 			Utility::goto('properties');

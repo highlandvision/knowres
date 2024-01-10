@@ -299,7 +299,7 @@ class AdhocController extends BaseController
 		$new          = '2022-01-01';
 		$Translations = new Translations();
 
-		$test = KrMethods::inputInt('test', 1, 'get');
+		$test = KrMethods::inputInt('test', 1);
 
 		$ids = KrFactory::getListModel('properties')->getIds();
 		if (!is_countable($ids) || !count($ids)) {

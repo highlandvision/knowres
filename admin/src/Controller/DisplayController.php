@@ -111,9 +111,9 @@ class DisplayController extends BaseController
 	 */
 	public function display($cachable = false, $urlparams = []): BaseController|bool
 	{
-		$view   = KrMethods::inputString('view', 'contracts', 'get');
-		$layout = KrMethods::inputString('layout', 'default', 'get');
-		$id     = KrMethods::inputInt('id', 0, 'get');
+		$view   = KrMethods::inputString('view', 'contracts');
+		$layout = KrMethods::inputString('layout', 'default');
+		$id     = KrMethods::inputInt('id');
 
 		$userSession = new KrSession\User();
 		$userData    = $userSession->getData();
@@ -210,14 +210,11 @@ class DisplayController extends BaseController
 			'rates'
 		];
 
-		if (in_array($view, $requireProperty))
-		{
-			$property_id = KrMethods::inputInt('property_id', 0, 'get');
-			if (!$property_id)
-			{
-				$cid = KrMethods::inputArray('cid', [], 'get');
-				if (is_countable($cid) && count($cid) == 1)
-				{
+		if (in_array($view, $requireProperty)) {
+			$property_id = KrMethods::inputInt('property_id');
+			if (!$property_id) {
+				$cid = KrMethods::inputArray('cid');
+				if (is_countable($cid) && count($cid) == 1) {
 					$property_id = (int) $cid[0];
 				}
 			}

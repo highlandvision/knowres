@@ -69,7 +69,7 @@ class FMethods
 	 * @since 3.7.0
 	 */
 	public static function addLogLog(mixed $entry, int $priority, string $category, string $date = null,
-		array $context = []): void
+	                                 array $context = []): void
 	{
 		Log::add($entry, $priority, $category, $date, $context);
 	}
@@ -88,40 +88,11 @@ class FMethods
 	}
 
 	/**
-	 * Build select list
-	 *
-	 * @param  array   $data       Options array with key / value
-	 * @param  string  $name       Nmae of select
-	 * @param  mixed   $attribs    See genericlist
-	 * @param  string  $optKey     See genericlist
-	 * @param  string  $optText    See genericlist
-	 * @param  null    $selected   See genericlist
-	 * @param  string  $idtag      See genericlist
-	 * @param  bool    $translate  See genericlist
-	 *
-	 * @throws InvalidArgumentException
-	 * @since  3.9.0
-	 * @return mixed
-	 */
-	public static function buildSelect(array $data, string $name, mixed $attribs, string $optKey, string $optText,
-		$selected, string $idtag, bool $translate): mixed
-	{
-		$options = [];
-		foreach ($data as $k => $v)
-		{
-			$options[] = HTMLHelper::_('select.option', $k, $v);
-		}
-
-		return HTMLHelper::_('select.genericlist', $options, $name, $attribs, $optKey, $optText, $selected, $idtag,
-			$translate);
-	}
-
-	/**
 	 * Convert email to punycode
 	 *
 	 * @param  string  $email  Email to convert
 	 *
-	 * @since   3.3.0
+	 * @since  3.3.0
 	 * @return string
 	 */
 	public static function emailToPunycode(string $email): string
@@ -335,8 +306,7 @@ class FMethods
 	 */
 	public static function getPath(string $type): false|string
 	{
-		if ($type == 'root')
-		{
+		if ($type == 'root') {
 			return JPATH_SITE;
 		}
 
@@ -389,12 +359,10 @@ class FMethods
 	 */
 	public static function getUser(int $id = null): User
 	{
-		if (is_null($id))
-		{
+		if (is_null($id)) {
 			return Factory::getApplication()->getIdentity();
 		}
-		else
-		{
+		else {
 			return Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById($id);
 		}
 	}
@@ -419,22 +387,14 @@ class FMethods
 	 *
 	 * @param  string  $name     Name of input
 	 * @param  array   $default  Default value
-	 * @param  string  $method   Input type
 	 *
 	 * @throws Exception
 	 * @since  3.5.0
 	 * @return array
 	 */
-	public static function inputArray(string $name, array $default, string $method): array
+	public static function inputArray(string $name, array $default): array
 	{
-		if ($method == 'post')
-		{
-			return Factory::getApplication()->input->post->get($name, $default, 'array');
-		}
-		else
-		{
-			return Factory::getApplication()->input->get($name, $default, 'array');
-		}
+		return Factory::getApplication()->getInput()->get($name, $default, 'array');
 	}
 
 	/**
@@ -442,26 +402,18 @@ class FMethods
 	 *
 	 * @param  string  $name     Name of input
 	 * @param  bool    $default  Default value
-	 * @param  string  $method   Type of input
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
-	 * @return int
+	 * @return bool
 	 */
-	public static function inputBool(string $name, bool $default, string $method): int
+	public static function inputBool(string $name, bool $default): bool
 	{
-		if ($method == 'post')
-		{
-			return Factory::getApplication()->input->post->getInt($name, $default);
-		}
-		else
-		{
-			return Factory::getApplication()->input->getInt($name, $default);
-		}
+		return Factory::getApplication()->getInput()->get($name, $default, 'bool');
 	}
 
 	/**
-	 * Get float input
+	 * Get files input
 	 *
 	 * @param  string  $name     Name of input
 	 * @param  array   $default  Default value
@@ -472,7 +424,7 @@ class FMethods
 	 */
 	public static function inputFiles(string $name, array $default): array
 	{
-		return Factory::getApplication()->input->files->get($name, $default);
+		return Factory::getApplication()->getInput()->get($name, $default, 'array');
 	}
 
 	/**
@@ -480,22 +432,14 @@ class FMethods
 	 *
 	 * @param  string  $name     Name of input
 	 * @param  float   $default  Default value
-	 * @param  string  $method   Input type
 	 *
 	 * @throws Exception
-	 * @since  3.5.0
-	 * @return int
+	 * @since  4.0.0
+	 * @return array
 	 */
-	public static function inputFloat(string $name, float $default, string $method): int
+	public static function inputFloat(string $name, float $default): array
 	{
-		if ($method == 'post')
-		{
-			return Factory::getApplication()->input->post->getFloat($name, $default);
-		}
-		else
-		{
-			return Factory::getApplication()->input->getFloat($name, $default);
-		}
+		return Factory::getApplication()->getInput()->get($name, $default, 'float');
 	}
 
 	/**
@@ -503,22 +447,14 @@ class FMethods
 	 *
 	 * @param  string  $name     Name of input
 	 * @param  int     $default  Default value
-	 * @param  string  $method   Type of input
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
 	 * @return int
 	 */
-	public static function inputInt(string $name, int $default, string $method): int
+	public static function inputInt(string $name, int $default): int
 	{
-		if ($method === 'post')
-		{
-			return Factory::getApplication()->input->post->getInt($name, $default);
-		}
-		else
-		{
-			return Factory::getApplication()->input->getInt($name, $default);
-		}
+		return Factory::getApplication()->getInput()->get($name, $default, 'int');
 	}
 
 	/**
@@ -526,22 +462,14 @@ class FMethods
 	 *
 	 * @param  string   $name     Name of input
 	 * @param  ?string  $default  Default value
-	 * @param  string   $method   Type of input
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
 	 * @return ?string
 	 */
-	public static function inputString(string $name, ?string $default, string $method): ?string
+	public static function inputString(string $name, ?string $default): ?string
 	{
-		if ($method == 'post')
-		{
-			return Factory::getApplication()->input->post->getString($name, $default);
-		}
-		else
-		{
-			return Factory::getApplication()->input->getString($name, $default);
-		}
+		return Factory::getApplication()->getInput()->get($name, $default, 'string');
 	}
 
 	/**
@@ -679,15 +607,13 @@ class FMethods
 		];
 
 		$user = new User();
-		if (!$user->bind($data))
-		{
+		if (!$user->bind($data)) {
 			throw new InvalidArgumentException(Text::sprintf('COM_USERS_REGISTRATION_BIND_FAILED', $user->getError()));
 		}
 
 		PluginHelper::importPlugin('user');
 		$user->save();
-		if (!$user->id)
-		{
+		if (!$user->id) {
 			throw new InvalidArgumentException(Text::sprintf('COM_USERS_REGISTRATION_SAVE_FAILED', $user->getError()));
 		}
 
@@ -728,28 +654,33 @@ class FMethods
 	 * @since  1.0.0
 	 * @return bool
 	 */
-	public static function sendEmail(mixed $from, mixed $fromName, mixed $to, mixed $subject, mixed $body,
-		bool $html = true, mixed $cc = null, mixed $bcc = null, mixed $reply = null,
-		mixed $replyName = null, mixed $attachment = null): bool
+	public static function sendEmail(mixed $from,
+	                                 mixed $fromName,
+	                                 mixed $to,
+	                                 mixed $subject,
+	                                 mixed $body,
+	                                 bool  $html = true,
+	                                 mixed $cc = null,
+	                                 mixed $bcc = null,
+	                                 mixed $reply = null,
+	                                 mixed $replyName = null,
+	                                 mixed $attachment = null): bool
 	{
 		$mail = self::getMailer();
 		$mail->setSender([$from, $fromName]);
 		$mail->addRecipient($to);
 
-		if (is_null($reply))
-		{
-			if (version_compare(JVERSION, '3.5', 'ge'))
-			{
+		if (is_null($reply)) {
+			if (version_compare(JVERSION, '3.5', 'ge')) {
 				$mail->addReplyTo($from, $fromName);
 			}
-			else
-			{
+			else {
 				$mail->addReplyTo([$from,
-				                   $fromName]);
+				                   $fromName
+				                  ]);
 			}
 		}
-		else
-		{
+		else {
 			$mail->addReplyTo($reply, $replyName);
 		}
 
@@ -760,12 +691,10 @@ class FMethods
 		$mail->isHtml($html);
 		$mail->setBody($body);
 
-		if (isset($_SERVER['HTTP_X_REAL_IP']))
-		{
+		if (isset($_SERVER['HTTP_X_REAL_IP'])) {
 			$mail->addCustomHeader('X_Real_IP', $_SERVER['HTTP_X_REAL_IP']);
 		}
-		if (isset($_SERVER['HTTP_X_GT_CLIENTIP']))
-		{
+		if (isset($_SERVER['HTTP_X_GT_CLIENTIP'])) {
 			$mail->addCustomHeader('X_GTClient_IP', $_SERVER['HTTP_X_GT_CLIENTIP']);
 		}
 

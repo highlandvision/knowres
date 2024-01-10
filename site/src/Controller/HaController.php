@@ -50,9 +50,9 @@ class HaController extends BaseController
 	 */
 	#[NoReturn] public function availability(): void
 	{
-		$test = KrMethods::inputInt('test', 0, 'get');
-		$id   = KrMethods::inputInt('id', 0, 'get');
-		$unit = KrMethods::inputString('unit', '', 'get');
+		$test = KrMethods::inputInt('test');
+		$id   = KrMethods::inputInt('id');
+		$unit = KrMethods::inputString('unit', '');
 
 		$Availability = new Manager\Availability($test);
 		$data         = $Availability->availability($id, $unit);
@@ -71,7 +71,7 @@ class HaController extends BaseController
 	 */
 	#[NoReturn] public function br(): void
 	{
-		$test = KrMethods::inputInt('test', 0, 'get');
+		$test = KrMethods::inputInt('test');
 		if ($test) {
 			$xmlstring = $this->zzTestBr();
 			$xmlstring = str_replace(array("\r", "\n", "\t"), '', $xmlstring);
@@ -108,8 +108,8 @@ class HaController extends BaseController
 	 */
 	#[NoReturn] public function bus(): void
 	{
-		$test = KrMethods::inputInt('test', 0, 'get');
-		$id   = KrMethods::inputInt('id', 0, 'get');
+		$test = KrMethods::inputInt('test');
+		$id   = KrMethods::inputInt('id');
 
 		$bookings = new Manager\Bookings($test);
 		$data     = $bookings->bus($id);
@@ -128,7 +128,7 @@ class HaController extends BaseController
 	 */
 	#[NoReturn] public function fas(): void
 	{
-		$test = KrMethods::inputInt('test', 0, 'get');
+		$test = KrMethods::inputInt('test');
 		if ($test) {
 			$json = $this->zzTestFas();
 		}
@@ -161,8 +161,8 @@ class HaController extends BaseController
 	 */
 	#[NoReturn] public function ix(): void
 	{
-		$test = KrMethods::inputInt('test', 0, 'get');
-		$type = KrMethods::inputString('type', 'properties', 'get');
+		$test = KrMethods::inputInt('test');
+		$type = KrMethods::inputString('type', 'properties');
 
 		if ($type === 'properties') {
 			$Properties = new Manager\Properties($test);
@@ -219,9 +219,9 @@ class HaController extends BaseController
 	 */
 	#[NoReturn] public function lodging(): void
 	{
-		$test = KrMethods::inputInt('test', 0, 'get');
-		$id   = KrMethods::inputInt('id', 0, 'get');
-		$unit = KrMethods::inputString('unit', '', 'get');
+		$test = KrMethods::inputInt('test');
+		$id   = KrMethods::inputInt('id');
+		$unit = KrMethods::inputString('unit', '');
 
 		$lodging = new Manager\Lodging($test);
 		$data    = $lodging->lodging($id, $unit);
@@ -240,8 +240,8 @@ class HaController extends BaseController
 	 */
 	#[NoReturn] public function properties(): void
 	{
-		$test = KrMethods::inputInt('test', 0, 'get');
-		$id   = KrMethods::inputInt('id', 0, 'get');
+		$test = KrMethods::inputInt('test');
+		$id   = KrMethods::inputInt('id');
 
 		$Properties = new Manager\Properties($test);
 		$data       = $Properties->listing($id);
@@ -260,9 +260,9 @@ class HaController extends BaseController
 	 */
 	#[NoReturn] public function rates(): void
 	{
-		$test = KrMethods::inputInt('test', 0, 'get');
-		$id   = KrMethods::inputInt('id', 0, 'get');
-		$unit = KrMethods::inputString('unit', '', 'get');
+		$test = KrMethods::inputInt('test');
+		$id   = KrMethods::inputInt('id');
+		$unit = KrMethods::inputString('unit', '');
 
 		$Rates = new Manager\Rates($test);
 		$data  = $Rates->rates($id, $unit);
@@ -285,7 +285,7 @@ class HaController extends BaseController
 	{
 		// TODO-v4.4 Remove October 2024 as all calls to ServiceController
 		try {
-			$id    = KrMethods::inputInt('id', 0, 'get');
+			$id    = KrMethods::inputInt('id');
 			$Terms = new Terms('download', $id);
 			$Terms->getPdf();
 		} catch (Exception) {

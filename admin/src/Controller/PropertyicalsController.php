@@ -67,7 +67,7 @@ class PropertyicalsController extends AdminController
 
 		try
 		{
-			$cid = KrMethods::inputArray('cid', [], 'get');
+			$cid = KrMethods::inputArray('cid');
 			if (is_countable($cid) && count($cid) > 0)
 			{
 				foreach ($cid as $c)
@@ -112,7 +112,7 @@ class PropertyicalsController extends AdminController
 
 		try
 		{
-			$cid = KrMethods::inputArray('cid', [], 'get');
+			$cid = KrMethods::inputArray('cid');
 			if (is_countable($cid) && count($cid) > 0)
 			{
 				foreach ($cid as $c)

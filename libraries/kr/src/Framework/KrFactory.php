@@ -88,23 +88,19 @@ class KrFactory
 	 * @since  3.3.0
 	 * @return Form
 	 */
-	public static function getAdhocForm(string $name, string $source, string $area = 'administrator',
-		?string $control = 'jform'): Form
+	public static function getAdhocForm(string  $name, string  $source, string  $area = 'administrator',
+	                                    ?string $control = 'jform'): Form
 	{
-		if ($area == 'site')
-		{
+		if ($area == 'site') {
 			$filepath = JPATH_COMPONENT_SITE . '/forms/' . $source;
 		}
-		else if ($area == 'module')
-		{
+		else if ($area == 'module') {
 			$filepath = JPATH_SITE . '/modules/' . $name . '/forms/' . $source;
 		}
-		else if ($area == 'library')
-		{
+		else if ($area == 'library') {
 			$filepath = JPATH_LIBRARIES . '/highlandvision/' . $name . '/forms/' . $source;
 		}
-		else
-		{
+		else {
 			$filepath = JPATH_COMPONENT_ADMINISTRATOR . '/forms/' . $source;
 		}
 
@@ -127,20 +123,6 @@ class KrFactory
 	public static function getAdminModel(string $name): ?ModelInterface
 	{
 		return FNS::getAdminModel($name);
-	}
-
-	/**
-	 * Get admin model
-	 *
-	 * @param  string  $name  Model name
-	 *
-	 * @throws Exception
-	 * @since  3.3.0
-	 * @return ModelInterface|FormModel|null  The model object or form
-	 */
-	public static function getSiteModel(string $name): ModelInterface|FormModel|null
-	{
-		return FNS::getAdminModel($name, 'site');
 	}
 
 	/**
@@ -179,6 +161,20 @@ class KrFactory
 	public static function getListSiteModel(string $name): mixed
 	{
 		return FNS::getListModel($name, 'site');
+	}
+
+	/**
+	 * Get admin model
+	 *
+	 * @param  string  $name  Model name
+	 *
+	 * @throws Exception
+	 * @since  3.3.0
+	 * @return ModelInterface|FormModel|null  The model object or form
+	 */
+	public static function getSiteModel(string $name): ModelInterface|FormModel|null
+	{
+		return FNS::getAdminModel($name, 'site');
 	}
 
 	/**

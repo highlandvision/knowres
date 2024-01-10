@@ -321,7 +321,7 @@ class CronserviceController extends BaseController
 	#[NoReturn] public function rua(): void
 	{
 		$this->checkSecret();
-		$method = KrMethods::inputString('method', null, 'get');
+		$method = KrMethods::inputString('method');
 		if (!$method) {
 			echo "Enter a method in the url";
 			jexit();
@@ -402,8 +402,8 @@ class CronserviceController extends BaseController
 	 */
 	private function checkSecret(): void
 	{
-		$this->test = KrMethods::inputInt('test', 0, 'get');
-		$secret     = KrMethods::inputString('secret', '', 'get');
+		$this->test = KrMethods::inputInt('test');
+		$secret     = KrMethods::inputString('secret', '');
 
 		if (!$this->test && $secret != KrMethods::getCfg('secret')) {
 			throw new RuntimeException('Secret does not match');

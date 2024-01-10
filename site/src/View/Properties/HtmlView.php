@@ -1,5 +1,4 @@
-<?php /** @noinspection PhpPossiblePolymorphicInvocationInspection */
-
+<?php
 /**
  * @package    Know Reservations
  * @subpackage Site View
@@ -7,6 +6,8 @@
  * @license    See the file "LICENSE.txt" for the full license governing this code.
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
+
+/** @noinspection PhpPossiblePolymorphicInvocationInspection */
 
 namespace HighlandVision\Component\Knowres\Site\View\Properties;
 
@@ -209,18 +210,18 @@ class HtmlView extends KrHtmlView\Site
 			$searchData->region_id = KrMethods::inputInt('region_id', $this->default_region);
 			$searchData->arrival   = KrMethods::inputString('arrival', '');
 			Utility::validateInputDate($searchData->arrival);
-			$searchData->departure = KrMethods::inputString('departure', '', 'get');
+			$searchData->departure = KrMethods::inputString('departure', '');
 			Utility::validateInputDate($searchData->departure);
-			$searchData->type_id     = KrMethods::inputInt('type_id', 0, 'get');
-			$searchData->category_id = KrMethods::inputInt('category_id', 0, 'get');
-			$searchData->feature_id  = KrMethods::inputInt('feature_id', 0, 'get');
-			$searchData->bedrooms    = KrMethods::inputInt('bedrooms', 0, 'get');
-			$searchData->flexible    = KrMethods::inputInt('flexible', 0, 'get');
-			$searchData->guests      = KrMethods::inputInt('guests', 2, 'get');
-			$searchData->adults      = KrMethods::inputInt('adults', 2, 'get');
-			$searchData->children    = KrMethods::inputInt('children', 0, 'get');
-			$searchData->child_ages  = KrMethods::inputArray('child_ages', [], 'get');
-			$searchData->limitstart  = KrMethods::inputint('limitstart', 0, 'get');
+			$searchData->type_id     = KrMethods::inputInt('type_id');
+			$searchData->category_id = KrMethods::inputInt('category_id');
+			$searchData->feature_id  = KrMethods::inputInt('feature_id');
+			$searchData->bedrooms    = KrMethods::inputInt('bedrooms');
+			$searchData->flexible    = KrMethods::inputInt('flexible');
+			$searchData->guests      = KrMethods::inputInt('guests', 2);
+			$searchData->adults      = KrMethods::inputInt('adults', 2);
+			$searchData->children    = KrMethods::inputInt('children');
+			$searchData->child_ages  = KrMethods::inputArray('child_ages');
+			$searchData->limitstart  = KrMethods::inputint('limitstart');
 
 			return $searchData;
 		} catch (Exception $e) {

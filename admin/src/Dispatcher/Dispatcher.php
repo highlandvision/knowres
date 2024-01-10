@@ -49,8 +49,7 @@ class Dispatcher extends ComponentDispatcher
 		$wa->useStyle('com_knowres.admin-generic');
 		$wa->useScript('com_knowres.admin-generic');
 
-		if (KrMethods::inputInt('success', 0, 'get'))
-		{
+		if (KrMethods::inputInt('success')) {
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_ACTION_SUCCESS'));
 		}
 
