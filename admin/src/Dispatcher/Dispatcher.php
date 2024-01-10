@@ -37,8 +37,7 @@ class Dispatcher extends ComponentDispatcher
 	 */
 	public function dispatch(): void
 	{
-		if (is_dir(JPATH_ROOT . '/media/com_knowres/vendor'))
-		{
+		if (is_dir(JPATH_ROOT . '/media/com_knowres/vendor')) {
 			require_once(JPATH_ROOT . '/media/com_knowres/vendor/autoload.php');
 		}
 

@@ -61,10 +61,10 @@ class Search
 	 */
 	public function __construct(stdClass $data)
 	{
-		$this->searchData       = clone $data;
-		$this->params           = KrMethods::getParams();
-		$this->Translations     = new Translations();
-		$this->Filter           = new Filter($this->params, $this->Translations);
+		$this->searchData   = clone $data;
+		$this->params       = KrMethods::getParams();
+		$this->Translations = new Translations();
+		$this->Filter       = new Filter($this->params, $this->Translations);
 	}
 
 	/**
@@ -92,8 +92,7 @@ class Search
 
 			if ($this->searchData->byAvailability) {
 				$this->setActualRates();
-			}
-			else {
+			} else {
 				$this->setMinRates();
 			}
 
@@ -236,8 +235,7 @@ class Search
 			if (!$contract_total) {
 				$this->searchData->rateNet[$property_id]      = $this->highval;
 				$this->searchData->rateDiscount[$property_id] = 0;
-			}
-			else {
+			} else {
 				$this->searchData->rateNet[$property_id]      = $contract_total;
 				$this->searchData->rateDiscount[$property_id] = $discount;
 			}
@@ -305,8 +303,7 @@ class Search
 			if (!empty($this->searchData->departure)) {
 				$this->searchData->nights =
 					TickTock::differenceDays($this->searchData->arrival, $this->searchData->departure);
-			}
-			else {
+			} else {
 				$this->searchData->departure = TickTock::modifyDays($this->searchData->arrival, 7);
 				$this->searchData->nights    = 7;
 			}
@@ -383,8 +380,7 @@ class Search
 					$markup                  = $net_markup[$r->property_id] ?? $net_markup[0];
 					$prices[$r->property_id] =
 						KrFactory::getAdminModel('ratemarkup')::getGrossRate((float) $r->minrate, $markup);
-				}
-				else {
+				} else {
 					$prices[$r->property_id] = (int) $r->minrate;
 				}
 			}
@@ -403,22 +399,18 @@ class Search
 	 */
 	private function validateRegion(): void
 	{
-		if (!count($this->searchData->region_id) && !$this->searchData->layout) {
-			$id                            = $this->params->get('default_region');
-			$this->searchData->region_id[] = $id;
+		if ($this->searchData->layout) {
+			return;
 		}
 
-		foreach ($this->searchData->region_id as $id) {
-			$region = KrFactory::getAdminModel('region')->getItem($id);
-			if (empty($region->id) || $region->state != 1) {
-				unset($this->searchData->region_id[$id]);
-				continue;
-			}
-
-			$this->searchData->region_name[$id]  = $this->Translations->getText('region', $region->id);
-			$this->searchData->country_name[$id] = $this->Translations->getText('country', $region->country_id);
-			$this->searchData->map_zoom          = min($region->map_zoom, $this->searchData->map_zoom);
-			$this->searchData->map_zoom_max      = max($region->map_zoom_max, $this->searchData->map_zoom_max);
+		if (!$this->searchData->region_id && !$this->searchData->layout) {
+			$this->searchData->region_id = $this->params->get('default_region');
 		}
+
+		$region                         = KrFactory::getAdminModel('region')->getItem($this->searchData->region_id);
+		$this->searchData->region_name  = $this->Translations->getText('region', $region->id);
+		$this->searchData->country_name = $this->Translations->getText('country', $region->country_id);
+		$this->searchData->map_zoom     = min($region->map_zoom, $this->searchData->map_zoom);
+		$this->searchData->map_zoom_max = max($region->map_zoom_max, $this->searchData->map_zoom_max);
 	}
 }

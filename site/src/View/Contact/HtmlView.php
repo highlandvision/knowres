@@ -1,5 +1,4 @@
-<?php /** @noinspection PhpPossiblePolymorphicInvocationInspection */
-
+<?php
 /**
  * @package    Know Reservations
  * @subpackage Site View
@@ -19,7 +18,6 @@ use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\HtmlView as KrHtmlView;
 use HighlandVision\KR\Session as KrSession;
 use HighlandVision\KR\SiteHelper;
-use Joomla\CMS\Factory;
 
 /**
  * Contact form
@@ -31,7 +29,7 @@ class HtmlView extends KrHtmlView\Site
 	/**
 	 * Display the form
 	 *
-	 * @param   null  $tpl  Default template.
+	 * @param  null  $tpl  Default template.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -43,8 +41,7 @@ class HtmlView extends KrHtmlView\Site
 		if ($this->property_id)
 		{
 			$property = KrFactory::getAdminModel('property')->getItem($this->property_id);
-			if (empty($property->id))
-			{
+			if (empty($property->id)) {
 				SiteHelper::redirectSearch();
 			}
 
@@ -85,33 +82,12 @@ class HtmlView extends KrHtmlView\Site
 	 */
 	protected function setMyPathway(): void
 	{
-		$pathway = Factory::getApplication()->getPathway();
-		$pathway->setPathway([]);
-
 		$searchSession = new KrSession\Search();
 		$searchData    = $searchSession->getData();
-		if (count($searchData->baseIds) && $this->property_id)
-		{
-			$regions = KrFactory::getListModel('regions')->getAllRegions(true);
-			$Itemid  = 0;
-			if (count($regions) > 1)
-			{
-				$Itemid = SiteHelper::getItemId('com_knowres', 'properties',
-					array('layout'    => 'search',
-					      'region_id' => $this->region_id));
-			}
-
-			$pathway = HtmlView::propertiesPathway($pathway);
-
-			$Itemid  = SiteHelper::getItemId('com_knowres', 'properties', array(
-				'layout'    => 'search',
-				'region_id' => $this->region_id
-			));
-			$pathway = self::searchPathway($pathway, $this->region_id, $Itemid);
+		if (count($searchData->baseIds) && $this->property_id) {
+			$pathway = HtmlView::propertiesPathway($pathway, $searchData);
 			$pathway = self::propertyPathway($pathway, $this->property_id, $this->property_name);
-		}
-		else if ($this->property_id)
-		{
+		} else if ($this->property_id) {
 			$pathway = self::propertyPathway($pathway, $this->property_id, $this->property_name);
 		}
 

@@ -24,15 +24,7 @@ $app     = Factory::getApplication();
 $searchSession = new KrSession\Search();
 $searchData    = $searchSession->getData();
 
-switch ((string) $item->text)
-{
-	//    // Check for "Start" item
-	//    case Text::_('JLIB_HTML_START'):
-	//        $icon = $app->getLanguage()->isRtl() ? 'icon-angle-double-right' : 'icon-angle-double-left';
-	//	    $icon = null;
-	//        $aria = Text::sprintf('JLIB_HTML_GOTO_POSITION', strtolower($item->text));
-	//        break;
-
+switch ((string) $item->text) {
 	// Check for "Prev" item
 	case Text::_('JPREV'):
 		$item->text = Text::_('JPREVIOUS');
@@ -48,13 +40,6 @@ switch ((string) $item->text)
 		$aria       = Text::sprintf('JLIB_HTML_GOTO_POSITION', strtolower($item->text));
 		$title      = Text::_('JNEXT');
 		break;
-	//
-	//    // Check for "End" item
-	//    case Text::_('JLIB_HTML_END'):
-	//       $icon = $app->getLanguage()->isRtl() ? 'icon-angle-double-left' : 'icon-angle-double-right';
-	//	    $icon = null;
-	//        $aria = Text::sprintf('JLIB_HTML_GOTO_POSITION', strtolower($item->text));
-	//        break;
 
 	default:
 		$icon = null;
@@ -62,36 +47,27 @@ switch ((string) $item->text)
 		break;
 }
 
-if ($icon !== null)
-{
+if ($icon !== null) {
 	$display = '<span class="' . $icon . '" aria-hidden="true"></span>';
 }
 
-if ($displayData['active'])
-{
+if ($displayData['active']) {
 	$limit = $item->base > 0 ? 'limitstart.value=' . $item->base : 'limitstart.value=0';
 
-	if ($app->isClient('administrator'))
-	{
+	if ($app->isClient('administrator')) {
 		$link = 'href="#" onclick="document.adminForm.' . $item->prefix . $limit
 			. '; Joomla.submitform();return false;"';
-	}
-	else if ($app->isClient('site'))
-	{
+	} else if ($app->isClient('site')) {
 		$region_id = $searchData->region_id;
-		// TODO v4.3 check why en-gb is hardcoded
 		$Itemid    = SiteHelper::getItemId('com_knowres', 'properties', ['region_id' => $region_id]);
-		$link      = 'index.php?option=com_knowres&view=properties&lang=en-gb&Itemid=' . $Itemid . '&limitstart='
-			. $item->base;
-		if ($region_id > 0)
-		{
+		$link      = KrMethods::route('index.php?option=com_knowres&view=properties&Itemid=' . $Itemid .
+		                              '&limitstart=' . $item->base);
+		if ($region_id > 0) {
 			$link .= '&region_id=' . $region_id;
 		}
 		$link = KrMethods::route($link);
 	}
-}
-else
-{
+} else {
 	$class = (property_exists($item, 'active') && $item->active) ? 'active' : 'disabled';
 	$class = $ajax ? ($class . ' getResponseSearch') : $class;
 }

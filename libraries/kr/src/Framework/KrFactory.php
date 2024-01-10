@@ -78,7 +78,7 @@ class KrFactory
 	}
 
 	/**
-	 * Get a new empty Form for adhic uses
+	 * Get a new empty Form for adhoc uses
 	 *
 	 * @param  string   $name     Form name
 	 * @param  string   $source   Name of XML file

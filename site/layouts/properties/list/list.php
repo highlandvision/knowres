@@ -29,7 +29,6 @@ extract($displayData);
  * @var array  $net            Net rates.
  * @var array  $discount       Discount value.
  * @var array  $rating         Review value.
- * @var bool   $one_region     True if all properties are in 1 region
  * @var array  $key_features   Features assigned for filtering
  */
 
@@ -85,7 +84,6 @@ $count   = 0;
 						<?php echo KrMethods::render('properties.list.card.section', ['item'         => $item,
 						                                                              'params'       => $params,
 						                                                              'plink'        => $plink,
-						                                                              'one_region'   => $one_region,
 						                                                              'key_features' => $key_features,
 						                                                              'Translations' => $Translations
 						]); ?>

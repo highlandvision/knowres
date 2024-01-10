@@ -26,10 +26,7 @@ use JetBrains\PhpStorm\NoReturn;
 use Joomla\Registry\Registry;
 use stdClass;
 
-use function array_slice;
-use function array_values;
 use function count;
-use function end;
 use function implode;
 
 /**
@@ -71,7 +68,7 @@ class HtmlView extends KrHtmlView\Site
 		$model                = $this->getModel();
 		$this->state          = $model->getState();
 		$this->params         = KrMethods::getParams();
-		$layout               = KrMethods::inputString('layout', 'default', 'get');
+		$layout               = KrMethods::inputString('layout', 'default');
 		$today                = TickTock::getDate();
 		$description          = false;
 		$this->default_region = $this->params->get('default_region', 0);
@@ -79,7 +76,7 @@ class HtmlView extends KrHtmlView\Site
 		$searchSession = new KrSession\Search();
 		$searchData    = $searchSession->getData();
 
-		$retain = KrMethods::inputInt('retain', 0, 'get');
+		$retain = KrMethods::inputInt('retain');
 		if ($retain == 2) {
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_EXPIRED_SESSION'));
 			$retain = 1;
@@ -95,7 +92,7 @@ class HtmlView extends KrHtmlView\Site
 			$this->property_search = true;
 
 			if ($layout == 'category') {
-				$this->category_id = KrMethods::inputInt('category_id', 0, 'get');
+				$this->category_id = KrMethods::inputInt('category_id');
 				if (!$this->category_id) {
 					$searchData = $searchSession->resetData();
 					SiteHelper::redirectHome();
@@ -108,26 +105,22 @@ class HtmlView extends KrHtmlView\Site
 				$description             = $category->name;
 				$this->meta_title        = KrMethods::sprintf('COM_KNOWRES_BROWSE_CATEGORY', $category->name);
 				$this->meta_description  = KrMethods::sprintf('COM_KNOWRES_BROWSE_CATEGORY_DSC', $category->name);
-			}
-			else if ($layout === 'new') {
+			} elseif ($layout === 'new') {
 				$searchData->layout     = $layout;
 				$description            = KrMethods::plain('COM_KNOWRES_BROWSE_NEW_VILLAS');
 				$this->meta_title       = KrMethods::plain('COM_KNOWRES_BROWSE_NEW_VILLAS');
 				$this->meta_description = KrMethods::plain('COM_KNOWRES_BROWSE_NEW_VILLAS_DSC');
-			}
-			else if ($layout === 'discount') {
+			} elseif ($layout === 'discount') {
 				$searchData->layout     = $layout;
 				$description            = KrMethods::plain('COM_KNOWRES_BROWSE_DISCOUNTS');
 				$this->meta_title       = KrMethods::plain('COM_KNOWRES_BROWSE_DISCOUNTS');
 				$this->meta_description = KrMethods::plain('COM_KNOWRES_BROWSE_DISCOUNTS_DSC');
-			}
-			else {
+			} else {
 				// From search module!
 				$searchData = $this->setInput($searchData, $searchSession);
 				if (!empty($searchData->arrival) && !empty($searchData->departure)) {
-					if ($searchData->arrival < $today ||
-						$searchData->departure < $today ||
-						$searchData->departure <= $searchData->arrival) {
+					if ($searchData->arrival < $today || $searchData->departure < $today
+						|| $searchData->departure <= $searchData->arrival) {
 						$searchData = $searchSession->resetData();
 						SiteHelper::redirectHome();
 					}
@@ -151,7 +144,7 @@ class HtmlView extends KrHtmlView\Site
 		if ($this->params->get('search_list', 0)) {
 			$this->layouts['list'] = true;
 		}
-		if ($this->params->get('search_thumb', 0)) {
+		if ($this->params->get('search_thumb', 0) && $layout == 'default') {
 			$this->layouts['thumb'] = true;
 		}
 
@@ -191,11 +184,10 @@ class HtmlView extends KrHtmlView\Site
 	 */
 	#[NoReturn] protected function setCanonical(): void
 	{
-		//TODO v4.3 when region URls are finalised
-		$Itemid = SiteHelper::getItemId('com_knowres', 'properties', ['region_id' => $this->default_region]);
-		$link   = 'index.php?option=com_knowres&view=properties&region_id[]=' . $this->default_region . '&Itemid=' .
+		$Itemid        = SiteHelper::getItemId('com_knowres', 'properties', ['region_id' => $this->default_region]);
+		$link          =
+			'index.php?option=com_knowres&view=properties&region_id=' . $this->default_region . '&Itemid=' .
 			$Itemid;
-
 		$canonical_url = KrMethods::route($link);
 		$this->document->addHeadLink(KrMethods::getRoot() . $canonical_url, 'canonical');
 	}
@@ -213,9 +205,9 @@ class HtmlView extends KrHtmlView\Site
 	protected function setInput(stdClass $searchData, KrSession\Search $searchSession): stdClass
 	{
 		try {
-			$searchData->area      = KrMethods::inputString('area', '', 'get');
-			$searchData->region_id = KrMethods::inputArray('region_id', [$this->params->get('default_region')], 'get');
-			$searchData->arrival   = KrMethods::inputString('arrival', '', 'get');
+			$searchData->area      = KrMethods::inputString('area');
+			$searchData->region_id = KrMethods::inputInt('region_id', $this->default_region);
+			$searchData->arrival   = KrMethods::inputString('arrival', '');
 			Utility::validateInputDate($searchData->arrival);
 			$searchData->departure = KrMethods::inputString('departure', '', 'get');
 			Utility::validateInputDate($searchData->departure);
@@ -257,31 +249,13 @@ class HtmlView extends KrHtmlView\Site
 	 */
 	protected function setSearchDescription(): string
 	{
-		$names = array_values($this->Search->searchData->region_name);
-		if (count($names) > 1 && count($names) < 6) {
-			$description = implode(', ', array_slice($names, 0, -1)) . ' & ' . end($names);
-		}
-		else if (count($names) == 1) {
-			$description = $names[0];
-		}
-		else {
-			$description = KrMethods::plain('COM_KNOWRES_SEARCH_HEADER_MULTIPLE');
-		}
-
+		$description            = $this->Search->searchData->region_name;
 		$this->meta_title       = KrMethods::sprintf('COM_KNOWRES_SEO_TITLE_PROPERTIES',
-		                                             implode(', ',
-		                                                     array_slice($this->Search->searchData->region_name,
-		                                                                 0,
-		                                                                 -1)) .
-		                                             ' & ' .
-		                                             end($this->Search->searchData->region_name));
-		$this->meta_description = KrMethods::sprintf('COM_KNOWRES_SEO_DSC_PROPERTIES',
-		                                             implode(', ',
-		                                                     array_slice($this->Search->searchData->region_name,
-		                                                                 0,
-		                                                                 -1)) .
-		                                             ' & ' .
-		                                             end($this->Search->searchData->region_name));
+		                                             $this->Search->data->region_name,
+		                                             $this->Search->data->country_name);
+		$this->meta_description = KrMethods::sprintf('COM_KNOWRES_SEO_DESCRIPTION_PROPERTIES',
+		                                             $this->Search->data->region_name,
+		                                             $this->Search->data->country_name);
 
 		return $description;
 	}

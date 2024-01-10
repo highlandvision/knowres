@@ -5,8 +5,6 @@
 			<![CDATA[COM_KNOWRES_TITLE_PROPERTIES_CATEGORY_DSC]]>
 		</message>
 	</layout>
-
-	<!-- Add fields to the request variables for the layout. -->
 	<fields name="request">
 		<fieldset name="request">
 			<field name="category_id"

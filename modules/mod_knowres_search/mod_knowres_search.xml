@@ -37,15 +37,22 @@
 					<option value="bottom">MOD_KNOWRES_SEARCH_BOTTOM</option>
                 </field>
                 <field name="show_regions"
-                       class="btn-group"
+                       class="btn-group btn-group-yesno"
                        default="1"
-                       filter="int"
                        type="radio"
                        label="MOD_KNOWRES_SEARCH_SHOW_REGION"
                        description="MOD_KNOWRES_SEARCH_SHOW_REGION_DSC">
-                    <option class="btn btn-outline-danger" value="0">JNO</option>
-                    <option class="btn btn-outline-success" value="1">MOD_KNOWRES_SEARCH_SHOW_REGION_SINGLE</option>
-                    <option class="btn btn-outline-info" value="2">MOD_KNOWRES_SEARCH_SHOW_REGION_MULTI</option>
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field name="show_regions_expanded"
+                       class="btn-group btn-group-yesno"
+                       default="1"
+                       type="radio"
+                       label="MOD_KNOWRES_SEARCH_SHOW_REGION_EXPANDED"
+                       description="MOD_KNOWRES_SEARCH_SHOW_REGION_EXPANDED_DSC">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
                 </field>
                 <field name="search_text"
                        default=""

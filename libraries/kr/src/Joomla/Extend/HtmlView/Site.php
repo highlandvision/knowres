@@ -64,9 +64,8 @@ class Site extends KrHtmlView
 	 */
 	public static function confirmPathway(Pathway $pathway): Pathway
 	{
-		$Itemid  = SiteHelper::getItemId('com_knowres', 'confirm');
-
-		$pathway->addItem(Krmethods::plain('COM_KNOWRES_CONFIRM_TITLE'),
+		$Itemid = SiteHelper::getItemId('com_knowres', 'confirm');
+		$pathway->addItem(Krmethods::plain('COM_KNOWRES_MAKE_A_RESERVATION'),
 		                  KrMethods::route('index.php?option=com_knowres&view=confirm&Itemid=' . $Itemid));
 
 		return $pathway;
@@ -103,7 +102,7 @@ class Site extends KrHtmlView
 	{
 		if (!empty($searchData) && count($searchData->baseIds)) {
 			$Itemid = SiteHelper::getItemId('com_knowres', 'properties', ['layout' => 'search']);
-			$link   = 'index.php?Itemid=' . $Itemid . '&retain=1';
+			$link   = KrMethods::route('index.php?Itemid=' . $Itemid . '&retain=1');
 			$pathway->addItem(KrMethods::plain('COM_KNOWRES_SEARCH_RESULTS'), $link);
 		}
 
@@ -168,10 +167,7 @@ class Site extends KrHtmlView
 	{
 		$backlink =
 			KrMethods::route('index.php?option=com_knowres&view=properties&Itemid=' .
-			                 $Itemid .
-			                 '&region_id=' .
-			                 $region_id .
-			                 '&retain=1');
+			                 $Itemid . '&region_id=' . $region_id . '&retain=1');
 		$pathway->addItem(KrMethods::plain('COM_KNOWRES_SEARCH_RESULTS'), $backlink);
 
 		return $pathway;

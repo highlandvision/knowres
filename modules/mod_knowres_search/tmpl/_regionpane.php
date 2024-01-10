@@ -12,31 +12,35 @@ defined('_JEXEC') or die;
 
 <div class="dropdown-pane" id="kr-searchregion-drop" data-auto-focus="true" data-closable
      data-close-on-click="true" data-dropdown data-h-offset="-2" data-v-offset="8">
-	<?php $c = 0; ?>
-	<?php foreach ($regions as $k => $v): ?>
-		<div class="grid-x grid-margin-x">
-			<div class="small-6 large-5 cell">
-				<?php echo $k; ?>
-			</div>
-			<div class="small-6 large-7 cell end">
-				<?php foreach ($v as $id => $r): ?>
-					<?php if (!empty($initial->region_id[$id])) : ?>
-						<input type="radio" class="radioover region" name="region_id"
-						       id="<?php echo $id; ?>" value="<?php echo $id; ?>" checked="checked"
-						       data-field="<?php echo $id; ?>" data-country="<?php echo $k; ?>"
-						       data-region="<?php echo $id; ?>" data-value="<?php echo $id; ?>">
-					<?php else : ?>
-						<input type="radio" class="radioover region" name="region_id"
-						       id="<?php echo $id; ?>" value="<?php echo $id; ?>" data-value="<?php echo $id; ?>"
-						       data-region="<?php echo $id; ?>" data-country="<?php echo $k; ?>">
-					<?php endif; ?>
+	<div class="dropdown-body">
+		<?php $c = 0; ?>
+		<?php foreach ($regions as $k => $v): ?>
+			<div class="grid-x grid-margin-x">
+				<div class="small-6 large-5 cell">
+					<?php echo $k; ?>
+				</div>
+				<div class="small-6 large-7 cell end">
+					<?php foreach ($v as $id => $r): ?>
+						<?php if ($id == $initial->region_id) : ?>
+							<input type="radio" class="radioover region" checked="checked"
+							       name="xregion_id" onclick="setregion(<?php echo $id; ?>);"
+							       id="<?php echo $id; ?>" value="<?php echo $id; ?>"
+							       data-field="<?php echo $id; ?>" data-country="<?php echo $k; ?>"
+							       data-region="<?php echo $id; ?>" data-value="<?php echo $id; ?>">
+						<?php else : ?>
+							<input type="radio" class="radioover region"
+							       name="xregion_id" onclick="setregion(<?php echo $id; ?>);"
+							       id="<?php echo $id; ?>" value="<?php echo $id; ?>" data-value="<?php echo $id; ?>"
+							       data-region="<?php echo $id; ?>" data-country="<?php echo $k; ?>">
+						<?php endif; ?>
 
-					<label class="radiolabel" for="<?php echo $id; ?>">
-						<?php echo $r; ?></label>
-					<br>
-					<?php $c++; ?>
-				<?php endforeach; ?>
+						<label class="radiolabel" for="<?php echo $id; ?>">
+							<?php echo $r; ?></label>
+						<br>
+						<?php $c++; ?>
+					<?php endforeach; ?>
+				</div>
 			</div>
-		</div>
-	<?php endforeach; ?>
+		<?php endforeach; ?>
+	</div>
 </div>

@@ -31,7 +31,6 @@ extract($displayData);
  * @var array  $net            Net rates.
  * @var array  $discount       Discount value.
  * @var array  $rating         Review value.
- * @var bool   $one_region     True if all properties are in 1 region
  * @var array  $key_features   Features assigned for filtering
  */
 

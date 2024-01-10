@@ -1,5 +1,4 @@
-<?php /** @noinspection PhpPossiblePolymorphicInvocationInspection */
-
+<?php
 /**
  * @package    Know Reservations
  * @subpackage Site View
@@ -17,9 +16,7 @@ use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\HtmlView as KrHtmlView;
 use HighlandVision\KR\Session as KrSession;
-use HighlandVision\KR\SiteHelper;
 use HighlandVision\KR\Utility;
-use Joomla\CMS\Factory;
 
 use function count;
 use function defined;
@@ -70,7 +67,7 @@ class HtmlView extends KrHtmlView\Site
 		$this->state->set('list.ordering', 'review_date');
 		$this->state->set('list.direction', 'DESC');
 		$this->state->set('list.limit', $this->list_limit);
-		$this->state->set('list.start', KrMethods::inputInt('limitstart', $this->list_limit, 'get'));
+		$this->state->set('list.start', KrMethods::inputInt('limitstart', $this->list_limit));
 
 		$this->items            = $this->get('items');
 		$this->pagination       = $this->get('pagination');
@@ -104,22 +101,15 @@ class HtmlView extends KrHtmlView\Site
 	 */
 	protected function setMyPathway(int $region_id, string $region_name): void
 	{
-		$pathway = Factory::getApplication()->getPathway();
-		$pathway->setPathway([]);
-
-		$Itemid  = SiteHelper::getRegionItemid($region_id);
-		$pathway = self::propertiesPathway($pathway);
-
 		$searchSession = new KrSession\Search();
 		$searchData    = $searchSession->getData();
-		if (count($searchData->baseIds))
-		{
-			$Itemid  = SiteHelper::getItemId('com_knowres', 'properties',
-				['layout' => 'search', 'region_id' => $this->property->region_id]);
-			$pathway = self::searchPathway($pathway, $this->property->region_id, $Itemid);
+		if (count($searchData->baseIds) && $this->property_id) {
+			$pathway = HtmlView::propertiesPathway($pathway, $searchData);
+			$pathway = self::propertyPathway($pathway, $this->property_id, $this->property_name);
 		}
-
-		$pathway = self::propertyPathway($pathway, $this->property->id, $this->property->property_name);
+		else if ($this->property_id) {
+			$pathway = self::propertyPathway($pathway, $this->property_id, $this->property_name);
+		}
 
 		$pathway->addItem(KrMethods::plain('COM_KNOWRES_REVIEWS'));
 	}

@@ -21,7 +21,6 @@ extract($displayData);
  * @var false|object $item         Property item.
  * @var Registry     $params       KR params.
  * @var string       $plink        Property link.
- * @var bool         $one_region   True if single region site.
  * @var array        $key_features Key (filter) property features.
  * @var Translations $Translations Translations object.
  */
@@ -51,10 +50,8 @@ extract($displayData);
 
 <div class="info">
 	<?php echo strtoupper($item->property_area); ?>
-	<?php if (!$one_region) : ?>
-		<?php echo ', ' . $item->region_name . ', '; ?>
-		<?php echo Translations::getCountryName($item->country_id); ?>
-	<?php endif; ?>
+	<?php echo ', ' . $item->region_name . ', '; ?>
+	<?php echo Translations::getCountryName($item->country_id); ?>
 	<br>
 	<?php echo KrMethods::plain('COM_KNOWRES_SLEEPS'); ?>
 	<?php echo $item->sleeps; ?>

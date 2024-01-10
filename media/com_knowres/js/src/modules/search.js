@@ -75,10 +75,3 @@ export function removeAgeField(count) {
     let container = document.getElementById('child_ages_' + count);
     container.remove()
 }
-
-export function setregion(id) {
-    let element = document.getElementById('region_id');
-    element.value = id;
-    let pane = document.getElementById('region_id');
-    pane.click();
-}

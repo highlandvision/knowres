@@ -131,12 +131,12 @@ class PropertiesModel extends ListModel
 		             ' AND ' . $db->qn('r.state') . '=1' .
 		             ' AND ' . $db->qn('r.held') . '=0');
 
-		if (count($data->region_id)) {
-			$query->where($db->qn('a.region_id') . 'IN (' . implode(',', array_values($data->region_id)) . ')');
+		if ($data->region_id) {
+			$query->where($db->qn('a.region_id') . '=' . (int)$data->region_id);
 		}
 
 		if ($data->layout == 'category' && $data->category_id) {
-			$query = self::jsonFindInSet($db, $query, $data->category_id, 'categories');
+			$query = self::jsonFindInSet($db, $query, $data->category_id, 'a.categories');
 		}
 
 //		if ($data->layout == 'discount') {

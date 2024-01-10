@@ -143,8 +143,8 @@ class Search extends Session
 		$data->rateNet        = [];
 		$data->rateDiscount   = [];
 		$data->rating         = 0;
-		$data->region_id      = [];
-		$data->region_name    = [];
+		$data->region_id      = 0;
+		$data->region_name    = '';
 		$data->start          = 0;
 		$data->type_id        = 0;
 		$data->value          = '';

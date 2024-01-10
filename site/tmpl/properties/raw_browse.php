@@ -12,9 +12,6 @@ defined('_JEXEC') or die;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 
-$one_region = count($this->Response->searchData->region_id) == 1 &&
-	KrMethods::getParams('default_region') == $this->Response->searchData->region_id[0];
-
 $results = KrFactory::getListModel('propertyfeatures')->getAll(true);
 foreach ($results as $r) {
 	$key_features[$r->id] = $r->name;
@@ -30,7 +27,6 @@ foreach ($results as $r) {
                                                         'net'            => $this->Response->searchData->rateNet,
                                                         'discount'       => $this->Response->searchData->rateDiscount,
                                                         'rating'         => $this->Response->searchData->rating,
-                                                        'one_region'     => $one_region,
                                                         'key_features'   => $key_features
 ]);
 ?>
