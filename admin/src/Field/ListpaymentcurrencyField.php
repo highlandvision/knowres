@@ -17,8 +17,6 @@ use InvalidArgumentException;
 use Joomla\CMS\Form\Field\ListField;
 use Joomla\CMS\HTML\HTMLHelper;
 
-use RuntimeException;
-
 use function array_merge;
 
 /**

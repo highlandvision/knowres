@@ -100,8 +100,8 @@ class HtmlView extends KrHtmlView\Site
 			SiteHelper::redirectDashboard();
 		}
 
-		$this->meta_title       = KrMethods::plain('COM_KNOWRES_PAY_NOW');
-		$this->meta_description = KrMethods::plain('COM_KNOWRES_PAY_NOW');
+		$this->meta_title       = KrMethods::plain('COM_KNOWRES_MAKE_A_PAYMENT');
+		$this->meta_description = KrMethods::plain('COM_KNOWRES_MAKE_A_PAYMENT');
 		$this->prepareDocument();
 
 		parent::display($tpl);
@@ -131,6 +131,6 @@ class HtmlView extends KrHtmlView\Site
 		$pathway->setPathway([]);
 
 		$pathway = HtmlView::dashboardPathway($pathway);
-		$pathway->addItem(KrMethods::plain('COM_KNOWRES_PAY_NOW'));
+		$pathway->addItem(KrMethods::plain('COM_KNOWRES_MAKE_A_PAYMENT'));
 	}
 }

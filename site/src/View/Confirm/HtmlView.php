@@ -91,7 +91,7 @@ class HtmlView extends KrHtmlView\Site
 		                                   ->getPropertysettings($this->contractData->property_id);
 		$this->pimage           = Images::getImagePath($this->property->id, 'solo',
 			Images::getPropertyImageName($this->property->id));
-		$this->meta_title       = KrMethods::plain('COM_KNOWRES_CONFIRM_TITLE');
+		$this->meta_title       = KrMethods::plain('COM_KNOWRES_MAKE_A_RESERVATION');
 		$this->meta_description = KrMethods::plain('COM_KNOWRES_PAGE_TITLE');
 		$this->prepareDocument();
 
@@ -158,6 +158,6 @@ class HtmlView extends KrHtmlView\Site
 		$pathway = self::propertiesPathway($pathway, $searchData);
 		$pathway = self::propertyPathway($pathway, $searchData, $this->property);
 
-		$pathway->addItem(KrMethods::plain('COM_KNOWRES_CONFIRM_TITLE'));
+		$pathway->addItem(KrMethods::plain('COM_KNOWRES_MAKE_A_RESERVATION'));
 	}
 }

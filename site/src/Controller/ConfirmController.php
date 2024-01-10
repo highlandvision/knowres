@@ -66,9 +66,7 @@ class ConfirmController extends FormController
 			$region_id           = $searchData->region_id ?? 0;
 			$Itemid              = SiteHelper::getItemId('com_knowres', 'properties', ['region_id' => $region_id]);
 			$wrapper['redirect'] =
-				KrMethods::route(KrMethods::getRoot() .
-				                 'index.php?option=com_knowres&view=properties&retain=2&Itemid=' .
-				                 $Itemid);
+				KrMethods::route('index.php?option=com_knowres&view=properties&retain=2&Itemid=' . $Itemid);
 			echo new JsonResponse($wrapper);
 			jexit();
 		}
@@ -142,7 +140,8 @@ class ConfirmController extends FormController
 		}
 
 		if (!KrFactory::getListModel('contracts')
-		              ->isPropertyAvailable($contractData->property_id, $contractData->arrival,
+		              ->isPropertyAvailable($contractData->property_id,
+		                                    $contractData->arrival,
 		                                    $contractData->departure)) {
 			$contractSession->resetData();
 			SiteHelper::expiredSession($jform['property_id'], true);
@@ -334,8 +333,7 @@ class ConfirmController extends FormController
 			$output->hr                    = '<hr>';
 			$output->room_total_text       = KrMethods::plain('COM_KNOWRES_CONFIRM_ROOM_TOTAL');
 			$output->room_total            = $Hub->currencyDisplay($Hub->getValue('room_total'));
-		}
-		else {
+		} else {
 			$output->room_total_gross_text = KrMethods::plain('COM_KNOWRES_CONFIRM_ROOM_TOTAL');
 			$output->room_total_text       = '';
 			$output->room_total            = '';
@@ -375,20 +373,17 @@ class ConfirmController extends FormController
 				$output->deposit_date =
 					KrMethods::sprintf('COM_KNOWRES_CONFIRM_REQUEST_FULL_PAYMENT',
 					                   TickTock::displayDate($Hub->getValue('expiry_date')));
-			}
-			else {
+			} else {
 				$output->deposit_date =
 					KrMethods::sprintf('COM_KNOWRES_CONFIRM_REQUEST_DEPOSIT_DUE',
 					                   TickTock::displayDate($Hub->getValue('expiry_date')));
 			}
 
 			$output->request_note = KrMethods::plain('COM_KNOWRES_CONFIRM_REQUEST_NOTE');
-		}
-		else {
+		} else {
 			if ($Hub->getValue('contract_total') == $Hub->getValue('deposit')) {
 				$output->deposit_date = KrMethods::sprintf('COM_KNOWRES_CONFIRM_BOOK_FULL_PAYMENT');
-			}
-			else {
+			} else {
 				$output->deposit_date =
 					KrMethods::plain('COM_KNOWRES_DEPOSIT') .
 					' ' .
@@ -400,8 +395,7 @@ class ConfirmController extends FormController
 			$output->balance = $Hub->currencyDisplay($Hub->getValue('contract_total') - $Hub->getValue('deposit'));
 			if (!(int) $Hub->getValue('balance_days')) {
 				$output->balance_date = KrMethods::plain('COM_KNOWRES_CONTRACTS_BOOKING_STATUS_39');
-			}
-			else {
+			} else {
 				$output->balance_date =
 					KrMethods::sprintf('COM_KNOWRES_CONFIRM_BALANCE_DUE',
 					                   TickTock::displayDate($Hub->getValue('balance_date')));
@@ -438,8 +432,7 @@ class ConfirmController extends FormController
 				if ($tax_type == 3 && !(int) $v['pay_arrival']) {
 					continue;
 				}
-			}
-			else {
+			} else {
 				$tax_type = isset($v['type']) ?? 0;
 				$tax_type += 1;
 			}
@@ -476,14 +469,12 @@ class ConfirmController extends FormController
 				$data->coupon_amount        = $coupon->amount;
 				$data->coupon_is_percentage = $coupon->is_percentage;
 				$data->coupon_discount      = 0;
-			}
-			else {
+			} else {
 				$error = KrMethods::sprintf('COM_KNOWRES_CONFIRM_COUPON_INVALID', $data->coupon_code);
 				echo new JsonResponse(null, $error, true);
 				jexit();
 			}
-		}
-		else {
+		} else {
 			$data->coupon_code          = '';
 			$data->coupon_id            = 0;
 			$data->coupon_amount        = 0;

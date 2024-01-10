@@ -46,7 +46,7 @@ ksort($display);
 <div class="kr-properties-slideshow" id="<?php echo $slick_id; ?>" >
 	<?php foreach ($display as $order => $image): ?>
 		<?php $alt = $Translations->getText('image', $image['id'], 'alt_text'); ?>
-		<a href="<?php echo $plink; ?>" target="_blank" title="View">
+		<a href="<?php echo $plink; ?>" title="View">
 			<?php echo HTMLHelper::_('image', $path . $image['name'], $alt, [
 					'width'  => $width,
 					'height' => $height

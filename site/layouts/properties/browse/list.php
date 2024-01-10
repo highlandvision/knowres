@@ -69,7 +69,7 @@ $weekly = KrFactory::getListModel('propertysettings')->getOneSetting('tariffChar
 					</div>
 				<?php endif; ?>
 
-				<a href="<?php echo $plink; ?>" target="_blank">
+				<a href="<?php echo $plink; ?>">
 					<div class="card-section">
 						<?php echo KrMethods::render('properties.browse.card.section',
 						                             ['item'         => $item,

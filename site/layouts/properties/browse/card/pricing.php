@@ -52,7 +52,7 @@ $params       = KrMethods::getParams();
 		<?php endif; ?>
 	</div>
 	<div class="price">
-		<a class="button rate" href="<?php echo $plink; ?>" target="_blank">
+		<a class="button rate" href="<?php echo $plink; ?>">
 			<?php if ($booking_type): ?>
 				<?php if ($byAvailability): ?>
 					<?php echo KrMethods::sprintf('COM_KNOWRES_SEARCH_PRICE',

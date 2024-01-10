@@ -80,7 +80,7 @@ $count   = 0;
 				<?php endif; ?>
 
 				<div class="card-section">
-					<a href="<?php echo $plink; ?>" target="_blank">
+					<a href="<?php echo $plink; ?>">
 						<?php echo KrMethods::render('properties.list.card.section', ['item'         => $item,
 						                                                              'params'       => $params,
 						                                                              'plink'        => $plink,

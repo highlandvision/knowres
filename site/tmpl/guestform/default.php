@@ -194,7 +194,7 @@ $wa->useScript('com_knowres.site')
 			<div class="text-right">
 				<?php if ($this->contract_id) : ?>
 					<button type="submit" class="button primary">
-						<?php echo KrMethods::plain('COM_KNOWRES_PAY_NOW'); ?>
+						<?php echo KrMethods::plain('COM_KNOWRES_MAKE_A_PAYMENT'); ?>
 					</button>
 				<?php else: ?>
 					<button type="submit" class="button primary">

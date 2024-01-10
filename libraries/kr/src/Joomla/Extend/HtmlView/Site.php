@@ -203,7 +203,7 @@ class Site extends KrHtmlView
 		}
 
 		if (isset($langs[$tag])) {
-			$link = KrMethods::route('/index.php?Itemid=' . $langs[$tag]);
+			$link  = KrMethods::route('index.php?Itemid=' . $langs[$tag]);
 			$title = Factory::getApplication()->getMenu()->getItem($langs[$tag])->title;
 			if (!empty($title) && $link) {
 				$pathway->addItem($title, $link);

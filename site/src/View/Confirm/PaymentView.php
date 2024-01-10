@@ -70,7 +70,7 @@ class PaymentView extends KrHtmlView\Site
 	protected function prepareDocument(): void
 	{
 		$this->document   = Factory::getDocument();
-		$meta_title       = KrMethods::plain('COM_KNOWRES_PAY_NOW');
+		$meta_title       = KrMethods::plain('COM_KNOWRES_MAKE_A_PAYMENT');
 		$meta_description = KrMethods::plain('COM_KNOWRES_PAGE_TITLE');
 		$this->prepareDefaultDocument($meta_title, $meta_description);
 
@@ -93,6 +93,6 @@ class PaymentView extends KrHtmlView\Site
 		$pathway = self::propertyPathway($pathway, $searchData, $this->property);
 		$pathway = self::confirmPathway($pathway);
 
-		$pathway->addItem(KrMethods::plain('COM_KNOWRES_PAY_NOW'));
+		$pathway->addItem(KrMethods::plain('COM_KNOWRES_MAKE_A_PAYMENT'));
 	}
 }

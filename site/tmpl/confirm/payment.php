@@ -1,4 +1,4 @@
-<?php /** @noinspection PhpPossiblePolymorphicInvocationInspection */
+<?php
 /**
  * @package     Know Reservations
  * @subpackage  Site Controller
@@ -6,6 +6,7 @@
  * @license     See the file "LICENSE.txt" for the full license governing this code.
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
+/** @noinspection PhpPossiblePolymorphicInvocationInspection */
 /** @noinspection PhpUnhandledExceptionInspection */
 
 defined('_JEXEC') or die;
@@ -30,7 +31,7 @@ $wa->useScript('com_knowres.site')
 	<div class="small-12 cell">
 		<?php if ($this->contractData->booking_type == 2) : ?>
 			<h1>
-				<?php echo KrMethods::plain('COM_KNOWRES_PAY_NOW'); ?>
+				<?php echo KrMethods::plain('COM_KNOWRES_MAKE_A_PAYMENT'); ?>
 			</h1>
 			<?php $this->when = KrMethods::plain('COM_KNOWRES_CONFIRM_BOOK_WHEN'); ?>
 		<?php else: ?>

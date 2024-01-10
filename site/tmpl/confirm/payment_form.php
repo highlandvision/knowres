@@ -106,7 +106,7 @@ $action = KrMethods::route('index.php?option=com_knowres&view=confirm&layout=pay
 
 	<button type="submit" id="checkterms" class="button expanded large validate">
 		<?php if ($this->property->booking_type == 2) : ?>
-			<span><?php echo KrMethods::plain('COM_KNOWRES_PAY_NOW'); ?></span>
+			<span><?php echo KrMethods::plain('COM_KNOWRES_MAKE_A_PAYMENT'); ?></span>
 		<?php else: ?>
 			<span><?php echo KrMethods::plain('COM_KNOWRES_CONFIRM_REQUEST_PAYMENT_SUBMIT'); ?></span>
 		<?php endif; ?>
