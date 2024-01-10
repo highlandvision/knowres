@@ -18,8 +18,12 @@ use HighlandVision\KR\Joomla\Extend\ListModel;
 use Joomla\Database\QueryInterface;
 use RuntimeException;
 
+use function array_map;
 use function defined;
+use function implode;
+use function is_array;
 use function is_null;
+use function is_string;
 
 /**
  * Services list model.
@@ -94,13 +98,33 @@ class ServicesModel extends ListModel
 	}
 
 	/**
+	 * Get online gateway currencies
+	 *
+	 * @since  4.3.0
+	 * @return mixed
+	 */
+	public function getGatewayCurrencies(): mixed
+	{
+		$db    = $this->getDatabase();
+		$query = $db->getQuery(true);
+
+		$query->select($this->getState('list.select', 's.currency'))
+		      ->from($db->qn('#__knowres_service', 's'))
+		      ->where($db->qn('a.type') . '=' . $db->q('g'))
+			  ->where(JSON_CONTAINS(parameters, 'obd', 1))
+		      ->where($db->qn('a.state') . '=1');
+		$db->setQuery($query);
+
+		return $db->loadObjectList();
+	}
+
+	/**
 	 * Get gateway payment services
 	 *
 	 * @param   mixed  $currency     String or array of currencies
 	 * @param   int    $agency_id    ID of agency
 	 * @param   int    $property_id  ID of property
 	 *
-	 * @throws RuntimeException
 	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return mixed

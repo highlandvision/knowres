@@ -73,54 +73,7 @@ class KrMethods
 	}
 
 	/**
-	 * Set class to adjust site width for some forms
-	 *
-	 * @since  4.0.0
-	 * @return string
-	 */
-	public static function adjustForWidth(): string
-	{
-		$width = KrMethods::getParams()->get('property_template_width', '960');
-		if ($width <= 1024)
-		{
-			$class = "small-12 columns";
-		}
-		else if ($width <= 1366)
-		{
-			$class = "small-12 large-8 large-offset-2 columns";
-		}
-		else
-		{
-			$class = "small-12 large-6 large-offset-3 columns";
-		}
-
-		return $class;
-	}
-
-	/**
-	 * Build select list
-	 *
-	 * @param  array   $data       Options array with key / value
-	 * @param  string  $name       Name of select
-	 * @param  mixed   $attribs    See genericlist
-	 * @param  string  $optKey     See genericlist
-	 * @param  string  $optText    See genericlist
-	 * @param  null    $selected   See genericlist
-	 * @param  string  $idtag      See genericlist
-	 * @param  bool    $translate  See genericlist
-	 *
-	 * @throws InvalidArgumentException
-	 * @since  3.3.0
-	 * @return mixed
-	 */
-	public static function buildSelect(array $data, string $name, mixed $attribs = null, string $optKey = 'value',
-		string $optText = 'text', $selected = null, string $idtag = '', bool $translate = false): mixed
-	{
-		return FNS::buildSelect($data, $name, $attribs, $optKey, $optText, $selected, $idtag, $translate);
-	}
-
-	/**
-	 * Remoce cached data
+	 * Remove cached data
 	 *
 	 * @param  string  $name  Name of cache
 	 *
@@ -405,15 +358,14 @@ class KrMethods
 	 *
 	 * @param  string  $name     Name of input
 	 * @param  array   $default  Default value
-	 * @param  string  $method   Input type
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
 	 * @return array
 	 */
-	public static function inputArray(string $name, array $default = [], string $method = 'post'): array
+	public static function inputArray(string $name, array $default = []): array
 	{
-		return FNS::inputArray($name, $default, $method);
+		return FNS::inputArray($name, $default);
 	}
 
 	/**
@@ -421,15 +373,14 @@ class KrMethods
 	 *
 	 * @param  string  $name     Name of input
 	 * @param  bool    $default  Default value
-	 * @param  string  $method   Input type   True for POST o/w GET
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
 	 * @return bool
 	 */
-	public static function inputBool(string $name, bool $default = false, string $method = 'post'): bool
+	public static function inputBool(string $name, bool $default = false): bool
 	{
-		return FNS::inputBool($name, $default, $method);
+		return FNS::inputBool($name, $default);
 	}
 
 	/**
@@ -451,32 +402,15 @@ class KrMethods
 	 * Get user input
 	 *
 	 * @param  string  $name     Name of input
-	 * @param  float   $default  Default value
-	 * @param  string  $method   Input type
-	 *
-	 * @throws Exception
-	 * @since  3.3.0
-	 * @return float
-	 */
-	public static function inputFloat(string $name, float $default = 0.00, string $method = 'post'): float
-	{
-		return FNS::inputFloat($name, $default, $method);
-	}
-
-	/**
-	 * Get user input
-	 *
-	 * @param  string  $name     Name of input
 	 * @param  int     $default  Default value
-	 * @param  string  $method   Input type
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
 	 * @return int
 	 */
-	public static function inputInt(string $name, int $default = 0, string $method = 'post'): int
+	public static function inputInt(string $name, int $default = 0): int
 	{
-		return FNS::inputInt($name, $default, $method);
+		return FNS::inputInt($name, $default);
 	}
 
 	/**
@@ -484,15 +418,14 @@ class KrMethods
 	 *
 	 * @param  string   $name     Name of input
 	 * @param  ?string  $default  Default value
-	 * @param  string   $method   Input type
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
 	 * @return ?string
 	 */
-	public static function inputString(string $name, ?string $default = null, string $method = 'post'): ?string
+	public static function inputString(string $name, ?string $default = null): ?string
 	{
-		return FNS::inputString($name, $default, $method);
+		return FNS::inputString($name, $default);
 	}
 
 	/**
