@@ -31,8 +31,8 @@ $show_regions = $params->get('show_regions');
 					method="post" name="search-default">
 					<div class="grid-x grid-margin-x">
 						<?php if (!empty($search_text) && $show_regions < 1): ?>
-							<div class="small-12 medium-12 large-3 cell">
-								<h3><?php echo $search_text; ?></h3>
+							<div class="small-12 medium-12 large-3 cell hero-search-text">
+								<h3 class="h4"><?php echo $search_text; ?></h3>
 							</div>
 						<?php endif; ?>
 						<?php if ($show_regions): ?>

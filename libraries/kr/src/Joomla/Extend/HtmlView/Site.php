@@ -174,7 +174,7 @@ class Site extends KrHtmlView
 	}
 
 	/**
-	 * Set pathway base
+	 * Set the base item for the pathway
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
