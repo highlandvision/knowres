@@ -18,7 +18,7 @@ $wa->useScript('com_knowres.site-modules');
 $grid = $params->get('imagegrid');
 $data = [];
 
-//TODO v4.3 Add alt and description fields
+//TODO v4.4 Add alt and description fields
 
 foreach ($grid as $g) {
 	if (!empty($g->image)) {

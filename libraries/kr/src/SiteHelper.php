@@ -736,7 +736,6 @@ class SiteHelper
 		$guest_id     = $userData->db_guest_id;
 		$db_contracts = $userData->db_contracts;
 
-		//TODO v4.3 no contract_id from url
 		$contract_id = KrMethods::inputInt('key');
 		if (!$contract_id) {
 			$contract_id = $userData->db_contract_id;

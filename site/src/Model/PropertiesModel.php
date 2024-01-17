@@ -369,35 +369,6 @@ class PropertiesModel extends ListModel
 		return $db->loadObjectList();
 	}
 
-	//TODO 4.3 delete if no issues
-//	/**
-//	 * Get max values for guests and bedrooms per region
-//	 *
-//	 * @param  int  $region_id  The property region for the select
-//	 *
-//	 * @throws RuntimeException
-//	 * @throws InvalidArgumentException
-//	 * @return mixed
-//	 */
-//	public function getMaxBedsSleeps(int $region_id): mixed
-//	{
-//		$db    = KrFactory::getDatabase();
-//		$query = $db->getQuery(true);
-//
-//		$query->select('MAX(' . $db->qn('a.bedrooms') . ')  as ' . $db->qn('bedrooms'))
-//		      ->select('MAX(' . $db->qn('a.sleeps') . '+' . $db->qn('a.sleeps_extra') . ') as ' . $db->qn('guests'))
-//		      ->from($db->qn('#__knowres_property', 'a'))
-//		      ->where($db->qn('a.state') . '=1')
-//		      ->where($db->qn('a.approved') . '=1')
-//		      ->where($db->qn('a.private') . '=0')
-//		      ->where($db->qn('a.region_id') . '=' . $region_id)
-//		      ->setLimit(1);
-//
-//		$db->setQuery($query);
-//
-//		return $db->loadObject();
-//	}
-
 	/**
 	 * Get the minimum and maximum rate for one or more properties
 	 *
@@ -833,10 +804,6 @@ class PropertiesModel extends ListModel
 		$query->from($db->qn('#__knowres_property', 'a'));
 		$query = self::intArrayString($db, $query, 'a.id', $this->state->get('filter.id'));
 
-//		if ($name != 'a.region_id') {
-//			$query = self::intFilter($db, $query, 'a.region_id', $this->state->get('filter.region_id'));
-//		}
-		//TODO v4.3 does this need to use region_id
 		if ($name != 'a.property_area') {
 			$query = self::stringFilter($db, $query, 'a.property_area', $this->state->get('filter.property_area'));
 		}

@@ -70,8 +70,7 @@ if ($this->access_level == 10)
 
 					if ($this->allow_block)
 					{
-// TODO v4.1 check and see if this gobackto is correct
-//						KrMethods::setUserState('com_knowres.gobackto', 'view=properties');
+						KrMethods::setUserState('com_knowres.gobackto', 'view=properties');
 						$data            = [];
 						$data['label']   = KrMethods::plain('COM_KNOWRES_CONTRACT_BLOCK_TITLE_LONG');
 						$data['icon']    = 'fa-lock';

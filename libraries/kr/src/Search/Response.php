@@ -53,25 +53,6 @@ class Response
 	}
 
 	/**
-	 * Check if a region is selected
-	 *
-	 * @param  array  $regions    Selected regions
-	 * @param  int    $region_id  ID of region to check
-	 *
-	 * @since  4.3.0
-	 * @return bool
-	 */
-	// TODO v4.3 Delete if OK
-//	private static function regionIsSelected(array $regions, int $region_id): bool
-//	{
-//		foreach ($regions as $id => $values) {
-//			if ($id == $region_id) {
-//				return $values[2];
-//			}
-//		}
-//	}
-
-	/**
 	 * Set count for the displayed filters
 	 *
 	 * @param  array  $totalAreas     Areas

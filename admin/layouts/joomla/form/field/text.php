@@ -2,13 +2,15 @@
 /**
  * @package         Joomla.Site
  * @subpackage      Layout
+ *
  * @copyright   (C) 2016 Open Source Matters, Inc. <https://www.joomla.org>
  * @license         GNU General Public License version 2 or later; see LICENSE.txt
  */
+// Copy of Joomla text with flex-nowrap added to input-group
 
 defined('_JEXEC') or die;
 
-// Copy of Joomla text with flex-nowrap added to input-group
+use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 
 extract($displayData);
@@ -16,7 +18,6 @@ extract($displayData);
 /**
  * Layout variables
  * -----------------
- *
  * @var   string  $autocomplete   Autocomplete attribute for the field.
  * @var   boolean $autofocus      Is autofocus enabled?
  * @var   string  $class          Classes for the input.
@@ -50,6 +51,7 @@ extract($displayData);
  * @var   string  $dirname        The directory name
  * @var   string  $addonBefore    The text to use in a bootstrap input group prepend
  * @var   string  $addonAfter     The text to use in a bootstrap input group append
+ * @var   boolean  $charcounter     Does this field support a character counter?
  */
 
 $list = '';
@@ -57,8 +59,23 @@ if ($options) {
 	$list = 'list="' . $id . '_datalist"';
 }
 
-$attributes = array(
-	!empty($class) ? 'class="form-control ' . $class . '"' : 'class="form-control"',
+$charcounterclass = '';
+
+if ($charcounter) {
+    // Load the js file
+    /** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
+    $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+    $wa->useScript('short-and-sweet');
+
+    // Set the css class to be used as the trigger
+    $charcounterclass = ' charcount';
+
+    // Set the text
+    $counterlabel = 'data-counter-label="' . $this->escape(Text::_('JFIELD_META_DESCRIPTION_COUNTER')) . '"';
+}
+
+$attributes = [
+    !empty($class) ? 'class="form-control ' . $class . $charcounterclass . '"' : 'class="form-control' . $charcounterclass . '"',
 	!empty($size) ? 'size="' . $size . '"' : '',
 	!empty($description) ? 'aria-describedby="' . ($id ?: $name) . '-desc"' : '',
 	$disabled ? 'disabled' : '',
@@ -73,19 +90,22 @@ $attributes = array(
 	$autofocus ? ' autofocus' : '',
 	$spellcheck ? '' : 'spellcheck="false"',
 	!empty($inputmode) ? $inputmode : '',
+    !empty($counterlabel) ? $counterlabel : '',
 	!empty($pattern) ? 'pattern="' . $pattern . '"' : '',
 
 	// @TODO add a proper string here!!!
 	!empty($validationtext) ? 'data-validation-text="' . $validationtext . '"' : '',
-);
+];
 
 $addonBeforeHtml = '<span class="input-group-text">' . Text::_($addonBefore) . '</span>';
 $addonAfterHtml  = '<span class="input-group-text">' . Text::_($addonAfter) . '</span>';
 ?>
 
 <?php if (!empty($addonBefore) || !empty($addonAfter)) : ?>
-	<div class="input-group flex-nowrap">
+<!--	KR change -->
+<div class="input-group flex-nowrap">
 <?php endif; ?>
+
 <?php if (!empty($addonBefore)) : ?>
 	<?php echo $addonBeforeHtml; ?>
 <?php endif; ?>

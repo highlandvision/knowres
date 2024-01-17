@@ -940,8 +940,6 @@ class ContractEmail extends Email
 		$text                            = ltrim($text, '<p>');
 		$text                            = rtrim($text, '</p>');
 		$this->data['CANCELLATIONTERMS'] = $text;
-		// TODO v4.0 Generic for JSA
-		//		$this->data['CHECKINOUTTIMES']   = $this->property->p14;
 
 		$tmp = [];
 		if ($this->property->property_street)

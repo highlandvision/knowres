@@ -32,7 +32,7 @@ extract($displayData);
 			</td>
 			<td style="width:30%;">
 			</td>
-			<td style="width:30%;">
+			<td style="width:30%;text-align:right;">
 				<?php echo Utility::displayValue($contract->room_total_gross, $contract->currency); ?>
 			</td>
 		</tr>
