@@ -18,21 +18,20 @@ $wa->useScript('com_knowres.site-modules');
 $glob    = 'images/' . $params->get('folder') . '/*.{jpg,png,gif}';
 $fimages = glob($glob, GLOB_BRACE);
 $images  = [];
-foreach ($fimages as $i)
-{
+foreach ($fimages as $i) {
 	$size = getimagesize(JPATH_SITE . '/' . $i);
 	if ($size)
 	{
 		$parts = pathinfo($i);
-		$alt   = str_replace(["_", " "], "-", $parts['filename']);
-		$alt   = str_replace(['.jpg', '.png', '.gif'], "", $alt);
+		$alt   = str_replace(['_', ' '], '-', $parts['filename']);
+		$alt   = str_replace(['.jpg', '.png', '.gif'], '', $alt);
 
-		$images[] = array(
+		$images[] = [
 			'image'  => $i,
-			'height' => $params->get('height', $size[1]),
 			'width'  => $params->get('width', $size[0]),
+			'height' => $params->get('height', $size[1]),
 			'alt'    => $alt
-		);
+		];
 	}
 }
 

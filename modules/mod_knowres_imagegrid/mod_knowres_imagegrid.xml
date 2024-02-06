@@ -80,6 +80,16 @@
                        type="color"
                        label="MOD_KNOWRES_IMAGEGRID_TEXTBG"
                        description="MOD_KNOWRES_IMAGEGRID_TEXTBG_DSC"/>
+                <field name="textshadow"
+                       class="btn-group btn-group-yesno"
+                       default="0"
+                       showon="textoverlay:1"
+                       type="radio"
+                       label="MOD_KNOWRES_IMAGEGRID_TEXTSHADOW"
+                       description="MOD_KNOWRES_IMAGEGRID_TEXTSHADOW_DSC">
+                       <option value="0">JNO</option>
+                       <option value="1">JYES</option>
+                </field>
                 <field name="textsize"
                        addonAfter="px"
                        class="w-auto"

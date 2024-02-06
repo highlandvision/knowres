@@ -122,8 +122,7 @@
                 autoplay: true,
                 fade: true,
                 infinite: true,
-                lazyLoad: 'ondemand',
-                adaptiveHeight: true
+                lazyLoad: 'progressive',
             });
         });
 

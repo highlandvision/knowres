@@ -17,7 +17,7 @@
                hiddenLabel="true"
                type="mobisearch"
                hint="MOD_KNOWRES_SEARCH_ARRIVAL"
-               label="MOD_KNOWRES_SEARCH_ARRIVAL"/>
+               label="MOD_KNOWRES_SEARCH_ARRIVAL_LBL"/>
         <field name="departuredsp"
                addfieldprefix="HighlandVision\Component\Knowres\Site\Field"
                class="notranslate datepicker"
@@ -25,7 +25,7 @@
                hiddenLabel="true"
                type="mobisearch"
                hint="MOD_KNOWRES_SEARCH_DEPARTURE"
-               label="MOD_KNOWRES_SEARCH_DEPARTURE"/>
+               label="MOD_KNOWRES_SEARCH_DEPARTURE_LBL"/>
         <field name="guests"
                addfieldprefix="HighlandVision\Component\Knowres\Site\Field"
                default="2"

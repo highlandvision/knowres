@@ -140,7 +140,7 @@ class HtmlView extends KrHtmlView\Site
 		}
 
 		$this->header =
-			KrMethods::sprintf('COM_KNOWRES_SEARCH_HEADER', $description, count($this->Search->searchData->baseIds));
+ 		KrMethods::sprintf('COM_KNOWRES_SEARCH_HEADER_X', $description);
 
 		if ($this->params->get('search_list', 0)) {
 			$this->layouts['list'] = true;
@@ -245,12 +245,13 @@ class HtmlView extends KrHtmlView\Site
 	/**
 	 * Set the descriptions for the search module search
 	 *
+	 * @throws Exception
 	 * @since  4.3.0
 	 * @return string
 	 */
 	protected function setSearchDescription(): string
 	{
-		$description            = $this->Search->searchData->region_name;
+		$description            = $this->Search->searchData->region_name . ', ' . KrMethods::getCfg('sitename');
 		$this->meta_title       = KrMethods::sprintf('COM_KNOWRES_SEO_TITLE_PROPERTIES',
 		                                             $this->Search->data->region_name,
 		                                             $this->Search->data->country_name);

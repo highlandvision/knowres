@@ -25,7 +25,9 @@ $text   = KrMethods::sprintf('MOD_KNOWRES_DESTINATION_VIEW_PROPERTIES', $destina
 			<a href="<?php echo $link; ?>">
 				<?php $options = ['src'   => $params->get('image'),
 				                  'alt'   => $destination,
-				                  'class' => 'th responsive'
+				                  'class' => 'th responsive',
+				                  'width'  => '100%',
+				                  'height' => 'auto'
 				];
 				?>
 				<?php echo KrMethods::render('joomla.html.image', $options); ?>

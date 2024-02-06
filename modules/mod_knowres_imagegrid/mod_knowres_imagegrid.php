@@ -15,11 +15,9 @@ $wa = $app->getDocument()->getWebAssetManager();
 $wa->getRegistry()->addExtensionRegistryFile('com_knowres');
 $wa->useScript('com_knowres.site-modules');
 
+//TODO v4.4 Add alt and description fields
 $grid = $params->get('imagegrid');
 $data = [];
-
-//TODO v4.4 Add alt and description fields
-
 foreach ($grid as $g) {
 	if (!empty($g->image)) {
 		$data[] = [

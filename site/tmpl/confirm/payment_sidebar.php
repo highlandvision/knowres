@@ -28,7 +28,7 @@ $address = Utility::formatAddress($this->guestData->address1, $this->guestData->
 				<?php echo Utility::displayValue($this->contractData->deposit, $this->contractData->currency); ?>
 			</span>
 		<?php else: ?>
-			<?php echo KrMethods::sprintf('COM_KNOWRES_CONFIRM_REQUEST_PAYABLE_NOW'); ?>
+			<?php echo KrMethods::plain('COM_KNOWRES_CONFIRM_REQUEST_PAYABLE_NOW'); ?>
 			<br>
 			<span class="paynow">
 				<?php echo Utility::displayValue($this->contractData->deposit, $this->contractData->currency); ?>

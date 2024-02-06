@@ -24,7 +24,7 @@ let resized = false;
 
         checkScreenWidth();
         $(window).on("resize", function () {
-            checkScreenWidth()
+            checkScreenWidth();
         });
 
         const bars = $('.kr-rating');

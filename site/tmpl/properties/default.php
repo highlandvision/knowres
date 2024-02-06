@@ -22,7 +22,7 @@ HTMLHelper::_('script', trim(Utility::getGmapsURL()), ['async' => 'async', 'defe
 HTMLHelper::_('script', trim(Utility::getMarkerClustererURL()), ['async' => 'async', 'defer' => 'defer']);
 ?>
 
-<h1 id="kr-properties-filter-heading" class="h3 show-for-medium">
+<h1 id="kr-properties-filter-heading" class="h3 kr-properties-filter-heading show-for-medium">
 	<?php echo $this->header; ?>
 </h1>
 

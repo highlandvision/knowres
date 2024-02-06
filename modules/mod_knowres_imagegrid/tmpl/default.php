@@ -16,6 +16,7 @@ $textcolor           = $params->get('textcolor');
 $textbg              = $params->get('textbg');
 $textverticalalign   = $params->get('textverticalalign');
 $textbold            = $params->get('textbold');
+$textshadow          = $params->get('textshadow') . 'px';
 $textsize            = $params->get('textsize') . 'px';
 $textoverlay         = $params->get('textoverlay');
 $small_cc            = $params->get('small-column-count');
@@ -35,25 +36,23 @@ if ($textsize) {
 	$pstyle .= 'font-size:' . $textsize . ';';
 }
 if (!empty($textbg)) {
-	$pstyle   .= 'background:' . $textbg . ';';
-	$pclass[] = 'withbg';
+	$pstyle .= 'background-color:rgba(0,0,0,0.25);';
 }
 if ($texthorizontalalign == "center") {
 	$pstyle .= 'text-align:center;';
+}
+if ($textshadow) {
+	$pstyle .= 'text-shadow:1px 1px 2px #0a0a0a';
 }
 ?>
 
 <style>
     .kr-imagegrid .gitem {
         flex: <?php echo '1 1 ' . $small_cc; ?>;
-    }
-    @media screen and (min-width: 40em) {
-        .kr-imagegrid .gitem {
+        @media screen and (min-width: 640px) {
             flex: <?php echo '1 1 ' . $medium_cc; ?>;
         }
-    }
-    @media screen and (min-width: 64em) {
-        .kr-imagegrid .gitem {
+        @media screen and (min-width: 1024px) {
             flex: <?php echo '1 1 ' .  $large_cc; ?>;
         }
     }
@@ -74,26 +73,28 @@ if ($texthorizontalalign == "center") {
 				<?php endif; ?>
 
 				<?php if ($link): ?>
-					<a href="<?php echo $link; ?>" style="cursor:pointer;" <?php echo $external; ?>
-				        title="<?php echo KrMethods::plain('MOD_KNOWRES_IMAGEGRID_CLICK_TO_VIEW'); ?>">
-				<?php endif; ?>
+				<a href="<?php echo $link; ?>" style="cursor:pointer;" <?php echo $external; ?>
+				   title="<?php echo KrMethods::plain('MOD_KNOWRES_IMAGEGRID_CLICK_TO_VIEW'); ?>">
+					<?php endif; ?>
 
-				<?php $options = ['src'    => $d['image'],
-				                  'alt'    => $d['text'],
-				                  'class'  => 'th responsive'
+					<?php $options = ['src'   => $d['image'],
+					                  'alt'   => $d['text'],
+					                  'class' => 'th responsive',
+					                  'width'  => '100%',
+					                  'height' => 'auto'
 					];
-				?>
-				<?php echo KrMethods::render('joomla.html.image', $options); ?>
+					?>
+					<?php echo KrMethods::render('joomla.html.image', $options); ?>
 
-				<?php if ($textoverlay && $d['text']): ?>
-					<p class="<?php echo implode(' ', $pclass); ?>" style="<?php echo $pstyle; ?>">
-						<?php echo $d['text']; ?>
-					</p>
-				<?php endif; ?>
+					<?php if ($textoverlay && $d['text']): ?>
+						<p class="<?php echo implode(' ', $pclass); ?>" style="<?php echo $pstyle; ?>">
+							<?php echo $d['text']; ?>
+						</p>
+					<?php endif; ?>
 
-				<?php if ($link): ?>
-					<?php echo '</a>'; ?>
-				<?php endif; ?>
+					<?php if ($link): ?>
+						<?php echo '</a>'; ?>
+					<?php endif; ?>
 			</div>
 		<?php endforeach; ?>
 	</div>
