@@ -80,7 +80,7 @@ class Upgrade
 	/**
 	 * Update guest and owner service xrefs from client and owner tables (V4.0)
 	 *
-	 * @param  string  $table  Table namee
+	 * @param  string  $table  Table name
 	 *
 	 * @throws Exception
 	 * @since  4.0.0
@@ -100,8 +100,12 @@ class Upgrade
 			return;
 		}
 
-		$db      = KrFactory::getDatabase();
-		$columns = $db->getTableColumns($db->qn($table));
+		$db = KrFactory::getDatabase();
+		if ($table == 'guest') {
+			$columns = $db->getTableColumns($db->qn('#__knowres_guest'));
+		} else {
+			$columns = $db->getTableColumns($db->qn('#__knowres_owner'));
+		}
 		if (!isset($columns['foreign_key'])) {
 			return;
 		}
@@ -109,8 +113,14 @@ class Upgrade
 		$db    = KrFactory::getDatabase();
 		$query = $db->getQuery(true);
 		$query->select($db->qn(['id', 'foreign_key']))
-		      ->from($db->qn($table))
 		      ->where($db->qn('foreign_key') . '<>' . $db->q(''));
+
+		if ($table == 'guest') {
+			$query->from($db->qn('#__knowres_guest'));
+		} else {
+			$query->from($db->qn('#__knowres_owner'));
+		}
+
 		$db->setQuery($query);
 		$rows = $db->loadObjectList();
 		if (!count($rows)) {
