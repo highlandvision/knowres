@@ -55,44 +55,41 @@ if ($textshadow) {
     }
 </style>
 
-<div class="grid-x grid-margin-x">
-	<div class="cell kr-imagegrid">
-		<?php foreach ($data as $d): ?>
-			<?php $link = ''; ?>
+<div class="kr-imagegrid">
+	<?php foreach ($data as $d): ?>
+		<?php $link = ''; ?>
+		<?php if (!empty($d['link'])): ?>
+			<?php $link = $d['link']; ?>
+			<?php $external = ''; ?>
+		<?php elseif (!empty($d['url'])): ?>
+			<?php $link = $d['url']; ?>
+			<?php $external = 'target="_blank"'; ?>
+		<?php endif; ?>
 
-			<div class="gitem">
-				<?php if ($d['link'] != -1): ?>
-					<?php $link = KrMethods::route('index.php?Itemid=' . $d['link']); ?>
-					<?php $external = ''; ?>
-				<?php elseif (!empty($d['url'])): ?>
-					<?php $link = $d['url']; ?>
-					<?php $external = 'target="_blank"'; ?>
-				<?php endif; ?>
+		<div class="gitem">
+			<?php if ($link): ?>
+				<a href="<?php echo $link; ?>" <?php echo $external; ?>
+			        title="<?php echo KrMethods::plain('MOD_KNOWRES_IMAGEGRID_CLICK_TO_VIEW'); ?>">
+			<?php endif; ?>
 
-				<?php if ($link): ?>
-				<a href="<?php echo $link; ?>" style="cursor:pointer;" <?php echo $external; ?>
-				   title="<?php echo KrMethods::plain('MOD_KNOWRES_IMAGEGRID_CLICK_TO_VIEW'); ?>">
-					<?php endif; ?>
+			<?php $options = ['src'    => $d['image'],
+			                  'alt'    => $d['text'],
+			                  'class'  => 'th responsive',
+			                  'width'  => '100%',
+			                  'height' => 'auto'
+			];
+			?>
+			<?php echo KrMethods::render('joomla.html.image', $options); ?>
 
-					<?php $options = ['src'   => $d['image'],
-					                  'alt'   => $d['text'],
-					                  'class' => 'th responsive',
-					                  'width'  => '100%',
-					                  'height' => 'auto'
-					];
-					?>
-					<?php echo KrMethods::render('joomla.html.image', $options); ?>
+			<?php if ($textoverlay && $d['text']): ?>
+				<p class="<?php echo implode(' ', $pclass); ?>" style="<?php echo $pstyle; ?>">
+					<?php echo $d['text']; ?>
+				</p>
+			<?php endif; ?>
 
-					<?php if ($textoverlay && $d['text']): ?>
-						<p class="<?php echo implode(' ', $pclass); ?>" style="<?php echo $pstyle; ?>">
-							<?php echo $d['text']; ?>
-						</p>
-					<?php endif; ?>
-
-					<?php if ($link): ?>
-						<?php echo '</a>'; ?>
-					<?php endif; ?>
-			</div>
-		<?php endforeach; ?>
-	</div>
+			<?php if ($link): ?>
+				<?php echo '</a>'; ?>
+			<?php endif; ?>
+		</div>
+	<?php endforeach; ?>
 </div>

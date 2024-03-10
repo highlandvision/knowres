@@ -270,8 +270,7 @@ class Filter
 		if ($this->params->get('filter_area')) {
 			$filter_this = $item->region_id . '^' . $item->property_area;
 			if (!array_key_exists($filter_this, $this->searchData->filterArea)) {
-				$text                                       =
-					$this->Translations->getText('region', $item->region_id) . ': ' . $item->property_area;
+				$text = $this->Translations->getText('region', $item->region_id) . ': ' . $item->property_area;
 				$this->searchData->filterArea[$filter_this] = [$filter_this, 0, 0, $text];
 			}
 		}

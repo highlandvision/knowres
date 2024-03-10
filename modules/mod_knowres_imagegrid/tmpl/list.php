@@ -11,45 +11,27 @@ defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrMethods;
 
-$textalign     = $params->get('textalign');
-$textcolor     = $params->get('textcolor');
-$textbg        = $params->get('textbg');
-$verticalalign = $params->get('verticalalign');
-$textbold      = $params->get('textbold');
-$textsize      = $params->get('textsize') . 'px';
-$textoverlay   = $params->get('textoverlay');
+$textbg    = $params->get('textbg');
+$textbold  = $params->get('textbold');
+$textcolor = $params->get('textcolor');
+$textsize  = $params->get('textsize') . 'px';
+$small_cc  = $params->get('small-column-count');
+$medium_cc = $params->get('medium-column-count');
+$large_cc  = $params->get('large-column-count');
 
 $pstyle = '';
 $pclass = [];
-$pstyle .= 'text-align:' . $textalign . ';';
-if ($textalign == 'center')
-{
-	$pclass[] = 'center';
-}
-if ($textbold)
-{
+if ($textbold) {
 	$pclass[] = 'strong';
 }
-if ($textoverlay)
-{
-	$pclass[] = 'overlay';
-}
-if ($textcolor)
-{
+if ($textcolor) {
 	$pstyle .= 'color:' . $textcolor . ';';
 }
-if ($textsize)
-{
+if ($textsize) {
 	$pstyle .= 'font-size:' . $textsize . ';';
 }
-if ($textbg)
-{
-	$pstyle   .= 'background:' . $textbg . ';';
-	$pclass[] = "withbg";
-}
-if (!empty($verticalalign))
-{
-	$pclass[] = $verticalalign;
+if (!empty($textbg)) {
+	$pstyle .= 'background-color:' . $textbg . ';';
 }
 ?>
 
@@ -58,7 +40,7 @@ if (!empty($verticalalign))
 		<?php foreach ($data as $d): ?>
 			<li>
 				<?php if ($d['link']): ?>
-				    <a href="<?php echo KrMethods::route('index.php?Itemid=' . $d['link']); ?>"
+					<a href="<?php echo KrMethods::route('index.php?Itemid=' . $d['link']); ?>"
 				        title="<?php echo $d['text']; ?>">
 				<?php endif; ?>
 
@@ -67,8 +49,8 @@ if (!empty($verticalalign))
 				<?php endif; ?>
 
 				<?php if ($d['link']): ?>
-				    </a>
-			    <?php endif; ?>
+					</a>
+				<?php endif; ?>
 			</li>
 		<?php endforeach; ?>
 	</ul>

@@ -23,32 +23,32 @@ extract($displayData);
 ?>
 
 <?php if ($invoice || $voucher || $guestdata || count($pdfs)): ?>
-	<div class="callout small neutral">
+	<div class="callout small accent">
 		<p><?php echo strtoupper(KrMethods::plain('COM_KNOWRES_YOUR_DOCUMENTS')); ?></p>
 
 		<ul class="download">
 			<?php if ($invoice): ?>
 				<li>
-					<i class='fa-solid fa-1x fa-file-pdf'></i>
+					<i class='fa-solid fa-2x fa-file-pdf red'></i>
 					<?php echo $invoice; ?>
 				</li>
 			<?php endif; ?>
 			<?php if ($voucher): ?>
 				<li>
-					<i class='fa-solid fa-1x fa-file-pdf'></i>
+					<i class='fa-solid fa-2x fa-file-pdf red'></i>
 					<?php echo $voucher; ?>
 				</li>
 			<?php endif; ?>
 			<?php if ($guestdata): ?>
 				<li>
-					<i class='fa-solid fa-1x fa-file-pdf'></i>
+					<i class='fa-solid fa-2x fa-file-pdf red'></i>
 					<?php echo $guestdata; ?>
 				</li>
 			<?php endif; ?>
 			<?php if (count($pdfs)): ?>
 				<?php foreach ($pdfs as $d) : ?>
 					<li>
-						<i class='fa-solid fa-1x fa-file-pdf'></i>
+						<i class='fa-solid fa-2x fa-file-pdf red'></i>
 						<?php echo $d; ?>
 					</li>
 				<?php endforeach; ?>

@@ -11,8 +11,7 @@ defined('_JEXEC') or die;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Utility;
 
-if (empty($this->contract->adults))
-{
+if (empty($this->contract->adults)) {
 	$this->contract->adults = $this->contract->guests;
 }
 ?>
@@ -31,8 +30,8 @@ if (empty($this->contract->adults))
 				<?php if ($this->contract->children == 1): ?>
 					<?php echo ', ' . KrMethods::sprintf('COM_KNOWRES_CHILD', $this->contract->child_ages[0]); ?>
 				<?php elseif ($this->contract->children > 1): ?>
-					<?php echo ', ' .  KrMethods::sprintf('COM_KNOWRES_CHILD_PLUS', $this->contract->children,
-							Utility::displayAges($this->contract->child_ages)); ?>
+					<?php echo ', ' . KrMethods::sprintf('COM_KNOWRES_CHILD_PLUS', $this->contract->children,
+					                                     Utility::displayAges($this->contract->child_ages)); ?>
 				<?php endif; ?>)
 			</h4>
 

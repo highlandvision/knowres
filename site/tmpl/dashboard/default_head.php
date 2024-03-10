@@ -38,8 +38,8 @@ if ($this->guest->id)
 				</div>
 				<?php if ($guestformlink): ?>
 					<div class="small-6 cell text-right">
-						<a class="button small" style="margin-bottom:0;" href="<?php echo $guestformlink; ?>">
-							<?php echo KrMethods::plain('COM_KNOWRES_DASHBOARD_UPDATE_ITEM'); ?>
+						<a class="guestformlink button small" href="<?php echo $guestformlink; ?>"
+							title="<?php echo KrMethods::plain('COM_KNOWRES_DASHBOARD_UPDATE_ITEM'); ?>">
 							&nbsp;<i style="color:#fefefe;" class="fa-solid fa-user-edit"></i>
 						</a>
 					</div>

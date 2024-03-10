@@ -212,8 +212,7 @@ class DashboardController extends BaseController
 			$userSession->setData($userData);
 
 			SiteHelper::redirectView($view);
-		}
-		else if ($view !== 'dashboard') {
+		} else if ($view !== 'dashboard') {
 			$contract = KrFactory::getAdminModel('contract')->getItem($contract_id);
 			if (!$contract->id || $contract->qkey != $qkey || $contract->guest_id != $guest_id) {
 				SiteHelper::redirectHome();
@@ -227,15 +226,13 @@ class DashboardController extends BaseController
 			if ($view == 'guestupdate') {
 				$userData->db_guest_update = true;
 				$view                      = 'guestform';
-			}
-			else if ($view == 'contractguestdataform') {
+			} else if ($view == 'contractguestdataform') {
 				$userData->db_guest_update = false;
 			}
 
 			$userSession->setData($userData);
 			SiteHelper::redirectView($view);
-		}
-		else {
+		} else {
 			$userData->db_guest_id    = $guest_id;
 			$userData->db_contracts   = [];
 			$userData->db_contract_id = 0;

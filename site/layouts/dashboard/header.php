@@ -24,8 +24,7 @@ extract($displayData);
  * @var bool         $times    True to display times.
  */
 
-if (!isset($times))
-{
+if (!isset($times)) {
 	$times = true;
 }
 $params = KrMethods::getParams();
@@ -34,12 +33,11 @@ $image  = Media\Images::getPropertyImageName($contract->property_id);
 
 <div class="grid-x grid-margin-x">
 	<div class="small-12 cell">
-		<h2 class="h4 color-dark no-margin-bottom">
+		<h2 class="h3 color-dark">
 			<?php echo $contract->property_name; ?>
 			<?php echo trim($contract->property_area); ?>,&nbsp;
 			<?php echo $contract->country_name; ?>
 		</h2>
-		<br>
 	</div>
 </div>
 <div class="grid-x grid-margin-x">

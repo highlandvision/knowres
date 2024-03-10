@@ -93,6 +93,7 @@
             </fieldset>
             <fieldset name="advanced">
                 <field name="moduleclass_sfx"
+                       default="kr-search"
                        type="textarea"
                        rows="1"
                        validate="CssIdentifier"

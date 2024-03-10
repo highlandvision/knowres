@@ -62,7 +62,7 @@ class RegionsModel extends ListModel
 	/**
 	 * Return regions as per requested params
 	 *
-	 * @param   bool    $allow_property  Set True to return only property countries
+	 * @param   bool    $allow_property  Set True to return only property regions
 	 * @param  ?string  $ordering        Name of ordering field
 	 * @param   int     $country_id      ID of country
 	 *

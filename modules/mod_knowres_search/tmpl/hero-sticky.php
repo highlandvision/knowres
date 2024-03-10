@@ -22,7 +22,10 @@ $form         = KrFactory::getAdhocForm('mod_knowres_search', 'mod_knowres_searc
 $show_regions = $params->get('show_regions');
 ?>
 
-<div class="kr-search">
+<div class="kr-search hero-sticky">
+	<button class="close-button show-for-small primary" aria-label="Close menu" type="button" data-close>
+		<span aria-hidden="true">&times;</span>
+	</button>
 	<form action="<?php echo KrMethods::route('index.php?option=com_knowres&task=properties.search'); ?>"
 	      method="post" name="search-default">
 		<div class="grid-container">

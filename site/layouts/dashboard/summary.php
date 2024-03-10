@@ -66,14 +66,14 @@ extract($displayData);
 	</div>
 <?php endif; ?>
 
-	<div class="grid-x grid-margin-x">
-		<div class="small-9 cell">
-			<?php echo KrMethods::plain('COM_KNOWRES_RENTAL_PRICE'); ?>
-		</div>
-		<div class="small-3 cell text-right">
-			<?php echo Utility::displayValue($contract->room_total, $contract->currency); ?>
-		</div>
+<div class="grid-x grid-margin-x">
+	<div class="small-9 cell">
+		<?php echo KrMethods::plain('COM_KNOWRES_RENTAL_PRICE'); ?>
 	</div>
+	<div class="small-3 cell text-right">
+		<?php echo Utility::displayValue($contract->room_total, $contract->currency); ?>
+	</div>
+</div>
 
 	<!--// // Check for a booking note-->
 	<!--// 	$notes = $this->getContractNotes(('owner'));-->
@@ -214,28 +214,28 @@ extract($displayData);
 		<?php endif; ?>
 
 		<div class="grid-x grid-margin-x">
-			<div class="small-4 large-3 cell">
+			<div class="small-3 cell">
 				<?php echo TickTock::displayDate($p->payment_date); ?>
 				<?php if (!$p->confirmed): ?>
 					<?php echo '*'; ?>
 				<?php endif; ?>
 			</div>
-			<div class="small-5 large-6 cell">
+			<div class="small-6 cell">
 				<?php if ($p->base_amount > 0): ?>
-					<?php if (!empty($fex)): ?>
+<!--					--><?php //if (!empty($fex)): ?>
 						<?php echo $fex . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . Utility::displayValue($p->base_amount,
 								$contract->currency); ?>
-					<?php endif; ?>
+<!--					--><?php //endif; ?>
 				<?php else: ?>
-					<?php if (!empty($fex)): ?>
+<!--					--><?php //if (!empty($fex)): ?>
 						<?php echo $fex . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . Utility::displayValue(abs($p->base_amount),
 								$contract->currency); ?>
-					<?php endif; ?>
+<!--					--><?php //endif; ?>
 				<?php endif; ?>
 				&nbsp;
 			</div>
 			<div class="small-3 cell text-right">
-				<?php echo Utility::displayValue(abs($p->base_amount), $contract->currency); ?>
+<!--				--><?php //echo Utility::displayValue(abs($p->base_amount), $contract->currency); ?>
 			</div>
 		</div>
 	<?php endforeach; ?>

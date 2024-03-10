@@ -38,7 +38,7 @@ extract($displayData);
 	</label>
 	<?php if ($surcharge > 0): ?>
 		<div class="gateway-surcharge">
-			<p class="vsmall">
+			<p class="small">
 				<?php echo KrMethods::sprintf('COM_KNOWRES_PAYMENT_SURCHARGE_ADDED',
 					Utility::displayValue($surcharge, $currency)); ?>
 			</p>

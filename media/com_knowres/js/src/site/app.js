@@ -20,6 +20,7 @@ let resized = false;
     $(function () {
         Foundation.addToJquery();
         $(document).foundation();
+
         lang = $('#kr-lang').data('krlang');
 
         checkScreenWidth();
@@ -33,6 +34,12 @@ let resized = false;
                 showValues: true,
                 showSelectedRating: false
             });
+        }
+
+        const $ctrigger = $('#kr-page-geriatric-calendar-trigger');
+        if ($ctrigger.length && !calendarLoaded) {
+            loadCalendar($ctrigger.data('pid'), $ctrigger.data('target'));
+            calendarLoaded = true;
         }
 
         $(document).on('submit', '.ajaxform', function (e) {
@@ -106,7 +113,7 @@ let resized = false;
             if ($(this).data('action') === undefined) {
                 getProperties($(this).data('bar'));
             } else {
-                getProperties($(this).data('bar'), $(this).data('action'),  $(this).data('action-value'));
+                getProperties($(this).data('bar'), $(this).data('action'), $(this).data('action-value'));
             }
         }).on('click', '.kr-filters-close', function (e) {
             e.preventDefault();
@@ -129,10 +136,10 @@ let resized = false;
             e.preventDefault();
             if (!calendarLoaded) {
                 const pid = $(this).data('pid');
-                loadCalendar(pid);
+                loadCalendar(pid, '#calendar.tabs-panel');
                 calendarLoaded = true;
             }
-        }).on('mouseover', '#kr-thumb img', function() {
+        }).on('mouseover', '#kr-thumb img', function () {
             let property = $(this).parent().data('id');
             if (property) {
                 let target = '.thumboverview' + property;
@@ -206,11 +213,11 @@ let resized = false;
         }
     }
 
-    function getProperties(bar, action = '', action_value = ''){
+    function getProperties(bar, action = '', action_value = '') {
         $.ajax({
             url: '/index.php?option=com_knowres&view=properties&format=raw&lang=' + lang,
             type: 'POST',
-            data: {'bar': bar, 'action': action, 'action_value': action_value },
+            data: {'bar': bar, 'action': action, 'action_value': action_value},
             dataType: 'json',
             success: function (data) {
                 if (!data) {
@@ -236,8 +243,13 @@ let resized = false;
     function setSearchData(response, action = '') {
         if (response) {
             $('#kr-properties-data').empty().fadeIn('slow').html(response['items']).foundation();
-            $('#kr-properties-filter-heading').html(response['heading']);
+ //           $('#kr-properties-filter-heading').html(response['heading']);
             $('.kr-pager').html(response['pagination']);
+            if (action !== 'thumb') {
+                $('.kr-pager.bottom').html(response['pagination']);
+            } else {
+                $('.kr-pager.bottom').empty();
+            }
             $("#kr-offcanvas-properties-filter").html(response['filters']);
             $("#kr-offcanvas-properties-sortby").html(response['sortby']);
 //            $("#kr-offcanvas-top-search").html(response['search']);

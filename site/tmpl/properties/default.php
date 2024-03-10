@@ -25,13 +25,11 @@ HTMLHelper::_('script', trim(Utility::getMarkerClustererURL()), [], ['async' => 
 <h1 id="kr-properties-filter-heading" class="h3 kr-properties-filter-heading show-for-medium">
 	<?php echo $this->header; ?>
 </h1>
+<?php echo $this->loadTemplate('searchbar'); ?>
 
-<div class="kr-properties">
-	<?php echo $this->loadTemplate('searchbar'); ?>
-	<div id="kr-properties-data"></div>
-	<div class="small-only-text-center">
-		<div class="kr-pager"></div>
-	</div>
+<div class="kr-properties" id="kr-properties-data"></div>
+<div class="small-only-text-center">
+	<div class="kr-pager bottom"></div>
 </div>
 
 <?php echo $this->loadTemplate('modalmap'); ?>

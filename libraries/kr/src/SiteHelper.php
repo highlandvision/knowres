@@ -123,7 +123,7 @@ class SiteHelper
 	 */
 	public static function checkLocks(object $item, GuestModel|ContractguestdataModel $model): void
 	{
-		if (is_int($item->checked_out) && $item->checked_out != KrMethods::getUser()->id) {
+		if (is_int($item->checked_out) && $item->checked_out != KrMethods::getUser($item->checked_out)->id) {
 			// Ouch! Record is checked out by admin
 			if ($item->checked_out_time < TickTock::modifyHours('now', 1, '-')) {
 				$model->checkin([$item->id]);
@@ -553,11 +553,12 @@ class SiteHelper
 	 */
 	public static function loginUser(): void
 	{
-		if (self::userRequired() && !KrMethods::getUser()->id) {
+		$user_id = KrMethods::getUser()->id;
+		if (self::userRequired() && !$user_id) {
 			self::redirectLogin();
 		}
 
-		$guest_id = KrFactory::getListModel('guests')->getGuestForUser(KrMethods::getUser()->id);
+		$guest_id = KrFactory::getListModel('guests')->getGuestForUser($user_id);
 		if (!$guest_id) {
 			SiteHelper::redirectLogin();
 		}

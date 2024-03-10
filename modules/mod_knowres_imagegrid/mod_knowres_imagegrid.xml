@@ -19,6 +19,15 @@
     <config>
         <fields name="params">
             <fieldset name="basic">
+                <field name="show-images"
+                       class="btn-group btn-group-yesno"
+                       default="0"
+                       type="radio"
+                       label="MOD_KNOWRES_IMAGEGRID_SHOW-IMAGES"
+                       description="MOD_KNOWRES_IMAGEGRID_SHOW-IMAGES_DSC">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
                 <field name="small-column-count"
                        class="w-auto"
                        default="1"
@@ -62,6 +71,7 @@
                 <field name="textoverlay"
                        class="btn-group btn-group-yesno"
                        default="0"
+                       showon="show-images:1"
                        type="radio"
                        label="MOD_KNOWRES_IMAGEGRID_TEXTOVERLAY"
                        description="MOD_KNOWRES_IMAGEGRID_TEXTOVERLAY_DSC">
@@ -70,20 +80,18 @@
                 </field>
                 <field name="textcolor"
                        default="#fefefe"
-                       showon="textoverlay:1"
                        type="color"
                        label="MOD_KNOWRES_IMAGEGRID_TEXTCOLOR"
                        description="MOD_KNOWRES_IMAGEGRID_TEXTCOLOR_DSC"/>
                 <field name="textbg"
                        default=""
-                       showon="textoverlay:1"
                        type="color"
                        label="MOD_KNOWRES_IMAGEGRID_TEXTBG"
                        description="MOD_KNOWRES_IMAGEGRID_TEXTBG_DSC"/>
                 <field name="textshadow"
                        class="btn-group btn-group-yesno"
                        default="0"
-                       showon="textoverlay:1"
+                       showon="textoverlay:1[AND]show-images:1"
                        type="radio"
                        label="MOD_KNOWRES_IMAGEGRID_TEXTSHADOW"
                        description="MOD_KNOWRES_IMAGEGRID_TEXTSHADOW_DSC">
@@ -94,7 +102,6 @@
                        addonAfter="px"
                        class="w-auto"
                        default="16"
-                       showon="textoverlay:1"
                        type="number"
                        min="10"
                        max="30"
@@ -103,7 +110,6 @@
                 <field name="textbold"
                        class="btn-group btn-group-yesno"
                        default="0"
-                       showon="textoverlay:1"
                        type="radio"
                        label="MOD_KNOWRES_IMAGEGRID_TEXTBOLD"
                        description="MOD_KNOWRES_IMAGEGRID_TEXTBOLD_DSC">
@@ -113,7 +119,7 @@
                 <field name="texthorizontalalign"
                        class="btn-group"
                        default="center"
-                       showon="textoverlay:1"
+                       showon="textoverlay:1[AND]show-images:1"
                        type="radio"
                        label="MOD_KNOWRES_IMAGEGRID_TEXTHORIZONTAL"
                        description="MOD_KNOWRES_IMAGEGRID_TEXTHORIZONTAL_DSC">
@@ -123,7 +129,7 @@
                 <field name="textverticalalign"
                        class="btn-group"
                        default="center"
-                       showon="textoverlay:1"
+                       showon="textoverlay:1[AND]show-images:1"
                        type="radio"
                        label="MOD_KNOWRES_IMAGEGRID_TEXTVERTICAL"
                        description="MOD_KNOWRES_IMAGEGRID_TEXTVERTICAL_DSC">
@@ -133,7 +139,7 @@
                 </field>
                 <field name="imagegrid"
                        formsource="modules/mod_knowres_imagegrid/form/imagegrid.xml"
-                       layout="joomla.form.field.subform.repeatable-table"
+                       layout="joomla.form.field.subform.repeatable"
                        hiddenLabel="true"
                        min="1"
                        multiple="true"

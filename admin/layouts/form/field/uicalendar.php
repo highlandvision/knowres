@@ -59,7 +59,7 @@ $addonBeforeHtml = '<span class="kr-filter-datepicker input-group-text">' . $add
 	<div class="input-group">
 <?php endif; ?>
 
-	<span class="visually-hidden">
+<span class="visually-hidden">
 	<label id="<?php echo $id_input . '-lbl'; ?>" for="<?php echo $id_input; ?>">
 		<?php echo $label; ?>
 	</label>
@@ -69,9 +69,9 @@ $addonBeforeHtml = '<span class="kr-filter-datepicker input-group-text">' . $add
 	<?php echo $addonBeforeHtml; ?>
 <?php endif; ?>
 
-	<input type="text" class="form-control uicalendar <?php echo $class; ?>" name="<?php echo $name_input; ?>"
-	       id="<?php echo $id_input; ?>" value="<?php echo TickTock::getDate($value, 'j M Y'); ?>" <?php echo $dataAttribute; ?>>
-	<input type="hidden" id="<?php echo $id; ?>" name="<?php echo $name; ?>" value="<?php echo TickTock::getDate($value); ?>">
+<input type="text" class="form-control uicalendar <?php echo $class; ?>" name="<?php echo $name_input; ?>"
+       id="<?php echo $id_input; ?>" value="<?php echo TickTock::getDate($value, 'j M Y'); ?>" <?php echo $dataAttribute; ?>>
+<input type="hidden" id="<?php echo $id; ?>" name="<?php echo $name; ?>" value="<?php echo TickTock::getDate($value); ?>">
 
 <?php if (!empty($addonBefore) || !empty($addonAfter)) : ?>
 	</div>

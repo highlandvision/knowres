@@ -23,19 +23,19 @@ $data = [];
 
 if (!empty($this->items) && count($this->items)) {
 	$data['bar'] = $this->Response->searchData->bar;
-	$description = $this->Response->searchData->description;
-	if (!$description) {
-		$description = $this->Response->searchData->region_name . ', ' . KrMethods::getCfg('sitename');
-	}
-	if (count($this->Response->searchData->baseIds) > 1) {
-		$data['heading'] = KrMethods::sprintf('COM_KNOWRES_SEARCH_HEADER_X',
-		                                      $description);
-//		                                      count($this->Response->searchData->baseIds));
-	}
-	else {
-//		$data['heading'] = KrMethods::sprintf('COM_KNOWRES_SEARCH_HEADER_1', $this->Response->searchData->description);
-		$data['heading'] = KrMethods::sprintf('COM_KNOWRES_SEARCH_HEADER_X', $description);
-	}
+//	$description = $this->Response->searchData->description;
+//	if (!$description) {
+//		$description = $this->Response->searchData->region_name . ', ' . KrMethods::getCfg('sitename');
+//	}
+//	if (count($this->Response->searchData->baseIds) > 1) {
+//		$data['heading'] = KrMethods::sprintf('COM_KNOWRES_SEARCH_HEADER_X',
+//		                                      $description);
+////		                                      count($this->Response->searchData->baseIds));
+//	}
+//	else {
+////		$data['heading'] = KrMethods::sprintf('COM_KNOWRES_SEARCH_HEADER_1', $this->Response->searchData->description);
+//		$data['heading'] = KrMethods::sprintf('COM_KNOWRES_SEARCH_HEADER_X', $description);
+//	}
 
 	if ($this->Response->searchData->layout) {
 		$data['items'] = $this->loadTemplate('browse');
@@ -45,17 +45,16 @@ if (!empty($this->items) && count($this->items)) {
 		}
 		$data['items'] = $this->loadTemplate($this->Response->searchData->bar);
 	}
-	$data['filters']    = $this->favs ? '' : $this->loadTemplate('filters_offcanvas');
+	$data['filters']    = $this->favs ? '' : $this->loadTemplate('filters');
 	$data['sortby']     = $this->loadTemplate('sortby');
 	$data['pagination'] = $pagination;
-}
-else {
+} else {
 	$data['items']   = $this->loadTemplate('sorry');
 	$data['sortby']  = '';
 	$data['filters'] = '';
 }
 
-$data['search'] = $this->modules;
+$data['search'] = true;
 
 echo Utility::encodeJson($data);
 

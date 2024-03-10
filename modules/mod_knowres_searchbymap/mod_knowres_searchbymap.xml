@@ -24,6 +24,7 @@
 					validate="moduleLayout"
 					label="JFIELD_ALT_LAYOUT_LABEL"/>
 				<field name="moduleclass_sfx"
+					default="kr-search"
 					type="textarea"
 					rows="1"
 					validate="CssIdentifier"

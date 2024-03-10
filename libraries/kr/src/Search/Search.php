@@ -40,6 +40,8 @@ class Search
 {
 	/* @var Filter Search filters */
 	public Filter $Filter;
+	/** @var int Value set for properties with no rate. */
+	protected int $highval = 9999999;
 	/* @var Response Output ajax data */
 	public Response $Response;
 	/** @var stdClass Search session data. */

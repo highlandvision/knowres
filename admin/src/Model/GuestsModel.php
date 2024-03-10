@@ -264,7 +264,6 @@ class GuestsModel extends ListModel
 	 * @param   int  $user_id  ID of user
 	 *
 	 * @throws RuntimeException
-	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return ?int
 	 */

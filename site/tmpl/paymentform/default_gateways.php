@@ -32,7 +32,7 @@ $surcharge_displayed = false;
 				<?php $this->currency = $this->gateway->currency; ?>
 			<?php endif; ?>
 			<?php if ($this->gateway->surcharge > 0 && !$surcharge_displayed) : ?>
-				<p class="vsmall" style="margin-top:5px;">
+				<p class="small" style="margin-top:5px;">
 					<i><?php echo KrMethods::plain('COM_KNOWRES_PAYMENT_SELECT_SURCHARGE'); ?></i>
 				</p>
 				<?php $surcharge_displayed = true; ?>
@@ -71,7 +71,7 @@ $surcharge_displayed = false;
 				</a>
 			</label>
 		</div>
-		<button type="submit" id="checkterms" class="button expanded no-margin-bottom validate">
+		<button type="submit" id="checkterms" class="button expanded validate">
 			<span><?php echo KrMethods::plain('COM_KNOWRES_PAY_NOW'); ?></span>
 		</button>
 	</div>

@@ -39,4 +39,3 @@ use HighlandVision\KR\Framework\KrMethods;
 		<?php endif; ?>
 	<?php endif; ?>
 <?php endforeach; ?>
-

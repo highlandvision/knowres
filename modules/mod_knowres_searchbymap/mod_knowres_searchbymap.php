@@ -21,6 +21,6 @@ $layout    = $params->get('layout', 'default');
 $KRparams  = KrMethods::getParams();
 $region_id = $KRparams->get('default_region');
 /** @noinspection PhpUnhandledExceptionInspection */
-$Itemid = SiteHelper::getItemId('com_knowres', 'properties', array("region_id" => 0));
+$Itemid = SiteHelper::getItemId('com_knowres', 'properties', ["region_id" => 0]);
 
 require ModuleHelper::getLayoutPath('mod_knowres_searchbymap', $params->get('layout', 'default'));

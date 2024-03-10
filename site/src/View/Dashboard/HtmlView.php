@@ -42,6 +42,7 @@ class HtmlView extends KrHtmlView\Site
 
 		$userSession = new KrSession\User();
 		$userData    = $userSession->getData();
+
 		if (!$userData->db_guest_id)
 		{
 			SiteHelper::badUser();

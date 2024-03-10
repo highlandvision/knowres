@@ -35,6 +35,8 @@ class RawView extends KrHtmlView
 	protected bool $favs = false;
 	/** @var string Modules output */
 	protected string $modules;
+	/** @var bool True if favourites requested but none selected */
+	protected bool $nofavs = false;
 
 	/**
 	 * Display the view
@@ -54,7 +56,6 @@ class RawView extends KrHtmlView
 		$searchData    = $searchSession->getData();
 		if (!is_countable($searchData->baseIds) || !count($searchData->baseIds)) {
 			$this->items      = [];
-			$this->modules    = KrMethods::loadInternal('{loadposition propertiesview}');
 			$this->pagination = $this->get('pagination');
 			$this->Itemid     = SiteHelper::getItemId('com_knowres', 'property', ['id' => 0]);
 
@@ -69,14 +70,14 @@ class RawView extends KrHtmlView
 
 		$favs = false;
 		if ($bar == 'favs' && !count($searchData->favs)) {
-			$bar = $this->params->get('default_view', 'list');
+			$bar          = $this->params->get('default_view', 'list');
+			$this->nofavs = true;
 		}
 
 		if ($bar == 'favs' && count($searchData->favs)) {
 			$this->setFavs($searchData->favs);
 			$favs = true;
-		}
-		else {
+		} else {
 //			else if ($bar == 'view' && !$value) {
 //				$value = $this->Response->data->view;
 //				if (!$value) {
@@ -116,7 +117,6 @@ class RawView extends KrHtmlView
 			                                  $result[7]);
 		}
 
-		$this->modules    = KrMethods::loadInternal('{loadposition propertiesview}');
 		$this->order      = $this->Response->searchData->order != '' ? $this->Response->searchData->order :
 			$this->params->get('order_default');
 		$this->pagination = $this->get('pagination');
@@ -161,8 +161,7 @@ class RawView extends KrHtmlView
 					for ($i = 0; $i < 10; $i++) {
 						$filter[] = $k + $i;
 					}
-				}
-				else {
+				} else {
 					$filter[] = $k;
 				}
 			}

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
-	<fieldset name="name" class="small-6 medium-4 large-3 xlarge-2 cell">
+	<fieldset name="name" class="small-6 medium-4 large-3 xlarge-3 cell">
 		<field name="name"
 			filter="string"
 			hiddenDescription="true"
@@ -8,7 +8,7 @@
 			label="COM_KNOWRES_CONTRACTGUESTDATAFORM_GUESTINFO_NAME1_LBL"
 			description="COM_KNOWRES_CONTRACTGUESTDATAFORM_GUESTINFO_NAME1_LBL"/>
 	</fieldset>
-	<fieldset name="surname1" class="small-6 medium-4 large-3 xlarge-2 cell">
+	<fieldset name="surname1" class="small-6 medium-4 large-3 xlarge-3 cell">
 		<field name="surname1"
 			filter="string"
 			hiddenDescription="true"
@@ -16,7 +16,7 @@
 			label="COM_KNOWRES_CONTRACTGUESTDATAFORM_GUESTINFO_NAME2_LBL"
 			description="COM_KNOWRES_CONTRACTGUESTDATAFORM_GUESTINFO_NAME2_LBL"/>
 	</fieldset>
-	<fieldset name="surname2" class="small-6 medium-4 large-3 xlarge-2 cell">
+	<fieldset name="surname2" class="small-6 medium-4 large-3 xlarge-3 cell">
 		<field name="surname2"
 			filter="string"
 			hiddenDescription="true"
@@ -34,7 +34,7 @@
 			label="COM_KNOWRES_CONTRACTGUESTDATAFORM_SEX_LBL"
 			description="COM_KNOWRES_CONTRACTGUESTDATAFORM_SEX_LBL"/>
 	</fieldset>
-	<fieldset name="dob" class="small-6 medium-4 large-3 xlarge-2 cell">
+	<fieldset name="dob" class="small-6 medium-4 large-3 xlarge-3 cell">
 		<field name="dob"
 			class="dobissue input-mini"
 			data-validation="max"
@@ -44,7 +44,7 @@
 			label="COM_KNOWRES_CONTRACTGUESTDATAFORM_DOB_LBL"
 			description="COM_KNOWRES_CONTRACTGUESTDATAFORM_DOB_LBL"/>
 	</fieldset>
-	<fieldset name="document_type" class="small-6 medium-4 large-3 xlarge-2 cell">
+	<fieldset name="document_type" class="small-6 medium-4 large-3 xlarge-3 cell">
 		<field name="document_type"
 			addfieldprefix="HighlandVision\Component\Knowres\Administrator\Field"
 			filter="int"
@@ -55,7 +55,7 @@
 			<option value="0">COM_KNOWRES_SELECT_REQUIRED</option>
 		</field>
 	</fieldset>
-	<fieldset name="document_id" class="small-6 medium-4 large-3 xlarge-2 cell">
+	<fieldset name="document_id" class="small-6 medium-4 large-3 xlarge-3 cell">
 		<field name="document_id"
 			filter="string"
 			hiddenDescription="true"
@@ -63,7 +63,7 @@
 			label="COM_KNOWRES_CONTRACTGUESTDATAFORM_DOCUMENT_NUMBER_LBL"
 			description="COM_KNOWRES_CONTRACTGUESTDATAFORM_DOCUMENT_NUMBER_LBL"/>
 	</fieldset>
-	<fieldset name="document_nat" class="small-6 medium-4 large-3 xlarge-2 cell">
+	<fieldset name="document_nat" class="small-6 medium-4 large-3 xlarge-3 cell">
 		<field name="document_nat"
 			addfieldprefix="HighlandVision\Component\Knowres\Administrator\Field"
 			filter="int"
@@ -74,7 +74,7 @@
 			<option value="0">COM_KNOWRES_SELECT_REQUIRED</option>
 		</field>
 	</fieldset>
-	<fieldset name="document_issue" class="small-6 medium-4 large-3 xlarge-2 cell">
+	<fieldset name="document_issue" class="small-6 medium-4 large-3 xlarge-3 cell">
 		<field name="document_issue"
 			class="dobissue input-mini"
 			data-validation="max"
@@ -84,7 +84,7 @@
 			label="COM_KNOWRES_CONTRACTGUESTDATAFORM_DOCUMENT_DOI_LBL"
 			description="COM_KNOWRES_CONTRACTGUESTDATAFORM_DOCUMENT_DOI_LBL"/>
 	</fieldset>
-	<fieldset name="document_expiry" class="small-6 medium-4 large-3 xlarge-2 cell">
+	<fieldset name="document_expiry" class="small-6 medium-4 large-3 xlarge-3 cell">
 		<field name="document_expiry"
 			class="dobissue input-mini"
 			data-validation="min"

@@ -41,13 +41,14 @@ class ListcategoriesField extends ListField
 	{
 		$options      = [];
 		$Translations = new Translations();
-		$categories   = KrFactory::getListModel('categories')->getAllCategories();
 
+		$categories   = KrFactory::getListModel('categories')->getAllCategories();
 		foreach ($categories as $c)
 		{
 			$options[] = HTMLHelper::_('select.option', $c->id, $Translations->getText('category', $c->id));
 		}
 
-		return array_merge(parent::getOptions(), ArrayHelper::sortObjects($options, 'text'));
+		$options = ArrayHelper::sortObjects($options, 'text');
+		return array_merge(parent::getOptions(), $options);
 	}
 }

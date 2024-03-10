@@ -23,68 +23,66 @@ $form         = KrFactory::getAdhocForm('mod_knowres_search', 'mod_knowres_searc
 $show_regions = $params->get('show_regions');
 ?>
 
-<div class="grid-container">
-	<div class="grid-x grid-margin-x">
-		<div class="small-12 medium-4 large-12 cell">
-			<div class="kr-search slider">
-				<form action="<?php echo KrMethods::route('index.php?option=com_knowres&task=properties.search'); ?>"
-					method="post" name="search-default">
-					<div class="grid-x grid-margin-x">
-						<?php if (!empty($search_text) && $show_regions < 1): ?>
-							<div class="small-12 medium-12 large-3 cell hero-search-text">
-								<h3 class="h4"><?php echo $search_text; ?></h3>
-							</div>
-						<?php endif; ?>
-						<?php if ($show_regions): ?>
-							<div class="small-12 medium-12 large-3 cell">
-								<?php echo $options; ?>
-							</div>
-						<?php endif; ?>
-						<?php if ($show_datepickers): ?>
-							<div class="small-12 medium-12 large-2 cell">
-								<?php echo $form->renderField('arrivaldsp',
-								                              null,
-								                              TickTock::getDate((string) $initial->arrival,
-								                                                'j M Y')); ?>
-							</div>
-							<div class="small-12 medium-12 large-2 cell">
-								<?php echo $form->renderField('departuredsp',
-								                              null,
-								                              TickTock::getDate((string) $initial->departure,
-								                                                'j M Y')); ?>
-							</div>
-							<input type="hidden" id="arrival" name="arrival" value="">
-							<input type="hidden" id="departure" name="departure" value="">
-						<?php endif; ?>
-						<?php if ($show_guests): ?>
+<div class="grid-x grid-margin-x">
+	<div class="small-12 medium-4 large-12 cell">
+		<div class="hero-search">
+			<form action="<?php echo KrMethods::route('index.php?option=com_knowres&task=properties.search'); ?>"
+				method="post" name="search-default">
+				<div class="grid-x grid-margin-x">
+					<?php if (!empty($search_text) && $show_regions < 1): ?>
+						<div class="small-12 medium-12 large-3 cell hero-search-text">
+							<h3 class="h4"><?php echo $search_text; ?></h3>
+						</div>
+					<?php endif; ?>
+					<?php if ($show_regions): ?>
 						<div class="small-12 medium-12 large-3 cell">
-							<?php echo $form->renderField('guests',
-							                              null,
-							                              $initial->guests,
-							                              ['format'     => $show_guests,
-							                               'adults'     => $initial->adults,
-							                               'children'   => $initial->children,
-							                               'child_ages' => $initial->child_ages ?: [],
-							                               'max'        => $max_guests
-							                              ]); ?>
+							<?php echo $options; ?>
 						</div>
-						<?php endif; ?>
+					<?php endif; ?>
+					<?php if ($show_datepickers): ?>
 						<div class="small-12 medium-12 large-2 cell">
-							<button type="submit" class="button expanded">
-								<?php echo KrMethods::plain('MOD_KNOWRES_SEARCH_BUTTON'); ?>
-								&nbsp;&nbsp;<i class='fa-solid fa-search'></i>
-							</button>
+							<?php echo $form->renderField('arrivaldsp',
+							                              null,
+							                              TickTock::getDate((string) $initial->arrival,
+							                                                'j M Y')); ?>
 						</div>
-					</div>
-
-					<?php if ($show_regions == 1): ?>
-						<?php require ModuleHelper::getLayoutPath('mod_knowres_search', '_regionpane'); ?>
+						<div class="small-12 medium-12 large-2 cell">
+							<?php echo $form->renderField('departuredsp',
+							                              null,
+							                              TickTock::getDate((string) $initial->departure,
+							                                                'j M Y')); ?>
+						</div>
+						<input type="hidden" id="arrival" name="arrival" value="">
+						<input type="hidden" id="departure" name="departure" value="">
 					<?php endif; ?>
 					<?php if ($show_guests): ?>
-						<?php require ModuleHelper::getLayoutPath('mod_knowres_search', '_partypane'); ?>
+					<div class="small-12 medium-12 large-3 cell">
+						<?php echo $form->renderField('guests',
+						                              null,
+						                              $initial->guests,
+						                              ['format'     => $show_guests,
+						                               'adults'     => $initial->adults,
+						                               'children'   => $initial->children,
+						                               'child_ages' => $initial->child_ages ?: [],
+						                               'max'        => $max_guests
+						                              ]); ?>
+					</div>
 					<?php endif; ?>
-				</form>
-			</div>
+					<div class="small-12 medium-12 large-2 cell">
+						<button type="submit" class="button expanded">
+							<?php echo KrMethods::plain('MOD_KNOWRES_SEARCH_BUTTON'); ?>
+							&nbsp;&nbsp;<i class='fa-solid fa-search'></i>
+						</button>
+					</div>
+				</div>
+
+				<?php if ($show_regions == 1): ?>
+					<?php require ModuleHelper::getLayoutPath('mod_knowres_search', '_regionpane'); ?>
+				<?php endif; ?>
+				<?php if ($show_guests): ?>
+					<?php require ModuleHelper::getLayoutPath('mod_knowres_search', '_partypane'); ?>
+				<?php endif; ?>
+			</form>
 		</div>
 	</div>
 </div>

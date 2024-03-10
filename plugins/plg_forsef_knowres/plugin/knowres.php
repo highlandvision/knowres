@@ -56,7 +56,11 @@ class Knowres extends Base
 	{
 		$sefSegments = parent::build($uriToBuild, $platformUri, $originalUri);
 
-		if ($uriToBuild->getVar('format') =='raw') {
+		if ($uriToBuild->getVar('format') == 'raw') {
+			return [];
+		}
+
+		if ($uriToBuild->getVar('retain') == 1) {
 			return [];
 		}
 
@@ -75,6 +79,7 @@ class Knowres extends Base
 		$property_id = $uriToBuild->getVar('property_id', 0);
 		$region_id   = $uriToBuild->getVar('region_id', 0);
 		$search      = $uriToBuild->getVar('search', 0);
+		$solo_region = '';
 		$task        = $uriToBuild->getVar('task');
 		$type_id     = $uriToBuild->getVar('type_id');
 
@@ -82,6 +87,13 @@ class Knowres extends Base
 			$key = $view == 'property' || $view == 'contact' ? $id : $property_id;
 			if ($key) {
 				$pdata = $this->getPropertyData($key);
+			}
+		}
+
+		if ($view == 'properties') {
+			$items = KrFactory::getListModel('regions')->getAllRegions(true);
+			if (count($items) == 1) {
+				$solo_region = $items[0]->name;
 			}
 		}
 
@@ -142,14 +154,14 @@ class Knowres extends Base
 				break;
 			case 'properties':
 				$Translations = new Translations;
-
 				if ($region_id) {
 					$sefSegments[] = $Translations->getText('region', $region_id);
-				}
-				elseif ($category_id) {
+				} elseif ($category_id) {
+					if (!empty($solo_region)) {
+						$sefSegments[] = $solo_region;
+					}
 					$sefSegments[] = $Translations->getText('category', $category_id);
-				}
-				elseif ($layout) {
+				} elseif ($layout) {
 					$sefSegments[] = $alias;
 				}
 
@@ -172,14 +184,13 @@ class Knowres extends Base
 			default:
 				if (!$view || !$alias) {
 					$dosef = false;
-				}
-				else {
+				} else {
 					$sefSegments[] = $alias;
 					$platformUri->delvar('view');
 				}
 		}
 
-		if (!count($sefSegments) && $alias) {
+		if (!count($sefSegments) && !empty($alias)) {
 			$sefSegments[] = $alias;
 		}
 
@@ -291,10 +302,7 @@ class Knowres extends Base
 	{
 		$alias = '';
 		if ($Itemid) {
-			$menu = $this->platform->getMenu()->getItem($Itemid);
-			if (!empty($menu)) {
-				$alias = $menu->alias;
-			}
+			$alias = $this->menuHelper->getMenuTitle('com_knowres', $Itemid);
 		}
 
 		return $alias;

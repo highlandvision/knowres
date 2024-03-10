@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 $action = 'index.php';
 ?>
 
-<form action="<?php echo $action; ?>" method="get" id="kr-goto-property" name="kr-goto-property">
+<form action="<?php echo $action; ?>" method="get" id="kr-goto-property" name="goto-property">
 	<input type="hidden" name="option" value="com_knowres">
 	<input type="hidden" name="view" value="property">
 	<input type="hidden" name="Itemid" value="<?php echo $Itemid; ?>">

@@ -62,7 +62,7 @@ class HtmlView extends KrHtmlView\Site
 	 * @param  null  $tpl  Default template.
 	 *
 	 * @throws Exception
-	 * @since        1.0.0
+	 * @since  1.0.0
 	 * @return void
 	 */
 	#[NoReturn] public function display($tpl = null): void
@@ -100,7 +100,6 @@ class HtmlView extends KrHtmlView\Site
 					$searchData = $searchSession->resetData();
 					SiteHelper::redirectHome();
 				}
-
 				/** @var CategoryModel $category */
 				$category                = KrFactory::getAdminModel('category')->getItem($this->category_id);
 				$searchData->layout      = $layout;

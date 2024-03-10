@@ -34,9 +34,9 @@ use HighlandVision\KR\Framework\KrMethods;
 
 			<?php if (isset($this->layouts['list'])): ?>
 				<?php $text =  KrMethods::plain('COM_KNOWRES_VIEW_LIST'); ?>
-				<?php if ($this->Search->searchData->layout): ?>
-					<?php $text =  KrMethods::plain('COM_KNOWRES_VIEW_BROWSE'); ?>
-				<?php endif; ?>
+<!--				--><?php //if ($this->Search->searchData->layout): ?>
+<!--					--><?php //$text =  KrMethods::plain('COM_KNOWRES_VIEW_BROWSE'); ?>
+<!--				--><?php //endif; ?>
 
 				<a class="button getResponseSearch list" data-bar="list"
 				   title="<?php echo $text; ?>"
@@ -73,14 +73,16 @@ use HighlandVision\KR\Framework\KrMethods;
 				</a>
 			<?php endif; ?>
 
-			<a class="button getResponseSearch favs" data-bar="favs"
-			   title="<?php echo KrMethods::plain('COM_KNOWRES_VIEW_FAVOURITES'); ?>"
-			   aria-label="<?php echo KrMethods::plain('COM_KNOWRES_VIEW_FAVOURITES'); ?>">
-				<i class='fa-solid fa-heart'></i>
-				<span class="show-for-large">
-					<?php echo KrMethods::plain('COM_KNOWRES_VIEW_FAVOURITES'); ?>
-				</span>
-			</a>
+			<?php if (!$this->Search->searchData->layout): ?>
+				<a class="button getResponseSearch favs" data-bar="favs"
+				   title="<?php echo KrMethods::plain('COM_KNOWRES_VIEW_FAVOURITES'); ?>"
+				   aria-label="<?php echo KrMethods::plain('COM_KNOWRES_VIEW_FAVOURITES'); ?>">
+					<i class="fa-solid fa-heart"></i>
+					<span class="show-for-large">
+						<?php echo KrMethods::plain('COM_KNOWRES_VIEW_FAVOURITES'); ?>
+					</span>
+				</a>
+			<?php endif; ?>
 
 			<button type="button" class="button filter right-off-canvas-toggle"
 			        data-toggle="kr-offcanvas-properties-filter"

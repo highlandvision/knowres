@@ -61,10 +61,6 @@ defined('_JEXEC') or die;
 		<?php endif; ?>
 	<?php endforeach; ?>
 
-<!--	<div>-->
-<!--		--><?php //echo $this->loadTemplate('phototour'); ?>
-<!--	</div>-->
-
 	<!--  Geriatric calendar -->
 	<?php if ((int) $this->settings['display_calendar']) : ?>
 		<h3 class="header"><?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_AVAILABILITY_PRICE"); ?></h3>

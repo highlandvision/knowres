@@ -16,7 +16,7 @@ use HighlandVision\KR\Framework\KrMethods;
 	<li id="air" class="amitem">
 		<a>
 			<i class='fa-solid fa-plane fa-1x' aria-hidden="true"></i>
-			<span class="hide-for-small-only">
+			<span class="show-for-medium">
 				<?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATAFORM_AIR'); ?>
 			</span>
 		</a>
@@ -24,7 +24,7 @@ use HighlandVision\KR\Framework\KrMethods;
 	<li id="train" class="amitem">
 		<a>
 			<i class='fa-solid fa-train fa-1x' aria-hidden="true"></i>
-			<span class="hide-for-small-only">
+			<span class="show-for-medium">
 				<?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATAFORM_TRAIN'); ?>
 			</span>
 		</a>
@@ -32,7 +32,7 @@ use HighlandVision\KR\Framework\KrMethods;
 	<li id="auto" class="amitem">
 		<a>
 			<i class='fa-solid fa-car fa-1x' aria-hidden="true"></i>
-			<span class="hide-for-small-only">
+			<span class="show-for-medium">
 				<?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATAFORM_AUTO'); ?>
 			</span>
 		</a>
@@ -40,7 +40,7 @@ use HighlandVision\KR\Framework\KrMethods;
 	<li id="other" class="amitem">
 		<a>
 			<i class='fa-solid fa-exclamation fa-1x' aria-hidden="true"></i>
-			<span class="hide-for-small-only">
+			<span class="show-for-mediumy">
 				<?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATAFORM_OTHER'); ?>
 			</span>
 		</a>
