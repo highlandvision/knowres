@@ -48,7 +48,7 @@ if ($this->access_level == 10)
 					<?php
 					$data            = [];
 					$data['label']   = KrMethods::plain('COM_KNOWRES_PROPERTYDASHBOARD_TITLE');
-					$data['icon']    = 'fa-tachometer-alt';
+					$data['icon']    = 'fa-gauge';
 					$data['id']      = 'property-dashboard' . $this->item->id;
 					$data['item_id'] = $this->item->id;
 					$data['type']    = 'task';

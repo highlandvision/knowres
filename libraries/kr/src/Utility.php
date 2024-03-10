@@ -321,7 +321,7 @@ class Utility
 	{
 		$params = KrMethods::getParams();
 		$key    = $params->get('gmapkey', '');
-		$url    = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" . $latlng . '&key=' . $key;
+		$url    = "https://maps.googleapis.com/maps/api/geocode/json?v=3.55&latlng=" . $latlng . '&key=' . $key . '&loading=async&callback=initMap';
 		$data   = self::decodeJson(file_get_contents($url));
 
 		if (isset($data->results[0]->formatted_address)) {
@@ -419,12 +419,12 @@ class Utility
 	 */
 	public static function getGmapsURL(): string
 	{
-		$url = 'https://maps.googleapis.com/maps/api/js';
+		$url = 'https://maps.googleapis.com/maps/api/js?v=3.55';
 
 		$params = KrMethods::getParams();
 		$key    = $params->get('gmapkey', '');
 		if ($key) {
-			$url .= '?key=' . $key;
+			$url .= '&key=' . $key . '&loading=async&callback=initMap';;
 		}
 
 		$url .= '&callback=Function.prototype';

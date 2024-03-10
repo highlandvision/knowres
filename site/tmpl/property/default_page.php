@@ -67,9 +67,12 @@ defined('_JEXEC') or die;
 
 	<!--  Geriatric calendar -->
 	<?php if ((int) $this->settings['display_calendar']) : ?>
-		<div class="tabs-panel" id="calendar">
-			<?php echo $this->loadTemplate('geriatric'); ?>
-		</div>
+		<h3 class="header"><?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_AVAILABILITY_PRICE"); ?></h3>
+		<div id="kr-page-geriatric-calendar"></div>
+		<a href="#" id="kr-page-geriatric-calendar-trigger" data-pid="<?php echo $this->item->id; ?>"
+		   data-target="#kr-page-geriatric-calendar"
+		   aria-label="<?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_AVAILABILITY_PRICE"); ?>">
+		</a>
 	<?php endif; ?>
 
 	<!--  Units -->
@@ -80,9 +83,16 @@ defined('_JEXEC') or die;
 
 	<!--  Map -->
 	<?php if ($this->item->lat && $this->item->lng) : ?>
-		<div class="tabs-panel" id="map">
-			<?php echo $this->loadTemplate('map'); ?>
-		</div>
+		<h3 class="header"><?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_MAP"); ?></h3>
+		<div id="kr-map-solo"></div>
+		<a href="#" id="kr-map-solo-trigger" class="map-trigger"
+		   aria-label="<?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_MAP"); ?>"
+		   data-forcemap="true"
+		   data-zoom="<?php echo $this->map_zoom; ?>"
+		   data-zoommax="<?php echo $this->item->map_max_zoom; ?>" data-target="kr-map-solo"
+		   data-type="solo" data-pid="<?php echo $this->item->id; ?>"
+		   data-maptypeid="<?php echo $this->params->get('property_map_type', "roadmap"); ?>">
+		</a>
 	<?php endif; ?>
 
 	<!--  Reviews -->

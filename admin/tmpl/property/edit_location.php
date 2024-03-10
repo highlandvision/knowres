@@ -15,7 +15,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 
 /** @var HighlandVision\Component\Knowres\Administrator\View\Property\HtmlView $this */
 
-HTMLHelper::script(Utility::getGmapsURL());
+HTMLHelper::script(trim(Utility::getGmapsURL()), [], ['async' => 'async', 'defer' => 'defer']);
 
 $this->lat  = $this->item->lat;
 $this->lng  = $this->item->lng;

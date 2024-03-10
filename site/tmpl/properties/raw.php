@@ -39,8 +39,10 @@ if (!empty($this->items) && count($this->items)) {
 
 	if ($this->Response->searchData->layout) {
 		$data['items'] = $this->loadTemplate('browse');
-	}
-	else {
+	} else {
+		if ($this->Response->searchData->bar == 'favs') {
+			$this->Response->searchData->bar = 'list';
+		}
 		$data['items'] = $this->loadTemplate($this->Response->searchData->bar);
 	}
 	$data['filters']    = $this->favs ? '' : $this->loadTemplate('filters_offcanvas');

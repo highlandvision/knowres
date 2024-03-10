@@ -38,9 +38,6 @@ if ($textsize) {
 if (!empty($textbg)) {
 	$pstyle .= 'background-color:rgba(0,0,0,0.25);';
 }
-if ($texthorizontalalign == "center") {
-	$pstyle .= 'text-align:center;';
-}
 if ($textshadow) {
 	$pstyle .= 'text-shadow:1px 1px 2px #0a0a0a';
 }

@@ -23,7 +23,7 @@ use RuntimeException;
  *
  * @since 1.0.0
  */
-class EnquiryEmail extends Email
+class ContactEmail extends Email
 {
 	/** @var string Guest (enquirer) name */
 	protected string $guest_name = '';

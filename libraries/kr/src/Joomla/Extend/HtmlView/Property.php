@@ -154,7 +154,7 @@ class Property extends KrHtmlView
 		if ($name !== 'propertyoptions' && $this->access_level > 10) {
 			$link = KrMethods::route('index.php?option=com_knowres&view=propertyoptions');
 			$ChildToolbar->linkButton('propertyoptions', 'COM_KNOWRES_PROPERTYOPTIONS_TITLE')
-			             ->icon('fa-solid fa-question knowres')
+			             ->icon('fa-solid fa-question-circle knowres')
 			             ->url($link);
 		}
 

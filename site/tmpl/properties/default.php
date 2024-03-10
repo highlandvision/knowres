@@ -18,8 +18,8 @@ $wa->useScript('com_knowres.site')
    ->useScript('form.validate')
    ->useScript('keepalive');
 
-HTMLHelper::_('script', trim(Utility::getGmapsURL()), ['async' => 'async', 'defer' => 'defer']);
-HTMLHelper::_('script', trim(Utility::getMarkerClustererURL()), ['async' => 'async', 'defer' => 'defer']);
+HTMLHelper::_('script', trim(Utility::getGmapsURL()), [], ['async' => 'async', 'defer' => 'defer']);
+HTMLHelper::_('script', trim(Utility::getMarkerClustererURL()), [], ['async' => 'async', 'defer' => 'defer']);
 ?>
 
 <h1 id="kr-properties-filter-heading" class="h3 kr-properties-filter-heading show-for-medium">

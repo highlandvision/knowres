@@ -17,7 +17,7 @@
 	</files>
 	<config>
 		<fields name="params">
-			<fields name="basic">
+			<fieldset name="basic">
 				<field name="folder"
 					directory="images"
 					hide_none="true"
@@ -57,7 +57,7 @@
 					description="MOD_KNOWRES_CAROUSEL_URL_DSC">
 					<option value="0">JNO</option>
 				</field>
-			</fields>
+			</fieldset>
 			<fieldset name="advanced">
 				<field name="layout"
 					class="form-select"

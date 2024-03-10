@@ -15,7 +15,7 @@ use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Utility;
 use Joomla\CMS\HTML\HTMLHelper;
 
-HTMLHelper::script(Utility::getGmapsURL());
+HTMLHelper::script(Utility::getGmapsURL(), [], ['async' => 'async', 'defer' => 'defer']);
 
 /** @var HighlandVision\Component\Knowres\Administrator\View\Mapmarker\HtmlView $this */
 $wa = $this->document->getWebAssetManager();

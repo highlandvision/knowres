@@ -23,7 +23,7 @@ use ReCaptcha\ReCaptcha;
 use ReCaptcha\RequestMethod\CurlPost;
 
 /**
- * Enquiry form controller
+ * Enquiry controller - Creates contract with enquiry details
  *
  * @since   3.2.0
  */
@@ -39,9 +39,7 @@ class EnquiryController extends FormController
 	 * @since   3.2.0
 	 * @return BaseDatabaseModel
 	 */
-	public function getModel($name = 'enquiry',
-	                         $prefix = 'Site',
-	                         $config = array('ignore_request' => true)): BaseDatabaseModel
+	public function getModel($name='enquiry', $prefix='Site', $config=['ignore_request' => true]):BaseDatabaseModel
 	{
 		return parent::getModel($name, $prefix);
 	}

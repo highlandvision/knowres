@@ -38,6 +38,11 @@
         </field>
     </fieldset>
     <fieldset name="requirements">
+        <field name="reserve"
+               type="checkbox"
+               class="checkover"
+               labelclass="checklabel"
+               label="COM_KNOWRES_CONTACT_RESERVE"/>
         <field name="region"
                filter="string"
                type="text"
@@ -55,8 +60,7 @@
                type="number"
                min="1"
                max="31"
-               label="COM_KNOWRES_CONTACT_DAY_LBL">
-        </field>
+               label="COM_KNOWRES_CONTACT_DAY_LBL"/>
         <field name="month"
                addfieldprefix="HighlandVision\Component\Knowres\Site\Field"
                filter="integer"
@@ -80,8 +84,7 @@
                type="number"
                min="1"
                max="50"
-               label="COM_KNOWRES_CONTACT_GUESTS_LBL">
-        </field>
+               label="COM_KNOWRES_CONTACT_GUESTS_LBL"/>
         <field name="children"
                default="0"
                filter="integer"
@@ -101,7 +104,7 @@
                label="COM_KNOWRES_CONTACT_BUDGET_LBL"
                description="COM_KNOWRES_CONTACT_BUDGET_LBL">
             <option value="">COM_KNOWRES_PLEASE_SELECT</option>
-            <option value="1500€/week">COM_KNOWRES_CONTACT_BUDGET_OPTION_1500</option>
+            <option value="1500€/week">COM_KNOWRES_CONTACT_BUDGET_OPTION_2500_MINUS</option>
             <option value="2500€/week">COM_KNOWRES_CONTACT_BUDGET_OPTION_2500</option>
             <option value="3500€/week">COM_KNOWRES_CONTACT_BUDGET_OPTION_3500</option>
             <option value="6000€/week">COM_KNOWRES_CONTACT_BUDGET_OPTION_6000</option>
@@ -113,7 +116,6 @@
         <field name="message"
                cols="50"
                filter="string"
-               hiddenLabel="true"
                rows="5"
                type="textarea"
                hint="COM_KNOWRES_CONTACT_MESSAGE_DSC"

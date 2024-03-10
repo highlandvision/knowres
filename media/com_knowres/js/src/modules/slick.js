@@ -6,9 +6,11 @@
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
 
-"use strict";
+'use strict';
 
 (function ($) {
+    let portrait = null;
+
     function kickSlideshow() {
         const $slides = $('#kr-property-slideshow');
 
@@ -28,10 +30,12 @@
             if (type === 'centered') {
                 $slides.slick({
                     arrows: true,
-                    prevArrow: '<i class="slick-nav prev fas fa-chevron-left show-for-medium"></i>',
-                    nextArrow: '<i class="slick-nav next fas fa-chevron-right show-for-medium"></i>',
+                    asNavFor: showthumbs ? '#kr-property-thumbs' : '',
+                    prevArrow: '<i class="slick-nav prev fa-solid fa-chevron-left show-for-medium"></i>',
+                    nextArrow: '<i class="slick-nav next fa-solid fa-chevron-right show-for-medium"></i>',
                     infinite: true,
                     speed: 300,
+                    adaptiveHeight: false,
                     centerMode: true,
                     centerPadding: '3px',
                     variableWidth: true,
@@ -54,21 +58,20 @@
                 $slides.slick({
                     slidesToShow: 1,
                     slidesToScroll: 1,
-                    prevArrow: '<i class="slick-nav prev fas fa-chevron-left show-for-medium"></i>',
-                    nextArrow: '<i class="slick-nav next fas fa-chevron-right show-for-medium"></i>',
+                    prevArrow: '<i class="slick-nav prev fa-solid fa-chevron-left show-for-medium"></i>',
+                    nextArrow: '<i class="slick-nav next fa-solid fa-chevron-right show-for-medium"></i>',
                     arrows: true,
                     infinite: true,
                     lazyLoad: 'ondemand',
                     fade: true,
-                    asNavFor: showthumbs ? '#kr-property-thumbs' : ''
+                    asNavFor: showthumbs ? '#kr-property-thumbs' : '',
                 });
             }
 
             if (showthumbs) {
                 const $thumbs = $('#kr-property-thumbs');
                 const twidth = $thumbs.data('twidth');
-                const show = Math.floor($slides.width() / (twidth + 5));
-
+                const show = Math.floor($slides.width() / (twidth + 6));
                 if ($thumbs.length) {
                     $thumbs.slick({
                         slidesToShow: show,
@@ -78,7 +81,7 @@
                         infinite: true,
                         arrows: false,
                         lazyLoad: 'ondemand',
-                        centerMode: false,
+                        centerMode: true,
                         focusOnSelect: true
                     });
                 }
@@ -103,17 +106,16 @@
                 });
             }
         });
-
         $('.kr-slideshow').slick({
-            prevArrow: '<i class="slick-nav prev fas fa-chevron-left"></i>',
-            nextArrow: '<i class="slick-nav next fas fa-chevron-right"></i>',
+            prevArrow: '<i class="slick-nav prev fa-solid fa-chevron-left"></i>',
+            nextArrow: '<i class="slick-nav next fa-solid fa-chevron-right"></i>',
             speed: 800,
             lazyLoad: 'ondemand',
-            adaptiveHeight: true
+            adaptiveHeight: true,
         });
 
         if ($('#kr-property-slideshow').length) {
-            kickSlideshow()
+            kickSlideshow();
         }
 
         $('.kr-carousel').each(function () {
@@ -128,8 +130,8 @@
 
         $('.kr-featured').slick({
             appendArrows: '.kr-double-arrows',
-            prevArrow: '<i class="featured slick-nav prev fas fa-chevron-left"></i>',
-            nextArrow: '<i class="featured slick-nav next fas fa-chevron-right"></i>',
+            prevArrow: '<i class="featured slick-nav prev fa-solid fa-chevron-left"></i>',
+            nextArrow: '<i class="featured slick-nav next fa-solid fa-chevron-right"></i>',
             lazyload: 'ondemand',
             infinite: false,
             slidesToScroll: 1,
@@ -160,8 +162,8 @@
 
         $('.kr-alternatives').slick({
             appendArrows: '.kr-double-arrows',
-            prevArrow: '<i class="slick-nav prev fas fa-chevron-left"></i>',
-            nextArrow: '<i class="slick-nav next fas fa-chevron-right"></i>',
+            prevArrow: '<i class="slick-nav prev fa-solid fa-chevron-left"></i>',
+            nextArrow: '<i class="slick-nav next fa-solid fa-chevron-right"></i>',
             infinite: false,
             lazyload: 'ondemand',
             slidesToScroll: 1,
@@ -169,4 +171,31 @@
             variableHeight: true
         });
     });
+
+    $('#kr-property-slideshow.mixed-width').on('beforeChange init', function(event, slick, currentSlide, nextSlide) {
+        let currentImg = $(slick.$slides.get(nextSlide)).find('img');
+        if (isPortrait(currentImg) && !portrait) {
+            $('#kr-property-slideshow.mixed-width.slick-initialized').slick('slickSetOption', {
+                centerMode: true,
+                centerPadding: '0px',
+                slidesToShow: 3,
+                slidesToScroll: 1,
+            }, true);
+            $('#kr-property-slideshow.mixed-width').slick('setPosition');
+            portrait = true;
+        } else if (portrait) {
+            $('#kr-property-slideshow.mixed-width.slick-initialized').slick('slickSetOption', {
+                centerMode: false,
+                centerPadding: '0px',
+                slidesToShow: 1,
+                slidesToScroll: 1,
+            }, true);
+            portrait = false;
+            $('#kr-property-slideshow.mixed-width').slick('setPosition');
+        }
+    });
 }(jQuery));
+
+function isPortrait(img) {
+    return img.attr('height') > img.attr('width');
+}

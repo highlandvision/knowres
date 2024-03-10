@@ -150,7 +150,7 @@ let resized = false;
             $tabs.find('a').each(function () {
                 if ($(this).attr('href') === "#calendar") {
                     const pid = $(this).data('pid');
-                    loadCalendar(pid);
+                    loadCalendar(pid, '#calendar.tabs-panel');
                     calendarLoaded = true;
                 }
             });
@@ -176,7 +176,7 @@ let resized = false;
         }
     };
 
-    function loadCalendar(pid) {
+    function loadCalendar(pid, target) {
         $.ajax({
             type: 'POST',
             url: '/index.php?option=com_knowres&task=property.geriatric&lang=' + lang,
@@ -185,7 +185,7 @@ let resized = false;
                 'pid': pid
             },
             success: function (data) {
-                $('#calendar.tabs-panel').append(data);
+                $(target).append(data);
             }
         });
     }

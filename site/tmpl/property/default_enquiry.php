@@ -9,11 +9,14 @@
 
 defined('_JEXEC') or die;
 
+use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
+use Joomla\CMS\HTML\HTMLHelper;
 
+$eform = KrFactory::getAdhocForm('enquiry', 'enquiry.xml', 'site', null);
 ?>
 
-<div class="grid-x grid-margin-x ">
+<div class="grid-x grid-margin-x">
 	<div class="small-12">
 		<form action="<?php echo KrMethods::route('index.php?option=com_knowres&task=enquiry.submit'); ?>"
 		      id="form-enquiry" onsubmit="return verifyemail();" class="formbg form-validate" method="post">
@@ -31,31 +34,31 @@ use HighlandVision\KR\Framework\KrMethods;
 				<div class="grid-x grid-margin-x ">
 					<div class="small-6 cell">
 						<div class="form-floating-label has-value">
-							<?php echo $this->enquiry_form->getInput('arrival'); ?>
-							<?php echo $this->enquiry_form->getLabel('arrival'); ?>
+							<?php echo $eform->getInput('arrival'); ?>
+							<?php echo $eform->getLabel('arrival'); ?>
 						</div>
 					</div>
 					<div class="small-6 cell">
 						<div class="form-floating-label has-value">
-							<?php echo $this->enquiry_form->getInput('departure'); ?>
-							<?php echo $this->enquiry_form->getLabel('departure'); ?>
+							<?php echo $eform->getInput('departure'); ?>
+							<?php echo $eform->getLabel('departure'); ?>
 						</div>
 					</div>
 				</div>
 			</fieldset>
 
-			<?php echo $this->enquiry_form->getInput('guest_types'); ?>
-			<?php echo $this->enquiry_form->getInput('rooms'); ?>
-			<?php echo $this->enquiry_form->getInput('extras'); ?>
+			<?php echo $eform->getInput('guest_types'); ?>
+			<?php echo $eform->getInput('rooms'); ?>
+			<?php echo $eform->getInput('extras'); ?>
 
 			<fieldset class="fieldset">
 				<legend>
 					<i class="fa fa-pencil" aria-hidden="true"></i>&nbsp;
 					<?php echo KrMethods::plain('COM_KNOWRES_CONTACT_MESSAGE_LABEL'); ?>
 				</legend>
-				<div class="grid-x grid-margin-x ">
+				<div class="grid-x grid-margin-x">
 					<div class="small-12 cell">
-						<?php echo $this->enquiry_form->getInput('guest_note'); ?>
+						<?php echo $eform->getInput('guest_note'); ?>
 					</div>
 				</div>
 			</fieldset>
@@ -66,82 +69,82 @@ use HighlandVision\KR\Framework\KrMethods;
 					<?php echo KrMethods::plain('COM_KNOWRES_ENQURIY_DETAILS'); ?>
 				</legend>
 				<div class="grid-x grid-margin-x ">
-					<?php $this->enquiry_form->setFieldAttribute('firstname', 'required', true); ?>
-					<?php $this->enquiry_form->setFieldAttribute('surname', 'required', true); ?>
+					<?php $eform->setFieldAttribute('firstname', 'required', true); ?>
+					<?php $eform->setFieldAttribute('surname', 'required', true); ?>
 					<div class="small-6 cell">
 						<div class="form-floating-label">
-							<?php echo $this->enquiry_form->getInput('firstname'); ?>
-							<?php echo $this->enquiry_form->getLabel('firstname'); ?>
+							<?php echo $eform->getInput('firstname'); ?>
+							<?php echo $eform->getLabel('firstname'); ?>
 						</div>
 					</div>
 					<div class="small-6 cell">
 						<div class="form-floating-label">
-							<?php echo $this->enquiry_form->getInput('surname'); ?>
-							<?php echo $this->enquiry_form->getLabel('surname'); ?>
+							<?php echo $eform->getInput('surname'); ?>
+							<?php echo $eform->getLabel('surname'); ?>
 						</div>
 					</div>
 					<div class="small-12 cell">
 						<div class="form-floating-label">
-							<?php echo $this->enquiry_form->render('email'); ?>
-							<?php echo $this->enquiry_form->getLabel('email'); ?>
+							<?php echo $eform->render('email'); ?>
+							<?php echo $eform->getLabel('email'); ?>
 						</div>
 					</div>
 					<div class="small-12 cell">
 						<div class="form-floating-label">
-							<?php echo $this->enquiry_form->getInput('verify_email'); ?>
-							<?php echo $this->enquiry_form->getLabel('verify_email'); ?>
+							<?php echo $eform->getInput('verify_email'); ?>
+							<?php echo $eform->getLabel('verify_email'); ?>
 						</div>
 					</div>
 
-					<?php $this->enquiry_form->setFieldAttribute('mobile_country_id', 'required', true); ?>
-					<?php $this->enquiry_form->setFieldAttribute('mobile', 'required', true); ?>
+					<?php $eform->setFieldAttribute('mobile_country_id', 'required', true); ?>
+					<?php $eform->setFieldAttribute('mobile', 'required', true); ?>
 					<div class="small-7 cell">
 						<div class="form-floating-label">
-							<?php echo $this->enquiry_form->getLabel('mobile_country_id'); ?>
-							<?php echo $this->enquiry_form->getInput('mobile_country_id'); ?>
+							<?php echo $eform->getLabel('mobile_country_id'); ?>
+							<?php echo $eform->getInput('mobile_country_id'); ?>
 						</div>
 					</div>
 					<div class="small-5 cell">
 						<div class="form-floating-label">
-							<?php echo $this->enquiry_form->getInput('mobile'); ?>
-							<?php echo $this->enquiry_form->getLabel('mobile'); ?>
+							<?php echo $eform->getInput('mobile'); ?>
+							<?php echo $eform->getLabel('mobile'); ?>
 						</div>
 					</div>
 
 					<div class="small-12 cell">
 						<div class="form-floating-label">
-							<?php echo $this->enquiry_form->getInput('address1'); ?>
-							<?php echo $this->enquiry_form->getLabel('address1'); ?>
+							<?php echo $eform->getInput('address1'); ?>
+							<?php echo $eform->getLabel('address1'); ?>
 						</div>
 					</div>
 					<div class="small-12 cell">
 						<div class="form-floating-label">
-							<?php echo $this->enquiry_form->getInput('address2'); ?>
-							<?php echo $this->enquiry_form->getLabel('address2'); ?>
+							<?php echo $eform->getInput('address2'); ?>
+							<?php echo $eform->getLabel('address2'); ?>
 						</div>
 					</div>
 					<div class="small-12 cell">
 						<div class="form-floating-label">
-							<?php echo $this->enquiry_form->getInput('town'); ?>
-							<?php echo $this->enquiry_form->getLabel('town'); ?>
+							<?php echo $eform->getInput('town'); ?>
+							<?php echo $eform->getLabel('town'); ?>
 						</div>
 					</div>
 					<div class="small-12 cell">
 						<div class="form-floating-label">
-							<?php echo $this->enquiry_form->getInput('postcode'); ?>
-							<?php echo $this->enquiry_form->getLabel('postcode'); ?>
+							<?php echo $eform->getInput('postcode'); ?>
+							<?php echo $eform->getLabel('postcode'); ?>
 						</div>
 					</div>
 					<div class="small-12 cell">
 						<div class="form-floating-label">
-							<?php echo $this->enquiry_form->getLabel('country_id'); ?>
-							<?php echo $this->enquiry_form->getInput('country_id'); ?>
+							<?php echo $eform->getLabel('country_id'); ?>
+							<?php echo $eform->getInput('country_id'); ?>
 						</div>
 					</div>
 					<div class="small-12 cell">
 						<div class="form-floating-label">
-							<?php echo $this->enquiry_form->getLabel('region_id'); ?>
-							<?php echo $this->enquiry_form->getInput('region_id'); ?>
+							<?php echo $eform->getLabel('region_id'); ?>
+							<?php echo $eform->getInput('region_id'); ?>
 						</div>
 					</div>
 				</div>
@@ -150,9 +153,9 @@ use HighlandVision\KR\Framework\KrMethods;
 			<fieldset>
 				<div class="grid-x grid-margin-x  align-center">
 					<div class="small-12 cell text-center">
-						<?php echo $this->enquiry_form->getLabel('grecaptcha'); ?>
+						<?php echo $eform->getLabel('grecaptcha'); ?>
 						<div id="recaptcha-container">
-							<?php echo $this->enquiry_form->getInput('grecaptcha'); ?>
+							<?php echo $eform->getInput('grecaptcha'); ?>
 						</div>
 					</div>
 					<div class="small-12 cell text-center" style="margin-top:2rem;margin-bottom:0;">
@@ -166,7 +169,7 @@ use HighlandVision\KR\Framework\KrMethods;
 			<input type="hidden" name="task" value="enquiry.submit">
 			<input type="hidden" name="jform[property_id]" value="<?php echo $this->item->id; ?>">
 			<input type="hidden" name="jform[black_booking]" value="0">
-			<?php echo JHtml::_('form.token'); ?>
+			<?php echo HTMLHelper::_('form.token'); ?>
 		</form>
 	</div>
 </div>

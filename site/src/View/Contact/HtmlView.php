@@ -70,24 +70,25 @@ class HtmlView extends KrHtmlView\Site
 	protected function prepareDocument(): void
 	{
 		$this->prepareDefaultDocument($this->meta_title, $this->meta_description);
-		$this->setMyPathway();
+		$this->setPathway();
 	}
 
 	/**
-	 * Set the pathway for the property
+	 * Set the pathway for the enquiry
 	 *
 	 * @throws Exception
 	 * @since 3.3.0
 	 */
-	protected function setMyPathway(): void
+	protected function setPathway(): void
 	{
 		$searchSession = new KrSession\Search();
 		$searchData    = $searchSession->getData();
-		if (count($searchData->baseIds) && $this->property_id) {
-			$pathway = HtmlView::propertiesPathway($pathway, $searchData);
-			$pathway = self::propertyPathway($pathway, $this->property_id, $this->property_name);
-		} else if ($this->property_id) {
-			$pathway = self::propertyPathway($pathway, $this->property_id, $this->property_name);
+
+		$pathway = self::setPathwayBase();
+		$pathway = self::propertiesPathway($pathway, $searchData);
+
+		if (!empty($this->property_name)) {
+			$pathway->addItem($this->property_name);
 		}
 
 		$pathway->addItem(KrMethods::plain('COM_KNOWRES_CONTACT_TITLE'));

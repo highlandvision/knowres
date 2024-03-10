@@ -41,11 +41,9 @@ class HtmlView extends KrHtmlView\Site
 	public string $arrival = '';
 	/** @var string Backlink to search results. */
 	public string $backlink = '';
-	/** @var array Bedtypes for this property */
-	public array $bedtypes = [];
 	/** @var int Property booking type. */
 	public int $booking_type = 0;
-	/** @var string Contact link to enquiry form. */
+	/** @var string Link to contact form. */
 	public string $contactlink = '';
 	/** @var array Currency setting for all properties. */
 	public array $currencies = [];
@@ -131,7 +129,9 @@ class HtmlView extends KrHtmlView\Site
 		$this->contactlink =
 			KrMethods::route('index.php?option=com_knowres&view=contact&id=' . $this->item->id . '&Itemid=' . $Itemid);
 
-		if (is_countable($this->searchData->baseIds) && count($this->searchData->baseIds)) {
+		if (is_countable($this->searchData->baseIds)
+			&& count($this->searchData->baseIds)
+			&& $this->searchData->region_id == $this->item->region_id) {
 			$Itemid = SiteHelper::getItemId('com_knowres', 'properties', [
 				'layout'    => 'search',
 				'region_id' => $this->item->region_id
@@ -211,13 +211,11 @@ class HtmlView extends KrHtmlView\Site
 			$contractData->arrival   = $this->arrival;
 			$contractData->departure = $this->departure;
 			$contractData->guests    = $this->guests;
-		}
-		else if ($contractData->arrival) {
+		} else if ($contractData->arrival) {
 			$this->arrival   = $contractData->arrival;
 			$this->departure = $contractData->departure;
 			$this->guests    = $contractData->guests;
-		}
-		else if ($this->searchData->arrival) {
+		} else if ($this->searchData->arrival) {
 			$this->arrival   = $this->searchData->arrival;
 			$this->departure = $this->searchData->departure;
 			$this->guests    = $this->searchData->guests;
@@ -251,9 +249,9 @@ class HtmlView extends KrHtmlView\Site
 	protected function redirectToSearch(): void
 	{
 		$Itemid = SiteHelper::getItemId('com_knowres', 'properties', [
-			'layout'    => 'search',
+			'layout' => 'search',
 		]);
-		$link = 'index.php?Itemid=' . $Itemid . '&retain=1';
+		$link   = 'index.php?Itemid=' . $Itemid . '&retain=1';
 
 		if (isset($this->item->state) && $this->item->state != 1) {
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_UNPUBLISHED_PROPERTY'));
@@ -271,6 +269,7 @@ class HtmlView extends KrHtmlView\Site
 	protected function setDisplayData(): void
 	{
 		$this->fields = KrFactory::getListModel('propertyfields')->getAllPropertyFields();
+
 		if (is_countable($this->item->property_alternatives) && count($this->item->property_alternatives)) {
 			$this->alternatives = KrFactory::getListSiteModel('properties')
 			                               ->getMinMaxRates($this->item->property_alternatives);
@@ -278,6 +277,7 @@ class HtmlView extends KrHtmlView\Site
 				KrFactory::getAdminModel('property')->setPropertyFields($a, $this->fields);
 			}
 		}
+
 		if (is_countable($this->item->property_units) && count($this->item->property_units)) {
 			$this->units = KrFactory::getListSiteModel('properties')->getMinMaxRates($this->item->property_units);
 			foreach ($this->units as $a) {
@@ -297,10 +297,6 @@ class HtmlView extends KrHtmlView\Site
 		$region = KrFactory::getAdminModel('region')->getItem($this->item->region_id);
 		if (!empty($region->id)) {
 			$this->map_zoom = $region->map_zoom;
-		}
-
-		if (is_countable($this->item->bed_types) && count($this->item->bed_types)) {
-			$this->bedtypes = KrFactory::getListModel('bedtypes')->getAll();
 		}
 
 		$this->features = [];

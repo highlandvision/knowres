@@ -241,7 +241,7 @@ class PropertyModel extends AdminModel
 				if (!KrMethods::isAdmin() && $f->format == 2) {
 					$item->{$name} = Utility::nl2p($item->{$name});
 				}
-
+				$item->buttons ="true";
 				$hvar          = 'h' . $name;
 				$item->{$hvar} = $label;
 			}
@@ -393,6 +393,7 @@ class PropertyModel extends AdminModel
 				else if ($f->format == 3) {
 					$fieldXml->addAttribute('type', 'editor');
 					$fieldXml->addAttribute('filter', 'safehtml');
+					$fieldXml->addAttribute('buttons', 'true');
 				}
 
 				$form->setField($fieldXml, null, true, $tab);

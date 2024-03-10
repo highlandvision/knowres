@@ -13,13 +13,11 @@ use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Utility;
 use Joomla\CMS\HTML\HTMLHelper;
 
-if ($this->item->lat && $this->item->lng)
-{
-	HTMLHelper::script(Utility::getGmapsURL(), [], ['async' => 'async', 'defer' => 'defer']);
+if ($this->item->lat && $this->item->lng) {
+	HTMLHelper::script(trim(Utility::getGmapsURL()), [], ['async' => 'async', 'defer' => 'defer']);
 }
 
-if ((int) $this->settings['display_calendar'])
-{
+if ((int) $this->settings['display_calendar']) {
 	$style = 'table.legend tr td div {box-sizing: border-box}'
 		. 'table.amonth tr td div.bookme, table.legend tr td div.bookme {' . 'border-top-color:'
 		. $this->params->get('calendar_available') . ';' . 'border-left-color:'

@@ -28,9 +28,9 @@ $Translations = new Translations();
 			<?php continue; ?>
 		<?php endif; ?>
 
-		<h6><?php echo $r->name; ?></h6>
+		<h3 class="header"><?php echo $r->name; ?></h3>
 		<?php if ($r->description && $r->name != $r->description): ?>
-			<?php echo '<p class="small">' . $r->description . '</p>'; ?>
+			<?php echo '<p>' . $r->description . '</p>'; ?>
 		<?php endif; ?>
 		<?php $data = Utility::decodeJson($r->features); ?>
 		<?php $string = ''; ?>

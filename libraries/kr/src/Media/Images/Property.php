@@ -82,57 +82,6 @@ class Property extends Images
 	}
 
 	/**
-	 * Resize thumb and main images from original uploaded image
-	 *
-	 * @throws Exception
-	 * @since  4.0.0
-	 */
-	public function resize(): void
-	{
-		$quality = $this->params->get('max_upload_quality');
-		$source  = $this->original_path . $this->name;
-
-		if ($this->type == 'slideshow')
-		{
-			$target = $this->upload_path . $this->name;
-			$width  = $this->params->get('max_slideshow_width');
-			$height = $this->params->get('max_slideshow_height');
-			self::resizeImage($source, $target, $width, $height, $quality);
-
-			$target = $this->thumb_path . $this->name;
-			$width  = $this->params->get('max_slideshow_thumb_width');
-			$height = $this->params->get('max_slideshow_thumb_height');
-		}
-		else
-		{
-			$target = $this->solo_path . $this->name;
-			$width  = $this->params->get('max_property_width');
-			$height = $this->params->get('max_property_height');
-		}
-
-		self::resizeImage($source, $target, $width, $height, $quality);
-	}
-
-	/**
-	 * Delete any images in upload path
-	 *
-	 * @since  4.0.0
-	 */
-	protected function deleteExisting(): void
-	{
-		$path = $this->upload_path . "*.{jpg,gif,png,JPG,GIF,PNG}";
-		if ($this->type == 'solo')
-		{
-			$path = $this->solo_path . "*.{jpg,gif,png,JPG,GIF,PNG}";
-		}
-		$files = glob($path, GLOB_BRACE);
-		foreach ($files as $file)
-		{
-			unlink($file);
-		}
-	}
-
-	/**
 	 * Process the original uploaded file
 	 *
 	 * @throws Exception
@@ -152,29 +101,83 @@ class Property extends Images
 	 */
 	public function processOriginal(): void
 	{
-		if (!move_uploaded_file($this->tmp_name, $this->original_path. $this->name))
-		{
+		if (!move_uploaded_file($this->tmp_name, $this->original_path . $this->name)) {
 			throw new RuntimeException(KrMethods::plain("Uploaded file $this->name could not be moved"));
 		}
 	}
 
 	/**
+	 * Resize thumb and main images from original uploaded image
+	 *
+	 * @throws Exception
+	 * @since  4.0.0
+	 */
+	public function resize(): void
+	{
+		$quality = $this->params->get('max_upload_quality');
+		$source  = $this->original_path . $this->name;
+
+		if ($this->type == 'slideshow') {
+			$orientation = 'landscape';
+			if (!$this->params->get('crop_slideshow', 1)) {
+				list ($width, $height) = getimagesize($source);
+				$orientation = $width > $height ? 'landscape' : 'portrait';
+			}
+
+			$target = $this->upload_path . $this->name;
+			$height = $this->params->get('max_slideshow_height');
+			if ($orientation == 'landscape') {
+				$width  = $this->params->get('max_slideshow_width');
+			} else {
+				$width  = $this->params->get('max_slideshow_width') / 2;
+			}
+			self::resizeImage($source, $target, $width, $height, $quality);
+
+			$target = $this->thumb_path . $this->name;
+			$width  = $this->params->get('max_slideshow_thumb_width');
+			$height = $this->params->get('max_slideshow_thumb_height');
+		} else {
+			$target = $this->solo_path . $this->name;
+			$width  = $this->params->get('max_property_width');
+			$height = $this->params->get('max_property_height');
+		}
+
+		self::resizeImage($source, $target, $width, $height, $quality);
+	}
+
+	/**
 	 * Set type
 	 *
-	 * @param $type
+	 * @param string $type Image type
 	 *
 	 * @throws InvalidArgumentException
 	 * @since  1.0.0
 	 * @return void
 	 */
-	public function setType($type): void
+	public function setType(string $type): void
 	{
-		if ($type != 'slideshow' && $type != 'solo')
-		{
+		if ($type != 'slideshow' && $type != 'solo') {
 			throw new InvalidArgumentException('$type must be entered and contain slideshow or solo');
 		}
 
 		$this->type = $type;
+	}
+
+	/**
+	 * Delete any images in upload path
+	 *
+	 * @since  4.0.0
+	 */
+	protected function deleteExisting(): void
+	{
+		$path = $this->upload_path . "*.{jpg,gif,png,JPG,GIF,PNG}";
+		if ($this->type == 'solo') {
+			$path = $this->solo_path . "*.{jpg,gif,png,JPG,GIF,PNG}";
+		}
+		$files = glob($path, GLOB_BRACE);
+		foreach ($files as $file) {
+			unlink($file);
+		}
 	}
 
 	/**
@@ -202,8 +205,7 @@ class Property extends Images
 	 */
 	protected function setId($id): void
 	{
-		if (!is_numeric($id) || !$id)
-		{
+		if (!is_numeric($id) || !$id) {
 			throw new InvalidArgumentException('$id should consist of numbers only and should not be zero');
 		}
 
@@ -223,15 +225,10 @@ class Property extends Images
 		$path[] = 'images';
 		$path[] = $this->params->get('image_path', 'krgallery');
 
-		if ($this->params->get('image_folder'))
-		{
+		$folder = $this->id;
+		if ($this->params->get('image_folder')) {
 			$folder = Utility::makeFolderName($this->property_name);
 		}
-		else
-		{
-			$folder = $this->id;
-		}
-
 		$path[] = $folder;
 
 		$this->upload_path   = JPATH_SITE . '/' . implode('/', $path) . '/';

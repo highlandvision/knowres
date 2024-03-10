@@ -14,7 +14,7 @@ use HighlandVision\KR\Framework\KrMethods;
 
 <div class="kr-searchbar grid-x">
 	<div class="small-12 medium-8 cell">
-		<div class="small button-group">
+		<div class="small custom button-group">
 			<button type="button" class="button sort left-off-canvas-toggle"
 			        data-toggle="kr-offcanvas-properties-sortby" id="sortby"
 			        title="<?php echo KrMethods::plain('COM_KNOWRES_SORT_LIST'); ?>"
@@ -41,7 +41,7 @@ use HighlandVision\KR\Framework\KrMethods;
 				<a class="button getResponseSearch list" data-bar="list"
 				   title="<?php echo $text; ?>"
 				   aria-label="<?php echo $text; ?>">
-					<i class='fa-solid fa-th-list'></i>
+					<i class="fa-solid fa-th-list"></i>
 					<span class="show-for-large">
 						<?php echo $text; ?>
 					</span>
@@ -52,7 +52,7 @@ use HighlandVision\KR\Framework\KrMethods;
 				<a class="button getResponseSearch thumb" data-bar="thumb"
 				   title="<?php echo KrMethods::plain('COM_KNOWRES_VIEW_THUMB'); ?>"
 				   aria-label="<?php echo KrMethods::plain('COM_KNOWRES_VIEW_THUMB'); ?>">
-					<i class='fa-solid fa-table-cells'></i>
+					<i class="fa-solid fa-table-cells"></i>
 					<span class="show-for-large">
 						<?php echo KrMethods::plain('COM_KNOWRES_VIEW_THUMB'); ?>
 					</span>
@@ -86,7 +86,7 @@ use HighlandVision\KR\Framework\KrMethods;
 			        data-toggle="kr-offcanvas-properties-filter"
 			        title="<?php echo KrMethods::plain('COM_KNOWRES_FILTER'); ?>"
 			        aria-label="<?php echo KrMethods::plain('COM_KNOWRES_FILTER'); ?>">
-				<i class='fa-solid fa-filter'></i>
+				<i class="fa-solid fa-filter"></i>
 				<span class="show-for-large">
 					&nbsp;<?php echo KrMethods::plain('COM_KNOWRES_FILTER'); ?>
 				</span>

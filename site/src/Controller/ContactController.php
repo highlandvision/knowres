@@ -12,7 +12,7 @@ namespace HighlandVision\Component\Knowres\Site\Controller;
 defined('_JEXEC') or die;
 
 use Exception;
-use HighlandVision\KR\Email\EnquiryEmail;
+use HighlandVision\KR\Email\ContactEmail;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\SiteHelper;
@@ -28,7 +28,7 @@ use ReCaptcha\ReCaptcha;
 use RuntimeException;
 
 /**
- * Contact form controller
+ * Contact controller - sends email enquiry only no contract
  *
  * @since   1.0.0
  */
@@ -48,8 +48,7 @@ class ContactController extends FormController
 		$id = KrMethods::inputInt('id');
 		if ($id) {
 			KrMethods::redirect(SiteHelper::buildPropertyLink($id));
-		}
-		else {
+		} else {
 			$Itemid = SiteHelper::getItemId('com_knowres', 'properties');
 			KrMethods::redirect(KrMethods::route('index.php?Itemid=' . $Itemid, false));
 		}
@@ -68,7 +67,7 @@ class ContactController extends FormController
 	 * @return BaseDatabaseModel
 	 */
 	public function getModel($name = 'contact', $prefix = 'Site',
-		$config = ['ignore_request' => true]): BaseDatabaseModel
+	                         $config = ['ignore_request' => true]): BaseDatabaseModel
 	{
 		return parent::getModel($name, $prefix, $config);
 	}
@@ -138,8 +137,7 @@ class ContactController extends FormController
 		$gresponse = $this->input->post->getString('g-recaptcha-response', '');
 		if (!$gresponse) {
 			$errors[] = KrMethods::plain('Please complete the ReCaptcha entry box');
-		}
-		else {
+		} else {
 			$recaptcha = new ReCaptcha($params->get('grsecretkey'));
 			$resp      = $recaptcha->verify($gresponse, $_SERVER['REMOTE_ADDR']);
 			if (!$resp->isSuccess()) {
@@ -172,8 +170,7 @@ class ContactController extends FormController
 			if ($day) {
 				$arrival = $year . '-' . $month . '-' . $day;
 				$arrival = TickTock::displayDate($arrival);
-			}
-			else {
+			} else {
 				$arrival = $year . '-' . $month;
 				$arrival = TickTock::parseString($arrival, 'F Y');
 			}
@@ -195,7 +192,7 @@ class ContactController extends FormController
 		$input['PROPERTYNAME'] = "--";
 		$input['LOCATION']     = $data['region'];
 
-		$email = new EnquiryEmail('BOOKENQUIRY');
+		$email = new ContactEmail('BOOKENQUIRY');
 		$email->sendTheEmails($id, $input);
 	}
 }

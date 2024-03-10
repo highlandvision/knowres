@@ -41,6 +41,8 @@ class HtmlView extends KrHtmlView\Site
 	public Registry $params;
 	/** @var Search Site search */
 	protected Search $Search;
+	/** @var string Category Blurb */
+	protected string $blurb = '';
 	/** @var int Category ID */
 	protected int $category_id = 0;
 	/** @var array Property currencies */
@@ -104,6 +106,7 @@ class HtmlView extends KrHtmlView\Site
 				$searchData->layout      = $layout;
 				$searchData->category_id = $this->category_id;
 				$description             = $category->name;
+				$this->blurb             = $category->blurb;
 				$this->meta_title        = KrMethods::sprintf('COM_KNOWRES_BROWSE_CATEGORY', $category->name);
 				$this->meta_description  = KrMethods::sprintf('COM_KNOWRES_BROWSE_CATEGORY_DSC', $category->name);
 			} elseif ($layout === 'new') {
@@ -139,13 +142,14 @@ class HtmlView extends KrHtmlView\Site
 			$description = $this->setSearchDescription();
 		}
 
-		$this->header =
- 		KrMethods::sprintf('COM_KNOWRES_SEARCH_HEADER_X', $description);
+//		$this->header =	KrMethods::sprintf('COM_KNOWRES_SEARCH_HEADER', $description, count($this->Search->searchData->baseIds));
+		$this->header = KrMethods::sprintf('COM_KNOWRES_SEARCH_HEADER_X', $description);
 
 		if ($this->params->get('search_list', 0)) {
 			$this->layouts['list'] = true;
 		}
-		if ($this->params->get('search_thumb', 0) && $layout == 'default') {
+		//TODO-v43 Tidy up thumb view
+		if ($this->params->get('search_thumb', 0)) {
 			$this->layouts['thumb'] = true;
 		}
 

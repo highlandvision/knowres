@@ -11,7 +11,7 @@ defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrMethods;
 
-$tadults   = KrMethods::sprintf('MOD_KNOWRES_SEARCH_ADULTS');
+$tadults   = KrMethods::plain('MOD_KNOWRES_SEARCH_ADULTS');
 $tchildren = KrMethods::plain('MOD_KNOWRES_SEARCH_PLURAL_CHILDREN');
 $tchild    = KrMethods::plain('MOD_KNOWRES_SEARCH_PLURAL_CHILDREN_1');
 

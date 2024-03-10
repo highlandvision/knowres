@@ -61,7 +61,7 @@ class PropertyController extends FormController
 		$response        = [];
 		$key             = KrMethods::getParams()->get('gmapkey', '');
 		$address         = urlencode($address);
-		$url             = 'https://maps.googleapis.com/maps/api/geocode/json?address=' . $address . '&key=' . $key;
+		$url             = 'https://maps.googleapis.com/maps/api/geocode/json?v=3.55&address=' . $address . '&key=' . $key . '&loading=async&callback=initMap';
 		$geocodeResponse = Utility::decodeJson(file_get_contents($url));
 		if ($geocodeResponse->status == 'OK') {
 			foreach ($geocodeResponse->results as $result) {

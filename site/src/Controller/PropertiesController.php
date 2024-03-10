@@ -105,7 +105,7 @@ class PropertiesController extends BaseController
 		try {
 			if ($pid) {
 				$item      = KrFactory::getAdminModel('property')->getItem($pid);
-				$region_id = [$item->region_id];
+				$region_id = $item->region_id;
 
 				if ((float) $item->lat && (float) $item->lng) {
 					$property_markers[] = $this->setMarker($item, 'solo');
@@ -259,9 +259,14 @@ class PropertiesController extends BaseController
 		}
 
 		$Itemid = SiteHelper::getItemId('com_knowres', 'properties', ['layout' => 'search']);
-		$route = KrMethods::route('index.php?option=com_knowres&view=properties&region_id=' .
-		                          $region_id . '&Itemid=' . $Itemid .
-		                          '&' . rawurlencode(http_build_query($input)), false);
+		$route  = KrMethods::route('index.php?option=com_knowres&view=properties&' .
+		                           'region_id=' .
+		                           $region_id .
+		                           '&Itemid=' .
+		                           $Itemid .
+		                           '&' .
+		                           rawurlencode(http_build_query($input)),
+		                           false);
 
 		KrMethods::redirect($route);
 	}
@@ -343,13 +348,13 @@ class PropertiesController extends BaseController
 	/**
 	 * Find and set the map markers
 	 *
-	 * @param  array  $region_id  ID of region
+	 * @param  int  $region_id  ID of region
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
 	 * @return array
 	 */
-	protected function setMapMarkers(array $region_id): array
+	protected function setMapMarkers(int $region_id): array
 	{
 		$markers = [];
 
@@ -361,14 +366,12 @@ class PropertiesController extends BaseController
 			 'defaultgroup' => 'com_knowres_map'
 			];
 
-		$cache = KrMethods::getCache($cache_options);
-		foreach ($region_id as $id) {
-			$cache_markers = $cache->get($id);
-			if ($cache_markers) {
-				$markers = array_merge($markers, Utility::decodeJson($cache_markers, true));
-			} else {
-				$markers = array_merge($markers, $this->getMapMarkers($id, $cache));
-			}
+		$cache         = KrMethods::getCache($cache_options);
+		$cache_markers = $cache->get($id);
+		if ($cache_markers) {
+			$markers = array_merge($markers, Utility::decodeJson($cache_markers, true));
+		} else {
+			$markers = array_merge($markers, $this->getMapMarkers($region_id, $cache));
 		}
 
 		return $markers;
@@ -390,7 +393,7 @@ class PropertiesController extends BaseController
 		$tmp['lat']     = (float) $item->lat;
 		$tmp['lng']     = (float) $item->lng;
 		$tmp['boxinfo'] = $item->id;
-		$tmp['icon']    = KrMethods::getRoot() . KrMethods::route('images/krmap/property.png');
+		$tmp['icon']    = KrMethods::getRoot() . KrMethods::route('media/com_knowres/images/property.png');
 		$tmp['id']      = 'kr-property-' . $item->id;
 		$tmp['pid']     = $item->id;
 

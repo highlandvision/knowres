@@ -17,9 +17,5 @@ $action = 'index.php';
 	<input type="hidden" name="view" value="property">
 	<input type="hidden" name="Itemid" value="<?php echo $Itemid; ?>">
 
-	<div class="grid-x grid-margin-x collapse">
-		<div class="small-12 cell">
-			<?php echo $property_select; ?>
-		</div>
-	</div>
+	<?php echo $property_select; ?>
 </form>

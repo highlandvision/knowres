@@ -15,17 +15,16 @@ use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Media;
 use HighlandVision\KR\SiteHelper;
 use Joomla\CMS\HTML\HTMLHelper;
-
 ?>
 
-<?php foreach ($this->units as $unit): ?>
-	<div class="grid-x grid-margin-x ">
+<div class="grid-x grid-margin-x">
+	<?php foreach ($this->units as $unit): ?>
 		<?php
 		$plink = SiteHelper::buildPropertyLink($unit->id);
 		$image = Media\Images::getPropertyImageName($unit->id);
 		?>
 
-		<div class="small-12 medium-6 cell">
+		<div class="small-12 medium-6 large-4 cell">
 			<a href="<?php echo $plink; ?>" title="">
 				<?php echo HTMLHelper::_('image',
 				                         Media\Images::getImagePath($unit->id, 'solo', $image),
@@ -37,14 +36,11 @@ use Joomla\CMS\HTML\HTMLHelper;
 				                         ]);
 				?>
 			</a>
-		</div>
-		<div class="small-12 medium-6 cell">
-			<h4>
+			<h5 class="no-margin-bottom">
 				<a href="<?php echo $plink; ?>" title="<?php echo $unit->property_name; ?>">
 					<?php echo $unit->property_name; ?>
 				</a>
-			</h4>
-
+			</h5>
 			<p>
 				<strong><?php echo KrMethods::plain("COM_KNOWRES_COLON_BEDROOMS"); ?></strong>
 				<?php echo $unit->bedrooms; ?>
@@ -55,5 +51,5 @@ use Joomla\CMS\HTML\HTMLHelper;
 				<?php endif; ?>
 			</p>
 		</div>
-	</div>
-<?php endforeach; ?>
+	<?php endforeach; ?>
+</div>

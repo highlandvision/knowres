@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 $counter = 0;
 ?>
 
-<div class="calendar-month text-center">
+<div class="calendar-month">
 	<?php while ($counter < $this->months_to_show) : ?>
 		<?php
 		echo $this->loadTemplate('month');

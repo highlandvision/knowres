@@ -23,12 +23,12 @@ use HighlandVision\KR\Framework\KrMethods;
 		</a>
 	</li>
 	<li class="tabs-title" role="presentation">
-		<a href="#details" data-tabs-target="details"
-		   aria-label="<?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_DETAILS"); ?>">
+		<a href="#facilities" data-tabs-target="facilities"
+		   aria-label="<?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_FACILITIES"); ?>">
 			<i class='fa-solid fa-info-circle fa-lg hide-for-medium'></i>
 			<span class="show-for-medium">
-		<?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_DETAILS"); ?>
-	</span>
+				<?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_FACILITIES"); ?>
+			</span>
 		</a>
 	</li>
 	<li class="tabs-title" role="presentation">
@@ -58,8 +58,8 @@ use HighlandVision\KR\Framework\KrMethods;
 			   aria-label="<?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_AVAILABILITY_PRICE"); ?>">
 				<i class='fa-solid fa-calendar-alt fa-lg hide-for-medium'></i>
 				<span class="show-for-medium">
-			<?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_AVAILABILITY_PRICE"); ?>
-		</span>
+					<?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_AVAILABILITY_PRICE"); ?>
+				</span>
 			</a>
 		</li>
 	<?php endif; ?>
@@ -105,35 +105,9 @@ use HighlandVision\KR\Framework\KrMethods;
 <div class="tabs-content" data-tabs-content="kr-property-tabs">
 	<div class="tabs-panel is-active" id="overview">
 		<?php echo $this->loadTemplate('overview'); ?>
-		<!--  Amenities -->
-		<?php if (!empty($this->features) && count($this->features)): ?>
-			<h3 class="header"><?php echo KrMethods::plain('COM_KNOWRES_PROPERTY_TAB_AMENITIES'); ?></h3>
-			<div class="rooms">
-				<?php echo KrMethods::render('property.features', ['features' => $this->features]); ?>
-			</div>
-		<?php endif; ?>
 	</div>
-	<div class="tabs-panel" id="details">
-		<!--  Rooms -->
-		<?php if (!empty($this->rooms) && count($this->rooms)): ?>
-			<h3 class="header" style="margin-top:0;">
-				<?php echo KrMethods::plain('COM_KNOWRES_PROPERTY_TAB_ROOMS');?>
-			</h3>
-			<div class="rooms">
-				<?php echo KrMethods::render('property.rooms', ['rooms' => $this->rooms]); ?>
-			</div>
-		<?php endif; ?>
-		<!--  Text Fields -->
-		<?php foreach($this->fields as $pf): ?>
-			<?php if (!$pf->special && $pf->id > 1 ): ?>
-				<?php $label = 'hp' . $pf->id; ?>
-				<?php $field = 'p' . $pf->id; ?>
-				<?php if (!empty(strip_tags($this->item->{$field}))): ?>
-					<h3 class="header"><?php echo $this->item->{$label}; ?></h3>
-					<?php echo $this->item->{$field}; ?>
-				<?php endif; ?>
-			<?php endif; ?>
-		<?php endforeach; ?>
+	<div class="tabs-panel" id="facilities">
+		<?php echo $this->loadTemplate('facilities'); ?>
 	</div>
 	<div class="tabs-panel" id="phototour">
 		<?php echo $this->loadTemplate('phototour'); ?>

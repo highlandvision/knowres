@@ -12,29 +12,25 @@ defined('_JEXEC') or die;
 use HighlandVision\KR\Framework\KrMethods;
 ?>
 
-<div class="kr-carousel">
-	<?php if ($params->get('url', '')) : ?>
-		<a href="<?php echo KrMethods::route('index.php?Itemid=' . $params->get('url')); ?>" title="<?php echo ''; ?>">
-	<?php endif; ?>
+<?php if ($params->get('url', '')) : ?>
+	<a href="<?php echo KrMethods::route('index.php?Itemid=' . $params->get('url')); ?>" title="<?php echo ''; ?>">
+<?php endif; ?>
 
-	<div class="kr-slick"
-	     data-slick='{"autoplaySpeed": <?php echo $params->get('autoPlaySpeed', '5000'); ?>,"speed": <?php echo $params->get('speed', '50'); ?>}'>
-
-		<?php foreach ($images as $i): ?>
-			<?php
-			$options = [
-				'src'    => $i['image'],
-				'alt'    => $i['alt'],
-				'class'  => 'th responsive',
-				'width'  => '100%',
-				'height' => 'auto'
-			];
-			echo KrMethods::render('joomla.html.image', $options);
-			?>
-		<?php endforeach; ?>
-	</div>
-
-	<?php if ($params->get('url', '')) : ?>
-		</a>
-	<?php endif; ?>
+<div class="kr-carousel kr-slick" data-slick='{"autoplaySpeed": <?php echo $params->get('autoPlaySpeed', '5000'); ?>,"speed": <?php echo $params->get('speed', '50'); ?>}'>>
+	<?php foreach ($images as $i): ?>
+		<?php
+		$options = [
+			'src'    => $i['image'],
+			'alt'    => $i['alt'],
+			'class'  => 'th responsive',
+			'width'  => '100%',
+			'height' => 'auto'
+		];
+		echo KrMethods::render('joomla.html.image', $options);
+		?>
+	<?php endforeach; ?>
 </div>
+
+<?php if ($params->get('url', '')) : ?>
+	</a>
+<?php endif; ?>

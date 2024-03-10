@@ -16,8 +16,7 @@
 		<folder>tmpl</folder>
 	</files>
 	<config>
-		<fields name="params"
-			addfieldpath="administrator/components/com_knowres/models/fields">
+		<fields name="params" addfieldpath="administrator/components/com_knowres/models/fields">
 			<fieldset name="basic">
 				<field name="region1"
 					input_type="list"

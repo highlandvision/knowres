@@ -175,13 +175,13 @@ const lang = "en";
 				return function () {
 					infoWindow2.setContent(html);
 					infoWindow2.open(map, marker);
-				}
+				};
 			})(html));
 
 			google.maps.event.addListener(marker, 'mouseout', (function () {
 				return function () {
 					infoWindow2.close();
-				}
+				};
 			})());
 
 			google.maps.event.addListener(marker, 'closeclick', function () {
@@ -255,8 +255,8 @@ const lang = "en";
 						success: function (data) {
 							$('#kr-infowindow').fadeIn(400).html(data).show();
 							$(".kr-infowindow-slideshow").not('.slick-initialized').slick({
-								nextArrow: '<i class="slick-nav next fas fa-chevron-right "></i>',
-								prevArrow: '<i class="slick-nav prev fas fa-chevron-left "></i>',
+								nextArrow: '<i class="slick-nav next fa-solid fa-chevron-right "></i>',
+								prevArrow: '<i class="slick-nav prev fa-solid fa-chevron-left "></i>',
 								autoplay:  true
 							});
 						}
@@ -293,8 +293,8 @@ const lang = "en";
 			let self = this;
 			jQuery.ajax({
 				url:      '/index.php?option=com_knowres&task=properties.refreshmap&lang=' + lang,
-				type:     "POST",
-				dataType: "json",
+				type:     'POST',
+				dataType: 'json',
 				success:  function (result) {
 					if (result.success) {
 						self.settings.filterIds = result.data.filterIds;
@@ -315,7 +315,7 @@ const lang = "en";
 						google.maps.event.trigger(map, 'resize');
 						$mapmodal.foundation('open');
 					} else {
-						alert(result.message);
+						window.alert(result.message);
 					}
 				}
 			});
@@ -431,15 +431,14 @@ const lang = "en";
 		let $mapmodal;
 
 		$('body').on('click', '.map-trigger', function (e) {
-			e.preventDefault();
-			if (mapData) {
-				myKrmap.refreshMap($mapmodal);
-			} else {
-				kickMap($(this));
+ 			e.preventDefault();
+ 			if (mapData) {
+ 				myKrmap.refreshMap($mapmodal);
+ 			} else {
+ 				kickMap($(this));
 				$mapmodal = $('#kr-search-map-modal');
-				new Foundation.Reveal($mapmodal);
 				$mapmodal.foundation('open');
-			}
+ 			}
 		}).on('click', '.resetmap', function (e) {
 			e.preventDefault();
 			myKrmap.resetMap();
@@ -517,7 +516,7 @@ const lang = "en";
 						myKrmap = new Krmap(settings);
 						mapData = true;
 					} else {
-						alert(result.message);
+						window.alert(result.message);
 					}
 				}
 			});

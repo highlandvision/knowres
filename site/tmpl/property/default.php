@@ -21,23 +21,15 @@ $wa->useScript('com_knowres.site')
 <?php if ($this->item) : ?>
 	<div class="kr-property">
 		<?php if ($this->backlink): ?>
-			<a href="<?php echo $this->backlink ?>" class="show-for-large button backlink"
+			<a href="<?php echo $this->backlink ?>" class="show-for-large accent button hollow backlink"
 			   title="<?php echo KrMethods::plain('COM_KNOWRES_SEARCH_RESULTS'); ?>">
 				<i class='fa-solid fa-long-arrow-alt-left'>&nbsp;</i>
 				<?php echo KrMethods::plain('COM_KNOWRES_SEARCH_RESULTS'); ?>
 			</a>
 		<?php endif; ?>
 		<div class="grid-x grid-margin-x align-bottom">
-			<div class="small-12 medium-8 cell">
+			<div class="small-12 medium-12 cell">
 				<h1><?php echo $this->item->property_name . ' - ' . $this->item->region_name . ' / ' . $this->item->property_area; ?></h1>
-			</div>
-			<div class="show-for-medium medium-4 medium-text-left cell">
-				<div class="addthis_toolbox addthis_default_style addthis_32x32_style" style="float:right;">
-					<a class="addthis_button_facebook"></a>
-					<a class="addthis_button_twitter"></a>
-					<a class="addthis_button_pinterest_share"></a>
-					<a class="addthis_button_email"></a>
-				</div>
 			</div>
 		</div>
 		<div class="grid-x grid-margin-x slideshow-wrapper">
