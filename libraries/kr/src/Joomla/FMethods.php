@@ -423,7 +423,7 @@ class FMethods
 	 */
 	public static function inputFiles(string $name, array $default): array
 	{
-		return Factory::getApplication()->getInput()->get($name, $default, 'array');
+		return Factory::getApplication()->getInput()->get($name, $default, []);
 	}
 
 	/**

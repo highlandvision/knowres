@@ -33,9 +33,11 @@ use JetBrains\PhpStorm\NoReturn;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\MVC\View\ViewInterface;
 use Joomla\CMS\Response\JsonResponse;
+use Joomla\CMS\Session\Session;
 use RuntimeException;
 use stdClass;
 
+use function count;
 use function file_get_contents;
 use function jexit;
 use function trim;
@@ -355,23 +357,23 @@ class PropertyController extends FormController
 
 		$property_id = KrMethods::inputInt('id');
 		if (!$property_id) {
-			KrMethods::message(KrMethods::plain('COM_KNOWRES_PROPERTY_MEDIA_ERROR1'));
+			KrMethods::message(KrMethods::plain('Property not found, please try again!'));
 			Utility::goto('properties');
 		}
 
 		$this->setRedirect(KrMethods::route('index.php?option=com_knowres&view=media&id=' . $property_id, false));
 
-		$files    = KrMethods::inputFiles('jform');
-		$files    = $files['images'];
-		$name     = $files['image']['name'];
-		$tmp_name = $files['image']['tmp_name'];
-		$error    = $files['image']['error'];
-
+		$name     = $_FILES['image']['name'];
 		if (!$name) {
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_FORM_ERROR_PROPERTY_IMAGE'), 'error');
 
 			return;
 		}
+
+		$tmp_name = $_FILES['image']['tmp_name'];
+		$error    = $_FILES['image']['error'];
+		$size     = $_FILES['image']['size'];
+
 
 		$ImagesProperty = new Media\Images\Property($property_id, 'solo');
 		try {
@@ -389,7 +391,7 @@ class PropertyController extends FormController
 	 * Save the video field
 	 *
 	 * @throws Exception
-	 * @since        3.0.0
+	 * @since  3.0.0
 	 * @noinspection PhpUnused
 	 */
 	public function savevideo(): void

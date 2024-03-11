@@ -47,7 +47,7 @@ else
 						<?php echo KrMethods::plain('COM_KNOWRES_PROPERTY_IMAGE_UPLOAD_FORM_DSC'); ?>
 					</div>
 					<div class="controls" style="margin-top:10px;margin-bottom:10px;">
-						<input type='file' name="jform[images][image]" value="">
+						<input type='file' name="image" value="">
 					</div>
 				</div>
 				<button type="submit" class="btn btn-primary">
