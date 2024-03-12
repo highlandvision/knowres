@@ -118,15 +118,15 @@
             kickSlideshow();
         }
 
-        // $('.kr-carousel').slick({
-        //     arrows: false,
-        //     autoplay: true,
-        //     fade: true,
-        //     infinite: true,
-        //     lazyLoad: 'ondemand',
-        //     slidesToScroll: 1,
-        //     slidesToShow: 1
-        // });
+        $('.kr-carousel').slick({
+            arrows: false,
+            autoplay: true,
+            fade: true,
+            infinite: true,
+            lazyLoad: 'ondemand',
+            slidesToScroll: 1,
+            slidesToShow: 1
+        });
 
         $('.kr-featured').slick({
             appendArrows: '.kr-double-arrows',

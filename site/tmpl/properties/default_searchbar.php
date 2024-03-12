@@ -25,19 +25,8 @@ use HighlandVision\KR\Framework\KrMethods;
 				</span>
 			</button>
 
-<!--			<button type="button" class="button hide-for-large search"-->
-<!--			        data-toggle="kr-offcanvas-top-search" id="search"-->
-<!--			        title="--><?php //echo KrMethods::plain('COM_KNOWRES_SEARCH'); ?><!--"-->
-<!--			        aria-label="--><?php //echo KrMethods::plain('COM_KNOWRES_SEARCH'); ?><!--">-->
-<!--				<i class='fa-solid fa-search'></i>-->
-<!--			</button>-->
-
-			<?php if (isset($this->layouts['list'])): ?>
+			<?php if (isset($this->layouts['list']) && !$this->Search->searchData->layout): ?>
 				<?php $text =  KrMethods::plain('COM_KNOWRES_VIEW_LIST'); ?>
-<!--				--><?php //if ($this->Search->searchData->layout): ?>
-<!--					--><?php //$text =  KrMethods::plain('COM_KNOWRES_VIEW_BROWSE'); ?>
-<!--				--><?php //endif; ?>
-
 				<a class="button getResponseSearch list" data-bar="list"
 				   title="<?php echo $text; ?>"
 				   aria-label="<?php echo $text; ?>">

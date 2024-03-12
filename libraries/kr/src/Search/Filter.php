@@ -21,6 +21,7 @@ use stdClass;
 use function array_key_exists;
 use function array_pop;
 use function ceil;
+use function count;
 use function in_array;
 use function ksort;
 use function min;
@@ -116,6 +117,24 @@ class Filter
 			$this->setPriceRanges($this->searchData->rateNet, $this->searchData->currency);
 		}
 
+		$show_country = false;
+		if ($this->params->get('filter_area')) {
+			$distinct = KrFactory::getListModel('regions')->getDistinctRegions();
+			if (count($distinct) > 1) {
+				$cname = '';
+				foreach ($distinct as $r) {
+					if (empty($cname)) {
+						$cname = $r->country_name;
+					} else {
+						if ($cname != $r->country_name) {
+							$show_country = true;
+							break;
+						}
+					}
+				}
+			}
+		}
+
 		$this->searchData->filterArea     = [];
 		$this->searchData->filterBedrooms = [];
 		$this->searchData->filterBook     = [];
@@ -131,7 +150,7 @@ class Filter
 					continue;
 				}
 
-				$this->setFilterArea($item);
+				$this->setFilterArea($item, $show_country);
 				$this->setFilterBedrooms($item, $this->params->get('search_maxbedrooms', 6));
 				$this->setFilterBook($item);
 				$this->setFilterCategory($item);
@@ -260,17 +279,24 @@ class Filter
 	/**
 	 * Set area filter
 	 *
-	 * @param  mixed  $item  Property item.
+	 * @param  mixed  $item          Property item.
+	 * @param  bool   $show_country  True to display country name.
 	 *
 	 * @throws RuntimeException
 	 * @since  4.3.0
 	 */
-	private function setFilterArea(mixed $item): void
+	private function setFilterArea(mixed $item, bool $show_country): void
 	{
 		if ($this->params->get('filter_area')) {
 			$filter_this = $item->region_id . '^' . $item->property_area;
 			if (!array_key_exists($filter_this, $this->searchData->filterArea)) {
-				$text = $this->Translations->getText('region', $item->region_id) . ': ' . $item->property_area;
+				$text = '';
+				if ($show_country) {
+					$text = $this->Translations->getText('country', $item->country_id) . ', ';
+				}
+
+				$text .= $this->Translations->getText('region', $item->region_id) .
+					': ' . $item->property_area;
 				$this->searchData->filterArea[$filter_this] = [$filter_this, 0, 0, $text];
 			}
 		}
@@ -291,8 +317,7 @@ class Filter
 			if (!array_key_exists($filter_this, $this->searchData->filterBedrooms)) {
 				if ($filter_this == $max) {
 					$text = KrMethods::plural('COM_KNOWRES_BEDROOMS_COUNT', $max . '+');
-				}
-				else {
+				} else {
 					$text = KrMethods::plural('COM_KNOWRES_BEDROOMS_COUNT', $item->bedrooms);
 				}
 				$this->searchData->filterBedrooms[$filter_this] = [$filter_this, 0, 0, $text];
@@ -389,8 +414,7 @@ class Filter
 			if (!array_key_exists($filter_this, $this->searchData->filterPets)) {
 				if ($filter_this == 0) {
 					$text = KrMethods::plain('COM_KNOWRES_NO_PETS');
-				}
-				else {
+				} else {
 					$text = KrMethods::plural('COM_KNOWRES_PETS_COUNT', $item->pets);
 				}
 
@@ -470,8 +494,7 @@ class Filter
 			if ($p != $this->highval) {
 				$num_properties++;
 				$highest = $p;
-			}
-			else {
+			} else {
 				break;
 			}
 		}
@@ -483,11 +506,9 @@ class Filter
 		$levels = 5;
 		if ($spread < 30 || $num_properties < 3) {
 			$levels = 2;
-		}
-		else if ($spread < 40 || $num_properties < 4) {
+		} else if ($spread < 40 || $num_properties < 4) {
 			$levels = 3;
-		}
-		else if ($spread < 50 || $num_properties < 5) {
+		} else if ($spread < 50 || $num_properties < 5) {
 			$levels = 4;
 		}
 
@@ -515,8 +536,7 @@ class Filter
 		foreach ($ranges as $k => $r) {
 			if ($k == $this->highval) {
 				$text = KrMethods::plain('COM_KNOWRES_SEARCH_REQUEST');
-			}
-			else {
+			} else {
 				$text = Utility::displayValue($low, $currency, false);
 				$text .= ' - ';
 				$text .= Utility::displayValue($k, $currency, false);

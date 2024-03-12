@@ -104,7 +104,7 @@ class HtmlView extends KrHtmlView\Site
 				$category                = KrFactory::getAdminModel('category')->getItem($this->category_id);
 				$searchData->layout      = $layout;
 				$searchData->category_id = $this->category_id;
-				$description             = $category->name;
+				$description             = KrMethods::sprintf('COM_KNOWRES_VIEW_BROWSE', $category->name);
 				$this->blurb             = $category->blurb;
 				$this->meta_title        = KrMethods::sprintf('COM_KNOWRES_BROWSE_CATEGORY', $category->name);
 				$this->meta_description  = KrMethods::sprintf('COM_KNOWRES_BROWSE_CATEGORY_DSC', $category->name);

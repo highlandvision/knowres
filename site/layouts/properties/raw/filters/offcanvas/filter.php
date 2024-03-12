@@ -38,7 +38,7 @@ foreach ($data as $k => $v) {
 	<?php foreach ($data as $k => $v) : ?>
 		<?php $id = str_replace(' ', '-', $action); ?>
 		<?php $id .= ':' . $k; ?>
-		<li class="checkbox" <?php echo $none; ?>>
+		<li class="filter-item" <?php echo $none; ?>>
 			<?php if ($v[2]) : ?>
 				<input type="checkbox" class="checkover getResponseSearch" name="<?php echo $action; ?>"
 				       checked="checked" id="<?php echo $id; ?>" data-action="<?php echo $action; ?>"

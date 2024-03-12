@@ -121,7 +121,7 @@ let resized = false;
             $(this).removeClass('active');
         }).on('click', '.kr-filters ul.filter-sort-list li.head', function (e) {
             e.preventDefault();
-            $(this).parent().children('li.checkbox').toggle();
+            $(this).parent().children('li.filter-item').toggle();
             $(this).toggleClass('active');
         }).on('click', '#showgateways', function (e) {
             e.preventDefault();
@@ -260,9 +260,9 @@ let resized = false;
 
             $('.sidebar .kr-filters ul.filter-sort-list li.head').each(function () {
                 if ($(this).hasClass('active')) {
-                    $(this).parent().children('li.checkbox').show();
+                    $(this).parent().children('li.filter-item').show();
                 } else {
-                    $(this).parent().children('li.checkbox').hide();
+                    $(this).parent().children('li.filter-item').hide();
                 }
             });
 

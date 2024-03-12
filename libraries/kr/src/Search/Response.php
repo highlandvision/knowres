@@ -132,8 +132,8 @@ class Response
 	 * Set search data options for action fields
 	 *
 	 * @param  string  $bar           Menu bar selection
-	 * @param  string  $action        Action for filters or sort
-	 * @param  string  $action_value  Action value for filters or sort
+	 * @param  string  $action        Action filters or sort
+	 * @param  string  $action_value  Action value
 	 *
 	 * @throws Exception
 	 * @since        1.0.0
@@ -367,12 +367,10 @@ class Response
 				$this->searchData->ordercustom = "field ( a.id, " . $ids . ")";
 				break;
 			case '51':
-				$this->searchData->ordering  = 'property_area';
-				$this->searchData->direction = 'asc';
+				$this->searchData->ordercustom = 'country_name asc, region_name asc, property_area asc';
 				break;
 			case '52':
-				$this->searchData->ordering  = 'property_area';
-				$this->searchData->direction = 'desc';
+				$this->searchData->ordercustom = 'country_name desc, region_name desc, property_area desc';
 				break;
 			case '61':
 				$this->searchData->ordering  = 'rating';

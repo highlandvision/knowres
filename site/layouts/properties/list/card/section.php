@@ -49,9 +49,9 @@ extract($displayData);
 <?php endif; ?>
 
 <div class="info">
+	<?php echo Translations::getCountryName($item->country_id) . ','; ?>
+	<?php echo $item->region_name . ','; ?>
 	<?php echo strtoupper($item->property_area); ?>
-	<?php echo ', ' . $item->region_name . ', '; ?>
-	<?php echo Translations::getCountryName($item->country_id); ?>
 	<br>
 	<?php echo KrMethods::plain('COM_KNOWRES_SLEEPS'); ?>
 	<?php echo $item->sleeps; ?>

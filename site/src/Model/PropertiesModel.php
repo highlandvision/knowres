@@ -131,6 +131,9 @@ class PropertiesModel extends ListModel
 		             ' AND ' . $db->qn('r.state') . '=1' .
 		             ' AND ' . $db->qn('r.held') . '=0');
 
+		$query->select('(' . self::transSQ($db, 'region', 'a.region_id') . ') AS ' . $db->q('a.region_name'));
+		$query->select('(' . self::transSQ($db, 'country', 'a.country_id') . ') AS ' . $db->q('a.country_name'));
+
 		if ($data->region_id) {
 			$query->where($db->qn('a.region_id') . '=' . (int)$data->region_id);
 		}
@@ -173,9 +176,8 @@ class PropertiesModel extends ListModel
 			$query->order($db->qn('a.created_at') . 'DESC');
 			$query->setLimit(50);
 		}
-		else if ($data->ordercustom) {
-			$orderCustom = $data->ordercustom;
-			$query->order($db->escape($orderCustom));
+		else if (!empty($data->ordercustom)) {
+			$query->order($db->escape($data->ordercustom));
 		}
 		else {
 			$orderCol  = $data->ordering;
@@ -184,8 +186,8 @@ class PropertiesModel extends ListModel
 				$query->order($db->escape($orderCol . ' ' . $orderDirn));
 			}
 		}
-		$db->setQuery($query);
 
+		$db->setQuery($query);
 		$results = $db->loadObjectList();
 		if (!$data->flexible || !count($results)) {
 			return $results;
@@ -227,9 +229,7 @@ class PropertiesModel extends ListModel
 
 		$query->from($db->qn('#__knowres_property'))
 		      ->select('(' .
-			      self::transSQ($db, 'region', 'region_id') .
-			      ') AS ' .
-			      $db->q('region_name'))
+			      self::transSQ($db, 'region', 'region_id') . ') AS ' . $db->q('region_name'))
 		      ->where($db->qn('state') . '=1')
 		      ->where($db->qn('approved') . '=1')
 		      ->where($db->qn('private') . '=0');
@@ -302,9 +302,7 @@ class PropertiesModel extends ListModel
 
 		$query->from($db->qn('#__knowres_discount', 'd'))
 		      ->select('(' .
-			      self::transSQ($db, 'region', 'a.region_id') .
-			      ') AS ' .
-			      $db->q('region_name'))
+			      self::transSQ($db, 'region', 'a.region_id') . ') AS ' . $db->q('region_name'))
 		      ->join('INNER',
 		             $db->qn('#__knowres_property', 'a') .
 			      'ON' .
@@ -493,9 +491,7 @@ class PropertiesModel extends ListModel
 		)));
 		$query->from($db->qn('#__knowres_property', 'a'))
 		      ->select('(' .
-			      self::transSQ($db, 'region', 'a.region_id') .
-			      ') AS ' .
-			      $db->q('region_name'))
+			      self::transSQ($db, 'region', 'a.region_id') . ') AS ' .  $db->q('region_name'))
 		      ->where($db->qn('a.state') . '=1')
 		      ->where($db->qn('a.approved') . '=1')
 		      ->where($db->qn('a.private') . '=0')
@@ -850,6 +846,7 @@ class PropertiesModel extends ListModel
 		      ->select('a.sleeps + a.sleeps_extra AS ' . $db->qn('allsleeps'))
 		      ->from($db->qn('#__knowres_property', 'a'))
 		      ->select('(' . self::transSQ($db, 'region', 'a.region_id') . ') AS ' . $db->q('region_name'))
+			  ->select('(' . self::transSQ($db, 'country', 'a.country_id') . ') AS ' . $db->q('country_name'))
 		      ->select('(' . self::transSQ($db, 'type', 'a.type_id') . ') AS ' . $db->q('type_name')
 		      );
 
@@ -917,6 +914,7 @@ class PropertiesModel extends ListModel
 		$id .= ':' . json_encode($this->getState('filter.bedrooms'));
 		$id .= ':' . json_encode($this->getState('filter.booking_type'));
 		$id .= ':' . json_encode($this->getState('filter.category'));
+		$id .= ':' . json_encode($this->getState('filter.country_id'));
 		$id .= ':' . json_encode($this->getState('filter.feature'));
 		$id .= ':' . json_encode($this->getState('filter.pets'));
 		$id .= ':' . json_encode($this->getState('filter.region_id'));
@@ -951,6 +949,8 @@ class PropertiesModel extends ListModel
 		                $this->getUserStateFromRequest($this->context . '.filter.booking_type', 'filter_booking_type'));
 		$this->setState('filter.category',
 		                $this->getUserStateFromRequest($this->context . '.filter.category', 'filter_category'));
+		$this->setState('filter.country_id',
+		                $this->getUserStateFromRequest($this->context . '.filter.country_id', 'filter_country_id'));
 		$this->setState('filter.feature',
 		                $this->getUserStateFromRequest($this->context . '.filter.feature', 'filter_feature'));
 		$this->setState('filter.pets',

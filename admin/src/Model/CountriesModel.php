@@ -128,7 +128,6 @@ class CountriesModel extends ListModel
 	 * @param   string  $country_iso  ISO country code (2 characters)
 	 *
 	 * @throws RuntimeException
-	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return mixed
 	 */

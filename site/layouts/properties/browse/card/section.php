@@ -25,13 +25,13 @@ extract($displayData);
  */
 ?>
 
-<h2 class="h5" style="flex-grow:1">
+<h3 class="h6" style="flex-grow:1">
 	<?php echo $item->property_name; ?>
-</h2>
+</h3>
 <div class="info small">
+	<?php echo Translations::getCountryName($item->country_id) . ','; ?>
+	<?php echo $item->region_name . ','; ?>
 	<?php echo strtoupper($item->property_area); ?>
-	<?php echo ', ' . $item->region_name . ', '; ?>
-	<?php echo Translations::getCountryName($item->country_id); ?>
 	<br>
 	<?php echo KrMethods::plain('COM_KNOWRES_SLEEPS'); ?>
 	<?php echo $item->sleeps; ?>

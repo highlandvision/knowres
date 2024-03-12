@@ -49,7 +49,7 @@ $count   = 0;
 		<?php $count++; ?>
 		<?php $end = $count < $total ? '' : 'end'; ?>
 		<div class="small-12 medium-6 cell flex-container">
-			<div id="<?php echo $id; ?>" class="card kr-list-property" data-id="<?php echo $item->id; ?>">
+			<div id="<?php echo $id; ?>" class="card" data-id="<?php echo $item->id; ?>">
 				<?php if ($item->imagefilename) : ?>
 					<div class="kr-slideshow-wrapper">
 						<?php echo KrMethods::render('properties.list.card.slideshow.images',
@@ -80,7 +80,7 @@ $count   = 0;
 				<?php endif; ?>
 
 				<div class="card-section">
-					<a href="<?php echo $plink; ?>">
+					<a class="suppress-underline" href="<?php echo $plink; ?>">
 						<?php echo KrMethods::render('properties.list.card.section', ['item'         => $item,
 						                                                              'params'       => $params,
 						                                                              'plink'        => $plink,
