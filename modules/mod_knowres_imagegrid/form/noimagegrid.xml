@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+    <fieldset>
+        <field name="text"
+               default=""
+               type="text"
+               label="MOD_KNOWRES_IMAGEGRID_TEXT"
+               description="MOD_KNOWRES_IMAGEGRID_TEXT_DSC"/>
+        <field name="category_id"
+               addfieldprefix="HighlandVision\Component\Knowres\Administrator\Field"
+               default="-1"
+               type="listcategories"
+               label="MOD_KNOWRES_IMAGEGRID_CATEGORY"
+               description="MOD_KNOWRES_IMAGEGRID_CATEGORY_DSC">
+            <option value="">COM_MODULES_OPTION_SELECT_MENU_ITEM</option>
+            <option value="-1">COM_MODULES_NONE</option>
+        </field>
+        <field name="link"
+               type="menuitem"
+               default="-1"
+               label="MOD_KNOWRES_IMAGEGRID_LINK"
+               description="MOD_KNOWRES_IMAGEGRID_LINK_DSC">
+            <option value="-1">COM_MODULES_NONE</option>
+        </field>
+        <field name="url"
+               default=""
+               filter="url"
+               size="35"
+               type="url"
+               validate="url"
+               label="MOD_KNOWRES_IMAGEGRID_URL"
+               description="MOD_KNOWRES_IMAGEGRID_URL_DSC"/>
+    </fieldset>
+</form>
