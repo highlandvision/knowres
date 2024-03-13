@@ -57,25 +57,25 @@ $action = KrMethods::route('index.php?option=com_knowres&task=contact.submit');
 		<fieldset class="fieldset">
 			<div class="callout dark">
 				<div class="grid-x grid-margin-x">
-					<div class="small-12 medium-4 cell">
+					<div class="small-12 cell">
 						<?php echo $this->form->renderField('day'); ?>
 					</div>
-					<div class="small-12 medium-4 cell">
+					<div class="small-4 cell">
 						<?php echo $this->form->renderField('month'); ?>
 					</div>
-					<div class="small-12 medium-4 cell end">
+					<div class="small-4 cell end">
 						<?php echo $this->form->renderField('nights'); ?>
 					</div>
-					<div class="small-12 medium-4 cell">
+					<div class="small-4 cell">
 						<?php echo $this->form->renderField('guests'); ?>
 					</div>
-					<div class="small-12 medium-4 cell">
+					<div class="small-4 cell">
 						<?php echo $this->form->renderField('children'); ?>
 					</div>
-					<div class="small-12 medium-4 cell end">
+					<div class="small-4cell end">
 						<?php echo $this->form->renderField('ages'); ?>
 					</div>
-					<div class="small-12 medium-4 cell end">
+					<div class="small-4 cell end">
 						<?php echo $this->form->renderField('budget'); ?>
 					</div>
 				</div>
