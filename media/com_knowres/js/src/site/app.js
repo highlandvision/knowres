@@ -40,6 +40,7 @@ let resized = false;
         if ($ctrigger.length && !calendarLoaded) {
             loadCalendar($ctrigger.data('pid'), $ctrigger.data('target'));
             calendarLoaded = true;
+            $('.sticky').foundation('_calc', true);
         }
 
         $(document).on('submit', '.ajaxform', function (e) {

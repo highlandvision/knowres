@@ -856,28 +856,6 @@
                 <option value="0">COM_KNOWRES_CONFIG_IMAGE_UPLOADS_FOLDER_PROPERTY_ID</option>
                 <option value="1">COM_KNOWRES_CONFIG_IMAGE_UPLOADS_FOLDER_PROPERTY_NAME</option>
             </field>
-        </fieldset>
-        <fieldset name="slideshow"
-                  label="COM_KNOWRES_CONFIG_IMAGE_SLIDESHOW_UPLOADS"
-                  description="COM_KNOWRES_CONFIG_IMAGE_SLIDESHOW_UPLOADS_DSC">
-            <field name="property_slideshow"
-                   type="radio"
-                   default="centered"
-                   class="btn-group btn-group-yesno"
-                   label="COM_KNOWRES_CONFIG_IMAGE_SLIDESHOW_TYPE"
-                   description="COM_KNOWRES_CONFIG_IMAGE_SLIDESHOW_TYPE_DSC">
-                <option value="centered">COM_KNOWRES_CONFIG_IMAGE_SLIDESHOW_TYPE_CENTERED</option>
-                <option value="solo">COM_KNOWRES_CONFIG_IMAGE_SLIDESHOW_TYPE_SOLO</option>
-            </field>
-            <field name="property_thumbs"
-                   type="radio"
-                   default="1"
-                   class="btn-group btn-group-yesno"
-                   label="COM_KNOWRES_CONFIG_IMAGE_SLIDESHOW_THUMBS"
-                   description="COM_KNOWRES_CONFIG_IMAGE_SLIDESHOW_THUMBS_DSC">
-                <option value="1">JYES</option>
-                <option value="0">JNO</option>
-            </field>
             <field name="publish_image"
                    type="radio"
                    default="1"
@@ -905,18 +883,6 @@
                 <option value="1">JYES</option>
                 <option value="0">JNO</option>
             </field>
-            <field name="max_slideshow_width"
-                   type="text"
-                   class="w-auto"
-                   default="900"
-                   label="COM_KNOWRES_CONFIG_IMAGE_SLIDESHOW_WIDTH"
-                   description="COM_KNOWRES_CONFIG_IMAGE_SLIDESHOW_WIDTH_DSC"/>
-            <field name="max_slideshow_height"
-                   type="text"
-                   class="w-auto"
-                   default="600"
-                   label="COM_KNOWRES_CONFIG_IMAGE_SLIDESHOW_HEIGHT"
-                   description="COM_KNOWRES_CONFIG_IMAGE_SLIDESHOW_HEIGHT_DSC"/>
             <field name="crop_slideshow_thumb"
                    type="radio"
                    default="1"
@@ -938,6 +904,40 @@
                    default="80"
                    label="COM_KNOWRES_CONFIG_IMAGE_SLIDESHOW_THUMB_MAXIMUM_HEIGHT"
                    description="COM_KNOWRES_CONFIG_IMAGE_SLIDESHOW_THUMB_MAXIMUM_HEIGHT_DSC"/>
+        </fieldset>
+        <fieldset name="slideshow"
+                  label="COM_KNOWRES_CONFIG_IMAGE_SLIDESHOW_UPLOADS"
+                  description="COM_KNOWRES_CONFIG_IMAGE_SLIDESHOW_UPLOADS_DSC">
+            <field name="property_slideshow"
+                   type="radio"
+                   default="centered"
+                   class="btn-group btn-group-yesno"
+                   label="COM_KNOWRES_CONFIG_IMAGE_SLIDESHOW_TYPE"
+                   description="COM_KNOWRES_CONFIG_IMAGE_SLIDESHOW_TYPE_DSC">
+                <option value="centered">COM_KNOWRES_CONFIG_IMAGE_SLIDESHOW_TYPE_CENTERED</option>
+                <option value="solo">COM_KNOWRES_CONFIG_IMAGE_SLIDESHOW_TYPE_SOLO</option>
+            </field>
+            <field name="property_thumbs"
+                   type="radio"
+                   default="1"
+                   class="btn-group btn-group-yesno"
+                   label="COM_KNOWRES_CONFIG_IMAGE_SLIDESHOW_THUMBS"
+                   description="COM_KNOWRES_CONFIG_IMAGE_SLIDESHOW_THUMBS_DSC">
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>
+            <field name="max_slideshow_width"
+                   type="text"
+                   class="w-auto"
+                   default="900"
+                   label="COM_KNOWRES_CONFIG_IMAGE_SLIDESHOW_WIDTH"
+                   description="COM_KNOWRES_CONFIG_IMAGE_SLIDESHOW_WIDTH_DSC"/>
+            <field name="max_slideshow_height"
+                   type="text"
+                   class="w-auto"
+                   default="600"
+                   label="COM_KNOWRES_CONFIG_IMAGE_SLIDESHOW_HEIGHT"
+                   description="COM_KNOWRES_CONFIG_IMAGE_SLIDESHOW_HEIGHT_DSC"/>
         </fieldset>
         <fieldset name="slideshowthunbs"
                   label="COM_KNOWRES_CONFIG_IMAGE_PROPERTY"

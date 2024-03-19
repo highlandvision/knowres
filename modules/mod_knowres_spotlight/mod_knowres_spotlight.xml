@@ -21,7 +21,7 @@
                 <field name="height"
                        type="text"
                        label="MOD_KNOWRES_SPOTLIGHT_HEIGHT"
-                       description="MOD_KNOWRES_SPOTLIGHT_HEIGHT_DSC" />
+                       description="MOD_KNOWRES_SPOTLIGHT_HEIGHT_DSC"/>
                 <field name="textcolor"
                        default="#fefefe"
                        type="color"
@@ -71,21 +71,21 @@
                        default=""
                        label="MOD_KNOWRES_SPOTLIGHT_TEXT"
                        description="MOD_KNOWRES_SPOTLIGHT_TEXT_DSC"/>
-                <field name="link1"
-                       type="menuitem"
-                       default=""
-                       label="MOD_KNOWRES_SPOTLIGHT_LINK"
-                       description="MOD_KNOWRES_SPOTLIGHT_LINK_DSC">
-                    <option value="">COM_MODULES_OPTION_SELECT_MENU_ITEM</option>
+                <field name="category_id1"
+                       addfieldprefix="HighlandVision\Component\Knowres\Administrator\Field"
+                       default="-1"
+                       type="listcategories"
+                       label="MOD_KNOWRES_SPOTLIGHT_CATEGORY"
+                       description="MOD_KNOWRES_SPOTLIGHT_CATEGORY_DSC">
                     <option value="-1">COM_MODULES_NONE</option>
                 </field>
-                <field name="url1"
-                       type="url"
-                       filter="url"
-                       size="35"
-                       validate="url"
-                       label="MOD_KNOWRES_SPOTLIGHT_URL"
-                       description="MOD_KNOWRES_SPOTLIGHT_URL_DSC"/>
+                <field name="link1"
+                       type="menuitem"
+                       default="-1"
+                       label="MOD_KNOWRES_SPOTLIGHT_LINK"
+                       description="MOD_KNOWRES_SPOTLIGHT_LINK_DSC">
+                    <option value="-1">COM_MODULES_NONE</option>
+                </field>
                 <field type="spacer"
                        name="spacer2"
                        label="&lt;b&gt;Image 2&lt;/b&gt;"/>
@@ -99,21 +99,21 @@
                        default=""
                        label="MOD_KNOWRES_SPOTLIGHT_TEXT"
                        description="MOD_KNOWRES_SPOTLIGHT_TEXT_DSC"/>
-                <field name="link2"
-                       type="menuitem"
-                       default=""
-                       label="MOD_KNOWRES_SPOTLIGHT_LINK"
-                       description="MOD_KNOWRES_SPOTLIGHT_LINK_DSC">
-                    <option value="">COM_MODULES_OPTION_SELECT_MENU_ITEM</option>
+                <field name="category_id2"
+                       addfieldprefix="HighlandVision\Component\Knowres\Administrator\Field"
+                       default="-1"
+                       type="listcategories"
+                       label="MOD_KNOWRES_SPOTLIGHT_CATEGORY"
+                       description="MOD_KNOWRES_SPOTLIGHT_CATEGORY_DSC">
                     <option value="-1">COM_MODULES_NONE</option>
                 </field>
-                <field name="url2"
-                       type="url"
-                       filter="url"
-                       size="35"
-                       validate="url"
-                       label="MOD_KNOWRES_SPOTLIGHT_URL"
-                       description="MOD_KNOWRES_SPOTLIGHT_URL_DSC"/>
+                <field name="link2"
+                       type="menuitem"
+                       default="-1"
+                       label="MOD_KNOWRES_SPOTLIGHT_LINK"
+                       description="MOD_KNOWRES_SPOTLIGHT_LINK_DSC">
+                    <option value="-1">COM_MODULES_NONE</option>
+                </field>
                 <field type="spacer"
                        name="spacer3"
                        label="&lt;b&gt;Image 3&lt;/b&gt;"/>
@@ -127,21 +127,21 @@
                        default=""
                        label="MOD_KNOWRES_SPOTLIGHT_TEXT"
                        description="MOD_KNOWRES_SPOTLIGHT_TEXT_DSC"/>
+                <field name="category_id3"
+                       addfieldprefix="HighlandVision\Component\Knowres\Administrator\Field"
+                       default="-1"
+                       type="listcategories"
+                       label="MOD_KNOWRES_SPOTLIGHT_CATEGORY"
+                       description="MOD_KNOWRES_SPOTLIGHT_CATEGORY_DSC">
+                    <option value="-1">COM_MODULES_NONE</option>
+                </field>
                 <field name="link3"
                        type="menuitem"
-                       default=""
+                       default="-1"
                        label="MOD_KNOWRES_SPOTLIGHT_LINK"
                        description="MOD_KNOWRES_SPOTLIGHT_LINK_DSC">
-                        <option value="">COM_MODULES_OPTION_SELECT_MENU_ITEM</option>
-                        <option value="-1">COM_MODULES_NONE</option>
+                    <option value="-1">COM_MODULES_NONE</option>
                 </field>
-                <field name="url3"
-                       type="url"
-                       filter="url"
-                       size="35"
-                       validate="url"
-                       label="MOD_KNOWRES_SPOTLIGHT_URL"
-                       description="MOD_KNOWRES_SPOTLIGHT_URL_DSC"/>
             </fieldset>
             <fieldset name="advanced">
                 <field name="layout"

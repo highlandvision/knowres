@@ -42,9 +42,8 @@ class ListcategoriesField extends ListField
 		$options      = [];
 		$Translations = new Translations();
 
-		$categories   = KrFactory::getListModel('categories')->getAllCategories();
-		foreach ($categories as $c)
-		{
+		$categories = KrFactory::getListModel('categories')->getAllCategories();
+		foreach ($categories as $c) {
 			$options[] = HTMLHelper::_('select.option', $c->id, $Translations->getText('category', $c->id));
 		}
 

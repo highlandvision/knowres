@@ -90,13 +90,6 @@ class Knowres extends Base
 			}
 		}
 
-		if ($view == 'properties') {
-			$items = KrFactory::getListModel('regions')->getAllRegions(true);
-			if (count($items) == 1) {
-				$solo_region = $items[0]->name;
-			}
-		}
-
 		$delvar = true;
 		switch ($view) {
 			case 'contact':
@@ -157,9 +150,6 @@ class Knowres extends Base
 				if ($region_id) {
 					$sefSegments[] = $Translations->getText('region', $region_id);
 				} elseif ($category_id) {
-					if (!empty($solo_region)) {
-						$sefSegments[] = $solo_region;
-					}
 					$sefSegments[] = $Translations->getText('category', $category_id);
 				} elseif ($layout) {
 					$sefSegments[] = $alias;

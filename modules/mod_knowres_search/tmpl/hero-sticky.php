@@ -22,7 +22,7 @@ $form         = KrFactory::getAdhocForm('mod_knowres_search', 'mod_knowres_searc
 $show_regions = $params->get('show_regions');
 ?>
 
-<div class="kr-search hero-sticky">
+<div class="hero-sticky">
 	<button class="close-button show-for-small primary" aria-label="Close menu" type="button" data-close>
 		<span aria-hidden="true">&times;</span>
 	</button>

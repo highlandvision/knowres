@@ -22,13 +22,13 @@ $form         = KrFactory::getAdhocForm('mod_knowres_search', 'mod_knowres_searc
 $show_regions = $params->get('show_regions');
 ?>
 
-<div class="grid-x grid-margin-x">
-	<div class="small-12 cell">
-		<div class="sidebar">
+<div class="sidebar">
+	<div class="grid-x grid-margin-x">
+		<div class="small-12 cell">
 			<form action="<?php echo KrMethods::route('index.php?option=com_knowres&task=properties.search'); ?>"
 			      class="vertical" method="post" name="search-default">
 				<?php if ($show_regions): ?>
-					<div class="small-12 medium-12 large-3 cell">
+					<div class="small-12 cell">
 						<?php echo $options; ?>
 					</div>
 				<?php endif; ?>

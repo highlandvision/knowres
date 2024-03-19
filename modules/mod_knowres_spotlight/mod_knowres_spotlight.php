@@ -9,6 +9,8 @@
 
 defined('_JEXEC') or die;
 
+use HighlandVision\KR\Framework\KrMethods;
+use HighlandVision\KR\SiteHelper;
 use Joomla\CMS\Helper\ModuleHelper;
 
 /** @noinspection PhpPossiblePolymorphicInvocationInspection */
@@ -24,10 +26,29 @@ $data  = [];
 for ($i = 1; $i <= 3; $i++) {
 	if ($params->get('image' . $i)) {
 		$count++;
+
+		$category_id = $params->get('category_id' . $i);
+		$mlink       = $params->get('link' . $i);
+		$link        = '';
+
+		if ($category_id <> -1) {
+			$Itemid = SiteHelper::getItemId('com_knowres', 'properties',
+			                                ['layout' => 'category', 'category_id' => $category_id],
+			                                ['layout' => 'category']);
+
+			$link   = KrMethods::route('index.php?option=com_knowres&view=properties&layout=category&category_id=' .
+			                           $category_id . '&Itemid=' . $Itemid);
+		} elseif ($mlink <> -1) {
+			$link = KrMethods::route('index.php?Itemid=' . $mlink);
+		}
+
+		if (empty($link)) {
+			continue;
+		}
+
 		$data[$i] = ['image' => $params->get('image' . $i),
 		             'text'  => $params->get('text' . $i),
-		             'link'  => $params->get('link' . $i),
-		             'url'   => $params->get('url' . $i)
+		             'link'  => $link,
 		];
 	}
 }

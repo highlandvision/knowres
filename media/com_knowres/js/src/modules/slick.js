@@ -29,37 +29,26 @@
 
             if (type === 'centered') {
                 $slides.slick({
+                    adaptiveHeight: false,
                     arrows: true,
                     asNavFor: showthumbs ? '#kr-property-thumbs' : '',
-                    prevArrow: '<i class="slick-nav prev fa-solid fa-chevron-left show-for-medium"></i>',
-                    nextArrow: '<i class="slick-nav next fa-solid fa-chevron-right show-for-medium"></i>',
-                    infinite: true,
-                    speed: 300,
-                    adaptiveHeight: false,
                     centerMode: true,
-                    centerPadding: '3px',
-                    variableWidth: true,
-                    slidesToShow: 1,
+                    centerPadding: '0px',
+                    infinite: true,
                     lazyLoad: 'progressive',
-                    responsive: [
-                        {
-                            breakpoint: 640,
-                            settings: {
-                                variableWidth: false,
-                                centerMode: false,
-                                centerPadding: '0px',
-                                slidesToShow: 1,
-                                slidesToScroll: 1
-                            }
-                        }
-                    ]
+                    prevArrow: '<i class="slick-nav prev fa-solid fa-chevron-left"></i>',
+                    nextArrow: '<i class="slick-nav next fa-solid fa-chevron-right"></i>',
+                    slidesToScroll: 1,
+                    slidesToShow: 1,
+                    speed: 300,
+                    variableWidth: true,
                 });
             } else {
                 $slides.slick({
                     slidesToShow: 1,
                     slidesToScroll: 1,
-                    prevArrow: '<i class="slick-nav prev fa-solid fa-chevron-left show-for-medium"></i>',
-                    nextArrow: '<i class="slick-nav next fa-solid fa-chevron-right show-for-medium"></i>',
+                    prevArrow: '<i class="slick-nav prev fa-solid fa-chevron-left"></i>',
+                    nextArrow: '<i class="slick-nav next fa-solid fa-chevron-right"></i>',
                     arrows: true,
                     infinite: true,
                     lazyLoad: 'ondemand',
@@ -143,18 +132,18 @@
         });
 
         let tallest = 0;
-        let $items =  $('.kr-featured .content h4');
-        $items.each(function(){
-            if ($(this).height() > tallest){
+        let $items = $('.kr-featured .content h4');
+        $items.each(function () {
+            if ($(this).height() > tallest) {
                 tallest = $(this).height();
             }
         });
         $items.height(tallest);
 
         tallest = 0;
-        $items =  $('.kr-featured .content p');
-        $items.each(function(){
-            if ($(this).height() > tallest){
+        $items = $('.kr-featured .content p');
+        $items.each(function () {
+            if ($(this).height() > tallest) {
                 tallest = $(this).height();
             }
         });
@@ -172,7 +161,7 @@
         });
     });
 
-    $('#kr-property-slideshow.mixed-width').on('beforeChange init', function(event, slick, currentSlide, nextSlide) {
+    $('#kr-property-slideshow.mixed-width').on('beforeChange init', function (event, slick, currentSlide, nextSlide) {
         let currentImg = $(slick.$slides.get(nextSlide)).find('img');
         if (isPortrait(currentImg) && !portrait) {
             $('#kr-property-slideshow.mixed-width.slick-initialized').slick('slickSetOption', {
@@ -181,7 +170,6 @@
                 slidesToShow: 3,
                 slidesToScroll: 1,
             }, true);
-            $('#kr-property-slideshow.mixed-width').slick('setPosition');
             portrait = true;
         } else if (portrait) {
             $('#kr-property-slideshow.mixed-width.slick-initialized').slick('slickSetOption', {
@@ -191,7 +179,6 @@
                 slidesToScroll: 1,
             }, true);
             portrait = false;
-            $('#kr-property-slideshow.mixed-width').slick('setPosition');
         }
     });
 }(jQuery));
