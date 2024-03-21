@@ -65,7 +65,7 @@ $count   = 0;
 			</a>
 			<div style="display:none;">
 				<div class="thumboverview<?php echo $item->id; ?>">
-					<h2><?php echo $item->property_name; ?></h2>
+					<h3 class="h4"><?php echo $item->property_name; ?></h3>
 					<?php echo $Translations->getText('property', $item->id, 'p2'); ?>
 				</div>
 			</div>

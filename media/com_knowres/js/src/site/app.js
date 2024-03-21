@@ -106,6 +106,7 @@ let resized = false;
                 success: function (result) {
                     if (result.success) {
                         getProperties(bar);
+                        $('.favicon-top').foundation('hide');
                     }
                 }
             });

@@ -26,11 +26,13 @@ extract($displayData);
         <i class="favicon-base fa-solid fa-circle fa-stack-2x"></i>
 	    <?php if (in_array($item->id, $favs)): ?>
 		    <i class="favicon-top fa-solid fa-heart fa-stack-1x favorite in has-tip" data-tooltip data-position="left"
-		       data-alignment="center" title="<?php echo KrMethods::plain('COM_KNOWRES_FAVORITES_REMOVE'); ?>">
+		       data-alignment="center" data-click-open="false"
+		       title="<?php echo KrMethods::plain('COM_KNOWRES_FAVORITES_REMOVE'); ?>">
             </i>
 	    <?php else: ?>
 		    <i class="favicon-top fa-solid fa-heart fa-stack-1x favorite has-tip" data-tooltip data-position="left"
-		       data-alignment="center" title="<?php echo KrMethods::plain('COM_KNOWRES_FAVORITES_ADD'); ?>">
+		       data-alignment="center" data-click-open="false"
+		       title="<?php echo KrMethods::plain('COM_KNOWRES_FAVORITES_ADD'); ?>">
             </i>
 	    <?php endif; ?>
 	</span>

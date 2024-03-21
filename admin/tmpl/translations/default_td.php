@@ -10,6 +10,7 @@
 
 defined('_JEXEC') or die;
 
+use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Session\Session;
@@ -17,7 +18,8 @@ use Joomla\CMS\Session\Session;
 
 <?php foreach ($this->items as $i => $this->item): ?>
 	<?php if ($this->item->item == 'property'): ?>
-		<?php $property_name = $Translations->getProperty($this->item->item_id); ?>
+		<?php $pdata = KrFactory::getAdminModel('property')->getItem($this->item->item_id); ?>
+		<?php $property_name = $pdata->property_name; ?>
 		<?php if (!$property_name): ?>
 			<?php continue; ?>
 		<?php endif; ?>

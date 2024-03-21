@@ -25,7 +25,7 @@ use HighlandVision\KR\Framework\KrMethods;
 				</span>
 			</button>
 
-			<?php if (isset($this->layouts['list']) && !$this->Search->searchData->layout): ?>
+			<?php if (isset($this->layouts['list'])): ?>
 				<?php $text =  KrMethods::plain('COM_KNOWRES_VIEW_LIST'); ?>
 				<a class="button getResponseSearch list" data-bar="list"
 				   title="<?php echo $text; ?>"
@@ -37,7 +37,19 @@ use HighlandVision\KR\Framework\KrMethods;
 				</a>
 			<?php endif; ?>
 
-			<?php if (isset($this->layouts['thumb']) && !$this->Search->searchData->layout): ?>
+			<?php if (isset($this->layouts['grid'])): ?>
+				<?php $text =  KrMethods::plain('COM_KNOWRES_VIEW_GRID'); ?>
+				<a class="button getResponseSearch grid" data-bar="grid"
+				   title="<?php echo $text; ?>"
+				   aria-label="<?php echo $text; ?>">
+					<i class="fa-solid fa-table-cells-large"></i>
+					<span class="show-for-large">
+						<?php echo $text; ?>
+					</span>
+				</a>
+			<?php endif; ?>
+
+			<?php if (isset($this->layouts['thumb'])): ?>
 				<a class="button getResponseSearch thumb" data-bar="thumb"
 				   title="<?php echo KrMethods::plain('COM_KNOWRES_VIEW_THUMB'); ?>"
 				   aria-label="<?php echo KrMethods::plain('COM_KNOWRES_VIEW_THUMB'); ?>">
@@ -62,16 +74,14 @@ use HighlandVision\KR\Framework\KrMethods;
 				</a>
 			<?php endif; ?>
 
-			<?php if (!$this->Search->searchData->layout): ?>
-				<a class="button getResponseSearch favs" data-bar="favs"
-				   title="<?php echo KrMethods::plain('COM_KNOWRES_VIEW_FAVOURITES'); ?>"
-				   aria-label="<?php echo KrMethods::plain('COM_KNOWRES_VIEW_FAVOURITES'); ?>">
-					<i class="fa-solid fa-heart"></i>
-					<span class="show-for-large">
-						<?php echo KrMethods::plain('COM_KNOWRES_VIEW_FAVOURITES'); ?>
-					</span>
-				</a>
-			<?php endif; ?>
+			<a class="button getResponseSearch favs" data-bar="favs"
+			   title="<?php echo KrMethods::plain('COM_KNOWRES_VIEW_FAVOURITES'); ?>"
+			   aria-label="<?php echo KrMethods::plain('COM_KNOWRES_VIEW_FAVOURITES'); ?>">
+				<i class="fa-solid fa-heart"></i>
+				<span class="show-for-large">
+					<?php echo KrMethods::plain('COM_KNOWRES_VIEW_FAVOURITES'); ?>
+				</span>
+			</a>
 
 			<button type="button" class="button filter right-off-canvas-toggle"
 			        data-toggle="kr-offcanvas-properties-filter"

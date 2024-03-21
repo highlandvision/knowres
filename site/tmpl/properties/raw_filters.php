@@ -58,11 +58,14 @@ echo KrMethods::render('properties.raw.filters.offcanvas.filter',
                         'data'  => $this->Response->searchData->filterPets,
                         'name'  => KrMethods::plain('COM_KNOWRES_FILTER_HEAD_PETS')
                        ]);
-echo KrMethods::render('properties.raw.filters.offcanvas.filter',
-                       ['action' => 'price',
-                        'data'  => $this->Response->searchData->filterPrice,
-                        'name'  => KrMethods::plain('COM_KNOWRES_FILTER_HEAD_PRICE')
-                       ]);
+
+if (!$this->Response->searchData->layout) {
+	echo KrMethods::render('properties.raw.filters.offcanvas.filter',
+	                       ['action' => 'price',
+	                        'data'   => $this->Response->searchData->filterPrice,
+	                        'name'   => KrMethods::plain('COM_KNOWRES_FILTER_HEAD_PRICE')
+	                       ]);
+}
 echo KrMethods::render('properties.raw.filters.offcanvas.filter',
                        ['action' => 'type',
                         'data'  => $this->Response->searchData->filterType,

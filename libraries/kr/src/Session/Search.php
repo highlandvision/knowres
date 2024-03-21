@@ -57,12 +57,17 @@ class Search extends Session
 	/**
 	 * Reset data and session
 	 *
+	 * @param  string|null  $bar  Currently selected bar layout
+	 *
 	 * @since 3.3.0
 	 * @return stdClass
 	 */
-	public function resetData(): stdClass
+	public function resetData(string $bar = null): stdClass
 	{
 		$data = $this->init();
+		if (!empty($bar)) {
+			$data->bar = $bar;
+		}
 		$this->saveSession($data);
 
 		return $data;

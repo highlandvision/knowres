@@ -65,8 +65,6 @@ class HtmlView extends KrHtmlView\Site
 	public string $max_date = '';
 	/** @var string Earliest arrival date. */
 	public string $min_date = '';
-	/** @var string Modules text from loadposition. */
-	public string $modules = '';
 	/** @var bool True if more than list limit reviews. */
 	public bool $more_reviews = false;
 	/** @var array Net markup setting for all properties. */
@@ -146,7 +144,6 @@ class HtmlView extends KrHtmlView\Site
 		$this->quoteData();
 
 		$this->tabs             = $this->params->get('property_tabs', 0);
-		$this->modules          = KrMethods::loadInternal('{loadposition propertyview}');
 		$this->Itemid           = SiteHelper::getItemId('com_knowres', 'property', ['id' => 0]);
 		$this->meta_title       = $this->item->property_name . ' | ' . $this->item->region_name . ' | '
 			. $this->item->type_name;

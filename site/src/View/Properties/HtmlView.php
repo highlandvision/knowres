@@ -87,7 +87,7 @@ class HtmlView extends KrHtmlView\Site
 
 		$new = false;
 		if (!$retain || !count($searchData->baseIds)) {
-			$searchData = $searchSession->resetData();
+			$searchData = $searchSession->resetData($searchData->bar);
 			$new        = true;
 		}
 
@@ -97,7 +97,7 @@ class HtmlView extends KrHtmlView\Site
 			if ($layout == 'category') {
 				$this->category_id = KrMethods::inputInt('category_id');
 				if (!$this->category_id) {
-					$searchData = $searchSession->resetData();
+					$searchData = $searchSession->resetData($searchData->bar);
 					SiteHelper::redirectHome();
 				}
 				/** @var CategoryModel $category */
@@ -124,7 +124,7 @@ class HtmlView extends KrHtmlView\Site
 				if (!empty($searchData->arrival) && !empty($searchData->departure)) {
 					if ($searchData->arrival < $today || $searchData->departure < $today
 						|| $searchData->departure <= $searchData->arrival) {
-						$searchData = $searchSession->resetData();
+						$searchData = $searchSession->resetData($searchData->bar);
 						SiteHelper::redirectHome();
 					}
 				}
@@ -141,13 +141,14 @@ class HtmlView extends KrHtmlView\Site
 			$description = $this->setSearchDescription();
 		}
 
-//		$this->header =	KrMethods::sprintf('COM_KNOWRES_SEARCH_HEADER', $description, count($this->Search->searchData->baseIds));
 		$this->header = KrMethods::sprintf('COM_KNOWRES_SEARCH_HEADER_X', $description);
 
+		if ($this->params->get('search_grid', 0)) {
+			$this->layouts['grid'] = true;
+		}
 		if ($this->params->get('search_list', 0)) {
 			$this->layouts['list'] = true;
 		}
-		//TODO-v43 Tidy up thumb view
 		if ($this->params->get('search_thumb', 0)) {
 			$this->layouts['thumb'] = true;
 		}

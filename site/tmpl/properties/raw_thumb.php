@@ -15,6 +15,15 @@ use HighlandVision\KR\Translations;
 $Translations = new Translations();
 ?>
 
+<?php if ($this->nofavs): ?>
+	<div class="callout warning" data-closable>
+		<?php echo KrMethods::plain('COM_KNOWRES_NO_FAVOURITES'); ?>
+		<button class="close-button" aria-label="Dismiss alert" type="button" data-close>
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+<?php endif; ?>
+
 <?php echo KrMethods::render('properties.thumb.thumb', ['items'          => $this->items,
                                                         'params'         => $this->params,
                                                         'currency'       => $this->Response->searchData->currency,

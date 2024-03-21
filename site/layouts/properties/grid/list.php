@@ -36,7 +36,7 @@ $Translations = new Translations();
 $weekly = KrFactory::getListModel('propertysettings')->getOneSetting('tariffChargesStoredWeeklyYesNo');
 ?>
 
-<div class="grid-x grid-margin-x" id="kr-browse">
+<div class="grid-x grid-margin-x" id="kr-grid">
 	<?php foreach ($items as $item) : ?>
 		<?php $plink = SiteHelper::buildPropertyLink($item->id); ?>
 		<?php $id = 'kr-property-' . $item->id; ?>
@@ -45,13 +45,13 @@ $weekly = KrFactory::getListModel('propertysettings')->getOneSetting('tariffChar
 			<div id="<?php echo $id; ?>" class="card" data-id="<?php echo $item->id; ?>">
 				<?php if ($item->imagefilename) : ?>
 					<div class="kr-slideshow-wrapper">
-						<?php echo KrMethods::render('properties.browse.card.slideshow.images',
+						<?php echo KrMethods::render('properties.grid.card.slideshow.images',
 						                             ['item'         => $item,
 						                              'params'       => $params,
 						                              'plink'        => $plink,
 						                              'Translations' => $Translations
 						                             ]); ?>
-						<?php echo KrMethods::render('properties.browse.card.slideshow.favicon',
+						<?php echo KrMethods::render('properties.grid.card.slideshow.favicon',
 						                             ['item' => $item,
 						                              'favs' => $favs,
 						                              'bar'  => $bar
@@ -59,7 +59,7 @@ $weekly = KrFactory::getListModel('propertysettings')->getOneSetting('tariffChar
 					</div>
 				<?php endif; ?>
 
-				<?php echo KrMethods::render('properties.browse.card.slideshow.pricing',
+				<?php echo KrMethods::render('properties.grid.card.slideshow.pricing',
 				                             ['item'           => $item,
 				                              'currency'       => $currency,
 				                              'byAvailability' => $byAvailability,
@@ -72,7 +72,7 @@ $weekly = KrFactory::getListModel('propertysettings')->getOneSetting('tariffChar
 
 				<a class="suppress-underline" href="<?php echo $plink; ?>">
 					<div class="card-section">
-						<?php echo KrMethods::render('properties.browse.card.section',
+						<?php echo KrMethods::render('properties.grid.card.section',
 						                             ['item'         => $item,
 						                              'params'       => $params,
 						                              'plink'        => $plink,

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form addfieldprefix="HighlandVision\Component\Knowres\Site\Field">
     <fieldset>
-<!--        <field name="region_id"-->
-<!--               addfieldprefix="HighlandVision\Component\Knowres\Site\Field"-->
-<!--               default="0"-->
-<!--               hiddenLabel="true"-->
-<!--               hint="MOD_KNOWRES_SEARCH_REGIONS"-->
-<!--               type="listgroupedregions"-->
-<!--               aria-label="MOD_KNOWRES_SEARCH_REGIONS"-->
-<!--               label="MOD_KNOWRES_SEARCH_REGIONS"-->
-<!--               placeholder="MOD_KNOWRES_SEARCH_LOCATION"/>-->
+        <!--        <field name="region_id"-->
+        <!--               addfieldprefix="HighlandVision\Component\Knowres\Site\Field"-->
+        <!--               default="0"-->
+        <!--               hiddenLabel="true"-->
+        <!--               hint="MOD_KNOWRES_SEARCH_REGIONS"-->
+        <!--               type="listgroupedregions"-->
+        <!--               aria-label="MOD_KNOWRES_SEARCH_REGIONS"-->
+        <!--               label="MOD_KNOWRES_SEARCH_REGIONS"-->
+        <!--               placeholder="MOD_KNOWRES_SEARCH_LOCATION"/>-->
         <field name="arrivaldsp"
                addfieldprefix="HighlandVision\Component\Knowres\Site\Field"
                class="notranslate datepicker"
@@ -31,8 +31,7 @@
                default="2"
                hiddenLabel="true"
                type="listpartysize"
-               label="MOD_KNOWRES_SEARCH_GUESTS">
-        </field>
+               label="MOD_KNOWRES_SEARCH_GUESTS"/>
         <field name="flexible"
                default="0"
                hiddenLabel="true"
