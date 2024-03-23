@@ -122,7 +122,7 @@ class sefRouter extends RouterBase
 	 * @param  array  $query
 	 *
 	 * @throws Exception
-	 * @since  4.3.0
+	 * @since  5.0.0
 	 * @return int
 	 */
 	protected function checkMultiRegion(array $query): int
@@ -138,7 +138,7 @@ class sefRouter extends RouterBase
 	 * @param  array  $query  URL Arguements.
 	 *
 	 * @throws Exception
-	 * @since  4.3.0
+	 * @since  5.0.0
 	 * @return array
 	 */
 	protected function setProperties(array $query): array
@@ -186,7 +186,7 @@ class sefRouter extends RouterBase
 	 * @param  int  $property_id  ID of property
 	 *
 	 * @throws Exception
-	 * @since  4.3.0
+	 * @since  5.0.0
 	 * @return array
 	 */
 	protected function setProperty(int $property_id): array
@@ -239,7 +239,7 @@ class sefRouter extends RouterBase
 	 * @param  int  $property_id  ID of property
 	 *
 	 * @throws Exception
-	 * @since  4.3.0
+	 * @since  5.0.0
 	 * @return array
 	 */
 	protected function setReviews(int $property_id): array

@@ -34,7 +34,7 @@ use function uasort;
 /**
  * Set property search filters
  *
- * @since  4.3.0
+ * @since  5.0.0
  */
 class Filter
 {
@@ -283,7 +283,7 @@ class Filter
 	 * @param  bool   $show_country  True to display country name.
 	 *
 	 * @throws RuntimeException
-	 * @since  4.3.0
+	 * @since  5.0.0
 	 */
 	private function setFilterArea(mixed $item, bool $show_country): void
 	{
@@ -308,7 +308,7 @@ class Filter
 	 * @param  mixed  $item  Property data
 	 * @param  int    $max   Max bedrooms in filter
 	 *
-	 * @since  4.3.0
+	 * @since  5.0.0
 	 */
 	private function setFilterBedrooms(mixed $item, int $max): void
 	{
@@ -330,7 +330,7 @@ class Filter
 	 *
 	 * @param  mixed  $item  Property data.
 	 *
-	 * @since  4.3.0
+	 * @since  5.0.0
 	 */
 	private function setFilterBook(mixed $item): void
 	{
@@ -354,7 +354,7 @@ class Filter
 	 * @param  mixed  $item  Property data
 	 *
 	 * @throws RuntimeException
-	 * @since  4.3.0
+	 * @since  5.0.0
 	 */
 	private function setFilterCategory(mixed $item): void
 	{
@@ -380,7 +380,7 @@ class Filter
 	 * @param  mixed  $item  Property data
 	 *
 	 * @throws RuntimeException
-	 * @since  4.3.0
+	 * @since  5.0.0
 	 */
 	private function setFilterFeature(mixed $item): void
 	{
@@ -405,7 +405,7 @@ class Filter
 	 *
 	 * @param  mixed  $item  Property data
 	 *
-	 * @since  4.3.0
+	 * @since  5.0.0
 	 */
 	private function setFilterPets(mixed $item): void
 	{
@@ -428,7 +428,7 @@ class Filter
 	 *
 	 * @param  mixed  $item  Property data.
 	 *
-	 * @since  4.3.0
+	 * @since  5.0.0
 	 */
 	private function setFilterPrice(mixed $item): void
 	{
@@ -449,7 +449,7 @@ class Filter
 	 * @param  mixed  $item  Property data
 	 *
 	 * @throws RuntimeException
-	 * @since  4.3.0
+	 * @since  5.0.0
 	 */
 	private function setFilterType(mixed $item): void
 	{

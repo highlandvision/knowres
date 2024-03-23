@@ -26,7 +26,7 @@ use function implode;
 /**
  * Site search for properties
  *
- * @since 4.3.0
+ * @since 5.0.0
  */
 class Response
 {
@@ -315,7 +315,7 @@ class Response
 	 *
 	 * @param  int  $order  Property order
 	 *
-	 * @since  4.3.0
+	 * @since  5.0.0
 	 */
 	private function setOrder(int $order): void
 	{

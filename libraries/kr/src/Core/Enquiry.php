@@ -24,7 +24,7 @@ use function hash;
 /**
  * Enquiry requests
  *
- * @since 4.3.0
+ * @since 5.0.0
  */
 class Enquiry
 {
@@ -39,7 +39,7 @@ class Enquiry
 	 * @param  Hub  $hub  Hub data
 	 *
 	 * @throws Exception
-	 * @since  4.3.0
+	 * @since  5.0.0
 	 * @return bool
 	 */
 	public function action(Hub $hub): bool
@@ -54,7 +54,7 @@ class Enquiry
 	 * Pre save processing
 	 *
 	 * @throws Exception
-	 * @since 4.3.0
+	 * @since 5.0.0
 	 */
 	protected function setValues(): void
 	{
@@ -71,7 +71,7 @@ class Enquiry
 	 *
 	 * @throws RuntimeException
 	 * @throws Exception
-	 * @since  4.3.0
+	 * @since  5.0.0
 	 * @return bool
 	 */
 	public function saveAll(): bool

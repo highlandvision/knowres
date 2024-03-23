@@ -250,7 +250,7 @@ class HtmlView extends KrHtmlView\Site
 	 * Set the descriptions for the search module search
 	 *
 	 * @throws Exception
-	 * @since  4.3.0
+	 * @since  5.0.0
 	 * @return string
 	 */
 	protected function setSearchDescription(): string

@@ -7,7 +7,7 @@
 	<authorUrl>https://www.highlandvision.com</authorUrl>
 	<copyright>2023 Highland Vision, all rights reserved.</copyright>
 	<license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
-	<version>4.3.0</version>
+	<version>5.0.0</version>
 	<description>COM_KNOWRES_DESCRIPTION</description>
 	<namespace path="src">HighlandVision\Component\Knowres</namespace>
 	<install>

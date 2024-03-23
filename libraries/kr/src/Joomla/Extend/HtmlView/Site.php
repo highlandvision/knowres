@@ -117,7 +117,7 @@ class Site extends KrHtmlView
 	 * @param  object    $property    Property item data
 	 *
 	 * @throws Exception
-	 * @since  4.3.0
+	 * @since  5.0.0
 	 * @return Pathway
 	 */
 	public static function propertyPathway(Pathway $pathway, stdClass $searchData, object $property): Pathway
@@ -138,7 +138,7 @@ class Site extends KrHtmlView
 	 * @param  string   $region_name  Region name of property
 	 *
 	 * @throws Exception
-	 * @since  4.3.0
+	 * @since  5.0.0
 	 * @return Pathway
 	 */
 	public static function propertyRegionPathway(Pathway $pathway, int $region_id, string $region_name): Pathway

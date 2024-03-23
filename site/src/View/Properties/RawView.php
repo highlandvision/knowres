@@ -247,7 +247,7 @@ class RawView extends KrHtmlView
 	 *
 	 * @param  array  $selected  Selected filters
 	 *
-	 * @since  4.3.0
+	 * @since  5.0.0
 	 */
 	private function setSelected(array $selected): array
 	{

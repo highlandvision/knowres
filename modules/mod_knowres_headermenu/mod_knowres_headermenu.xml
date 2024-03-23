@@ -7,7 +7,7 @@
 	<authorEmail>hazel@highlandvision.com</authorEmail>
 	<copyright>2023 Highland Vision, all rights reserved.</copyright>
 	<license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
-	<version>4.3.0</version>
+	<version>5.0.0</version>
 	<description>MOD_KNOWRES_HEADERMENU_DSC</description>
 	<namespace path="src">Knowres\Module\Headermenu</namespace>
 	<scriptfile>installation.script.php</scriptfile>

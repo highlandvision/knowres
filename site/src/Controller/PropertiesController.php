@@ -415,7 +415,7 @@ class PropertiesController extends BaseController
 	 * @param  Cache  $cache      Cache instance
 	 *
 	 * @throws Exception
-	 * @since  4.3.0
+	 * @since  5.0.0
 	 * @return array
 	 */
 	private function getMapMarkers(int $region_id, Cache $cache): array

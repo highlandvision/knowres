@@ -517,7 +517,7 @@ class Utility
 	 *
 	 * @param  string  $string String to convert
 	 *
-	 * @since  4.3.0
+	 * @since  5.0.0
 	 * @return string
 	 */
 	public static function nl2p(string $string): string

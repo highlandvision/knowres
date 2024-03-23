@@ -100,7 +100,7 @@ class ServicesModel extends ListModel
 	/**
 	 * Get online gateway currencies
 	 *
-	 * @since  4.3.0
+	 * @since  5.0.0
 	 * @return mixed
 	 */
 	public function getGatewayCurrencies(): mixed
