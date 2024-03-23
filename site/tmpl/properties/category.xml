@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <metadata>
-    <layout title="COM_KNOWRES_TITLE_PROPERTIES_CATEGORY" option="Search">
+    <layout title="COM_KNOWRES_TITLE_PROPERTIES_CATEGORY" option="COM_KNOWRES_TITLE_PROPERTIES_CATEGORY_OPT">
         <message>
             <![CDATA[COM_KNOWRES_TITLE_PROPERTIES_CATEGORY_DSC]]>
         </message>
@@ -10,10 +10,10 @@
             <field name="category_id"
                    addfieldprefix="HighlandVision\Component\Knowres\Administrator\Field"
                    filter="integer"
+                   required="true"
                    type="listcategories"
                    label="COM_KNOWRES_TITLE_PROPERTIES_CATEGORY_LBL"
                    description="COM_KNOWRES_TITLE_PROPERTIES_CATEGORY_SELECT">
-                <option value="">COM_KNOWRES_SELECT</option>
             </field>
         </fieldset>
     </fields>

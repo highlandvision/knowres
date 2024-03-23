@@ -6,6 +6,7 @@
  * @license    See the file "LICENSE.txt" for the full license governing this code.
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
+
 /** @noinspection PhpUnhandledExceptionInspection */
 
 use HighlandVision\KR\Framework\KrMethods;
@@ -23,28 +24,10 @@ $data = [];
 
 if (!empty($this->items) && count($this->items)) {
 	$data['bar'] = $this->Response->searchData->bar;
-//	$description = $this->Response->searchData->description;
-//	if (!$description) {
-//		$description = $this->Response->searchData->region_name . ', ' . KrMethods::getCfg('sitename');
-//	}
-//	if (count($this->Response->searchData->baseIds) > 1) {
-//		$data['heading'] = KrMethods::sprintf('COM_KNOWRES_SEARCH_HEADER_X',
-//		                                      $description);
-////		                                      count($this->Response->searchData->baseIds));
-//	}
-//	else {
-////		$data['heading'] = KrMethods::sprintf('COM_KNOWRES_SEARCH_HEADER_1', $this->Response->searchData->description);
-//		$data['heading'] = KrMethods::sprintf('COM_KNOWRES_SEARCH_HEADER_X', $description);
-//	}
-
-	if ($this->Response->searchData->layout) {
-		$data['items'] = $this->loadTemplate('browse');
-	} else {
-		if ($this->Response->searchData->bar == 'favs') {
-			$this->Response->searchData->bar = 'list';
-		}
-		$data['items'] = $this->loadTemplate($this->Response->searchData->bar);
+	if ($this->Response->searchData->bar == 'favs') {
+		$this->Response->searchData->bar = KrMethods::getParams()->get('default_view', 'list');
 	}
+	$data['items']      = $this->loadTemplate($this->Response->searchData->bar);
 	$data['filters']    = $this->favs ? '' : $this->loadTemplate('filters');
 	$data['sortby']     = $this->loadTemplate('sortby');
 	$data['pagination'] = $pagination;
@@ -65,8 +48,7 @@ if (count($this->Response->searchData->favs)) {
 	                                                   time() + $lifetime,
 	                                                   Factory::getApplication()->get('cookie_path', '/'),
 	                                                   Factory::getApplication()->get('cookie_domain'));
-}
-else {
+} else {
 	Factory::getApplication()->getInput()->cookie->set('krsaved',
 	                                                   '',
 	                                                   time() - $lifetime,

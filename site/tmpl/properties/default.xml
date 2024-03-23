@@ -1,8 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <metadata>
-    <layout title="COM_KNOWRES_TITLE_PROPERTIES" option="View">
+    <layout title="COM_KNOWRES_TITLE_PROPERTIES" option="COM_KNOWRES_TITLE_PROPERTIES_OPT">
         <message>
             <![CDATA[COM_KNOWRES_TITLE_PROPERTIES_DSC]]>
         </message>
     </layout>
+    <fields name="request">
+        <fieldset name="request">
+            <field name="region_id"
+                   addfieldprefix="HighlandVision\Component\Knowres\Administrator\Field"
+                   allow_property="true"
+                   filter="integer"
+                   type="listregions"
+                   label="Select Region"
+                   description="Select the region for the search. If not selected the default region will be used.">
+                <option value="">COM_KNOWRES_SELECT</option>
+            </field>
+        </fieldset>
+    </fields>
 </metadata>

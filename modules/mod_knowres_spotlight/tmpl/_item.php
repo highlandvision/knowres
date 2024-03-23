@@ -13,8 +13,7 @@ use HighlandVision\KR\Framework\KrMethods;
 ?>
 
 <?php if ($link): ?>
-	<a href="<?php echo $link; ?>" <?php echo $external; ?>
-        title="<?php echo $d['text']; ?>">
+	<a href="<?php echo $link; ?>" <?php echo $external; ?> title="<?php echo $d['text']; ?>">
 <?php endif; ?>
 
 <?php $options = ['src'   => $d['image'],
