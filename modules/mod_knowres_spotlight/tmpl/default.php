@@ -54,12 +54,8 @@ if ($textsize) {
 
 			$link = '';
 			if ($d['link'] != -1) {
-				$link     = KrMethods::route('index.php?Itemid=' . $d['link']);
+				$link     = $d['link'];
 				$external = '';
-			}
-			elseif (!empty($d['url'])) {
-				$link     = $d['url'];
-				$external = 'target="_blank"';
 			}
 
 			require ModuleHelper::getLayoutPath('mod_knowres_spotlight', '_item');

@@ -79,12 +79,14 @@
                        description="MOD_KNOWRES_SPOTLIGHT_CATEGORY_DSC">
                     <option value="-1">COM_MODULES_NONE</option>
                 </field>
-                <field name="link1"
-                       type="menuitem"
+                <field name="layout1"
                        default="-1"
-                       label="MOD_KNOWRES_SPOTLIGHT_LINK"
-                       description="MOD_KNOWRES_SPOTLIGHT_LINK_DSC">
+                       type="list"
+                       label="MOD_KNOWRES_SPOTLIGHT_LAYOUT"
+                       description="MOD_KNOWRES_SPOTLIGHT_LAYOUT_DSC">
                     <option value="-1">COM_MODULES_NONE</option>
+                    <option value="new">Newest Properties</option>
+                    <option value="discount">Discounted Properties</option>
                 </field>
                 <field type="spacer"
                        name="spacer2"
@@ -107,12 +109,14 @@
                        description="MOD_KNOWRES_SPOTLIGHT_CATEGORY_DSC">
                     <option value="-1">COM_MODULES_NONE</option>
                 </field>
-                <field name="link2"
-                       type="menuitem"
+                <field name="layout2"
                        default="-1"
-                       label="MOD_KNOWRES_SPOTLIGHT_LINK"
-                       description="MOD_KNOWRES_SPOTLIGHT_LINK_DSC">
+                       type="list"
+                       label="MOD_KNOWRES_SPOTLIGHT_LAYOUT"
+                       description="MOD_KNOWRES_SPOTLIGHT_LAYOUT_DSC">
                     <option value="-1">COM_MODULES_NONE</option>
+                    <option value="new">Newest Properties</option>
+                    <option value="discount">Discounted Properties</option>
                 </field>
                 <field type="spacer"
                        name="spacer3"
@@ -135,12 +139,14 @@
                        description="MOD_KNOWRES_SPOTLIGHT_CATEGORY_DSC">
                     <option value="-1">COM_MODULES_NONE</option>
                 </field>
-                <field name="link3"
-                       type="menuitem"
+                <field name="layout3"
                        default="-1"
-                       label="MOD_KNOWRES_SPOTLIGHT_LINK"
-                       description="MOD_KNOWRES_SPOTLIGHT_LINK_DSC">
+                       type="list"
+                       label="MOD_KNOWRES_SPOTLIGHT_LAYOUT"
+                       description="MOD_KNOWRES_SPOTLIGHT_LAYOUT_DSC">
                     <option value="-1">COM_MODULES_NONE</option>
+                    <option value="new">Newest Properties</option>
+                    <option value="discount">Discounted Properties</option>
                 </field>
             </fieldset>
             <fieldset name="advanced">

@@ -28,18 +28,20 @@ for ($i = 1; $i <= 3; $i++) {
 		$count++;
 
 		$category_id = $params->get('category_id' . $i);
-		$mlink       = $params->get('link' . $i);
+		$layout      = $params->get('layout' . $i);
 		$link        = '';
 
 		if ($category_id <> -1) {
 			$Itemid = SiteHelper::getItemId('com_knowres', 'properties',
 			                                ['layout' => 'category', 'category_id' => $category_id],
 			                                ['layout' => 'category']);
-
 			$link   = KrMethods::route('index.php?option=com_knowres&view=properties&layout=category&category_id=' .
 			                           $category_id . '&Itemid=' . $Itemid);
-		} elseif ($mlink <> -1) {
-			$link = KrMethods::route('index.php?Itemid=' . $mlink);
+		} elseif ($layout <> -1) {
+			$Itemid = SiteHelper::getItemId('com_knowres', 'properties',
+			                                ['layout' => $layout]);
+			$link = KrMethods::route('index.php?option=com_knowres&view=properties&layout=' . $layout
+			                         . '&Itemid=' . $Itemid);
 		}
 
 		if (empty($link)) {
@@ -48,7 +50,7 @@ for ($i = 1; $i <= 3; $i++) {
 
 		$data[$i] = ['image' => $params->get('image' . $i),
 		             'text'  => $params->get('text' . $i),
-		             'link'  => $link,
+		             'link'  => $link
 		];
 	}
 }

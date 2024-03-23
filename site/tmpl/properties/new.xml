@@ -5,4 +5,11 @@
 			<![CDATA[COM_KNOWRES_TITLE_PROPERTIES_NEW_DSC]]>
 		</message>
 	</layout>
+	<fields name="request">
+		<fieldset name="request">
+			<field name="layout"
+				   value="new">
+			</field>
+		</fieldset>
+	</fields>
 </metadata>
