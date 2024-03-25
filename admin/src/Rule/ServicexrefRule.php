@@ -6,11 +6,6 @@
  * @license    See the file "LICENSE.txt" for the full license governing this code.
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
-
-/** @noinspection PhpComposerExtensionStubsInspection */
-
-/** @noinspection PhpComposerExtensionStubsInspection */
-
 /** @noinspection PhpComposerExtensionStubsInspection */
 
 namespace HighlandVision\Component\Knowres\Administrator\Rule;
