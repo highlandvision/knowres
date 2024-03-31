@@ -218,15 +218,8 @@ class PropertiesModel extends ListModel
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
-		$query->select($db->qn(['id',
-		                        'bedrooms',
-		                        'property_name',
-		                        'property_area',
-		                        'region_id',
-		                        'sleeps',
-		                        'sleeps_extra'
-		]));
-
+		$query->select($db->qn(['id', 'bedrooms', 'property_name', 'property_area', 'region_id', 'sleeps',
+		                        'sleeps_extra']));
 		$query->from($db->qn('#__knowres_property'))
 		      ->select('(' .
 			      self::transSQ($db, 'region', 'region_id') . ') AS ' . $db->q('region_name'))

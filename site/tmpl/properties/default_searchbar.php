@@ -61,7 +61,7 @@ use HighlandVision\KR\Framework\KrMethods;
 			<?php endif; ?>
 
 			<?php if (!$this->Search->searchData->layout): ?>
-				<a class="button map map-trigger" data-zoom="<?php echo $this->Search->searchData->map_zoom; ?>"
+				<a id="kr-search-map-trigger" class="button map map-trigger" data-zoom="<?php echo $this->Search->searchData->map_zoom; ?>"
 				   data-zoommax="<?php echo $this->Search->searchData->map_zoom_max; ?>" data-target="kr-search-map-full"
 				   data-bar="map" data-type="cluster" data-forcemap="<?php echo $this->Search->searchData->map_modal; ?>"
 				   data-maptypeid="<?php echo $this->params->get('property_map_type', ''); ?>"

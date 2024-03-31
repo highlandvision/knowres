@@ -46,8 +46,7 @@ class ManagerpropertiesRule extends FormRule
 	 * @return bool  True if the value is valid, false otherwise.
 	 */
 	public function test(SimpleXMLElement $element, $value, $group = null, Registry $input = null,
-		Form $form = null): bool
-	{
+		Form $form = null): bool {
 		$access_level = ($input instanceof Registry) ? $input->get('access_level') : '';
 		if ($access_level >= 30)
 		{
@@ -62,5 +61,7 @@ class ManagerpropertiesRule extends FormRule
 				return false;
 			}
 		}
+
+		return true;
 	}
 }

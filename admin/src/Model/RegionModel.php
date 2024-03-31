@@ -46,14 +46,12 @@ class RegionModel extends AdminModel
 	public function getItem($pk = null): false|object
 	{
 		$item = parent::getItem($pk);
-		if ($item)
-		{
+		if ($item) {
 			$Translations = new Translations();
 			$item->name   = $Translations->getText('region', $item->id);
 			$item->blurb  = $Translations->getText('region', $item->id, 'blurb');
 
-			if (isset($item->country_id) && $item->country_id > 0)
-			{
+			if (isset($item->country_id) && $item->country_id > 0) {
 				$item->country_name = $Translations->getText('country', $item->country_id);
 			}
 		}
@@ -71,8 +69,7 @@ class RegionModel extends AdminModel
 	protected function loadFormData(): mixed
 	{
 		$data = KrMethods::getUserState('com_knowres.edit.region.data', []);
-		if (empty($data))
-		{
+		if (empty($data)) {
 			$data = $this->getItem();
 		}
 

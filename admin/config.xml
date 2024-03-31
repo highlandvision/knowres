@@ -1330,7 +1330,7 @@
                description="COM_KNOWRES_CONFIG_EMAIL_FONT_SIZE_DSC"/>
         <field name="email_affiliates"
                type="radio"
-               default="1"
+               default="0"
                class="btn-group btn-group-yesno"
                label="COM_KNOWRES_CONFIG_EMAIL_AFFILIATES"
                description="COM_KNOWRES_CONFIG_EMAIL_AFFILIATES_DSC">

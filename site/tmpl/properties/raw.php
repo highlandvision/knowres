@@ -6,14 +6,12 @@
  * @license    See the file "LICENSE.txt" for the full license governing this code.
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
-
 /** @noinspection PhpUnhandledExceptionInspection */
 
-use HighlandVision\KR\Framework\KrMethods;
+defined('_JEXEC') or die;
+
 use HighlandVision\KR\Utility;
 use Joomla\CMS\Factory;
-
-defined('_JEXEC') or die;
 
 $pagination = $this->pagination->getPagesLinks(true);
 if (!$pagination) {
