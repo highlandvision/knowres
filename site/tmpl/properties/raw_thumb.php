@@ -15,7 +15,7 @@ use HighlandVision\KR\Translations;
 $Translations = new Translations();
 ?>
 
-<?php if ($this->nofavs): ?>
+<?php if ($this->favs_alert): ?>
 	<div class="callout warning" data-closable>
 		<?php echo KrMethods::plain('COM_KNOWRES_NO_FAVOURITES'); ?>
 		<button class="close-button" aria-label="Dismiss alert" type="button" data-close>

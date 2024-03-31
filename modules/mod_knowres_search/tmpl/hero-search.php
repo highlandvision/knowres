@@ -21,13 +21,13 @@ $wa->useScript('com_knowres.site-modules');
 
 $form         = KrFactory::getAdhocForm('mod_knowres_search', 'mod_knowres_search.xml', 'module', null);
 $show_regions = $params->get('show_regions');
+$link         = '/index.php?option=com_knowres&task=properties.search';
 ?>
 
 <div class="grid-x grid-margin-x">
 	<div class="small-12 medium-4 large-12 cell">
 		<div class="hero-search">
-			<form action="<?php echo KrMethods::route('index.php?option=com_knowres&task=properties.search'); ?>"
-				method="post" name="search-default">
+			<form action="<?php echo $link; ?>" method="post" name="search-default">
 				<div class="grid-x grid-margin-x">
 					<?php if (!empty($search_text) && $show_regions < 1): ?>
 						<div class="small-12 medium-12 large-3 cell hero-search-text">
@@ -56,17 +56,17 @@ $show_regions = $params->get('show_regions');
 						<input type="hidden" id="departure" name="departure" value="">
 					<?php endif; ?>
 					<?php if ($show_guests): ?>
-					<div class="small-12 medium-12 large-3 cell">
-						<?php echo $form->renderField('guests',
-						                              null,
-						                              $initial->guests,
-						                              ['format'     => $show_guests,
-						                               'adults'     => $initial->adults,
-						                               'children'   => $initial->children,
-						                               'child_ages' => $initial->child_ages ?: [],
-						                               'max'        => $max_guests
-						                              ]); ?>
-					</div>
+						<div class="small-12 medium-12 large-3 cell">
+							<?php echo $form->renderField('guests',
+							                              null,
+							                              $initial->guests,
+							                              ['format'     => $show_guests,
+							                               'adults'     => $initial->adults,
+							                               'children'   => $initial->children,
+							                               'child_ages' => $initial->child_ages ?: [],
+							                               'max'        => $max_guests
+							                              ]); ?>
+						</div>
 					<?php endif; ?>
 					<div class="small-12 medium-12 large-2 cell">
 						<button type="submit" class="button expanded">

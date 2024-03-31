@@ -25,10 +25,10 @@ $data = [];
 if (!empty($this->items) && count($this->items)) {
 	$data['bar'] = $this->Response->searchData->bar;
 	if ($this->Response->searchData->bar == 'favs') {
-		$this->Response->searchData->bar = KrMethods::getParams()->get('default_view', 'list');
+		$this->Response->searchData->bar = $this->favs_bar;
 	}
 	$data['items']      = $this->loadTemplate($this->Response->searchData->bar);
-	$data['filters']    = $this->favs ? '' : $this->loadTemplate('filters');
+	$data['filters']    = $this->favs_bar ? '' : $this->loadTemplate('filters');
 	$data['sortby']     = $this->loadTemplate('sortby');
 	$data['pagination'] = $pagination;
 } else {

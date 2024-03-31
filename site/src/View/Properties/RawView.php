@@ -31,12 +31,12 @@ class RawView extends KrHtmlView
 {
 	/** @var Response Site search */
 	protected Response $Response;
-	/** @var bool True if favourites selected */
-	protected bool $favs = false;
+	/** @var bool True if favourites view is requested but no favourites are selected */
+	protected bool $favs_alert = false;
+	/** @var string Set to value of layout for favs */
+	protected string $favs_bar = '';
 	/** @var string Modules output */
 	protected string $modules;
-	/** @var bool True if favourites requested but none selected */
-	protected bool $nofavs = false;
 
 	/**
 	 * Display the view
@@ -51,6 +51,7 @@ class RawView extends KrHtmlView
 		$this->setLayout('raw');
 		$this->state  = $this->get('state');
 		$this->params = KrMethods::getParams();
+		$default_view = $this->params->get('default_view', 'list');
 
 		$searchSession = new KrSession\Search();
 		$searchData    = $searchSession->getData();
@@ -63,37 +64,29 @@ class RawView extends KrHtmlView
 		}
 
 		$this->Response = new Response($searchData);
-
-		$bar          = KrMethods::inputString('bar', $searchData->bar);
-		$action       = KrMethods::inputString('action', '');
-		$action_value = KrMethods::inputString('action_value', '');
-
-		$favs = false;
-		if ($bar == 'favs' && !count($searchData->favs)) {
-			$bar          = $this->params->get('default_view', 'list');
-			$this->nofavs = true;
+		$action         = KrMethods::inputString('action', '');
+		$action_value   = KrMethods::inputString('action_value', '');
+		$prev_bar       = $default_view;
+		if ($searchData->bar == 'list' || $searchData->bar == 'grid') {
+			$prev_bar = $searchData->bar;
 		}
 
-		if ($bar == 'favs' && count($searchData->favs)) {
-			$this->setFavs($searchData->favs);
-			$favs = true;
-		} else {
-//			else if ($bar == 'view' && !$value) {
-//				$value = $this->Response->data->view;
-//				if (!$value) {
-//					$value = $this->params->get('default_view', 'list');
-//				}
-//			}
+		$bar = KrMethods::inputString('bar', $searchData->bar);
+		if (!$bar || $bar == 'map') {
+			$bar = $default_view;
+		}
 
-//			$this->Response->searchData->bar = $bar;
+		if ($bar == 'favs') {
+			if (!count($searchData->favs)) {
+				$bar              = $prev_bar;
+				$this->favs_alert = true;
+			} else {
+				$this->setFavs($searchData->favs);
+				$this->favs_bar = $prev_bar;
+			}
+		}
 
-//			if ($bar && !$favs) {
-//				if ($this->Response->searchData->limitstart > 0) {
-//					$this->Response->searchData->start      = $this->searchData->limitstart;
-//					$this->Response->searchData->limitstart = 0;
-//				}
-//			}
-
+		if (!$this->favs_bar) {
 			$this->Response->setSearchData($bar, $action, $action_value);
 			$searchSession->setData($this->Response->searchData);
 			$this->state->set('filter.id', $this->Response->searchData->baseIds);
@@ -229,7 +222,7 @@ class RawView extends KrHtmlView
 	 */
 	private function setFavs(array $favourites): void
 	{
-		$this->favs                      = true;
+		$this->view_favs                 = true;
 		$this->Response->searchData->bar = 'favs';
 
 		$fids = [];
@@ -237,7 +230,7 @@ class RawView extends KrHtmlView
 			$fids[] = $s;
 		}
 
-		//TODO-v4.4 display favourites on map only when displayed in list
+		//TODO-v5.1 display favourites on map only when displayed in list
 		$this->state->set('filter.id', $fids);
 		$this->items = $this->get('items');
 	}

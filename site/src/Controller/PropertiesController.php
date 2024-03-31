@@ -253,6 +253,7 @@ class PropertiesController extends BaseController
 		$input['adults']     = KrMethods::inputInt('adults');
 		$input['child_ages'] = KrMethods::inputArray('child_ages');
 		$input['children']   = KrMethods::inputInt('children');
+		$input['map_modal']  = KrMethods::inputInt('map_modal');
 
 		foreach ($input as $k => $v) {
 			if (empty($v)) {
@@ -262,12 +263,9 @@ class PropertiesController extends BaseController
 
 		$Itemid = SiteHelper::getItemId('com_knowres', 'properties', ['layout' => 'search']);
 		$route  = KrMethods::route('index.php?option=com_knowres&view=properties&' .
-		                           'region_id=' .
-		                           $region_id .
-		                           '&Itemid=' .
-		                           $Itemid .
-		                           '&' .
-		                           rawurlencode(http_build_query($input)),
+		                           'region_id=' . $region_id .
+		                           '&Itemid=' . $Itemid .
+		                           '&' . rawurlencode(http_build_query($input)),
 		                           false);
 
 		KrMethods::redirect($route);
@@ -369,7 +367,7 @@ class PropertiesController extends BaseController
 			];
 
 		$cache         = KrMethods::getCache($cache_options);
-		$cache_markers = $cache->get($id);
+		$cache_markers = $cache->get($region_id);
 		if ($cache_markers) {
 			$markers = array_merge($markers, Utility::decodeJson($cache_markers, true));
 		} else {

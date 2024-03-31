@@ -31,7 +31,8 @@ foreach ($this->gateways as $gateway)
 }
 
 $Itemid = SiteHelper::getItemId('com_knowres', 'confirm', ['layout' => 'payment']);
-$action = KrMethods::route('index.php?option=com_knowres&view=confirm&layout=payment&Itemid=' . $Itemid);
+// Ajax request
+$action = '/index.php?option=com_knowres&view=confirm&layout=payment&Itemid=' . $Itemid;
 ?>
 
 <form action="<?php echo $action; ?>" class="ajaxform form-validate" id="kr-form-payment" method="post">

@@ -20,14 +20,14 @@ $wa->useScript('com_knowres.site-modules');
 
 $form         = KrFactory::getAdhocForm('mod_knowres_search', 'mod_knowres_search.xml', 'module', null);
 $show_regions = $params->get('show_regions');
+$link         = "/index.php?option=com_knowres&task=properties.search";
 ?>
 
 <div class="hero-sticky">
 	<button class="close-button show-for-small primary" aria-label="Close menu" type="button" data-close>
 		<span aria-hidden="true">&times;</span>
 	</button>
-	<form action="<?php echo KrMethods::route('index.php?option=com_knowres&task=properties.search'); ?>"
-	      method="post" name="search-default">
+	<form action="<?php echo $link; ?>" method="post" name="search-default">
 		<div class="grid-container">
 			<div class="grid-x grid-margin-x">
 				<?php if (!empty($search_text) && $show_regions < 1): ?>

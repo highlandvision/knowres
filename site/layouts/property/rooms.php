@@ -37,9 +37,9 @@ $Translations = new Translations();
 		<?php foreach ($data as $d): ?>
 			<?php $string .= $Translations->getText('propertyfeature', $d->id); ?>
 			<?php if ($d->count > 1): ?>
-				<?php $string .= $name . ' x ' . $d->count . ', '; ?>
+				<?php $string .= ' x ' . $d->count . ', '; ?>
 			<?php else: ?>
-				<?php $string .= $name . ', '; ?>
+				<?php $string .= ', '; ?>
 			<?php endif; ?>
 		<?php endforeach; ?>
 		<?php $string = rtrim($string, ', '); ?>

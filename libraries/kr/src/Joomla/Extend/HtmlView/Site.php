@@ -229,25 +229,34 @@ class Site extends KrHtmlView
 		$menu_description = '';
 		$menu_robots      = '';
 
-		$menu = $app->getMenu()->getActive();
-		if ($menu) {
-			$menu_params      = $menu->getParams();
-			$menu_title       = $menu_params->get('page_title');
-			$menu_description = $menu_params->get('menu-meta_description');
-			$menu_robots      = $menu_params->get('robots');
+		if (empty($title) || empty($description)) {
+			$menu = $app->getMenu()->getActive();
+			if ($menu) {
+				$menu_params      = $menu->getParams();
+				$menu_title       = $menu_params->get('page_title');
+				$menu_description = $menu_params->get('menu-meta_description');
+				$menu_robots      = $menu_params->get('robots');
+			}
 		}
 
-		$title = $menu_title <> '' ? $menu_title : $app->get('page_title', $title);
+		if (empty($title)) {
+			$title = !empty($menu_title) ? $menu_title : $app->get('page_title', $title);
+		}
 		if ($app->getCfg('sitename_pagetitles', 0) == 1) {
 			$title = KrMethods::sprintf('JPAGETITLE', $app->getCfg('sitename'), $title);
-		}
-		else if ($app->getCfg('sitename_pagetitles', 0) == 2) {
+		} else if ($app->getCfg('sitename_pagetitles', 0) == 2) {
 			$title = KrMethods::sprintf('JPAGETITLE', $title, $app->getCfg('sitename'));
 		}
-
 		$this->document->setTitle($title);
-		$this->document->setDescription($menu_description <> '' ? $menu_description :
-			                                $app->get('meta_description', $description));
+
+		if (empty($description)) {
+			$this->document->setDescription(!empty($menu_description) ? $menu_description :
+				                                $app->get('meta_description', $description));
+		}
+		else {
+			$this->document->setDescription($description);
+		}
+
 		$this->document->setMetaData('robots', $menu_robots <> '' ? $menu_robots : $app->get('robots'));
 	}
 }

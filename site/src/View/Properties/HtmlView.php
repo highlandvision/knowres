@@ -85,13 +85,13 @@ class HtmlView extends KrHtmlView\Site
 			$retain = 1;
 		}
 
-		$new = false;
+		$init = false;
 		if (!$retain || !count($searchData->baseIds)) {
 			$searchData = $searchSession->resetData($searchData->bar);
-			$new        = true;
+			$init        = true;
 		}
 
-		if ($new) {
+		if ($init) {
 			$this->property_search = true;
 
 			if ($layout == 'category') {
@@ -119,7 +119,7 @@ class HtmlView extends KrHtmlView\Site
 				$this->meta_title       = KrMethods::plain('COM_KNOWRES_BROWSE_DISCOUNTS');
 				$this->meta_description = KrMethods::plain('COM_KNOWRES_BROWSE_DISCOUNTS_DSC');
 			} else {
-				// From search module!
+				// From search or search by map module!
 				$searchData = $this->setInput($searchData, $searchSession);
 				if (!empty($searchData->arrival) && !empty($searchData->departure)) {
 					if ($searchData->arrival < $today || $searchData->departure < $today
@@ -133,12 +133,12 @@ class HtmlView extends KrHtmlView\Site
 
 		$searchData->favs = SiteHelper::getFavourites();
 		$this->Search     = new Search($searchData);
-		if ($new) {
+		if ($init) {
 			$this->Search->doBaseSearch();
 		}
 
 		if (!$description) {
-			$description = $this->setSearchDescription();
+			$description = $this->setSearchDescription($this->Search->searchData);
 		}
 
 		$this->header = KrMethods::sprintf('COM_KNOWRES_SEARCH_HEADER_X', $description);
@@ -226,6 +226,7 @@ class HtmlView extends KrHtmlView\Site
 			$searchData->children    = KrMethods::inputInt('children');
 			$searchData->child_ages  = KrMethods::inputArray('child_ages');
 			$searchData->limitstart  = KrMethods::inputint('limitstart');
+			$searchData->map_modal   = KrMethods::inputint('map_modal');
 
 			return $searchData;
 		} catch (Exception $e) {
@@ -249,19 +250,21 @@ class HtmlView extends KrHtmlView\Site
 	/**
 	 * Set the descriptions for the search module search
 	 *
+	 * @param  stdClass  $data  Search session data.
+	 *
 	 * @throws Exception
 	 * @since  5.0.0
 	 * @return string
 	 */
-	protected function setSearchDescription(): string
+	protected function setSearchDescription(stdClass $data): string
 	{
-		$description            = $this->Search->searchData->region_name . ', ' . KrMethods::getCfg('sitename');
+		$description            = $data->region_name . ', ' . KrMethods::getCfg('sitename');
 		$this->meta_title       = KrMethods::sprintf('COM_KNOWRES_SEO_TITLE_PROPERTIES',
-		                                             $this->Search->data->region_name,
-		                                             $this->Search->data->country_name);
+		                                             $data->region_name,
+		                                             $data->country_name);
 		$this->meta_description = KrMethods::sprintf('COM_KNOWRES_SEO_DESCRIPTION_PROPERTIES',
-		                                             $this->Search->data->region_name,
-		                                             $this->Search->data->country_name);
+		                                             $data->region_name,
+		                                             $data->country_name);
 
 		return $description;
 	}

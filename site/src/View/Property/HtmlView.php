@@ -147,7 +147,7 @@ class HtmlView extends KrHtmlView\Site
 		$this->Itemid           = SiteHelper::getItemId('com_knowres', 'property', ['id' => 0]);
 		$this->meta_title       = $this->item->property_name . ' | ' . $this->item->region_name . ' | '
 			. $this->item->type_name;
-		$this->meta_description = KrMethods::sprintf('COM_KNOWRES_SEO_DSC_PROPERTY',
+		$this->meta_description = KrMethods::sprintf('COM_KNOWRES_SEO_DESCRIPTION_PROPERTY',
 		                                             $this->item->property_name,
 		                                             $this->item->tagline ?? '',
 		                                             $this->item->type_name,

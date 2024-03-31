@@ -81,17 +81,21 @@ class CronserviceController extends BaseController
 
 		$PushRates = new Rates\PushRates($this->test);
 		if (method_exists($PushRates, 'processQueue')) {
-			$queue = KrFactory::getListModel('servicequeues')->getQueueByServiceMethod($i->id, 'updateListing');
-			if (is_countable($queue) && count($queue)) {
-				foreach ($queue as $q) {
-					//TODO-v4.4 Pass all queues to class
-					$PushRates->processQueue($q);
-
-					$actioned             = new stdClass();
-					$actioned->id         = $q->id;
-					$actioned->actioned   = 1;
-					$actioned->updated_at = TickTock::getTS();
-					KrFactory::update('service_queue', $actioned);
+			$services = self::getServicesByType('s');
+			foreach ($services as $s) {
+				if ($s->plugin == 'beyond') {
+					$queue = KrFactory::getListModel('servicequeues')->getQueueByServiceMethod($s->id, 'updateListing');
+					if (is_countable($queue) && count($queue)) {
+						foreach ($queue as $q) {
+							//TODO-v5.1 Pass all queues to class
+							$PushRates->processQueue($q);
+							$actioned             = new stdClass();
+							$actioned->id         = $q->id;
+							$actioned->actioned   = 1;
+							$actioned->updated_at = TickTock::getTS();
+							KrFactory::update('service_queue', $actioned);
+						}
+					}
 				}
 			}
 		}

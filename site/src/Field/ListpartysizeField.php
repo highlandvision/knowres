@@ -62,14 +62,14 @@ class ListpartysizeField extends ListField
 	 */
 	public function renderField($options = []): string
 	{
-		$this->format         = $options['format'];
+		$this->format         = !empty($options['format']) ? $options['format'] : '';
 		$this->adults         = $options['adults'];
 		$this->children       = $options['children'];
 		$this->child_ages     = $options['child_ages'];
 		$this->max            = $options['max'];
-		$this->infant_max     = $options['infant_max'] ?: 0;
-		$this->infant_age     = $options['infant_age'] ?: 0;
-		$this->fixed          = $options['fixed'] ?: false;
+		$this->infant_max     = !empty($options['infant_max']);
+		$this->infant_age     = !empty($options['infant_age']);
+		$this->fixed          = !empty($options['fixed']);
 		$this->dataAttributes = $this->setDataAttributes();
 
 		return parent::renderField();

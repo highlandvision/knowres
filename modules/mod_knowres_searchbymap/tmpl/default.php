@@ -10,8 +10,6 @@
 defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrMethods;
-
-$link = KrMethods::route('index.php?option=com_knowres&view=properties&region_id=' . $region_id . '&Itemid=' . $Itemid . '&display=map');
 ?>
 
 <div class="kr-searchby-map">
