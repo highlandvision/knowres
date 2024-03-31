@@ -52,6 +52,7 @@ class PropertiesController extends BaseController
 	 */
 	#[NoReturn] public function favourite(): void
 	{
+		KrMethods::loadLanguage();
 		$searchSession = new KrSession\Search();
 		$searchData    = $searchSession->getData();
 		$favs          = $searchData->favs;
@@ -152,6 +153,7 @@ class PropertiesController extends BaseController
 	 */
 	#[NoReturn] public function mapsession(): void
 	{
+		KrMethods::loadLanguage();
 		$searchSession         = new KrSession\Search();
 		$searchData            = $searchSession->getData();
 		$searchData->map_modal = KrMethods::inputInt('map_modal');

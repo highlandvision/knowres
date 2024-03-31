@@ -196,7 +196,7 @@ class KrMethods
 	}
 
 	/**
-	 * Get current language tag
+	 * Get current language
 	 *
 	 * @since  3.3.0
 	 * @return ?Language
@@ -248,8 +248,7 @@ class KrMethods
 			if ($site_template) {
 				$paths[] = JPATH_SITE . '/templates/' . $site_template . '/html/layouts/' . OPTION;
 			}
-		}
-		else {
+		} else {
 			$template = self::getTemplate();
 			$paths[]  = JPATH_SITE . '/templates/' . $template . '/html/layouts/' . OPTION;
 		}
@@ -465,6 +464,19 @@ class KrMethods
 	public static function loadInternal(string $position): string
 	{
 		return FNS::loadInternal($position);
+	}
+
+	/**
+	 * Loads currrent language file for ajax request
+	 *
+	 * @throws Exception
+	 * @since  5.0.0
+	 */
+	public static function loadLanguage(): void
+	{
+		$language_tag = self::getLanguageTag();
+		$lang         = self::getLanguage();
+		$lang->load('com_knowres', JPATH_SITE, $language_tag);
 	}
 
 	/**

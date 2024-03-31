@@ -54,6 +54,7 @@ class PaymentView extends KrHtmlView\Site
 	 */
 	public function display($tpl = null): void
 	{
+		KrMethods::loadLanguage();
 		$this->Translations = new Translations();
 		$this->prepareDocument();
 

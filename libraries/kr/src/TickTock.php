@@ -483,8 +483,9 @@ class TickTock
 	public static function parseString(string $string, string $format = 'Y-m-d'): string
 	{
 		return Carbon::parse($string)
+					 ->locale(KrMethods::getLanguageTag())
 		             ->setTimezone('UTC')
-		             ->format($format);
+		             ->translatedFormat($format);
 	}
 
 	/**

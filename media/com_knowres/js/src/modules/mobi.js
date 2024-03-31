@@ -162,7 +162,7 @@
 			$.ajax({
 				type:    'POST',
 				cache:   false,
-				url:     '/index.php?option=com_knowres&task=property.quote&lang=' + lang,
+				url:     '/index.php?option=com_knowres&task=property.quote',
 				data:    $element.serialize(),
 				success: function (response) {
 					if (response) {
@@ -183,7 +183,7 @@
 			$.ajax({
 				type:     'POST',
 				cache:    false,
-				url:      livesite + 'index.php?option=com_knowres&task=property.mobi&lang=' + lang,
+				url:      livesite + 'index.php?option=com_knowres&task=property.mobi',
 				dataType: 'json',
 				data:     {
 					'pid':   self.quoteoptions.mqPid,

@@ -248,7 +248,7 @@ const lang = "en";
 
 					$.ajax({
 						type:    "POST",
-						url:     '/index.php?option=com_knowres&task=property.mapinfowindow&lang=' + lang,
+						url:     '/index.php?option=com_knowres&task=property.mapinfowindow',
 						data:    {
 							id: parseInt(boxinfo)
 						},
@@ -292,7 +292,7 @@ const lang = "en";
 
 			let self = this;
 			jQuery.ajax({
-				url:      '/index.php?option=com_knowres&task=properties.refreshmap&lang=' + lang,
+				url:      '/index.php?option=com_knowres&task=properties.refreshmap',
 				type:     'POST',
 				dataType: 'json',
 				success:  function (result) {
@@ -450,7 +450,7 @@ const lang = "en";
 			$mapmodal.foundation('close');
 			$.ajax({
 				type:    "POST",
-				url:     '/index.php?option=com_knowres&task=properties.mapsession&lang=' + lang,
+				url:     '/index.php?option=com_knowres&task=properties.mapsession',
 				success: function () {
 					$( '.kr-searchbar .button.map').removeClass('is-active');
 					$( '.kr-searchbar .button.list').addClass('is-active');
@@ -463,7 +463,7 @@ const lang = "en";
 			google.maps.event.trigger(map, "resize");
 			$.ajax({
 				type:    "POST",
-				url:     '/index.php?option=com_knowres&task=properties.mapsession&lang=' + lang,
+				url:     '/index.php?option=com_knowres&task=properties.mapsession',
 				data:    {map_modal: '1'},
 				success: function () {
 					return true;
@@ -497,7 +497,7 @@ const lang = "en";
 			}
 
 			jQuery.ajax({
-				url:      '/index.php?option=com_knowres&task=properties.mapdata&pid=' + pid + '&lang=' + lang,
+				url:      '/index.php?option=com_knowres&task=properties.mapdata&pid=' + pid,
 				type:     "POST",
 				dataType: "json",
 				success:  function (result) {

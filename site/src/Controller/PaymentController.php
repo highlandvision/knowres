@@ -38,6 +38,7 @@ class PaymentController extends FormController
 	public function router(): void
 	{
 		$this->checkToken();
+		KrMethods::loadLanguage();
 
 		try {
 			$paymentSession = new KrSession\Payment();

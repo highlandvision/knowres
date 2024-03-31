@@ -12,7 +12,6 @@
 	if (!window.location.origin)
 		window.location.origin = window.location.protocol + "//" + window.location.host;
 
-	let lang = $("#kr-lang").data('krlang');
 	let myConfirm, $myTask;
 
 	class Krconfirm {
@@ -30,7 +29,7 @@
 			$myTask.val('confirm.compute');
 			jQuery.ajax({
 				type:     'POST',
-				url:      'index.php?option=com_knowres&task=confirm.compute&lang=' + lang,
+				url:      'index.php?option=com_knowres&task=confirm.compute',
 				data:     $form.serializeArray(),
 				dataType: 'json',
 				success:  function (result) {

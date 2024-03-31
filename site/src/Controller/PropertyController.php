@@ -52,6 +52,8 @@ class PropertyController extends BaseController
 	 */
 	#[NoReturn] public function geriatric(): void
 	{
+		KrMethods::loadLanguage();
+
 		/** @var GeriatricView $view */
 		$view     = $this->getView('property', 'geriatric');
 		$id       = KrMethods::inputInt('pid');
@@ -113,6 +115,7 @@ class PropertyController extends BaseController
 	 */
 	#[NoReturn] public function mapinfowindow(): void
 	{
+		KrMethods::loadLanguage();
 		$searchSession = new KrSession\Search();
 		$searchData    = $searchSession->getData();
 
@@ -144,6 +147,7 @@ class PropertyController extends BaseController
 	 */
 	#[NoReturn] public function mobi(): void
 	{
+		KrMethods::loadLanguage();
 		$property_id = KrMethods::inputInt('pid');
 		if (!$property_id) {
 			SiteHelper::redirectSearch();
@@ -174,6 +178,7 @@ class PropertyController extends BaseController
 	public function quote(): void
 	{
 		/** @var QuoteView $view */
+		KrMethods::loadLanguage();
 		$view        = $this->getView('property', 'quote');
 		$property_id = KrMethods::inputInt('property_id');
 		$arrival     = KrMethods::inputString('arrival');

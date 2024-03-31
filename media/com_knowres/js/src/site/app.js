@@ -8,7 +8,6 @@
 
 "use strict";
 
-let lang;
 let searchData = [];
 let searchDone = false;
 let calendarLoaded = false;
@@ -20,8 +19,6 @@ let resized = false;
     $(function () {
         Foundation.addToJquery();
         $(document).foundation();
-
-        lang = $('#kr-lang').data('krlang');
 
         checkScreenWidth();
         $(window).on("resize", function () {
@@ -48,7 +45,7 @@ let resized = false;
             const $form = $(this);
             $.ajax({
                 type: 'POST',
-                url: $form.attr('action') + '&lang=' + lang,
+                url: $form.attr('action'),
                 data: $form.serialize(),
                 dataType: 'json',
                 success: function (result) {
@@ -100,7 +97,7 @@ let resized = false;
             const bar = $('.kr-searchbar a.is-active').data('bar');
             $.ajax({
                 type: 'POST',
-                url: '/index.php?option=com_knowres&task=properties.favourite&lang=' + lang,
+                url: '/index.php?option=com_knowres&task=properties.favourite',
                 data: {'property_id': pid},
                 dataType: 'json',
                 success: function (result) {
@@ -188,7 +185,7 @@ let resized = false;
     function loadCalendar(pid, target) {
         $.ajax({
             type: 'POST',
-            url: '/index.php?option=com_knowres&task=property.geriatric&lang=' + lang,
+            url: '/index.php?option=com_knowres&task=property.geriatric',
             dataType: 'html',
             data: {
                 'pid': pid
@@ -217,7 +214,7 @@ let resized = false;
 
     function getProperties(bar, action = '', action_value = '') {
         $.ajax({
-            url: '/index.php?option=com_knowres&view=properties&format=raw&lang=' + lang,
+            url: '/index.php?option=com_knowres&view=properties&format=raw',
             type: 'POST',
             data: {'bar': bar, 'action': action, 'action_value': action_value},
             dataType: 'json',
