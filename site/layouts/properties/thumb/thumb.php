@@ -43,7 +43,7 @@ $total   = count($items);
 $count   = 0;
 ?>
 
-<div class="grid-x grid-margin-x" id="kr-thumb">
+<div class="grid-x grid-margin-x large-margin-collapse" id="kr-thumb">
 	<div class="large-4 show-for-large cell">
 		<div id="pinfo" class="pinfo">
 			<p><?php echo KrMethods::plain('COM_KNOWRES_VIEW_THUMB_DEFAULT1'); ?></p>
@@ -63,7 +63,7 @@ $count   = 0;
 				                         ]);
 				?>
 			</a>
-			<div style="display:none;">
+			<div class="hideme">
 				<div class="thumboverview<?php echo $item->id; ?>">
 					<h3 class="h4"><?php echo $item->property_name; ?></h3>
 					<?php echo $Translations->getText('property', $item->id, 'p2'); ?>
