@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 use HighlandVision\KR\Framework\KrMethods;
 ?>
 
-<div id="kr-search-map-modal" style="padding:0;" class="reveal full" data-reveal data-v-offset="0">
+<div id="kr-search-map-modal" class="reveal full" data-reveal data-v-offset="0">
 	<div id="kr-search-map-full"></div>
 	<div id="kr-infowindow" data-closable></div>
 	<div id="kr-search-map-buttons" class="small button-group">

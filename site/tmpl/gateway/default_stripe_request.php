@@ -19,7 +19,7 @@ StripeLib::setApiKey($this->paymentData->secret_key);
 <form action="<?php echo KrMethods::route('index.php?option=com_knowres&task=service.stripe'); ?>"
       method="POST" id="kr-form-gateway" class="stripe">
 
-	<div class="grid-x grid-margin-x">
+	<div class="grid-x grid-padding-x">
 		<div class="small-12 medium-10 medium-offset-1 cell">
 			<div class="text-center">
 				<br>

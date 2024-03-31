@@ -21,7 +21,7 @@ use HighlandVision\KR\Framework\KrMethods;
 	       value="<?php echo $this->paymentData->merchantSignature; ?>">
 
 	<br><br>
-	<div class="grid-x grid-margin-x">
+	<div class="grid-x grid-padding-x">
 		<div class="small-12 medium-8 medium-offset-2 cell">
 			<h4 class="text-center">
 				<?php echo KrMethods::plain('COM_KNOWRES_PAYMENT_REDIRECT'); ?>
