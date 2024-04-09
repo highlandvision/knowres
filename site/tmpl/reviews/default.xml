@@ -12,7 +12,7 @@
 				layout="joomla.form.field.list-fancy-select"
 				type="listproperties"
 				label="COM_KNOWRES_PROPERTY_TITLE"
-				description="COM_KNOWRES_TITLE_ITEM_VIEW_PROPERTY_SELECT">
+				description="COM_KNOWRES_TITLE_PROPERTY_SELECT">
 				<option value="">COM_KNOWRES_SELECT</option>
 			</field>
 		</fieldset>

@@ -103,14 +103,10 @@ class HtmlView extends KrHtmlView\Site
 	{
 		$searchSession = new KrSession\Search();
 		$searchData    = $searchSession->getData();
-		if (count($searchData->baseIds) && $this->property_id) {
-			$pathway = HtmlView::propertiesPathway($pathway, $searchData);
-			$pathway = self::propertyPathway($pathway, $this->property_id, $this->property_name);
-		}
-		else if ($this->property_id) {
-			$pathway = self::propertyPathway($pathway, $this->property_id, $this->property_name);
-		}
 
+		$pathway = self::setPathwayBase();
+		$pathway = self::propertiesPathway($pathway, $searchData);
+		$pathway = self::propertyPathway($pathway, $searchData, $this->property);
 		$pathway->addItem(KrMethods::plain('COM_KNOWRES_REVIEWS'));
 	}
 }
