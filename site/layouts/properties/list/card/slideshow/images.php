@@ -17,6 +17,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\Registry\Registry;
 
 extract($displayData);
+
 /**
  * Layout variables
  *
@@ -32,18 +33,17 @@ $path           = Media\Images::getImagePath($item->id) . '/';
 $width          = $params->get('max_slideshow_width');
 $height         = $params->get('max_slideshow_height');
 
-$slick_id       = "kr-lazy-" . $item->id;
-$display = [];
-$index   = 0;
-foreach ($image_order as $order)
-{
+$slick_id = "kr-lazy-" . $item->id;
+$display  = [];
+$index    = 0;
+foreach ($image_order as $order) {
 	$display[(int) $order] = ['name' => $image_filename[$index], 'id' => $image_id[$index]];
 	$index++;
 }
 ksort($display);
 ?>
 
-<div class="kr-properties-slideshow" id="<?php echo $slick_id; ?>" >
+<div class="kr-properties-slideshow" id="<?php echo $slick_id; ?>">
 	<?php foreach ($display as $order => $image): ?>
 		<?php $alt = $Translations->getText('image', $image['id'], 'alt_text'); ?>
 		<a href="<?php echo $plink; ?>" title="View">

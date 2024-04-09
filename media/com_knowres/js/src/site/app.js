@@ -242,17 +242,12 @@ let resized = false;
     function setSearchData(response, action = '') {
         if (response) {
             $('#kr-properties-data').empty().fadeIn('slow').html(response['items']).foundation();
- //           $('#kr-properties-filter-heading').html(response['heading']);
-            $('.kr-pager').html(response['pagination']);
             if (action !== 'thumb') {
-                $('.kr-pager.bottom').html(response['pagination']);
-            } else {
-                $('.kr-pager.bottom').empty();
+                $('.kr-pager').html(response['pagination']);
             }
+            $('.kr-pager.bottom').html(response['pagination']);
             $("#kr-offcanvas-properties-filter").html(response['filters']);
             $("#kr-offcanvas-properties-sortby").html(response['sortby']);
-//            $("#kr-offcanvas-top-search").html(response['search']);
-
             if (response['search'].length && $('#arrivaldsp').length) {
                 $('body').trigger('initajaxsearch');
             }

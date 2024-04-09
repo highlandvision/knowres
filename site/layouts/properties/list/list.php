@@ -49,7 +49,7 @@ $count   = 0;
 		<?php $count++; ?>
 		<?php $end = $count < $total ? '' : 'end'; ?>
 		<div class="small-12 medium-6 cell flex-container">
-			<div id="<?php echo $id; ?>" class="card" data-id="<?php echo $item->id; ?>">
+			<div id="<?php echo $id; ?>" class="kr-list-property card" data-id="<?php echo $item->id; ?>">
 				<?php if ($item->imagefilename) : ?>
 					<div class="kr-slideshow-wrapper">
 						<?php echo KrMethods::render('properties.list.card.slideshow.images',

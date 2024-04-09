@@ -42,7 +42,7 @@ $weekly = KrFactory::getListModel('propertysettings')->getOneSetting('tariffChar
 		<?php $id = 'kr-property-' . $item->id; ?>
 		<?php $title = KrMethods::plain('COM_KNOWRES_VIEW') . ' ' . $item->property_name; ?>
 		<div class="small-6 medium-4 cell flex-container">
-			<div id="<?php echo $id; ?>" class="card" data-id="<?php echo $item->id; ?>">
+			<div id="<?php echo $id; ?>" class="kr-list-property card" data-id="<?php echo $item->id; ?>">
 				<?php if ($item->imagefilename) : ?>
 					<div class="kr-slideshow-wrapper">
 						<?php echo KrMethods::render('properties.grid.card.slideshow.images',
