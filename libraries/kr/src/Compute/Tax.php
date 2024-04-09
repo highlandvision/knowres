@@ -54,8 +54,7 @@ class Tax
 	{
 		$this->Hub = $Hub;
 
-		if ((int) $this->Hub->params->get('tax_ignore') || (int) $this->Hub->settings['tax_ignore']
-			|| !(int) $this->Hub->getValue('guests'))
+		if ((int) $this->Hub->params->get('tax_ignore') || !(int) $this->Hub->getValue('guests'))
 		{
 			return;
 		}

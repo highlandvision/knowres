@@ -63,15 +63,6 @@
 		</field>
 	</fieldset>
 	<fieldset name="bookings-lefttax">
-		<field name="tax_ignore"
-			default="0"
-			type="radio"
-			class="btn-group btn-group-yesno"
-			label="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_TAX_IGNORE"
-			description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_TAX_IGNORE_DSC">
-			<option value="0">JNO</option>
-			<option value="1">JYES</option>
-		</field>
 		<field name="tax_code_1"
 			filter="string"
 			hiddenDescription="true"
