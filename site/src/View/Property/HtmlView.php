@@ -127,16 +127,11 @@ class HtmlView extends KrHtmlView\Site
 		$this->contactlink =
 			KrMethods::route('index.php?option=com_knowres&view=contact&id=' . $this->item->id . '&Itemid=' . $Itemid);
 
-		if (is_countable($this->searchData->baseIds)
-			&& count($this->searchData->baseIds)
+		if (is_countable($this->searchData->baseIds) && count($this->searchData->baseIds)
 			&& $this->searchData->region_id == $this->item->region_id) {
-			$Itemid = SiteHelper::getItemId('com_knowres', 'properties', [
-				'layout'    => 'search',
-				'region_id' => $this->item->region_id
-			]);
 
-			$this->backlink = KrMethods::route('index.php?option=com_knowres&view=properties&Itemid=' . $Itemid
-			                                   . '&region_id=' . $this->item->region_id . '&retain=1');
+			$Itemid = SiteHelper::getItemId('com_knowres', 'properties', ['layout' => 'search']);
+			$this->backlink = KrMethods::route('index.php?Itemid=' . $Itemid . '&retain=1');
 		}
 
 		$this->setDisplayData();

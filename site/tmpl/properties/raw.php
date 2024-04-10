@@ -36,7 +36,6 @@ if (!empty($this->items) && count($this->items)) {
 }
 
 $data['search'] = true;
-
 echo Utility::encodeJson($data);
 
 $lifetime = 3600 * 24 * 30;

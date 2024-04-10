@@ -55,6 +55,7 @@ class RawView extends KrHtmlView
 
 		$searchSession = new KrSession\Search();
 		$searchData    = $searchSession->getData();
+		$this->Response   = new Response($searchData);
 		if (!is_countable($searchData->baseIds) || !count($searchData->baseIds)) {
 			$this->items      = [];
 			$this->pagination = $this->get('pagination');
@@ -63,7 +64,6 @@ class RawView extends KrHtmlView
 			parent::display($tpl);
 		}
 
-		$this->Response = new Response($searchData);
 		$action         = KrMethods::inputString('action', '');
 		$action_value   = KrMethods::inputString('action_value', '');
 		$prev_bar       = $default_view;

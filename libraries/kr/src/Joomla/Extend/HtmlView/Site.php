@@ -153,27 +153,6 @@ class Site extends KrHtmlView
 	}
 
 	/**
-	 * Add search backlink to pathway
-	 *
-	 * @param  Pathway  $pathway    Current pathway
-	 * @param  ?int     $region_id  ID of search region
-	 * @param  ?int     $Itemid     Item ID of search page
-	 *
-	 * @throws Exception
-	 * @since  3.3.0
-	 * @return Pathway
-	 */
-	public static function searchPathway(Pathway $pathway, ?int $region_id, ?int $Itemid): Pathway
-	{
-		$backlink =
-			KrMethods::route('index.php?option=com_knowres&view=properties&Itemid=' .
-			                 $Itemid . '&region_id=' . $region_id . '&retain=1');
-		$pathway->addItem(KrMethods::plain('COM_KNOWRES_SEARCH_RESULTS'), $backlink);
-
-		return $pathway;
-	}
-
-	/**
 	 * Set the base item for the pathway
 	 *
 	 * @throws Exception
