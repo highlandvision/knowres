@@ -31,10 +31,13 @@ $nights = TickTock::differenceDays($data->arrival, $data->departure);
 <?php echo ' ' . TickTock::displayDate($data->departure, 'D j F Y'); ?>
 <br>
 <?php echo KrMethods::sprintf('COM_KNOWRES_CONFIRM_NIGHTS', $nights); ?>
-<br>
-<?php echo KrMethods::plural('COM_KNOWRES_CONFIRM_ADULTS', $data->adults); ?>
-<?php if (!empty($data->children)): ?>
+<?php if (KrMethods::getParams()->get('search_adult_age', 0)): ?>
 	<br>
-	<?php echo KrMethods::plural('COM_KNOWRES_CONFIRM_CHILDREN', $data->children,
-		Utility::displayAges($data->child_ages)); ?>
+	<?php echo KrMethods::plural('COM_KNOWRES_CONFIRM_ADULTS', $data->adults); ?>
+	<?php if ($data->children): ?>
+		<br>
+		<?php echo KrMethods::plural('COM_KNOWRES_CONFIRM_CHILDREN', $data->children, Utility::displayAges($data->child_ages)); ?>
+	<?php endif; ?>
+<?php else: ?>
+	<?php echo KrMethods::plural('COM_KNOWRES_CONFIRM_GUESTS', $data->adults); ?>
 <?php endif; ?>

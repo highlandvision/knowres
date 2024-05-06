@@ -157,7 +157,8 @@ class Utility
 	{
 		$ages = implode(', ', $ages);
 
-		return substr_replace($ages, ' and ', strrpos($ages, ', '), 1);
+		// Replace the last comma with "&"
+		return preg_replace('/,([^,]*)$/', ' &$1', $ages);
 	}
 
 	/**

@@ -20,7 +20,8 @@ use Joomla\CMS\Language\Text;
 use function array_merge;
 
 /**
- * Supports a value from an external table
+ * Displays either the expanded guest numbers with adults, children and ages
+ * or the simple select option for total guests
  *
  * @since 1.0.0
  */
@@ -32,6 +33,8 @@ class ListpartysizeField extends ListField
 	protected array $child_ages = [];
 	/** @var int $children The number of children. */
 	protected int $children = 0;
+	/** @var int Expanded guest option. */
+	protected int $expanded = 0;
 	/** @var int Free infant age limit. */
 	protected int $infant_age = 0;
 	/** @var int The max number of free infants. */
@@ -62,21 +65,22 @@ class ListpartysizeField extends ListField
 	 */
 	public function renderField($options = []): string
 	{
-		$this->format         = !empty($options['format']) ? $options['format'] : '';
-		$this->adults         = $options['adults'];
-		$this->children       = $options['children'];
-		$this->child_ages     = $options['child_ages'];
-		$this->max            = $options['max'];
-		$this->infant_max     = !empty($options['infant_max']);
-		$this->infant_age     = !empty($options['infant_age']);
-		$this->fixed          = !empty($options['fixed']);
-		$this->dataAttributes = $this->setDataAttributes();
+		$this->expanded   = KrMethods::getParams()->get('search_guests_expanded', 0);
+
+		$this->adults     = $options['adults'];
+		$this->child_ages = $options['child_ages'];
+		$this->children   = $options['children'];
+		$this->infant_age = !empty($options['infant_age']);
+		$this->infant_max = !empty($options['infant_max']);
+		$this->max        = $options['max'];
+
+//		$this->dataAttributes = $this->setDataAttributes();
 
 		return parent::renderField();
 	}
 
 	/**
-	 * Form field options for select from form xml or build your own
+	 * Form field options for select from or build your own
 	 *
 	 * @throws InvalidArgumentException
 	 * @since  4.0.0
@@ -84,10 +88,14 @@ class ListpartysizeField extends ListField
 	 */
 	protected function getOptions(): array
 	{
-		$options   = [];
-		$maxguests = $this->max ?: KrMethods::getParams()->get('search_maxguests', 16);
+		$options = [];
 
-		if ($this->format == 2) {
+		if ($this->expanded) {
+			$maxguests  = $this->max ?: KrMethods::getParams()->get('search_maxguests', 0);
+			$adult_age  = KrMethods::getParams()->get('search_adult_age', 18);
+			$infant_age = $this->infant_age ?: KrMethods::getParams()->get('infant_age', 2);
+			$infant_max = $this->infant_max ?: KrMethods::getParams()->get('infant_max', 1);
+
 			for ($i = 1; $i <= $maxguests; $i++) {
 				$options[] = HTMLHelper::_('select.option',
 				                           $i,
@@ -104,23 +112,15 @@ class ListpartysizeField extends ListField
 				                               KrMethods::sprintf('MOD_KNOWRES_SEARCH_GUESTS_LBL',
 				                                                  $this->adults,
 				                                                  $this->children));
-		}
-		else {
-			if (!$this->fixed) {
-				$options[] = HTMLHelper::_('select.option', 1, KrMethods::plain('MOD_KNOWRES_SEARCH_ANY'));
-				for ($i = 2; $i < $this->max; $i++) {
-					$options[] = HTMLHelper::_('select.option', $i, Text::plural('MOD_KNOWRES_SEARCH_GUEST', $i));
-				}
-
-				$options[] = HTMLHelper::_('select.option',
-				                           $max,
-				                           Text::plural('MOD_KNOWRES_SEARCH_GUEST', $this->max . '+'));
-			} else {
-				for ($i = 1; $i <= $this->max; $i++) {
-					$options[] = HTMLHelper::_('select.option', $i, Text::plural('MOD_KNOWRES_SEARCH_GUEST', $i));
-				}
-
+		} else {
+			$options[] = HTMLHelper::_('select.option', 1, KrMethods::plain('MOD_KNOWRES_SEARCH_ANY'));
+			for ($i = 2; $i < $this->max; $i++) {
+				$options[] = HTMLHelper::_('select.option', $i, Text::plural('MOD_KNOWRES_SEARCH_GUEST', $i));
 			}
+
+			$options[] = HTMLHelper::_('select.option',
+			                           $max,
+			                           Text::plural('MOD_KNOWRES_SEARCH_GUEST', $this->max . '+'));
 		}
 
 		return array_merge(parent::getOptions(), $options);
@@ -134,11 +134,11 @@ class ListpartysizeField extends ListField
 	 */
 	protected function setDataAttributes(): array
 	{
-		$attributes = [];
+		$attributes               = [];
+		$attributes['aria-label'] = KrMethods::plain('MOD_KNOWRES_SEARCH_GUESTS_LBL_ARIA');
+		$attributes['data-max']   = $this->max ?: KrMethods::getParams()->get('search_maxguests', 16);
 
-		if ($this->format == 2) {
-			$attributes['aria-label']  = KrMethods::plain('MOD_KNOWRES_SEARCH_GUESTS_LBL_ARIA');
-			$attributes['data-max']    = $this->max ?: KrMethods::getParams()->get('search_maxguests', 16);
+		if ($this->expanded) {
 			$attributes['data-adults'] = $this->max - $this->infant_max;
 			$attributes['onmousedown'] = "(function(e){ e.preventDefault(); })(event, this);";
 			$attributes['data-toggle'] = 'kr-searchguest-drop';

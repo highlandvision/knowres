@@ -49,11 +49,18 @@ class SearchHelper
 			Utility::validateInputDate($input->arrival);
 			$input->departure = KrMethods::inputString('departure', $searchData->departure);
 			Utility::validateInputDate($input->departure);
-			$input->guests     = KrMethods::inputInt('guests', $searchData->guests);
 			$input->flexible   = KrMethods::inputInt('flexible', $searchData->flexible);
-			$input->adults     = KrMethods::inputInt('adults', $searchData->adults);
-			$input->children   = KrMethods::inputInt('children', $searchData->children);
-			$input->child_ages = KrMethods::inputArray('child_ages', $searchData->child_ages);
+			if (KrMethods::getParams()->get('search_guests_expanded', 0)) {
+				$input->adults     = KrMethods::inputInt('adults', $searchData->adults);
+				$input->children   = KrMethods::inputInt('children', $searchData->children);
+				$input->child_ages = KrMethods::inputArray('child_ages', $searchData->child_ages);
+				$input->guests     = $input->adults + $input->children;
+			} else {
+				$input->guests     = KrMethods::inputInt('guests', $searchData->guests);
+				$input->adults     = 0;
+				$input->children   = 0;
+				$input->child_ages = [];
+			}
 		} catch (Exception $e) {
 			$searchData = $searchSession->resetData();
 			SiteModel::redirectHome();
@@ -79,24 +86,6 @@ class SearchHelper
 		}
 
 		return $regions;
-	}
-
-	/**
-	 * Creates the country region array for display as dropdown
-	 *
-	 * @param  array  $regions  Regions with properties
-	 *
-	 * @since  3.3.1
-	 * @return array
-	 */
-	public static function regionOptions(array $regions): array
-	{
-		$t = [];
-		foreach ($regions as $r) {
-			$t[$r->country_name][$r->region_id] = $r->name;
-		}
-
-		return $t;
 	}
 
 	/**
@@ -132,30 +121,4 @@ class SearchHelper
 
 		return HTMLHelper::_('select.genericlist', $groups, 'region_id', implode(' ', $a), 'value', 'text', $selected);
 	}
-
-//	/**
-//	 * Creates the single guest select
-//	 *
-//	 * @param  int  $default  Default #guests
-//	 * @param  int  $max      Max guests
-//	 *
-//	 * @since  1.0.0
-//	 * @return mixed
-//	 * @throws InvalidArgumentException
-//	 */
-//	public static function guestSelect(int $default = 2, int $max = 16): mixed
-//	{
-//		$options[] = HTMLHelper::_('select.option', 1, KrMethods::plain('MOD_KNOWRES_SEARCH_ANY'));
-//
-//		for ($i = 2; $i < $max; $i++) {
-//			$options[] = HTMLHelper::_('select.option', $i, Text::plural('MOD_KNOWRES_SEARCH_GUEST', $i));
-//		}
-//
-//		$options[] = HTMLHelper::_('select.option', $max,
-//		                           Text::plural('MOD_KNOWRES_SEARCH_GUEST', $max . '+'));
-//
-//		$attribs = ['aria-label' => KrMethods::plain('MOD_KNOWRES_SEARCH_GUESTS_LABEL_ARIA')];
-//
-//		return HTMLHelper::_('select.genericlist', $options, 'guests', $attribs, 'value', 'text', $default);
-//	}
 }

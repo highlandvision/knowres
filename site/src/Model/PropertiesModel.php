@@ -189,6 +189,7 @@ class PropertiesModel extends ListModel
 
 		$db->setQuery($query);
 		$results = $db->loadObjectList();
+
 		if (!$data->flexible || !count($results)) {
 			return $results;
 		}

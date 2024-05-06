@@ -26,7 +26,7 @@ $link         = '/index.php?option=com_knowres&task=properties.search';
 
 <div class="grid-x grid-margin-x">
 	<div class="small-12 medium-4 large-12 cell">
-		<div class="hero-search">
+		<div class="kr-search hero-search">
 			<form action="<?php echo $link; ?>" method="post" name="search-default">
 				<div class="grid-x grid-margin-x">
 					<?php if (!empty($search_text) && $show_regions < 1): ?>
@@ -60,11 +60,10 @@ $link         = '/index.php?option=com_knowres&task=properties.search';
 							<?php echo $form->renderField('guests',
 							                              null,
 							                              $initial->guests,
-							                              ['format'     => $show_guests,
-							                               'adults'     => $initial->adults,
-							                               'children'   => $initial->children,
-							                               'child_ages' => $initial->child_ages ?: [],
-							                               'max'        => $max_guests
+							                              ['adults'      => $initial->adults,
+							                               'children'    => $initial->children,
+							                               'child_ages'  => $initial->child_ages ?: [],
+							                               'max'         => $max_guests,
 							                              ]); ?>
 						</div>
 					<?php endif; ?>
@@ -79,7 +78,7 @@ $link         = '/index.php?option=com_knowres&task=properties.search';
 				<?php if ($show_regions == 1): ?>
 					<?php require ModuleHelper::getLayoutPath('mod_knowres_search', '_regionpane'); ?>
 				<?php endif; ?>
-				<?php if ($show_guests): ?>
+				<?php if ($show_guests && $expanded_guests): ?>
 					<?php require ModuleHelper::getLayoutPath('mod_knowres_search', '_partypane'); ?>
 				<?php endif; ?>
 			</form>

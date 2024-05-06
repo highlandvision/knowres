@@ -54,7 +54,7 @@
                 </field>
                 <field name="show_regions_expanded"
                        class="btn-group btn-group-yesno"
-                       default="1"
+                       default="0"
                        type="radio"
                        label="MOD_KNOWRES_SEARCH_SHOW_REGION_EXPANDED"
                        description="MOD_KNOWRES_SEARCH_SHOW_REGION_EXPANDED_DSC">
@@ -71,14 +71,13 @@
                     <option value="1">JYES</option>
                 </field>
                 <field name="show_guests"
-                       class="btn-group"
+                       class="btn-group btn-group-yesno"
                        default="1"
                        type="radio"
                        label="MOD_KNOWRES_SEARCH_SHOW_GUESTS"
                        description="MOD_KNOWRES_SEARCH_SHOW_GUESTS_DSC">
-                    <option class="btn btn-outline-danger" value="0">JNO</option>
-                    <option class="btn btn-outline-success" value="1">MOD_KNOWRES_SEARCH_SHOW_GUEST_SINGLE</option>
-                    <option class="btn btn-outline-info" value="2">MOD_KNOWRES_SEARCH_SHOW_GUEST_MULTI</option>
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
                 </field>
                 <field name="show_flexible"
                        class="btn-group btn-group-yesno"
