@@ -67,8 +67,8 @@ class HtmlView extends KrHtmlView\Site
 		$this->item = $model->getItem();
 		$this->form = $model->getForm();
 
-		$this->meta_title       = KrMethods::plain('COM_KNOWRES_REVIEW_META');
-		$this->meta_description = KrMethods::plain('COM_KNOWRES_REVIEW_META');
+		$this->meta_title       = KrMethods::plain('COM_KNOWRES_TITLE_REVIEWFORM');
+		$this->meta_description = KrMethods::plain('COM_KNOWRES_TITLE_REVIEWFORM');
 		$this->prepareDocument();
 
 		parent::display($tpl);

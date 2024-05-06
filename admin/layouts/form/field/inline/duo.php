@@ -20,7 +20,7 @@ extract($displayData);
 ?>
 
 <div class="row">
-	<div class="col">
+	<div class="col" style="margin-bottom:8px;">
 		<?php echo $label; ?>
 	</div>
 </div>

@@ -15,7 +15,6 @@ use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Media;
 use HighlandVision\KR\SiteHelper;
 use Joomla\CMS\HTML\HTMLHelper;
-
 ?>
 
 <div class="grid-x grid-margin-x">

@@ -94,8 +94,8 @@ class HtmlView extends KrHtmlView\Site
 		if ($init) {
 			$this->property_search = true;
 
-			if ($layout == 'category') {
-				$this->category_id = KrMethods::inputInt('category_id');
+			$this->category_id = KrMethods::inputInt('category_id');
+			if ($layout == 'category' || $this->category_id ) {
 				if (!$this->category_id) {
 					$searchData = $searchSession->resetData($searchData->bar);
 					SiteHelper::redirectHome();

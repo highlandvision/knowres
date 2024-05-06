@@ -39,18 +39,27 @@ if (!empty($textbg)) {
 	<ul>
 		<?php foreach ($data as $d): ?>
 			<li>
-				<?php if ($d['link']): ?>
-					<a href="<?php echo KrMethods::route('index.php?Itemid=' . $d['link']); ?>"
-				        title="<?php echo $d['text']; ?>">
+				<?php $link = ''; ?>
+				<?php if (!empty($d['link'])): ?>
+					<?php $link = $d['link']; ?>
+					<?php $external = ''; ?>
+				<?php elseif (!empty($d['url'])): ?>
+					<?php $link = $d['url']; ?>
+					<?php $external = 'target="_blank"'; ?>
 				<?php endif; ?>
 
-				<?php if ($d['text']): ?>
-					<?php echo $d['text']; ?>
-				<?php endif; ?>
+				<?php if ($link): ?>
+				<a href="<?php echo $link; ?>" <?php echo $external; ?>
+				   title="<?php echo KrMethods::plain('MOD_KNOWRES_IMAGEGRID_CLICK_TO_VIEW'); ?>">
+					<?php endif; ?>
 
-				<?php if ($d['link']): ?>
-					</a>
-				<?php endif; ?>
+					<?php if ($d['text']): ?>
+						<?php echo $d['text']; ?>
+					<?php endif; ?>
+
+					<?php if ($link): ?>
+				</a>
+			<?php endif; ?>
 			</li>
 		<?php endforeach; ?>
 	</ul>
