@@ -159,7 +159,7 @@ class ContactEmail extends Email
 	protected function setContactData(?int $agency_id = null): void
 	{
 		$this->setAgency($agency_id);
-		$enquiry_email = KrMethods::getParams->get('enquiry_email', null);
+		$enquiry_email = KrMethods::getParams()->get('enquiry_email');
 
 		if (!empty($this->property))
 		{

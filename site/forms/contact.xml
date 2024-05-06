@@ -40,7 +40,7 @@
     <fieldset name="requirements">
         <field name="reserve"
                type="checkbox"
-               class="checkover"
+               class="checkover open"
                labelclass="checklabel"
                label="COM_KNOWRES_CONTACT_RESERVE"/>
         <field name="region"

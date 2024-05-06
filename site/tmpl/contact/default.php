@@ -11,7 +11,6 @@
 
 defined('_JEXEC') or die;
 
-use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use Joomla\CMS\HTML\HTMLHelper;
 
@@ -27,7 +26,7 @@ $action = KrMethods::route('index.php?option=com_knowres&task=contact.submit');
 <p class="small"><?php echo KrMethods::plain( 'COM_KNOWRES_CONTACT_LEGEND' ); ?></p>
 
 <div>
-	<p class="small"><?php echo KrMethods::plain('COM_KNOWRES_CONTACT_REQUIRED'); ?></p>
+	<p class="vsmall"><?php echo KrMethods::plain('COM_KNOWRES_CONTACT_REQUIRED'); ?></p>
 	<form action="<?php echo $action; ?>" class="form-validate formbg" id="kr-contact-form"
 	      onsubmit="return verifyEmail();" method="post">
 		<fieldset class="fieldset">
@@ -57,13 +56,13 @@ $action = KrMethods::route('index.php?option=com_knowres&task=contact.submit');
 		<fieldset class="fieldset">
 			<div class="callout dark">
 				<div class="grid-x grid-margin-x">
-					<div class="small-12 cell">
+					<div class="small-4 cell">
 						<?php echo $this->form->renderField('day'); ?>
 					</div>
 					<div class="small-4 cell">
 						<?php echo $this->form->renderField('month'); ?>
 					</div>
-					<div class="small-4 cell end">
+					<div class="small-4 cell">
 						<?php echo $this->form->renderField('nights'); ?>
 					</div>
 					<div class="small-4 cell">
@@ -72,10 +71,10 @@ $action = KrMethods::route('index.php?option=com_knowres&task=contact.submit');
 					<div class="small-4 cell">
 						<?php echo $this->form->renderField('children'); ?>
 					</div>
-					<div class="small-4cell end">
+					<div class="small-4 cell">
 						<?php echo $this->form->renderField('ages'); ?>
 					</div>
-					<div class="small-4 cell end">
+					<div class="small-6 medium-4 cell end">
 						<?php echo $this->form->renderField('budget'); ?>
 					</div>
 				</div>

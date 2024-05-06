@@ -39,14 +39,10 @@ class HtmlView extends KrHtmlView\Site
 	{
 		$this->property_id = KrMethods::inputInt('id');
 		if ($this->property_id) {
-			$property = KrFactory::getAdminModel('property')->getItem($this->property_id);
-			if (empty($property->id)) {
+			$this->property = KrFactory::getAdminModel('property')->getItem($this->property_id);
+			if (empty($this->property->id)) {
 				SiteHelper::redirectSearch();
 			}
-
-			$this->property_name = $property->property_name;
-			$this->region_name   = $property->region_name;
-			$this->region_id     = $property->region_id;
 		}
 
 		/** @var ContactModel $model */
@@ -65,7 +61,7 @@ class HtmlView extends KrHtmlView\Site
 	 * Prepares the document
 	 *
 	 * @throws Exception
-	 * @since   1.0.0
+	 * @since  1.0.0
 	 */
 	protected function prepareDocument(): void
 	{
@@ -87,8 +83,8 @@ class HtmlView extends KrHtmlView\Site
 		$pathway = self::setPathwayBase();
 		$pathway = self::propertiesPathway($pathway, $searchData);
 
-		if (!empty($this->property_name)) {
-			$pathway->addItem($this->property_name);
+		if (!empty($this->property->property_name)) {
+			$pathway = self::propertyPathway($pathway, $searchData, $this->property);
 		}
 
 		$pathway->addItem(KrMethods::plain('COM_KNOWRES_CONTACT_TITLE'));

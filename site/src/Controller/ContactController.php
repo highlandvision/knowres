@@ -177,6 +177,7 @@ class ContactController extends FormController
 		}
 
 		$input                 = [];
+		$input['ARRIVAL']      = $arrival;
 		$input['REQNAME']      = $data['contact_name'];
 		$input['REQEMAIL']     = PunycodeHelper::emailToPunycode($data['contact_email']);
 		$input['REQCOUNTRY']   = Translations::getCountryName($data['contact_country']);
@@ -188,9 +189,8 @@ class ContactController extends FormController
 		$input['#CHILDREN']    = $data['children'];
 		$input['CHILDAGES']    = $data['ages'];
 		$input['BUDGET']       = $data['budget'] ?? "--";
-		$input['ARRIVAL']      = $arrival;
-		$input['PROPERTYNAME'] = "--";
-		$input['LOCATION']     = $data['region'];
+		$input['PROPERTYNAME'] = $data['property_name'] ?? '--';
+		$input['LOCATION']     = $data['region'] ?? '--';
 
 		$email = new ContactEmail('BOOKENQUIRY');
 		$email->sendTheEmails($id, $input);
