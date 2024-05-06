@@ -46,7 +46,7 @@ else
 <ul class="filter-sort-list">
 	<li class="head"><?php echo $heading ?></li>
 	<li>
-		<input type="radio" id="<?php echo $id1; ?>" class="radioover getResponseSearch"
+		<input type="radio" id="<?php echo $id1; ?>" class="radioover open getResponseSearch"
 		       name="ordering" <?php echo $order == $value1 ? 'checked="checked"' : ''; ?>
 		       value="<?php echo $value1; ?>" data-action="order" data-action-value="<?php echo $value1; ?>">
 		<label class="radiolabel open" for="<?php echo $id1; ?>">
@@ -54,7 +54,7 @@ else
 		</label>
 	</li>
 	<li>
-		<input type="radio" id="<?php echo $id2; ?>" class="radioover getResponseSearch"
+		<input type="radio" id="<?php echo $id2; ?>" class="radioover open getResponseSearch"
 		       name="ordering" <?php echo $order == $value2 ? 'checked="checked"' : ''; ?>
 		       value="<?php echo $value2; ?>" data-action="order" data-action-value="<?php echo $value2; ?>">
 		<label class="radiolabel open" for="<?php echo $id2; ?>">

@@ -43,20 +43,20 @@ foreach ($data as $k => $v) {
 				<input type="checkbox" class="checkover getResponseSearch" name="<?php echo $action; ?>"
 				       checked="checked" id="<?php echo $id; ?>" data-action="<?php echo $action; ?>"
 				       data-action-value="<?php echo $k; ?>">
-				<label class="checklabel" for="<?php echo $id; ?>">
+				<label class="checklabel open" for="<?php echo $id; ?>">
 					<?php echo $v[3]; ?> (<?php echo $v[1]; ?>)
 				</label>
 			<?php elseif ($v[1]) : ?>
 				<input type="checkbox" class="checkover getResponseSearch" name="<?php echo $action; ?>"
 				       id="<?php echo $id; ?>" data-action="<?php echo $action; ?>"
 				       data-action-value="<?php echo $k; ?>">
-				<label class="checklabel" for="<?php echo $id; ?>">
+				<label class="checklabel open" for="<?php echo $id; ?>">
 					<?php echo $v[3]; ?> (<?php echo $v[1]; ?>)
 				</label>
 			<?php else: ?>
 				<input type="checkbox" class="checkover" disabled name="<?php echo $action ?>"
 				       id="<?php echo $id; ?>">
-				<label class="checklabel disabled" for="<?php echo $id; ?>">
+				<label class="checklabel open disabled" for="<?php echo $id; ?>">
 					<?php echo $v[3]; ?> (<?php echo $v[1]; ?>)
 				</label>
 			<?php endif; ?>
