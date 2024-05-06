@@ -25,13 +25,12 @@ extract($displayData);
 $count = 0;
 ?>
 
-	<div class="row">
-		<div class="col-2 strong"><?php echo KrMethods::plain('COM_KNOWRES_DATE'); ?></div>
-		<div class="col-4 strong"><?php echo KrMethods::plain('COM_KNOWRES_STATUS'); ?></div>
-		<div class="col-3 strong text-end"><?php echo KrMethods::plain('COM_KNOWRES_CONTRACTPAYMENTS_AMOUNT'); ?></div>
-		<div
-			class="col-3 strong text-end"><?php echo KrMethods::plain('COM_KNOWRES_CONTRACTPAYMENTS_BASE_AMOUNT'); ?></div>
-	</div>
+<div class="row">
+	<div class="col-2 strong"><?php echo KrMethods::plain('COM_KNOWRES_DATE'); ?></div>
+	<div class="col-3 strong"><?php echo KrMethods::plain('COM_KNOWRES_STATUS'); ?></div>
+	<div class="col-4 strong text-end"><?php echo KrMethods::plain('COM_KNOWRES_CONTRACTPAYMENTS_AMOUNT'); ?></div>
+	<div class="col-3 strong text-end"><?php echo KrMethods::plain('COM_KNOWRES_CONTRACTPAYMENTS_BASE_AMOUNT'); ?></div>
+</div>
 
 <?php foreach ($payments as $p): ?>
 	<?php if ($count): ?>
@@ -45,7 +44,7 @@ $count = 0;
 		<div class="col-2">
 			<?php echo TickTock::displayDate($p->payment_date, 'dMy'); ?>
 		</div>
-		<div class="col-4">
+		<div class="col-3">
 			<?php if ($p->confirmed) : ?>
 				<?php echo KrMethods::plain('COM_KNOWRES_CONFIRMED'); ?>
 			<?php else: ?>
@@ -63,17 +62,31 @@ $count = 0;
 		</div>
 
 		<?php if ($p->currency != $contract->currency) : ?>
-			<div class="col-3 text-end">
+			<div class="col-4 text-end">
 				<?php echo Utility::displayValue($p->amount, $p->currency); ?> @ <?php echo $p->rate; ?>
 			</div>
-			<div class="col-3 text-end">
-				<?php echo Utility::displayValue($p->base_amount, $contract->currency); ?>
-			</div>
+			<?php if ($p->base_amount < 0): ?>
+				<div class="col-3 text-end red">
+					<?php echo Utility::displayValue($p->base_amount, $contract->currency); ?>
+				</div>
+			<?php else: ?>
+				<div class="col-3 text-end">
+					<?php echo Utility::displayValue($p->base_amount, $contract->currency); ?>
+				</div>
+			<?php endif; ?>
 		<?php else: ?>
-			<div class="col-3">&nbsp;</div>
-			<div class="col-3 text-end">
-				<?php echo Utility::displayValue($p->base_amount, $contract->currency); ?>
+			<div class="col-4">
+				&nbsp;
 			</div>
+			<?php if ($p->base_amount < 0): ?>
+				<div class="col-3 text-end red">
+					<?php echo Utility::displayValue($p->base_amount, $contract->currency); ?>
+				</div>
+			<?php else: ?>
+				<div class="col-3 text-end">
+					<?php echo Utility::displayValue($p->base_amount, $contract->currency); ?>
+				</div>
+			<?php endif; ?>
 		<?php endif; ?>
 	</div>
 	<div class="row">

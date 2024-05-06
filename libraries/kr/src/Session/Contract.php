@@ -47,8 +47,7 @@ class Contract extends Session
 	public function getData(): stdClass
 	{
 		$data = $this->getSession();
-		if (is_null($data))
-		{
+		if (is_null($data)) {
 			$data = $this->init();
 		}
 
@@ -80,10 +79,8 @@ class Contract extends Session
 	public function updateData(array|object $item): stdClass
 	{
 		$data = $this->getData();
-		foreach ($item as $key => $value)
-		{
-			if (property_exists($data, $key))
-			{
+		foreach ($item as $key => $value) {
+			if (property_exists($data, $key)) {
 				$data->$key = $value;
 			}
 		}

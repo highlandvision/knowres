@@ -19,13 +19,6 @@
                type="listbookingstatus"
                label="COM_KNOWRES_CONTRACTPAYMENT_BOOKING_STATUS_LBL"
                description="COM_KNOWRES_CONTRACTPAYMENT_BOOKING_STATUS_DSC"/>
-        <field name="currency"
-               class="input-mini"
-               filter="string"
-               required="true"
-               type="listcurrencypayment"
-               label="COM_KNOWRES_CONTRACTPAYMENT_CURRENCY_LBL"
-               description="COM_KNOWRES_CONTRACTPAYMENT_CURRENCY_DSC"/>
         <field name="payment_date"
                class="input-mini"
                datepicker='{"minDate": "-2Y", "maxDate": "+1D", "altField": "#jform_payment_date"}'
@@ -62,6 +55,13 @@
                description="COM_KNOWRES_CONTRACTPAYMENT_PAYMENT_REF_DSC"/>
     </fieldset>
     <fieldset name="krpayment">
+        <field name="currency"
+               class="input-mini"
+               filter="string"
+               required="true"
+               type="listcurrencypayment"
+               label="COM_KNOWRES_CONTRACTPAYMENT_CURRENCY_LBL"
+               description="COM_KNOWRES_CONTRACTPAYMENT_CURRENCY_DSC"/>
         <field name="amount"
                class="input-mini"
                default="0"
@@ -79,7 +79,7 @@
                description="COM_KNOWRES_CONTRACTPAYMENT_BASE_AMOUNT_DSC"/>
         <field name="rate"
                class="input-mini"
-               default="1"
+               default="0"
                dp="5"
                filter="string"
                type="textmoney"

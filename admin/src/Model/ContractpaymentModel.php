@@ -47,24 +47,22 @@ class ContractpaymentModel extends AdminModel
 	public static function setBalances(object $contract, array $payments = [], array $fees = []): array
 	{
 		$balance = $contract->contract_total;
-		foreach ($fees as $f)
-		{
+		foreach ($fees as $f) {
 			$balance += $f->value;
 		}
 
 		$balance_all = $balance;
 
-		foreach ($payments as $p)
-		{
+		foreach ($payments as $p) {
 			$balance_all -= $p->base_amount;
-			if ($p->confirmed)
-			{
+			if ($p->confirmed) {
 				$balance -= $p->base_amount;
 			}
 		}
 
 		return [Utility::roundValue($balance, $contract->currency),
-		        Utility::roundValue($balance_all, $contract->currency)];
+		        Utility::roundValue($balance_all, $contract->currency)
+		];
 	}
 
 	/**
@@ -79,10 +77,8 @@ class ContractpaymentModel extends AdminModel
 	public function getItem($pk = null): false|object
 	{
 		$item = parent::getItem($pk);
-		if ($item)
-		{
-			if ($item->service_id > 0)
-			{
+		if ($item) {
+			if ($item->service_id > 0) {
 				/* @var ServiceModel $service */
 				$service              = KrFactory::getAdminModel('service')->getItem($item->service_id);
 				$item->service_name   = $service->name;
@@ -106,51 +102,50 @@ class ContractpaymentModel extends AdminModel
 	public function validate($form, $data, $group = null): bool|array
 	{
 		$data = parent::validate($form, $data, $group);
-		if ($data === false)
-		{
+		if ($data === false) {
 			return false;
 		}
 
-		if (!(float) $data['amount'])
-		{
+		if (!(float) $data['amount']) {
 			$this->setError("Please enter a payment amount");
 
 			return false;
 		}
 
-		if ((float) $data['amount'] < 0)
-		{
+		if ((float) $data['amount'] < 0) {
 			$this->setError("Please remove the - sign from the Amount and set Refund to Yes");
 
 			return false;
 		}
 
-		if ($data['currency_res'] == $data['currency'])
-		{
+		if ($data['currency_res'] == $data['currency']) {
 			$data['rate']        = 1;
 			$data['base_amount'] = $data['amount'];
 
+			if ((int) $data['refund']) {
+				$data['amount']      = $data['amount'] * -1;
+				$data['base_amount'] = $data['base_amount'] * -1;
+			}
+
 			return $data;
-		}
-		else
-		{
+		} else {
 			if (((float) $data['rate'] == 1 && !(float) $data['base_amount'])
 				|| ((float) $data['rate'] == 0
-					&& (float) $data['base_amount'] == 0))
-			{
+					&& (float) $data['base_amount'] == 0)) {
 				$this->setError("Please enter Reservation amount or rate");
 
 				return false;
-			}
-			else
-			{
-				if ((float) $data['base_amount'] == 0 && (float) $data['rate'] > 0)
-				{
+			} else {
+				if ((float) $data['base_amount'] == 0 && (float) $data['rate'] > 0) {
 					$data['base_amount'] = round((float) $data['amount'] / (float) $data['rate'], 2);
-				}
-				else if (((float) $data['rate'] == 0 || (float) $data['rate'] == 1) && (float) $data['base_amount'] > 0)
-				{
+				} else if (((float) $data['rate'] == 0 || (float) $data['rate'] == 1) &&
+					(float) $data['base_amount'] > 0) {
 					$data['rate'] = round((float) $data['amount'] / (float) $data['base_amount'], 4);
+				}
+
+				if ((int) $data['refund']) {
+					$data['amount']      = $data['amount'] * -1;
+					$data['base_amount'] = $data['base_amount'] * -1;
 				}
 
 				return $data;
@@ -168,8 +163,7 @@ class ContractpaymentModel extends AdminModel
 	protected function loadFormData(): mixed
 	{
 		$data = KrMethods::getUserState('com_knowres.edit.contractpayment.data', []);
-		if (empty($data))
-		{
+		if (empty($data)) {
 			$data = $this->getItem();
 		}
 

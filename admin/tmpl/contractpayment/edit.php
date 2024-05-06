@@ -31,7 +31,7 @@ $this->form->setFieldAttribute('base_amount', 'addonBefore', $this->contract->cu
 			<div class="col-xl-9 col-xxl-8">
 				<?php echo $this->form->renderFieldset('krdata'); ?>
 				<?php echo KrMethods::render('form.field.inline.duo', [
-					'label' => KrMethods::plain('COM_KNOWRES_CONTRACTPAYMENT_AMOUNT_LBL'),
+					'label' => '',
 					'f1'    => $this->form->renderField('currency'),
 					'f2'    => $this->form->renderField('amount')
 				]);

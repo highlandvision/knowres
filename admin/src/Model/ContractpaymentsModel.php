@@ -355,7 +355,6 @@ class ContractpaymentsModel extends ListModel
 		      ->order($db->qn('id'));
 
 		$db->setQuery($query);
-
 		return $db->loadObjectList();
 	}
 

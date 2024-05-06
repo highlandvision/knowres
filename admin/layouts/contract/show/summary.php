@@ -69,18 +69,18 @@ extract($displayData);
 	</div>
 <?php endif; ?>
 
-	<div class="row">
-		<div class="col-6 strong">
-			<?php echo KrMethods::plain('COM_KNOWRES_CONTRACT_ROOM_TOTAL_LBL'); ?>
-		</div>
-		<div class="col-3">
-		</div>
-		<div class="col-3 strong text-end">
-			<?php echo Utility::displayValue($item->room_total, $item->currency); ?>
-		</div>
+<div class="row">
+	<div class="col-6 strong">
+		<?php echo KrMethods::plain('COM_KNOWRES_CONTRACT_ROOM_TOTAL_LBL'); ?>
 	</div>
+	<div class="col-3">
+	</div>
+	<div class="col-3 strong text-end">
+		<?php echo Utility::displayValue($item->room_total, $item->currency); ?>
+	</div>
+</div>
 
-	<!--JSA only-->
+<!--JSA only-->
 <?php if (KrMethods::getParams()->get('property_rooms', 0)): ?>
 	<?php if (is_countable($notes)): ?>
 		<?php foreach ($notes as $n): ?>
@@ -193,6 +193,7 @@ extract($displayData);
 
 <?php $payment_total = 0; ?>
 <?php $pending_total = 0; ?>
+
 <?php if (isset($payments) && is_countable($payments) && count($payments)): ?>
 	<div class="row" style="margin-top:10px;">
 		<div class="col-12">
@@ -229,23 +230,25 @@ extract($displayData);
 				<?php endif; ?>
 			</div>
 			<?php if ($p->base_amount > 0): ?>
-				<div class="col-5 red text-end">
-					<?php echo $fex . '-' . Utility::displayValue($p->base_amount, $item->currency); ?>
+				<div class="col-5 text-end">
+<!--					--><?php //echo $fex . '-' . Utility::displayValue($p->base_amount, $item->currency); ?>
+					<?php echo Utility::displayValue($p->base_amount, $item->currency); ?>
 				</div>
 			<?php else: ?>
-				<div class="col-3 text-end">
-					<?php echo $fex . Utility::displayValue(abs($p->base_amount), $item->currency); ?>
+				<div class="col-5 red text-end">
+<!--					--><?php //echo $fex . Utility::displayValue($p->base_amount * -1, $item->currency); ?>
+					<?php echo Utility::displayValue($p->base_amount * -1, $item->currency); ?>
 				</div>
 			<?php endif; ?>
 		</div>
 
-		<?php if ($p->note && $audience == 'manager'): ?>
-			<div class="row">
-				<div class="col-12 indent">
-					<p>(<?php echo $p->note; ?>)</p>
-				</div>
-			</div>
-		<?php endif; ?>
+<!--		--><?php //if ($p->note && $audience == 'manager'): ?>
+<!--			<div class="row">-->
+<!--				<div class="col-12 indent">-->
+<!--					<p>(--><?php //echo $p->note; ?><!--)</p>-->
+<!--				</div>-->
+<!--			</div>-->
+<!--		--><?php //endif; ?>
 	<?php endforeach; ?>
 
 	<div class="row">

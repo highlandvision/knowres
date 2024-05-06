@@ -18,7 +18,7 @@ use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Utility;
 
 $paymentTotal = KrFactory::getListModel('contractpayments')->getPaymentTotal($this->item->id);
-$feeTotal     = KrFactory::getListModel('contractFees')->getTotalForContract($this->item->id);
+$feeTotal     = KrFactory::getListModel('contractfees')->getTotalForContract($this->item->id);
 
 $balance_to_pay  = false;
 $balance_due_now = false;
