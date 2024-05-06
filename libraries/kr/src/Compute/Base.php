@@ -1,6 +1,6 @@
 <?php
 /**
- * @package     Know Hubs
+ * @package     Know Reservations
  * @subpackage  Library
  * @copyright   Copyright (c) 2020, Highland Vision. All rights reserved.
  * @license     See the file "LICENSE.txt" for the full license governing this code.
@@ -49,7 +49,6 @@ class Base
 		$property_id = $this->Hub->getValue('property_id');
 		$arrival     = $this->Hub->getValue('arrival');
 		$departure   = $this->Hub->getValue('departure');
-
 		$ratesDb = $this->getRates($property_id, $arrival, $departure);
 		if (!is_countable($ratesDb) || !count($ratesDb))
 		{
@@ -309,9 +308,7 @@ class Base
 				}
 			}
 
-			if ($nights < $xmin
-				&& ($nights < $this->Hub->settings['canwebook']
-					|| empty($this->Hub->settings['canwebook'])))
+			if ($nights < $xmin && $nights >= $this->Hub->settings['shortbook'])
 			{
 				$this->Hub->setValue('shortbook', 1);
 				$this->Hub->setValue('shortbook_departure', $departure);
@@ -325,6 +322,9 @@ class Base
 				$this->Hub->setValue('departure', $departure);
 				$this->Hub->setValue('nights', $nights);
 				$this->Hub->setValue('date_range', $date_range);
+			}
+			else {
+				$this->Hub->setValue('shortbook', 0);
 			}
 		}
 

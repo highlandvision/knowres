@@ -350,7 +350,6 @@ class LosRates
 			$this->Hub->setValue('contract_total', 0);
 			$this->Hub->setValue('room_total', 0);
 			$this->Hub->setValue('room_total_gross', 0);
-
 			$this->Hub->settings['canwebook'] = $this->settings['canwebook'];
 			$this->Hub->settings['shortbook'] = $this->settings['shortbook'];
 

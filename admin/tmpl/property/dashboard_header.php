@@ -178,13 +178,11 @@ $changerates = KrMethods::route('index.php?option=com_knowres&task=propertysetti
 
 			<?php if ($this->settings['cluster']
 				&& ($this->settings['managed_rates'] || $this->settings['beyond_rates'])): ?>
-				<dt class="col-xs-3">
-					<?php echo KrMethods::plain('COM_KNOWRES_CURRENCY'); ?>
+				<dt class="col-md-3">
+					<?php echo KrMethods::plain('COM_KNOWRES_CLUSTER_TITLE') . ':'; ?>
 				</dt>
-				<dd class="col-xs-9">
-					<?php echo ', ' . KrMethods::plain('COM_KNOWRES_CLUSTER_TITLE') . ' '
-						. $Translations->getText('cluster',
-							$this->settings['cluster']); ?>
+				<dd class="col-md-9">
+					<?php echo $Translations->getText('cluster', $this->settings['cluster']); ?>
 				</dd>
 			<?php endif; ?>
 		</dl>
