@@ -42,11 +42,11 @@ $link         = "/index.php?option=com_knowres&task=properties.search";
 				<?php endif; ?>
 				<?php if ($show_guests): ?>
 					<?php echo $form->renderField('guests', null, $initial->guests,
-					                              ['format'     => $show_guests,
-					                               'adults'     => $initial->adults,
-					                               'children'   => $initial->children,
-					                               'child_ages' => $initial->child_ages ?: [],
-					                               'max'        => $max_guests
+					                              ['show_guests' => $show_guests,
+					                               'adults'      => $initial->adults,
+					                               'children'    => $initial->children,
+					                               'child_ages'  => $initial->child_ages ?: [],
+					                               'max'         => $max_guests
 					                              ]);
 					?>
 				<?php endif; ?>
@@ -59,7 +59,7 @@ $link         = "/index.php?option=com_knowres&task=properties.search";
 					&nbsp;&nbsp;<i class="fa-solid fa-magnifying-glass"></i>
 				</button>
 
-				<?php if ($show_guests): ?>
+				<?php if ($show_guests && $expanded_guests): ?>
 					<?php require ModuleHelper::getLayoutPath('mod_knowres_search', '_partypane'); ?>
 				<?php endif; ?>
 			</form>

@@ -60,23 +60,22 @@ class Dispatcher extends AbstractModuleDispatcher
 	{
 		$data = parent::getLayoutData();
 		if ($data && !empty($data['params'])) {
-			$data['initial']    = SearchHelper::getDefaultValues();
-			$data['Itemid']     = SiteHelper::getItemId('com_knowres', 'properties', ['layout' => 'search']);
-			$data['max_guests'] = KrMethods::getParams()->get('search_maxguests', 16);
-			$data['region_id']  = KrMethods::getParams()->get('default_region', 0);
-
+			$data['initial']          = SearchHelper::getDefaultValues();
+			$data['Itemid']           = SiteHelper::getItemId('com_knowres', 'properties', ['layout' => 'search']);
+			$data['max_guests']       = KrMethods::getParams()->get('search_maxguests', 16);
+			$data['search_text']      = $data['params']->get('search_text', '');
+			$data['show_datepickers'] = $data['params']->get('show_datepickers', 0);
+			$data['show_flexible']    = $data['params']->get('show_flexible', 0);
+			$data['show_guests']      = $data['params']->get('show_guests', 0);
+			$data['expanded_guests']  = KrMethods::getParams()->get('search_guests_expanded', 0);
+			$data['region_id']        = KrMethods::getParams()->get('default_region', 0);
 			if ((int) $data['params']->get('show_regions', 0)) {
-				$data['regions']        = SearchHelper::getRegions();
-				$data['options']        =
-					SearchHelper::regionOptgroup($data['regions'], $data['params']->get('show_regions_expanded'),
-					                             $data['initial']->region_id);
+				$data['regions'] = SearchHelper::getRegions();
+				$data['options'] = SearchHelper::regionOptgroup($data['regions'],
+				                                                $data['params']->get('show_regions_expanded'),
+				                                                $data['initial']->region_id);
 			}
 		}
-
-		$data['search_text']      = $data['params']->get('search_text', '');
-		$data['show_datepickers'] = $data['params']->get('show_datepickers', 0);
-		$data['show_flexible']    = $data['params']->get('show_flexible', 0);
-		$data['show_guests']      = $data['params']->get('show_guests', 0);
 
 		return $data;
 	}

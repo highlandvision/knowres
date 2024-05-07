@@ -35,6 +35,8 @@ class HtmlView extends KrHtmlView\Site
 {
 	/** @var Translations Translations object. */
 	public Translations $Translations;
+	/** @var int # Adults. */
+	public int $adults = 2;
 	/** @var array Alternatives for this property. */
 	public array $alternatives = [];
 	/** @var string Arrival date. */
@@ -43,6 +45,10 @@ class HtmlView extends KrHtmlView\Site
 	public string $backlink = '';
 	/** @var int Property booking type. */
 	public int $booking_type = 0;
+	/** @var array Child ages. */
+	public array $child_ages = [];
+	/** @var int #Children. */
+	public int $children = 0;
 	/** @var string Link to contact form. */
 	public string $contactlink = '';
 	/** @var array Currency setting for all properties. */
@@ -130,8 +136,14 @@ class HtmlView extends KrHtmlView\Site
 		if (is_countable($this->searchData->baseIds) && count($this->searchData->baseIds)
 			&& $this->searchData->region_id == $this->item->region_id) {
 
-			$Itemid = SiteHelper::getItemId('com_knowres', 'properties', ['layout' => 'search']);
-			$this->backlink = KrMethods::route('index.php?Itemid=' . $Itemid . '&retain=1');
+			$Itemid = SiteHelper::getItemId('com_knowres', 'properties', [
+				'layout'    => 'search',
+				'region_id' => $this->item->region_id
+			]);
+
+			$this->backlink = KrMethods::route('index.php?option=com_knowres&view=properties&Itemid=' . $Itemid
+			                                   . '&region_id=' . $this->item->region_id);
+			$this->backlink .= '?retain=1';
 		}
 
 		$this->setDisplayData();
@@ -196,21 +208,33 @@ class HtmlView extends KrHtmlView\Site
 			$contractData = $contractSession->resetData();
 		}
 
-		$this->arrival   = KrMethods::inputString('arrival', '');
-		$this->departure = KrMethods::inputString('departure', '');
-		$this->guests    = KrMethods::inputInt('guests', 2);
+		$this->arrival     = KrMethods::inputString('arrival', '');
+		$this->departure   = KrMethods::inputString('departure', '');
+		$this->guests      = KrMethods::inputInt('guests', 2);
+		$this->adults      = KrMethods::inputInt('adults', 2);
+		$this->children    = KrMethods::inputInt('children');
+		$this->child_agess = KrMethods::inputArray('child_ages');
 		if ($this->arrival) {
-			$contractData->arrival   = $this->arrival;
-			$contractData->departure = $this->departure;
-			$contractData->guests    = $this->guests;
+			$contractData->arrival     = $this->arrival;
+			$contractData->departure   = $this->departure;
+			$contractData->guests      = $this->guests;
+			$contractData->adults      = $this->adults;
+			$contractData->children    = $this->children;
+			$contractData->child_agess = $this->child_ages;
 		} else if ($contractData->arrival) {
-			$this->arrival   = $contractData->arrival;
-			$this->departure = $contractData->departure;
-			$this->guests    = $contractData->guests;
+			$this->arrival     = $contractData->arrival;
+			$this->departure   = $contractData->departure;
+			$this->guests      = $contractData->guests;
+			$this->adults      = $contractData->adults;
+			$this->children    = $contractData->children;
+			$this->child_agess = $contractData->child_ages;
 		} else if ($this->searchData->arrival) {
-			$this->arrival   = $this->searchData->arrival;
-			$this->departure = $this->searchData->departure;
-			$this->guests    = $this->searchData->guests;
+			$this->arrival     = $this->searchData->arrival;
+			$this->departure   = $this->searchData->departure;
+			$this->guests      = $this->searchData->guests;
+			$this->adults      = $this->searchData->adults;
+			$this->children    = $this->searchData->children;
+			$this->child_agess = $this->searchData->child_ages;
 		}
 
 		$this->booking_type = $this->item->booking_type;

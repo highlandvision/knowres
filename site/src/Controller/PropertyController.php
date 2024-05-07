@@ -46,7 +46,7 @@ class PropertyController extends BaseController
 	 * Ajax display geriatric calendar using property.js
 	 *
 	 * @throws Exception
-	 * @since  3.3.0
+	 * @since        3.3.0
 	 * @return void
 	 * @noinspection PhpUnused
 	 */
@@ -109,7 +109,7 @@ class PropertyController extends BaseController
 	 * Ajax - display properties map infowindow
 	 *
 	 * @throws Exception
-	 * @since  1.0.0
+	 * @since        1.0.0
 	 * @return void
 	 * @noinspection PhpUnused
 	 */
@@ -183,7 +183,6 @@ class PropertyController extends BaseController
 		$property_id = KrMethods::inputInt('property_id');
 		$arrival     = KrMethods::inputString('arrival');
 		$departure   = KrMethods::inputString('departure');
-
 		if (empty($property_id) || empty($arrival) || empty($departure)) {
 			jexit();
 		}
@@ -191,6 +190,10 @@ class PropertyController extends BaseController
 		$adults     = KrMethods::inputInt('adults');
 		$children   = KrMethods::inputInt('children');
 		$child_ages = KrMethods::inputArray('child_ages');
+		$guests     = KrMethods::inputInt('guests');
+		if (!$guests) {
+			$guests = $adults + $children;
+		}
 
 		if (!KrFactory::getListModel('contracts')->isPropertyAvailable($property_id, $arrival, $departure)) {
 			$view->error = KrMethods::plain('COM_KNOWRES_ERROR_AVAILABILITY_CHANGED');
@@ -206,7 +209,7 @@ class PropertyController extends BaseController
 			$contractData->adults      = $adults;
 			$contractData->children    = $children;
 			$contractData->child_ages  = $child_ages;
-			$contractData->guests      = $adults + $children;
+			$contractData->guests      = $guests;
 			$contractData->tax_total   = 0;
 			$contractData->taxes       = [];
 			$Hub                       = new Hub($contractData);
@@ -224,7 +227,7 @@ class PropertyController extends BaseController
 		$searchData->adults     = $adults;
 		$searchData->children   = $children;
 		$searchData->child_ages = $child_ages;
-		$searchData->guests     = $adults + $children;
+		$searchData->guests     = $guests;
 		$searchSession->setData($searchData);
 
 		$Hub          = new Hub($contractData);
@@ -250,7 +253,6 @@ class PropertyController extends BaseController
 			}
 
 			$contractSession->setData($Hub->getData());
-
 			$view->quote = $Hub;
 			$view->error = '';
 			$view->display();
@@ -279,8 +281,7 @@ class PropertyController extends BaseController
 			if ($summary) {
 				$view->setLayout('terms_summary');
 				$view->article_id = $summary;
-			}
-			else {
+			} else {
 				$view->setLayout('terms');
 				$params           = KrMethods::getParams();
 				$view->article_id = (int) $params->get('id_cancellation', '0');
@@ -298,7 +299,7 @@ class PropertyController extends BaseController
 	 * Download property terms PDF
 	 *
 	 * @throws Exception
-	 * @since  3.3.0
+	 * @since        3.3.0
 	 * @return bool
 	 * @noinspection PhpUnused
 	 */

@@ -8,6 +8,7 @@
  */
 
 let cboxes = document.getElementsByClassName('checkover country');
+let items = ".card,.button,.tabs,.kr-slick,.kr-spotlight,.kr-imagegrid,.tabs-content";
 for (let c = 0; c < cboxes.length; c++) {
     cboxes[c].addEventListener('change', function () {
         let country = cboxes[c].getAttribute('data-value');
@@ -25,14 +26,14 @@ let observer = new MutationObserver(function (mutations) {
     mutations.forEach(function (mutation) {
         if (mutation.target.classList.contains('is-open')) {
             document.getElementById("kr-overlay").style.display = "block";
-            let cards = document.querySelectorAll(".card,.button,.tabs,.slideshow-wrapper,.tabs-content");
+            let cards = document.querySelectorAll(items);
             for (let i = 0; i < cards.length; i++) {
                 cards[i].style.cursor = "default";
                 cards[i].style.opacity = "0.2";
             }
         } else {
             document.getElementById("kr-overlay").style.display = "none";
-            let cards = document.querySelectorAll(".card,.button,.tabs,.slideshow-wrapper,.tabs-content");
+            let cards = document.querySelectorAll(items);
             for (let i = 0; i < cards.length; i++) {
                 cards[i].style.cursor = "pointer";
                 cards[i].style.opacity = "1";

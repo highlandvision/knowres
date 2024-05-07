@@ -75,6 +75,7 @@ if ($displayData['active']) {
 
 <?php if ($displayData['active']) : ?>
 	<?php $class = 'page-link'; ?>
+	<?php $data = ''; ?>
 	<?php if ($ajax) : ?>
 		<?php $class = $class . ' getResponseSearch'; ?>
 		<?php $data = 'data-action="page" data-action-value="' . $item->base . '"' ?>

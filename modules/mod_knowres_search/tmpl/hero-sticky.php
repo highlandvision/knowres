@@ -61,11 +61,10 @@ $link         = "/index.php?option=com_knowres&task=properties.search";
 						<?php echo $form->renderField('guests',
 						                              null,
 						                              $initial->guests,
-						                              ['format'     => $show_guests,
-						                               'adults'     => $initial->adults,
-						                               'children'   => $initial->children,
-						                               'child_ages' => $initial->child_ages ?: [],
-						                               'max'        => $max_guests
+						                              ['adults'      => $initial->adults,
+						                               'children'    => $initial->children,
+						                               'child_ages'  => $initial->child_ages ?: [],
+						                               'max'         => $max_guests
 						                              ]); ?>
 					</div>
 				<?php endif; ?>
@@ -79,7 +78,7 @@ $link         = "/index.php?option=com_knowres&task=properties.search";
 				<?php if ($show_regions == 1): ?>
 					<?php require ModuleHelper::getLayoutPath('mod_knowres_search', '_regionpane'); ?>
 				<?php endif; ?>
-				<?php if ($show_guests): ?>
+				<?php if ($show_guests && $expanded_guests): ?>
 					<?php require ModuleHelper::getLayoutPath('mod_knowres_search', '_partypane'); ?>
 				<?php endif; ?>
 			</div>
