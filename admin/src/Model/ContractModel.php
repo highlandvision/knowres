@@ -59,7 +59,7 @@ class ContractModel extends AdminModel
 	public static function deleteAll(int $id, int $guest_id = 0): void
 	{
 		if (!$id) {
-			throw new RuntimeException('Contract ID not received for Delete');
+			throw new RuntimeException('Contract ID not received for DeleteAll');
 		}
 
 		$guests = 0;
@@ -90,7 +90,6 @@ class ContractModel extends AdminModel
 			$db->transactionCommit();
 		} catch (Exception $e) {
 			$db->transactionRollback();
-
 			throw $e;
 		}
 	}

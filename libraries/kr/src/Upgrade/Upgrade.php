@@ -102,9 +102,9 @@ class Upgrade
 
 		$db = KrFactory::getDatabase();
 		if ($table == 'guest') {
-			$columns = $db->getTableColumns($db->qn('#__knowres_guest'));
+			$columns = $db->getTableColumns('#__knowres_guest');
 		} else {
-			$columns = $db->getTableColumns($db->qn('#__knowres_owner'));
+			$columns = $db->getTableColumns('#__knowres_owner');
 		}
 		if (!isset($columns['foreign_key'])) {
 			return;

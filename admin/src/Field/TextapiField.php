@@ -65,11 +65,11 @@ class TextapiField extends FormField
 			$test = @json_decode($this->value);
 			if ($test)
 			{
-				$json = Utility::decodeJson($this->value);
+				$json = Utility::decodeJson($this->value, true);
 				$d    = '<pre>';
 				foreach ($json as $key => $text)
 				{
-					if (is_object($text))
+					if (is_object($text) || is_array($text))
 					{
 						$properties = (array) $text;
 						foreach ($properties as $k => $v)
@@ -90,7 +90,7 @@ class TextapiField extends FormField
 			{
 				return '<pre>' . $this->value . '</pre>';
 			}
-			else if (is_countable($this->value))
+			else if (is_countable($this->value) && count($this->value))
 			{
 				$d = '<pre>';
 				foreach ($this->value as $key => $value)

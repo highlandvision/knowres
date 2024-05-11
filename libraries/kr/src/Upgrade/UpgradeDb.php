@@ -191,12 +191,11 @@ class UpgradeDb
 		//ALTER TABLE `#__knowres_property_ical` ADD COLUMN `icsdata` TEXT DEFAULT NULL AFTER `link`;
 		self::add($db, '#__knowres_property_ical', 'icsdata', 'link', 'TEXT DEFAULT NULL');
 		// DROP INDEX IF EXISTS `byInterfacePropertyMethod` ON `#__knowres_service_log`;
-		self::dropIndex($db, '#__knowres_property_service_log', 'byInterfacePropertyMethod');
+		self::dropIndex($db, '#__knowres_service_log', 'byInterfacePropertyMethod');
 		//DROP INDEX IF EXISTS `byInterface` ON `#__knowres_service_xref`;
 		self::dropIndex($db, '#__knowres_service_xref', 'byInterface');
 		//ALTER TABLE `#__knowres_service_log` ADD INDEX `byServicePropertyMethod`(`service_id`, `property_id`, `method`);
-		self::addIndex($db, '#__knowres_service_log', 'byServicePropertyMethod',
-			'`service_id`, `property_id`, `method`');
+		self::addIndex($db, '#__knowres_service_log', 'byServicePropertyMethod', '`service_id`, `property_id`, `method`');
 		//ALTER TABLE `#__knowres_service_xref` ADD INDEX `byService`(`service_id`);
 		self::addIndex($db, '#__knowres_service_xref', 'byService', '`service_id`');
 		//INSERT INTO `#__knowres_property_setting 'service_changes', 'vrbo';

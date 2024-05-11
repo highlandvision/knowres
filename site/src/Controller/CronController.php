@@ -311,7 +311,7 @@ class CronController extends BaseController
 		foreach ($rows as $r) {
 			try {
 				KrFactory::getAdminModel('contract')::deleteAll($r->id, $r->guest_id);
-			} catch (Exception $e) {
+			} catch (Exception|RuntimeException $e) {
 				Logger::logMe($e->getMessage());
 			}
 		}

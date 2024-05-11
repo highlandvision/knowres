@@ -452,8 +452,7 @@ const lang = "en";
 				type:    "POST",
 				url:     '/index.php?option=com_knowres&task=properties.mapsession',
 				success: function () {
-					$( '.kr-searchbar .button.map').removeClass('is-active');
-					$( '.kr-searchbar .button.list').addClass('is-active');
+					$('.kr-searchbar .button.map').removeClass('is-active');
 					return true;
 				}
 			});

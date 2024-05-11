@@ -237,6 +237,14 @@ extract($displayData);
 				</div>
 			<?php endif; ?>
 		</div>
+
+		<!--		--><?php //if ($p->note && $audience == 'manager'): ?>
+		<!--			<div class="row">-->
+		<!--				<div class="col-12 indent">-->
+		<!--					<p>(--><?php //echo $p->note; ?><!--)</p>-->
+		<!--				</div>-->
+		<!--			</div>-->
+		<!--		--><?php //endif; ?>
 	<?php endforeach; ?>
 
 	<div class="row">
