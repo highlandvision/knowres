@@ -9,10 +9,15 @@
 
 defined('_JEXEC') or die;
 
+use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Translations;
 
 $Translations = new Translations();
+$results = KrFactory::getListModel('propertyfeatures')->getAll(true);
+foreach ($results as $r) {
+	$key_features[$r->id] = $r->name;
+}
 ?>
 
 <?php if ($this->favs_alert): ?>

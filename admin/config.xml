@@ -256,11 +256,11 @@
         <field name="property_map_type"
                type="radio"
                default="roadmap"
-               class="btn-group btn-group-yesno"
+               class="btn-group"
                label="COM_KNOWRES_CONFIG_SITE_MAP_TYPE"
                description="COM_KNOWRES_CONFIG_SITE_MAP_TYPE_DSC">
-            <option value="roadmap">COM_KNOWRES_CONFIG_SITE_MAP_TYPE_ROAD</option>
-            <option value="hybrid">COM_KNOWRES_CONFIG_SITE_MAP_TYPE_SATELITE</option>
+            <option class="btn btn-outline-danger" value="hybrid">COM_KNOWRES_CONFIG_SITE_MAP_TYPE_SATELITE</option>
+            <option class="btn btn-outline-success" value="roadmap">COM_KNOWRES_CONFIG_SITE_MAP_TYPE_ROAD</option>
         </field>
         <field name="search_map_markers"
                type="radio"

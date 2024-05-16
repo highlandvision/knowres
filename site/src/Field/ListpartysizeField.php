@@ -72,7 +72,7 @@ class ListpartysizeField extends ListField
 		$this->children   = $options['children'];
 		$this->infant_age = !empty($options['infant_age']);
 		$this->infant_max = !empty($options['infant_max']);
-		$this->max        = $options['max'];
+		$this->max        = !empty($options['max']) ;
 
 //		$this->dataAttributes = $this->setDataAttributes();
 
@@ -119,7 +119,7 @@ class ListpartysizeField extends ListField
 			}
 
 			$options[] = HTMLHelper::_('select.option',
-			                           $max,
+			                           $this->max,
 			                           Text::plural('MOD_KNOWRES_SEARCH_GUEST', $this->max . '+'));
 		}
 
