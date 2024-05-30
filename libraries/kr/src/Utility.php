@@ -420,14 +420,14 @@ class Utility
 	 */
 	public static function getGmapsURL(): string
 	{
-		$url = 'https://maps.googleapis.com/maps/api/js?v=3.55';
+		$url = 'https://maps.googleapis.com/maps/api/js';
 
-		$params = KrMethods::getParams();
-		$key    = $params->get('gmapkey', '');
+		$key    = KrMethods::getParams()->get('gmapkey', '');
 		if ($key) {
-			$url .= '&key=' . $key . '&loading=async&callback=initMap';;
+			$url .= '?key=' . $key;
 		}
 
+		$url .= '&loading=async';
 		$url .= '&callback=Function.prototype';
 
 		return $url;
