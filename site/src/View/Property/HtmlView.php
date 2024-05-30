@@ -115,10 +115,14 @@ class HtmlView extends KrHtmlView\Site
 		$this->state  = $this->get('state');
 		$this->params = KrMethods::getParams();
 		$this->item   = KrFactory::getAdminModel('property')->getItem($id);
-		if (empty($this->item->id) || ($this->_layout != 'preview' && $this->item->state != 1)) {
+		$layout       = KrMethods::inputString('layout', 'default');
+
+		if (empty($this->item->id) || ($layout != 'preview' && $this->item->state != 1)) {
+			// Admin preview link for properties prior to publishing
 			$this->redirectToSearch();
 		}
-		if ($this->item->private && $this->_layout != 'preview') {
+		if ($this->item->private && $layout != 'preview') {
+			// Private property not for public view
 			$this->redirectToSearch();
 		}
 
