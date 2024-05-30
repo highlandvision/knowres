@@ -64,10 +64,6 @@ abstract class Service
 	protected ?object $exception = null;
 	/** @var  string Foreign key */
 	protected string $foreign_key = '';
-	/** @var string Foreign key guest */
-	protected string $foreign_key_guest = '';
-	/** @var string Foreign key owner */
-	protected string $foreign_key_owner = '';
 	/** @var ?object Guest item */
 	protected ?object $guest = null;
 	/** @var  array Logging messages */
