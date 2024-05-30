@@ -19,7 +19,7 @@ $wa->useScript('com_knowres.site')
    ->useScript('form.validate')
    ->useScript('keepalive');
 
-$action = KrMethods::route('index.php?option=com_knowres&task=contact.submit');
+$action = '/index.php?option=com_knowres&task=contact.submit';
 ?>
 
 <h1 class="title"><?php echo KrMethods::plain('COM_KNOWRES_CONTACT_TITLE'); ?></h1>
@@ -109,7 +109,7 @@ $action = KrMethods::route('index.php?option=com_knowres&task=contact.submit');
 		</div>
 
 		<?php echo HTMLHelper::_('form.token'); ?>
-		<input type="hidden" name="id" value="<?php echo $this->property_id; ?>">
+		<input type="hidden" name="id" value="0">
 		<input type="hidden" name="task" value="contact.submit">
 	</form>
 </div>

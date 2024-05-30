@@ -14,12 +14,13 @@ use HighlandVision\KR\Framework\KrMethods;
 use Joomla\CMS\HTML\HTMLHelper;
 
 $eform = KrFactory::getAdhocForm('enquiry', 'enquiry.xml', 'site', null);
+$action = '/index.php?option=com_knowres&task=enquiry.submit';
 ?>
 
 <div class="grid-x grid-margin-x">
 	<div class="small-12">
-		<form action="<?php echo KrMethods::route('index.php?option=com_knowres&task=enquiry.submit'); ?>"
-		      id="form-enquiry" onsubmit="return verifyemail();" class="formbg form-validate" method="post">
+		<form action="<?php echo $action; ?>" id="form-enquiry" onsubmit="return verifyemail();"
+		      class="formbg form-validate" method="post">
 
 			<p class="quoteform" style="margin-bottom:1px;">
 				<?php echo KrMethods::plain('COM_KNOWRES_QUOTE_GET'); ?>

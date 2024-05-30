@@ -99,7 +99,7 @@
                label="COM_KNOWRES_CONTACT_AGES_LBL"/>
         <field name="budget"
                hiddenDescription="true"
-               required="true"
+               required="false"
                type="list"
                label="COM_KNOWRES_CONTACT_BUDGET_LBL"
                description="COM_KNOWRES_CONTACT_BUDGET_LBL">

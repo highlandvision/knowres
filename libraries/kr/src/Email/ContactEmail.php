@@ -60,8 +60,7 @@ class ContactEmail extends Email
 	 */
 	public function sendTheEmails(int $property_id, array $input): void
 	{
-		if (!is_countable($input) || !count($input))
-		{
+		if (!is_countable($input) || !count($input)) {
 			throw new InvalidArgumentException('Input parameter is required and must have data');
 		}
 
@@ -85,8 +84,7 @@ class ContactEmail extends Email
 		$this->setPropertyData();
 		$this->setContactData();
 
-		if ($this->agency->id)
-		{
+		if ($this->agency->id) {
 			$this->setHelpScout();
 		}
 	}
@@ -108,15 +106,11 @@ class ContactEmail extends Email
 		$this->reply_to   = null;
 		$this->reply_name = null;
 
-		if ($trigger->send_guest && $this->guest_email)
-		{
-			if ($trigger->send_owner && $this->owner_email)
-			{
+		if ($trigger->send_guest && $this->guest_email) {
+			if ($trigger->send_owner && $this->owner_email) {
 				$this->reply_to   = $this->owner_email;
 				$this->reply_name = $this->owner_name;
-			}
-			else
-			{
+			} else {
 				$this->reply_to   = $this->manager_email;
 				$this->reply_name = $this->manager_name;
 			}
@@ -124,32 +118,28 @@ class ContactEmail extends Email
 			$this->dispatchEmail($this->guest_email, $this->guest_name);
 		}
 
-		if ($trigger->send_owner && $this->owner_email)
-		{
+		if ($trigger->send_owner && $this->owner_email) {
 			$this->reply_to   = $this->guest_email;
 			$this->reply_name = $this->guest_name;
 
 			$this->dispatchEmail($this->owner_email, $this->guest_name);
 		}
 
-		if ($trigger->send_agent && $this->agency_email)
-		{
+		if ($trigger->send_agent && $this->agency_email) {
 			$this->reply_to   = $this->guest_email;
 			$this->reply_name = $this->guest_name;
 
 			$this->dispatchEmail($this->agency_email, $this->guest_name);
 		}
 
-		if ($trigger->send_admin)
-		{
+		if ($trigger->send_admin) {
 			$this->dispatchEmail(KrMethods::getCfg('mailfrom'), $this->guest_name);
 		}
 	}
 
 	/**
-	 * Set contact details for Manager, Agency and Default
-	 * 1. Set property manager if there is a speciic property.
-	 * 2. Set to default agency if no manager or property for an enquiry.
+	 * Set contact details for Enquiry or Agency
+	 * 1. If enquiry email is set in options use that o/w agency default
 	 *
 	 * @param  ?int  $agency_id  ID of agency
 	 *
@@ -161,37 +151,17 @@ class ContactEmail extends Email
 		$this->setAgency($agency_id);
 		$enquiry_email = KrMethods::getParams()->get('enquiry_email');
 
-		if (!empty($this->property))
-		{
-			$settings = KrFactory::getListModel('propertysettings')
-			                     ->getPropertysettings($this->property->id, 'default_manager');
-			if ((int) $settings['default_manager'])
-			{
-				$manager                       = KrFactory::getAdminModel('manager')
-				                                          ->getItem((int) $settings['default_manager']);
-				$this->data['MANAGEREMAIL']    = $manager->email;
-				$this->data['MANAGERNAME']     = $manager->name;
-				$this->data['AGENCYEMAIL']     = $manager->agency_email;
-				$this->data['AGENCYNAME']      = $manager->agency_name;
-				$this->data['AGENCYTELEPHONE'] = $manager->agency_telephone;
-			}
+		if (!empty($enquiry_email)) {
+			$this->data['MANAGEREMAIL'] = $enquiry_email;
+			$this->data['AGENCYEMAIL']  = $enquiry_email;
+		} else {
+			$this->data['MANAGEREMAIL'] = KrMethods::getCfg('mailfrom');
+			$this->data['AGENCYEMAIL']  = KrMethods::getCfg('mailfrom');
 		}
-		else if (!empty($enquiry_email))
-		{
-			$this->data['MANAGEREMAIL']    = $enquiry_email;
-			$this->data['MANAGERNAME']     = $this->agency->name;
-			$this->data['AGENCYEMAIL']     = $enquiry_email;
-			$this->data['AGENCYNAME']      = $this->agency->name;
-			$this->data['AGENCYTELEPHONE'] = $this->agency->telephone;
-		}
-		else
-		{
-			$this->data['MANAGEREMAIL']    = KrMethods::getCfg('mailfrom');
-			$this->data['MANAGERNAME']     = $this->agency->name;
-			$this->data['AGENCYEMAIL']     = KrMethods::getCfg('mailfrom');
-			$this->data['AGENCYNAME']      = $this->agency->name;
-			$this->data['AGENCYTELEPHONE'] = $this->agency->telephone;
-		}
+
+		$this->data['MANAGERNAME']     = $this->agency->name;
+		$this->data['AGENCYNAME']      = $this->agency->name;
+		$this->data['AGENCYTELEPHONE'] = $this->agency->telephone;
 
 		$this->manager_email = $this->data['MANAGEREMAIL'];
 		$this->manager_name  = $this->data['MANAGERNAME'];
@@ -211,11 +181,9 @@ class ContactEmail extends Email
 		$this->owner_email          = '';
 		$this->owner_name           = '';
 
-		if ($this->property_id)
-		{
+		if ($this->property_id) {
 			$this->property = KrFactory::getAdminModel('property')->getItem($this->property_id);
-			if (!empty($this->property))
-			{
+			if (!empty($this->property)) {
 				$this->data['PROPERTYNAME'] = $this->property->property_name;
 				$this->owner_email          = $this->property->property_email;
 				$this->owner_name           = $this->property->property_name;

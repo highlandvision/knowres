@@ -87,12 +87,20 @@ class ContactController extends FormController
 		$data = KrMethods::inputArray('jform');
 
 		$params    = KrMethods::getParams();
-		$Itemid    = SiteHelper::getItemId('com_knowres', 'contact');
-		$return    =
-			KrMethods::route('index.php?option=com_knowres&view=contact&Itemid=' . $Itemid . '&id=' . $id, false);
-		$return_ok =
-			KrMethods::route('index.php?option=com_knowres&view=contact&sent=1&Itemid=' . $Itemid . '&id=' . $id,
-			                 false);
+		if ($id > 0) {
+			$Itemid    = SiteHelper::getItemId('com_knowres', 'property');
+			$return    =
+				KrMethods::route('index.php?option=com_knowres&view=property&Itemid=' . $Itemid . '&id=' . $id, false);
+			$return_ok =
+				KrMethods::route('index.php?option=com_knowres&view=property&sent=1&Itemid=' . $Itemid . '&id=' . $id,
+				                 false);
+		} else {
+			$Itemid    = SiteHelper::getItemId('com_knowres', 'contact');
+			$return    =
+				KrMethods::route('index.php?option=com_knowres&view=contact&Itemid=' . $Itemid, false);
+			$return_ok =
+				KrMethods::route('index.php?option=com_knowres&view=contact&sent=1&Itemid=' . $Itemid, false);
+		}
 
 		$session = Factory::getSession();
 		if ($session->getState() !== 'active') {
