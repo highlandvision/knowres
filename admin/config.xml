@@ -932,11 +932,11 @@
             <field name="property_slideshow"
                    type="radio"
                    default="centered"
-                   class="btn-group btn-group-yesno"
+                   class="btn-group"
                    label="COM_KNOWRES_CONFIG_IMAGE_SLIDESHOW_TYPE"
                    description="COM_KNOWRES_CONFIG_IMAGE_SLIDESHOW_TYPE_DSC">
-                <option value="centered">COM_KNOWRES_CONFIG_IMAGE_SLIDESHOW_TYPE_CENTERED</option>
-                <option value="solo">COM_KNOWRES_CONFIG_IMAGE_SLIDESHOW_TYPE_SOLO</option>
+                <option class="btn btn-outline-success" value="centered">COM_KNOWRES_CONFIG_IMAGE_SLIDESHOW_TYPE_CENTERED</option>
+                <option class="btn btn-outline-danger" value="solo">COM_KNOWRES_CONFIG_IMAGE_SLIDESHOW_TYPE_SOLO</option>
             </field>
             <field name="property_thumbs"
                    type="radio"

@@ -6,7 +6,7 @@
 			type="text"
 			inputmode="search"
 			label="COM_KNOWRES_SEARCH"
-			description="COM_KNOWRES_SERVICES_SEARCH"
+			description="COM_KNOWRES_SERVICELOGS_SEARCH"
 			hint="COM_KNOWRES_SEARCH"/>
 		<field name="service_id"
 			onchange="this.form.submit();"

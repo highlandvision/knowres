@@ -15,10 +15,6 @@ use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Utility;
 use Joomla\CMS\HTML\HTMLHelper;
 ?>
-	<style>
-		.table > :not(caption) > * > * {
-			padding: 0.75rem 0.5rem;
-	</style>
 
 <?php foreach ($this->items as $i => $this->item): ?>
 	<tr class="row<?php echo $i % 2; ?>;">

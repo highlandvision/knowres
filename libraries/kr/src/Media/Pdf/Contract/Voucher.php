@@ -72,7 +72,7 @@ class Voucher extends Contract
 			'property'  => KrFactory::getAdminModel('property')->getItem($this->contract->property_id),
 			'agency'    => $this->agency,
 			'guestdata' => KrFactory::getListModel('contractguestdata')->getItem($this->contract->guestdata_id),
-			'notes'     => KrFactory::getListModel('contractnotes')->getForContract($this->contract->id, 2),
+			'notes'     => KrFactory::getListModel('contractnotes')->getForContract($this->contract->id, 1),
 			'balance'   => KrFactory::getAdminModel('contract')::getCurrentBalance($this->contract->id)
 		]);
 	}

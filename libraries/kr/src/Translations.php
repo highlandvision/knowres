@@ -336,7 +336,12 @@ class Translations
 		}
 
 		if ($remove_cache) {
-			$this->cache->remove($item);
+			try {
+				$this->cache->remove($item);
+			}
+			catch (RuntimeException $e) {
+				//No cache file to remove just continue
+			}
 		}
 	}
 

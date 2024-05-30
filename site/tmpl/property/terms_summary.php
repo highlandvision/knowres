@@ -11,7 +11,7 @@ defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrMethods;
 
-//TODO-v4.3 cv test for split terms
+//TODO-v5.1 Revisit terms summary
 $summary = KrMethods::route('index.php?option=com_knowres&task=property.terms&id=' . $this->item->id, false);
 $link    = '<a class="notsobig red link" href="' . $summary . '" data-reveal-id="termsModal" data-reveal-ajax="true">
 	Show the Full Terms</a>';

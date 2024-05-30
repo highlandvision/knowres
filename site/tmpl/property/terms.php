@@ -1,4 +1,4 @@
-<?php /** @noinspection PhpPossiblePolymorphicInvocationInspection */
+<?php
 /**
  * @package    Know Reservations
  * @subpackage Site View
@@ -7,6 +7,7 @@
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
 /** @noinspection PhpUnhandledExceptionInspection */
+/** @noinspection PhpPossiblePolymorphicInvocationInspection */
 
 defined('_JEXEC') or die;
 

@@ -591,7 +591,7 @@ class FMethods
 	}
 
 	/**
-	 * Resgister a new user
+	 * Register a new user
 	 *
 	 * @param  string  $name      Name of user
 	 * @param  string  $username  Username of user

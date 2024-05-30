@@ -116,8 +116,7 @@ class Redsys extends Gateway
 	public function setResponseData(): stdClass
 	{
 		$signature = $this->getReplySignature();
-		if ($signature != $this->paymentData->merchantSignature)
-		{
+		if ($signature != $this->paymentData->merchantSignature) {
 			throw new RuntimeException("ERROR - Generated signature $signature and sent signature $this->paymentData->merchantSignature do not match");
 		}
 
@@ -250,8 +249,7 @@ class Redsys extends Gateway
 	{
 		$iv          = "\0\0\0\0\0\0\0\0";
 		$data_padded = $data;
-		if (strlen($data_padded) % 8)
-		{
+		if (strlen($data_padded) % 8) {
 			$data_padded = str_pad($data_padded, strlen($data_padded) + 8 - strlen($data_padded) % 8, "\0");
 		}
 
@@ -268,18 +266,17 @@ class Redsys extends Gateway
 	 */
 	protected function getLanguage(string $country_iso): string
 	{
-		return match ($country_iso)
-		{
+		return match ($country_iso) {
 			'FR', 'CH', 'LU', 'BE' => '004',
-			'DE', 'AT' => '005',
-			'ES', 'MX' => '001',
-			'IT' => '007',
-			'NL' => '006',
-			'PL' => '011',
-			'PT' => '009',
-			'RU' => '643',
-			'SE', 'DK', 'NO' => '008',
-			default => '002',
+			'DE', 'AT'             => '005',
+			'ES', 'MX'             => '001',
+			'IT'                   => '007',
+			'NL'                   => '006',
+			'PL'                   => '011',
+			'PT'                   => '009',
+			'RU'                   => '643',
+			'SE', 'DK', 'NO'       => '008',
+			default                => '002',
 		};
 	}
 
@@ -291,12 +288,9 @@ class Redsys extends Gateway
 	 */
 	protected function getOrder(): string
 	{
-		if (empty($this->fields['DS_MERCHANT_ORDER']))
-		{
+		if (empty($this->fields['DS_MERCHANT_ORDER'])) {
 			$order = $this->fields['Ds_Merchant_Order'];
-		}
-		else
-		{
+		} else {
 			$order = $this->fields['DS_MERCHANT_ORDER'];
 		}
 
@@ -312,12 +306,9 @@ class Redsys extends Gateway
 	 */
 	protected function getReplyOrder(): string
 	{
-		if (empty($this->fields['DS_ORDER']))
-		{
+		if (empty($this->fields['DS_ORDER'])) {
 			$order = $this->fields['Ds_Order'];
-		}
-		else
-		{
+		} else {
 			$order = $this->fields['DS_ORDER'];
 		}
 
@@ -396,15 +387,12 @@ class Redsys extends Gateway
 			throw new RuntimeException("Unsuccessful Ds_Response received: $response");
 		}
 
-		if ($currency != '978')
-		{
+		if ($currency != '978') {
 			throw new RuntimeException("Redsys currency is not 978 (EUR)");
 		}
 
-		if ($this->paymentData->payment_type == 'OBD')
-		{
-			if ($amount * 100 != $this->contract->deposit * 100)
-			{
+		if ($this->paymentData->payment_type == 'OBD') {
+			if ($amount * 100 != $this->contract->deposit * 100) {
 				throw new RuntimeException("Redsys amount $amount does not match with expected amount $this->contract->deposit");
 			}
 		}

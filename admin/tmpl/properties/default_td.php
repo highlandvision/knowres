@@ -44,7 +44,7 @@ if ($this->access_level == 10)
 		</th>
 		<td>
 			<div class="btn-toolbar kr-property-action" style="margin:0;">
-				<div class="btn-group">
+				<div class="btn-group btn-group-sm">
 					<?php
 					$data            = [];
 					$data['label']   = KrMethods::plain('COM_KNOWRES_PROPERTYDASHBOARD_TITLE');

@@ -28,27 +28,27 @@ $guestinfo = $guestdata->guestinfo;
 $count     = 1;
 ?>
 
-	<div class="row mt-2">
-		<div class="col-4 fw500">
-			<small><?php echo KrMethods::plain('COM_KNOWRES_NAME'); ?></small>
-		</div>
-
-		<?php if ($params->get('guestdata_age', 0)): ?>
-			<div class="col-4 fw500">
-				<small>
-					<?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATA_DOB_LBL'); ?>
-				</small>
-			</div>
-		<?php endif; ?>
-
-		<?php if ($params->get('guestdata_sex', 0)): ?>
-			<div class="col-4 fw500">
-				<small>
-					<?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATA_SEX_LBL'); ?>
-				</small>
-			</div>
-		<?php endif; ?>
+<div class="row mt-2">
+	<div class="col-4 fw500">
+		<small><?php echo KrMethods::plain('COM_KNOWRES_NAME'); ?></small>
 	</div>
+
+	<?php if ($params->get('guestdata_age', 0)): ?>
+		<div class="col-4 fw500">
+			<small>
+				<?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATA_DOB_LBL'); ?>
+			</small>
+		</div>
+	<?php endif; ?>
+
+	<?php if ($params->get('guestdata_sex', 0)): ?>
+		<div class="col-4 fw500">
+			<small>
+				<?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATA_SEX_LBL'); ?>
+			</small>
+		</div>
+	<?php endif; ?>
+</div>
 
 <?php if ($params->get('guestdata_document', 0)) : ?>
 	<div class="row">
@@ -114,7 +114,7 @@ $count     = 1;
 				<?php if ($g->document_issue): ?>
 					<?php echo TickTock::displayDate($g->document_issue, 'M-Y'); ?>
 				<?php endif; ?>
-				<?php if ($g->document_expiry): ?>
+				<?php if (!empty($g->document_expiry)): ?>
 					<?php echo ' / ' . TickTock::displayDate($g->document_expiry, 'M-Y'); ?>
 				<?php endif; ?>
 			</div>

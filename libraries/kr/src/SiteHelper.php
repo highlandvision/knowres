@@ -637,6 +637,10 @@ class SiteHelper
 	 */
 	public static function redirectSearch(int $region_id = 0, bool $message = true): void
 	{
+		if (!$region_id) {
+			$region_id = KrMethods::getParams()->get('default_region', 0);
+		}
+
 		$Itemid = SiteHelper::getItemId('com_knowres', 'properties', [
 			'layout'    => 'search',
 			'region_id' => $region_id
