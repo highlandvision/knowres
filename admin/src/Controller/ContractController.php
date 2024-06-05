@@ -66,34 +66,27 @@ class ContractController extends FormController
 		$contractData             = $contractSession->updateData($jform);
 		$contractData->guests     = (int) $jform['adults'] + (int) $jform['children'];
 		$contractData->child_ages = !empty($jform['child_ages']) ? explode(',', $jform['child_ages']) : [];
-		if (empty($jform['child_ages']))
-		{
+		if (empty($jform['child_ages'])) {
 			$contractData->child_ages_set = false;
 		}
 
 		/* @var ContractModel $model */
 		$model = $this->getModel();
 		$form  = $model->getForm();
-		if ($model->validate($form, (array) $contractData) === false)
-		{
+		if ($model->validate($form, (array) $contractData) === false) {
 			echo new JsonResponse(null, join('<br>', $model->getErrors()), true);
 			jexit();
 		}
 
-		try
-		{
+		try {
 			$Hub   = new Hub($contractData);
 			$agent = KrFactory::getAdminModel('agent')->getItem($contractData->agent_id);
 			$Hub->setAgent($agent);
-		}
-		catch (UnexpectedValueException $e)
-		{
+		} catch (UnexpectedValueException $e) {
 			Logger::logMe($e->getMessage());
 			echo new JsonResponse(null, $e->getMessage(), true);
 			jexit();
-		}
-		catch (Exception $e)
-		{
+		} catch (Exception $e) {
 			Logger::logMe($e->getMessage());
 			echo new JsonResponse(null, KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN_CHECK'), true);
 			jexit();
@@ -109,8 +102,7 @@ class ContractController extends FormController
 		];
 		$this->compute($Hub, $computations);
 
-		if ($Hub->agent->mandatory_extras_charge)
-		{
+		if ($Hub->agent->mandatory_extras_charge) {
 			$extrasDb = KrFactory::getListModel('extras')->getPricingExtras($Hub->getValue('property_id'), true);
 			$Hub->setValue('extrasRq', false);
 			$Hub->setValue('extrasDb', $extrasDb);
@@ -127,8 +119,7 @@ class ContractController extends FormController
 		$this->compute($Hub, $computations);
 
 		$room_total = $Hub->getValue('room_total');
-		if (!$room_total)
-		{
+		if (!$room_total) {
 			echo new JsonResponse(null, KrMethods::plain('COM_KNOWRES_ERROR_QUOTE_NO_ROOM_TOTAL'), true);
 			jexit();
 		}
@@ -153,10 +144,8 @@ class ContractController extends FormController
 		$this->setRedirect(KrMethods::route('index.php?option=com_knowres&view=contracts', false));
 
 		$cid = KrMethods::inputArray('cid');
-		if (is_countable($cid))
-		{
-			if (!KrFactory::getListModel('contractpayments')->updateXeroBatch($cid))
-			{
+		if (is_countable($cid)) {
+			if (!KrFactory::getListModel('contractpayments')->updateXeroBatch($cid)) {
 				KrMethods::message("An error occurred please reselect contracts", 'error');
 			}
 		}
@@ -172,8 +161,7 @@ class ContractController extends FormController
 	 */
 	public function cancel($key = null): void
 	{
-		if (parent::cancel($key))
-		{
+		if (parent::cancel($key)) {
 			$contractSession = new KrSession\Contract();
 			$contractData    = $contractSession->getData();
 			$id              = $contractData->id;
@@ -182,16 +170,11 @@ class ContractController extends FormController
 			$guestSession->resetData();
 			$gobackto = Utility::getGoBackTo();
 
-			if ($id)
-			{
+			if ($id) {
 				$return = KrMethods::route('index.php?option=com_knowres&task=contract.show&id=' . $id, false);
-			}
-			else if ($gobackto)
-			{
+			} else if ($gobackto) {
 				$return = KrMethods::route('index.php?option=com_knowres&' . $gobackto, false);
-			}
-			else
-			{
+			} else {
 				$return = KrMethods::route('index.php?option=com_knowres&view=properties', false);
 			}
 
@@ -216,8 +199,7 @@ class ContractController extends FormController
 		$id = $this->validateId();
 		/* @var ContractModel $item */
 		$item = KrFactory::getAdminModel('contract')->getItem($id);
-		if (!$item->id)
-		{
+		if (!$item->id) {
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN_CHECK'), 'error');
 			echo new JsonResponse(null, KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN_CHECK'), true);
 			jexit();
@@ -229,8 +211,7 @@ class ContractController extends FormController
 		$Hub     = new Hub($contractData);
 		$actions = ['delete'];
 		$success = $this->core($Hub, $actions);
-		if (!$success)
-		{
+		if (!$success) {
 			echo new JsonResponse(null, join('<br>', $Hub->errors), true);
 			jexit();
 		}
@@ -260,12 +241,10 @@ class ContractController extends FormController
 		$wrapper['blocked']  = Utility::encodeJson($Calendar->getBlockedDates());
 		$wrapper['getquote'] = true;
 
-		if (!$edit_id)
-		{
+		if (!$edit_id) {
 			$arrival   = $this->input->getString('arrival', '');
 			$departure = $this->input->getString('departure', '');
-			if (!$arrival || !$departure)
-			{
+			if (!$arrival || !$departure) {
 				list($arrival, $departure) = $Calendar->getFirstFreeDate();
 				$wrapper['getquote'] = false;
 			}
@@ -291,18 +270,15 @@ class ContractController extends FormController
 		$this->checkToken();
 
 		$contract_id = KrMethods::inputInt('contract_id');
-		if (!$contract_id)
-		{
+		if (!$contract_id) {
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN'));
 			KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&view=contracts'));
 		}
 
 		$Invoice = new Invoice('download', $contract_id);
 		$result  = $Invoice->getPdf();
-		if (!$result)
-		{
-			foreach ($errors as $e)
-			{
+		if (!$result) {
+			foreach ($errors as $e) {
 				KrMethods::message($e);
 			}
 
@@ -329,8 +305,7 @@ class ContractController extends FormController
 		$fixrate = isset($jform['fixrate']) ? (int) $jform['fixrate'] : 0;
 
 		$contractSession = new KrSession\Contract();
-		if (!$id)
-		{
+		if (!$id) {
 			$contractSession->resetData();
 		}
 		$contractData                   = $contractSession->updateData($jform);
@@ -341,23 +316,18 @@ class ContractController extends FormController
 		$contractData->extra_ids        = KrMethods::inputArray('extra_id');
 		$contractData                   = $this->validateCoupon($contractData);
 
-		if (!$id && $initial)
-		{
+		if (!$id && $initial) {
 			echo new JsonResponse(null, KrMethods::plain('COM_KNOWRES_CONTRACT_EDIT_EDIT'), false);
 			jexit();
 		}
 
-		try
-		{
+		try {
 			$Hub = new Hub($contractData);
-			if ($contractData->agent_id)
-			{
+			if ($contractData->agent_id) {
 				$agent = KrFactory::getAdminModel('agent')->getItem($contractData->agent_id);
 				$Hub->setAgent($agent);
 			}
-		}
-		catch (Exception $e)
-		{
+		} catch (Exception $e) {
 			echo new JsonResponse(null, $e->getMessage(), true);
 			Logger::logMe($e->getMessage());
 			jexit();
@@ -365,10 +335,8 @@ class ContractController extends FormController
 
 		$Hub->setExtras();
 
-		if ($manual)
-		{
-			if (!$Hub->getValue('room_total_gross'))
-			{
+		if ($manual) {
+			if (!$Hub->getValue('room_total_gross')) {
 				echo new JsonResponse(null, KrMethods::plain('COM_KNOWRES_ERROR_ROOM_TOTAL_GROSS'), true);
 				jexit();
 			}
@@ -401,28 +369,21 @@ class ContractController extends FormController
 			];
 
 			$this->compute($Hub, $computations);
-		}
-		else if ($fixrate)
-		{
+		} else if ($fixrate) {
 			$computations = [
 				'extras',
 				'deposit',
 				'paymentdates'
 			];
 			$this->compute($Hub, $computations);
-		}
-		else
-		{
+		} else {
 			$Calendar = new Calendar($Hub->getValue('property_id'), $Hub->getValue('arrival'),
-				$Hub->getValue('departure'));
+			                         $Hub->getValue('departure'));
 
 			$minstay = $Calendar->getMinstay();
-			if ($Hub->getValue('nights') < $minstay[$Hub->getValue('arrival')])
-			{
+			if ($Hub->getValue('nights') < $minstay[$Hub->getValue('arrival')]) {
 				$Hub->setValue('ajax_warning', KrMethods::plain('COM_KNOWRES_ERROR_QUOTE_NO_RATES'));
-			}
-			else
-			{
+			} else {
 				$computations = [
 					'base',
 					'dow',
@@ -444,8 +405,7 @@ class ContractController extends FormController
 		}
 
 		$contractSession->setData($Hub->getData());
-		if (!$Hub->getValue('room_total_gross'))
-		{
+		if (!$Hub->getValue('room_total_gross')) {
 			$Hub->setValue('ajax_warning', KrMethods::plain('COM_KNOWRES_ERROR_QUOTE_NO_RATES'));
 		}
 
@@ -474,8 +434,7 @@ class ContractController extends FormController
 		$access_level = $userSession->getAccessLevel();
 		$allow_block  = !($access_level == 10 && !$params->get('block_add'));
 		$form         = null;
-		if ($allow_block)
-		{
+		if ($allow_block) {
 			$Calendar = new Calendar\Manager($property_id);
 			$blocked  = $Calendar->getBlockedDates();
 			$edate    = $Calendar->getEndDate();
@@ -485,12 +444,9 @@ class ContractController extends FormController
 			$form->setValue('departuredsp', null, TickTock::parseString($departure, 'd M Y'));
 		}
 
-		if ($source == 'calendar')
-		{
+		if ($source == 'calendar') {
 			KrMethods::setUserState('com_knowres.gobackto', 'task=property.calendar&property_id=' . $property_id);
-		}
-		else if ($source == 'gantt')
-		{
+		} else if ($source == 'gantt') {
 			KrMethods::setUserState('com_knowres.gobackto', 'view=gantt');
 		}
 
@@ -526,18 +482,15 @@ class ContractController extends FormController
 	#[NoReturn] public function modalshow(): bool
 	{
 		$id = KrMethods::inputInt('id');
-		if (!$id)
-		{
+		if (!$id) {
 			echo new JsonResponse(null, KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN_CHECK'));
 			jexit();
 		}
 
 		$type = KrMethods::inputString('block', 'c');
-		if ($type == 'c')
-		{
+		if ($type == 'c') {
 			$item = KrFactory::getAdminModel('contract')->getItem($id);
-			if (empty($item->id))
-			{
+			if (empty($item->id)) {
 				KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN_CHECK'), 'error');
 				echo new JsonResponse(null, KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN_CHECK'), true);
 				jexit();
@@ -547,26 +500,22 @@ class ContractController extends FormController
 			$access_level = $userSession->getAccessLevel();
 			$params       = KrMethods::getParams();
 
-			if ($item->black_booking)
-			{
+			if ($item->black_booking) {
 				$notes = KrFactory::getListModel('contractnotes')->getForContract($item->id);
 				$html  = KrMethods::render('contract.modal.show.block', [
 					'item'         => $item,
 					'notes'        => $notes,
 					'allow_cancel' => !($access_level == 10 && !$params->get('block_cancel'))
 				]);
-			}
-			else
-			{
+			} else {
 				$guestdata = false;
-				if ($item->guestdata_id)
-				{
+				if ($item->guestdata_id) {
 					$guestdata = KrFactory::getAdminModel('contractguestdata')->getItem($item->guestdata_id);
 				}
 				$payments = KrFactory::getListModel('contractpayments')->getForContract($item->id);
 				$fees     = KrFactory::getListModel('contractfees')->getForContract($item->id);
 				[$balance, $balance_all] = KrFactory::getAdminModel('contractpayment')::setBalances($item,
-					$payments, $fees);
+				                                                                                    $payments, $fees);
 
 				$html = KrMethods::render('contract.modal.show.reservation', [
 					'item'        => $item,
@@ -583,12 +532,9 @@ class ContractController extends FormController
 			}
 
 			KrMethods::setUserState('com_knowres.current.contract_id', $item->id);
-		}
-		else
-		{
+		} else {
 			$item = KrFactory::getAdminModel('icalblock')->getItem($id);
-			if (empty($item->id))
-			{
+			if (empty($item->id)) {
 				KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN_CHECK'), 'error');
 				echo new JsonResponse(null, KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN_CHECK'), true);
 				jexit();
@@ -615,8 +561,7 @@ class ContractController extends FormController
 
 		$jform = KrMethods::inputArray('jform');
 		$id    = $jform['id'];
-		if (!$id)
-		{
+		if (!$id) {
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN_CHECK'), 'error');
 			echo new JsonResponse(null, KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN_CHECK'), true);
 			jexit();
@@ -630,8 +575,7 @@ class ContractController extends FormController
 		$Hub = new Hub($contractData);
 		$Hub->setOriginalData($originalData);
 		$actions = ['quick'];
-		if (!$this->core($Hub, $actions))
-		{
+		if (!$this->core($Hub, $actions)) {
 			echo new JsonResponse(null, join('<br>', $Hub->errors), true);
 			jexit();
 		}
@@ -641,7 +585,7 @@ class ContractController extends FormController
 
 		$wrapper             = [];
 		$wrapper['redirect'] = KrMethods::route('index.php?option=com_knowres&task=contract.show&success=1&id=' . $id,
-			false);
+		                                        false);
 		echo new JsonResponse($wrapper);
 		jexit();
 	}
@@ -660,8 +604,7 @@ class ContractController extends FormController
 		$service_id = $this->input->getInt('service_id', 0);
 
 		$item = KrFactory::getAdminModel('contract')->getItem($id);
-		if (!$item->id)
-		{
+		if (!$item->id) {
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN_CHECK'), 'error');
 			echo new JsonResponse(null, KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN_CHECK'), true);
 			jexit();
@@ -674,8 +617,7 @@ class ContractController extends FormController
 		$paymentSession          = new KrSession\Payment();
 		$paymentData             = $paymentSession->resetData();
 		$paymentData->service_id = $service_id;
-		if ($service_id)
-		{
+		if ($service_id) {
 			$paymentData->contract_id  = $id;
 			$paymentData->payment_type = 'RBD';
 		}
@@ -703,8 +645,7 @@ class ContractController extends FormController
 
 		$id   = $this->validateId();
 		$item = KrFactory::getAdminModel('contract')->getItem($id);
-		if (!$item->id)
-		{
+		if (!$item->id) {
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN_CHECK'), 'error');
 			echo new JsonResponse(null, KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN_CHECK'), true);
 			jexit();
@@ -716,7 +657,8 @@ class ContractController extends FormController
 		$Hub     = new Hub($contractData);
 		$actions = ['requestreject',
 		            'servicequeue',
-		            'emails'];
+		            'emails'
+		];
 		$this->core($Hub, $actions);
 
 		$contractSession->resetData();
@@ -743,8 +685,7 @@ class ContractController extends FormController
 		$id    = $this->validateId($jform['id']);
 
 		$item = KrFactory::getAdminModel('contract')->getItem($id);
-		if (!$item->id)
-		{
+		if (!$item->id) {
 			echo new JsonResponse(null, KrMethods::plain('COM_KNOWRES_ERROR_NOT_FOUND'), true);
 			jexit();
 		}
@@ -757,9 +698,9 @@ class ContractController extends FormController
 		$Hub = new Hub($contractData);
 		$Hub->setOriginalData($originalData);
 		$actions = ['resurrect',
-		            'servicequeue'];
-		if (!$this->core($Hub, $actions))
-		{
+		            'servicequeue'
+		];
+		if (!$this->core($Hub, $actions)) {
 			Utility::pageErrors($Hub->errors);
 			echo new JsonResponse(null, '', true);
 			jexit();
@@ -796,8 +737,7 @@ class ContractController extends FormController
 		$contractData->child_ages = !empty($jform['child_ages']) ? explode(',', $jform['child_ages']) : [];
 		$Hub                      = new Hub($contractData);
 
-		if ($action != 'block')
-		{
+		if ($action != 'block') {
 			$originalData = clone $contractData;
 			$guestSession = new KrSession\Guest();
 			$guestData    = $guestSession->updateData($jform);
@@ -805,31 +745,28 @@ class ContractController extends FormController
 			$Hub->setOriginalData($originalData);
 			$actions = ['manager',
 			            'servicequeue',
-			            'emails'];
-		}
-		else
-		{
+			            'emails'
+			];
+		} else {
 			$actions = ['block',
-			            'servicequeue'];
+			            'servicequeue'
+			];
 		}
 
 		$success = $this->core($Hub, $actions);
-		if (!$success)
-		{
+		if (!$success) {
 			echo new JsonResponse(null, join('<br>', $Hub->errors), true);
 			jexit();
 		}
 
 		$contractSession->resetData();
-		if ($action != 'block')
-		{
+		if ($action != 'block') {
 			$guestSession->resetData();
 		}
 		KrMethods::cleanCache('com_knowres_contracts');
 		KrMethods::message(KrMethods::plain('COM_KNOWRES_ACTION_SUCCESS'));
 
-		if (!$this->return)
-		{
+		if (!$this->return) {
 			$this->return = $this->setReturn($Hub, $action);
 		}
 
@@ -848,17 +785,14 @@ class ContractController extends FormController
 	#[NoReturn] public function show(): void
 	{
 		$id = $this->input->getInt('id', 0);
-		if (!$id)
-		{
+		if (!$id) {
 			$cid = $this->input->post->get('cid', [], 'array');
-			if (is_countable($cid) && count($cid))
-			{
+			if (is_countable($cid) && count($cid)) {
 				$id = $cid[0];
 			}
 		}
 
-		if (!$id)
-		{
+		if (!$id) {
 			KrMethods::message('Reservation ID not received, please select a Reservation', 'error');
 			Utility::goto('contracts');
 		}
@@ -879,21 +813,21 @@ class ContractController extends FormController
 	{
 		$id   = $this->validateId();
 		$item = KrFactory::getAdminModel('contract')->getItem($id);
-		if (!$item->id)
-		{
+		if (!$item->id) {
 			echo new JsonResponse(null, KrMethods::plain('COM_KNOWRES_ERROR_NOT_FOUND'), true);
 			jexit();
 		}
 
 		$contractSession = new KrSession\Contract();
+		$contractSession->resetData();
 		$contractData    = $contractSession->updateData($item);
 
 		$Hub     = new Hub($contractData);
 		$actions = ['cancel',
 		            'servicequeue',
-		            'emails'];
-		if (!$this->core($Hub, $actions))
-		{
+		            'emails'
+		];
+		if (!$this->core($Hub, $actions)) {
 			Utility::pageErrors($Hub->errors);
 			echo new JsonResponse(null, '', true);
 			jexit();
@@ -916,16 +850,15 @@ class ContractController extends FormController
 	 */
 	public function trigger(): void
 	{
-		$id            = $this->validateId();
-		$email_trigger = $this->input->getInt('email_trigger', 0);
+		$id = $this->validateId();
 
-		if ($email_trigger == 1 || $email_trigger == 0)
-		{
+		$jform         = KrMethods::inputArray('jform');
+		$email_trigger = (int) $jform['email_trigger'];
+		if ($email_trigger == 0 || $email_trigger == 2) {
 			$email = new ContractEmail('MANUALBOOK');
 			$email->sendTheEmails($id);
 		}
-		if ($email_trigger == 2 || $email_trigger == 0)
-		{
+		if ($email_trigger == 1 || $email_trigger == 2) {
 			$email = new ContractEmail('MANUALBOOKOWNER');
 			$email->sendTheEmails($id);
 		}
@@ -946,18 +879,15 @@ class ContractController extends FormController
 		$this->checkToken();
 
 		$contract_id = KrMethods::inputInt('contract_id');
-		if (!$contract_id)
-		{
+		if (!$contract_id) {
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN'));
 			$this->setRedirect(KrMethods::route('index.php?option=com_knowres&view=contracts'));
 		}
 
 		$Voucher = new Voucher('download', $contract_id);
 		$result  = $Voucher->getPdf();
-		if (!$result)
-		{
-			foreach ($errors as $e)
-			{
+		if (!$result) {
+			foreach ($errors as $e) {
 				KrMethods::message($e);
 			}
 
@@ -990,12 +920,9 @@ class ContractController extends FormController
 	 */
 	protected function compute(Hub $Hub, array $computations): void
 	{
-		try
-		{
+		try {
 			$Hub->compute($computations);
-		}
-		catch (Exception $e)
-		{
+		} catch (Exception $e) {
 			Logger::logMe($e->getMessage());
 			echo new JsonResponse(null, KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN_CHECK'), true);
 			jexit();
@@ -1014,12 +941,9 @@ class ContractController extends FormController
 	 */
 	protected function core(Hub $Hub, array $actions): bool
 	{
-		try
-		{
+		try {
 			return $Hub->action($actions);
-		}
-		catch (Exception $e)
-		{
+		} catch (Exception $e) {
 			Logger::logMe($e->getMessage());
 			echo new JsonResponse(null, $e->getMessage(), true);
 			jexit();
@@ -1057,29 +981,21 @@ class ContractController extends FormController
 		$output->net_price_system = $Hub->currencyDisplay($Hub->getValue('net_price_system'));
 		$output->commission       = $Hub->currencyDisplay($Hub->getValue('commission'));
 
-		if ($Hub->getValue('contract_total') == $Hub->getValue('deposit'))
-		{
+		if ($Hub->getValue('contract_total') == $Hub->getValue('deposit')) {
 			$output->deposit_date = KrMethods::sprintf('COM_KNOWRES_FULL_PAYMENT_DUE',
-				TickTock::displayDate($Hub->getValue('expiry_date')));
-		}
-		else
-		{
+			                                           TickTock::displayDate($Hub->getValue('expiry_date')));
+		} else {
 			$output->deposit_date = KrMethods::sprintf('COM_KNOWRES_DEPOSIT_DUE',
-				TickTock::displayDate($Hub->getValue('expiry_date')));
+			                                           TickTock::displayDate($Hub->getValue('expiry_date')));
 		}
 
-		if ($Hub->getvalue('contract_total') - $Hub->getValue('deposit') == 0)
-		{
+		if ($Hub->getvalue('contract_total') - $Hub->getValue('deposit') == 0) {
 			$output->balance_date = KrMethods::plain('COM_KNOWRES_BALANCE');
-		}
-		else if (!(int) $Hub->getValue('balance_days'))
-		{
+		} else if (!(int) $Hub->getValue('balance_days')) {
 			$output->balance_date = KrMethods::plain('COM_KNOWRES_CONTRACTS_BOOKING_STATUS_39');
-		}
-		else
-		{
+		} else {
 			$output->balance_date = KrMethods::sprintf('COM_KNOWRES_BALANCE_DUE',
-				TickTock::displayDate($Hub->getValue('balance_date')));
+			                                           TickTock::displayDate($Hub->getValue('balance_date')));
 		}
 
 		$output->ajax_warning = $Hub->getValue('ajax_warning');
@@ -1114,33 +1030,23 @@ class ContractController extends FormController
 		$output->hbalance         = KrMethods::plain('COM_KNOWRES_BALANCE');
 		$output->agent_commission = $Hub->currencyDisplay($Hub->getValue('agent_commission'));
 
-		if ($Hub->getValue('agent_deposit_paid'))
-		{
+		if ($Hub->getValue('agent_deposit_paid')) {
 			$output->hdeposit = KrMethods::plain('COM_KNOWRES_DEPOSIT_AGENT');
-		}
-		else if ($Hub->getValue('contract_total') == $Hub->getValue('deposit'))
-		{
+		} else if ($Hub->getValue('contract_total') == $Hub->getValue('deposit')) {
 			$output->hdeposit = KrMethods::sprintf('COM_KNOWRES_FULL_PAYMENT_DUE',
-				TickTock::displayDate($Hub->getValue('expiry_date')));
-		}
-		else
-		{
+			                                       TickTock::displayDate($Hub->getValue('expiry_date')));
+		} else {
 			$output->hdeposit = KrMethods::sprintf('COM_KNOWRES_DEPOSIT_DUE',
-				TickTock::displayDate($Hub->getValue('expiry_date')));
+			                                       TickTock::displayDate($Hub->getValue('expiry_date')));
 		}
 
-		if ($Hub->getValue('contract_total') - $Hub->getValue('deposit') == 0)
-		{
+		if ($Hub->getValue('contract_total') - $Hub->getValue('deposit') == 0) {
 			$output->balance_date = KrMethods::plain('COM_KNOWRES_BALANCE');
-		}
-		else if (!(int) $Hub->getValue('balance_days'))
-		{
+		} else if (!(int) $Hub->getValue('balance_days')) {
 			$output->balance_date = KrMethods::plain('COM_KNOWRES_CONTRACTS_BOOKING_STATUS_39');
-		}
-		else
-		{
+		} else {
 			$output->balance_date = KrMethods::sprintf('COM_KNOWRES_BALANCE_DUE',
-				TickTock::displayDate($Hub->getValue('balance_date')));
+			                                           TickTock::displayDate($Hub->getValue('balance_date')));
 		}
 
 		$output->ajax_warning = $Hub->getValue('ajax_warning');
@@ -1165,63 +1071,42 @@ class ContractController extends FormController
 	{
 		$task     = $this->getTask();
 		$gobackto = KrMethods::inputString('gobackto');
-		if (empty($gobackto))
-		{
+		if (empty($gobackto)) {
 			$gobackto = Utility::getGoBackTo();
 		}
 
 		$url = KrMethods::getRoot() . 'administrator/';
-		try
-		{
+		try {
 			$id = $Hub->getValue('id');
-		}
-		catch (Exception)
-		{
+		} catch (Exception) {
 			$id = 0;
 		}
 
-		if ($task === 'save' && $id > 0 && $action != 'block')
-		{
+		if ($task === 'save' && $id > 0 && $action != 'block') {
 			$url .= 'index.php?option=com_knowres&task=contract.show&id=' . $id;
-		}
-		else if ($task == 'save2new' && $id > 0)
-		{
+		} else if ($task == 'save2new' && $id > 0) {
 			$url .= 'index.php?option=com_knowres&view=contract&task=edit';
-			if ($action)
-			{
+			if ($action) {
 				$url .= '&layout=' . $action;
 			}
-		}
-		else if ($gobackto)
-		{
-			if (str_contains($gobackto, 'task') || str_contains($gobackto, 'view'))
-			{
+		} else if ($gobackto) {
+			if (str_contains($gobackto, 'task') || str_contains($gobackto, 'view')) {
 				$url .= 'index.php?option=com_knowres&' . $gobackto;
-			}
-			else
-			{
+			} else {
 				$url .= 'index.php?option=com_knowres&view=' . $gobackto;
 			}
-		}
-		else if (($task === 'trash' || $task === 'resurrect') && $id > 0)
-		{
+		} else if (($task === 'trash' || $task === 'resurrect') && $id > 0) {
 			$url .= 'index.php?option=com_knowres&task=contract.show&id=' . $id;
-		}
-		else if (($task === 'requestreject' || $task === 'requestapprove'))
-		{
+		} else if (($task === 'requestreject' || $task === 'requestapprove')) {
 			$url .= 'index.php?option=com_knowres&task=contracts.daily&success=1';
-		}
-		else
-		{
+		} else {
 			$url .= 'index.php?option=com_knowres&view=contract&task=edit&layout=' . $action;
-			if ($action)
-			{
+			if ($action) {
 				$url .= '&layout=' . $action;
 			}
 		}
 
-		if ($success)
-		{
+		if ($success) {
 			$url .= '&success=1';
 		}
 
@@ -1239,25 +1124,19 @@ class ContractController extends FormController
 	 */
 	protected function validateCoupon(stdClass $data): stdClass
 	{
-		if ($data->coupon_code)
-		{
+		if ($data->coupon_code) {
 			$coupon = KrFactory::getListModel('coupons')
 			                   ->getCoupon($data->property_id, $data->coupon_code);
-			if (isset($coupon->id) && $coupon->id > 0)
-			{
+			if (isset($coupon->id) && $coupon->id > 0) {
 				$data->coupon_id            = $coupon->id;
 				$data->coupon_amount        = $coupon->amount;
 				$data->coupon_is_percentage = $coupon->is_percentage;
 				$data->coupon_discount      = 0;
-			}
-			else
-			{
+			} else {
 				echo new JsonResponse(null, KrMethods::sprintf('COM_KNOWRES_COUPONS_ERROR', $data->coupon_code), true);
 				jexit();
 			}
-		}
-		else
-		{
+		} else {
 			$data->coupon_code          = '';
 			$data->coupon_id            = 0;
 			$data->coupon_amount        = 0;
@@ -1279,12 +1158,10 @@ class ContractController extends FormController
 	 */
 	protected function validateId(int $id = 0): int
 	{
-		if (!$id)
-		{
+		if (!$id) {
 			$id = KrMethods::inputInt('id');
 		}
-		if (!$id)
-		{
+		if (!$id) {
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_NO_CONTRACT'), 'error');
 			echo new JsonResponse(null, '', true);
 			jexit();
