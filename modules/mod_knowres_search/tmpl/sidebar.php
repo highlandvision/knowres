@@ -46,7 +46,7 @@ $link         = "/index.php?option=com_knowres&task=properties.search";
 					                               'adults'      => $initial->adults,
 					                               'children'    => $initial->children,
 					                               'child_ages'  => $initial->child_ages ?: [],
-					                               'max'         => $max_guests
+					                               'max_guests'  => $max_guests
 					                              ]);
 					?>
 				<?php endif; ?>

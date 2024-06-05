@@ -23,7 +23,7 @@ extract($displayData);
  * @var   int   $adults     #Adults.
  * @var   int   $children   #Children
  * @var   array $child_ages Child ages
- * @var   int   $max        Max guests
+ * @var   int   $max_guests Max guests
  */
 ?>
 
@@ -52,7 +52,7 @@ extract($displayData);
 						</button>
 					</div>
 					<input class="input-number" id="adults" name="adults" type="number"
-					       value="<?php echo $adults; ?>" min="1" max="<?php echo $max; ?>" readonly>
+					       value="<?php echo $adults; ?>" min="1" max="<?php echo $max_guests; ?>" readonly>
 					<div class="input-group-button">
 						<button type="button" id="aplus" class="input-number-increment"
 						        title="<?php echo KrMethods::plain('MOD_KNOWRES_SEARCH_INCREMENT'); ?>"

@@ -39,7 +39,7 @@ $max = $this->item->sleeps + $this->item->sleeps_extra + $this->item->sleeps_inf
 				'adults'     => $this->searchData->adults ?: 2,
 				'children'   => $this->searchData->children ?: 0,
 				'child_ages' => $this->searchData->child_ages ?: [],
-				'max'        => $this->item->sleeps + $this->item->sleeps_extra + $this->item->sleeps_infant_max,
+				'max_guests' => $this->item->sleeps + $this->item->sleeps_extra + $this->item->sleeps_infant_max,
 				'infant_max' => $this->item->sleeps_infant_max,
 				'infant_age' => $this->item->sleeps_infant_age,
 				'fixed'      => true,
@@ -51,7 +51,7 @@ $max = $this->item->sleeps + $this->item->sleeps_extra + $this->item->sleeps_inf
 	                             ['adults'     => $this->searchData->adults ?: 2,
 	                              'children'   => $this->searchData->children ?: 0,
 	                              'child_ages' => $this->searchData->child_ages ?: [],
-	                              'max'        => $max
+	                              'max_guests' => $max
 	                             ]); ?>
 
 	<?php echo HTMLHelper::_('form.token'); ?>
