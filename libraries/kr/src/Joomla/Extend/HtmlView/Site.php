@@ -13,6 +13,7 @@ defined('_JEXEC') or die;
 use Exception;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\HtmlView as KrHtmlView;
+use Highlandvision\KR\Model\SiteModel;
 use HighlandVision\KR\SiteHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Pathway\Pathway;
@@ -101,8 +102,16 @@ class Site extends KrHtmlView
 	public static function propertiesPathway(Pathway $pathway, ?stdClass $searchData = null): Pathway
 	{
 		if (!empty($searchData) && count($searchData->baseIds)) {
-			$Itemid = SiteHelper::getItemId('com_knowres', 'properties', ['layout' => 'search']);
-			$link   = KrMethods::route('index.php?Itemid=' . $Itemid . '&retain=1');
+			$region_id = $searchData->region_id ?: KrMethods::getParams()->get('default_region');
+
+			$Itemid = SiteHelper::getItemId('com_knowres', 'properties', [
+				'layout'    => 'default',
+				'region_id' => $region_id
+			]);
+
+			$link = KrMethods::route('index.php?option=com_knowres&view=properties&Itemid=' . $Itemid
+			                         . '&region_id=' . $region_id);
+			$link .= '?retain=1';
 			$pathway->addItem(KrMethods::plain('COM_KNOWRES_SEARCH_RESULTS'), $link);
 		}
 
@@ -122,9 +131,6 @@ class Site extends KrHtmlView
 	 */
 	public static function propertyPathway(Pathway $pathway, stdClass $searchData, object $property): Pathway
 	{
-		if (empty($searchData->baseIds)) {
-			$pathway = self::propertyRegionPathway($pathway, $property->region_id, $property->region_name);
-		}
 		$pathway->addItem($property->property_name, SiteHelper::buildPropertyLink($property->id));
 
 		return $pathway;
@@ -231,8 +237,7 @@ class Site extends KrHtmlView
 		if (empty($description)) {
 			$this->document->setDescription(!empty($menu_description) ? $menu_description :
 				                                $app->get('meta_description', $description));
-		}
-		else {
+		} else {
 			$this->document->setDescription($description);
 		}
 

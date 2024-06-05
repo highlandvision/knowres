@@ -29,6 +29,7 @@ use stdClass;
 
 use function count;
 use function implode;
+use function ltrim;
 
 /**
  * View properties
@@ -172,13 +173,11 @@ class HtmlView extends KrHtmlView\Site
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	protected function prepareDocument(): void
+	#[NoReturn] protected function prepareDocument(): void
 	{
 		$this->prepareDefaultDocument($this->meta_title, $this->meta_description);
-		if ($this->property_search) {
-			$this->setCanonical();
-			$this->setPathway();
-		}
+		$this->setCanonical();
+		$this->setPathway();
 	}
 
 	/**
@@ -194,7 +193,7 @@ class HtmlView extends KrHtmlView\Site
 			'index.php?option=com_knowres&view=properties&region_id=' . $this->default_region . '&Itemid=' .
 			$Itemid;
 		$canonical_url = KrMethods::route($link);
-		$this->document->addHeadLink(KrMethods::getRoot() . $canonical_url, 'canonical');
+		$this->document->addHeadLink(KrMethods::getRoot() . ltrim($canonical_url, '/'), 'canonical');
 	}
 
 	/**

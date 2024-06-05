@@ -337,10 +337,6 @@ class HtmlView extends KrHtmlView\Site
 	{
 		$pathway = self::setPathwayBase();
 		$pathway = self::propertiesPathway($pathway, $this->searchData);
-
-		if (empty($this->searchData->baseIds)) {
-			$pathway = self::propertyRegionPathway($pathway, $this->item->region_id, $this->item->region_name);
-		}
 		$pathway->addItem($this->item->property_name);
 	}
 
