@@ -73,5 +73,5 @@ export function createAgeField(count) {
 
 export function removeAgeField(count) {
     let container = document.getElementById('child_ages_' + count);
-    container.remove()
+    container.remove();
 }

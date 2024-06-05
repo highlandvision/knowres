@@ -30,7 +30,6 @@ for ($i = 1; $i <= 3; $i++) {
 		$category_id = $params->get('category_id' . $i);
 		$layout      = $params->get('layout' . $i);
 		$link        = '';
-
 		if ($category_id <> -1) {
 			$Itemid = SiteHelper::getItemId('com_knowres', 'properties',
 			                                ['layout' => 'category', 'category_id' => $category_id],

@@ -259,12 +259,14 @@
     <fieldset name="mapactual">
         <field name="lat_actual"
                class="input-mini"
+               default="0"
                filter="string"
                type="text"
                label="COM_KNOWRES_PROPERTY_LAT_ACTUAL_LBL"
                description="COM_KNOWRES_PROPERTY_LAT_ACTUAL_DSC"/>
         <field name="lng_actual"
                class="input-mini"
+               default="0"
                filter="string"
                type="text"
                label="COM_KNOWRES_PROPERTY_LNG_ACTUAL_LBL"
@@ -370,6 +372,7 @@
             <field name="security_amount"
                    addonBefore=""
                    class="input-mini"
+                   defaukt="0.00"
                    filter="string"
                    type="text"
                    label="COM_KNOWRES_PROPERTY_SECURITY_AMOUNT_LBL"

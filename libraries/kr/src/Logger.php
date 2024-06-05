@@ -32,13 +32,15 @@ class Logger
 	static protected array $emailLevel
 		= [self::ERROR,
 		   self::WARNING,
-		   self::PARSE];
+		   self::PARSE
+		];
 	/** @var array Defined logging level */
 	static protected array $logLevel
 		= [self::ERROR,
 		   self::WARNING,
 		   self::PARSE,
-		   self::NOTICE];
+		   self::NOTICE
+		];
 
 	/**
 	 * Default and set entered params
@@ -53,11 +55,10 @@ class Logger
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	public function __construct(string $message, int $code, string $file, int $line, string $level = 'notice',
-		?string $trace = '')
+	public function __construct(string  $message, int $code, string $file, int $line, string $level = 'notice',
+	                            ?string $trace = '')
 	{
-		if (!in_array($level, self::$logLevel) && !in_array($level, self::$emailLevel))
-		{
+		if (!in_array($level, self::$logLevel) && !in_array($level, self::$emailLevel)) {
 			return;
 		}
 
@@ -76,8 +77,7 @@ class Logger
 	 */
 	public static function logMe(string $message, string $level = 'notice'): void
 	{
-		if (!in_array($level, self::$logLevel) && !in_array($level, self::$emailLevel))
-		{
+		if (!in_array($level, self::$logLevel) && !in_array($level, self::$emailLevel)) {
 			return;
 		}
 
@@ -89,14 +89,13 @@ class Logger
 	/**
 	 * Log error to file
 	 *
-	 * @param array  $params  Data for log
+	 * @param  array  $params  Data for log
 	 *
 	 * @since 3.4.0
 	 */
 	protected static function logToFile(array $params): void
 	{
-		if (!in_array($params['level'], self::$logLevel))
-		{
+		if (!in_array($params['level'], self::$logLevel)) {
 			return;
 		}
 
@@ -120,18 +119,17 @@ class Logger
 	 */
 	protected static function sendEmail(array $params): void
 	{
-		if (str_contains($_SERVER['SERVER_NAME'], '.test'))
-		{
+		if (str_contains($_SERVER['SERVER_NAME'], '.test')) {
 			return;
 		}
 
-		if (!in_array($params['level'], self::$emailLevel))
-		{
+		if (!in_array($params['level'], self::$emailLevel)) {
 			return;
 		}
 
-		try
-		{
+		KrMethods::loadLanguage();
+
+		try {
 			$subject = KrMethods::sprintf('COM_KNOWRES_ERROR_EMAIL_SUBJECT', KrMethods::getCfg('sitename'));
 			$body    = 'An error occurred in your website at ' . $params['ts'] . ' that may require your attention.';
 			$body    .= "\r\n\r\n";
@@ -140,10 +138,9 @@ class Logger
 			$body    .= $params['line'] ? ' at ' . $params['line'] : '';
 
 			KrMethods::sendEmail(KrMethods::getCfg('mailfrom'), KrMethods::getCfg('fromname'),
-				KrMethods::getCfg('mailfrom'), $subject, $body, false);
-		}
-		catch (Exception)
-		{
+			                     KrMethods::getParams()->get('alert_email', KrMethods::getCfg('mailfrom')), $subject,
+			                     $body, false);
+		} catch (Exception) {
 			return;
 		}
 	}
@@ -162,30 +159,23 @@ class Logger
 	 * @return array
 	 */
 	protected static function setParams(string $message, int $code, string $file, int $line = 0,
-		string $level = 'notice', string $trace = ''): array
+	                                    string $level = 'notice', string $trace = ''): array
 	{
 		$message .= $file ? ' in ' . $file : '';
 		$message .= $line > 0 ? ' at line ' . $line : '';
 
-		try
-		{
+		try {
 			$today = TickTock::getDate();
-		}
-		catch (Exception)
-		{
+		} catch (Exception) {
 			$today = 'unknown';
 		}
-		try
-		{
+		try {
 			$ts = TickTock::getTs();
-		}
-		catch (Exception)
-		{
+		} catch (Exception) {
 			$ts = 'unknown';
 		}
 
-		try
-		{
+		try {
 			return ['option'  => 'com_knowres',
 			        'message' => $message,
 			        'code'    => $code,
@@ -196,9 +186,7 @@ class Logger
 			        'ts'      => $ts,
 			        'today'   => $today
 			];
-		}
-		catch (Exception $e)
-		{
+		} catch (Exception $e) {
 			return ['option'  => 'com_knowres',
 			        'message' => $message,
 			        'code'    => $code,

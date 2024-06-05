@@ -501,12 +501,6 @@ class ServiceController extends BaseController
 
 		$parameters = KrMethods::inputString('Ds_MerchantParameters', '');
 		$signature  = KrMethods::inputString('Ds_Signature', '');
-		if (empty($parameters)) {
-			// Try GET
-			$parameters = KrMethods::inputString('Ds_MerchantParameters', '');
-			$signature  = KrMethods::inputString('Ds_Signature', '');
-		}
-
 		if (empty($parameters) || empty($signature)) {
 			throw new RuntimeException('Payment response fields not received from Redsys');
 		}
@@ -554,26 +548,18 @@ class ServiceController extends BaseController
 
 				$postPayment = new PostPayment($service_id, $paymentData);
 				$postPayment->processPayment();
-
-				KrMethods::message(KrMethods::plain('COM_KNOWRES_PAYMENT_MANUAL'));
-				$this->redirectSuccess($paymentData->payment_type, $paymentData->contract_id);
 			} catch (Exception $e) {
-				Logger::logMe($e->getMessage(), 'error');
-				KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_FATAL'));
-				$this->redirectError($payment_type);
+				Logger::logMe($e->getMessage());
 			}
 
 			jexit();
 		}
-		else {
-			if ($action == 'success') {
-				KrMethods::message(KrMethods::plain('COM_KNOWRES_PAYMENT_SUCCESS'));
-				$this->redirectSuccess($payment_type, $contract_id);
-			}
-			else {
-				KrMethods::message(KrMethods::plain('COM_KNOWRES_PAYMENT_CANCEL'));
-				$this->redirectError($payment_type);
-			}
+		else if ($action == 'success') {
+			KrMethods::message(KrMethods::plain('COM_KNOWRES_PAYMENT_SUCCESS'));
+			$this->redirectSuccess($payment_type, $contract_id);
+		} else {
+			KrMethods::message(KrMethods::plain('COM_KNOWRES_PAYMENT_CANCEL'), 'alert');
+			$this->redirectError($payment_type);
 		}
 	}
 
@@ -587,11 +573,11 @@ class ServiceController extends BaseController
 	 */
 	protected function redirectError(string $payment_type): void
 	{
-		if ($payment_type == 'OBD') {
+		if ($payment_type === 'OBD') {
 			$Itemid = SiteHelper::getItemId('com_knowres', 'confirm');
 			KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&view=confirm&Itemid=' . $Itemid, false));
 		}
-		else if ($payment_type == 'PBD' || $payment_type == 'PBB') {
+		else if ($payment_type === 'PBD' || $payment_type === 'PBB') {
 			SiteHelper::redirectDashboard();
 		}
 		else {

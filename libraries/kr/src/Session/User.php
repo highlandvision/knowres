@@ -15,6 +15,7 @@ use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Session;
+use HighlandVision\KR\Utility;
 use JetBrains\PhpStorm\Pure;
 use stdClass;
 
