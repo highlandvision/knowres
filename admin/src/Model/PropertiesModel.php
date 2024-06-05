@@ -23,6 +23,10 @@ use Joomla\Database\QueryInterface;
 use Joomla\DI\Exception\KeyNotFoundException;
 use RuntimeException;
 
+use function implode;
+use function is_array;
+use function is_numeric;
+
 /**
  * Properties list model.
  *
@@ -547,6 +551,24 @@ class PropertiesModel extends ListModel
 				$data[] = 'a.booking_type = ' . (int) $f;
 			}
 			$query->where('(' . implode(" OR ", $data) . ')');
+		}
+
+		$filter_owner_id = $this->state->get('filter.owner_id');
+		if ($filter_owner_id)
+		{
+			if (is_numeric($filter_owner_id))
+			{
+				$query->where('a.owner_id = ' . (int) $filter_owner_id);
+			}
+			else if (is_array($filter_owner_id))
+			{
+				$data = [];
+				foreach ($filter_owner_id as $f)
+				{
+					$data[] = 'a.owner_id = ' . (int) $f;
+				}
+				$query->where('(' . implode(" OR ", $data) . ')');
+			}
 		}
 
 		$filter_type_id = $this->state->get('filter.type_id');
