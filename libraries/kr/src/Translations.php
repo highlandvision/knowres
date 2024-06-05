@@ -47,16 +47,14 @@ class Translations
 	{
 		if ($language) {
 			$this->setLanguage($language);
-		}
-		else {
+		} else {
 			$this->setLanguage(KrMethods::getLanguageTag());
 		}
 
 		$user = KrMethods::getUser();
 		if ($user->guest) {
 			$this->default_language = KrMethods::getDefaultLanguage('site');
-		}
-		else {
+		} else {
 			$this->default_language = KrMethods::getDefaultLanguage();
 		}
 
@@ -123,8 +121,8 @@ class Translations
 	 * @since  1.0.0
 	 * @return array
 	 */
-	public function addTranslationToObject(array $items, string $item, string $key = 'id', string $field = 'name',
-		string $new = 'name', bool $sort = true): array
+	public function addTranslationToObject(array  $items, string $item, string $key = 'id', string $field = 'name',
+	                                       string $new = 'name', bool $sort = true): array
 	{
 		if (is_countable($this->translations)) {
 			if (!count($this->translations) || !array_key_exists($item, $this->translations)) {
@@ -156,8 +154,7 @@ class Translations
 	{
 		if ($item) {
 			$this->cache->remove($item);
-		}
-		else {
+		} else {
 			$this->cache->clean();
 		}
 	}
@@ -245,8 +242,7 @@ class Translations
 			Logger::logMe('Translations property does not exist for ID ' . $property_id);
 
 			return '';
-		}
-		else {
+		} else {
 			return $property->property_name;
 		}
 	}
@@ -287,7 +283,7 @@ class Translations
 	 * @since  1.0.0
 	 */
 	public function updateDefault(string $item, int $item_id, string $field, string $text, bool $remove_cache = true,
-		string $language = '')
+	                              string $language = '')
 	{
 		if (!$language) {
 			$language = $this->language;
@@ -321,8 +317,7 @@ class Translations
 			$data->language      = $language;
 			$data->version       = 0;
 			KrFactory::insert('translation', $data);
-		}
-		else {
+		} else {
 			$data->id         = $row->id;
 			$data->item       = $item;
 			$data->item_id    = $item_id;
@@ -338,8 +333,7 @@ class Translations
 		if ($remove_cache) {
 			try {
 				$this->cache->remove($item);
-			}
-			catch (RuntimeException $e) {
+			} catch (RuntimeException $e) {
 				//No cache file to remove just continue
 			}
 		}
@@ -359,8 +353,7 @@ class Translations
 		if ($data === false) {
 			$this->setTranslations($item);
 			$this->cache->store(Utility::encodeJson($this->translations[$item]), $item);
-		}
-		else {
+		} else {
 			if (!is_array($data)) {
 				$data = Utility::decodeJson($data, true);
 			}
@@ -380,8 +373,7 @@ class Translations
 	{
 		if (!$language) {
 			$this->language = KrMethods::getLanguageTag();
-		}
-		else {
+		} else {
 			$this->language = $language;
 		}
 	}
@@ -415,8 +407,7 @@ class Translations
 			if (array_key_exists($key, $data)) {
 				$string = $data[$key];
 			}
-		}
-		else if (!$string) {
+		} else if (!$string) {
 			$languages = KrMethods::getLanguages();
 			foreach ($languages as $l) {
 				if ($l->published && $l->lang_code != $this->language) {

@@ -382,9 +382,12 @@ class Redsys extends Gateway
 		$currency    = (int) $this->fields['Ds_Currency'];
 		$payment_ref = $this->fields['Ds_Order'];
 
-		if ($response != '0000' && $response != '0099')
-		{
-			throw new RuntimeException("Unsuccessful Ds_Response received: $response");
+		if ($response != '0000' && $response != '0099') {
+			if ($response == "9915") {
+				throw new RuntimeException("Guest cancelled: $response");
+			} else {
+				throw new RuntimeException("Invalid Ds_Response received: $response");
+			}
 		}
 
 		if ($currency != '978') {
@@ -401,7 +404,6 @@ class Redsys extends Gateway
 		$this->paymentData->payment_ref = $payment_ref;
 		$this->paymentData->currency    = $this->contract->currency;
 		$this->paymentData->expiry_date = $this->contract->expiry_date;
-
 		$this->setNote();
 	}
 }
