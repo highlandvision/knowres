@@ -72,7 +72,7 @@ class Knowres extends Base
 		$area        = $uriToBuild->getVar('property_area');
 		$category_id = $uriToBuild->getVar('category_id');
 		$feature_id  = $uriToBuild->getVar('feature_id');
-		$id          = $uriToBuild->getVar('id');
+		$id          = $uriToBuild->getVar('id', 0);
 		$Itemid      = $uriToBuild->getVar('Itemid');
 		$alias       = $this->setAlias($Itemid);
 		$layout      = $uriToBuild->getVar('layout');
@@ -83,67 +83,62 @@ class Knowres extends Base
 		$task        = $uriToBuild->getVar('task');
 		$type_id     = $uriToBuild->getVar('type_id');
 
-		if ($view == 'property' || $view == 'contact' || $view == 'reviews') {
-			$key = $view == 'property' || $view == 'contact' ? $id : $property_id;
-			if ($key) {
-				$pdata = $this->getPropertyData($key);
-			}
-		}
-
 		$delvar = true;
 		switch ($view) {
 			case 'contact':
 				$sefSegments[] = KrMethods::plain('COM_KNOWRES_SEND_AN_ENQUIRY');
-				$sefSegments[] = $pdata->name;
-
 				break;
 			case 'property':
-				switch ($params->get('seo_property', 1)) {
-					case 1:
-						$sefSegments[] = $pdata->region . '-' . $pdata->area . '-' . $pdata->type;
-						$sefSegments[] = $pdata->name;
-						break;
-					case 2:
-						$sefSegments[] = $pdata->region;
-						$sefSegments[] = $pdata->area . '-' . $pdata->type;
-						$sefSegments[] = $pdata->name;
-						break;
-					case 3:
-						$sefSegments[] = $pdata->region;
-						$sefSegments[] = $pdata->area;
-						$sefSegments[] = $pdata->type;
-						$sefSegments[] = $pdata->name;
-						break;
-					case 4:
-						$sefSegments[] = $pdata->name . '-' . $pdata->area;
-						break;
-					case 5:
-						$sefSegments[] = $pdata->type;
-						$sefSegments[] = $pdata->name;
-						break;
-					default:
-						throw new RuntimeException('Invalid value received for KR params seo-property');
+				if ($id) {
+					$pdata = $this->getPropertyData($id);
+					switch ($params->get('seo_property', 1)) {
+						case 1:
+							$sefSegments[] = $pdata->region . '-' . $pdata->area . '-' . $pdata->type;
+							$sefSegments[] = $pdata->name;
+							break;
+						case 2:
+							$sefSegments[] = $pdata->region;
+							$sefSegments[] = $pdata->area . '-' . $pdata->type;
+							$sefSegments[] = $pdata->name;
+							break;
+						case 3:
+							$sefSegments[] = $pdata->region;
+							$sefSegments[] = $pdata->area;
+							$sefSegments[] = $pdata->type;
+							$sefSegments[] = $pdata->name;
+							break;
+						case 4:
+							$sefSegments[] = $pdata->name . '-' . $pdata->area;
+							break;
+						case 5:
+							$sefSegments[] = $pdata->type;
+							$sefSegments[] = $pdata->name;
+							break;
+						default:
+							throw new RuntimeException('Invalid value received for KR params seo-property');
+					}
 				}
-
 				break;
 			case 'reviews':
-				switch ($params->get('seo_property', 1)) {
-					case 1:
-						$sefSegments[] = $pdata->region . '-' . $pdata->area . '-' . $pdata->type;
-						break;
-					case 2:
-						$sefSegments[] = $pdata->region;
-						$sefSegments[] = $pdata->area . '-' . $pdata->type;
-						break;
-					default:
-						$sefSegments[] = $pdata->region;
-						$sefSegments[] = $pdata->area;
-						$sefSegments[] = $pdata->type;
+				if ($property_id) {
+					$pdata = $this->getPropertyData($property_id);
+					switch ($params->get('seo_property', 1)) {
+						case 1:
+							$sefSegments[] = $pdata->region . '-' . $pdata->area . '-' . $pdata->type;
+							break;
+						case 2:
+							$sefSegments[] = $pdata->region;
+							$sefSegments[] = $pdata->area . '-' . $pdata->type;
+							break;
+						default:
+							$sefSegments[] = $pdata->region;
+							$sefSegments[] = $pdata->area;
+							$sefSegments[] = $pdata->type;
+					}
+
+					$sefSegments[] = $pdata->name;
+					$sefSegments[] = 'reviews';
 				}
-
-				$sefSegments[] = $pdata->name;
-				$sefSegments[] = 'reviews';
-
 				break;
 			case 'properties':
 				$Translations = new Translations;
@@ -270,6 +265,9 @@ class Knowres extends Base
 	protected function getPropertyData(int $key): object
 	{
 		$property = KrFactory::getAdminModel('property')->getItem($key);
+		if (!$property) {
+			throw new RuntimeException('Property ID not found for ID ' . $key);
+		}
 
 		$data         = new stdClass();
 		$data->name   = $property->property_name;
