@@ -237,11 +237,13 @@
     </fieldset>
     <fieldset name="map">
         <field name="lat"
+               default="0"
                type="text"
                filter="string"
                label="COM_KNOWRES_PROPERTY_LAT_LBL"
                description="COM_KNOWRES_PROPERTY_LAT_DSC"/>
         <field name="lng"
+               default="0"
                type="text"
                filter="string"
                label="COM_KNOWRES_PROPERTY_LNG_LBL"
@@ -372,7 +374,7 @@
             <field name="security_amount"
                    addonBefore=""
                    class="input-mini"
-                   defaukt="0.00"
+                   default="0.00"
                    filter="string"
                    type="text"
                    label="COM_KNOWRES_PROPERTY_SECURITY_AMOUNT_LBL"

@@ -86,7 +86,7 @@ class JsonguestinfoField extends FormField
 			$tmp['document_type']   = (int) $d->document_type;
 			$tmp['document_id']     = $d->document_id;
 			$tmp['document_issue']  = $d->document_issue;
-			$tmp['document_expiry'] = !empty($d->document_expiry) ?: '';
+			$tmp['document_expiry'] = $d->document_expiry ?? '';
 
 			$values[$count] = $tmp;
 			$count++;
