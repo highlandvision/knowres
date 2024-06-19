@@ -263,6 +263,21 @@ class PropertyController extends BaseController
 	}
 
 	/**
+	 * Sets up the redirect for property module
+	 *
+	 * @throws Exception
+	 * @since  1.0.0
+	 */
+	#[NoReturn] public function search(): void
+	{
+		$id     = KrMethods::inputString('id');
+		$Itemid = SiteHelper::getItemId('com_knowres', 'property', ['id' => 0]);
+		$route  = KrMethods::route('index.php?option=com_knowres&view=property&Itemid=152&id=' . $id);
+
+		KrMethods::redirect($route);
+	}
+
+	/**
 	 * Display property terms
 	 *
 	 * @throws Exception

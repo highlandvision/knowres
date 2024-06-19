@@ -21,7 +21,6 @@ for (let c = 0; c < cboxes.length; c++) {
     });
 }
 
-
 let observer = new MutationObserver(function (mutations) {
     mutations.forEach(function (mutation) {
         if (mutation.target.classList.contains('is-open')) {

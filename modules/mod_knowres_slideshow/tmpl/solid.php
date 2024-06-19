@@ -7,8 +7,6 @@
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
 
-/** @noinspection PhpUnhandledExceptionInspection */
-
 defined('_JEXEC') or die;
 
 $bgcolor = $params->get('bgcolor');

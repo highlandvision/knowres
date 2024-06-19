@@ -50,9 +50,10 @@ class ExceptionHandling
 	 */
 	public function exceptionErrorHandler(int $severity, string $message, string $file, int $line = 0): void
 	{
-		if ($this->setLevel($severity))
+		$level = $this->setLevel($severity);
+		if ($level !== 'ignore' && $level !== 'warning' )
 		{
-			Logger::logMe($message, $this->setLevel($severity));
+			Logger::logMe($message, $level);
 		}
 	}
 

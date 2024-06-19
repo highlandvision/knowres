@@ -33,64 +33,66 @@ $approval_url = KrMethods::route('index.php?option=com_knowres&task=service.payp
 </button>
 
 <script>
-	paypal.Buttons({
-		createOrder: function (data, actions) {
-			return actions.order.create({
-				payer:               {
-					name:          {
-						given_name: '<?php echo $this->paymentData->firstname; ?>',
-						surname:    '<?php echo $this->paymentData->surname; ?>',
-					},
-					address:       {
-						address_line_1: '<?php echo $this->paymentData->address1; ?>',
-						address_line_2: '<?php echo $this->paymentData->address2; ?>',
-						admin_area_1:   '<?php echo $this->paymentData->town; ?>',
-						admin_area_2:   '<?php echo $this->paymentData->region_name; ?>',
-						postal_code:    '<?php echo $this->paymentData->postcode; ?>',
-						country_code:   '<?php echo $this->paymentData->country_iso; ?>',
-					},
-					email_address: '<?php echo $this->paymentData->email; ?>',
-					phone:         {
-						phone_type:   'MOBILE',
-						phone_number: {
-							national_number: '<?php echo $this->paymentData->mobile; ?>'
-						}
-					}
-				},
-				purchase_units:      [{
-					description: '<?php echo $this->paymentData->note; ?>',
-					custom_id:   '<?php echo $this->paymentData->tag; ?>',
-					invoice_id:  '<?php echo $this->paymentData->invoice_id; ?>',
-					amount:      {
-						value: '<?php echo $this->paymentData->amount; ?>'
-					},
-				}],
-				application_context: {
-					shipping_preference: 'NO_SHIPPING',
-				},
-			});
-		},
-		onApprove:   function (data) {
-			return fetch("<?php echo $approval_url; ?>", {
-				headers:     {
-					'Content-Type': 'application/json'
-				},
-				method:      'POST',
-				mode:        "same-origin",
-				credentials: "same-origin",
-				body:        JSON.stringify({
-					payment_ref: data.orderID,
-					service_id: <?php echo $this->service_id; ?>,
-				})
-			}).then(function (response) {
-				return response.json();
-			}).then(function (result) {
-				if (result.error) {
-					alert("ouch");
-				} else {
-					window.location.replace(result.success);
-				}
-			})
-		},
-	}).render('#paypal-button-container');
+    paypal.Buttons({
+        createOrder: function (data, actions) {
+            return actions.order.create({
+                payer: {
+                    name: {
+                        given_name: '<?php echo $this->paymentData->firstname; ?>',
+                        surname: '<?php echo $this->paymentData->surname; ?>',
+                    },
+                    address: {
+                        address_line_1: '<?php echo $this->paymentData->address1; ?>',
+                        address_line_2: '<?php echo $this->paymentData->address2; ?>',
+                        admin_area_1: '<?php echo $this->paymentData->town; ?>',
+                        admin_area_2: '<?php echo $this->paymentData->region_name; ?>',
+                        postal_code: '<?php echo $this->paymentData->postcode; ?>',
+                        country_code: '<?php echo $this->paymentData->country_iso; ?>',
+                    },
+                    email_address: '<?php echo $this->paymentData->email; ?>',
+                    phone: {
+                        phone_type: 'MOBILE',
+                        phone_number: {
+                            national_number: '<?php echo $this->paymentData->mobile; ?>'
+                        }
+                    }
+                },
+                purchase_units: [{
+                    description: '<?php echo $this->paymentData->note; ?>',
+                    custom_id: '<?php echo $this->paymentData->tag; ?>',
+                    invoice_id: '<?php echo $this->paymentData->invoice_id; ?>',
+                    amount: {
+                        value: '<?php echo $this->paymentData->amount; ?>'
+                    },
+                }],
+                application_context: {
+                    shipping_preference: 'NO_SHIPPING',
+                },
+            });
+        },
+        onApprove:   function (data, actions) {
+            return actions.order.capture().then(function (details) {
+                return fetch("<?php echo $approval_url; ?>", {
+                   headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    method: 'POST',
+                    mode: "same-origin",
+                    credentials: "same-origin",
+                    body: JSON.stringify({
+                        payment_ref: data.orderID,
+                        service_id: <?php echo $this->service_id; ?>,
+                    })
+                }).then(function (response) {
+                    return response.json();
+                }).then(function (result) {
+                    if (result.error) {
+                        alert("ouch");
+                    } else {
+                        window.location.replace(result.success);
+                    }
+                })
+            })
+        },
+    }).render('#paypal-button-container');
 </script>

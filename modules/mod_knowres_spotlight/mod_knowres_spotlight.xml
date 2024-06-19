@@ -7,13 +7,17 @@
     <authorEmail>hazel@highlandvision.com</authorEmail>
     <copyright>2023 Highland Vision, all rights reserved.</copyright>
     <license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
+    <namespace path="src">HighlandVision\Module\KnowresSpotlight</namespace>
     <version>5.0.0</version>
     <description>MOD_KNOWRES_SPOTLIGHT_DSC</description>
     <files>
-        <filename module="mod_knowres_spotlight">mod_knowres_spotlight.php</filename>
-        <filename>mod_knowres_spotlight.xml</filename>
-        <folder>language</folder>
-        <folder>tmpl</folder>
+        <files>
+            <folder module="mod_knowres_spotlight">services</folder>
+            <folder>language</folder>
+            <folder>src</folder>
+            <folder>tmpl</folder>
+            <file>mod_knowres_spotlight.xml</file>
+        </files>
     </files>
     <config>
         <fields name="params">

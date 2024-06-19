@@ -7,18 +7,19 @@
 	<authorEmail>hazel@highlandvision.com</authorEmail>
 	<copyright>2023 Highland Vision, all rights reserved.</copyright>
 	<license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
+	<namespace path="src">HighlandVision\Module\KnowresFeatured</namespace>
 	<version>5.0.0</version>
 	<description>MOD_KNOWRES_FEATURED_DSC</description>
 	<files>
-		<filename module="mod_knowres_featured">mod_knowres_featured.php</filename>
-		<filename>mod_knowres_featured.xml</filename>
+		<folder module="mod_knowres_featured">services</folder>
 		<folder>language</folder>
+		<folder>src</folder>
 		<folder>tmpl</folder>
+		<file>mod_knowres_featured.xml</file>
 	</files>
 	<config>
 		<fields name="params">
-			<fieldset name="Basic"
-				addfieldprefix="HighlandVision\Component\Knowres\Site\Field">
+			<fieldset name="Basic" addfieldprefix="HighlandVision\Component\Knowres\Site\Field">
 				<field name="title"
 					type="text"
 					class="input-xxlarge"

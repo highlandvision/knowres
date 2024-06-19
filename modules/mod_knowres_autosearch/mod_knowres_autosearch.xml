@@ -2,28 +2,64 @@
 <extension type="module" client="site" method="upgrade">
 	<name>mod_knowres_autosearch</name>
 	<author>Highland Vision</author>
-	<creationDate>April 2023</creationDate>
-	<authorUrl>https://www.highlandvision.com</authorUrl>
 	<authorEmail>hazel@highlandvision.com</authorEmail>
+	<authorUrl>https://www.highlandvision.com</authorUrl>
 	<copyright>2023 Highland Vision, all rights reserved.</copyright>
-	<license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
-	<version>5.0.0</version>
+	<creationDate>April 2023</creationDate>
 	<description>MOD_KNOWRES_AUTOSEARCH_DSC</description>
+	<license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
+    <namespace path="src">HighlandVision\Module\KnowresAutosearch</namespace>
+	<version>5.0.0</version>
 	<files>
-		<filename module="mod_knowres_autosearch">mod_knowres_autosearch.php</filename>
-		<filename>mod_knowres_autosearch.xml</filename>
+		<folder module="mod_knowres_autosearch">services</folder>
 		<folder>language</folder>
+		<folder>src</folder>
 		<folder>tmpl</folder>
+		<file>mod_knowres_autosearch.xml</file>
 	</files>
 	<config>
 		<fields name="params">
+			<fieldset name="basic">
+				<field name="absolute"
+					   type="radio"
+					   class="btn-group btn-group-yesno"
+					   default="1"
+					   label="MOD_KNOWRES_AUTOSEARCH_ABSOLUTE"
+					   description="MOD_KNOWRES_AUTOSEARCH_ABSOLUTE_DSC">
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
+				<field name="top"
+					   type="number"
+					   default="0"
+					   min="0"
+					   max="2000"
+					   step="1"
+					   label="MOD_KNOWRES_AUTOSEARCH_ABSOLUTE_TOP"
+					   description="MOD_KNOWRES_AUTOSEARCH_ABSOLUTE_DSC">
+				</field>
+				<field name="left"
+					   type="number"
+					   default="0"
+					   min="0"
+					   max="3000"
+					   step="1"
+					   label="MOD_KNOWRES_AUTOSEARCH_ABSOLUTE_LEFT"
+					   description="MOD_KNOWRES_AUTOSEARCH_ABSOLUTE_LEFT">
+				</field>
+				<field name="right"
+					   type="number"
+					   default="0"
+					   min="0"
+					   max="3000"
+					   step="1"
+					   label="MOD_KNOWRES_AUTOSEARCH_ABSOLUTE_RIGHT"
+					   description="MOD_KNOWRES_AUTOSEARCH_ABSOLUTE_RIGHT_DSC">
+				</field>
+			</fieldset>
 			<fieldset name="advanced">
-				<field name="layout"
-					class="form-select"
-					type="modulelayout"
-					validate="moduleLayout"
-					label="JFIELD_ALT_LAYOUT_LABEL"/>
 				<field name="moduleclass_sfx"
+                    default="kr-autosearch"
 					type="textarea"
 					rows="1"
 					validate="CssIdentifier"

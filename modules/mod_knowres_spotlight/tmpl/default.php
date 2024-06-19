@@ -7,17 +7,20 @@
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
 
-use HighlandVision\KR\Framework\KrMethods;
 use Joomla\CMS\Helper\ModuleHelper;
 
 defined('_JEXEC') or die;
+
+$wa = $app->getDocument()->getWebAssetManager();
+$wa->getRegistry()->addExtensionRegistryFile('com_knowres');
+$wa->useScript('com_knowres.site-modules');
 
 $textbg    = $params->get('textbg');
 $textbold  = $params->get('textbold');
 $textcolor = $params->get('textcolor');
 $textsize  = $params->get('textsize') . 'px';
 $height    = $params->get('height') . 'px';
-$count     = count($data);
+$count     = count($images);
 
 $pstyle   = '';
 $pclass[] = $params->get('horizontal');
@@ -38,17 +41,17 @@ if ($textsize) {
 }
 ?>
 
-<div class="kr-spotlight grid-x grid-margin-x">
+<div class="kr-spotlight kr-equalize grid-x grid-margin-x">
 	<?php
 		$num = 0;
-		foreach ($data as $d) {
+		foreach ($images as $d) {
 			echo match ($count) {
 				3       => '<div class="small-12 medium-4 cell">',
 				2       => '<div class="small-6 cell">',
 				default => '<div class="small-12 cell">',
 			};
 
-			if (count($data) - 1 == $num) {
+			if (count($images) - 1 == $num) {
 				$pclass[] = 'last';
 			}
 

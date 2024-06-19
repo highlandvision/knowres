@@ -31,8 +31,8 @@ return new class implements ServiceProviderInterface {
 	 */
 	public function register(Container $container): void
 	{
-		$container->registerServiceProvider(new ModuleDispatcherFactory('\\Knowres\\Module\\Search'));
-		$container->registerServiceProvider(new HelperFactory('\\Knowres\\Module\\Search\\Site\\Helper'));
+		$container->registerServiceProvider(new ModuleDispatcherFactory('\\HighlandVision\\Module\\KnowresSearch'));
+		$container->registerServiceProvider(new HelperFactory('\\HighlandVision\\Module\\KnowresSearch\\Site\\Helper'));
 		$container->registerServiceProvider(new Module);
 	}
 };

@@ -7,13 +7,15 @@
 	<authorEmail>hazel@highlandvision.com</authorEmail>
 	<copyright>2023 Highland Vision, all rights reserved.</copyright>
 	<license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
+	<namespace path="src">HighlandVision\Module\KnowresSlideshow</namespace>
 	<version>5.0.0</version>
 	<description>MOD_KNOWRES_SLIDESHOW_DSC</description>
 	<files>
-		<filename module="mod_knowres_slideshow">mod_knowres_slideshow.php</filename>
-		<filename>mod_knowres_slideshow.xml</filename>
+		<folder module="mod_knowres_slideshow">services</folder>
 		<folder>language</folder>
+		<folder>src</folder>
 		<folder>tmpl</folder>
+		<file>mod_knowres_slideshow.xml</file>
 	</files>
 	<config>
 		<fields name="params">

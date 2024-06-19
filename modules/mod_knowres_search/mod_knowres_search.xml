@@ -8,7 +8,7 @@
     <creationDate>April 2023</creationDate>
     <description>MOD_KNOWRES_SEARCH_DSC</description>
     <license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
-    <namespace path="src">Knowres\Module\Search</namespace>
+    <namespace path="src">HighlandVision\Module\KnowresSearch</namespace>
     <version>5.0.0</version>
     <files>
         <folder module="mod_knowres_search">services</folder>
@@ -16,6 +16,7 @@
         <folder>language</folder>
         <folder>src</folder>
         <folder>tmpl</folder>
+        <file>mod_knowres_search.xml</file>
     </files>
     <config>
         <fields name="params">

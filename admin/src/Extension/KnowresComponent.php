@@ -43,6 +43,8 @@ class KnowresComponent extends MVCComponent implements BootableExtensionInterfac
 	 *
 	 * @throws ContainerExceptionInterface
 	 * @throws NotFoundExceptionInterface
+	 * @throws RuntimeException
+	 * @throws UnexpectedValueException
 	 * @since   4.0.0
 	 * @return  void
 	 */

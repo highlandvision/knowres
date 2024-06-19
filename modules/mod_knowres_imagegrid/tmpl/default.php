@@ -11,6 +11,10 @@ defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrMethods;
 
+$wa = $app->getDocument()->getWebAssetManager();
+$wa->getRegistry()->addExtensionRegistryFile('com_knowres');
+$wa->useScript('com_knowres.site-modules');
+
 $texthorizontalalign = $params->get('texthorizontalalign');
 $textcolor           = $params->get('textcolor');
 $textbg              = $params->get('textbg');
@@ -19,9 +23,9 @@ $textbold            = $params->get('textbold');
 $textshadow          = $params->get('textshadow') . 'px';
 $textsize            = $params->get('textsize') . 'px';
 $textoverlay         = $params->get('textoverlay');
-$small_cc            = $params->get('small-column-count');
-$medium_cc           = $params->get('medium-column-count');
-$large_cc            = $params->get('large-column-count');
+$small_cc            = $params->get('small_column_count');
+$medium_cc           = $params->get('medium_column_count');
+$large_cc            = $params->get('large_column_count');
 
 $pstyle   = '';
 $pclass[] = $texthorizontalalign;
@@ -56,7 +60,7 @@ if ($textshadow) {
 </style>
 
 <div class="kr-imagegrid">
-	<?php foreach ($data as $d): ?>
+	<?php foreach ($items as $d): ?>
 		<?php $link = ''; ?>
 		<?php if (!empty($d['link'])): ?>
 			<?php $link = $d['link']; ?>
@@ -74,11 +78,12 @@ if ($textshadow) {
 
 			<?php $options = ['src'    => $d['image'],
 			                  'alt'    => $d['text'],
-			                  'class'  => 'th responsive',
+			                  'class'  => 'responsive',
 			                  'width'  => '100%',
 			                  'height' => 'auto'
 			];
 			?>
+
 			<?php echo KrMethods::render('joomla.html.image', $options); ?>
 
 			<?php if ($textoverlay && $d['text']): ?>

@@ -20,10 +20,10 @@ $KRparams = KrMethods::getParams();
 ?>
 
 <div class="small-12 medium-4 cell">
-	<a href="<?php echo $item['plink']; ?>" class="property text-left" title="<?php echo $item['property_name']; ?>">
+	<a href="<?php echo $item['plink']; ?>" class="property text-left suppress-underline" title="<?php echo $item['property_name']; ?>">
 		<div class="image-wrapper">
 			<?php echo HTMLHelper::_('image',
-			                         Media\Images::getImagePath($id, 'solo', $item['image']),
+			                         Media\Images::getImagePath($item['id'], 'solo', $item['image']),
 			                         $item['property_name'],
 			                         [
 				                         'width'  => $KRparams->get('max_property_width'),

@@ -7,15 +7,13 @@
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
 
+use HighlandVision\KR\Framework\KrMethods;
+
 defined('_JEXEC') or die;
 
-$action = 'index.php';
+$action = KrMethods::route('index.php?option=com_knowres&task=property.search');
 ?>
 
-<form action="<?php echo $action; ?>" method="get" id="kr-goto-property" name="goto-property">
-	<input type="hidden" name="option" value="com_knowres">
-	<input type="hidden" name="view" value="property">
-	<input type="hidden" name="Itemid" value="<?php echo $Itemid; ?>">
-
-	<?php echo $property_select; ?>
+<form action="<?php echo $action; ?>" method="post" id="kr-goto-property" name="goto-property">
+	<?php echo $options; ?>
 </form>

@@ -50,8 +50,7 @@ class ListforeignkeytranslateField extends ListField
 		$data         = $Translations->getArray($items, $translation_item, $value_field, !$orderby);
 
 		$options = [];
-		foreach ($data as $k => $v)
-		{
+		foreach ($data as $k => $v) {
 			$options[] = HTMLHelper::_('select.option', $k, $v);
 		}
 
@@ -79,16 +78,13 @@ class ListforeignkeytranslateField extends ListField
 		$query->select($db->qn($key_field));
 		$query->from($table);
 
-		if (!is_null($where))
-		{
+		if (!is_null($where)) {
 			$query->where($where);
 		}
-		if (!is_null($today))
-		{
+		if (!is_null($today)) {
 			$query->where($db->qn($today) . '>=' . $db->q(TickTock::getDate()));
 		}
-		if (!is_null($room_type))
-		{
+		if (!is_null($room_type)) {
 			$query->where($db->qn('room_type') . ' LIKE ' . $db->q($room_type));
 		}
 

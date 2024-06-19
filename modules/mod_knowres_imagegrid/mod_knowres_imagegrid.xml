@@ -7,19 +7,21 @@
     <authorEmail>hazel@highlandvision.com</authorEmail>
     <copyright>2023 Highland Vision, all rights reserved.</copyright>
     <license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
+    <namespace path="src">HighlandVision\Module\KnowresImagegrid</namespace>
     <version>5.0.0</version>
     <description>MOD_KNOWRES_IMAGEGRID_DSC</description>
     <files>
-        <filename module="mod_knowres_imagegrid">mod_knowres_imagegrid.php</filename>
-        <filename>mod_knowres_imagegrid.xml</filename>
-        <folder>form</folder>
+        <folder module="mod_knowres_imagegrid">services</folder>
+        <folder>forms</folder>
         <folder>language</folder>
+        <folder>src</folder>
         <folder>tmpl</folder>
+        <file>mod_knowres_imagegrid.xml</file>
     </files>
     <config>
         <fields name="params">
             <fieldset name="basic">
-                <field name="show-images"
+                <field name="show_images"
                        class="btn-group btn-group-yesno"
                        default="0"
                        type="radio"
@@ -28,7 +30,7 @@
                     <option value="0">JNO</option>
                     <option value="1">JYES</option>
                 </field>
-                <field name="small-column-count"
+                <field name="small_column_count"
                        class="w-auto"
                        default="1"
                        type="list"
@@ -39,7 +41,7 @@
                     <option value="33.33%">MOD_KNOWRES_IMAGEGRID_IMAGES_ROW, 3</option>
                     <option value="25%">MOD_KNOWRES_IMAGEGRID_IMAGES_ROW, 4</option>
                 </field>
-                <field name="medium-column-count"
+                <field name="medium_column_count"
                        class="w-auto"
                        default="3"
                        type="list"
@@ -52,7 +54,7 @@
                     <option value="20%">MOD_KNOWRES_IMAGEGRID_IMAGES_ROW, 5</option>
                     <option value="16.66%">MOD_KNOWRES_IMAGEGRID_IMAGES_ROW, 6</option>
                 </field>
-                <field name="large-column-count"
+                <field name="large_column_count"
                        class="w-auto"
                        default="6"
                        type="list"
@@ -71,7 +73,7 @@
                 <field name="textoverlay"
                        class="btn-group btn-group-yesno"
                        default="0"
-                       showon="show-images:1"
+                       showon="show_images:1"
                        type="radio"
                        label="MOD_KNOWRES_IMAGEGRID_TEXTOVERLAY"
                        description="MOD_KNOWRES_IMAGEGRID_TEXTOVERLAY_DSC">
@@ -138,7 +140,7 @@
                     <option value="bottom">MOD_KNOWRES_IMAGEGRID_BOTTOM</option>
                 </field>
                 <field name="imagegrid"
-                       formsource="modules/mod_knowres_imagegrid/form/imagegrid.xml"
+                       formsource="modules/mod_knowres_imagegrid/forms/images_subform.xml"
                        layout="joomla.form.field.subform.repeatable"
                        hiddenLabel="true"
                        min="1"

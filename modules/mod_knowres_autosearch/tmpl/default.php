@@ -11,17 +11,37 @@
 defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrMethods;
+
+$wa  = $app->getDocument()->getWebAssetManager();
+$wa->getRegistry()->addExtensionRegistryFile('com_knowres');
+$wa->useScript('com_knowres.site-modules');
+
+$lang = KrMethods::getLanguage();
+$lang->load('mod_knowres_autosearch', '/modules/mod_knowres_autosearch');
 ?>
 
-<div id="kr-autosearch-wrapper">
+<?php
+$absolute = $params->get('absolute');
+$top      = $params->get('top') . 'px;';
+$left     = $params->get('left') . 'px;';
+$right    = $params->get('right') . 'px;';
+
+$pstyle = '';
+if ($absolute) {
+	$pstyle .= 'position:absolute;';
+	$pstyle .= 'top:' . $top;
+	if ($params->get('left')) {
+		$pstyle .= 'left:' . $left;
+	}
+	if ($params->get('right')) {
+		$pstyle .= 'right:' . $right;
+	}
+}
+?>
+
+<div id="kr-autosearch-wrapper" style="<?php echo $pstyle; ?>">
 	<div class="input-group">
-		<label class="show-for-sr" for="kr-autosearch">
-			<?php echo KrMethods::plain('MOD_KNOWRES_AUTOSEARCH_PLACEHOLDER'); ?>
-		</label>
-		<input id="kr-autosearch" class="kr-autosearch"
-		       placeholder="<?php echo KrMethods::plain('MOD_KNOWRES_AUTOSEARCH_PLACEHOLDER'); ?>" type="text">
-		<span class="input-group-text">
-	        <i class='fa-solid fa-lg fa-search'></i>
-		</span>
+		<span class="input-group-label"><i class="fa-solid fa-magnifying-glass"></i></span>
+		<input class="kr-autosearch input-group-field" placeholder="<?php echo KrMethods::plain('MOD_KNOWRES_AUTOSEARCH_PLACEHOLDER'); ?>" type="text">
 	</div>
 </div>

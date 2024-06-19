@@ -7,7 +7,7 @@
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
 
-namespace Knowres\Module\Search\Site\Dispatcher;
+namespace HighlandVision\Module\KnowresSearch\Site\Dispatcher;
 
 defined('JPATH_PLATFORM') or die;
 
@@ -17,11 +17,11 @@ use HighlandVision\KR\ExceptionHandling;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\SiteHelper;
 use Joomla\CMS\Dispatcher\AbstractModuleDispatcher;
-use Knowres\Module\Search\Site\Helper\SearchHelper;
+use Joomla\CMS\Helper\HelperFactoryAwareInterface;
+use Joomla\CMS\Helper\HelperFactoryAwareTrait;
 
 use function defined;
 use function is_dir;
-
 use const JPATH_ROOT;
 
 /**
@@ -29,8 +29,10 @@ use const JPATH_ROOT;
  *
  * @since  4.0.0
  */
-class Dispatcher extends AbstractModuleDispatcher
+class Dispatcher extends AbstractModuleDispatcher implements HelperFactoryAwareInterface
 {
+	use HelperFactoryAwareTrait;
+
 	/**
 	 * Define tasks for before dispatch
 	 *
@@ -58,22 +60,26 @@ class Dispatcher extends AbstractModuleDispatcher
 	 */
 	protected function getLayoutData(): array
 	{
-		$data = parent::getLayoutData();
-		if ($data && !empty($data['params'])) {
-			$data['initial']          = SearchHelper::getDefaultValues();
+		$data   = parent::getLayoutData();
+		$params = $data['params'];
+
+		if ($data && !empty($params)) {
+			$Helper                   = $this->getHelperFactory()->getHelper('KnowresSearchHelper');
+			$data['initial']          = $Helper::getSearchDefaults();
 			$data['Itemid']           = SiteHelper::getItemId('com_knowres', 'properties', ['layout' => 'search']);
 			$data['max_guests']       = KrMethods::getParams()->get('search_maxguests', 16);
-			$data['search_text']      = $data['params']->get('search_text', '');
-			$data['show_datepickers'] = $data['params']->get('show_datepickers', 0);
-			$data['show_flexible']    = $data['params']->get('show_flexible', 0);
-			$data['show_guests']      = $data['params']->get('show_guests', 0);
+			$data['search_text']      = $params->get('search_text', '');
+			$data['show_datepickers'] = $params->get('show_datepickers', 0);
+			$data['show_flexible']    = $params->get('show_flexible', 0);
+			$data['show_guests']      = $params->get('show_guests', 0);
 			$data['expanded_guests']  = KrMethods::getParams()->get('search_guests_expanded', 0);
 			$data['region_id']        = KrMethods::getParams()->get('default_region', 0);
-			if ((int) $data['params']->get('show_regions', 0)) {
-				$data['regions'] = SearchHelper::getRegions();
-				$data['options'] = SearchHelper::regionOptgroup($data['regions'],
-				                                                $data['params']->get('show_regions_expanded'),
-				                                                $data['initial']->region_id);
+
+			if ((int) $params->get('show_regions', 0)) {
+				$data['regions'] = $Helper::getRegions();
+				$data['options'] = $Helper::regionOptgroup($data['regions'],
+				                                          $data['params']->get('show_regions_expanded'),
+				                                          $data['initial']->region_id);
 			}
 		}
 

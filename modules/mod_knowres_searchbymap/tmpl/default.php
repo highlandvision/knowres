@@ -10,6 +10,10 @@
 defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrMethods;
+
+$wa = $app->getDocument()->getWebAssetManager();
+$wa->getRegistry()->addExtensionRegistryFile('com_knowres');
+$wa->useScript('com_knowres.site-modules');
 ?>
 
 <div class="kr-searchby-map">

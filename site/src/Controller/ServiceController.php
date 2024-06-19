@@ -147,6 +147,8 @@ class ServiceController extends BaseController
 
 		try {
 			$json        = trim(file_get_contents("php://input"));
+			Logger::logMe($json, 'error');
+
 			$data        = Utility::decodeJson($json, true);
 			$paymentData = $paymentSession->updateData($data);
 

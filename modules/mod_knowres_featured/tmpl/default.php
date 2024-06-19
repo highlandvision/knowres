@@ -13,6 +13,10 @@ use HighlandVision\KR\Currency;
 use HighlandVision\KR\Framework\KrMethods;
 use Joomla\CMS\Helper\ModuleHelper;
 
+$wa = $app->getDocument()->getWebAssetManager();
+$wa->getRegistry()->addExtensionRegistryFile('com_knowres');
+$wa->useScript('com_knowres.site-modules');
+
 $Currency = new Currency();
 ?>
 
@@ -39,7 +43,7 @@ $Currency = new Currency();
 </div>
 
 <div class="grid-x kr-featured kr-slick" data-slick='{"slidesToShow": <?php echo $slidestoshow; ?>}'>
-	<?php foreach ($data as $id => $item): ?>
+	<?php foreach ($items as $item): ?>
 		<?php require ModuleHelper::getLayoutPath('mod_knowres_featured', $params->get('layout', 'default') . '_item'); ?>
 	<?php endforeach; ?>
 </div>

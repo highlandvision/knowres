@@ -9,13 +9,13 @@
 	<license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
 	<version>5.0.0</version>
 	<description>MOD_KNOWRES_PROPERTIES_DSC</description>
-	<namespace path="src">Knowres\Module\Properties</namespace>
+	<namespace path="src">HighlandVision\Module\KnowresProperties</namespace>
 	<files>
-		<filename module="mod_knowres_properties">mod_knowres_properties.php</filename>
-		<filename>mod_knowres_properties.xml</filename>
-		<folder>src</folder>
+		<folder module="mod_knowres_properties">services</folder>
 		<folder>language</folder>
+		<folder>src</folder>
 		<folder>tmpl</folder>
+		<file>mod_knowres_properties.xml</file>
 	</files>
 	<config>
 		<fields name="params">

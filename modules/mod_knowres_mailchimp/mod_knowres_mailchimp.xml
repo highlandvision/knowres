@@ -2,24 +2,25 @@
 <extension type="module" client="site" method="upgrade">
 	<name>mod_knowres_mailchimp</name>
 	<author>Highland Vision</author>
-	<creationDate>April 2023</creationDate>
-	<authorUrl>https://www.highlandvision.com</authorUrl>
 	<authorEmail>hazel@highlandvision.com</authorEmail>
+	<authorUrl>https://www.highlandvision.com</authorUrl>
 	<copyright>2023 Highland Vision, all rights reserved.</copyright>
-	<license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
-	<version>5.0.0</version>
+	<creationDate>April 2019</creationDate>
 	<description>MOD_KNOWRES_MAILCHIMP_DSC</description>
+	<license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
+	<namespace path="src">HighlandVision\Module\KnowresMailchimp</namespace>
+	<version>5.0.0</version>
 	<files>
-		<filename module="mod_knowres_mailchimp">mod_knowres_mailchimp.php</filename>
-		<filename>mod_knowres_mailchimp.xml</filename>
-		<folder>form</folder>
+		<folder module="mod_knowres_mailchimp">services</folder>
+		<folder>forms</folder>
 		<folder>language</folder>
+		<folder>src</folder>
 		<folder>tmpl</folder>
+		<file>mod_knowres_mailchimp.xml</file>
 	</files>
 	<config>
 		<fields name="params">
-			<fieldset name="basic"
-				addfieldprefix="HighlandVision\Component\Knowres\Site\Field">
+			<fieldset name="basic" addfieldprefix="HighlandVision\Component\Knowres\Site\Field">
 				<field name="id"
 					default="0"
 					filter="integer"

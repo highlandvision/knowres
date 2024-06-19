@@ -18,7 +18,7 @@ $wa = $app->getDocument()->getWebAssetManager();
 $wa->getRegistry()->addExtensionRegistryFile('com_knowres');
 $wa->useScript('com_knowres.site-modules');
 
-$form         = KrFactory::getAdhocForm('mod_knowres_search', 'mod_knowres_search.xml', 'module', null);
+$form         = KrFactory::getAdhocForm('mod_knowres_search', 'search.xml', 'module', null);
 $show_regions = $params->get('show_regions');
 $link         = "/index.php?option=com_knowres&task=properties.search";
 ?>

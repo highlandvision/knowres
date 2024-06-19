@@ -10,26 +10,32 @@
 use HighlandVision\KR\Framework\KrMethods;
 
 defined('_JEXEC') or die;
+
+$wa = $app->getDocument()->getWebAssetManager();
+$wa->getRegistry()->addExtensionRegistryFile('com_knowres');
+$wa->useScript('com_knowres.site-modules');
 ?>
 
-<ul class="small-block-grid-3 medium-block-grid-5 homethumbs">
-	<?php foreach ($data as $d): ?>
-		<li>
-			<a href="<?php echo KrMethods::route('index.php?option=com_knowres&view=properties&region_id=' . $d['id']
-				. '&Itemid=' . $d['Itemid']); ?>" title="<?php echo $d['name']; ?>">
+<div class="kr-equalize grid-x grid-margin-x">
+	<?php foreach ($regions as $region): ?>
+		<div class="small-12 medium-4 cell">
+			<a href="<?php echo KrMethods::route('index.php?option=com_knowres&view=properties&region_id=' .
+			                                     $region['id']
+			                                     .
+			                                     '&Itemid=' .
+			                                     $region['Itemid']); ?>" title="<?php echo $region['name']; ?>">
 
 				<?php
-				$options = [
-					'src'    => $d['image'],
-					'alt'    => $d['name'],
-					'class'  => 'border responsive',
-					'width'  => 84,
-					'height' => 84
+				$options = ['src'   => $region['image'],
+				            'alt'   => $region['name'],
+				            'style' => 'min-height:180px',
+				            'class' => 'responsive'
 				];
+
 				echo KrMethods::render('joomla.html.image', $options);
 				?>
 			</a>
-			<h5><?php echo $d['name']; ?></h5>
-		</li>
+			<h5><?php echo $region['name']; ?></h5>
+		</div>
 	<?php endforeach; ?>
-</ul>
+</div>

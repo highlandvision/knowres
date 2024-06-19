@@ -10,13 +10,17 @@
 defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrMethods;
+
+$wa = $app->getDocument()->getWebAssetManager();
+$wa->getRegistry()->addExtensionRegistryFile('com_knowres');
+$wa->useScript('com_knowres.site-modules');
 ?>
 
-<?php if ($params->get('url', '')) : ?>
-	<a href="<?php echo KrMethods::route('index.php?Itemid=' . $params->get('url')); ?>" title="<?php echo ''; ?>">
+<?php if (!empty($url)) : ?>
+	<a href="<?php echo KrMethods::route('index.php?Itemid=' . $url); ?>" title="<?php echo ''; ?>">
 <?php endif; ?>
 
-<div class="kr-carousel kr-slick" data-slick='{"autoplaySpeed": <?php echo $params->get('autoPlaySpeed', '5000'); ?>,"speed": <?php echo $params->get('speed', '50'); ?>}'>>
+<div class="kr-carousel kr-slick" data-slick='{"autoplaySpeed": <?php echo $autoPlaySpeed; ?>,"speed": <?php echo $speed; ?>}'>>
 	<?php foreach ($images as $i): ?>
 		<?php
 		$options = [
@@ -31,6 +35,6 @@ use HighlandVision\KR\Framework\KrMethods;
 	<?php endforeach; ?>
 </div>
 
-<?php if ($params->get('url', '')) : ?>
+<?php if (!empty($url)) : ?>
 	</a>
 <?php endif; ?>

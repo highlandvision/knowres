@@ -10,10 +10,11 @@
 	<version>5.0.0</version>
 	<description>MOD_KNOWRES_DESTINATION_DSC</description>
 	<files>
-		<filename module="mod_knowres_destination">mod_knowres_destination.php</filename>
-		<filename>mod_knowres_destination.xml</filename>
+		<folder module="mod_knowres_destination">services</folder>
 		<folder>language</folder>
+		<folder>src</folder>
 		<folder>tmpl</folder>
+		<file>mod_knowres_destination.xml</file>
 	</files>
 	<config>
 		<fields name="params">

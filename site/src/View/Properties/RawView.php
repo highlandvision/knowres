@@ -21,6 +21,7 @@ use HighlandVision\KR\SiteHelper;
 use function array_unique;
 use function count;
 use function explode;
+use function print_r;
 
 /**
  * Display property search results
@@ -113,6 +114,7 @@ class RawView extends KrHtmlView
 		$this->order      = $this->Response->searchData->order != '' ? $this->Response->searchData->order :
 			$this->params->get('order_default');
 		$this->pagination = $this->get('pagination');
+
 		$this->Itemid     = SiteHelper::getItemId('com_knowres', 'property', ['id' => 0]);
 
 		parent::display($tpl);

@@ -6,29 +6,26 @@
  * @license    See the file "LICENSE.txt" for the full license governing this code.
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
-/** @noinspection PhpUnhandledExceptionInspection */
 
 defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrMethods;
-use HighlandVision\KR\SiteHelper;
 
-$Itemid = SiteHelper::getItemId('com_knowres', 'properties', ['region_id' => $params->get('region_id')]);
-$link   = KrMethods::route('index.php?option=com_knowres&view=properties&Itemid=' . $Itemid . '&region_id='
-	. $params->get('region_id'));
-$text   = KrMethods::sprintf('MOD_KNOWRES_DESTINATION_VIEW_PROPERTIES', $destination) . ' >>';
+$wa = $app->getDocument()->getWebAssetManager();
+$wa->getRegistry()->addExtensionRegistryFile('com_knowres');
+$wa->useScript('com_knowres.site-modules');
 
-$id     = 'kr-destination-tabs-' . $params->get('region_id');
-$panel1 = '#panel1-' . $params->get('region_id');
-$panel2 = '#panel2-' . $params->get('region_id');
-$panel3 = '#panel3-' . $params->get('region_id');
-$panel4 = '#panel4-' . $params->get('region_id');
-$panel5 = '#panel5-' . $params->get('region_id');
-$tab1   = 'panel1-' . $params->get('region_id');
-$tab2   = 'panel2-' . $params->get('region_id');
-$tab3   = 'panel3-' . $params->get('region_id');
-$tab4   = 'panel4-' . $params->get('region_id');
-$tab5   = 'panel5-' . $params->get('region_id');
+$id     = 'kr-destination-tabs-' . $region_id;
+$panel1 = '#panel1-' . $region_id;
+$panel2 = '#panel2-' . $region_id;
+$panel3 = '#panel3-' . $region_id;
+$panel4 = '#panel4-' . $region_id;
+$panel5 = '#panel5-' . $region_id;
+$tab1   = 'panel1-' . $region_id;
+$tab2   = 'panel2-' . $region_id;
+$tab3   = 'panel3-' . $region_id;
+$tab4   = 'panel4-' . $region_id;
+$tab5   = 'panel5-' . $region_id;
 ?>
 
 <div class="kr-destination-detail">
@@ -40,54 +37,45 @@ $tab5   = 'panel5-' . $params->get('region_id');
 		</li>
 		<li class="tabs-title">
 			<a href="<?php echo $panel2; ?>">
-				<?php echo $params->get('heading1'); ?>
+				<?php echo $heading1; ?>
 			</a>
 		</li>
 		<li class="tabs-title">
 			<a href="<?php echo $panel3; ?>">
-				<?php echo $params->get('heading2'); ?>
+				<?php echo $heading2; ?>
 			</a>
 		</li>
 		<li class=" tabs-title">
 			<a href="<?php echo $panel4; ?>">
-				<?php echo $params->get('heading3'); ?>
+				<?php echo $heading3; ?>
 			</a>
 		</li>
 		<li class="tabs-title">
 			<a href="<?php echo $panel5; ?>">
-				<?php echo $params->get('heading4'); ?>
+				<?php echo $heading4; ?>
 			</a>
 		</li>
 	</ul>
 
 	<div class="kr-destinations tabs-content" data-tabs-content="<?php echo $id; ?>">
 		<div class="tabs-panel is-active image" id="<?php echo $tab1; ?>">
-			<?php
-			$options = [
-				'src'    => $params->get('image'),
-				'alt'    => $destination,
-				'class'  => 'responsive',
-				'width'  => $params->get('width'),
-				'height' => $params->get('height')
-			];
-			echo KrMethods::render('joomla.html.image', $options);
-			?>
+			<?php echo KrMethods::render('joomla.html.image', $options); ?>
 		</div>
 		<div class="tabs-panel" id="<?php echo $tab2; ?>">
-			<?php echo $params->get('text1'); ?>
+			<?php echo $text1; ?>
 		</div>
 		<div class="tabs-panel" id="<?php echo $tab3; ?>">
-			<?php echo $params->get('text2'); ?>
+			<?php echo $text2; ?>
 		</div>
 		<div class="tabs-panel" id="<?php echo $tab4; ?>">
-			<?php echo $params->get('text3'); ?>
+			<?php echo $text3; ?>
 		</div>
 		<div class="tabs-panel" id="<?php echo $tab5; ?>">
-			<?php echo $params->get('text4'); ?>
+			<?php echo $text4; ?>
 		</div>
 	</div>
 
 	<a class="button large gray expanded" title="<?php echo $text; ?>" href="<?php echo $link; ?>">
-		<?php echo $text; ?>
+		<?php echo $textplus; ?>
 	</a>
 </div>

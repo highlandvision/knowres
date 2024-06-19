@@ -261,7 +261,7 @@ class PropertiesController extends BaseController
 			}
 		}
 
-		$Itemid = SiteHelper::getItemId('com_knowres', 'properties', ['layout' => 'search']);
+		$Itemid = SiteHelper::getItemId('com_knowres', 'properties', ['region_id' => $region_id]);
 		$route  = KrMethods::route('index.php?option=com_knowres&view=properties&' .
 		                           'region_id=' . $region_id .
 		                           '&Itemid=' . $Itemid .

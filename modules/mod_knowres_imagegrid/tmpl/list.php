@@ -11,6 +11,10 @@ defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrMethods;
 
+$wa = $app->getDocument()->getWebAssetManager();
+$wa->getRegistry()->addExtensionRegistryFile('com_knowres');
+$wa->useScript('com_knowres.site-modules');
+
 $textbg    = $params->get('textbg');
 $textbold  = $params->get('textbold');
 $textcolor = $params->get('textcolor');
@@ -37,7 +41,7 @@ if (!empty($textbg)) {
 
 <div class="kr-imagegrid list">
 	<ul>
-		<?php foreach ($data as $d): ?>
+		<?php foreach ($items as $d): ?>
 			<li>
 				<?php $link = ''; ?>
 				<?php if (!empty($d['link'])): ?>
