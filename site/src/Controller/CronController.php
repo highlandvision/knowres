@@ -58,6 +58,8 @@ class CronController extends BaseController
 	#[NoReturn] public function dailyemails(): void
 	{
 		$this->checkSecret();
+		KrMethods::loadLanguage();
+
 		//Delete unpublished contracts
 		self::deleteUnpublished();
 		// Cancel no deposit received
