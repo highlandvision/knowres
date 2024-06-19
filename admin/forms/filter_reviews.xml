@@ -1,75 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form addfieldprefix="HighlandVision\Component\Knowres\Administrator\Field">
-	<fields name="filter">
-		<field
-			name="search"
-			type="text"
-			inputmode="search"
-			label="COM_KNOWRES_SEARCH"
-			description="COM_KNOWRES_REVIEWS_SEARCH"
-			hint="COM_KNOWRES_SEARCH"/>
-		<field
-			name="state"
-			type="status"
-			onchange="this.form.submit();">
-			<option value="">JOPTION_SELECT_PUBLISHED</option>
-		</field>
-		<!--<field-->
-		<!--name="property_id"-->
-		<!--type="filterproperty"-->
-		<!--table="#__knowres_review"-->
-		<!--onchange="this.form.submit();">-->
-		<!--<option value="">COM_KNOWRES_SELECT_PROPERTY</option>-->
-		<!--</field>-->
-		<field
-			name="approved"
-			type="list"
-			onchange="this.form.submit();">
-			<option value="">COM_KNOWRES_SELECT_APPROVED</option>
-			<option value="0">COM_KNOWRES_SELECT_APPROVED_ONLY</option>
-		</field>
-		<field
-			name="held"
-			type="list"
-			onchange="this.form.submit();">
-			<option value="">COM_KNOWRES_SELECT_HELD</option>
-			<option value="1">COM_KNOWRES_SELECT_HELD_ONLY</option>
-		</field>
-	</fields>
-	<fields name="list">
-		<field
-			name="fullordering"
-			type="listorderingkr"
-			statuses="*,0,1,2,-2"
-			onchange="this.form.submit();"
-			default="property_name ASC"
-			label="JGLOBAL_SORT_BY"
-			description="JGLOBAL_SORT_BY">
-			<option value="">JGLOBAL_SORT_BY</option>
-			<option value="a.state ASC">JSTATUS_ASC</option>
-			<option value="a.state DESC">JSTATUS_DESC</option>
-			<option value="a.approved ASC">COM_KNOWRES_REVIEWS_APPROVED COM_KNOWRES_ASCENDING</option>
-			<option value="a.approved DESC">COM_KNOWRES_REVIEWS_APPROVED COM_KNOWRES_DESCENDING</option>
-			<option value="a.held ASC">COM_KNOWRES_REVIEWS_HELD COM_KNOWRES_ASCENDING</option>
-			<option value="a.held DESC">COM_KNOWRES_REVIEWS_HELD COM_KNOWRES_DESCENDING</option>
-			<option value="a.review_date ASC">COM_KNOWRES_REVIEWS_REVIEW_DATE COM_KNOWRES_ASCENDING</option>
-			<option value="a.review_date DESC">COM_KNOWRES_REVIEWS_REVIEW_DATE COM_KNOWRES_DESCENDING</option>
-			<option value="a.title ASC">COM_KNOWRES_REVIEWS_TITLE COM_KNOWRES_ASCENDING</option>
-			<option value="a.title DESC">COM_KNOWRES_REVIEWS_TITLE COM_KNOWRES_DESCENDING</option>
-			<option value="a.guest_name ASC">COM_KNOWRES_REVIEWS_GUEST_NAME COM_KNOWRES_ASCENDING</option>
-			<option value="a.guest_name DESC">COM_KNOWRES_REVIEWS_GUEST_NAME COM_KNOWRES_DESCENDING</option>
-			<option value="contract_tag ASC">COM_KNOWRES_REVIEWS_CONTRACT_ID COM_KNOWRES_ASCENDING</option>
-			<option value="contract_tag DESC">COM_KNOWRES_REVIEWS_CONTRACT_ID COM_KNOWRES_DESCENDING</option>
-			<option value="a.id ASC">JGRID_HEADING_ID_ASC</option>
-			<option value="a.id DESC">JGRID_HEADING_ID_DESC</option>
-		</field>
-		<field
-			name="limit"
-			type="limitbox"
-			class="input-mini"
-			default="25"
-			onchange="this.form.submit();"
-			label="COM_KNOWRES_LIST_LIMIT"
-			description="COM_KNOWRES_LIST_LIMIT_DSC"/>
-	</fields>
+    <fields name="filter">
+        <field name="search"
+               type="text"
+               inputmode="search"
+               label="COM_KNOWRES_SEARCH"
+               description="COM_KNOWRES_REVIEWS_SEARCH"
+               hint="COM_KNOWRES_SEARCH"/>
+        <field name="state"
+               type="status"
+               class="js-select-submit-on-change">
+            <option value="">JOPTION_SELECT_PUBLISHED</option>
+        </field>
+        <field name="approved"
+               type="list"
+               class="js-select-submit-on-change">
+            <option value="">COM_KNOWRES_SELECT_APPROVED</option>
+            <option value="0">COM_KNOWRES_SELECT_APPROVED_ONLY</option>
+        </field>
+        <field name="held"
+               type="list"
+               class="js-select-submit-on-change">
+            <option value="">COM_KNOWRES_SELECT_HELD</option>
+            <option value="1">COM_KNOWRES_SELECT_HELD_ONLY</option>
+        </field>
+    </fields>
+    <fields name="list">
+        <field name="fullordering"
+               type="listorderingkr"
+               class="js-select-submit-on-change"
+               default="property_name ASC"
+               statuses="*,0,1,2,-2"
+               label="JGLOBAL_SORT_BY"
+               description="JGLOBAL_SORT_BY">
+            <option value="">JGLOBAL_SORT_BY</option>
+            <option value="a.state ASC">JSTATUS_ASC</option>
+            <option value="a.state DESC">JSTATUS_DESC</option>
+            <option value="a.approved ASC">COM_KNOWRES_REVIEWS_APPROVED COM_KNOWRES_ASCENDING</option>
+            <option value="a.approved DESC">COM_KNOWRES_REVIEWS_APPROVED COM_KNOWRES_DESCENDING</option>
+            <option value="a.held ASC">COM_KNOWRES_REVIEWS_HELD COM_KNOWRES_ASCENDING</option>
+            <option value="a.held DESC">COM_KNOWRES_REVIEWS_HELD COM_KNOWRES_DESCENDING</option>
+            <option value="a.review_date ASC">COM_KNOWRES_REVIEWS_REVIEW_DATE COM_KNOWRES_ASCENDING</option>
+            <option value="a.review_date DESC">COM_KNOWRES_REVIEWS_REVIEW_DATE COM_KNOWRES_DESCENDING</option>
+            <option value="a.title ASC">COM_KNOWRES_REVIEWS_TITLE COM_KNOWRES_ASCENDING</option>
+            <option value="a.title DESC">COM_KNOWRES_REVIEWS_TITLE COM_KNOWRES_DESCENDING</option>
+            <option value="a.guest_name ASC">COM_KNOWRES_REVIEWS_GUEST_NAME COM_KNOWRES_ASCENDING</option>
+            <option value="a.guest_name DESC">COM_KNOWRES_REVIEWS_GUEST_NAME COM_KNOWRES_DESCENDING</option>
+            <option value="contract_tag ASC">COM_KNOWRES_REVIEWS_CONTRACT_ID COM_KNOWRES_ASCENDING</option>
+            <option value="contract_tag DESC">COM_KNOWRES_REVIEWS_CONTRACT_ID COM_KNOWRES_DESCENDING</option>
+            <option value="a.id ASC">JGRID_HEADING_ID_ASC</option>
+            <option value="a.id DESC">JGRID_HEADING_ID_DESC</option>
+        </field>
+        <field name="limit"
+               type="limitbox"
+               class="input-mini js-select-submit-on-change"
+               default="25"
+               label="COM_KNOWRES_LIST_LIMIT"
+               description="COM_KNOWRES_LIST_LIMIT_DSC"/>
+    </fields>
 </form>

@@ -1,116 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form addfieldprefix="HighlandVision\Component\Knowres\Administrator\Field">
-	<fields name="filter">
-		<field name="search"
-			type="text"
-			inputmode="search"
-			label="COM_KNOWRES_SEARCH"
-			description="COM_KNOWRES_CONTRACTS_SEARCH"
-			hint="COM_KNOWRES_SEARCH"/>
-		<field name="state"
-			type="status"
-			onchange="this.form.submit();">
-			<option value="">JOPTION_SELECT_PUBLISHED</option>
-		</field>
-		<field name="departure"
-			addonAfter="Departure from"
-			addonBefore="Departure from"
-			class="input-mini kr-search-date-filter"
-			datepicker='{"minDate": "-10Y", "maxDate": "+48M", "altField": "#filter_departure"}'
-			default="now"
-			hiddenLabel="true"
-			type="uicalendar"
-			label="COM_KNOWRES_FILTER_DEPARTURE"/>
-		<field name="property_id"
-			table="#__knowres_contract"
-			onchange="this.form.submit();"
-			type="filterproperty">
-			<option value="">COM_KNOWRES_SELECT_PROPERTY</option>
-		</field>
-		<field name="agent_id"
-			type="filteragent"
-			table="#__knowres_contract"
-			onchange="this.form.submit();">
-			<option value="">COM_KNOWRES_SELECT_AGENT</option>
-		</field>
-		<field name="region_id"
-			type="filterregionjoin"
-			onchange="this.form.submit();">
-			<option value="">COM_KNOWRES_SELECT_REGION</option>
-		</field>
-		<field name="owner_id"
-			type="filterownerrestrict"
-			table="#__knowres_property"
-			onchange="this.form.submit();">
-			<option value="">COM_KNOWRES_SELECT_OWNER</option>
-		</field>
-		<field name="manager_id"
-			type="filtermanager"
-			table="#__knowres_contract"
-			onchange="this.form.submit();">
-			<option value="">COM_KNOWRES_SELECT_MANAGER</option>
-		</field>
-		<field name="booking_status"
-			type="filterbookingstatus"
-			onchange="this.form.submit();">
-			<option value="">COM_KNOWRES_SELECT_BOOKING_STATUS</option>
-		</field>
-		<field name="black_booking"
-			type="list"
-			onchange="this.form.submit();">
-			<option value=''>COM_KNOWRES_SELECT_BLACK_BOOKING</option>
-			<option value='1'>COM_KNOWRES_SELECT_BLACK_BOOKING_ONLY</option>
-			<option value='0,1'>COM_KNOWRES_SELECT_BLACK_BOOKING_ALL</option>
-		</field>
-		<field name="cancelled"
-			type="list"
-			onchange="this.form.submit();">
-			<option value=''>COM_KNOWRES_SELECT_CANCELLED</option>
-			<option value='1,2'>COM_KNOWRES_SELECT_CANCELLED_ONLY</option>
-			<option value='0,1,2'>COM_KNOWRES_SELECT_CANCELLED_ALL</option>
-		</field>
-	</fields>
-	<fields name="list">
-		<field name="fullordering"
-			type="listorderingkr"
-			statuses="*,0,1,2,-2"
-			onchange="this.form.submit();"
-			label="JGLOBAL_SORT_BY"
-			description="JGLOBAL_SORT_BY">
-			<option value=''>JGLOBAL_SORT_BY</option>
-			<option value='a.state ASC'>JSTATUS_ASC</option>
-			<option value='a.state DESC'>JSTATUS_DESC</option>
-			<option value='a.tag ASC'>COM_KNOWRES_TAG COM_KNOWRES_ASCENDING</option>
-			<option value='a.tag DESC'>COM_KNOWRES_TAG COM_KNOWRES_DESCENDING</option>
-			<option value='a.arrival ASC'>COM_KNOWRES_ARRIVAL COM_KNOWRES_ASCENDING</option>
-			<option value='a.arrival DESC'>COM_KNOWRES_ARRIVAL COM_KNOWRES_DESCENDING</option>
-			<option value='a.departure ASC'>COM_KNOWRES_DEPARTURE COM_KNOWRES_ASCENDING</option>
-			<option value='a.departure DESC'>COM_KNOWRES_DEPARTURE COM_KNOWRES_DESCENDING</option>
-			<option value='property_name ASC'>COM_KNOWRES_PROPERTY COM_KNOWRES_ASCENDING</option>
-			<option value='property_name DESC'>COM_KNOWRES_PROPERTY COM_KNOWRES_DESCENDING</option>
-			<option value='guest_name ASC'>COM_KNOWRES_GUEST COM_KNOWRES_ASCENDING</option>
-			<option value='guest_name DESC'>COM_KNOWRES_GUEST COM_KNOWRES_DESCENDING</option>
-			<option value='agent_name ASC'>COM_KNOWRES_CONTRACTS_AGENT_ID COM_KNOWRES_ASCENDING</option>
-			<option value='agent_name DESC'>COM_KNOWRES_CONTRACTS_AGENT_ID COM_KNOWRES_DESCENDING</option>
-			<option value='region_name ASC'>COM_KNOWRES_PROPERTIES_REGION_ID COM_KNOWRES_ASCENDING</option>
-			<option value='region_name DESC'>COM_KNOWRES_PROPERTIES_REGION_ID COM_KNOWRES_DESCENDING</option>
-			<option value='owner_name ASC'>COM_KNOWRES_PROPERTIES_OWNER COM_KNOWRES_ASCENDING</option>
-			<option value='owner_name DESC'>COM_KNOWRES_PROPERTIES_OWNER COM_KNOWRES_DESCENDING</option>
-			<option value='manager_name ASC'>COM_KNOWRES_MANAGER COM_KNOWRES_ASCENDING</option>
-			<option value='manager_name DESC'>COM_KNOWRES_MANAGER COM_KNOWRES_DESCENDING</option>
-			<option value='a.booking_status ASC'>COM_KNOWRES_CONTRACTS_BOOKING_STATUS_SHORT COM_KNOWRES_ASCENDING</option>
-			<option value='a.booking_status DESC'>COM_KNOWRES_CONTRACTS_BOOKING_STATUS_SHORT COM_KNOWRES_DESCENDING</option>
-			<option value='a.contract_total ASC'>COM_KNOWRES_CONTRACTS_CONTRACT_TOTAL COM_KNOWRES_ASCENDING</option>
-			<option value='a.contract_total DESC'>COM_KNOWRES_CONTRACTS_CONTRACT_TOTAL COM_KNOWRES_DESCENDING</option>
-			<option value='a.id ASC'>JGRID_HEADING_ID_ASC</option>
-			<option value='a.id DESC'>JGRID_HEADING_ID_DESC</option>
-		</field>
-		<field name='limit'
-			type='limitbox'
-			class='input-mini'
-			default='25'
-			onchange='this.form.submit();'
-			label='COM_KNOWRES_LIST_LIMIT'
-			description='COM_KNOWRES_LIST_LIMIT_DESC'/>
-	</fields>
+    <fields name="filter">
+        <field name="search"
+               type="text"
+               inputmode="search"
+               label="COM_KNOWRES_SEARCH"
+               description="COM_KNOWRES_CONTRACTS_SEARCH"
+               hint="COM_KNOWRES_SEARCH"/>
+        <field name="state"
+               type="status"
+               class="js-select-submit-on-change">
+            <option value="">JOPTION_SELECT_PUBLISHED</option>
+        </field>
+        <field name="departure"
+               type="uicalendar"
+               addonAfter="Departure from"
+               addonBefore="Departure from"
+               class="input-mini kr-search-date-filter"
+               datepicker='{"minDate": "-10Y", "maxDate": "+48M", "altField": "#filter_departure"}'
+               default="now"
+               hiddenLabel="true"
+               label="COM_KNOWRES_FILTER_DEPARTURE"/>
+        <field name="property_id"
+               type="filterproperty"
+               class="js-select-submit-on-change"
+               table="#__knowres_contract">
+            <option value="">COM_KNOWRES_SELECT_PROPERTY</option>
+        </field>
+        <field name="agent_id"
+               type="filteragent"
+               class="js-select-submit-on-change"
+               table="#__knowres_contract">
+            <option value="">COM_KNOWRES_SELECT_AGENT</option>
+        </field>
+        <field name="region_id"
+               type="filterregionjoin"
+               class="js-select-submit-on-change">
+            <option value="">COM_KNOWRES_SELECT_REGION</option>
+        </field>
+        <field name="owner_id"
+               type="filterownerrestrict"
+               class="js-select-submit-on-change"
+               table="#__knowres_property">
+            <option value="">COM_KNOWRES_SELECT_OWNER</option>
+        </field>
+        <field name="manager_id"
+               type="filtermanager"
+               class="js-select-submit-on-change"
+               table="#__knowres_contract">
+            <option value="">COM_KNOWRES_SELECT_MANAGER</option>
+        </field>
+        <field name="booking_status"
+               type="filterbookingstatus"
+               class="js-select-submit-on-change">
+            <option value="">COM_KNOWRES_SELECT_BOOKING_STATUS</option>
+        </field>
+        <field name="black_booking"
+               type="list"
+               class="js-select-submit-on-change">
+            <option value=''>COM_KNOWRES_SELECT_BLACK_BOOKING</option>
+            <option value='1'>COM_KNOWRES_SELECT_BLACK_BOOKING_ONLY</option>
+            <option value='0,1'>COM_KNOWRES_SELECT_BLACK_BOOKING_ALL</option>
+        </field>
+        <field name="cancelled"
+               type="list"
+               class="js-select-submit-on-change">
+            <option value=''>COM_KNOWRES_SELECT_CANCELLED</option>
+            <option value='1,2'>COM_KNOWRES_SELECT_CANCELLED_ONLY</option>
+            <option value='0,1,2'>COM_KNOWRES_SELECT_CANCELLED_ALL</option>
+        </field>
+    </fields>
+    <fields name="list">
+        <field name="fullordering"
+               type="listorderingkr"
+               class="js-select-submit-on-change"
+               statuses="*,0,1,2,-2"
+               label="JGLOBAL_SORT_BY"
+               description="JGLOBAL_SORT_BY">
+            <option value=''>JGLOBAL_SORT_BY</option>
+            <option value='a.state ASC'>JSTATUS_ASC</option>
+            <option value='a.state DESC'>JSTATUS_DESC</option>
+            <option value='a.tag ASC'>COM_KNOWRES_TAG COM_KNOWRES_ASCENDING</option>
+            <option value='a.tag DESC'>COM_KNOWRES_TAG COM_KNOWRES_DESCENDING</option>
+            <option value='a.arrival ASC'>COM_KNOWRES_ARRIVAL COM_KNOWRES_ASCENDING</option>
+            <option value='a.arrival DESC'>COM_KNOWRES_ARRIVAL COM_KNOWRES_DESCENDING</option>
+            <option value='a.departure ASC'>COM_KNOWRES_DEPARTURE COM_KNOWRES_ASCENDING</option>
+            <option value='a.departure DESC'>COM_KNOWRES_DEPARTURE COM_KNOWRES_DESCENDING</option>
+            <option value='property_name ASC'>COM_KNOWRES_PROPERTY COM_KNOWRES_ASCENDING</option>
+            <option value='property_name DESC'>COM_KNOWRES_PROPERTY COM_KNOWRES_DESCENDING</option>
+            <option value='guest_name ASC'>COM_KNOWRES_GUEST COM_KNOWRES_ASCENDING</option>
+            <option value='guest_name DESC'>COM_KNOWRES_GUEST COM_KNOWRES_DESCENDING</option>
+            <option value='agent_name ASC'>COM_KNOWRES_CONTRACTS_AGENT_ID COM_KNOWRES_ASCENDING</option>
+            <option value='agent_name DESC'>COM_KNOWRES_CONTRACTS_AGENT_ID COM_KNOWRES_DESCENDING</option>
+            <option value='region_name ASC'>COM_KNOWRES_PROPERTIES_REGION_ID COM_KNOWRES_ASCENDING</option>
+            <option value='region_name DESC'>COM_KNOWRES_PROPERTIES_REGION_ID COM_KNOWRES_DESCENDING</option>
+            <option value='owner_name ASC'>COM_KNOWRES_PROPERTIES_OWNER COM_KNOWRES_ASCENDING</option>
+            <option value='owner_name DESC'>COM_KNOWRES_PROPERTIES_OWNER COM_KNOWRES_DESCENDING</option>
+            <option value='manager_name ASC'>COM_KNOWRES_MANAGER COM_KNOWRES_ASCENDING</option>
+            <option value='manager_name DESC'>COM_KNOWRES_MANAGER COM_KNOWRES_DESCENDING</option>
+            <option value='a.booking_status ASC'>COM_KNOWRES_CONTRACTS_BOOKING_STATUS_SHORT COM_KNOWRES_ASCENDING
+            </option>
+            <option value='a.booking_status DESC'>COM_KNOWRES_CONTRACTS_BOOKING_STATUS_SHORT COM_KNOWRES_DESCENDING
+            </option>
+            <option value='a.contract_total ASC'>COM_KNOWRES_CONTRACTS_CONTRACT_TOTAL COM_KNOWRES_ASCENDING</option>
+            <option value='a.contract_total DESC'>COM_KNOWRES_CONTRACTS_CONTRACT_TOTAL COM_KNOWRES_DESCENDING</option>
+            <option value='a.id ASC'>JGRID_HEADING_ID_ASC</option>
+            <option value='a.id DESC'>JGRID_HEADING_ID_DESC</option>
+        </field>
+        <field name='limit'
+               type='limitbox'
+               class='input-mini js-select-submit-on-change'
+               default='25'
+               label='COM_KNOWRES_LIST_LIMIT'
+               description='COM_KNOWRES_LIST_LIMIT_DESC'/>
+    </fields>
 </form>

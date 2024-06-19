@@ -1,56 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form addfieldprefix="HighlandVision\Component\Knowres\Administrator\Field">
-	<fields name="filter">
-		<field name="search"
-			type="text"
-			inputmode="search"
-			label="COM_KNOWRES_SEARCH"
-			description="COM_KNOWRES_DEFAULT_SEARCH"
-			hint="COM_KNOWRES_SEARCH"/>
-		<field name="state"
-			type="status"
-			onchange="this.form.submit();">
-			<option value="">JOPTION_SELECT_PUBLISHED</option>
-		</field>
-	</fields>
-	<fields name="list">
-		<field name="fullordering"
-			type="listorderingkr"
-			statuses="*,0,1,2,-2"
-			onchange="this.form.submit();"
-			default="a.valid_from ASC"
-			label="JGLOBAL_SORT_BY"
-			description="JGLOBAL_SORT_BY">
-			<option value="">JGLOBAL_SORT_BY</option>
-			<option value="a.state ASC">JSTATUS_ASC</option>
-			<option value="a.state DESC">JSTATUS_DESC</option>
-			<option value="a.valid_from ASC">COM_KNOWRES_RATES_VALID_FROM COM_KNOWRES_ASCENDING</option>
-			<option value="a.valid_from DESC">COM_KNOWRES_RATES_VALID_FROM COM_KNOWRES_DESCENDING</option>
-			<option value="a.valid_to ASC">COM_KNOWRES_RATES_VALID_TO COM_KNOWRES_ASCENDING</option>
-			<option value="a.valid_to DESC">COM_KNOWRES_RATES_VALID_TO COM_KNOWRES_DESCENDING</option>
-			<option value="a.rate ASC">COM_KNOWRES_RATES_RATE COM_KNOWRES_ASCENDING</option>
-			<option value="a.rate DESC">COM_KNOWRES_RATES_RATE COM_KNOWRES_DESCENDING</option>
-			<option value="a.min_nights ASC">COM_KNOWRES_RATES_MIN_NIGHTS COM_KNOWRES_ASCENDING</option>
-			<option value="a.min_nights DESC">COM_KNOWRES_RATES_MIN_NIGHTS COM_KNOWRES_DESCENDING</option>
-			<option value="a.max_nights ASC">COM_KNOWRES_RATES_MAX_NIGHTS COM_KNOWRES_ASCENDING</option>
-			<option value="a.max_nights DESC">COM_KNOWRES_RATES_MAX_NIGHTS COM_KNOWRES_DESCENDING</option>
-			<option value="a.min_guests ASC">COM_KNOWRES_RATES_MIN_GUESTS COM_KNOWRES_ASCENDING</option>
-			<option value="a.min_guests DESC">COM_KNOWRES_RATES_MIN_GUESTS COM_KNOWRES_DESCENDING</option>
-			<option value="a.max_guests ASC">COM_KNOWRES_RATES_MAX_GUESTS COM_KNOWRES_ASCENDING</option>
-			<option value="a.max_guests DESC">COM_KNOWRES_RATES_MAX_GUESTS COM_KNOWRES_DESCENDING</option>
-			<option value="a.more_guests ASC">COM_KNOWRES_RATES_MORE_GUESTS COM_KNOWRES_ASCENDING</option>
-			<option value="a.more_guests DESC">COM_KNOWRES_RATES_MORE_GUESTS COM_KNOWRES_DESCENDING</option>
-			<option value="a.start_day ASC">COM_KNOWRES_RATES_START_DAY COM_KNOWRES_ASCENDING</option>
-			<option value="a.start_day DESC">COM_KNOWRES_RATES_START_DAY COM_KNOWRES_DESCENDING</option>
-			<option value="a.id ASC">JGRID_HEADING_ID_ASC</option>
-			<option value="a.id DESC">JGRID_HEADING_ID_DESC</option>
-		</field>
-		<field name="limit"
-			type="limitbox"
-			class="input-mini"
-			default="25"
-			onchange="this.form.submit();"
-			label="COM_KNOWRES_LIST_LIMIT"
-			description="COM_KNOWRES_LIST_LIMIT_DSC"/>
-	</fields>
+    <fields name="filter">
+        <field name="search"
+               type="text"
+               inputmode="search"
+               label="COM_KNOWRES_SEARCH"
+               description="COM_KNOWRES_DEFAULT_SEARCH"
+               hint="COM_KNOWRES_SEARCH"/>
+        <field name="state"
+               type="status"
+               class="js-select-submit-on-change">
+            <option value="">JOPTION_SELECT_PUBLISHED</option>
+        </field>
+    </fields>
+    <fields name="list">
+        <field name="fullordering"
+               type="listorderingkr"
+               class="js-select-submit-on-change"
+               default="a.valid_from ASC"
+               statuses="*,0,1,2,-2"
+               label="JGLOBAL_SORT_BY"
+               description="JGLOBAL_SORT_BY">
+            <option value="">JGLOBAL_SORT_BY</option>
+            <option value="a.state ASC">JSTATUS_ASC</option>
+            <option value="a.state DESC">JSTATUS_DESC</option>
+            <option value="a.valid_from ASC">COM_KNOWRES_RATES_VALID_FROM COM_KNOWRES_ASCENDING</option>
+            <option value="a.valid_from DESC">COM_KNOWRES_RATES_VALID_FROM COM_KNOWRES_DESCENDING</option>
+            <option value="a.valid_to ASC">COM_KNOWRES_RATES_VALID_TO COM_KNOWRES_ASCENDING</option>
+            <option value="a.valid_to DESC">COM_KNOWRES_RATES_VALID_TO COM_KNOWRES_DESCENDING</option>
+            <option value="a.rate ASC">COM_KNOWRES_RATES_RATE COM_KNOWRES_ASCENDING</option>
+            <option value="a.rate DESC">COM_KNOWRES_RATES_RATE COM_KNOWRES_DESCENDING</option>
+            <option value="a.min_nights ASC">COM_KNOWRES_RATES_MIN_NIGHTS COM_KNOWRES_ASCENDING</option>
+            <option value="a.min_nights DESC">COM_KNOWRES_RATES_MIN_NIGHTS COM_KNOWRES_DESCENDING</option>
+            <option value="a.max_nights ASC">COM_KNOWRES_RATES_MAX_NIGHTS COM_KNOWRES_ASCENDING</option>
+            <option value="a.max_nights DESC">COM_KNOWRES_RATES_MAX_NIGHTS COM_KNOWRES_DESCENDING</option>
+            <option value="a.min_guests ASC">COM_KNOWRES_RATES_MIN_GUESTS COM_KNOWRES_ASCENDING</option>
+            <option value="a.min_guests DESC">COM_KNOWRES_RATES_MIN_GUESTS COM_KNOWRES_DESCENDING</option>
+            <option value="a.max_guests ASC">COM_KNOWRES_RATES_MAX_GUESTS COM_KNOWRES_ASCENDING</option>
+            <option value="a.max_guests DESC">COM_KNOWRES_RATES_MAX_GUESTS COM_KNOWRES_DESCENDING</option>
+            <option value="a.more_guests ASC">COM_KNOWRES_RATES_MORE_GUESTS COM_KNOWRES_ASCENDING</option>
+            <option value="a.more_guests DESC">COM_KNOWRES_RATES_MORE_GUESTS COM_KNOWRES_DESCENDING</option>
+            <option value="a.start_day ASC">COM_KNOWRES_RATES_START_DAY COM_KNOWRES_ASCENDING</option>
+            <option value="a.start_day DESC">COM_KNOWRES_RATES_START_DAY COM_KNOWRES_DESCENDING</option>
+            <option value="a.id ASC">JGRID_HEADING_ID_ASC</option>
+            <option value="a.id DESC">JGRID_HEADING_ID_DESC</option>
+        </field>
+        <field name="limit"
+               type="limitbox"
+               class="input-mini js-select-submit-on-change"
+               default="25"
+               label="COM_KNOWRES_LIST_LIMIT"
+               description="COM_KNOWRES_LIST_LIMIT_DSC"/>
+    </fields>
 </form>

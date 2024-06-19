@@ -11,7 +11,7 @@
 		<field
 			name="state"
 			type="status"
-			onchange="this.form.submit();">
+			class="js-select-submit-on-change">
 			<option value="">JOPTION_SELECT_PUBLISHED</option>
 		</field>
 	</fields>
@@ -19,9 +19,9 @@
 		<field
 			name="fullordering"
 			type="listorderingkr"
-			statuses="*,0,1,2,-2"
-			onchange="this.form.submit();"
+			class="js-select-submit-on-change"
 			default="a.ordering ASC"
+			statuses="*,0,1,2,-2"
 			label="JGLOBAL_SORT_BY"
 			description="JGLOBAL_SORT_BY">
 			<option value="">JGLOBAL_SORT_BY</option>
@@ -45,9 +45,8 @@
 		<field
 			name="limit"
 			type="limitbox"
-			class="input-mini"
+			class="input-mini js-select-submit-on-change"
 			default="25"
-			onchange="this.form.submit();"
 			label="COM_KNOWRES_LIST_LIMIT"
 			description="COM_KNOWRES_LIST_LIMIT_DSC"/>
 	</fields>

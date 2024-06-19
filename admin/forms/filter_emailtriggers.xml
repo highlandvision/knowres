@@ -11,19 +11,19 @@
 		<field
 			name="state"
 			type="status"
-			onchange="this.form.submit();">
+			class="js-select-submit-on-change">
 			<option value="">JOPTION_SELECT_PUBLISHED</option>
 		</field>
 		<field
 			name="trigger_actual"
 			type="listtriggeractual"
-			onchange="this.form.submit();">
+			class="js-select-submit-on-change">
 			<option value="">COM_KNOWRES_SELECT_TRIGGER_ACTUAL</option>
 		</field>
 		<field
 			name="trigger_cron"
 			type="list"
-			onchange="this.form.submit();">
+			class="js-select-submit-on-change">
 			<option value="">COM_KNOWRES_SELECT_TRIGGER_CRON</option>
 			<option value="expiry_date">COM_KNOWRES_CONTRACTS_EXPIRY_DATE</option>
 			<option value="balance_date">COM_KNOWRES_CONTRACTS_BALANCE_DATE</option>
@@ -35,9 +35,9 @@
 		<field
 			name="fullordering"
 			type="listorderingkr"
-			statuses="*,0,1,2,-2"
-			onchange="this.form.submit();"
+			class="js-select-submit-on-change"
 			default="a.name ASC"
+			statuses="*,0,1,2,-2"
 			label="JGLOBAL_SORT_BY"
 			description="JGLOBAL_SORT_BY">
 			<option value="">JGLOBAL_SORT_BY</option>
@@ -74,9 +74,8 @@
 		<field
 			name="limit"
 			type="limitbox"
-			class="input-mini"
+			class="input-mini js-select-submit-on-change"
 			default="25"
-			onchange="this.form.submit();"
 			label="COM_KNOWRES_LIST_LIMIT"
 			description="COM_KNOWRES_LIST_LIMIT_DSC"/>
 	</fields>

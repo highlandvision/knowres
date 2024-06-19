@@ -11,14 +11,14 @@
 		<field
 			name="state"
 			type="status"
-			onchange="this.form.submit();">
+			class="js-select-submit-on-change">
 			<option value="">JOPTION_SELECT_PUBLISHED</option>
 		</field>
 		<field
 			name="service_id"
 			type="filterservice"
-			table="#__knowres_agent"
-			onchange="this.form.submit();">
+			class="js-select-submit-on-change"
+			table="#__knowres_agent">
 			<option value="">COM_KNOWRES_SELECT_SERVICE</option>
 		</field>
 	</fields>
@@ -26,8 +26,8 @@
 		<field
 			name="fullordering"
 			type="listorderingkr"
+			class="js-select-submit-on-change"
 			statuses="*,0,1,2,-2"
-			onchange="this.form.submit();"
 			default="a.name ASC"
 			label="JGLOBAL_SORT_BY"
 			description="JGLOBAL_SORT_BY">
@@ -44,9 +44,8 @@
 		<field
 			name="limit"
 			type="limitbox"
-			class="input-mini"
+			class="input-mini js-select-submit-on-change"
 			default="25"
-			onchange="this.form.submit();"
 			label="COM_KNOWRES_LIST_LIMIT"
 			description="COM_KNOWRES_LIST_LIMIT_DSC"/>
 	</fields>

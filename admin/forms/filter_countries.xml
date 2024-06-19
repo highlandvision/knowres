@@ -11,13 +11,13 @@
 		<field
 			name="state"
 			type="status"
-			onchange="this.form.submit();">
+			class="js-select-submit-on-change">
 			<option value="">JOPTION_SELECT_PUBLISHED</option>
 		</field>
 		<field
 			name="allow_property"
 			type="list"
-			onchange="this.form.submit();">
+			class="js-select-submit-on-change">
 			<option value="">COM_KNOWRES_SELECT_ALLOW_PROPERTY</option>
 			<option value="1">COM_KNOWRES_SELECT_ALLOW_PROPERTY_ONLY</option>
 		</field>
@@ -26,9 +26,9 @@
 		<field
 			name="fullordering"
 			type="listorderingkr"
-			statuses="*,0,1,2,-2"
-			onchange="this.form.submit();"
+			class="js-select-submit-on-change"
 			default="name ASC"
+			statuses="*,0,1,2,-2"
 			label="JGLOBAL_SORT_BY"
 			description="JGLOBAL_SORT_BY">
 			<option value="">JGLOBAL_SORT_BY</option>
@@ -48,9 +48,8 @@
 		<field
 			name="limit"
 			type="limitbox"
-			class="input-mini"
+			class="input-mini js-select-submit-on-change"
 			default="25"
-			onchange="this.form.submit();"
 			label="COM_KNOWRES_LIST_LIMIT"
 			description="COM_KNOWRES_LIST_LIMIT_DSC"/>
 	</fields>

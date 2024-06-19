@@ -13,7 +13,7 @@
 		<field
 			name="fullordering"
 			type="listorderingkr"
-			onchange="this.form.submit();"
+			class="js-select-submit-on-change"
 			default="a.id ASC"
 			label="JGLOBAL_SORT_BY"
 			description="JGLOBAL_SORT_BY">
@@ -26,9 +26,8 @@
 		<field
 			name="limit"
 			type="limitbox"
-			class="input-mini"
+			class="input-mini js-select-submit-on-change"
 			default="25"
-			onchange="this.form.submit();"
 			label="COM_KNOWRES_LIST_LIMIT"
 			description="COM_KNOWRES_LIST_LIMIT_DSC"/>
 	</fields>

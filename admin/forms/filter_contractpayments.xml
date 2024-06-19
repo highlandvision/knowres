@@ -1,99 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form addfieldprefix="HighlandVision\Component\Knowres\Administrator\Field">
-	<fields name="filter">
-		<field
-			name="search"
-			type="text"
-			inputmode="search"
-			label="COM_KNOWRES_SEARCH"
-			description="COM_KNOWRES_CONTRACTPAYMENTS_SEARCH"
-			hint="COM_KNOWRES_SEARCH"/>
-		<field name="payment_date"
-			addonBefore="Payments from"
-			class="input-mini kr-search-date-filter"
-			datepicker='{"minDate": "-10Y", "maxDate": "+0D", "altField": "#filter_payment_date"}'
-			default="-1 Months"
-			hiddenLabel="true"
-			type="uicalendar"
-			label="COM_KNOWRES_FILTER_PAYMENT_DATE"/>
-		<field
-			name="state"
-			type="list"
-			onchange="this.form.submit();">
-			<option value="">JOPTION_SELECT_PUBLISHED</option>
-			<option value="1">PUBLISHED</option>
-			<option value="0">UNPUBLISHED</option>
-		</field>
-		<field name="service_id"
-			type="filterservice"
-			table="#__knowres_contract_payment"
-			onchange="this.form.submit();">
-			<option value="">COM_KNOWRES_SELECT_PAYMENT_METHOD</option>
-		</field>
-		<field
-			name="confirmed"
-			type="list"
-			onchange="this.form.submit();">
-			<option value="">COM_KNOWRES_SELECT_CONFIRMED</option>
-			<option value="1">COM_KNOWRES_SELECT_CONFIRMED_ONLY</option>
-			<option value="0">COM_KNOWRES_SELECT_CONFIRMED_ALL</option>
-		</field>
-		<field name="currency"
-			type="filtercurrency"
-			table="#__knowres_contract_payment"
-			column="currency"
-			onchange="this.form.submit();">
-			<option value="">COM_KNOWRES_SELECT_PAY_CURRENCY</option>
-		</field>
-		<field
-			name="actioned"
-			type="list"
-			onchange="this.form.submit();">
-			<option value="">COM_KNOWRES_SELECT_ACTIONED</option>
-			<option value="1">COM_KNOWRES_SELECT_ACTIONED_ONLY</option>
-			<option value="0">COM_KNOWRES_SELECT_ACTIONED_NOT</option>
-		</field>
-	</fields>
-	<fields name="list">
-		<field
-			name="fullordering"
-			type="listorderingkr"
-			statuses="*,0,1,2,-2"
-			onchange="this.form.submit();"
-			default="a.payment_date ASC"
-			label="JGLOBAL_SORT_BY"
-			description="JGLOBAL_SORT_BY">
-			<option value="">JGLOBAL_SORT_BY</option>
-			<option value="a.state ASC">JSTATUS_ASC</option>
-			<option value="a.state DESC">JSTATUS_DESC</option>
-			<option value="contract_tag ASC">COM_KNOWRES_TAG COM_KNOWRES_ASCENDING</option>
-			<option value="contract_tag DESC">COM_KNOWRES_TAG COM_KNOWRES_DESCENDING</option>
-			<option value="service_name ASC">COM_KNOWRES_CONTRACTPAYMENTS_SERVICE_ID COM_KNOWRES_ASCENDING</option>
-			<option value="service_name DESC">COM_KNOWRES_CONTRACTPAYMENTS_SERVICE_ID COM_KNOWRES_DESCENDING</option>
-			<option value="a.payment_date ASC">COM_KNOWRES_CONTRACTPAYMENTS_PAYMENT_DATE COM_KNOWRES_ASCENDING</option>
-			<option value="a.payment_date DESC">COM_KNOWRES_CONTRACTPAYMENTS_PAYMENT_DATE COM_KNOWRES_DESCENDING</option>
-			<option value="a.amount ASC">COM_KNOWRES_CONTRACTPAYMENTS_AMOUNT COM_KNOWRES_ASCENDING</option>
-			<option value="a.amount DESC">COM_KNOWRES_CONTRACTPAYMENTS_AMOUNT COM_KNOWRES_DESCENDING</option>
-			<option value="a.rate ASC">COM_KNOWRES_CONTRACTPAYMENTS_RATE COM_KNOWRES_ASCENDING</option>
-			<option value="a.rate DESC">COM_KNOWRES_CONTRACTPAYMENTS_RATE COM_KNOWRES_DESCENDING</option>
-			<option value="a.base_amount ASC">COM_KNOWRES_CONTRACTPAYMENTS_BASE_AMOUNT COM_KNOWRES_ASCENDING</option>
-			<option value="a.base_amount DESC">COM_KNOWRES_CONTRACTPAYMENTS_BASE_AMOUNT COM_KNOWRES_DESCENDING</option>
-			<option value="a.payment_ref ASC">COM_KNOWRES_CONTRACTPAYMENTS_PAYMENT_REF COM_KNOWRES_ASCENDING</option>
-			<option value="a.payment_ref DESC">COM_KNOWRES_CONTRACTPAYMENTS_PAYMENT_REF COM_KNOWRES_DESCENDING</option>
-			<option value="a.confirmed ASC">COM_KNOWRES_CONTRACTPAYMENTS_CONFIRMED COM_KNOWRES_ASCENDING</option>
-			<option value="a.confirmed DESC">COM_KNOWRES_CONTRACTPAYMENTS_CONFIRMED COM_KNOWRES_DESCENDING</option>
-			<option value="a.actioned ASC">COM_KNOWRES_CONTRACTPAYMENTS_ACTIONED COM_KNOWRES_ASCENDING</option>
-			<option value="a.actioned DESC">COM_KNOWRES_CONTRACTPAYMENTS_ACTIONED COM_KNOWRES_DESCENDING</option>
-			<option value="a.id ASC">JGRID_HEADING_ID_ASC</option>
-			<option value="a.id DESC">JGRID_HEADING_ID_DESC</option>
-		</field>
-		<field
-			name="limit"
-			type="limitbox"
-			class="input-mini"
-			default="25"
-			onchange="this.form.submit();"
-			label="COM_KNOWRES_LIST_LIMIT"
-			description="COM_KNOWRES_LIST_LIMIT_DSC"/>
-	</fields>
+    <fields name="filter">
+        <field
+                name="search"
+                type="text"
+                inputmode="search"
+                label="COM_KNOWRES_SEARCH"
+                description="COM_KNOWRES_CONTRACTPAYMENTS_SEARCH"
+                hint="COM_KNOWRES_SEARCH"/>
+        <field name="payment_date"
+               addonBefore="Payments from"
+               class="input-mini kr-search-date-filter"
+               datepicker='{"minDate": "-10Y", "maxDate": "+0D", "altField": "#filter_payment_date"}'
+               default="-1 Months"
+               hiddenLabel="true"
+               type="uicalendar"
+               label="COM_KNOWRES_FILTER_PAYMENT_DATE"/>
+        <field
+                name="state"
+                type="list"
+                class="js-select-submit-on-change">
+            <option value="">JOPTION_SELECT_PUBLISHED</option>
+            <option value="1">PUBLISHED</option>
+            <option value="0">UNPUBLISHED</option>
+        </field>
+        <field name="service_id"
+               type="filterservice"
+               class="js-select-submit-on-change"
+               table="#__knowres_contract_payment">
+            <option value="">COM_KNOWRES_SELECT_PAYMENT_METHOD</option>
+        </field>
+        <field name="confirmed"
+               type="list"
+               class="js-select-submit-on-change">
+            <option value="">COM_KNOWRES_SELECT_CONFIRMED</option>
+            <option value="1">COM_KNOWRES_SELECT_CONFIRMED_ONLY</option>
+            <option value="0">COM_KNOWRES_SELECT_CONFIRMED_ALL</option>
+        </field>
+        <field name="currency"
+               type="filtercurrency"
+               class="js-select-submit-on-change"
+               column="currency"
+               table="#__knowres_contract_payment">
+            <option value="">COM_KNOWRES_SELECT_PAY_CURRENCY</option>
+        </field>
+        <field name="actioned"
+               type="list"
+               class="js-select-submit-on-change">
+            <option value="">COM_KNOWRES_SELECT_ACTIONED</option>
+            <option value="1">COM_KNOWRES_SELECT_ACTIONED_ONLY</option>
+            <option value="0">COM_KNOWRES_SELECT_ACTIONED_NOT</option>
+        </field>
+    </fields>
+    <fields name="list">
+        <field  name="fullordering"
+                type="listorderingkr"
+                class="js-select-submit-on-change"
+                default="a.payment_date ASC"
+                statuses="*,0,1,2,-2"
+                label="JGLOBAL_SORT_BY"
+                description="JGLOBAL_SORT_BY">
+            <option value="">JGLOBAL_SORT_BY</option>
+            <option value="a.state ASC">JSTATUS_ASC</option>
+            <option value="a.state DESC">JSTATUS_DESC</option>
+            <option value="contract_tag ASC">COM_KNOWRES_TAG COM_KNOWRES_ASCENDING</option>
+            <option value="contract_tag DESC">COM_KNOWRES_TAG COM_KNOWRES_DESCENDING</option>
+            <option value="service_name ASC">COM_KNOWRES_CONTRACTPAYMENTS_SERVICE_ID COM_KNOWRES_ASCENDING</option>
+            <option value="service_name DESC">COM_KNOWRES_CONTRACTPAYMENTS_SERVICE_ID COM_KNOWRES_DESCENDING</option>
+            <option value="a.payment_date ASC">COM_KNOWRES_CONTRACTPAYMENTS_PAYMENT_DATE COM_KNOWRES_ASCENDING</option>
+            <option value="a.payment_date DESC">COM_KNOWRES_CONTRACTPAYMENTS_PAYMENT_DATE COM_KNOWRES_DESCENDING
+            </option>
+            <option value="a.amount ASC">COM_KNOWRES_CONTRACTPAYMENTS_AMOUNT COM_KNOWRES_ASCENDING</option>
+            <option value="a.amount DESC">COM_KNOWRES_CONTRACTPAYMENTS_AMOUNT COM_KNOWRES_DESCENDING</option>
+            <option value="a.rate ASC">COM_KNOWRES_CONTRACTPAYMENTS_RATE COM_KNOWRES_ASCENDING</option>
+            <option value="a.rate DESC">COM_KNOWRES_CONTRACTPAYMENTS_RATE COM_KNOWRES_DESCENDING</option>
+            <option value="a.base_amount ASC">COM_KNOWRES_CONTRACTPAYMENTS_BASE_AMOUNT COM_KNOWRES_ASCENDING</option>
+            <option value="a.base_amount DESC">COM_KNOWRES_CONTRACTPAYMENTS_BASE_AMOUNT COM_KNOWRES_DESCENDING</option>
+            <option value="a.payment_ref ASC">COM_KNOWRES_CONTRACTPAYMENTS_PAYMENT_REF COM_KNOWRES_ASCENDING</option>
+            <option value="a.payment_ref DESC">COM_KNOWRES_CONTRACTPAYMENTS_PAYMENT_REF COM_KNOWRES_DESCENDING</option>
+            <option value="a.confirmed ASC">COM_KNOWRES_CONTRACTPAYMENTS_CONFIRMED COM_KNOWRES_ASCENDING</option>
+            <option value="a.confirmed DESC">COM_KNOWRES_CONTRACTPAYMENTS_CONFIRMED COM_KNOWRES_DESCENDING</option>
+            <option value="a.actioned ASC">COM_KNOWRES_CONTRACTPAYMENTS_ACTIONED COM_KNOWRES_ASCENDING</option>
+            <option value="a.actioned DESC">COM_KNOWRES_CONTRACTPAYMENTS_ACTIONED COM_KNOWRES_DESCENDING</option>
+            <option value="a.id ASC">JGRID_HEADING_ID_ASC</option>
+            <option value="a.id DESC">JGRID_HEADING_ID_DESC</option>
+        </field>
+        <field
+                name="limit"
+                type="limitbox"
+                class="input-mini js-select-submit-on-change"
+                default="25"
+                label="COM_KNOWRES_LIST_LIMIT"
+                description="COM_KNOWRES_LIST_LIMIT_DSC"/>
+    </fields>
 </form>

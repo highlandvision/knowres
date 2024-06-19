@@ -1,80 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form addfieldprefix="HighlandVision\Component\Knowres\Administrator\Field">
-	<fields name="filter">
-		<field name="search"
-			inputmode="search"
-			type="text"
-			label="COM_KNOWRES_SEARCH"
-			description="COM_KNOWRES_SERVICEXREFS_SEARCH"
-			hint="COM_KNOWRES_SEARCH"/>
-		<field name="state"
-			onchange="this.form.submit();"
-			type="status">
-			<option value="">JOPTION_SELECT_PUBLISHED</option>
-		</field>
-		<field name="service_id"
-			onchange="this.form.submit();"
-			table="#__knowres_service_xref"
-			type="filterservice">
-			<option value="">COM_KNOWRES_SELECT_SERVICE</option>
-		</field>
-		<field name="type"
-			default=""
-			onchange="this.form.submit();"
-			type="list">
-			<option value="">COM_KNOWRES_SELECT_TYPE</option>
-			<option value="p">COM_KNOWRES_PROPERTY_TITLE</option>
-			<option value="c">COM_KNOWRES_CONTRACT_TITLE</option>
-			<option value="g">COM_KNOWRES_GUEST</option>
-			<option value="o">COM_KNOWRES_OWNER</option>
-		</field>
-		<field name="key"
-			onchange="this.form.submit();"
-			table="#__knowres_service_xref"
-			type="filterkey">
-			<option value="">COM_KNOWRES_SELECT_SERVICEXREF_KEY</option>
-		</field>
-		<field name="sell"
-			default=""
-			onchange="this.form.submit();"
-			type="list">
-			<option value="">COM_KNOWRES_SELECT_SELL</option>
-			<option value="1">JYES</option>
-			<option value="0">JNO</option>
-		</field>
-	</fields>
-	<fields name="list">
-		<field
-			name="fullordering"
-			type="listorderingkr"
-			statuses="*,0,1,2,-2"
-			onchange="this.form.submit();"
-			default="property_name ASC"
-			label="JGLOBAL_SORT_BY"
-			description="JGLOBAL_SORT_BY">
-			<option value="">JGLOBAL_SORT_BY</option>
-			<option value="a.state ASC">JSTATUS_ASC</option>
-			<option value="a.state DESC">JSTATUS_DESC</option>
-			<option value="service_name ASC">COM_KNOWRES_SERVICEXREFS_SERVICE_ID COM_KNOWRES_ASCENDING</option>
-			<option value="service_name DESC">COM_KNOWRES_SERVICEXREFS_SERVICE_ID COM_KNOWRES_DESCENDING</option>
-			<option value="type ASC">COM_KNOWRES_SERVICEXREFS_TYPE COM_KNOWRES_ASCENDING</option>
-			<option value="type DESC">COM_KNOWRES_SERVICEXREFS_TYPE COM_KNOWRES_DESCENDING</option>
-			<option value="a.foreign_key ASC">COM_KNOWRES_SERVICEXREFS_FOREIGN_KEY COM_KNOWRES_ASCENDING</option>
-			<option value="a.foreign_key DESC">COM_KNOWRES_SERVICEXREFS_FOREIGN_KEY COM_KNOWRES_DESCENDING</option>
-			<option value="key ASC">COM_KNOWRES_SERVICEXREFS_KEY COM_KNOWRES_ASCENDING</option>
-			<option value="key DESC">COM_KNOWRES_SERVICEXREFS_KEY COM_KNOWRES_DESCENDING</option>
-			<option value="a.sell ASC">COM_KNOWRES_SERVICEXREFS_SELL COM_KNOWRES_ASCENDING</option>
-			<option value="a.sell DESC">COM_KNOWRES_SERVICEXREFS_SELL COM_KNOWRES_DESCENDING</option>
-			<option value="a.id ASC">JGRID_HEADING_ID_ASC</option>
-			<option value="a.id DESC">JGRID_HEADING_ID_DESC</option>
-		</field>
-		<field
-			name="limit"
-			type="limitbox"
-			class="input-mini"
-			default="25"
-			onchange="this.form.submit();"
-			label="COM_KNOWRES_LIST_LIMIT"
-			description="COM_KNOWRES_LIST_LIMIT_DSC"/>
-	</fields>
+    <fields name="filter">
+        <field name="search"
+               inputmode="search"
+               type="text"
+               label="COM_KNOWRES_SEARCH"
+               description="COM_KNOWRES_SERVICEXREFS_SEARCH"
+               hint="COM_KNOWRES_SEARCH"/>
+        <field name="state"
+               type="status"
+               class="js-select-submit-on-change">
+            <option value="">JOPTION_SELECT_PUBLISHED</option>
+        </field>
+        <field name="service_id"
+               type="filterservice"
+               class="js-select-submit-on-change"
+               table="#__knowres_service_xref">
+            <option value="">COM_KNOWRES_SELECT_SERVICE</option>
+        </field>
+        <field name="type"
+               type="list"
+               class="js-select-submit-on-change"
+               default="">
+            <option value="">COM_KNOWRES_SELECT_TYPE</option>
+            <option value="p">COM_KNOWRES_PROPERTY_TITLE</option>
+            <option value="c">COM_KNOWRES_CONTRACT_TITLE</option>
+            <option value="g">COM_KNOWRES_GUEST</option>
+            <option value="o">COM_KNOWRES_OWNER</option>
+        </field>
+        <field name="key"
+               type="filterkey"
+               class="js-select-submit-on-change"
+               table="#__knowres_service_xref">
+            <option value="">COM_KNOWRES_SELECT_SERVICEXREF_KEY</option>
+        </field>
+        <field name="sell"
+               type="list"
+               class="js-select-submit-on-change"
+               default="">
+            <option value="">COM_KNOWRES_SELECT_SELL</option>
+            <option value="1">JYES</option>
+            <option value="0">JNO</option>
+        </field>
+    </fields>
+    <fields name="list">
+        <field name="fullordering"
+               type="listorderingkr"
+               class="js-select-submit-on-change"
+               default="property_name ASC"
+               statuses="*,0,1,2,-2"
+               label="JGLOBAL_SORT_BY"
+               description="JGLOBAL_SORT_BY">
+            <option value="">JGLOBAL_SORT_BY</option>
+            <option value="a.state ASC">JSTATUS_ASC</option>
+            <option value="a.state DESC">JSTATUS_DESC</option>
+            <option value="service_name ASC">COM_KNOWRES_SERVICEXREFS_SERVICE_ID COM_KNOWRES_ASCENDING</option>
+            <option value="service_name DESC">COM_KNOWRES_SERVICEXREFS_SERVICE_ID COM_KNOWRES_DESCENDING</option>
+            <option value="type ASC">COM_KNOWRES_SERVICEXREFS_TYPE COM_KNOWRES_ASCENDING</option>
+            <option value="type DESC">COM_KNOWRES_SERVICEXREFS_TYPE COM_KNOWRES_DESCENDING</option>
+            <option value="a.foreign_key ASC">COM_KNOWRES_SERVICEXREFS_FOREIGN_KEY COM_KNOWRES_ASCENDING</option>
+            <option value="a.foreign_key DESC">COM_KNOWRES_SERVICEXREFS_FOREIGN_KEY COM_KNOWRES_DESCENDING</option>
+            <option value="key ASC">COM_KNOWRES_SERVICEXREFS_KEY COM_KNOWRES_ASCENDING</option>
+            <option value="key DESC">COM_KNOWRES_SERVICEXREFS_KEY COM_KNOWRES_DESCENDING</option>
+            <option value="a.sell ASC">COM_KNOWRES_SERVICEXREFS_SELL COM_KNOWRES_ASCENDING</option>
+            <option value="a.sell DESC">COM_KNOWRES_SERVICEXREFS_SELL COM_KNOWRES_DESCENDING</option>
+            <option value="a.id ASC">JGRID_HEADING_ID_ASC</option>
+            <option value="a.id DESC">JGRID_HEADING_ID_DESC</option>
+        </field>
+        <field name="limit"
+               type="limitbox"
+               class="input-mini js-select-submit-on-change"
+               default="25"
+               label="COM_KNOWRES_LIST_LIMIT"
+               description="COM_KNOWRES_LIST_LIMIT_DSC"/>
+    </fields>
 </form>
