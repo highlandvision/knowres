@@ -4,6 +4,8 @@ Know Reservations (KR) is a complete Joomla package for managing Vacation Rental
 
 REQUIREMENTS
 
+KR v5 requirements are as per Joomla5 (see https://manual.joomla.org/docs/next/get-started/technical-requirements/)
+
 KR v4.0.0. requires
 Joomla: any variant of version 4.0.0
 PHP: version 8.0.0 or greater but less than 8.1.0
