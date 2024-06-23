@@ -1,11 +1,11 @@
-<?php /** @noinspection PhpPossiblePolymorphicInvocationInspection */
-
+<?php
 /**
  * @package         Joomla.Site
  * @subpackage      com_knowres
  * @copyright   (C) 2012 Open Source Matters, Inc. <https://www.joomla.org>
  * @license         GNU General Public License version 2 or later; see LICENSE.txt
  */
+/** @noinspection PhpPossiblePolymorphicInvocationInspection */
 
 namespace HighlandVision\Component\Knowres\Site\Helper;
 
@@ -44,7 +44,7 @@ abstract class AssociationHelper extends AssociationExtensionHelper
 	 */
 	public static function getAssociations(int $id = 0, ?string $view = null): array
 	{
-		//TODO-v4.4 Maybe language related
+		//TODO-v5.1 Maybe language related
 		$return       = [];
 		$associations = [];
 

@@ -67,7 +67,7 @@ class User extends Session
 			$data = $this->init();
 		}
 		if (is_array($data)) {
-			$data = (object)$this->init();
+			$data = $this->init();
 		}
 
 		return $data;

@@ -226,7 +226,7 @@ class PlgOSMapKnowres extends Base implements ContentInterface
 	 */
 	private static function processTreeRegions(Collector $collector, Item $menuItem, object $params): void
 	{
-		//TODO v4.4 Put this into a menu item
+		//TODO v5.1 Put this into a menu item
 		static::checkMemory();
 
 		$rows = KrFactory::getListModel('regions')->getDistinctRegions();

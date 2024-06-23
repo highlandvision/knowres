@@ -86,6 +86,7 @@ class Dispatcher extends AbstractModuleDispatcher
 			}
 
 			if (!empty($link) || $g->url) {
+				// TODO v5.1 Check for false return attrib removed in getLayoutData()
 				$data['items'][] = [
 					'image' => $g->image,
 					'text'  => $g->text,

@@ -56,7 +56,7 @@ class ServiceModel extends AdminModel
 	{
 		return parent::getForm($data, $loadData, $source);
 
-		// TODO v4.4 Sort out Xero
+		// TODO v5.1 Sort out Xero
 		if ($form->getValue('plugin') != 'xero') {
 			return $form;
 		}

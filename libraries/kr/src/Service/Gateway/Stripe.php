@@ -93,7 +93,7 @@ class Stripe extends Gateway
 		}
 	}
 
-	//TODO-v4.4 Reinstate with correct stripe processing end email notifications
+	//TODO-v5.1 Reinstate with correct stripe processing end email notifications
 	//	/**
 	//	 * Process channel booking balance (CBB) transaction
 	//	 * Create customer and take payment
@@ -314,8 +314,8 @@ class Stripe extends Gateway
 	//	 */
 	//	protected function outputChannelBalance()
 	//	{
-	//		TODO-v4.4 Automatic balance payments with notification emails etc,
-	//		TODO-v4.4 Move all of this to the calling routine
+	//		TODO-v5.1 Automatic balance payments with notification emails etc,
+	//		TODO-v5.1 Move all of this to the calling routine
 	//		$this->readGuest();
 	//		if (!$this->guest->customer_ref)
 	//		{
@@ -418,7 +418,7 @@ class Stripe extends Gateway
 		}
 		else if ($this->paymentData->payment_type == 'CBB')
 		{
-			//TODO-v4.4 do this properly with emails etc and add to valid payment types above
+			//TODO-v5.1 do this properly with emails etc and add to valid payment types above
 			//return $this->outputChannelBalance();
 			throw new RuntimeException('Payment type CBB not currently implemented');
 		}

@@ -153,7 +153,7 @@ class Response
 			$this->setOrder($action_value);
 		}
 		else if ($action === 'currency') {
-			// TODO-v4.4 Pricing by currency
+			// TODO-v5.1 Pricing by currency
 			// Set currency, get updated dropdown and refresh current page
 			//			$currency                                                  = $value;
 			//			$tmpBookingHandler->user_settings['current_exchange_rate'] = $currency;

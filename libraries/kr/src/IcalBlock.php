@@ -31,7 +31,7 @@ use function json_encode;
 use function ksort;
 use function trim;
 
-//TODO v4.4 Check if blocks can be entered as is and just ignored for booked dates on calendar
+//TODO v5.1 Check if blocks can be entered as is and just ignored for booked dates on calendar
 
 /**
  * Create blocks for Ical import
