@@ -86,7 +86,7 @@ class Cloner
 			return 0;
 		}
 
-		KrMethods::message(KrMethods::plain(COM_KNOWRES_PROPERTY_CLONE_OK), 'info');
+		KrMethods::message(KrMethods::plain('COM_KNOWRES_PROPERTY_CLONE_OK'), 'info');
 
 		if (!$this->createPropertysettingsClone())
 		{
@@ -104,8 +104,6 @@ class Cloner
 	 * @param  array   $options  Clone options
 	 *
 	 * @throws Exception
-	 * @throws RuntimeException
-	 * @throws RuntimeException
 	 * @throws RuntimeException
 	 * @since  3.0.0
 	 */
@@ -128,7 +126,7 @@ class Cloner
 					$Translations = new Translations();
 					$Translations->cleanTranslationCache();
 
-					$title = "COM_KNOWRES_TITLE_" . strtoupper($type . 's');
+					$title = "COM_KNOWRES_PROPERTY_CLONE_" . strtoupper($type . 's');
 					echo KrMethods::plain($title) . " cloned successfully";
 				}
 			}
