@@ -28,7 +28,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 		</div>
 	</div>
 
-	<div class="grid-x grid-margin-x kr-alternatives kr-slick">
+	<div class="kr-alternatives kr-slick">
 		<?php foreach ($this->alternatives as $item): ?>
 			<?php
 			$plink    = SiteHelper::buildPropertyLink($item->id);

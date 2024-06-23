@@ -76,6 +76,7 @@ class Dispatcher extends AbstractModuleDispatcher
 			            'title'    => KrMethods::plain('MOD_KNOWRES_PROPERTIES_TITLE')
 			];
 
+			//TODO-v51 Needs false return attrib removed in getLayoutData()
 			$data['options'] = HTMLHelper::_('select.genericlist', $options, 'id', $attribs, 'value', 'text', 0);
 		}
 

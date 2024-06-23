@@ -21,7 +21,6 @@ use HighlandVision\KR\SiteHelper;
 use function array_unique;
 use function count;
 use function explode;
-use function print_r;
 
 /**
  * Display property search results

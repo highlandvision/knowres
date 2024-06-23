@@ -6,6 +6,7 @@
  * @license     See the file "LICENSE.txt" for the full license governing this code.
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
+/** @noinspection PhpPossiblePolymorphicInvocationInspection */
 
 namespace HighlandVision\KR\Joomla;
 
@@ -15,7 +16,6 @@ use Exception;
 use InvalidArgumentException;
 use Joomla\CMS\Cache\Cache;
 use Joomla\CMS\Component\ComponentHelper;
-use Joomla\CMS\Event\Content\ContentPrepareEvent;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Language;
 use Joomla\CMS\Language\LanguageHelper;
@@ -31,7 +31,6 @@ use Joomla\CMS\Table\Table;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\User\User;
 use Joomla\CMS\User\UserFactoryInterface;
-use Joomla\Event\DispatcherInterface;
 use Joomla\Registry\Registry;
 use Joomla\Session\SessionInterface;
 use RuntimeException;
@@ -516,20 +515,6 @@ class FMethods
 		Factory::getApplication()->triggerEvent('onContentPrepare', [&$context, &$obj, null, 0]);
 
 		return $obj->text;
-
-//		$dispatcher = Factory::getContainer()->get(DispatcherInterface::class);
-//
-//		PluginHelper::importPlugin('content', null, true, $dispatcher);
-//		$dispatcher->dispatch('onContentPrepare', new ContentPrepareEvent('onContentPrepare', [
-//			'context' => $context,
-//			'subject' => $article,
-//			'params'  => $params,
-//			'page'    => 0,
-//		]));
-//
-//		return $article->text;
-
-
 	}
 
 	/**

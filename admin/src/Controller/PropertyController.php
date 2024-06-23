@@ -33,7 +33,6 @@ use JetBrains\PhpStorm\NoReturn;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\MVC\View\ViewInterface;
 use Joomla\CMS\Response\JsonResponse;
-use Joomla\CMS\Session\Session;
 use RuntimeException;
 use stdClass;
 
@@ -158,7 +157,7 @@ class PropertyController extends FormController
 	}
 
 	/**
-	 * An Ajax method to clone a property
+	 * Ajax method to clone a property
 	 *
 	 * @throws Exception
 	 * @since  3.0.0

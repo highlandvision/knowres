@@ -1,5 +1,4 @@
-<?php /** @noinspection PhpPossiblePolymorphicInvocationInspection */
-
+<?php
 /**
  * @package    Know Reservations
  * @subpackage Site View
@@ -7,6 +6,7 @@
  * @license    See the file "LICENSE.txt" for the full license governing this code.
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
+/** @noinspection PhpPossiblePolymorphicInvocationInspection */
 
 namespace HighlandVision\Component\Knowres\Site\View\Success;
 

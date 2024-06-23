@@ -65,6 +65,7 @@ class NewView extends KrHtmlView
 	protected function addCustomToolbar(Toolbar $Toolbar): Toolbar
 	{
 		$link = KrMethods::route('index.php?option=com_knowres&view=services');
+		/** @noinspection PhpPossiblePolymorphicInvocationInspection */
 		$Toolbar->linkButton('back', 'JTOOLBAR_BACK')
 		        ->buttonClass('btn')
 		        ->icon('fa-solid fa-fast-backward knowres')

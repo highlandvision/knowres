@@ -36,7 +36,7 @@ class ServicelogController extends FormController
 	{
 		$this->checkToken('get');
 
-		$id = KrMethods::inputInt('id', 0, 'get');
+		$id = KrMethods::inputInt('id');
 		if (!$id) {
 			Utility::goto('servicelogs');
 		}

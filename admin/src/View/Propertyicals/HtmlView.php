@@ -62,6 +62,15 @@ class HtmlView extends KrHtmlView\Property
 		}
 	}
 
+	/**
+	 * Add custom toolbar
+	 *
+	 * @param  Toolbar  $Toolbar  Joomla toolbar
+	 *
+	 * @throws Exception
+	 * @since  1.0.0
+	 */
+	/** @noinspection PhpPossiblePolymorphicInvocationInspection */
 	protected function addCustomToolbar(Toolbar $Toolbar): Toolbar
 	{
 		$dropdown = $Toolbar->dropdownButton('propertyical-manage-group')

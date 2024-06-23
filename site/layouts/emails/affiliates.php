@@ -55,6 +55,7 @@ else if ($count == 4) {
 }
 ?>
 <!--Keep width attribute -->
+<!--suppress HtmlDeprecatedAttribute -->
 <table class="affiliates" width="100%" style="border:none;border-collapse:collapse;width:100%!important;text-align:center!important;padding:16px 16px 16px 16px;background-color:<?php echo $button_bg; ?>">
 	<tr style="text-align:center">
 		<?php if ($terms): ?>

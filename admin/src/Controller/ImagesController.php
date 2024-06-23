@@ -21,7 +21,6 @@ use JetBrains\PhpStorm\NoReturn;
 use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Response\JsonResponse;
-use Joomla\CMS\Utility\Utility as JUtility;
 use RuntimeException;
 
 use function header;

@@ -6,6 +6,7 @@
  * @license    See the file "LICENSE.txt" for the full license governing this code.
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
+/** @noinspection PhpPossiblePolymorphicInvocationInspection */
 
 namespace HighlandVision\Component\Knowres\Administrator\Model;
 
@@ -58,18 +59,16 @@ class ServicequeueModel extends AdminModel
 	 * @since  3.3.0
 	 * @return bool
 	 */
-	public static function checkCluster(int $cluster_id, int $property_id, array $cluster, array $managed,
-		array $beyond): bool
+	public static function checkCluster(int   $cluster_id, int $property_id, array $cluster, array $managed,
+	                                    array $beyond): bool
 	{
 		$update = false;
 
 		$managed = $managed[$property_id] ?? $managed[0];
 		$beyond  = $beyond[$property_id] ?? $beyond[0];
-		if ($managed || $beyond)
-		{
+		if ($managed || $beyond) {
 			$property_cluster = $cluster[$property_id] ?? $cluster[0];
-			if ((int) $property_cluster == $cluster_id)
-			{
+			if ((int) $property_cluster == $cluster_id) {
 				$update = true;
 			}
 		}
@@ -112,7 +111,8 @@ class ServicequeueModel extends AdminModel
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	public static function insertQueue(object $xref, string $method, ?string $arrival = null, ?string $departure = null): void
+	public static function insertQueue(object  $xref, string $method, ?string $arrival = null,
+	                                   ?string $departure = null): void
 	{
 		$queue               = new stdClass();
 		$queue->id           = 0;
@@ -148,41 +148,58 @@ class ServicequeueModel extends AdminModel
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	public static function serviceQueueUpdate(string $method, int $property_id = 0, int $cluster_id = 0,
-		?string $plugin = null, ?string $arrival = null, ?string $departure = null): void
+	public static function serviceQueueUpdate(string  $method, int $property_id = 0, int $cluster_id = 0,
+	                                          ?string $plugin = null, ?string $arrival = null,
+	                                          ?string $departure = null): void
 	{
 		$result = KrFactory::getListModel('servicexrefs')->getPropertiesForAllServices($property_id, $method, $plugin);
-		if (is_countable($result) && count($result))
-		{
-			if ($cluster_id)
-			{
+		if (is_countable($result) && count($result)) {
+			if ($cluster_id) {
 				$settings_cluster       = KrFactory::getListModel('propertysettings')->getOneSetting('cluster');
 				$settings_managed_rates = KrFactory::getListModel('propertysettings')->getOneSetting('managed_rates');
 				$settings_beyond_rates  = KrFactory::getListModel('propertysettings')->getOneSetting('beyond_rates');
 			}
 
-			foreach ($result as $r)
-			{
-				if ($method == 'updateProperty')
-				{
+			foreach ($result as $r) {
+				if ($method == 'updateProperty') {
 					$parameters = Utility::decodeJson($r->parameters);
-					if (!isset($parameters->upload_properties) || !$parameters->upload_properties)
-					{
+					if (!isset($parameters->upload_properties) || !$parameters->upload_properties) {
 						continue;
 					}
 				}
 
-				if ($cluster_id)
-				{
+				if ($cluster_id) {
 					if (!self::checkCluster($cluster_id, $r->property_id, $settings_cluster, $settings_managed_rates,
-						$settings_beyond_rates))
-					{
+					                        $settings_beyond_rates)) {
 						continue;
 					}
 				}
 
 				self::insertQueue($r, $method, $arrival, $departure);
 			}
+		}
+	}
+
+	/**
+	 * Update queue records to actioned
+	 *
+	 * @param  array  $ids  Queue ids to update
+	 *
+	 * @throws Exception
+	 * @since  3.1.0
+	 */
+	public static function setQueueActioned(array $ids): void
+	{
+		if (is_countable($ids) && count($ids)) {
+			$db    = KrFactory::getDatabase();
+			$query = $db->getQuery(true);
+
+			$query->update($db->qn('#__knowres_service_queue'))
+			      ->set($db->qn('actioned') . '=1')
+			      ->set($db->qn('updated_at') . '=' . $db->q(TickTock::getTS()))
+			      ->where($db->qn('id') . ' IN (' . implode(',', array_map('intval', $ids)) . ')');
+			$db->setQuery($query);
+			$db->execute();
 		}
 	}
 
@@ -196,8 +213,7 @@ class ServicequeueModel extends AdminModel
 	 */
 	public function resend(array $pks): void
 	{
-		if (!is_countable($pks) || !count($pks))
-		{
+		if (!is_countable($pks) || !count($pks)) {
 			return;
 		}
 
@@ -205,7 +221,8 @@ class ServicequeueModel extends AdminModel
 
 		$fields     = [$db->qn('q.actioned') . '=0'];
 		$conditions = [$db->qn('q.id') . '=' . implode(' OR ' . $db->qn('q.id') . '=', $pks),
-		               $db->qn('q.actioned') . '=1'];
+		               $db->qn('q.actioned') . '=1'
+		];
 
 		$query = $db->getQuery(true);
 		$query->update($db->qn('#__knowres_service_queue', 'q'))
@@ -241,36 +258,11 @@ class ServicequeueModel extends AdminModel
 	protected function loadFormData(): mixed
 	{
 		$data = KrMethods::getUserState('com_knowres.edit.servicequeue.data', []);
-		if (empty($data))
-		{
+		if (empty($data)) {
 			$data = $this->getItem();
 		}
 
 		return $data;
-	}
-
-	/**
-	 * Update queue records to actioned
-	 *
-	 * @param  array  $ids  Queue ids to update
-	 *
-	 * @throws Exception
-	 * @since  3.1.0
-	 */
-	public static function setQueueActioned(array $ids): void
-	{
-		if (is_countable($ids) && count($ids))
-		{
-			$db    = KrFactory::getDatabase();
-			$query = $db->getQuery(true);
-
-			$query->update($db->qn('#__knowres_service_queue'))
-			      ->set($db->qn('actioned') . '=1')
-			      ->set($db->qn('updated_at') . '=' . $db->q(TickTock::getTS()))
-			      ->where($db->qn('id') . ' IN (' . implode(',', array_map('intval', $ids)) . ')');
-			$db->setQuery($query);
-			$db->execute();
-		}
 	}
 
 	/**
@@ -280,12 +272,12 @@ class ServicequeueModel extends AdminModel
 	 *
 	 * @throws RuntimeException
 	 * @throws Exception
-	 * @since  4.0.0
+	 * @since        4.0.0
+	 * @noinspection PhpPossiblePolymorphicInvocationInspection
 	 */
 	protected function prepareTable($table): void
 	{
-		if ($table->method != 'updateAvailability' && $table->method != 'updatePropertyRates')
-		{
+		if ($table->method != 'updateAvailability' && $table->method != 'updatePropertyRates') {
 			$table->arrival     = null;
 			$table->departure   = null;
 			$table->contract_id = 0;
