@@ -5,7 +5,7 @@
 	<authorEmail>hazel@highlandvision.com</authorEmail>
 	<authorUrl>https://www.highlandvision.com</authorUrl>
 	<copyright>2023 Highland Vision, all rights reserved.</copyright>
-	<creationDate>April 2023</creationDate>
+	<creationDate>2024-06-24</creationDate>
 	<description>MOD_KNOWRES_AUTOSEARCH_DSC</description>
 	<license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
     <namespace path="src">HighlandVision\Module\KnowresAutosearch</namespace>
@@ -58,6 +58,11 @@
 				</field>
 			</fieldset>
 			<fieldset name="advanced">
+				<field name="layout"
+					   class="form-select"
+					   type="modulelayout"
+					   validate="moduleLayout"
+					   label="JFIELD_ALT_LAYOUT_LABEL"/>
 				<field name="moduleclass_sfx"
                     default="kr-autosearch"
 					type="textarea"

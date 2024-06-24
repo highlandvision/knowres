@@ -2,7 +2,7 @@
 <extension type="plugin" group="forsef" method="upgrade">
 	<name>plg_forsef_knowres</name>
 	<author>Highland Vision</author>
-	<creationDate>November 2022</creationDate>
+	<creationDate>2024-06-24</creationDate>
 	<copyright>2022 Highland Vision. All rights reserved.</copyright>
 	<license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
 	<authorEmail>hazel@highlandvision.com</authorEmail>

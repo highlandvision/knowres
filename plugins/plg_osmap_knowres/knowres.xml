@@ -2,7 +2,7 @@
 <extension type="plugin" group="osmap" method="upgrade">
 	<name>plg_osmap_knowres</name>
 	<author>Highland Vision</author>
-	<creationDate>December 2022</creationDate>
+	<creationDate>2024-06-24</creationDate>
 	<authorUrl>https://www.highlandvision.com</authorUrl>
 	<authorEmail>hazel@highlandvision.com</authorEmail>
 	<copyright>2022 Highland Vision. All rights reserved.</copyright>

@@ -3,17 +3,17 @@
 	<name>lib_highlandvision_kr</name>
 	<libraryname>highlandvision/kr</libraryname>
 	<version>5.0.0</version>
-	<creationDate>November 2022</creationDate>
 	<author>Highland Vision</author>
 	<authorEmail>support@highlandvision.com</authorEmail>
 	<authorUrl>https://www.highlandvision.com</authorUrl>
 	<copyright>2022 Highland Vision, all rights reserved.</copyright>
+	<creationDate>2024-06-24</creationDate>
 	<license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
 	<description>LIB_HIGHLANDVISION_KR_XML_DESCRIPTION</description>
 	<namespace path="src">HighlandVision\KR</namespace>
 	<files>
-		<folder>src</folder>
 		<folder>language</folder>
+		<folder>src</folder>
 		<filename>lib_highlandvision_kr.xml</filename>
 	</files>
 </extension>

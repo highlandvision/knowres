@@ -2,22 +2,20 @@
 <extension type="module" client="site" method="upgrade">
     <name>mod_knowres_spotlight</name>
     <author>Highland Vision</author>
-    <creationDate>April 2023</creationDate>
-    <authorUrl>https://www.highlandvision.com</authorUrl>
     <authorEmail>hazel@highlandvision.com</authorEmail>
+    <authorUrl>https://www.highlandvision.com</authorUrl>
     <copyright>2023 Highland Vision, all rights reserved.</copyright>
+    <creationDate>2024-06-24</creationDate>
+    <description>MOD_KNOWRES_SPOTLIGHT_DSC</description>
     <license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
     <namespace path="src">HighlandVision\Module\KnowresSpotlight</namespace>
     <version>5.0.0</version>
-    <description>MOD_KNOWRES_SPOTLIGHT_DSC</description>
     <files>
-        <files>
-            <folder module="mod_knowres_spotlight">services</folder>
-            <folder>language</folder>
-            <folder>src</folder>
-            <folder>tmpl</folder>
-            <file>mod_knowres_spotlight.xml</file>
-        </files>
+        <folder module="mod_knowres_spotlight">services</folder>
+        <folder>language</folder>
+        <folder>src</folder>
+        <folder>tmpl</folder>
+        <file>mod_knowres_spotlight.xml</file>
     </files>
     <config>
         <fields name="params">

@@ -5,7 +5,7 @@
 	<authorEmail>hazel@highlandvision.com</authorEmail>
 	<authorUrl>https://www.highlandvision.com</authorUrl>
 	<copyright>2023 Highland Vision, all rights reserved.</copyright>
-	<creationDate>April 2023</creationDate>
+	<creationDate>2024-06-24</creationDate>
 	<description>MOD_KNOWRES_CAROUSEL_DSC</description>
 	<license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
 	<namespace path="src">HighlandVision\Module\KnowresCarousel</namespace>
