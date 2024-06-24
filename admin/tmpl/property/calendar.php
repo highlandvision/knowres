@@ -6,7 +6,7 @@
  * @license     See the file "LICENSE.txt" for the full license governing this code.
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
-
+/** @noinspection PhpPossiblePolymorphicInvocationInspection */
 /** @noinspection PhpUnhandledExceptionInspection */
 
 defined('_JEXEC') or die;
@@ -15,11 +15,9 @@ use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\TickTock;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\WebAsset\WebAssetManager;
 
 /** @var HighlandVision\Component\Knowres\Administrator\View\Property\CalendarView $this */
 
-/** @var WebAssetManager $wa */
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useScript('keepalive')
    ->useScript('bootstrap.dropdown')
@@ -45,13 +43,15 @@ $wa->useScript('keepalive')
 	</div>
 </div>
 
-<div aria-hidden="true" aria-labelledby="kr-contract-modal-book-label" class="modal draggable fade" id="kr-contract-modal-book" tabindex="-1">
+<div aria-hidden="true" aria-labelledby="kr-contract-modal-book-label" class="modal draggable fade"
+     id="kr-contract-modal-book" tabindex="-1">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 		</div>
 	</div>
 </div>
-<div aria-hidden="true" aria-labelledby="kr-calendar-modal-show-label" class="modal draggable fade" id="kr-calendar-modal-show" tabindex="-1">
+<div aria-hidden="true" aria-labelledby="kr-calendar-modal-show-label" class="modal draggable fade"
+     id="kr-calendar-modal-show" tabindex="-1">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 		</div>

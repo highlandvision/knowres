@@ -37,8 +37,6 @@ class HtmlView extends KrHtmlView
 	public array $settings_ids = [];
 	/** @var string Task value. */
 	public string $task = '';
-	/** @var array Taxrate rows. */
-	public array $taxrates = [];
 
 	/**
 	 * Display the view
@@ -61,8 +59,7 @@ class HtmlView extends KrHtmlView
 			$this->property_id   = 0;
 			$this->property_name = 'Global';
 			$this->properties    = '';
-		}
-		else {
+		} else {
 			$this->getUserSessionData();
 		}
 
@@ -138,12 +135,10 @@ class HtmlView extends KrHtmlView
 
 				if ($item->property_id) {
 					$this->settings_ids[$item->akey] = $item->id;
-				}
-				else {
+				} else {
 					$this->settings_ids[$item->akey] = 0;
 				}
-			}
-			else {
+			} else {
 				if (!$item->property_id) {
 					$this->settings_ids[$item->akey] = $item->id;
 					$this->settings[$item->akey]     = $item->value;

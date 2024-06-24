@@ -73,8 +73,7 @@ class DailyView extends KrHtmlView
 		$this->getActions();
 		$userSession        = new KrSession\User();
 		$this->access_level = $userSession->getAccessLevel();
-		if ($this->access_level == 40)
-		{
+		if ($this->access_level == 40) {
 			$this->approvals     = KrFactory::getListModel('properties')->getForApproval();
 			$this->reviews       = KrFactory::getListModel('reviews')->getReviewsForApproval();
 			$this->payments      = KrFactory::getListModel('contractpayments')->getOverview();
@@ -82,8 +81,7 @@ class DailyView extends KrHtmlView
 		}
 
 		$this->setLines();
-		if ($this->params->get('download_registration', 0))
-		{
+		if ($this->params->get('download_registration', 0)) {
 			$this->registration     = true;
 			$this->registrationform = KrFactory::getAdhocForm('export_registration', 'export_registration.xml');
 		}
@@ -108,15 +106,14 @@ class DailyView extends KrHtmlView
 	{
 		$Toolbar = Toolbar::getInstance();
 
-		if (!empty($this->registration))
-		{
+		if (!empty($this->registration)) {
 			$title = KrMethods::plain('COM_KNOWRES_CONFIG_ADMIN_DOWNLOAD_REGISTRATION');
 			$html  = KrMethods::render('toolbar.contract.registration', ['title' => $title]);
 			$Toolbar->customButton('guestregistration')
 			        ->html($html);
 		}
 
-		/* @var Toolbar\LinkButton $Toolbar **/
+		/* @var Toolbar\LinkButton $Toolbar * */
 		$Toolbar->linkButton('refresh')
 		        ->icon('fa-solid fa-redo knowres')
 		        ->text('COM_KNOWRES_REFRESH')
@@ -126,14 +123,13 @@ class DailyView extends KrHtmlView
 		$Toolbar = $this->addQuickLinksToolbar($Toolbar);
 		$Toolbar = $this->addBackLink($Toolbar);
 
-		/* @var Toolbar\LinkButton $Toolbar **/
+		/* @var Toolbar\LinkButton $Toolbar * */
 		$Toolbar->linkButton('close')
 		        ->icon('fa-solid fa-times knowres')
 		        ->text('JTOOLBAR_CLOSE')
 		        ->url(KrMethods::route('index.php?option=com_knowres&task=gantt.cancel'));
 
-		if ($this->canDo->get('core.admin'))
-		{
+		if ($this->canDo->get('core.admin')) {
 			ToolbarHelper::preferences('com_knowres');
 		}
 	}
@@ -146,48 +142,28 @@ class DailyView extends KrHtmlView
 	 */
 	#[NoReturn] protected function setLines(): void
 	{
-		foreach ($this->items as $c)
-		{
+		foreach ($this->items as $c) {
 			$line = $this->setLine($c);
 
-			if (!$c->booking_status)
-			{
+			if (!$c->booking_status) {
 				$this->lines['enquiry'][] = $line;
-			}
-			else if ($c->booking_status == 1 && (int) $c->on_request)
-			{
+			} else if ($c->booking_status == 1 && (int) $c->on_request) {
 				$this->lines['requests'][] = $line;
-			}
-			else if ($c->booking_status == 1 && !(int) $c->on_request)
-			{
+			} else if ($c->booking_status == 1 && !(int) $c->on_request) {
 				$this->lines['option'][] = $line;
-			}
-			else if ($c->booking_status == 5)
-			{
+			} else if ($c->booking_status == 5) {
 				$this->lines['dueDeposit'][] = $line;
-			}
-			else if ($c->booking_status == 30)
-			{
+			} else if ($c->booking_status == 30) {
 				$this->lines['overdueBalance'][] = $line;
-			}
-			else if ($c->booking_status == 35)
-			{
+			} else if ($c->booking_status == 35) {
 				$this->lines['dueBalance'] = $line;
-			}
-			else if ($c->booking_status == 99)
-			{
+			} else if ($c->booking_status == 99) {
 				$this->lines['cancelled'][] = $line;
-			}
-			else if ($c->arrival == $this->today)
-			{
+			} else if ($c->arrival == $this->today) {
 				$this->lines['arrivals'][] = $line;
-			}
-			else if ($c->departure == $this->today)
-			{
+			} else if ($c->departure == $this->today) {
 				$this->lines['departures'][] = $line;
-			}
-			else
-			{
+			} else {
 				$this->lines['new'][] = $line;
 			}
 		}
@@ -196,7 +172,7 @@ class DailyView extends KrHtmlView
 	/**
 	 * Set one line of data from contract
 	 *
-	 * @param   stdClass  $c  Contract data
+	 * @param  stdClass  $c  Contract data
 	 *
 	 * @throws Exception
 	 * @since  4.0.0
@@ -212,22 +188,17 @@ class DailyView extends KrHtmlView
 		$line['departure']      = TickTock::displayDate($c->departure, 'dMy');
 		$line['contract_total'] = $c->contract_total;
 		$line['agent_name']     = '';
-		if (!is_null($c->agent_name))
-		{
+		if (!is_null($c->agent_name)) {
 			$line['agent_name'] = $c->agent_name;
 		}
-		if ($c->guest_id > 0)
-		{
+		if ($c->guest_id > 0) {
 			$name              = ucfirst($c->firstname) . " " . ucfirst($c->surname);
 			$line['guestname'] = $name;
 		}
-		if ((int) $c->on_request)
-		{
+		if ((int) $c->on_request) {
 			$expires         = TickTock::modifyHours($c->created_at, $c->on_request);
 			$line['expires'] = TickTock::displayTs($expires);
-		}
-		else
-		{
+		} else {
 			$line['expires'] = TickTock::displayDate($c->expiry_date, 'dMy');
 		}
 		$line['balancedate']    = TickTock::displayDate($c->balance_date, 'dMy');
@@ -239,7 +210,7 @@ class DailyView extends KrHtmlView
 		$line['tag'] = '<a href="' . $link . '">' . $c->tag . '</a>';
 
 		$link                  = KrMethods::route('index.php?option=com_knowres&task=property.dashboard&id='
-			. $c->property_id);
+		                                          . $c->property_id);
 		$line['property_name'] = '<a href="' . $link . '">' . $c->property_name . '</a>';
 
 		return $line;

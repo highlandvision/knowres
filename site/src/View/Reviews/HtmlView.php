@@ -18,7 +18,6 @@ use HighlandVision\KR\Joomla\Extend\HtmlView as KrHtmlView;
 use HighlandVision\KR\Session as KrSession;
 use HighlandVision\KR\Utility;
 
-use function count;
 use function defined;
 
 /**

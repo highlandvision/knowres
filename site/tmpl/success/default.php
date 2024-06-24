@@ -1,4 +1,4 @@
-<?php /** @noinspection PhpPossiblePolymorphicInvocationInspection */
+<?php
 /**
  * @package    Know Reservations
  * @subpackage Site View
@@ -6,17 +6,15 @@
  * @license    See the file "LICENSE.txt" for the full license governing this code.
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
-
 /** @noinspection PhpUnhandledExceptionInspection */
 
 defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrMethods;
-use Joomla\CMS\Factory;
 
 $params = KrMethods::getParams();
 
-$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+$wa = $this->document->getWebAssetManager();
 $wa->useScript('com_knowres.site')
    ->useScript('keepalive');
 ?>

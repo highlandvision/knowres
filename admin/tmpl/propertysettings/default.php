@@ -15,9 +15,8 @@ use HighlandVision\KR\Utility;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 
-/** @var HighlandVision\Component\Knowres\Administrator\View\Propertysettings\HtmlView $this */
+/** @var HighlandVision\Component\Knowres\Administrator\View\Property\CalendarView $this */
 
-/** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useScript('keepalive')
    ->useScript('form.validate');

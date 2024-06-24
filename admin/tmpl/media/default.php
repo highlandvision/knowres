@@ -10,10 +10,8 @@
 defined('_JEXEC') or die;
 
 use HighlandVision\KR\Media;
-use Joomla\CMS\Factory;
 
-/** @noinspection PhpUnhandledExceptionInspection */
-$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+$wa = $this->document->getWebAssetManager();
 $wa->useScript('keepalive')
    ->useScript('bootstrap.dropdown')
    ->useScript('form.validate');

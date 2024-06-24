@@ -6,6 +6,7 @@
  * @license    See the file "LICENSE.txt" for the full license governing this code.
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
+/** @noinspection PhpPossiblePolymorphicInvocationInspection */
 /** @noinspection PhpUnhandledExceptionInspection */
 
 namespace HighlandVision\Component\Knowres\Administrator\Field;
@@ -15,9 +16,7 @@ defined('_JEXEC') or die;
 use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Field\TextField;
-use Joomla\CMS\WebAsset\WebAssetManager;
 
-/** @var WebAssetManager $wa */
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useStyle('com_knowres.admin-datepicker')
    ->useScript('com_knowres.admin-datepicker');

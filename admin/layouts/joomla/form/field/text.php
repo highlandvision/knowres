@@ -64,7 +64,7 @@ $charcounterclass = '';
 if ($charcounter) {
     // Load the js file
     /** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
-    $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+	$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
     $wa->useScript('short-and-sweet');
 
     // Set the css class to be used as the trigger
@@ -110,9 +110,9 @@ $addonAfterHtml  = '<span class="input-group-text">' . Text::_($addonAfter) . '<
 	<?php echo $addonBeforeHtml; ?>
 <?php endif; ?>
 
-	<input type="text" name="<?php echo $name; ?>" id="<?php echo $id; ?>"
-	       value="<?php echo htmlspecialchars($value, ENT_COMPAT, 'UTF-8'); ?>"
-		<?php echo $dirname; ?> <?php echo implode(' ', $attributes); ?>>
+<input type="text" name="<?php echo $name; ?>" id="<?php echo $id; ?>"
+       value="<?php echo htmlspecialchars($value, ENT_COMPAT, 'UTF-8'); ?>"
+	<?php echo $dirname; ?> <?php echo implode(' ', $attributes); ?>>
 
 <?php if (!empty($addonAfter)) : ?>
 	<?php echo $addonAfterHtml; ?>
