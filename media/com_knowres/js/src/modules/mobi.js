@@ -162,7 +162,7 @@
 			$.ajax({
 				type:    'POST',
 				cache:   false,
-				url:     '/index.php?option=com_knowres&task=property.quote',
+				url:     livesite + 'index.php?option=com_knowres&task=property.quote',
 				data:    $element.serialize(),
 				success: function (response) {
 					if (response) {
