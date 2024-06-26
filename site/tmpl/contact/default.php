@@ -30,7 +30,7 @@ $action = '/index.php?option=com_knowres&task=contact.submit';
 	<form action="<?php echo $action; ?>" class="form-validate formbg" id="kr-contact-form"
 	      onsubmit="return verifyEmail();" method="post">
 		<fieldset class="fieldset">
-			<div class="callout dark">
+			<div class="callout">
 				<div class="grid-x grid-margin-x">
 					<div class="small-12 medium-6 cell end">
 						<?php echo $this->form->renderField('contact_name'); ?>
@@ -54,7 +54,7 @@ $action = '/index.php?option=com_knowres&task=contact.submit';
 		</fieldset>
 
 		<fieldset class="fieldset">
-			<div class="callout dark">
+			<div class="callout">
 				<div class="grid-x grid-margin-x">
 					<div class="small-4 cell">
 						<?php echo $this->form->renderField('day'); ?>
@@ -82,7 +82,7 @@ $action = '/index.php?option=com_knowres&task=contact.submit';
 		</fieldset>
 
 		<fieldset class="fieldset">
-			<div class="callout dark">
+			<div class="callout">
 				<div class="grid-x grid-margin-x">
 					<div class="small-12 medium-12 cell">
 						<?php echo $this->form->renderField('message'); ?>
@@ -91,7 +91,7 @@ $action = '/index.php?option=com_knowres&task=contact.submit';
 			</div>
 		</fieldset>
 
-		<div class="callout dark">
+		<div class="callout">
 			<div class="grid-x grid-margin-x">
 				<div class="small-12 medium-6 cell end text-center">
 					<?php echo $this->form->renderField('grecaptcha'); ?>

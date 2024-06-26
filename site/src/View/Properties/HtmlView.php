@@ -93,6 +93,7 @@ class HtmlView extends KrHtmlView\Site
 		}
 
 		if ($init) {
+			// It's a new one
 			$this->property_search = true;
 
 			$this->category_id = KrMethods::inputInt('category_id');

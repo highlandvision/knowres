@@ -78,7 +78,7 @@ class Dispatcher extends AbstractModuleDispatcher implements HelperFactoryAwareI
 			if ((int) $params->get('show_regions', 0)) {
 				$data['regions'] = $Helper::getRegions();
 				$data['options'] = $Helper::regionOptgroup($data['regions'],
-				                                          $data['params']->get('show_regions_expanded'),
+				                                          $data['params']->get('show_regions_expanded', 0),
 				                                          $data['initial']->region_id);
 			}
 		}

@@ -58,7 +58,6 @@ class Dispatcher extends AbstractModuleDispatcher {
 		$lang         = KrMethods::getLanguage();
 		$language_tag = KrMethods::getLanguageTag();
 		$base_dir = JPATH_ROOT . '/modules';
-		//echo " here " . $base_dir;exit;
 		$lang->load('mod_knowres_autosearch', $base_dir, $language_tag);
 
 		return parent::getLayoutData();

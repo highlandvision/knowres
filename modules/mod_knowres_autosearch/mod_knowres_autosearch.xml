@@ -45,7 +45,7 @@
 					   max="3000"
 					   step="1"
 					   label="MOD_KNOWRES_AUTOSEARCH_ABSOLUTE_LEFT"
-					   description="MOD_KNOWRES_AUTOSEARCH_ABSOLUTE_LEFT">
+					   description="MOD_KNOWRES_AUTOSEARCH_ABSOLUTE_LEFT_DSC">
 				</field>
 				<field name="right"
 					   type="number"
