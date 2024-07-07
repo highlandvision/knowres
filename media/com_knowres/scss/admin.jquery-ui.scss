@@ -158,7 +158,7 @@
 	}
 	td {
 		border: 0;
-		padding: 1px;
+		padding: 0.5px;
 	}
 	td span,
 	td a {
@@ -207,7 +207,7 @@
 	height: 235px;
 }
 .ui-datepicker-multi .ui-datepicker-group {
-	width: 190px
+	width: 175px
 }
 .ui-datepicker-multi .ui-datepicker-group-last .ui-datepicker-header,
 .ui-datepicker-multi .ui-datepicker-group-middle .ui-datepicker-header {
@@ -253,7 +253,7 @@
 .ui-state-default,
 .ui-widget-content .ui-state-default,
 .ui-widget-header .ui-state-default {
-	background: #d5d5d5;
+	background: #e5e5e5;
 	font-weight: normal;
 	color: #222222;
 	text-align: center;
@@ -270,9 +270,9 @@
 .ui-state-focus,
 .ui-widget-content .ui-state-focus,
 .ui-widget-header .ui-state-focus {
-	background: #fefefe;
-	font-weight: normal;
-	color: #fefefe;
+	background: #a5a5a5;
+//	font-weight: bold;
+//	color: green;
 }
 .ui-state-hover a,
 .ui-state-hover a:hover,
@@ -419,15 +419,21 @@
 		color: #999;
 		background: #c60f13;
 	}
-	&.datepick-candepart {
-		.ui-state-default {
-			background: linear-gradient(to right bottom, #d5d5d5 50%, #c60f13 50%);
+}
+.datepick-booked.datepick-candepart {
+	.ui-state-default {
+		background: linear-gradient(to right bottom, #e5e5e5 50%, #c60f13 50%);
+		&.ui-state-hover {
+			background: linear-gradient(to right bottom, #a5a5a5 50%, #c60f13 50%);
 		}
 	}
 }
 .datepick-booked.datepick-canarrive {
 	.ui-state-default {
-		background: linear-gradient(to right bottom, #c60f13 50%, #d5d5d5 50%);
+		background: linear-gradient(to right bottom, #c60f13 50%, #e5e5e5 50%);
+		&.ui-state-hover {
+			background: linear-gradient(to right bottom, #c60f13 50%, #a5a5a5 50%);
+		}
 	}
 }
 .datepick-selected .ui-state-default {
