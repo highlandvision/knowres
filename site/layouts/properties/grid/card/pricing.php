@@ -47,7 +47,8 @@ $params       = KrMethods::getParams();
 		<?php endif; ?>
 
 		<?php if (!$discounts): ?>
-			<button aria-label="No discounts available" class="button secondary discounts-none" type="button">&nbsp;
+			<button aria-label="<?php echo KrMethods::plain('COM_KNOWRES_DISCOUNTS_NONE'); ?>"
+			        class="button accent discounts-none" type="button">&nbsp;
 			</button>
 		<?php endif; ?>
 	</div>

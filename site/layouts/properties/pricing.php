@@ -39,16 +39,18 @@ $params       = KrMethods::getParams();
 	<?php $discounts = KrFactory::getListSiteModel('properties')->getDiscount($item->id); ?>
 	<?php if (is_countable($discounts) && count($discounts)): ?>
 		<?php echo KrMethods::render('properties.discountsearch', ['property_id' => $item->id,
-																   'discounts' => $discounts,
-		                                                           'currency'  => $currency]); ?>
+		                                                           'discounts'   => $discounts,
+		                                                           'currency'    => $currency
+		]); ?>
 	<?php else: ?>
-		<button aria-label="No discounts available" class="button secondary discounts-none"
+		<button aria-label="<?php echo KrMethods::plain('COM_KNOWRES_DISCOUNTS_NONE'); ?>"
+		        class="button accent discounts-none"
 		        style="pointer-events:none" type="button">&nbsp;
 		</button>
 	<?php endif; ?>
 <?php else: ?>
-	<button aria-label="No discounts available" class="button secondary discounts-none" style="pointer-events:none"
-	        type="button">&nbsp;
+	<button aria-label="<?php echo KrMethods::plain('COM_KNOWRES_DISCOUNTS_NONE'); ?>"
+	        class="button accent discounts-none" style="pointer-events:none" type="button">&nbsp;
 	</button>
 <?php endif; ?>
 
@@ -56,7 +58,7 @@ $params       = KrMethods::getParams();
 	<?php if ($booking_type): ?>
 		<?php if ($byAvailability): ?>
 			<?php echo KrMethods::sprintf('COM_KNOWRES_SEARCH_PRICE',
-				Utility::displayValue($net, $currency, false)); ?>
+			                              Utility::displayValue($net, $currency, false)); ?>
 		<?php elseif ($weekly) : ?>
 			<?php echo KrMethods::plain('COM_KNOWRES_SEARCH_PRICE_FROM'); ?>
 			<?php echo Utility::displayValue($net, $currency, false); ?>

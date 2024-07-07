@@ -40,15 +40,16 @@ $params       = KrMethods::getParams();
 			<?php $discounts = KrFactory::getListSiteModel('properties')->getDiscount($item->id); ?>
 			<?php if (is_countable($discounts) && count($discounts)): ?>
 				<?php echo KrMethods::render('properties.discountsearch', ['property_id' => $item->id,
-			                                                               'discounts'   => $discounts,
-			                                                               'currency'    => $currency
+				                                                           'discounts'   => $discounts,
+				                                                           'currency'    => $currency
 				]); ?>
 				<?php $discounts = true; ?>
 			<?php endif; ?>
 		<?php endif; ?>
 
 		<?php if (!$discounts): ?>
-			<button aria-label="No discounts available" class="button secondary discounts-none" type="button">&nbsp;
+			<button aria-label="<?php echo KrMethods::plain('COM_KNOWRES_DISCOUNTS_NONE'); ?>"
+			        class="button accent discounts-none" type="button">&nbsp;
 			</button>
 		<?php endif; ?>
 	</div>
