@@ -134,6 +134,7 @@ class Search extends Session
 		$data->filterType     = [];
 		$data->flexible       = 0;
 		$data->guests         = 2;
+		$data->initial_area   = '';
 		$data->layout         = '';
 		$data->limitstart     = 0;
 		$data->map_modal      = 0;
@@ -144,7 +145,6 @@ class Search extends Session
 		$data->ordercustom    = '';
 		$data->ordering       = '';
 		$data->pets           = 0;
-		$data->property_area  = '';
 		$data->rateNet        = [];
 		$data->rateDiscount   = [];
 		$data->rating         = 0;

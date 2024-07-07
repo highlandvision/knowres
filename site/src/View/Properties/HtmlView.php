@@ -89,7 +89,7 @@ class HtmlView extends KrHtmlView\Site
 		$init = false;
 		if (!$retain || !count($searchData->baseIds)) {
 			$searchData = $searchSession->resetData($searchData->bar);
-			$init        = true;
+			$init       = true;
 		}
 
 		if ($init) {
@@ -97,14 +97,14 @@ class HtmlView extends KrHtmlView\Site
 			$this->property_search = true;
 
 			$this->category_id = KrMethods::inputInt('category_id');
-			if ($layout == 'category' || $this->category_id ) {
+			if ($layout == 'category' || $this->category_id) {
 				if (!$this->category_id) {
 					$searchData = $searchSession->resetData($searchData->bar);
 					SiteHelper::redirectHome();
 				}
 				/** @var CategoryModel $category */
 				$category                = KrFactory::getAdminModel('category')->getItem($this->category_id);
-				$searchData->layout      = $layout;
+				$searchData->layout      = 'category';
 				$searchData->category_id = $this->category_id;
 				$description             = KrMethods::sprintf('COM_KNOWRES_VIEW_BROWSE', $category->name);
 				$this->blurb             = $category->blurb;
@@ -210,7 +210,7 @@ class HtmlView extends KrHtmlView\Site
 	protected function setInput(stdClass $searchData, KrSession\Search $searchSession): stdClass
 	{
 		try {
-			$searchData->area      = KrMethods::inputString('area');
+			$searchData->area      = KrMethods::inputString('area', '');
 			$searchData->region_id = KrMethods::inputInt('region_id', $this->default_region);
 			$searchData->arrival   = KrMethods::inputString('arrival', '');
 			Utility::validateInputDate($searchData->arrival);
@@ -227,6 +227,10 @@ class HtmlView extends KrHtmlView\Site
 			$searchData->child_ages  = KrMethods::inputArray('child_ages');
 			$searchData->limitstart  = KrMethods::inputint('limitstart');
 			$searchData->map_modal   = KrMethods::inputint('map_modal');
+
+			if (!empty($searchData->area)) {
+				$searchData->initial_area = $searchData->region_id . '^' . $searchData->area;
+			}
 
 			return $searchData;
 		} catch (Exception $e) {

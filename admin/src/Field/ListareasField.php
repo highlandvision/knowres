@@ -39,8 +39,7 @@ class ListareasField extends ListField
 	{
 		$options = [];
 		$items   = KrFactory::getListModel('properties')->getArea();
-		foreach ($items as $i)
-		{
+		foreach ($items as $i) {
 			$options[] = HTMLHelper::_('select.option', urlencode($i), $i);
 		}
 

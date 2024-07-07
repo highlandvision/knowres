@@ -33,7 +33,6 @@ use function in_array;
 use function is_countable;
 use function jexit;
 use function json_encode;
-use function rawurlencode;
 use function trim;
 
 /**
@@ -244,29 +243,30 @@ class PropertiesController extends BaseController
 	 */
 	#[NoReturn] public function search(): void
 	{
-		$input               = [];
-		$region_id           = KrMethods::inputInt('region_id', KrMethods::getParams()->get('default_region'));
-		$input['arrival']    = KrMethods::inputString('arrival');
-		$input['departure']  = KrMethods::inputString('departure');
-		$input['flexible']   = KrMethods::inputInt('flexible');
-		$input['guests']     = KrMethods::inputInt('guests');
-		$input['adults']     = KrMethods::inputInt('adults');
-		$input['child_ages'] = KrMethods::inputArray('child_ages');
-		$input['children']   = KrMethods::inputInt('children');
-		$input['map_modal']  = KrMethods::inputInt('map_modal');
+		$input                  = [];
+		$region_id              = KrMethods::inputInt('region_id', KrMethods::getParams()->get('default_region'));
+		$input['area']          = KrMethods::inputString('area');
+		$input['arrival']       = KrMethods::inputString('arrival');
+		$input['departure']     = KrMethods::inputString('departure');
+		$input['flexible']      = KrMethods::inputInt('flexible');
+		$input['guests']        = KrMethods::inputInt('guests');
+		$input['adults']        = KrMethods::inputInt('adults');
+		$input['child_ages']    = KrMethods::inputArray('child_ages');
+		$input['children']      = KrMethods::inputInt('children');
+		$input['map_modal']     = KrMethods::inputInt('map_modal');
 
 		foreach ($input as $k => $v) {
 			if (empty($v)) {
 				unset($input[$k]);
 			}
 		}
+		$raw = http_build_query($input);
 
 		$Itemid = SiteHelper::getItemId('com_knowres', 'properties', ['region_id' => $region_id]);
 		$route  = KrMethods::route('index.php?option=com_knowres&view=properties&' .
 		                           'region_id=' . $region_id .
-		                           '&Itemid=' . $Itemid .
-		                           '&' . rawurlencode(http_build_query($input)),
-		                           false);
+		                           '&' . $raw .
+		                           '&Itemid=' . $Itemid, false);
 
 		KrMethods::redirect($route);
 	}

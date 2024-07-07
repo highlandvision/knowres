@@ -53,9 +53,9 @@ class RawView extends KrHtmlView
 		$this->params = KrMethods::getParams();
 		$default_view = $this->params->get('default_view', 'list');
 
-		$searchSession = new KrSession\Search();
-		$searchData    = $searchSession->getData();
-		$this->Response   = new Response($searchData);
+		$searchSession  = new KrSession\Search();
+		$searchData     = $searchSession->getData();
+		$this->Response = new Response($searchData);
 		if (!is_countable($searchData->baseIds) || !count($searchData->baseIds)) {
 			$this->items      = [];
 			$this->pagination = $this->get('pagination');
@@ -64,9 +64,15 @@ class RawView extends KrHtmlView
 			parent::display($tpl);
 		}
 
-		$action         = KrMethods::inputString('action', '');
-		$action_value   = KrMethods::inputString('action_value', '');
-		$prev_bar       = $default_view;
+		$action       = KrMethods::inputString('action', '');
+		$action_value = KrMethods::inputString('action_value', '');
+		if (empty($action) && empty($action_value) && !empty($searchData->initial_area)) {
+			$action                    = 'property_area';
+			$action_value              = $searchData->initial_area;
+			$searchData->initial_area = '';
+		}
+
+		$prev_bar = $default_view;
 		if ($searchData->bar == 'list' || $searchData->bar == 'grid') {
 			$prev_bar = $searchData->bar;
 		}
@@ -114,7 +120,7 @@ class RawView extends KrHtmlView
 			$this->params->get('order_default');
 		$this->pagination = $this->get('pagination');
 
-		$this->Itemid     = SiteHelper::getItemId('com_knowres', 'property', ['id' => 0]);
+		$this->Itemid = SiteHelper::getItemId('com_knowres', 'property', ['id' => 0]);
 
 		parent::display($tpl);
 	}

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+    <layout title="COM_KNOWRES_TITLE_PROPERTIES_AREA" option="COM_KNOWRES_TITLE_PROPERTIES_AREA_OPT">
+        <message>
+            <![CDATA[COM_KNOWRES_TITLE_PROPERTIES_AREA_DSC]]>
+        </message>
+    </layout>
+    <fields name="request">
+        <fieldset name="request">
+            <field name="area"
+                   addfieldprefix="HighlandVision\Component\Knowres\Administrator\Field"
+                   filter="string"
+                   required="true"
+                   type="listareas"
+                   label="COM_KNOWRES_TITLE_PROPERTIES_AREA_LBL"
+                   description="COM_KNOWRES_TITLE_PROPERTIES_AREA_SELECT">
+           </field>
+        </fieldset>
+    </fields>
+</metadata>
