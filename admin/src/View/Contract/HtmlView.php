@@ -82,7 +82,6 @@ class HtmlView extends KrHtmlView\Contract
 
 		$this->task    = KrMethods::inputString('task', 'manager');
 		$this->params  = KrMethods::getParams();
-		$this->maxdate = TickTock::modifyDays($this->today, $this->params->get('advanceBookingsLimit', 365));
 		$this->setLayoutValue();
 
 		$userSession        = new KrSession\User();
@@ -116,6 +115,7 @@ class HtmlView extends KrHtmlView\Contract
 
 		$this->property     = KrFactory::getAdminModel('property')->getItem($this->property_id);
 		$this->settings     = KrFactory::getListModel('propertysettings')->getPropertysettings($this->property_id);
+		$this->maxdate      = TickTock::modifyDays($this->today, $this->settings['advanceBookingsLimit']);
 		$this->dp           = KrFactory::getListModel('currencies')->getDp($this->settings['currency']);
 		$this->arrival_bd   = TickTock::displayDate($this->arrival, 'j M Y');
 		$this->departure_bd = TickTock::displayDate($this->departure, 'j M Y');
