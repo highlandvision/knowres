@@ -28,12 +28,14 @@
         <field name="document_type"
                addfieldprefix="HighlandVision\Component\Knowres\Administrator\Field"
                filter="integer"
+               required="true"
                type="listdocumenttype"
                label="COM_KNOWRES_DOCUMENT_TYPE_LBL"
                description="COM_KNOWRES_DOCUMENT_TYPE_DSC">
         </field>
         <field name="document_id"
                filter="string"
+               required="true"
                type="text"
                label="COM_KNOWRES_DOCUMENT_ID_LBL"
                description="COM_KNOWRES_DOCUMENT_ID_DSC"/>
