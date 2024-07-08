@@ -125,8 +125,8 @@ class PropertiesModel extends ListModel
 
 		$query->select($db->qn('a.property_area'));
 		$query->from($db->qn('#__knowres_property', 'a'))
-		      ->where($db->qn('a.state') . ' = 1')
-		      ->where($db->qn('a.approved') . ' = 1');
+		      ->where($db->qn('a.state') . '=1')
+		      ->where($db->qn('a.approved') . '=1');
 
 		if ($region_id)
 		{
