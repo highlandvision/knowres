@@ -17,26 +17,21 @@ $wa->useScript('com_knowres.site-modules');
 ?>
 
 <div class="kr-destinations">
-	<div class="grid-x grid-margin-x">
-		<div class="small-12 cell">
-			<a href="<?php echo $link; ?>">
-				<?php echo KrMethods::render('joomla.html.image', $options); ?>
-				<h2 class="h4">
-					<?php echo $text; ?>
-				</h2>
-			</a>
+	<a class="button primary small" href="<?php echo $link; ?>">
+		<?php echo $text; ?>
+	</a>
 
-			<h4><?php echo $heading1; ?></h4>
-			<?php echo $text1; ?>
+	<?php echo KrMethods::render('joomla.html.image', $options); ?>
 
-			<h4><?php echo $heading2; ?></h4>
-			<?php echo $text2; ?>
+	<h4><?php echo $heading1; ?></h4>
+	<?php echo $text1; ?>
 
-			<h4><?php echo $heading3; ?></h4>
-			<?php echo $text3; ?>
+	<h4><?php echo $heading2; ?></h4>
+	<?php echo $text2; ?>
 
-			<h4><?php echo $heading4; ?></h4>
-			<?php echo $text4; ?>
-		</div>
-	</div>
+	<h4><?php echo $heading3; ?></h4>
+	<?php echo $text3; ?>
+
+	<h4><?php echo $heading4; ?></h4>
+	<?php echo $text4; ?>
 </div>
