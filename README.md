@@ -19,7 +19,7 @@ INSTALLATION
 
 Installation and upgrade are via the Joomla component/extension installer using the download package available on GitHub. Full site backup prior to an install or upgrade is highly recommended)
 Installation and upgrade notes are provided on GitHub.
-A quick start package will be available in the future. Please note that until quick start is available then it is not recommended that KR is used for a new installation but only for upgrades from existing sites. 
+A quick start package will be available in the future.
 
 SUPPORT
 
