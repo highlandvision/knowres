@@ -293,8 +293,8 @@ class UpgradeDb
 		self::add($db, '#__knowres_contract', 'markup', 'commission', 'DECIMAL(11,2) NOT NULL DEFAULT 0.00');
 		//ALTER TABLE `#__knowres_contract` ADD COLUMN `child_ages` VARCHAR(255) DEFAULT NULL AFTER `children`;
 		self::add($db, '#__knowres_contract', 'child_ages', 'children', 'VARCHAR(255) DEFAULT NULL');
-		//ALTER TABLE `#__knowres_country` ADD COLUMN `property_licence` TINYINT(1) DEFAULT 0 AFTER `allow_property`;
-		self::add($db, '#__knowres_country', 'property_licence', 'allow_property', 'TINYINT(1) DEFAULT 0');
+		//ALTER TABLE `#__knowres_country` ADD COLUMN `property_licence` TINYINT(1) DEFAULT NULL AFTER `allow_property`;
+		self::add($db, '#__knowres_country', 'property_licence', 'allow_property', 'TINYINT(1) DEFAULT NULL');
 		//ALTER TABLE `#__knowres_coupon` DROP COLUMN `ordering`;
 		self::drop($db, '#__knowres_coupon', 'ordering');
 		//ALTER TABLE `#__knowres_owner` ADD COLUMN `deposit_pc` TINYINT(1) NOT NULL DEFAULT 0 AFTER `pay_deposit`;
@@ -363,6 +363,62 @@ class UpgradeDb
 		self::add($db, '#__knowres_tax_rate', 'tt_option', 'taxrate_id', 'TINYINT(1) NOT NULL DEFAULT 0');
 
 		self::updateTaxSettings();
+	}
+
+	/**
+	 * Changes for V400.
+	 *
+	 * @throws Exception
+	 * @since  4.0.0
+	 * @return void
+	 */
+	public static function forV510(): void
+	{
+		$db = KrFactory::getDatabase();
+
+		//ALTER TABLE `#__knowres_region` ADD COLUMN `property_licence` TINYINT(1) DEFAULT 0 AFTER `allow_property`;
+		self::add($db, '#__knowres_region', 'property_licence', 'allow_property', 'TINYINT(1) DEFAULT 0');
+		//ALTER TABLE `#__knowres_town` ADD COLUMN `property_licence` TINYINT(1) DEFAULT 0 AFTER `allow_property`;
+		self::add($db, '#__knowres_town', 'property_licence', 'allow_property', 'TINYINT(1) DEFAULT 0');
+	}
+
+	/**
+	 * Update property settings taxes to replace tax ID with tax code
+	 *
+	 * @since  4.1.0
+	 */
+	public static function updateTaxSettings(): void
+	{
+		$db    = KrFactory::getDatabase();
+		$query = $db->getQuery(true);
+
+		$query->select($db->qn(['id', 'akey', 'value']))
+		      ->from($db->qn('#__knowres_property_setting'))
+		      ->where($db->qn('akey') . ' IN  ("tax_code_1", "tax_code_2", "tax_code_3")');
+		$db->setQuery($query);
+		$rows = $db->loadObjectList();
+
+		foreach ($rows as $r) {
+			if ($r->value == 0) {
+				$update        = new stdClass();
+				$update->id    = $r->id;
+				$update->value = '';
+				KrFactory::update('property_setting', $update);
+			} else if ($r->value > 0 && is_numeric($r->value)) {
+				$query = $db->getQuery(true);
+				$query->select($db->qn('code'))
+				      ->from($db->qn('#__knowres_tax_rate'))
+				      ->where($db->qn('id') . '=' . (int) $r->value)
+				      ->setLimit(1);
+				$db->setQuery($query);
+				$code = $db->loadResult();
+
+				$update        = new stdClass();
+				$update->id    = $r->id;
+				$update->value = $code;
+				KrFactory::update('property_setting', $update);
+			}
+		}
 	}
 
 	/**

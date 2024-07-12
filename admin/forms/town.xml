@@ -39,6 +39,15 @@
 			<option value="0">JNO</option>
 			<option value="1">JYES</option>
 		</field>
+		<field name="property_licence"
+			   class="btn-group btn-group-yesno"
+			   default="0"
+			   type="radio"
+			   label="COM_KNOWRES_TOWN_PROPERTY_LICENCE_LBL"
+			   description="COM_KNOWRES_TOWN_PROPERTY_LICENCE_DSC">
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
 		<field name="timezone"
 			type="timezone"
 			default="0"
