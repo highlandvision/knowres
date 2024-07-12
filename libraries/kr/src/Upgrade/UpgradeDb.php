@@ -24,8 +24,7 @@ use function defined;
 use function in_array;
 use function is_numeric;
 
-if (!defined('KRFRAMEWORK'))
-{
+if (!defined('KRFRAMEWORK')) {
 	define('KRFRAMEWORK', 'Joomla');
 }
 
@@ -115,10 +114,8 @@ class UpgradeDb
 		$db      = KrFactory::getDatabase();
 		$results = $db->setQuery('SHOW TABLES')->loadColumn();
 		$prefix  = $db->getPrefix();
-		if (in_array($prefix . 'knowres_interface', $results))
-		{
-			if (in_array($prefix . 'knowres_service', $results))
-			{
+		if (in_array($prefix . 'knowres_interface', $results)) {
+			if (in_array($prefix . 'knowres_service', $results)) {
 				// Sort out stupid installation anomaly
 				self::dropTable($db, '#__knowres_service');
 				self::dropTable($db, '#__knowres_service_log');
@@ -151,7 +148,7 @@ class UpgradeDb
 		self::change($db, '#__knowres_agent', 'interface_id', 'service_id', 'INT(11) NOT NULL DEFAULT 0');
 		//ALTER TABLE `#__knowres_contract` CHANGE `interface_commission` `channel_commission` DECIMAL(11,2) NOT NULL DEFAULT 0.00;
 		self::change($db, '#__knowres_contract', 'interface_commission', 'channel_commission',
-			'DECIMAL(11,2) NOT NULL DEFAULT 0.00');
+		             'DECIMAL(11,2) NOT NULL DEFAULT 0.00');
 		//ALTER TABLE `#__knowres_contract` CHANGE `interface_id` `service_id` INT(11) NOT NULL DEFAULT 0;
 		self::change($db, '#__knowres_contract', 'interface_id', 'service_id', 'INT(11) NOT NULL DEFAULT 0');
 		//ALTER TABLE `#__knowres_contract` CHANGE `tax` `tax_total` DECIMAL(11,2) NOT NULL DEFAULT 0.00;
@@ -195,7 +192,8 @@ class UpgradeDb
 		//DROP INDEX IF EXISTS `byInterface` ON `#__knowres_service_xref`;
 		self::dropIndex($db, '#__knowres_service_xref', 'byInterface');
 		//ALTER TABLE `#__knowres_service_log` ADD INDEX `byServicePropertyMethod`(`service_id`, `property_id`, `method`);
-		self::addIndex($db, '#__knowres_service_log', 'byServicePropertyMethod', '`service_id`, `property_id`, `method`');
+		self::addIndex($db, '#__knowres_service_log', 'byServicePropertyMethod',
+		               '`service_id`, `property_id`, `method`');
 		//ALTER TABLE `#__knowres_service_xref` ADD INDEX `byService`(`service_id`);
 		self::addIndex($db, '#__knowres_service_xref', 'byService', '`service_id`');
 		//INSERT INTO `#__knowres_property_setting 'service_changes', 'vrbo';
@@ -254,14 +252,14 @@ class UpgradeDb
 
 		//ALTER TABLE `#__knowres_service_log` ADD INDEX `byPropertyServiceMethod`(`property_id`, `service_id`, `method`);
 		self::addIndex($db, '#__knowres_service_log', 'byPropertyServiceMethod',
-			'`property_id`, `service_id`, `method`');
+		               '`property_id`, `service_id`, `method`');
 		//ALTER TABLE `#__knowres_contract` ADD INDEX `byAvailability` (`property_id`, `departure`, `cancelled`);
 		self::addIndex($db, '#__knowres_contract', 'byAvailability', '`property_id`, `departure`, `cancelled`');
 		//ALTER TABLE `#__knowres_ical_block` ADD INDEX `byAvailability` (`property_id`, `departure`);
 		self::addIndex($db, '#__knowres_ical_block', 'byAvailability', '`property_id`, `departure`');
 		//ALTER TABLE `#__knowres_agent` ADD COLUMN `owner_deposit_payment` TINYINT(1) NOT NULL DEFAULT 0 AFTER `foreign_key_reqd`;
 		self::add($db, '#__knowres_agent', 'owner_deposit_payment', 'foreign_key_reqd',
-			'TINYINT(1) NOT NULL DEFAULT 0');
+		          'TINYINT(1) NOT NULL DEFAULT 0');
 		//ALTER TABLE `#__knowres_property` ADD COLUMN `service_id` INT(11) NOT NULL DEFAULT 0 AFTER `approved`;
 		self::add($db, '#__knowres_property', 'service_id', 'approved', 'INT(11) NOT NULL DEFAULT 0');
 		//ALTER TABLE `#__knowres_property` ADD COLUMN `resell` TINYINT(1) NOT NULL DEFAULT 1 AFTER `service_id`;
@@ -384,8 +382,7 @@ class UpgradeDb
 	protected static function add(DatabaseDriver $db, string $table, string $field, string $after, mixed $default): void
 	{
 		$columns = $db->getTableColumns($table);
-		if (!array_key_exists($field, $columns))
-		{
+		if (!array_key_exists($field, $columns)) {
 			$query = 'ALTER TABLE ' . $db->qn($table) . ' ADD COLUMN ' . $db->qn($field) . ' ' . $default . ' AFTER '
 				. $db->qn($after);
 			$db->setQuery($query);
@@ -406,14 +403,11 @@ class UpgradeDb
 	 */
 	protected static function addIndex(DatabaseDriver $db, string $table, string $index, string $keys): void
 	{
-		try
-		{
+		try {
 			$query = 'ALTER TABLE ' . $db->qn($table) . ' ADD INDEX ' . $db->qn($index) . '(' . $keys . ')';
 			$db->setQuery($query);
 			$db->execute();
-		}
-		catch (Exception)
-		{
+		} catch (Exception) {
 			// Do nothing index exists
 		}
 	}
@@ -440,8 +434,7 @@ class UpgradeDb
 		$db->setQuery($query);
 		$id = $db->loadObjectList();
 
-		if (!is_countable($id))
-		{
+		if (!is_countable($id)) {
 			$new              = new stdClass();
 			$new->id          = 0;
 			$new->property_id = 0;
@@ -467,11 +460,10 @@ class UpgradeDb
 	 * @since  4.0.0
 	 */
 	protected static function change(DatabaseDriver $db, string $table, string $field, string $new,
-		mixed $default): void
+	                                 mixed          $default): void
 	{
 		$columns = $db->getTableColumns($table);
-		if (array_key_exists($field, $columns))
-		{
+		if (array_key_exists($field, $columns)) {
 			$query = 'ALTER TABLE ' . $db->qn($table) . ' CHANGE ' . $db->qn($field) . ' ' . $db->qn($new) . ' '
 				. $default;
 			$db->setQuery($query);
@@ -494,34 +486,10 @@ class UpgradeDb
 	protected static function drop(DatabaseDriver $db, string $table, string $field): void
 	{
 		$columns = $db->getTableColumns($table);
-		if (array_key_exists($field, $columns))
-		{
+		if (array_key_exists($field, $columns)) {
 			$query = 'ALTER TABLE ' . $db->qn($table) . ' DROP COLUMN ' . $db->qn($field);
 			$db->setQuery($query);
 			$db->execute();
-		}
-	}
-
-	/**
-	 * Drop table
-	 *
-	 * @param  DatabaseDriver  $db     Database instance
-	 * @param  string          $table  Table name
-	 *
-	 * @since  4.0.0
-	 * @return void
-	 */
-	protected static function dropTable(DatabaseDriver $db, string $table): void
-	{
-		try
-		{
-			$query = 'DROP TABLE ' . $db->qn($table);
-			$db->setQuery($query);
-			$db->execute();
-		}
-		catch (Exception)
-		{
-			// Do nothing TABLE does not exist
 		}
 	}
 
@@ -537,58 +505,32 @@ class UpgradeDb
 	 */
 	protected static function dropIndex(DatabaseDriver $db, string $table, string $index): void
 	{
-		try
-		{
+		try {
 			$query = 'ALTER TABLE ' . $db->qn($table) . ' DROP INDEX ' . $db->qn($index);
 			$db->setQuery($query);
 			$db->execute();
-		}
-		catch (Exception)
-		{
+		} catch (Exception) {
 			// Do nothing index does not exist
 		}
 	}
 
 	/**
-	 * Update property settings taxes to replace tax ID with tax code
+	 * Drop table
 	 *
-	 * @since  4.1.0
+	 * @param  DatabaseDriver  $db     Database instance
+	 * @param  string          $table  Table name
+	 *
+	 * @since  4.0.0
+	 * @return void
 	 */
-	public static function updateTaxSettings(): void
+	protected static function dropTable(DatabaseDriver $db, string $table): void
 	{
-		$db    = KrFactory::getDatabase();
-		$query = $db->getQuery(true);
-
-		$query->select($db->qn(['id', 'akey', 'value']))
-		      ->from($db->qn('#__knowres_property_setting'))
-		      ->where($db->qn('akey') . ' IN  ("tax_code_1", "tax_code_2", "tax_code_3")');
-		$db->setQuery($query);
-		$rows = $db->loadObjectList();
-
-		foreach ($rows as $r)
-		{
-			if ($r->value == 0)
-			{
-				$update        = new stdClass();
-				$update->id    = $r->id;
-				$update->value = '';
-				KrFactory::update('property_setting', $update);
-			}
-			else if ($r->value > 0 && is_numeric($r->value))
-			{
-				$query = $db->getQuery(true);
-				$query->select($db->qn('code'))
-				      ->from($db->qn('#__knowres_tax_rate'))
-				      ->where($db->qn('id') . '=' . (int) $r->value)
-				      ->setLimit(1);
-				$db->setQuery($query);
-				$code = $db->loadResult();
-
-				$update        = new stdClass();
-				$update->id    = $r->id;
-				$update->value = $code;
-				KrFactory::update('property_setting', $update);
-			}
+		try {
+			$query = 'DROP TABLE ' . $db->qn($table);
+			$db->setQuery($query);
+			$db->execute();
+		} catch (Exception) {
+			// Do nothing TABLE does not exist
 		}
 	}
 }
