@@ -151,25 +151,6 @@
 			<option value="0">COM_KNOWRES_SELECT_REGION</option>
 		</field>
 	</fieldset>
-	<fieldset name="referral">
-		<field name="referral_id"
-			filter="integer"
-			input_type="list"
-			key_field="id"
-			table="#__knowres_referral"
-			translation_item="referral"
-			type="listforeignkeytranslate"
-			value_field="name"
-			where="state=1"
-			label="COM_KNOWRES_GUEST_REFERRAL_ID_LBL"
-			description="COM_KNOWRES_GUEST_REFERRAL_ID_DSC"/>
-		<field name="referral_info"
-			class="input-xxlarge"
-			filter="string"
-			type="text"
-			label="COM_KNOWRES_GUEST_REFERRAL_INFO_LBL"
-			description="COM_KNOWRES_GUEST_REFERRAL_INFO_DSC"/>
-	</fieldset>
 	<fieldset name="hidden">
 		<field name="user_id"
 			default="0"

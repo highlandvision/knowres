@@ -288,12 +288,6 @@ class ContractsModel extends ListModel
 			$query->select($db->qn('g.document_id', 'guest_document_id'));
 		}
 
-		if ($data['referral']) {
-			$query->select($db->qn(['g.referral_id',
-			                        'g.referral_info'
-			]));
-		}
-
 		if ($data['owner'] || (int) $data['owner_id'] > 0) {
 			$query->select($db->qn(['o.name',
 			                        'o.commission'
@@ -317,7 +311,7 @@ class ContractsModel extends ListModel
 		$query->join('LEFT',
 			$db->qn('#__knowres_region', 'r') . ' ON ' . $db->qn('r.id') . '=' . $db->qn('p.region_id'));
 
-		if ($data['guest'] || $data['referral']) {
+		if ($data['guest']) {
 			$query->join('LEFT',
 				$db->qn('#__knowres_guest', 'g') . ' ON ' . $db->qn('g.id') . '=' . $db->qn('a.guest_id'));
 		}

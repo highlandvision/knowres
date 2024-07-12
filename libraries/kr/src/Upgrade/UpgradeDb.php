@@ -380,6 +380,12 @@ class UpgradeDb
 		self::add($db, '#__knowres_region', 'property_licence', 'allow_property', 'TINYINT(1) DEFAULT 0');
 		//ALTER TABLE `#__knowres_town` ADD COLUMN `property_licence` TINYINT(1) DEFAULT 0 AFTER `allow_property`;
 		self::add($db, '#__knowres_town', 'property_licence', 'allow_property', 'TINYINT(1) DEFAULT 0');
+		//ALTER TABLE `#__knowres_guest` DROP COLUMN `referral_id`;
+		self::drop($db, '#__knowres_guest', 'referral_id');
+		//ALTER TABLE `#__knowres_guest` DROP COLUMN `referral_info`;
+		self::drop($db, '#__knowres_guest', 'referral_info');
+		//ALTER TABLE `#__knowres_property` DROP COLUMN `bed_types`;
+		self::drop($db, '#__knowres_property', 'bed_types');
 	}
 
 	/**

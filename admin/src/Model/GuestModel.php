@@ -145,7 +145,6 @@ class GuestModel extends AdminModel
 			$item->b_country_name = $Translations->getText('country', $item->b_country_id);
 			$item->region_name    = $Translations->getText('region', $item->region_id);
 			$item->b_region_name  = $Translations->getText('region', $item->b_region_id);
-			$item->referral_name  = $Translations->getText('referral', $item->referral_id);
 
 			$item->country_iso = '';
 			if (isset($item->country_id) && $item->country_id > 0)
