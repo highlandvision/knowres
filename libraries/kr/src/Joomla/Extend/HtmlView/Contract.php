@@ -32,7 +32,7 @@ class Contract extends KrHtmlView
 {
 	/** @var array Contract related views */
 	public array $related
-		= ['agencies', 'agents', 'emailactions', 'emailtemplates', 'emailtriggers', 'guests', 'referrals'];
+		= ['agencies', 'agents', 'emailactions', 'emailtemplates', 'emailtriggers', 'guests'];
 
 	/**
 	 * Constructor
@@ -109,14 +109,6 @@ class Contract extends KrHtmlView
 			$link = KrMethods::route('index.php?option=com_knowres&view=guests');
 			$ChildToolbar->linkButton('guests', 'COM_KNOWRES_GUESTS_TITLE')
 			             ->icon('fa-solid fa-user knowres')
-			             ->url($link);
-		}
-
-		if ($name !== 'referrals')
-		{
-			$link = KrMethods::route('index.php?option=com_knowres&view=referrals');
-			$ChildToolbar->linkButton('referrals', 'COM_KNOWRES_REFERRALS_TITLE')
-			             ->icon('fa-solid fa-eye knowres')
 			             ->url($link);
 		}
 

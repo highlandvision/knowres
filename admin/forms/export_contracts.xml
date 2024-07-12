@@ -112,15 +112,6 @@
 			<option value="0">JNO</option>
 			<option value="1">JYES</option>
 		</field>
-		<field name="referral"
-			class="btn-group btn-group-yesno"
-			default="0"
-			type="radio"
-			label="COM_KNOWRES_EXPORT_REFERRAL_LBL"
-			description="COM_KNOWRES_EXPORT_REFERRAL_DSC">
-			<option value="0">JNO</option>
-			<option value="1">JYES</option>
-		</field>
 		<field name="cancelled"
 			class="btn-group btn-group-yesno"
 			default="0"

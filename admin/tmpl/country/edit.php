@@ -21,7 +21,7 @@ $wa->useScript('keepalive')
 ?>
 
 <form action="<?php echo KrMethods::route('index.php?option=com_knowres&layout=edit&id=' . (int) $this->item->id); ?>"
-      aria-label="<?php echo $this->form_aria_label; ?>" class="form-validate" id="referral-form" method="post"
+      aria-label="<?php echo $this->form_aria_label; ?>" class="form-validate" id="country-form" method="post"
       name="adminForm">
 
 	<div class="main-card">

@@ -108,7 +108,7 @@ class Guest extends Session
 		$data->b_address1        = '';
 		$data->b_address2        = '';
 		$data->b_country_id      = '';
-		$data->b_postcode        = 0;
+		$data->b_postcode        = '';
 		$data->b_region          = '';
 		$data->b_region_id       = 0;
 		$data->b_town            = '';
@@ -126,8 +126,6 @@ class Guest extends Session
 		$data->mobile_country_id = 0;
 		$data->postcode          = '';
 		$data->property_id       = 0;
-		$data->referral_id       = 0;
-		$data->referral_info     = '';
 		$data->region            = '';
 		$data->region_id         = 0;
 		$data->surname           = '';

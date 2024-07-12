@@ -161,12 +161,6 @@ class Contracts
 			$head[] = 'Guest Country';
 		}
 
-		if ($this->data['referral'])
-		{
-			$head[] = 'Referral';
-			$head[] = 'Referral Info';
-		}
-
 		return $head;
 	}
 
@@ -268,12 +262,6 @@ class Contracts
 			$head[] = $row->email;
 			$head[] = $row->guest_document_id;
 			$head[] = $this->Translations->getText('country', $row->country_id);
-		}
-
-		if ($this->data['referral'])
-		{
-			$head[] = $this->Translations->getText('referral', $row->referral_id);
-			$head[] = $row->referral_info;
 		}
 
 		return $head;

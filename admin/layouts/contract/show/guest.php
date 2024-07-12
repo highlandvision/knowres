@@ -34,8 +34,7 @@ extract($displayData);
 		<div class="fw500"><?php echo KrMethods::plain('COM_KNOWRES_BILLING_ADDRESS'); ?></div>
 		<address>
 			<?php echo Utility::formatAddress($guest->b_address1, $guest->b_address2, $guest->b_postcode,
-				$guest->b_town,
-				$guest->b_region_name, $guest->b_country_name, '<br>'); ?>
+				$guest->b_town, $guest->b_region_name, $guest->b_country_name, '<br>'); ?>
 		</address>
 
 		<?php if ($document_id && !empty($guest->document_id) && !empty($guest->document_type)): ?>

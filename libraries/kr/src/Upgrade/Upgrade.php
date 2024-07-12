@@ -180,7 +180,6 @@ class Upgrade
 			'propertysetting',
 			'rate',
 			'ratemarkup',
-			'referral',
 			'region',
 			'review',
 			'season',
@@ -1921,15 +1920,6 @@ class Upgrade
 					'targetTable'   => '#__knowres_property',
 					'targetColumn'  => 'id',
 					'displayColumn' => 'property_name'
-				];
-			}
-
-			if (property_exists($table, 'referral_id')) {
-				$lookup[] = [
-					'sourceColumn'  => 'referral_id',
-					'targetTable'   => 'referral',
-					'targetColumn'  => 'krtranslate',
-					'displayColumn' => 'name'
 				];
 			}
 

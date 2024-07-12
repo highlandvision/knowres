@@ -110,7 +110,7 @@ class GuestsModel extends ListModel
 		                             'a.b_region', 'a.b_postcode',
 		                             'a.b_region_id', 'a.b_country_id', 'a.email_2', 'a.email_3', 'a.mobile',
 		                             'a.mobile_country_id',
-		                             'a.telephone', 'a.discount', 'a.referral_id', 'a.referral_info', 'a.customer_ref',
+		                             'a.telephone', 'a.discount', 'a.customer_ref',
 		                             'a.foreign_key',
 		                             'a.state'
 		)));
@@ -423,9 +423,8 @@ class GuestsModel extends ListModel
 		$this->setState('list.select', 'a.id, a.user_id, a.property_id, a.email, a.firstname, a.surname, 
 		a.document_type, a.document_id, a.address1, a.address2, a.town, a.region, a.region_id, a.country_id, a.postcode,
 		 a.b_address1, a.b_address2, a.b_town, a.b_region, a.b_postcode, a.b_region_id, a.b_country_id, 
-		 a.email_2, a.email_3, a.mobile, a.mobile_country_id, a.telephone, a.discount, a.referral_id,
-		 a.referral_info, a.customer_ref, a.foreign_key,
- 		 a.state, a.created_by, a.created_at, a.updated_by, a.updated_at');
+		 a.email_2, a.email_3, a.mobile, a.mobile_country_id, a.telephone, a.discount, a.customer_ref, 
+		 a.foreign_key, a.state, a.created_by, a.created_at, a.updated_by, a.updated_at');
 
 		parent::populateState($ordering, $direction);
 	}
