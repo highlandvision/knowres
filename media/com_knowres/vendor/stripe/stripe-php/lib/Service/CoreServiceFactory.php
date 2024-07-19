@@ -1,16 +1,18 @@
 <?php
 
-// File generated from our OpenAPI spec
-
 namespace Stripe\Service;
 
 /**
  * Service factory class for API resources in the root namespace.
  *
+ * @property OAuthService $oauth
+ * // Doc: The beginning of the section generated from our OpenAPI spec
  * @property AccountLinkService $accountLinks
  * @property AccountService $accounts
+ * @property AccountSessionService $accountSessions
  * @property ApplePayDomainService $applePayDomains
  * @property ApplicationFeeService $applicationFees
+ * @property Apps\AppsServiceFactory $apps
  * @property BalanceService $balance
  * @property BalanceTransactionService $balanceTransactions
  * @property BillingPortal\BillingPortalServiceFactory $billingPortal
@@ -32,11 +34,10 @@ namespace Stripe\Service;
  * @property InvoiceService $invoices
  * @property Issuing\IssuingServiceFactory $issuing
  * @property MandateService $mandates
- * @property OAuthService $oauth
- * @property OrderReturnService $orderReturns
- * @property OrderService $orders
  * @property PaymentIntentService $paymentIntents
  * @property PaymentLinkService $paymentLinks
+ * @property PaymentMethodConfigurationService $paymentMethodConfigurations
+ * @property PaymentMethodDomainService $paymentMethodDomains
  * @property PaymentMethodService $paymentMethods
  * @property PayoutService $payouts
  * @property PlanService $plans
@@ -52,11 +53,11 @@ namespace Stripe\Service;
  * @property SetupIntentService $setupIntents
  * @property ShippingRateService $shippingRates
  * @property Sigma\SigmaServiceFactory $sigma
- * @property SkuService $skus
  * @property SourceService $sources
  * @property SubscriptionItemService $subscriptionItems
  * @property SubscriptionService $subscriptions
  * @property SubscriptionScheduleService $subscriptionSchedules
+ * @property Tax\TaxServiceFactory $tax
  * @property TaxCodeService $taxCodes
  * @property TaxRateService $taxRates
  * @property Terminal\TerminalServiceFactory $terminal
@@ -64,7 +65,9 @@ namespace Stripe\Service;
  * @property TokenService $tokens
  * @property TopupService $topups
  * @property TransferService $transfers
+ * @property Treasury\TreasuryServiceFactory $treasury
  * @property WebhookEndpointService $webhookEndpoints
+ * // Doc: The end of the section generated from our OpenAPI spec
  */
 class CoreServiceFactory extends \Stripe\Service\AbstractServiceFactory
 {
@@ -72,10 +75,14 @@ class CoreServiceFactory extends \Stripe\Service\AbstractServiceFactory
      * @var array<string, string>
      */
     private static $classMap = [
+        'oauth' => OAuthService::class,
+        // Class Map: The beginning of the section generated from our OpenAPI spec
         'accountLinks' => AccountLinkService::class,
         'accounts' => AccountService::class,
+        'accountSessions' => AccountSessionService::class,
         'applePayDomains' => ApplePayDomainService::class,
         'applicationFees' => ApplicationFeeService::class,
+        'apps' => Apps\AppsServiceFactory::class,
         'balance' => BalanceService::class,
         'balanceTransactions' => BalanceTransactionService::class,
         'billingPortal' => BillingPortal\BillingPortalServiceFactory::class,
@@ -97,11 +104,10 @@ class CoreServiceFactory extends \Stripe\Service\AbstractServiceFactory
         'invoices' => InvoiceService::class,
         'issuing' => Issuing\IssuingServiceFactory::class,
         'mandates' => MandateService::class,
-        'oauth' => OAuthService::class,
-        'orderReturns' => OrderReturnService::class,
-        'orders' => OrderService::class,
         'paymentIntents' => PaymentIntentService::class,
         'paymentLinks' => PaymentLinkService::class,
+        'paymentMethodConfigurations' => PaymentMethodConfigurationService::class,
+        'paymentMethodDomains' => PaymentMethodDomainService::class,
         'paymentMethods' => PaymentMethodService::class,
         'payouts' => PayoutService::class,
         'plans' => PlanService::class,
@@ -117,11 +123,11 @@ class CoreServiceFactory extends \Stripe\Service\AbstractServiceFactory
         'setupIntents' => SetupIntentService::class,
         'shippingRates' => ShippingRateService::class,
         'sigma' => Sigma\SigmaServiceFactory::class,
-        'skus' => SkuService::class,
         'sources' => SourceService::class,
         'subscriptionItems' => SubscriptionItemService::class,
         'subscriptions' => SubscriptionService::class,
         'subscriptionSchedules' => SubscriptionScheduleService::class,
+        'tax' => Tax\TaxServiceFactory::class,
         'taxCodes' => TaxCodeService::class,
         'taxRates' => TaxRateService::class,
         'terminal' => Terminal\TerminalServiceFactory::class,
@@ -129,7 +135,9 @@ class CoreServiceFactory extends \Stripe\Service\AbstractServiceFactory
         'tokens' => TokenService::class,
         'topups' => TopupService::class,
         'transfers' => TransferService::class,
+        'treasury' => Treasury\TreasuryServiceFactory::class,
         'webhookEndpoints' => WebhookEndpointService::class,
+        // Class Map: The end of the section generated from our OpenAPI spec
     ];
 
     protected function getServiceClass($name)

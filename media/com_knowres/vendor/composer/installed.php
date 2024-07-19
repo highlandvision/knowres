@@ -1,7 +1,7 @@
 <?php return array(
     'root' => array(
-        'pretty_version' => '5.0.0',
-        'version' => '5.0.0.0',
+        'pretty_version' => '5.1.0',
+        'version' => '5.1.0.0',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../../../../',
         'aliases' => array(),
@@ -65,8 +65,8 @@
             'dev_requirement' => false,
         ),
         'highlandvision/kr' => array(
-            'pretty_version' => '5.0.0',
-            'version' => '5.0.0.0',
+            'pretty_version' => '5.1.0',
+            'version' => '5.1.0.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../../../../',
             'aliases' => array(),
@@ -101,12 +101,12 @@
             'dev_requirement' => false,
         ),
         'stripe/stripe-php' => array(
-            'pretty_version' => 'v7.128.0',
-            'version' => '7.128.0.0',
+            'pretty_version' => 'v12.8.0',
+            'version' => '12.8.0.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../stripe/stripe-php',
             'aliases' => array(),
-            'reference' => 'c704949c49b72985c76cc61063aa26fefbd2724e',
+            'reference' => '6b6f4a775ad46fee4b1df2df4fdfa574365b1621',
             'dev_requirement' => false,
         ),
         'symfony/polyfill-mbstring' => array(
