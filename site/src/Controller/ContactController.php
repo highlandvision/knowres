@@ -83,8 +83,8 @@ class ContactController extends FormController
 	{
 		$this->checkToken();
 
-		$id   = KrMethods::inputInt('id');
 		$data = KrMethods::inputArray('jform');
+		$id   = KrMethods::inputInt('id');
 
 		$params    = KrMethods::getParams();
 		if ($id > 0) {
@@ -197,7 +197,6 @@ class ContactController extends FormController
 		$input['#CHILDREN']    = $data['children'];
 		$input['CHILDAGES']    = $data['ages'];
 		$input['BUDGET']       = $data['budget'] ?? "--";
-		$input['PROPERTYNAME'] = $data['property_name'] ?? '--';
 		$input['LOCATION']     = $data['region'] ?? '--';
 
 		$email = new ContactEmail('BOOKENQUIRY');

@@ -36,17 +36,15 @@ class DisplayController extends BaseController
 	 */
 	public function display($cachable = false, $urlparams = false): DisplayController
 	{
-		$view         = KrMethods::inputString('view', 'properties');
-		$Itemid       = KrMethods::inputInt('Itemid');
+		$view   = KrMethods::inputString('view', 'properties');
+		$Itemid = KrMethods::inputInt('Itemid');
 
-		if (!$view)
-		{
+		if (!$view) {
 			$Itemid = SiteHelper::getItemId('com_knowres', 'properties', ['region_id' => 0]);
 			KrMethods::redirect(KrMethods::route('index.php?Itemid=' . $Itemid, false));
 		}
 
-		if (!$Itemid)
-		{
+		if (!$Itemid) {
 			$Itemid = SiteHelper::getItemId('com_knowres', $view);
 			KrMethods::redirect(KrMethods::route('index.php?Itemid=' . $Itemid, false));
 		}

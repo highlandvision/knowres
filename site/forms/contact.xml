@@ -38,21 +38,6 @@
         </field>
     </fieldset>
     <fieldset name="requirements">
-        <field name="reserve"
-               type="checkbox"
-               class="checkover open"
-               labelclass="checklabel"
-               label="COM_KNOWRES_CONTACT_RESERVE"/>
-        <field name="region"
-               filter="string"
-               type="text"
-               hint="COM_KNOWRES_CONTACT_REGION_DSC"
-               label="COM_KNOWRES_CONTACT_REGION_LBL"/>
-        <field name="property"
-               filter="string"
-               type="text"
-               hint="COM_KNOWRES_CONTACT_PROPERTY_DSC"
-               label="COM_KNOWRES_CONTACT_PROPERTY_LBL"/>
         <field name="day"
                default="1"
                filter="integer"

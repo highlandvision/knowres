@@ -138,8 +138,9 @@ class ContactEmail extends Email
 	}
 
 	/**
-	 * Set contact details for Enquiry or Agency
-	 * 1. If enquiry email is set in options use that o/w agency default
+	 * Set contact details for Manager, Agency and Default
+	 * 1. Set property manager if there is a speciic property.
+	 * 2. Set to default agency if no manager or property for an enquiry.
 	 *
 	 * @param  ?int  $agency_id  ID of agency
 	 *
@@ -177,9 +178,9 @@ class ContactEmail extends Email
 	 */
 	protected function setPropertyData(): void
 	{
-		$this->data['PROPERTYNAME'] = '';
-		$this->owner_email          = '';
-		$this->owner_name           = '';
+		$this->data['PROPERTYNAME'] = '--';
+		$this->owner_email          = '--';
+		$this->owner_name           = '--';
 
 		if ($this->property_id) {
 			$this->property = KrFactory::getAdminModel('property')->getItem($this->property_id);
