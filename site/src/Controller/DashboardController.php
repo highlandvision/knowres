@@ -175,8 +175,6 @@ class DashboardController extends BaseController
 	 */
 	public function request(): void
 	{
-		SiteHelper::checkUser();
-
 		$userSession = new KrSession\User();
 		$userData    = $userSession->getData();
 		$contract_id = 0;
@@ -195,6 +193,10 @@ class DashboardController extends BaseController
 		} catch (Exception $e) {
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_DASHBOARD_ACCESS'));
 			SiteHelper::badUser();
+		}
+
+		if ($view != 'reviewform') {
+			SiteHelper::checkUser();
 		}
 
 		//TODO-v5.1 Can be deleted 31-12-2024

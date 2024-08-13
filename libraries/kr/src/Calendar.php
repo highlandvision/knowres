@@ -387,15 +387,16 @@ class Calendar
 	 * @since  3.4.0
 	 */
 	protected function incrementBlockedDate(string $d, string $first, string $last, bool $check_frozen = true,
-	                                        bool   $paid = true): void
+	                                        bool $paid = true): void
 	{
 		if ($check_frozen && isset($this->frozen[$d])) {
 			return;
 		}
 
-		if ($d == $this->first && $first == TickTock::getDate()) {
+		if ($d === $this->first && $first === TickTock::getDate()) {
+			$this->blocked[$d] = 0;
 			$this->incrementBlocked($d, 2);
-			if ($d == $first) {
+			if ($d === $first) {
 				$this->incrementBlocked($d, 1);
 			}
 

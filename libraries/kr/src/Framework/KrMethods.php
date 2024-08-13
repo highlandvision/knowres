@@ -129,18 +129,18 @@ class KrMethods
 		return FNS::getBase();
 	}
 
-	/**
-	 * Get cache instance
-	 *
-	 * @param  array  $options  Cache options
-	 *
-	 * @since  3.2.0
-	 * @return Cache
-	 */
-	public static function getCache(array $options): Cache
-	{
-		return FNS::getCache($options);
-	}
+    /**
+     * Get cache instance
+     *
+     * @param  array  $options  Cache optionsRBD
+     *
+     * @since  3.2.0
+     * @return Cache
+     */
+    public static function getCache(array $options): Cache
+    {
+        return FNS::getCache($options);
+    }
 
 	/**
 	 * Get a configuration value
