@@ -64,6 +64,10 @@ abstract class Service
 	protected ?object $exception = null;
 	/** @var  string Foreign key */
 	protected string $foreign_key = '';
+	/** @var string Foreign key guest */
+	protected string $foreign_key_guest = '';
+	/** @var string Foreign key owner */
+	protected string $foreign_key_owner = '';
 	/** @var ?object Guest item */
 	protected ?object $guest = null;
 	/** @var  array Logging messages */
@@ -132,7 +136,7 @@ abstract class Service
 		// 0 - service type
 		// 1 - 0 = free, 1 = paid, 2 = proprietary
 		// 2 - 0 = not installed, 1 = not enabled 2 = unpublished 3 = all good
-		// TODO-v5.1 Reinstate Xero
+		// TODO-v5.2 Reinstate Xero
 		$services = [
 			'iCal'          => ['i', 0, 1],
 			'RU'            => ['c', 1, 0],

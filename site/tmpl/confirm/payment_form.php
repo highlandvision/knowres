@@ -31,7 +31,6 @@ foreach ($this->gateways as $gateway)
 }
 
 $Itemid = SiteHelper::getItemId('com_knowres', 'confirm', ['layout' => 'payment']);
-// Ajax request
 $action = '/index.php?option=com_knowres&view=confirm&layout=payment&Itemid=' . $Itemid;
 ?>
 

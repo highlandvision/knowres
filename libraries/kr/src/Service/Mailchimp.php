@@ -68,16 +68,12 @@ class Mailchimp extends Service
 			'email_address' => $this->email, 'status' => 'subscribed', 'merge_fields' => $this->mergeFields()
 		]);
 
-		if ($VendorMailchimp->success())
-		{
+		if ($VendorMailchimp->success()) {
 			return true;
-		}
-		else
-		{
+		} else {
 			$error  = $VendorMailchimp->getLastError();
 			$needle = 'is already a list member';
-			if (str_contains($error, $needle))
-			{
+			if (str_contains($error, $needle)) {
 				return true;
 			}
 
@@ -95,20 +91,16 @@ class Mailchimp extends Service
 	protected function mergeFields(): array
 	{
 		$merge_fields = [];
-		if ($this->parameters->language)
-		{
+		if ($this->parameters->language) {
 			$merge_fields[$this->parameters->language] = KrMethods::getLanguage()->getTag();
 		}
-		if ($this->parameters->firstname)
-		{
+		if ($this->parameters->firstname) {
 			$merge_fields[$this->parameters->firstname] = $this->firstname;
 		}
-		if ($this->parameters->surname)
-		{
+		if ($this->parameters->surname) {
 			$merge_fields[$this->parameters->surname] = $this->surname;
 		}
-		if ($this->parameters->subscribeDate)
-		{
+		if ($this->parameters->subscribeDate) {
 			$merge_fields[$this->parameters->subscribeDate] = TickTock::getDate();
 		}
 
@@ -125,13 +117,11 @@ class Mailchimp extends Service
 	 */
 	protected function setEmail(string $email): void
 	{
-		if (!$email)
-		{
+		if (!$email) {
 			throw new InvalidArgumentException(KrMethods::plain('COM_KNOWRES_EMAIL_MISSING'));
 		}
 
-		if (!preg_match("/^[_a-z\d-]+(\.[_a-z\d-]+)*@[a-z\d-]+(\.[a-z\d-]+)*$/i", $email))
-		{
+		if (!preg_match("/^[_a-z\d-]+(\.[_a-z\d-]+)*@[a-z\d-]+(\.[a-z\d-]+)*$/i", $email)) {
 			throw new InvalidArgumentException(KrMethods::plain('COM_KNOWRES_EMAIL_INVALID'));
 		}
 
@@ -148,24 +138,17 @@ class Mailchimp extends Service
 	 */
 	protected function setName(string $name): void
 	{
-		if (empty($name))
-		{
+		if (empty($name)) {
 			throw new InvalidArgumentException(KrMethods::plain('COM_KNOWRES_NAME_MISSING'));
 		}
 
 		$split = explode(' ', $name);
-		foreach ($split as $n)
-		{
-			if (!$this->firstname)
-			{
+		foreach ($split as $n) {
+			if (!$this->firstname) {
 				$this->firstname = $n;
-			}
-			else if (!$this->surname)
-			{
+			} else if (!$this->surname) {
 				$this->surname = $n;
-			}
-			else
-			{
+			} else {
 				$this->surname .= ' ' . $n;
 			}
 		}

@@ -55,7 +55,6 @@ class Wire extends Gateway
 	 * Set custom gateway payment data
 	 *
 	 * @throws Exception
-	 * @throws Exception
 	 * @since  3.3.0
 	 */
 	protected function setCustomOutput(): void

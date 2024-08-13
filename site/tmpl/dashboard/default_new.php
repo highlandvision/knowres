@@ -28,6 +28,6 @@ $overview_url = KrMethods::route('index.php?option=com_knowres&view=dashboard&fo
 	</a>
 </div>
 
-<div id="<?php echo $overview_modal; ?>" class="reveal kr-modal-with-rows kr-ajax-modal"
+<div id="<?php echo $overview_modal; ?>" class="reveal kr-ajax-modal"
      data-ajaxurl="<?php echo $overview_url; ?>" data-v-offset="20" data-reveal>
 </div>

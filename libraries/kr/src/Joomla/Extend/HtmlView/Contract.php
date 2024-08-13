@@ -198,7 +198,6 @@ class Contract extends KrHtmlView
 		        ->icon('fa-solid fa-calendar knowres')
 		        ->url($link);
 
-//		if (!$this->params->get('create_user', 0) && $this->access_level == 40)
 		if ($this->access_level == 40)
 		{
 			$hash = Cryptor::setHash(0, $this->item->guest_id, $this->item->qkey);

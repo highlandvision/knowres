@@ -22,6 +22,7 @@ use function implode;
 use function json_decode;
 use function json_encode;
 use function number_format;
+use function pow;
 
 use const JSON_NUMERIC_CHECK;
 
@@ -96,6 +97,26 @@ class Utility
 	public static function compareFloat(float $one, float $two, int $decimal = 2): bool
 	{
 		return round($one, $decimal) == round($two, $decimal);
+	}
+
+	/**
+	 * Generate stripe metadata based on paymentdata session with some fields removed
+	 *
+	 * @param  stdClass  $paymentData
+	 *
+	 * @since  5.1.0
+	 * @return array
+	 */
+	public static function setStripeMeta(stdClass $paymentData):array {
+		$tmp = (array) $paymentData;
+		unset($tmp['gateway_name']);
+		unset($tmp['gateway_description']);
+		unset($tmp['gateways']);
+		unset($tmp['merchantParameters']);
+		unset($tmp['merchantSignature']);
+		$data = (object) $tmp;
+
+		return json_decode(json_encode($data), true);
 	}
 
 	/**
@@ -602,6 +623,26 @@ class Utility
 
 		return $value;
 	}
+
+    /**
+     * Set the payment amount for stripe (no dp)
+     *
+     * @throws Exception
+     * @since  5.1.0
+     */
+    public static function setStripeAmount(float $amount, string $currency): string
+    {
+        $KrCurrency = new Currency($currency);
+        $dp         = $KrCurrency->getDp();
+        if ($dp > 0) {
+            $multiplier = pow(10, $dp);
+            $amount     = (string)$amount * $multiplier;
+        } else {
+            $amount = (string)$amount;
+        }
+
+        return $amount;
+    }
 
 	/**
 	 * Validate input date

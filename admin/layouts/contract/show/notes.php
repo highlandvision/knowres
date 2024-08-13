@@ -30,13 +30,13 @@ $confirm = KrMethods::plain('COM_KNOWRES_JS_CONFIRM');
 	<div class="row">
 		<div class="col-4">
 			<?php if ($n->updated_by_name) : ?>
-				<i class='fa-solid fa-xs fa-user-edit grey'></i> <?php echo $n->updated_by_name; ?>
+				<i class='fa-solid fa-user-edit grey'></i> <?php echo $n->updated_by_name; ?>
 			<?php elseif ($n->created_by_name) : ?>
-				<i class='fa-solid fa-xs fa-user grey'></i> <?php echo $n->created_by_name; ?>
+				<i class='fa-solid fa-user grey'></i> <?php echo $n->created_by_name; ?>
 			<?php elseif ($contract->guest_name && $n->note_type !== '["3"]') : ?>
-				<i class='fa-solid fa-xs fa-globe grey'></i> <?php echo $contract->guest_name; ?>
+				<i class='fa-solid fa-globe grey'></i> <?php echo $contract->guest_name; ?>
 			<?php else: ?>
-				<i class='fa-solid fa-xs fa-robot grey'></i> Auto
+				<i class='fa-solid fa-robot grey'></i> Auto
 			<?php endif; ?>
 		</div>
 		<div class="col-4">
@@ -89,11 +89,11 @@ $confirm = KrMethods::plain('COM_KNOWRES_JS_CONFIRM');
 <div class="row">
 	<div class="col-4">
 		<?php if ($contract->created_by_name): ?>
-			<i class='fa-solid fa-xs fa-user grey'></i> <?php echo $contract->created_by_name; ?>
+			<i class='fa-solid fa-user grey'></i> <?php echo $contract->created_by_name; ?>
 		<?php elseif ($contract->service_name): ?>
-			<i class='fa-solid fa-xs fa-headphones grey'></i> <?php echo $contract->service_name; ?>
+			<i class='fa-solid fa-headphones grey'></i> <?php echo $contract->service_name; ?>
 		<?php elseif ($contract->guest_name) : ?>
-			<i class='fa-solid fa-xs fa-globe grey'></i> <?php echo $contract->guest_name; ?>
+			<i class='fa-solid fa-globe grey'></i> <?php echo $contract->guest_name; ?>
 		<?php endif; ?>
 		<br>
 		<?php echo TickTock::displayTS($contract->created_at); ?>

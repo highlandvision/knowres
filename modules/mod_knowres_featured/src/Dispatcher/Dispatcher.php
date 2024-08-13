@@ -22,9 +22,6 @@ use Joomla\CMS\Helper\HelperFactoryAwareTrait;
 
 use function defined;
 use function is_dir;
-
-use function print_r;
-
 use const JPATH_ROOT;
 
 /**

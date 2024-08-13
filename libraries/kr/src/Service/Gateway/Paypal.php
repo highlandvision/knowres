@@ -69,7 +69,7 @@ class Paypal extends Gateway
 		$this->paymentData->postcode    = $this->guest->postcode;
 		$this->paymentData->region_name = $this->guest->region_name;
 		$this->paymentData->mobile      = Utility::formatPhoneNumber($this->guest->mobile,
-			$this->guest->mobile_country_id, true);
+		                                                             $this->guest->mobile_country_id, true);
 
 		return $this->paymentData;
 	}

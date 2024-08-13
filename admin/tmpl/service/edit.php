@@ -20,14 +20,13 @@ $wa = $this->document->getWebAssetManager();
 $wa->useScript('keepalive')
    ->useScript('form.validate');
 
-if ($this->item->type == 'g')
-{
+if ($this->item->type == 'g') {
 	$this->form->setFieldAttribute('currency', 'type', 'listpaymentcurrency');
 	$this->form->setFieldAttribute('currency', 'required', 'false');
 	$this->form->setFieldAttribute('property_id', 'type', 'listforeignkey');
 	$this->form->setFieldAttribute('property_id', 'layout', 'joomla.form.field.list-fancy-select');
 }
-//TODO-v5.1 Sort out Xero
+//TODO-v5.2 Sort out Xero
 //if ($this->item->plugin === 'xero' && $this->item->id > 0)
 //{
 //	$xero = new Xero($this->item->id);

@@ -83,8 +83,7 @@ class ExceptionHandling
 			else
 			{
 				$level = 'error';
-				$code  = $error->getCode();
-				if ($class == 'InvalidArgumentException' || $code == 403 || $code == 404)
+				$code  = $error->getCode();if ($class == 'InvalidArgumentException' || $code == 403 || $code == 404)
 				{
 					$level = 'notice';
 				}

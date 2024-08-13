@@ -92,8 +92,7 @@ class ServicexrefModel extends AdminModel
 	public static function resetNewServiceProperty(int $id, int $service_id, int $property_id): void
 	{
 		$service = KrFactory::getAdminModel('service')->getItem($service_id);
-		if ($service->id && $service->plugin === 'vrbo')
-		{
+		if ($service->id && $service->plugin === 'vrbo') {
 			$update              = new stdClass();
 			$update->id          = $id;
 			$update->foreign_key = $property_id;

@@ -37,8 +37,7 @@ class Currency
 	 */
 	public function __construct(string $currency_code = '')
 	{
-		if ($currency_code)
-		{
+		if ($currency_code) {
 			$this->currency_code = trim($currency_code);
 		}
 	}
@@ -57,6 +56,29 @@ class Currency
 	}
 
 	/**
+	 * Return the decimal points for a currency
+	 *
+	 * @param  string  $currency_code  Currency
+	 *
+	 * @since  5.1.0
+	 * @return int
+	 */
+	public function getDp(string $currency_code = ''): int
+	{
+		if (empty($currency_code)) {
+			$currency_code = $this->currency_code;
+		}
+
+		$this->setCurrencySymbols();
+		if (isset($this->currency_symbols[$currency_code])) {
+			$symbol = $this->currency_symbols[$currency_code];
+			return (int)$symbol['dp'];
+		} else {
+			return 2;
+		}
+	}
+
+	/**
 	 * Format simple value display
 	 *
 	 * @param  string   $text           Currency value
@@ -67,21 +89,17 @@ class Currency
 	 */
 	public function getSimpleValue(string $text, ?string $currency_code = ''): string
 	{
-		if (empty($currency_code))
-		{
+		if (empty($currency_code)) {
 			$currency_code = $this->currency_code;
 		}
 
 		$this->setCurrencySymbols();
 
-		if (isset($this->currency_symbols[$currency_code]))
-		{
+		if (isset($this->currency_symbols[$currency_code])) {
 			$symbol = $this->currency_symbols[$currency_code];
 
 			return $symbol['pre'] . $text . $symbol['post'];
-		}
-		else
-		{
+		} else {
 			return $this->currency_code . $text;
 		}
 	}
@@ -93,8 +111,7 @@ class Currency
 	 */
 	private function setCurrencyCodes(): void
 	{
-		if (!count($this->currency_codes))
-		{
+		if (!count($this->currency_codes)) {
 			$this->currency_codes = [
 				'AFA' => 'AFA Afghanistan Afghani',
 				'ALL' => 'ALL Albanian Lek',
@@ -248,8 +265,7 @@ class Currency
 	 */
 	private function setCurrencySymbols(): void
 	{
-		if (count($this->currency_symbols) > 0)
-		{
+		if (count($this->currency_symbols) > 0) {
 			return;
 		}
 

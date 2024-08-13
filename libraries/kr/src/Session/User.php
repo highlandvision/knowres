@@ -230,6 +230,7 @@ class User extends Session
 		$data->cr_town_id       = 0;
 		$data->pr_contract_id   = 0;
 		$data->pr_guest_id      = 0;
+		$data->pr_payment_type  = '';
 		$data->pr_property_id   = 0;
 		$data->db_contract_id   = 0;
 		$data->db_contracts     = [];

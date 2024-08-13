@@ -96,7 +96,6 @@ class PropertyController extends FormController
 			$data->id       = $id;
 			$data->approved = 1;
 			KrFactory::update('property', $data);
-
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_ACTION_SUCCESS'));
 		}
 

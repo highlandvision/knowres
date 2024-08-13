@@ -40,8 +40,8 @@ use const OPENSSL_RAW_DATA;
  */
 class Redsys extends Gateway
 {
-	const REDSYSLIVEURL = 'https://sis.redsys.es/sis/realizarPago';
-	const REDSYSTESTURL = 'https://sis-t.redsys.es:25443/sis/realizarPago';
+	const string REDSYSLIVEURL = 'https://sis.redsys.es/sis/realizarPago';
+	const string REDSYSTESTURL = 'https://sis-t.redsys.es:25443/sis/realizarPago';
 	/** @var array Form fields */
 	protected array $fields = [];
 

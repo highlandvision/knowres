@@ -33,7 +33,7 @@ class HtmlView extends KrHtmlView\Site
 	/**
 	 * Display the payment form.
 	 *
-	 * @param   null  $tpl  Default template.
+	 * @param  null  $tpl  Default template.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -41,10 +41,8 @@ class HtmlView extends KrHtmlView\Site
 	 */
 	public function display($tpl = null): void
 	{
-		try
-		{
-			if (!$this->gateway_name || !$this->service_id || !$this->payment_type)
-			{
+		try {
+			if (!$this->gateway_name || !$this->service_id || !$this->payment_type) {
 				throw new Exception('One or more of Gateway, Service ID or Payment Type are empty');
 			}
 
@@ -52,9 +50,7 @@ class HtmlView extends KrHtmlView\Site
 			$wrapper['html'] = $this->loadTemplate($tpl);
 
 			echo new JsonResponse($wrapper);
-		}
-		catch (Exception)
-		{
+		} catch (Exception) {
 			echo new JsonResponse(null, KrMethods::plain('COM_KNOWRES_TRY_LATER'), true);
 		}
 
