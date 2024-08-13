@@ -341,16 +341,6 @@
                label="COM_KNOWRES_PROPERTY_PROPERTY_MAPPINGLINK_LBL"
                description="COM_KNOWRES_PROPERTY_PROPERTY_MAPPINGLINK_DSC"/>
     </fieldset>
-    <fieldset name="roomsbeds">
-        <field name="bed_types"
-               filter="string"
-               hiddenDescription="true"
-               hiddenLabel="true"
-               layout="form.field.json.bedtypes"
-               type="jsonbedtypes"
-               label="COM_KNOWRES_PROPERTY_BED_TYPES_LBL"
-               description="COM_KNOWRES_PROPERTY_BED_TYPES_DSC"/>
-    </fieldset>
     <fieldset name="roomsguests">
         <field name="rooms"
                default=""

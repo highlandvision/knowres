@@ -89,8 +89,6 @@ class PropertyModel extends AdminModel
 	{
 		$item = parent::getItem($pk);
 		if ($item) {
-			//TODO-v5.1 delete bed types
-			$item->bed_types             = Utility::decodeJson($item->bed_types, true);
 			$item->cancellation_penalty  = Utility::decodeJson($item->cancellation_penalty);
 			$item->categories            = Utility::decodeJson($item->categories, true);
 			$item->checkin_fees          = Utility::decodeJson($item->checkin_fees);
@@ -263,7 +261,6 @@ class PropertyModel extends AdminModel
 	 */
 	public function validate($form, $data, $group = null): bool|array
 	{
-		$data['bed_types']            = Utility::encodeJson(KrMethods::inputArray('bed_types'), true);
 		$data['cancellation_penalty'] = Utility::encodeJson(KrMethods::inputArray('cancellation_penalty'));
 		$data['checkin_fees']         = Utility::encodeJson(KrMethods::inputArray('checkin_fees'));
 		$data['checkout_fees']        = Utility::encodeJson(KrMethods::inputArray('checkout_fees'));

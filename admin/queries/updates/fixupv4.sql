@@ -50,21 +50,6 @@ MODIFY	`version`                   INT(11)          NOT NULL DEFAULT 0;
 UPDATE `#__knowres_agent` SET `created_at` = NULL WHERE created_at = '0000-00-00 00:00:00';
 UPDATE `#__knowres_agent` SET `updated_at` = NULL WHERE updated_at = '0000-00-00 00:00:00';
 
-ALTER TABLE `#__knowres_bed_type`
-MODIFY	`bedicon`          VARCHAR(255)     DEFAULT NULL,
-MODIFY	`generic`          VARCHAR(20)      DEFAULT NULL,
-MODIFY	`ordering`         INT(11)          NOT NULL DEFAULT 0,
-MODIFY	`state`            TINYINT(1)       NOT NULL DEFAULT 1,
-MODIFY	`checked_out`      INT(11)          DEFAULT NULL,
-MODIFY	`checked_out_time` DATETIME         DEFAULT NULL,
-MODIFY	`created_by`       INT(11)          NOT NULL DEFAULT 0,
-MODIFY	`created_at`       DATETIME         DEFAULT NULL,
-MODIFY	`updated_by`       INT(11)          NOT NULL DEFAULT 0,
-MODIFY	`updated_at`       DATETIME         DEFAULT NULL,
-MODIFY	`version`          INT(11)          NOT NULL DEFAULT 1;
-UPDATE `#__knowres_bed_type` SET `created_at` = NULL WHERE created_at = '0000-00-00 00:00:00';
-UPDATE `#__knowres_bed_type` SET `updated_at` = NULL WHERE updated_at = '0000-00-00 00:00:00';
-
 ALTER TABLE `#__knowres_category`
 MODIFY	`ordering`         INT(11)          NOT NULL DEFAULT 0,
 MODIFY	`state`            TINYINT(1)       NOT NULL DEFAULT 1,
@@ -601,7 +586,6 @@ MODIFY	`sleeps_infant_age`     TINYINT(1)       NOT NULL DEFAULT 0,
 MODIFY	`sleeps_infant_max`     TINYINT(1)       NOT NULL DEFAULT 0,
 MODIFY	`pets`                  TINYINT(1)       NOT NULL DEFAULT 0,
 MODIFY	`bedrooms`              INT(11)          NOT NULL DEFAULT 0,
-MODIFY	`bed_types`             TEXT             DEFAULT NULL,
 MODIFY	`bathrooms`             INT(11)          NOT NULL DEFAULT 0,
 MODIFY	`wc`                    TINYINT(1)       NOT NULL DEFAULT 0,
 MODIFY	`price_summary`         VARCHAR(50)      DEFAULT NULL,

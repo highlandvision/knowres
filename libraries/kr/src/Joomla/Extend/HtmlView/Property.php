@@ -400,12 +400,6 @@ class Property extends KrHtmlView
 			             ->url(KrMethods::route('index.php?option=com_knowres&view=propertyfeatures'));
 		}
 
-		if ($list_name != 'bedtypes') {
-			$ChildToolbar->linkButton('bedtypes', 'COM_KNOWRES_BEDTYPES_TITLE')
-			             ->icon('fa-solid fa-bed knowres')
-			             ->url(KrMethods::route('index.php?option=com_knowres&view=bedtypes'));
-		}
-
 		if ($list_name != 'categories') {
 			$ChildToolbar->linkButton('categories', 'COM_KNOWRES_CATEGORIES_TITLE')
 			             ->icon('fa-solid fa-project-diagram knowres')

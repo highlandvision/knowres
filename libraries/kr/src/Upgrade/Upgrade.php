@@ -150,7 +150,6 @@ class Upgrade
 		$tables = [
 			'agency',
 			'agent',
-			'bedtype',
 			'category',
 			'cluster',
 			'contractguestdata',
@@ -1701,15 +1700,6 @@ class Upgrade
 			if (property_exists($table, 'arrival_air')) {
 				$lookup[] = [
 					'sourceColumn'  => 'arrival_air',
-					'targetTable'   => 'layout',
-					'targetColumn'  => '',
-					'displayColumn' => ''
-				];
-			}
-
-			if (property_exists($table, 'bed_types')) {
-				$lookup[] = [
-					'sourceColumn'  => 'bed_types',
 					'targetTable'   => 'layout',
 					'targetColumn'  => '',
 					'displayColumn' => ''

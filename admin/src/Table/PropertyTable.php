@@ -29,7 +29,6 @@ class PropertyTable extends Table implements VersionableTableInterface
 	/** @var array An array of key names to be json encoded in the bind function */
 	protected $_jsonEncode
 		= [
-			'bed_types',
 			'cancellation_penalty',
 			'categories',
 			'checkin_fees',

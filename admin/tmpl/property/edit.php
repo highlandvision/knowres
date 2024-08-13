@@ -46,13 +46,6 @@ $wa->useScript('keepalive')
 	echo $this->loadTemplate('amenities');
 	echo HTMLHelper::_('uitab.endTab');
 
-	if (is_countable($this->item->bed_types) && count($this->item->bed_types)) {
-		echo HTMLHelper::_('uitab.addTab', 'propertyTabs', 'roomsbeds',
-		                   KrMethods::plain('COM_KNOWRES_PROPERTY_TAB_BEDTYPES'));
-		echo $this->loadTemplate('bedtypes');
-		echo HTMLHelper::_('uitab.endTab');
-	}
-
 	if ($this->params->get('property_rooms', 0)) {
 		echo HTMLHelper::_('uitab.addTab', 'propertyTabs', 'rooms', KrMethods::plain('COM_KNOWRES_PROPERTY_TAB_ROOMS'));
 		echo $this->loadTemplate('rooms');

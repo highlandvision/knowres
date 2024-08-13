@@ -28,8 +28,6 @@ use function strtolower;
  */
 class HtmlView extends KrHtmlView
 {
-	/** @var array Bedtypes. */
-	public array $bedtypes;/**
 	/** @var ?float Property latitude. */
 	public ?float $lat = 0;
 	/** @var ?float Property longitude. */
@@ -74,7 +72,6 @@ class HtmlView extends KrHtmlView
 		KrMethods::setUserState('com_knowres.gobackto', 'task=property.dashboard&id=' . $this->item->id);
 		$this->params   = KrMethods::getParams();
 		$this->settings = KrFactory::getListModel('propertysettings')->getPropertysettings($this->item->id);
-		$this->bedtypes = KrFactory::getListModel('bedtypes')->getAll();
 
 		$this->checkVersions();
 		$this->checkErrors();

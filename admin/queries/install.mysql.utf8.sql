@@ -59,25 +59,6 @@ CREATE TABLE IF NOT EXISTS `#__knowres_agent` (
 	DEFAULT CHARSET = utf8mb4
 	DEFAULT COLLATE = utf8mb4_unicode_ci;
 
-CREATE TABLE IF NOT EXISTS `#__knowres_bed_type` (
-	`id`               INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-	`bedicon`          VARCHAR(255)     DEFAULT NULL,
-	`generic`          VARCHAR(20)      DEFAULT NULL,
-	`ordering`         INT(11)          NOT NULL DEFAULT 0,
-	`state`            TINYINT(1)       NOT NULL DEFAULT 0,
-	`checked_out`      INT(11)          DEFAULT NULL,
-	`checked_out_time` DATETIME         DEFAULT NULL,
-	`created_by`       INT(11)          NOT NULL DEFAULT 0,
-	`created_at`       DATETIME         DEFAULT NULL,
-	`updated_by`       INT(11)          NOT NULL DEFAULT 0,
-	`updated_at`       DATETIME         DEFAULT NULL,
-	`version`          INT(11)          NOT NULL DEFAULT 1,
-	PRIMARY KEY (`id`)
-)
-	ENGINE = InnoDB
-	DEFAULT CHARSET = utf8mb4
-	DEFAULT COLLATE = utf8mb4_unicode_ci;
-
 CREATE TABLE IF NOT EXISTS `#__knowres_category` (
 	`id`               INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
 	`ordering`         INT(11)          NOT NULL DEFAULT 0,
@@ -738,7 +719,6 @@ CREATE TABLE IF NOT EXISTS `#__knowres_property` (
 	`sleeps_infant_max`     TINYINT(1)       NOT NULL DEFAULT 0,
 	`pets`                  TINYINT(1)       NOT NULL DEFAULT 0,
 	`bedrooms`              INT(11)          NOT NULL DEFAULT 0,
-	`bed_types`             TEXT             DEFAULT NULL,
 	`bathrooms`             INT(11)          NOT NULL DEFAULT 0,
 	`wc`                    TINYINT(1)       NOT NULL DEFAULT 0,
 	`price_summary`         VARCHAR(50)      DEFAULT NULL,
