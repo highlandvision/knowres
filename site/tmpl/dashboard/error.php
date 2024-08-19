@@ -9,7 +9,7 @@
 
 defined('_JEXEC') or die;
 
-use Highlandvision\KR\Framework\KrMethods;
+use HighlandVision\KR\Framework\KrMethods;
 ?>
 
 <div class="grid-x grid-margin-x">

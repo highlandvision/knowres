@@ -33,7 +33,7 @@ class Check extends Gateway
 	 */
 	public function __construct(int $service_id, stdClass $paymentData)
 	{
-		parent::__construct($service_id, $paymentData, true, ['PBD', 'PBB']);
+		parent::__construct($service_id, $paymentData, 1, ['PBD', 'PBB']);
 	}
 
 	/**
