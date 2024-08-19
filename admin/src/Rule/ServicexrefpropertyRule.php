@@ -143,7 +143,7 @@ class ServicexrefpropertyRule extends FormRule
 			$error = true;
 		}
 
-		// TODO-v5.1 Set up defaults for these
+		// TODO-v5.2 Set up defaults for these
 		$entered = false;
 		foreach ($item->cancellation_penalty as $d) {
 			if ((int) $d->cancellation_penalty_pc > 0) {

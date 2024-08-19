@@ -283,7 +283,7 @@ class HaController extends BaseController
 	 */
 	#[NoReturn] public function termspdf(): void
 	{
-		// TODO-v5.1 Remove October 2024 as all calls to ServiceController
+		// TODO-v5.2 Remove October 2024 as all calls to ServiceController
 		try {
 			$id    = KrMethods::inputInt('id');
 			$Terms = new Terms('download', $id);

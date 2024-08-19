@@ -199,7 +199,7 @@ class DashboardController extends BaseController
 			SiteHelper::checkUser();
 		}
 
-		//TODO-v5.1 Can be deleted 31-12-2024
+		//TODO-v5.2 Can be deleted 31-12-2024
 		if ($view == 'guestdataform') {
 			$view = 'contractguestdataform';
 		}
@@ -252,7 +252,7 @@ class DashboardController extends BaseController
 	 */
 	public function success(): void
 	{
-		KrMethods::message(KrMethods::plain('COM_KNOWRES_PAYMENT_SUCCESS_POST'));
+//		KrMethods::message(KrMethods::plain('COM_KNOWRES_PAYMENT_SUCCESS_POST'));
 		SiteHelper::redirectDashboard();
 	}
 

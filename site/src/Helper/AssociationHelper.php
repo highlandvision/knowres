@@ -44,7 +44,7 @@ abstract class AssociationHelper extends AssociationExtensionHelper
 	 */
 	public static function getAssociations(int $id = 0, ?string $view = null): array
 	{
-		//TODO-v5.1 Maybe language related
+		//TODO-v5.2 Maybe language related
 		$return       = [];
 		$associations = [];
 

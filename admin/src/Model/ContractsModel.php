@@ -1180,7 +1180,7 @@ class ContractsModel extends ListModel
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
-		//TODO-v5.1 Check if join will work
+		//TODO-v5.2 Check if join will work
 		$query->select($db->qn('c.id'));
 		$query->from($db->qn('#__knowres_contract', 'c'))
 		      ->where($db->qn('c.property_id') . '=' . $property_id)

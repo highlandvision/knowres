@@ -11,7 +11,6 @@ defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
-use Highlandvision\KR\Model\SiteModel;
 use HighlandVision\KR\TickTock;
 use Joomla\CMS\Helper\ModuleHelper;
 

@@ -21,7 +21,7 @@ use Joomla\CMS\Form\FormRule;
 use Joomla\Registry\Registry;
 use SimpleXMLElement;
 
-//TODO-v5.1 can be deleted if no issues
+//TODO-v5.2 Deleted me please I am obolete
 
 /**
  * Form rule class for tax rate code

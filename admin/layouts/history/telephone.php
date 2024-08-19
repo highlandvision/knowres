@@ -16,7 +16,7 @@ defined('_JEXEC') or die;
 if (!$displayData['data']) {
 	return;
 }
-//TODO-v5.1 Fix and renable history
+//TODO-v5.2 Fix and renable history
 $data = $displayData['data'];
 if (is_countable($data)) {
 	foreach ($data as $d) {
