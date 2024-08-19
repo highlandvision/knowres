@@ -16,7 +16,7 @@ use HighlandVision\KR\Service\Gateway\Wire;
 use stdClass;
 
 /**
- * Service gateway bankia (redsys)
+ * Service gateway international wire
  *
  * @since 1.0.0
  */

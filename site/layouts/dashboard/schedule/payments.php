@@ -33,7 +33,7 @@ extract($displayData);
 				<?php echo KrMethods::plain('COM_KNOWRES_FULL_PAYMENT'); ?>
 			<?php endif; ?>
 		</div>
-		<div class="small-6 cell">
+		<div class="small-6 cell text-right">
 			<?php if ($contract->booking_status > 9): ?>
 				<?php echo KrMethods::plain('COM_KNOWRES_PAID_IN_FULL'); ?>
 			<?php else: ?>

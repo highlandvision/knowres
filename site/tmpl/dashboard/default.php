@@ -55,7 +55,7 @@ $wa->useScript('com_knowres.site')
 			$pdfs      = SiteHelper::getPdfs($this->item);
 			?>
 
-			<div class="callout small gray">
+			<div class="callout medium primary">
 				<div class="grid-x grid-margin-x">
 					<div class="small-12 medium-8 cell">
 						<?php echo KrMethods::render('dashboard.header', ['contract' => $this->item,

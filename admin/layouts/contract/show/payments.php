@@ -27,9 +27,9 @@ $count = 0;
 
 <div class="row">
 	<div class="col-2 strong"><?php echo KrMethods::plain('COM_KNOWRES_DATE'); ?></div>
-	<div class="col-3 strong"><?php echo KrMethods::plain('COM_KNOWRES_STATUS'); ?></div>
+	<div class="col-4 strong"><?php echo KrMethods::plain('COM_KNOWRES_STATUS'); ?></div>
 	<div class="col-4 strong text-end"><?php echo KrMethods::plain('COM_KNOWRES_CONTRACTPAYMENTS_AMOUNT'); ?></div>
-	<div class="col-3 strong text-end"><?php echo KrMethods::plain('COM_KNOWRES_CONTRACTPAYMENTS_BASE_AMOUNT'); ?></div>
+	<div class="col-2 strong text-end"><?php echo KrMethods::plain('COM_KNOWRES_CONTRACTPAYMENTS_BASE_AMOUNT'); ?></div>
 </div>
 
 <?php foreach ($payments as $p): ?>
@@ -44,19 +44,19 @@ $count = 0;
 		<div class="col-2">
 			<?php echo TickTock::displayDate($p->payment_date, 'dMy'); ?>
 		</div>
-		<div class="col-3">
+		<div class="col-4">
 			<?php if ($p->confirmed) : ?>
 				<?php echo KrMethods::plain('COM_KNOWRES_CONFIRMED'); ?>
 			<?php else: ?>
 				<a href="<?php echo KrMethods::route('index.php?option=com_knowres&task=contractpayment.edit&id='
 					. $p->id, false); ?>">
-					<i class='fa-solid fa-check'></i>&nbsp<?php echo KrMethods::plain('COM_KNOWRES_CONFIRM'); ?>
+					<i class='fa-solid fa-check green'></i>&nbsp<?php echo KrMethods::plain('COM_KNOWRES_CONFIRM'); ?>
 				</a>
 				&nbsp;&nbsp;
 				<a onclick="return Joomla.submitbutton('contractpayments.delete')"
 				   href="<?php echo KrMethods::route('index.php?option=com_knowres&task=contractpayments.delete&cid='
 					   . $p->id . '&' . Session::getFormToken() . '=1', false); ?>">
-					<i class='fa-solid fa-trash'></i>&nbsp;<?php echo KrMethods::plain('COM_KNOWRES_DELETE'); ?>
+					<i class='fa-solid fa-trash red'></i>&nbsp;<?php echo KrMethods::plain('COM_KNOWRES_DELETE'); ?>
 				</a>
 			<?php endif; ?>
 		</div>
@@ -66,11 +66,11 @@ $count = 0;
 				<?php echo Utility::displayValue($p->amount, $p->currency); ?> @ <?php echo $p->rate; ?>
 			</div>
 			<?php if ($p->base_amount < 0): ?>
-				<div class="col-3 text-end red">
+				<div class="col-2 text-end red">
 					<?php echo Utility::displayValue($p->base_amount, $contract->currency); ?>
 				</div>
 			<?php else: ?>
-				<div class="col-3 text-end">
+				<div class="col-2 text-end">
 					<?php echo Utility::displayValue($p->base_amount, $contract->currency); ?>
 				</div>
 			<?php endif; ?>
@@ -79,11 +79,11 @@ $count = 0;
 				&nbsp;
 			</div>
 			<?php if ($p->base_amount < 0): ?>
-				<div class="col-3 text-end red">
+				<div class="col-2 text-end red">
 					<?php echo Utility::displayValue($p->base_amount, $contract->currency); ?>
 				</div>
 			<?php else: ?>
-				<div class="col-3 text-end">
+				<div class="col-2 text-end">
 					<?php echo Utility::displayValue($p->base_amount, $contract->currency); ?>
 				</div>
 			<?php endif; ?>

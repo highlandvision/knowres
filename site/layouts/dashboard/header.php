@@ -33,7 +33,7 @@ $image  = Media\Images::getPropertyImageName($contract->property_id);
 
 <div class="grid-x grid-margin-x">
 	<div class="small-12 cell">
-		<h2 class="h3 color-dark">
+		<h2 class="h4 color-dark">
 			<?php echo $contract->property_name; ?>
 			<?php echo trim($contract->property_area); ?>,&nbsp;
 			<?php echo $contract->country_name; ?>

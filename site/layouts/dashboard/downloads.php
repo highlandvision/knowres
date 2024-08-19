@@ -23,7 +23,7 @@ extract($displayData);
 ?>
 
 <?php if ($invoice || $voucher || $guestdata || count($pdfs)): ?>
-	<div class="callout small accent">
+	<div class="callout small" style="margin-bottom:0;">
 		<p><?php echo strtoupper(KrMethods::plain('COM_KNOWRES_YOUR_DOCUMENTS')); ?></p>
 
 		<ul class="download">

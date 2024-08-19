@@ -26,18 +26,18 @@ use Joomla\CMS\HTML\HTMLHelper;
 		<?php echo HTMLHelper::_('searchtools.sort', 'JSTATUS', 'a.state', $this->listDirn, $this->listOrder); ?>
 	</th>
 	<th scope="col" class="w-15">
-		<?php echo HTMLHelper::_('searchtools.sort', 'COM_KNOWRES_NAME', 'user_name', $this->listDirn,
+		<?php echo HTMLHelper::_('searchtools.sort', 'COM_KNOWRES_NAME', 'name', $this->listDirn,
 			$this->listOrder); ?>
 	</th>
-	<th scope="col" class='w-15 d-none d-md-table-cell'>
-		<?php echo HTMLHelper::_('searchtools.sort', 'COM_KNOWRES_OWNERS_EMAIL', 'a.access_level',
+	<th scope="col" class='w-15'>
+		<?php echo HTMLHelper::_('searchtools.sort', 'COM_KNOWRES_OWNERS_EMAIL', 'a.email',
 			$this->listDirn, $this->listOrder); ?>
 	</th>
-	<th scope="col" class='w-15 d-none d-md-table-cell'>
-		<?php echo HTMLHelper::_('searchtools.sort', 'COM_KNOWRES_OWNERS_COMMISSION', 'agency_name', $this->listDirn,
-			$this->listOrder); ?>
+	<th scope="col" class='w-15'>
+		<?php echo HTMLHelper::_('searchtools.sort', 'COM_KNOWRES_OWNERS_COMMISSION', 'a.commission',
+		                         $this->listDirn, $this->listOrder); ?>
 	</th>
-	<th scope="col" class="w-5 d-none d-md-table-cell">
+	<th scope="col" class="w-5">
 		<?php echo HTMLHelper::_('searchtools.sort', 'JGRID_HEADING_ID', 'a.id', $this->listDirn, $this->listOrder); ?>
 	</th>
 </tr>

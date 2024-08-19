@@ -10,7 +10,6 @@
 defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrMethods;
-use Highlandvision\KR\Model\ContractModel;
 use HighlandVision\KR\Utility;
 
 extract($displayData);
