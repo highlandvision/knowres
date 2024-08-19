@@ -2,7 +2,7 @@
 <extension type="library" method="upgrade">
 	<name>lib_highlandvision_kr</name>
 	<libraryname>highlandvision/kr</libraryname>
-	<version>5.0.0</version>
+	<version>5.1.0</version>
 	<author>Highland Vision</author>
 	<authorEmail>support@highlandvision.com</authorEmail>
 	<authorUrl>https://www.highlandvision.com</authorUrl>

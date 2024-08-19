@@ -9,7 +9,7 @@
     <description>MOD_KNOWRES_SPOTLIGHT_DSC</description>
     <license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
     <namespace path="src">HighlandVision\Module\KnowresSpotlight</namespace>
-    <version>5.0.0</version>
+    <version>5.1.0</version>
     <files>
         <folder module="mod_knowres_spotlight">services</folder>
         <folder>language</folder>

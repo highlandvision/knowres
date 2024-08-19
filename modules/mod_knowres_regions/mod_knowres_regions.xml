@@ -7,7 +7,7 @@
     <authorEmail>hazel@highlandvision.com</authorEmail>
     <copyright>2023 Highland Vision, all rights reserved.</copyright>
     <license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
-    <version>5.0.0</version>
+    <version>5.1.0</version>
     <namespace path="src">HighlandVision\Module\KnowresRegions</namespace>
     <description>MOD_KNOWRES_REGIONS_DSC</description>
     <files>
