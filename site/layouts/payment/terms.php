@@ -24,10 +24,10 @@ $checked = $text ? '' : 'checked="checked"';
 ?>
 
 <?php if ($text) : ?>
-	<div class="callout small <?php echo $hide; ?>">
+	<div class="callout <?php echo $hide; ?>">
 		<h5><?php echo $title ?></h5>
 		<p><?php echo nl2br($text); ?></p>
-		<div class="callout formbg small">
+		<div class="callout small">
 			<input type="checkbox" class="checkover" name="<?php echo $name; ?>" id="<?php echo $name; ?>" <?php echo $checked; ?>>
 			<label class="checklabel" for="<?php echo $name; ?>">
 				<?php echo $label; ?>

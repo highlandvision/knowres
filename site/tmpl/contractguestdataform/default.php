@@ -20,7 +20,7 @@ $wa->useScript('com_knowres.site')
 
 <h1><?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATAFORM_TITLE'); ?></h1>
 
-<div class="callout small secondary">
+<div class="callout small">
 	<?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATAFORM_INSTRUCTIONS'); ?>
 </div>
 
@@ -34,7 +34,7 @@ $wa->useScript('com_knowres.site')
 		<legend><?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATAFORM_LEGEND_GUESTINFO'); ?></legend>
 		<div class="grid-x grid-margin-x">
 			<div class="small-12 cell">
-				<div class="callout formbg small">
+				<div class="callout small">
 					<?php echo $this->form->renderField('guestinfo'); ?>
 				</div>
 			</div>

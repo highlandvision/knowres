@@ -39,7 +39,7 @@ $wa->useScript('com_knowres.site')
 			<fieldset class="fieldset">
 				<legend><?php echo KrMethods::plain('COM_KNOWRES_LEAD_GUEST'); ?></legend>
 
-				<div class="callout formbg small">
+				<div class="callout small">
 					<div class="grid-x grid-margin-x">
 						<div class="small-12 medium-6 cell">
 							<?php echo $this->form->renderField('firstname'); ?>
@@ -85,7 +85,7 @@ $wa->useScript('com_knowres.site')
 
 			<fieldset class="fieldset">
 				<legend><?php echo KrMethods::plain('COM_KNOWRES_GUEST_ADDITIONAL_CONTACT_DETAILS'); ?></legend>
-				<div class="callout formbg small">
+				<div class="callout small">
 					<div class="callout success small">
 						<p class="vsmall"><?php echo KrMethods::plain('COM_KNOWRES_ARRIVAL_EMAIL_CHANGE'); ?></p>
 					</div>
@@ -105,7 +105,7 @@ $wa->useScript('com_knowres.site')
 
 			<fieldset class="fieldset">
 				<legend><?php echo KrMethods::plain('COM_KNOWRES_MAILING_ADDRESS'); ?></legend>
-				<div class="callout formbg small">
+				<div class="callout small">
 					<div class="grid-x grid-margin-x">
 						<?php if ((int) $settings['bookingform_requiredfields_address1'] == 1) : ?>
 							<?php $this->form->setFieldAttribute('address1', 'required', 'true'); ?>
@@ -152,7 +152,7 @@ $wa->useScript('com_knowres.site')
 					<?php echo KrMethods::plain('COM_KNOWRES_BILLING_ADDRESS'); ?>
 				</legend>
 
-				<div class="callout formbg small">
+				<div class="callout small">
 					<div class="rgrid-x grid-margin-xow">
 						<div class="small-12 medium-6 cell" style="margin-bottom:10px;">
 							<?php echo $this->form->renderField('billing'); ?>

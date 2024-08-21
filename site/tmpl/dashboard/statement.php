@@ -17,7 +17,7 @@ use HighlandVision\KR\Framework\KrMethods;
 	<div class="small-12 cell">
 		<?php if ($this->balance > 0): ?>
 			<h6><?php echo KrMethods::plain('COM_KNOWRES_PAYMENT_SCHEDULE'); ?></h6>
-			<div class="callout formbg small financial">
+			<div class="callout small financial">
 				<?php if (is_countable($this->payments) && count($this->payments)): ?>
 					<?php echo KrMethods::render('dashboard.schedule.payments',
 					                             ['contract' => $this->item,
@@ -38,7 +38,7 @@ use HighlandVision\KR\Framework\KrMethods;
 		<?php endif; ?>
 
 		<h6><?php echo KrMethods::plain('COM_KNOWRES_YOUR_STATEMENT'); ?></h6>
-		<div class="callout formbg small financial">
+		<div class="callout small financial">
 			<?php echo KrMethods::render('dashboard.summary', ['contract'    => $this->item,
 			                                                   'fees'        => $this->fees,
 			                                                   'payments'    => $this->payments,
@@ -51,7 +51,7 @@ use HighlandVision\KR\Framework\KrMethods;
 		<?php if (count($this->notes)) : ?>
 			<h6><?php echo KrMethods::plain('COM_KNOWRES_NOTES'); ?></h6>
 			<?php foreach ($this->notes as $p) : ?>
-				<div class="callout formbg small">
+				<div class="callout small">
 					<?php echo nl2br($p->note); ?>
 				</div>
 			<?php endforeach; ?>

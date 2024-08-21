@@ -19,7 +19,7 @@ $address = Utility::formatAddress($this->guestData->address1, $this->guestData->
 	$this->guestData->country_id, '<br>');
 ?>
 
-<div class="summary callout formbg text-center">
+<div class="summary callout primary text-center">
 	<h2 class="color-primary">
 		<?php if ($this->property->booking_type == 2) : ?>
 			<?php echo KrMethods::plain('COM_KNOWRES_CONFIRM_BOOK_PAYABLE_NOW'); ?>

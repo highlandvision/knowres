@@ -36,7 +36,7 @@ $action = '/index.php?option=com_knowres&task=payment.router';
 
 			<fieldset class="fieldset">
 				<?php if ($this->contract->cancelled): ?>
-					<div class="callout formbg small">
+					<div class="callout small">
 						<div class="grid-x grid-margin-x">
 							<div class="small-12 cell">
 								<h4>

@@ -68,7 +68,7 @@ $large  = 'large-up-' . $per_row_large;
 						<?php endif; ?>
 					</p>
 
-					<div class="callout small secondary">
+					<div class="callout small">
 						<?php $pdiscounts = $discounts[$item->property_id]; ?>
 						<?php foreach ($pdiscounts as $k => $discount): ?>
 							<?php echo KrMethods::render('properties.discount', [

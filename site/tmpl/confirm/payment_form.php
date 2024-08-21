@@ -93,7 +93,7 @@ $action = '/index.php?option=com_knowres&view=confirm&layout=payment&Itemid=' . 
 		]);
 		?>
 
-		<div class="callout formbg small">
+		<div class="callout white">
 			<input type="checkbox" class="checkover" name="agreecheck" id="agreecheck">
 			<label class="checklabel" for="agreecheck">
 				<?php echo KrMethods::plain('COM_KNOWRES_PAYMENT_TERMS1'); ?>

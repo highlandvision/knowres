@@ -29,15 +29,12 @@ $prices_inclusive = 1;
 $all              = [];
 $Translations     = new Translations();
 
-foreach ($extras as $extra)
-{
-	if ($extra->mandatory)
-	{
+foreach ($extras as $extra) {
+	if ($extra->mandatory) {
 		continue;
 	}
 
-	switch ($extra->model)
-	{
+	switch ($extra->model) {
 		case '1': // Per week
 			$text = KrMethods::plain('COM_KNOWRES_EXTRA_MODEL_PERWEEK');
 			break;
@@ -66,29 +63,21 @@ foreach ($extras as $extra)
 	$one['name']        = $Translations->getText('extra', $extra->id);
 	$one['description'] = '';
 	$description        = $Translations->getText('extra', $extra->id, 'description');
-	if (!empty($description) && $description != $one['name'])
-	{
+	if (!empty($description) && $description != $one['name']) {
 		$one['description'] = $description;
 	}
 
-	if ($extra->model < 11)
-	{
-		if ((int) $extra->price == 0)
-		{
+	if ($extra->model < 11) {
+		if ((int) $extra->price == 0) {
 			$one['price'] = '';
-			if (!str_contains($one['name'], '(Payable Locally)'))
-			{
+			if (!str_contains($one['name'], '(Payable Locally)')) {
 				$one['price'] = KrMethods::plain('COM_KNOWRES_FREE');
 			}
-		}
-		else
-		{
+		} else {
 			$price        = Utility::displayValue($extra->price, $currency) . ' ' . $text;
 			$one['price'] = $price;
 		}
-	}
-	else
-	{
+	} else {
 		$one['price'] = $extra->percentage . $text;
 	}
 
@@ -97,39 +86,41 @@ foreach ($extras as $extra)
 	$values[0] = KrMethods::plain('JSELECT');
 	$default   = 0;
 
-	if (is_array($data) && array_key_exists($extra->id, $data))
-	{
+	if (is_array($data) && array_key_exists($extra->id, $data)) {
 		$default = $data[$extra->id]['quantity'];
 	}
 
-	for ($i = 1; $i <= $extra->max_quantity; $i++)
-	{
+	for ($i = 1; $i <= $extra->max_quantity; $i++) {
 		$values[$i] = $i;
 	}
 
 	$options = [];
-	foreach ($values as $key => $value)
-	{
+	foreach ($values as $key => $value) {
 		$options[] = HTMLHelper::_('select.option', (string) $key, (string) $value);
 	}
 
 	$id              = 'extraquantity' . $extra->id;
-	$one['dropdown'] = HTMLHelper::_('select.genericlist', $options, 'extra_quantities[]',
-		'class="kr-calculate kr-extra-select"', 'value', 'text', $default, $id);
+	$one['dropdown'] = HTMLHelper::_('select.genericlist',
+		$options,
+		'extra_quantities[]',
+		'class="kr-calculate kr-extra-select"',
+		'value',
+		'text',
+		$default,
+		$id);
 
 	$one['hidden'] = '<input type="hidden" name="extra_ids[]" value="' . $extra->id . '">';
 	$all[]         = $one;
 }
 
-if (is_countable($all) && !count($all))
-{
+if (is_countable($all) && !count($all)) {
 	return;
 }
 ?>
 
 <fieldset class="fieldset">
 	<legend><?php echo KrMethods::plain('COM_KNOWRES_CONFIRM_EXTRAS_LBL'); ?></legend>
-	<div class="callout formbg small">
+	<div class="callout small">
 		<?php foreach ($all as $a) : ?>
 			<div class="grid-x grid-margin-x extras">
 				<div class="small-12 medium-3 cell">

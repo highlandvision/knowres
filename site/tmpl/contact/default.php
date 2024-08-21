@@ -27,7 +27,7 @@ $action = '/index.php?option=com_knowres&task=contact.submit';
 
 <div>
 	<p class="vsmall"><?php echo KrMethods::plain('COM_KNOWRES_CONTACT_REQUIRED'); ?></p>
-	<form action="<?php echo $action; ?>" class="form-validate formbg" id="kr-contact-form"
+	<form action="<?php echo $action; ?>" class="form-validate" id="kr-contact-form"
 	      onsubmit="return verifyEmail();" method="post">
 		<fieldset class="fieldset">
 			<div class="callout">

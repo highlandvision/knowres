@@ -28,7 +28,7 @@ extract($displayData);
 		<?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATAFORM_LEGEND_OPTIONS'); ?>
 	</legend>
 
-	<div class="callout gray">
+	<div class="callout">
 		<?php foreach ($property_options as $po): ?>
 			<div class="grid-x grid-margin-x">
 				<div class="small-12 medium-3 cell">

@@ -31,7 +31,7 @@ $this->rates = KrFactory::getListModel('rates')->getRatesForProperty($this->item
 		<?php endif; ?>
 	</h3>
 
-	<div class="callout small secondary italic" style="font-size:13px;">
+	<div class="callout small italic" style="font-size:13px;">
 		<?php echo KrMethods::plain('COM_KNOWRES_PRICING_DISCLAIMER'); ?>
 	</div>
 
