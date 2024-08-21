@@ -184,6 +184,7 @@ class Contract extends Session
 		$data->owner_deposit                   = 0;
 		$data->owner_id                        = 0;
 		$data->owner_note                      = '';
+		$data->on_request_paid                 = null;
 		$data->pets                            = 0;
 		$data->property_id                     = 0;
 		$data->qkey                            = '';

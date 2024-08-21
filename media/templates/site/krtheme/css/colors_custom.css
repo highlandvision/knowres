@@ -18,6 +18,8 @@
   --success-color-hover: hsl(128, 19%, 60%);
   --warning-color: hsl(24, 100%, 56%);
   --warning-color-hover: hsl(24, 90%, 46%);
+  --custom-color: hsl(215, 54%, 36%);
+  --custom-color-hover: hsl(215, 54%, 48%);
   --favorite: hsl(338, 87%, 55%);
   --header-font-family: Tahoma, Arial, sans-serif;
   --header-color: hsl(208, 100%, 22%);
@@ -32,6 +34,7 @@
   --large-h3-font-size: 22px;
   --large-h4-font-size: 18px;
   --large-h5-font-size: 17px;
+  --paragraph-font-size: 16px;
   --small-font-size: 85%;
   --topbar-background-top: hsl(208, 100%, 22%);
   --topbar-background: hsl(208, 100%, 22%);
@@ -45,6 +48,7 @@
   --footer-link: hsl(0, 0%, 96%);
   --footer-link-hover: hsl(0, 0%, 48%);
   --form-background-color: hsl(202, 45%, 96%);
+  --border-color: hsl(215, 54%, 36%);
 }
 
 /*# sourceMappingURL=colors_custom.css.map */

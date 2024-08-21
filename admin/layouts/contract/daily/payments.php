@@ -42,7 +42,7 @@ extract($displayData);
 		<?php foreach ($lines as $l): ?>
 			<?php $clink = KrMethods::route('index.php?option=com_knowres&task=contract.show&id=' . $l->contract_id); ?>
 			<?php $plink = KrMethods::route('index.php?option=com_knowres&task=property.dashboard&id='
-				. $l->property_id); ?>
+			                                . $l->property_id); ?>
 
 			<tr>
 				<th scope="col"><a href="<?php echo $clink; ?>"><?php echo $l->tag; ?></a></th>

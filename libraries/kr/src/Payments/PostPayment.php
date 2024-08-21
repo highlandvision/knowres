@@ -39,37 +39,40 @@ use function is_numeric;
  */
 class PostPayment
 {
-	/* @var false|object Contract item */
-	private false|object $contract;
-	/* @var int ID of contract */
-	private int $contract_id;
 	/** @var array Form fields */
 	protected array $fields = [];
-	/* @var false|object Guest item */
-	private false|object $guest;
 	/* @var object|null Service parameters */
 	protected ?object $parameters = null;
 	/* @var stdClass Payment session data */
 	protected stdClass $paymentData;
 	/* @var int Service ID */
 	protected int $service_id = 0;
+	/* @var false|object Contract item */
+	private false|object $contract;
+	/* @var int ID of contract */
+	private int $contract_id;
+	/* @var false|object Guest item */
+	private false|object $guest;
+	/* @var bool Webhook payment */
+	private bool $webhook;
 
 	/**
 	 * Initialize
 	 *
 	 * @param  int       $service_id   ID of service
 	 * @param  stdClass  $paymentData  Session payment data
+	 * @param  bool      $webhook      Set to true for webhook processing
 	 *
 	 * @throws Exception
 	 * @since  3.3.1
 	 */
-	public function __construct(int $service_id, stdClass $paymentData)
+	public function __construct(int $service_id, stdClass $paymentData, bool $webhook = false)
 	{
 		$this->setService($service_id);
+		$this->webhook = $webhook;
 
 		$this->paymentData = $paymentData;
-		if (!$this->paymentData->payment_type)
-		{
+		if (!$this->paymentData->payment_type) {
 			throw new InvalidArgumentException('Payment type should not be empty');
 		}
 
@@ -100,14 +103,12 @@ class PostPayment
 	 */
 	protected function readContract(): void
 	{
-		if (!$this->contract_id)
-		{
+		if (!$this->contract_id) {
 			throw new InvalidArgumentException('Contract ID must be non zero');
 		}
 
 		$this->contract = KrFactory::getAdminModel('contract')->getItem($this->contract_id);
-		if (!$this->contract->id)
-		{
+		if (!$this->contract->id) {
 			throw new RuntimeException('Contract not found for id ' . $this->contract_id);
 		}
 	}
@@ -122,50 +123,14 @@ class PostPayment
 	 */
 	protected function readGuest(): void
 	{
-		if (!$this->contract->guest_id)
-		{
+		if (!$this->contract->guest_id) {
 			throw new InvalidArgumentException('Contract Guest ID must be non zero');
 		}
 
 		$this->guest = KrFactory::getAdminModel('guest')->getItem($this->contract->guest_id);
-		if (!$this->guest->id)
-		{
+		if (!$this->guest->id) {
 			throw new RuntimeException('Guest not found for ID ' . $this->contract->guest_id);
 		}
-	}
-
-	/**
-	 * Read Payment for RBD
-	 *
-	 * @throws RuntimeException
-	 * @since  3.3.1
-	 */
-	protected function readPayment(): void
-	{
-		$payment = KrFactory::getListModel('contractpayments')->getPending($this->contract_id, $this->service_id);
-		if (!$payment->id)
-		{
-			throw new RuntimeException('Payment not found for id ' . $this->contract_id);
-		}
-	}
-
-	/**
-	 * Set the service
-	 *
-	 * @param  int  $service_id  ID of service
-	 *
-	 * @throws Exception
-	 * @since  1.2.2
-	 */
-	protected function setService(int $service_id): void
-	{
-		$service = KrFactory::getAdminModel('service')->getItem($service_id);
-		if (!$service->id)
-		{
-			throw new RuntimeException('Service not found for ID ' . $service_id);
-		}
-
-		$this->service_id = $service_id;
 	}
 
 	/**
@@ -180,10 +145,6 @@ class PostPayment
 	{
 		$this->readContract();
 		$this->readGuest();
-		if ($this->paymentData->payment_type == 'RBD')
-		{
-			$this->readPayment();
-		}
 	}
 
 	/**
@@ -198,10 +159,13 @@ class PostPayment
 		KrMethods::setUserState('com_knowres.edit.guest.data', null);
 		KrMethods::setUserState('com_knowres.edit.confirm.data', null);
 
-		$userSession              = new KrSession\User();
-		$userData                 = $userSession->getData();
-		$userData->pr_contract_id = $this->contract_id;
-		$userSession->setData($userData);
+		if (!$this->webhook) {
+			$userSession               = new KrSession\User();
+			$userData                  = $userSession->getData();
+			$userData->pr_contract_id  = $this->paymentData->contract_id;
+			$userData->pr_payment_type = $this->paymentData->payment_type;
+			$userSession->setData($userData);
+		}
 
 		$paymentSession = new KrSession\Payment();
 		$paymentSession->resetData();
@@ -220,8 +184,7 @@ class PostPayment
 	 */
 	protected function saveAll(): void
 	{
-		try
-		{
+		try {
 			$db = KrFactory::getDatabase();
 			$db->transactionStart();
 
@@ -229,8 +192,7 @@ class PostPayment
 			$modelPayment->save((array) $this->paymentData);
 			$payment_id = $modelPayment->getState('contractpayment.id');
 
-			if ($this->paymentData->payment_type == 'OBR' && $this->paymentData->customer_ref)
-			{
+			if ($this->paymentData->payment_type == 'OBR' && $this->paymentData->customer_ref) {
 				$this->updateGuest();
 			}
 
@@ -239,9 +201,7 @@ class PostPayment
 			$this->updateContract();
 
 			$db->transactionCommit();
-		}
-		catch (Exception $e)
-		{
+		} catch (Exception $e) {
 			$db->transactionRollback();
 			Logger::logMe($e->getMessage());
 			throw $e;
@@ -258,8 +218,7 @@ class PostPayment
 	 */
 	protected function saveFee(int $payment_id): void
 	{
-		if ($this->paymentData->base_surcharge > 0 && $this->paymentData->payment_type != 'RBD')
-		{
+		if ($this->paymentData->base_surcharge > 0 && $this->paymentData->payment_type != 'RBD') {
 			$fee                      = new stdClass();
 			$fee->id                  = 0;
 			$fee->description         = KrMethods::plain('COM_KNOWRES_PAYMENT_SURCHARGE');
@@ -280,43 +239,43 @@ class PostPayment
 	 */
 	protected function sendEmails(): void
 	{
-		if (!$this->paymentData->manual)
-		{
-			if ($this->paymentData->payment_type == 'OBR')
-			{
+		if (!$this->paymentData->manual) {
+			if ($this->paymentData->payment_type == 'OBR') {
 				// Booking request
 				$email = new ContractEmail('BOOKREQUEST');
-				$email->sendTheEmails($this->paymentData->contract_id, $this->paymentData->amount,
-					$this->paymentData->currency, $this->service_id);
-			}
-			else if ($this->paymentData->payment_type == 'RBD')
-			{
+				$email->sendTheEmails($this->paymentData->contract_id,
+					$this->paymentData->amount,
+					$this->paymentData->currency,
+					$this->service_id);
+			} elseif ($this->paymentData->payment_type == 'RBD') {
 				// Booking request deposit
 				$email = new ContractEmail('BOOKREQUESTCONFIRM');
-				$email->sendTheEmails($this->paymentData->contract_id, $this->paymentData->amount,
-					$this->paymentData->currency, $this->service_id);
-			}
-			else if ($this->paymentData->payment_type == 'OBD' || $this->paymentData->payment_type == 'PBD')
-			{
+				$email->sendTheEmails($this->paymentData->contract_id,
+					$this->paymentData->amount,
+					$this->paymentData->currency,
+					$this->service_id);
+			} elseif ($this->paymentData->payment_type == 'OBD' || $this->paymentData->payment_type == 'PBD') {
 				// Online deposit
 				$email = new ContractEmail('BOOKCONFIRM');
-				$email->sendTheEmails($this->paymentData->contract_id, $this->paymentData->amount,
-					$this->paymentData->currency, $this->service_id);
-			}
-			else if ($this->paymentData->payment_type == 'PBB' || $this->paymentData->payment_type == 'CBB')
-			{
+				$email->sendTheEmails($this->paymentData->contract_id,
+					$this->paymentData->amount,
+					$this->paymentData->currency,
+					$this->service_id);
+			} elseif ($this->paymentData->payment_type == 'PBB' || $this->paymentData->payment_type == 'CBB') {
 				// Balance
 				$email = new ContractEmail('PAYRECEIPT');
-				$email->sendTheEmails($this->paymentData->contract_id, $this->paymentData->amount,
-					$this->paymentData->currency, $this->service_id);
+				$email->sendTheEmails($this->paymentData->contract_id,
+					$this->paymentData->amount,
+					$this->paymentData->currency,
+					$this->service_id);
 			}
-		}
-		else
-		{
+		} else {
 			// Manual gateways
 			$email = new ContractEmail('PAYINIT');
-			$email->sendTheEmails($this->paymentData->contract_id, $this->paymentData->amount,
-				$this->paymentData->currency, $this->service_id);
+			$email->sendTheEmails($this->paymentData->contract_id,
+				$this->paymentData->amount,
+				$this->paymentData->currency,
+				$this->service_id);
 		}
 	}
 
@@ -330,12 +289,29 @@ class PostPayment
 	 */
 	protected function setContractId(int $contract_id): void
 	{
-		if (!is_numeric($contract_id) || !$contract_id)
-		{
+		if (!is_numeric($contract_id) || !$contract_id) {
 			throw new InvalidArgumentException('Contract ID should consist of numbers only and should not be zero');
 		}
 
 		$this->contract_id = $contract_id;
+	}
+
+	/**
+	 * Set the service
+	 *
+	 * @param  int  $service_id  ID of service
+	 *
+	 * @throws Exception
+	 * @since  1.2.2
+	 */
+	protected function setService(int $service_id): void
+	{
+		$service = KrFactory::getAdminModel('service')->getItem($service_id);
+		if (!$service->id) {
+			throw new RuntimeException('Service not found for ID ' . $service_id);
+		}
+
+		$this->service_id = $service_id;
 	}
 
 	/**
@@ -351,20 +327,14 @@ class PostPayment
 		$update->updated_at = TickTock::getTS();
 		$update->updated_by = KrMethods::getUser()->id;
 
-		if (!$this->paymentData->manual)
-		{
+		if (!$this->paymentData->manual) {
 			$update = $this->updateContractForOnlinePayment($update);
-		}
-		else
-		{
-			if ($this->paymentData->payment_type == 'OBD' || $this->paymentData->payment_type == 'PBD')
-			{
+		} else {
+			if ($this->paymentData->payment_type == 'OBD' || $this->paymentData->payment_type == 'PBD') {
 				$update->state          = 1;
 				$update->booking_status = 5;
 				$update->expiry_date    = $this->paymentData->expiry_date;
-			}
-			else if ($this->paymentData->payment_type == 'PBB')
-			{
+			} else if ($this->paymentData->payment_type == 'PBB') {
 				$update->booking_status = 35;
 			}
 		}
@@ -383,8 +353,7 @@ class PostPayment
 	 */
 	protected function updateContractForOnlinePayment(stdClass $update): stdClass
 	{
-		switch ($this->paymentData->payment_type)
-		{
+		switch ($this->paymentData->payment_type) {
 			case 'OBR':
 				$update->state          = 1;
 				$update->booking_status = 1;
@@ -396,36 +365,26 @@ class PostPayment
 			case 'RBD':
 				$update->state      = 1;
 				$update->on_request = 0;
+				if ($this->paymentData->on_request_paid != 99) {
+					$update->on_request_paid = $this->paymentData->on_request_paid;
+				}
 				if (Utility::compareFloat($this->paymentData->base_amount,
-					$this->contract->contract_total + $this->paymentData->base_surcharge))
-				{
-					if (!$this->paymentData->confirmed)
-					{
+					$this->contract->contract_total + $this->paymentData->base_surcharge)) {
+					if (!$this->paymentData->confirmed) {
 						$update->booking_status = 5;
-					}
-					else
-					{
+					} else {
 						$update->booking_status = 40;
 					}
-				}
-				else
-				{
-					if (!$this->paymentData->confirmed)
-					{
+				} else {
+					if (!$this->paymentData->confirmed) {
 						$update->booking_status = 5;
-					}
-					else if (!$this->contract->balance_days)
-					{
+					} else if (!$this->contract->balance_days) {
 						$update->booking_status = 39;
-					}
-					else if ($this->contract->balance_date <= TickTock::getDate()
-						|| ($this->contract->balance_date == $this->contract->arrival
-							&& $this->contract->balance_date == $this->contract->expiry_date))
-					{
+					} else if ($this->contract->balance_date <= TickTock::getDate()
+					           || ($this->contract->balance_date == $this->contract->arrival
+					               && $this->contract->balance_date == $this->contract->expiry_date)) {
 						$update->booking_status = 30;
-					}
-					else
-					{
+					} else {
 						$update->booking_status = 10;
 					}
 				}
@@ -433,16 +392,11 @@ class PostPayment
 				break;
 			case 'PBB':
 			case 'CBB':
-				if (!$this->paymentData->confirmed)
-				{
+				if (!$this->paymentData->confirmed) {
 					$update->booking_status = 35;
-				}
-				else if (!$this->contract->balance_days)
-				{
+				} else if (!$this->contract->balance_days) {
 					$update->booking_status = 39;
-				}
-				else
-				{
+				} else {
 					$update->booking_status = 40;
 				}
 

@@ -47,8 +47,7 @@ class SiteHelper
 	{
 		if (self::userRequired()) {
 			self::redirectLogin();
-		}
-		else {
+		} else {
 			self::redirectHome();
 		}
 	}
@@ -68,8 +67,7 @@ class SiteHelper
 	{
 		if (is_null($view)) {
 			$hash = Cryptor::setHash($contract->id, $contract->guest_id, $contract->qkey);
-		}
-		else {
+		} else {
 			$hash = Cryptor::setHash($contract->id, $contract->guest_id, $contract->qkey, $view);
 		}
 
@@ -78,8 +76,7 @@ class SiteHelper
 			return KrMethods::route(
 				KrMethods::getRoot() . 'index.php?option=com_knowres&task=dashboard.request&key=' . $key
 			);
-		}
-		else {
+		} else {
 			return KrMethods::route('index.php?option=com_knowres&task=dashboard.request&key=' . $key);
 		}
 	}
@@ -105,8 +102,7 @@ class SiteHelper
 
 		if (!$external) {
 			return KrMethods::route($link);
-		}
-		else {
+		} else {
 			return KrMethods::route(KrMethods::getRoot() . $link);
 		}
 	}
@@ -128,8 +124,7 @@ class SiteHelper
 			if ($item->checked_out_time < TickTock::modifyHours('now', 1, '-')) {
 				$model->checkin([$item->id]);
 				KrMethods::logoutUser($item->checked_out);
-			}
-			else {
+			} else {
 				KrMethods::message(KrMethods::plain('COM_KNOWRES_LOCKED'));
 				self::redirectDashboard();
 			}
@@ -177,8 +172,7 @@ class SiteHelper
 				false
 			);
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_EXPIRED_SESSION'), 'warning');
-		}
-		else {
+		} else {
 			// retain=2 displays expired session message in properties
 			$Itemid = self::getItemId('com_knowres', 'properties', array('region_id' => 0));
 			$link   = KrMethods::route('index.php?option=com_knowres&Itemid=' . $Itemid . '&view=properties&retain=2',
@@ -187,8 +181,7 @@ class SiteHelper
 
 		if (!$ajax) {
 			KrMethods::redirect(KrMethods::route($link, false));
-		}
-		else {
+		} else {
 			$wrapper             = [];
 			$wrapper['redirect'] = $link;
 			echo KrMethods::jsonResponse($wrapper);
@@ -233,17 +226,16 @@ class SiteHelper
 		$directions   = '';
 		$Translations = new Translations();
 		if ($params->get('guest_plan_routing', 0) && $contract->booking_status > 35 &&
-			$contract->lat && $contract->lng) {
+		    $contract->lat && $contract->lng) {
 			//https://maps.google.com?saddr=airport%20<nearest town/region>+Location&daddr=<address>&sensor=false
 			$base = 'https://maps.google.com';
 			$from = '?saddr=airport%20' . $Translations->getText('region', $contract->region_id) . ' '
-				. $Translations->getText('country', $contract->country_id);
+			        . $Translations->getText('country', $contract->country_id);
 			$from = str_replace(' ', '+', $from);
 
 			if (!empty($contract->lat_actual) && (int) $contract->lat_actual != 0) {
 				$to = '&daddr=' . $contract->lat_actual . ',' . $contract->lng_actual;
-			}
-			else {
+			} else {
 				$to = '&daddr=' . $contract->lat . ',' . $contract->lng;
 			}
 
@@ -272,8 +264,7 @@ class SiteHelper
 
 		if ($type) {
 			$file = $pdfPath . $type . '/' . $id . '/' . $filename;
-		}
-		else {
+		} else {
 			$file = $pdfPath . $id . '/' . $filename;
 		}
 
@@ -330,8 +321,8 @@ class SiteHelper
 				'index.php?option=com_knowres&task=dashboard.guestdata&format=pdf&id=' . $item->id
 			);
 			$link      = '<a href="' . $dl . '">'
-				. KrMethods::plain('COM_KNOWRES_PDF_ARRIVAL_INFORMATION_TITLE')
-				. '</a>';
+			             . KrMethods::plain('COM_KNOWRES_PDF_ARRIVAL_INFORMATION_TITLE')
+			             . '</a>';
 			$guestdata = $link;
 		}
 
@@ -375,7 +366,7 @@ class SiteHelper
 	 * @return int
 	 */
 	public static function getItemId(string $component = 'com_knowres', string $view = '',
-	                                 array  $variables = [], array  $alternatives = []): int
+	                                 array  $variables = [], array $alternatives = []): int
 	{
 		$base = 'index.php?option=' . $component;
 		if ($view) {
@@ -537,8 +528,8 @@ class SiteHelper
 				'index.php?option=com_knowres&task=dashboard.voucher&format=pdf&id=' . $item->id
 			);
 			$link    = '<a href="' . $dl . '">'
-				. KrMethods::plain('COM_KNOWRES_PDF_ACCOMMODATION_VOUCHER_TITLE')
-				. '</a>';
+			           . KrMethods::plain('COM_KNOWRES_PDF_ACCOMMODATION_VOUCHER_TITLE')
+			           . '</a>';
 			$voucher = $link;
 		}
 
@@ -575,13 +566,22 @@ class SiteHelper
 	/**
 	 * Return to correct dashboard
 	 *
+	 * @param  bool  $root  True to include site url
+	 *
 	 * @throws Exception
 	 * @since  2.5.0
 	 */
-	public static function redirectDashboard(): void
+	public static function redirectDashboard(bool $root = false): void
 	{
 		$Itemid = self::getItemId('com_knowres', 'dashboard');
-		KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&view=dashboard&Itemid=' . $Itemid, false));
+		if ($root) {
+			KrMethods::redirect(KrMethods::route(KrMethods::getBase() .
+			                                     '/index.php?option=com_knowres&view=dashboard&Itemid=' . $Itemid,
+			                                     false));
+		} else {
+			KrMethods::redirect(KrMethods::route('/index.php?option=com_knowres&view=dashboard&Itemid=' . $Itemid,
+			                                     false));
+		}
 	}
 
 	/**
@@ -621,7 +621,7 @@ class SiteHelper
 		$Itemid = self::getItemId('com_knowres', 'property', ['id' => $id]);
 		KrMethods::redirect(
 			KrMethods::route('index.php?option=com_knowres&view=property&id=' . $id . '&Itemid=' . $Itemid,
-				false
+			                 false
 			)
 		);
 	}
@@ -653,6 +653,20 @@ class SiteHelper
 		}
 
 		KrMethods::redirect(KrMethods::route($link, false));
+	}
+
+	/**
+	 * Return for successful online payment (excluding dashbaord)
+	 *
+	 * @throws Exception
+	 * @since  5.1.0
+	 */
+	public static function redirectSuccess(): void
+	{
+		$Itemid = SiteHelper::getItemId('com_knowres', 'success');
+		KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&task=success.success&Itemid=' . $Itemid,
+		                                     false));
+
 	}
 
 	/**

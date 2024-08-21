@@ -37,17 +37,10 @@ if (typeof jQuery === 'undefined') jQuery.noConflict();
 				dataType:    'json',
 				success:     function (result) {
 					if (result.success) {
-						/** @namespace string result.data.redirect **/
-						if (result.data == null || window.location.href === result.data.redirect) {
-							window.location.reload();
-						} else {
-							window.location.href = result.data.redirect;
-						}
-						/** @namespace result.messages **/
+						window.location.href = result.data.redirect;
 					} else if (result.messages) {
-						if (modal) {
+						if (modal)
 							jQuery('.modal').modal('hide');
-						}
 						Joomla.renderMessages(result.messages);
 					} else {
 						/** @namespace result.message **/

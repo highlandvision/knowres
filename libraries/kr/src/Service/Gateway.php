@@ -47,13 +47,13 @@ class Gateway extends Service
 	 *
 	 * @param  int       $service_id     ID of service
 	 * @param  stdClass  $paymentData    Session payment data
-	 * @param  bool      $manual         True for manual gateway
+	 * @param  int       $manual         1 for manual gateway
 	 * @param  array     $payment_types  Valid payment types
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function __construct(int $service_id, stdClass $paymentData, bool $manual = false,
+	public function __construct(int $service_id, stdClass $paymentData, int $manual = 0,
 		array $payment_types = ['OBD', 'PBD', 'PBB'])
 	{
 		parent::__construct($service_id);
@@ -225,7 +225,6 @@ class Gateway extends Service
 	 * No gateways displayed as Stripe already selected at booking
 	 * and stored in an unpublished payment record
 	 *
-	 * @throws Exception
 	 * @throws Exception
 	 * @throws RuntimeException
 	 * @since  1.0.0

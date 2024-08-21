@@ -18,9 +18,8 @@ $wa->useScript('com_knowres.site')
    ->useScript('form.validate')
    ->useScript('keepalive');
 
-if ($this->payment_type == 'OBR') {
+if ($this->paymentData->payment_type == 'OBR') {
 	echo $this->loadTemplate('stripe_request');
-}
-else {
+} else {
 	echo $this->loadTemplate($this->gateway_name);
 }

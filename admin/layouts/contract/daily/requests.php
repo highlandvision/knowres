@@ -49,16 +49,18 @@ extract($displayData);
 				<td>
 					<?php $id = "kr-contract-request-form-" . $l['id']; ?>
 					<form action="<?php echo KrMethods::route('index.php?option=com_knowres'); ?>"
-					      class="form-validate" id="<?php echo $id; ?>" method="post" name="adminForm"">
+					      class="form-validate" id="<?php echo $id; ?>" method="post" name="adminForm">
 
 						<div class="btn-toolbar" role="toolbar" aria-label="Approve request">
 							<button class="btn btn-success"
-							        onclick="Knowres.submitform('contract.requestapprove', document.getElementById('<?php echo $id; ?>'));"
+							        onclick="Knowres.submitform('contract.requestapprove',
+								        document.getElementById('<?php echo $id; ?>')); this.disabled=true"
 							        title="<?php echo KrMethods::plain('COM_KNOWRES_APPROVE'); ?>" type="button">
 								<i class='fa-solid fa-check'></i>
 							</button>&nbsp;&nbsp;&nbsp;
 							<button class="btn btn-danger"
-							        onclick="Knowres.submitform('contract.requestreject', document.getElementById('<?php echo $id; ?>'));"
+							        onclick="Knowres.submitform('contract.requestreject',
+								        document.getElementById('<?php echo $id; ?>')); this.disabled=true"
 							        title="<?php echo KrMethods::plain('COM_KNOWRES_REJECT'); ?>" type="button">
 								<i class='fa-solid fa-trash'></i>
 							</button>

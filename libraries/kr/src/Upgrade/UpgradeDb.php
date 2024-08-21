@@ -386,6 +386,8 @@ class UpgradeDb
 		self::drop($db, '#__knowres_guest', 'referral_info');
 		//ALTER TABLE `#__knowres_property` DROP COLUMN `bed_types`;
 		self::drop($db, '#__knowres_property', 'bed_types');
+		// ALTER TABLE `#__knowres_contract` ADD COLUMN `on_request_paid` TINYINT(1) DEFAULT NULL AFTER `qkey`;
+		self::add($db, '#__knowres_contract', 'on_request_paid', 'qkey', 'TINYINT(1) DEFAULT NULL');
 	}
 
 	/**

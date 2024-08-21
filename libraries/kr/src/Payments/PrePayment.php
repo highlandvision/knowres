@@ -43,8 +43,7 @@ class PrePayment
 	 */
 	public function constructExisting(object $contract, float $balance = 0): stdClass
 	{
-		if (!$contract->id)
-		{
+		if (!$contract->id) {
 			throw new InvalidArgumentException('Invalid Contract object passed');
 		}
 
@@ -76,15 +75,14 @@ class PrePayment
 	 */
 	public function constructNew(stdClass $contractData): stdClass
 	{
-		if (!$contractData->property_id)
-		{
-			throw new InvalidArgumentException('Invalid Contract object passed');
+		if (!$contractData->property_id) {
+			throw new InvalidArgumentException('Invalid Contract object passed without a property');
 		}
 
-		$paymentSession    = new KrSession\Payment();
-		$this->paymentData = $paymentSession->getData();
+		$paymentSession = new KrSession\Payment();
 		$paymentSession->resetData();
 
+		$this->paymentData               = $paymentSession->getData();
 		$this->paymentData->agency_id    = $contractData->agency_id;
 		$this->paymentData->base_amount  = $this->setNewAmount($contractData->deposit);
 		$this->paymentData->contract_id  = $contractData->id;
@@ -96,6 +94,30 @@ class PrePayment
 		$paymentSession->setData($this->paymentData);
 
 		return $this->paymentData;
+	}
+
+	/**
+	 * Set the available currencies for a payment
+	 *
+	 * @param  string  $currency  Contract currency
+	 *
+	 * @throws RuntimeException
+	 * @since  3.3.1
+	 * @return array
+	 */
+	protected function getCurrencies(string $currency): array
+	{
+		$currencies[] = $currency;
+
+		$payment_currencies = KrFactory::getListModel('currencies')->getPaymentCurrencies($currency);
+		if (is_string($payment_currencies)) {
+			$payment_currencies = Utility::decodeJson($payment_currencies);
+			foreach ($payment_currencies as $c) {
+				$currencies[] = $c;
+			}
+		}
+
+		return $currencies;
 	}
 
 	/**
@@ -115,27 +137,21 @@ class PrePayment
 		$gateway = new Gateway($this->paymentData->payment_type, $currency,
 			$this->paymentData->base_amount);
 
-		foreach ($services as $g)
-		{
+		foreach ($services as $g) {
 			$params = Utility::decodeJson($g->parameters);
 
 			$obd = isset($params->obd) ? (int) $params->obd : false;
-			if (!$obd && $this->paymentData->payment_type === 'OBD')
-			{
+			if (!$obd && $this->paymentData->payment_type === 'OBD') {
 				continue;
 			}
 			$obr = isset($params->obr) ? (int) $params->obr : false;
-			if (!$obr && $this->paymentData->payment_type === 'OBR')
-			{
+			if (!$obr && $this->paymentData->payment_type === 'OBR') {
 				continue;
 			}
 
-			try
-			{
+			try {
 				$gateways[$g->id] = $gateway->setGateway($g, $params);
-			}
-			catch (Exception)
-			{
+			} catch (Exception) {
 				continue;
 			}
 		}
@@ -155,50 +171,21 @@ class PrePayment
 	protected function getServiceGateways(array $currencies): array
 	{
 		$services = KrFactory::getListModel('services')->getGateways($currencies,
-			$this->paymentData->agency_id, $this->paymentData->property_id);
+			$this->paymentData->agency_id,
+			$this->paymentData->property_id);
 
 		$property = [];
 		$global   = [];
 
-		foreach ($services as $t)
-		{
-			if ($t->property_id)
-			{
+		foreach ($services as $t) {
+			if ($t->property_id) {
 				$property[] = $t;
-			}
-			else
-			{
+			} else {
 				$global[] = $t;
 			}
 		}
 
 		return count($property) ? $property : $global;
-	}
-
-	/**
-	 * Set the available currencies for a payment
-	 *
-	 * @param  string  $currency  Contract currency
-	 *
-	 * @throws RuntimeException
-	 * @since  3.3.1
-	 * @return array
-	 */
-	protected function getCurrencies(string $currency): array
-	{
-		$currencies[] = $currency;
-
-		$payment_currencies = KrFactory::getListModel('currencies')->getPaymentCurrencies($currency);
-		if (is_string($payment_currencies))
-		{
-			$payment_currencies = Utility::decodeJson($payment_currencies);
-			foreach ($payment_currencies as $c)
-			{
-				$currencies[] = $c;
-			}
-		}
-
-		return $currencies;
 	}
 
 	/**
@@ -214,17 +201,13 @@ class PrePayment
 	protected function setExistingAmount(object $contract, float $balance): float
 	{
 		$hasDeposit = $contract->contract_total - $contract->deposit;
-		if ($hasDeposit && $contract->booking_status < 10)
-		{
+		if ($hasDeposit && $contract->booking_status < 10) {
 			$amount = $contract->deposit;
-		}
-		else
-		{
+		} else {
 			$amount = $balance;
 		}
 
-		if (!$amount)
-		{
+		if (!$amount) {
 			throw new RuntimeException('Your reservation is fully paid');
 		}
 
@@ -242,8 +225,7 @@ class PrePayment
 	 */
 	protected function setNewAmount(float $amount): float
 	{
-		if (!$amount)
-		{
+		if (!$amount) {
 			throw new InvalidArgumentException('Payment amount could not be calculated');
 		}
 
@@ -282,12 +264,9 @@ class PrePayment
 	 */
 	protected function setPaymentTypeExisting(int $booking_status): string
 	{
-		if ($booking_status < 10)
-		{
+		if ($booking_status < 10) {
 			return 'PBD';
-		}
-		else
-		{
+		} else {
 			return 'PBB';
 		}
 	}
@@ -302,12 +281,9 @@ class PrePayment
 	 */
 	protected function setPaymentTypeNew(int $booking_type): string
 	{
-		if ($booking_type == 2)
-		{
+		if ($booking_type == 2) {
 			return 'OBD';
-		}
-		else
-		{
+		} else {
 			return 'OBR';
 		}
 	}

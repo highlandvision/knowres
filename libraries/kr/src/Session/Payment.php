@@ -111,7 +111,7 @@ class Payment extends Session
         $data->currency            = '';
         $data->customer_ref        = '';
         $data->due_date            = '';
-        $data->expiry_date         = null;
+        $data->expiry_date         = '';
         $data->gateway_name        = '';
         $data->gateway_description = '';
         $data->gateways            = [];
@@ -121,6 +121,7 @@ class Payment extends Session
         $data->merchantParameters  = '';
         $data->merchantSignature   = '';
         $data->note                = '';
+	    $data->on_request_paid     = 99;
         $data->payment_date        = '';
         $data->payment_intent_id   = '';
         $data->payment_method_id   = '';

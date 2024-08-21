@@ -61,15 +61,13 @@ class Requestreject
 		$this->hub->setValue('cancelled', 2);
 		$this->hub->setValue('cancelled_timestamp', TickTock::getTs());
 
-		try
-		{
+		try {
 			$db = KrFactory::getDatabase();
 			$db->transactionStart();
 
 			$modelContract = KrFactory::getAdminModel('contract');
 			$data          = $modelContract->validate($modelContract->getForm(), (array) $this->hub->getData());
-			if (!$data)
-			{
+			if (!$data) {
 				$this->hub->errors = $modelGuest->getErrors();
 				throw new RuntimeException('Validation errors found in Contract');
 			}
@@ -80,13 +78,10 @@ class Requestreject
 			KrFactory::getAdminModel('contractnote')::createContractNote($this->hub->getValue('id'), $note);
 
 			$db->transactionCommit();
-		}
-		catch (Exception $e)
-		{
+		} catch (Exception $e) {
 			$db->transactionRollback();
 
-			if (is_countable($this->hub->errors) && count($this->hub->errors))
-			{
+			if (is_countable($this->hub->errors) && count($this->hub->errors)) {
 				return false;
 			}
 

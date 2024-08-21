@@ -14,6 +14,7 @@ let calendarLoaded = false;
 let savedwidth = false;
 let large;
 let resized = false;
+let scloaded = false;
 
 (function ($) {
     $(function () {
@@ -91,6 +92,14 @@ let resized = false;
                     });
                 }
             }
+        }).on('open.zf.reveal', '#kr-gateway-modal[data-reveal]', function (e) {
+            if (!scloaded) {
+                e.preventDefault();
+                $.getScript('media/com_knowres/js/stripecheckout.min.js');
+                scloaded = true;
+            } else {
+                initializeStripe();
+            }
         }).on('click', '.favspan', function (e) {
             e.preventDefault();
             const pid = $(this).data('property');
@@ -150,7 +159,6 @@ let resized = false;
         if ($props.length && !searchDone) {
             getProperties($props.data('bar'));
         }
-
         let $tabs = $('.tabs');
         if ($('#kr-property-tabs').length && !calendarLoaded) {
             $tabs.find('a').each(function () {

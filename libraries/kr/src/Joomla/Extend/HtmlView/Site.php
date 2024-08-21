@@ -14,7 +14,7 @@ defined('_JEXEC') or die;
 use Exception;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\HtmlView as KrHtmlView;
-use Highlandvision\KR\Model\SiteModel;
+use HighlandVision\KR\Model\SiteModel;
 use HighlandVision\KR\SiteHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Pathway\Pathway;

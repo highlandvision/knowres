@@ -33,7 +33,6 @@ use JetBrains\PhpStorm\NoReturn;
 use Joomla\CMS\Response\JsonResponse;
 use RuntimeException;
 use stdClass;
-use UnexpectedValueException;
 
 use function count;
 use function explode;
@@ -82,10 +81,6 @@ class ContractController extends FormController
 			$Hub   = new Hub($contractData);
 			$agent = KrFactory::getAdminModel('agent')->getItem($contractData->agent_id);
 			$Hub->setAgent($agent);
-		} catch (UnexpectedValueException $e) {
-			Logger::logMe($e->getMessage());
-			echo new JsonResponse(null, $e->getMessage(), true);
-			jexit();
 		} catch (Exception $e) {
 			Logger::logMe($e->getMessage());
 			echo new JsonResponse(null, KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN_CHECK'), true);
@@ -172,7 +167,7 @@ class ContractController extends FormController
 
 			if ($id) {
 				$return = KrMethods::route('index.php?option=com_knowres&task=contract.show&id=' . $id, false);
-			} else if ($gobackto) {
+			} elseif ($gobackto) {
 				$return = KrMethods::route('index.php?option=com_knowres&' . $gobackto, false);
 			} else {
 				$return = KrMethods::route('index.php?option=com_knowres&view=properties', false);
@@ -369,7 +364,7 @@ class ContractController extends FormController
 			];
 
 			$this->compute($Hub, $computations);
-		} else if ($fixrate) {
+		} elseif ($fixrate) {
 			$computations = [
 				'extras',
 				'deposit',
@@ -378,7 +373,7 @@ class ContractController extends FormController
 			$this->compute($Hub, $computations);
 		} else {
 			$Calendar = new Calendar($Hub->getValue('property_id'), $Hub->getValue('arrival'),
-			                         $Hub->getValue('departure'));
+				$Hub->getValue('departure'));
 
 			$minstay = $Calendar->getMinstay();
 			if ($Hub->getValue('nights') < $minstay[$Hub->getValue('arrival')]) {
@@ -446,7 +441,7 @@ class ContractController extends FormController
 
 		if ($source == 'calendar') {
 			KrMethods::setUserState('com_knowres.gobackto', 'task=property.calendar&property_id=' . $property_id);
-		} else if ($source == 'gantt') {
+		} elseif ($source == 'gantt') {
 			KrMethods::setUserState('com_knowres.gobackto', 'view=gantt');
 		}
 
@@ -515,7 +510,8 @@ class ContractController extends FormController
 				$payments = KrFactory::getListModel('contractpayments')->getForContract($item->id);
 				$fees     = KrFactory::getListModel('contractfees')->getForContract($item->id);
 				[$balance, $balance_all] = KrFactory::getAdminModel('contractpayment')::setBalances($item,
-				                                                                                    $payments, $fees);
+					$payments,
+					$fees);
 
 				$html = KrMethods::render('contract.modal.show.reservation', [
 					'item'        => $item,
@@ -585,7 +581,7 @@ class ContractController extends FormController
 
 		$wrapper             = [];
 		$wrapper['redirect'] = KrMethods::route('index.php?option=com_knowres&task=contract.show&success=1&id=' . $id,
-		                                        false);
+			false);
 		echo new JsonResponse($wrapper);
 		jexit();
 	}
@@ -599,36 +595,65 @@ class ContractController extends FormController
 	#[NoReturn] public function requestapprove(): void
 	{
 		$this->checkToken();
+		$contract_id = $this->validateId();
+		$service_id  = KrMethods::inputInt('service_id');
 
-		$id         = $this->validateId();
-		$service_id = $this->input->getInt('service_id', 0);
-
-		$item = KrFactory::getAdminModel('contract')->getItem($id);
+		$item = KrFactory::getAdminModel('contract')->getItem($contract_id);
 		if (!$item->id) {
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN_CHECK'), 'error');
 			echo new JsonResponse(null, KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN_CHECK'), true);
 			jexit();
 		}
 
+		if ($service_id > 0) {
+			$service = KrFactory::getAdminModel('service')->getItem($service_id);
+			if (!$service->id) {
+				KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN_CHECK'), 'error');
+				echo new JsonResponse(null, KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN_CHECK'), true);
+				jexit();
+			}
+		}
+
 		$contractSession = new KrSession\Contract();
 		$contractData    = $contractSession->updateData($item);
 		$Hub             = new Hub($contractData);
 
-		$paymentSession          = new KrSession\Payment();
-		$paymentData             = $paymentSession->resetData();
+		$guest = KrFactory::getAdminModel('guest')->getItem($item->guest_id);
+		if (!$guest->id) {
+			KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN_CHECK'), 'error');
+			echo new JsonResponse(null, KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN_CHECK'), true);
+			jexit();
+		}
+
+		$guestSession = new KrSession\Guest();
+		$Hub->setData($guest, 'guestData');
+
+		$payment        = KrFactory::getAdminModel('contractpayments')->getPending($contract_id, $service_id);
+		$paymentSession = new KrSession\Payment();
+		$paymentData    = $paymentSession->updateData($payment);
+
 		$paymentData->service_id = $service_id;
 		if ($service_id) {
-			$paymentData->contract_id  = $id;
+			$paymentData->contract_id  = $contract_id;
 			$paymentData->payment_type = 'RBD';
+			$paymentData->secret_key   = $service->parameters->secret_key;
 		}
 		$Hub->setData($paymentData, 'paymentData');
 
-		$actions = ['requestapprove', 'emails'];
-		$this->core($Hub, $actions);
+		$actions = ['requestapprove'];
+
+		if (!$this->core($Hub, $actions)) {
+			Utility::pageErrors($Hub->errors);
+			echo new JsonResponse(null, '', true);
+			jexit();
+		}
+
+		$contractSession->resetData();
+		$paymentSession->resetData();
+		KrMethods::cleanCache('com_knowres_contracts');
 
 		$wrapper             = [];
 		$wrapper['redirect'] = $this->setReturn($Hub);
-
 		echo new JsonResponse($wrapper);
 		jexit();
 	}
@@ -720,7 +745,8 @@ class ContractController extends FormController
 	 * Requires session data to be set with current data
 	 *
 	 * @param  null  $key     The name of the primary key of the URL variable.
-	 * @param  null  $urlVar  The name of the URL variable if different from the primary key (sometimes required to avoid router collisions).
+	 * @param  null  $urlVar  The name of the URL variable if different from the
+	 *                        primary key (sometimes required to avoid router collisions).
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -820,7 +846,7 @@ class ContractController extends FormController
 
 		$contractSession = new KrSession\Contract();
 		$contractSession->resetData();
-		$contractData    = $contractSession->updateData($item);
+		$contractData = $contractSession->updateData($item);
 
 		$Hub     = new Hub($contractData);
 		$actions = ['cancel',
@@ -983,19 +1009,19 @@ class ContractController extends FormController
 
 		if ($Hub->getValue('contract_total') == $Hub->getValue('deposit')) {
 			$output->deposit_date = KrMethods::sprintf('COM_KNOWRES_FULL_PAYMENT_DUE',
-			                                           TickTock::displayDate($Hub->getValue('expiry_date')));
+				TickTock::displayDate($Hub->getValue('expiry_date')));
 		} else {
 			$output->deposit_date = KrMethods::sprintf('COM_KNOWRES_DEPOSIT_DUE',
-			                                           TickTock::displayDate($Hub->getValue('expiry_date')));
+				TickTock::displayDate($Hub->getValue('expiry_date')));
 		}
 
 		if ($Hub->getvalue('contract_total') - $Hub->getValue('deposit') == 0) {
 			$output->balance_date = KrMethods::plain('COM_KNOWRES_BALANCE');
-		} else if (!(int) $Hub->getValue('balance_days')) {
+		} elseif (!(int) $Hub->getValue('balance_days')) {
 			$output->balance_date = KrMethods::plain('COM_KNOWRES_CONTRACTS_BOOKING_STATUS_39');
 		} else {
 			$output->balance_date = KrMethods::sprintf('COM_KNOWRES_BALANCE_DUE',
-			                                           TickTock::displayDate($Hub->getValue('balance_date')));
+				TickTock::displayDate($Hub->getValue('balance_date')));
 		}
 
 		$output->ajax_warning = $Hub->getValue('ajax_warning');
@@ -1032,12 +1058,12 @@ class ContractController extends FormController
 
 		if ($Hub->getValue('agent_deposit_paid')) {
 			$output->hdeposit = KrMethods::plain('COM_KNOWRES_DEPOSIT_AGENT');
-		} else if ($Hub->getValue('contract_total') == $Hub->getValue('deposit')) {
+		} elseif ($Hub->getValue('contract_total') == $Hub->getValue('deposit')) {
 			$output->hdeposit = KrMethods::sprintf('COM_KNOWRES_FULL_PAYMENT_DUE',
-			                                       TickTock::displayDate($Hub->getValue('expiry_date')));
+				TickTock::displayDate($Hub->getValue('expiry_date')));
 		} else {
 			$output->hdeposit = KrMethods::sprintf('COM_KNOWRES_DEPOSIT_DUE',
-			                                       TickTock::displayDate($Hub->getValue('expiry_date')));
+				TickTock::displayDate($Hub->getValue('expiry_date')));
 		}
 
 		if ($Hub->getValue('contract_total') - $Hub->getValue('deposit') == 0) {
@@ -1046,7 +1072,7 @@ class ContractController extends FormController
 			$output->balance_date = KrMethods::plain('COM_KNOWRES_CONTRACTS_BOOKING_STATUS_39');
 		} else {
 			$output->balance_date = KrMethods::sprintf('COM_KNOWRES_BALANCE_DUE',
-			                                           TickTock::displayDate($Hub->getValue('balance_date')));
+				TickTock::displayDate($Hub->getValue('balance_date')));
 		}
 
 		$output->ajax_warning = $Hub->getValue('ajax_warning');
@@ -1083,24 +1109,25 @@ class ContractController extends FormController
 		}
 
 		if ($task === 'save' && $id > 0 && $action != 'block') {
-			$url .= 'index.php?option=com_knowres&task=contract.show&id=' . $id;
-		} else if ($task == 'save2new' && $id > 0) {
-			$url .= 'index.php?option=com_knowres&view=contract&task=edit';
+			$url = 'index.php?option=com_knowres&task=contract.show&id=' . $id;
+		} elseif ($task == 'save2new' && $id > 0) {
+			$url = 'index.php?option=com_knowres&view=contract&task=edit';
 			if ($action) {
 				$url .= '&layout=' . $action;
 			}
-		} else if ($gobackto) {
+		} elseif ($gobackto) {
 			if (str_contains($gobackto, 'task') || str_contains($gobackto, 'view')) {
-				$url .= 'index.php?option=com_knowres&' . $gobackto;
+				$url = 'index.php?option=com_knowres&' . $gobackto;
 			} else {
-				$url .= 'index.php?option=com_knowres&view=' . $gobackto;
+				$url = 'index.php?option=com_knowres&view=' . $gobackto;
 			}
-		} else if (($task === 'trash' || $task === 'resurrect') && $id > 0) {
-			$url .= 'index.php?option=com_knowres&task=contract.show&id=' . $id;
-		} else if (($task === 'requestreject' || $task === 'requestapprove')) {
-			$url .= 'index.php?option=com_knowres&task=contracts.daily&success=1';
+		} elseif (($task === 'trash' || $task === 'resurrect') && $id > 0) {
+			$url = 'index.php?option=com_knowres&task=contract.show&id=' . $id;
+		} elseif ($task === 'contract.requestreject' || $task === 'contract.requestapprove') {
+			KrMethods::message(KrMethods::plain('COM_KNOWRES_ACTION_SUCCESS'));
+			$url = 'index.php?option=com_knowres&task=contracts.daily';
 		} else {
-			$url .= 'index.php?option=com_knowres&view=contract&task=edit&layout=' . $action;
+			$url = 'index.php?option=com_knowres&view=contract&task=edit&layout=' . $action;
 			if ($action) {
 				$url .= '&layout=' . $action;
 			}
@@ -1126,7 +1153,7 @@ class ContractController extends FormController
 	{
 		if ($data->coupon_code) {
 			$coupon = KrFactory::getListModel('coupons')
-			                   ->getCoupon($data->property_id, $data->coupon_code);
+				->getCoupon($data->property_id, $data->coupon_code);
 			if (isset($coupon->id) && $coupon->id > 0) {
 				$data->coupon_id            = $coupon->id;
 				$data->coupon_amount        = $coupon->amount;

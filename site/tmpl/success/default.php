@@ -21,11 +21,11 @@ $wa->useScript('com_knowres.site')
 
 <div class="grid-x grid-margin-x">
 	<div class="small-12 medium-8 large-9 cell">
-		<?php if (!$this->request): ?>
+		<?php if (!$this->on_request): ?>
 			<h1><?php echo KrMethods::plain('COM_KNOWRES_SUCCESS_CONFIRMED'); ?></h1>
 			<h2 class="color-dark">
 				<?php echo KrMethods::sprintf('COM_KNOWRES_SUCCESS_CONFIRMED_DETAILS',
-					$this->contract->tag, $this->contract->property_name); ?></h2>
+					$this->contract_tag, $this->property_name); ?></h2>
 			<p><?php echo KrMethods::plain('COM_KNOWRES_SUCCESS_CONFIRMED_TEXT'); ?></p>
 			<p>
 				<?php echo KrMethods::plain('COM_KNOWRES_SUCCESS_DO_NOT_FORGETH'); ?><br>
@@ -35,7 +35,7 @@ $wa->useScript('com_knowres.site')
 			<h1><?php echo KrMethods::plain('COM_KNOWRES_SUCCESS_REQUEST_CONFIRMED'); ?></h1>
 			<h2 class="color-dark">
 				<?php echo KrMethods::sprintf('COM_KNOWRES_SUCCESS_REQUEST_CONFIRMED_DETAILS',
-					$this->contract->tag, $this->contract->property_name); ?>
+					$this->contract_tag, $this->property_name); ?>
 			</h2>
 			<p><?php echo KrMethods::plain('COM_KNOWRES_SUCCESS_REQUEST_CONFIRMED_TEXT'); ?></p>
 			<p>

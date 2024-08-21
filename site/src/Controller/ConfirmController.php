@@ -35,6 +35,7 @@ use function implode;
 use function jexit;
 use function substr;
 
+
 /**
  * Reservation confirm controller
  *
@@ -133,8 +134,8 @@ class ConfirmController extends FormController
 
 		$jform = KrMethods::inputArray('jform');
 		if ($jform['property_id'] != $contractData->property_id ||
-			$jform['arrival'] != $contractData->arrival ||
-			$jform['room_total'] != $contractData->room_total) {
+		    $jform['arrival'] != $contractData->arrival ||
+		    $jform['room_total'] != $contractData->room_total) {
 			$contractSession->resetData();
 			SiteHelper::expiredSession($jform['property_id'], true);
 		}
@@ -251,6 +252,41 @@ class ConfirmController extends FormController
 	}
 
 	/**
+	 * Display confirmation page for online reservations
+	 *
+	 * @throws Exception
+	 * @since  1.0.0
+	 */
+	public function success(): void
+	{
+		$userSession  = new KrSession\User();
+		$userData     = $userSession->getData();
+		$contract_id  = !empty($userData->pr_contract_id) ? $userData->pr_contract_id : 0;
+		$payment_type = !empty($userData->pr_payment_type) ? $userData->pr_payment_type : '';
+
+		if (empty($contract_id)) {
+			KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_FATAL_CONFIRM'));
+			KrMethods::redirect(KrMethods::route(KrMethods::getRoot()));
+		}
+
+		$contract = KrFactory::getAdminModel('contract')->getItem($contract_id);
+
+		KrMethods::cleanCache('com_knowres_contracts');
+		$contractSession = new KrSession\Contract();
+		$contractSession->resetData();
+
+		/* @var HighlandVision\Component\Knowres\Site\View\Success\HtmlView $view * */
+		$view                = $this->getView('success', 'html');
+		$view->contract_id   = $contract->id;
+		$view->contract_tag  = $contract->tag;
+		$view->on_request    = $payment_type == 'OBR';
+		$view->property_name = $contract->property_name;
+		$view->Itemid        = SiteHelper::getItemId('com_knowres', 'success');
+
+		$view->display();
+	}
+
+	/**
 	 * Process the core updates and actions.
 	 *
 	 * @param  Hub    $Hub      Hub
@@ -301,10 +337,10 @@ class ConfirmController extends FormController
 			}
 
 			$display .= '<div class="grid-x grid-margin-x"><span class="small-8 cell">' .
-				$name .
-				'</span><span class="small-4 cell text-right">' .
-				$valueDsp .
-				'</span></div>';
+			            $name .
+			            '</span><span class="small-4 cell text-right">' .
+			            $valueDsp .
+			            '</span></div>';
 		}
 
 		return $display;
