@@ -20,25 +20,27 @@ $wa->useScript('com_knowres.site')
 
 <?php if ($this->item) : ?>
 	<div class="kr-property">
-		<?php if ($this->backlink): ?>
-			<a href="<?php echo $this->backlink ?>" class="show-for-large accent button hollow backlink"
-			   title="<?php echo KrMethods::plain('COM_KNOWRES_SEARCH_RESULTS'); ?>">
-				<i class='fa-solid fa-long-arrow-alt-left'>&nbsp;</i>
-				<?php echo KrMethods::plain('COM_KNOWRES_SEARCH_RESULTS'); ?>
-			</a>
-		<?php endif; ?>
-		<div class="grid-x grid-margin-x align-bottom">
-			<div class="small-12 medium-12 cell">
-				<h1><?php echo $this->item->property_name . ' - ' . $this->item->region_name . ' / ' . $this->item->property_area; ?></h1>
+		<div class="kr-property-header">
+			<?php if ($this->backlink): ?>
+				<a href="<?php echo $this->backlink ?>" class="show-for-large accent button hollow backlink"
+				   title="<?php echo KrMethods::plain('COM_KNOWRES_SEARCH_RESULTS'); ?>">
+					<i class='fa-solid fa-long-arrow-alt-left'>&nbsp;</i>
+					<?php echo KrMethods::plain('COM_KNOWRES_SEARCH_RESULTS'); ?>
+				</a>
+			<?php endif; ?>
+			<div class="grid-x grid-margin-x align-bottom">
+				<div class="small-12 medium-12 cell">
+					<h1><?php echo $this->item->property_name . ' - ' . $this->item->region_name . ' / ' . $this->item->property_area; ?></h1>
+				</div>
 			</div>
-		</div>
-		<div class="grid-x grid-margin-x slideshow-wrapper">
-			<div class="small-12 cell">
-				<?php echo $this->loadTemplate('slideshow'); ?>
+			<div class="grid-x grid-margin-x">
+				<div class="small-12 cell">
+					<?php echo $this->loadTemplate('slideshow'); ?>
+				</div>
 			</div>
 		</div>
 
-		<div class="grid-x grid-margin-x ">
+		<div class="grid-x grid-margin-x">
 			<div class="small-12 medium-8 cell">
 				<?php if ($this->tabs): ?>
 					<?php echo $this->loadTemplate('tabs'); ?>

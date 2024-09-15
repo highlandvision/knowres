@@ -28,21 +28,20 @@ $Translations = new Translations();
 			<?php continue; ?>
 		<?php endif; ?>
 
-		<h3 class="header"><?php echo $r->name; ?></h3>
-		<?php if ($r->description && $r->name != $r->description): ?>
-			<?php echo '<p>' . $r->description . '</p>'; ?>
-		<?php endif; ?>
+		<h6><?php echo $r->name; ?></h6>
 		<?php $data = Utility::decodeJson($r->features); ?>
 		<?php $string = ''; ?>
-		<?php foreach ($data as $d): ?>
-			<?php $string .= $Translations->getText('propertyfeature', $d->id); ?>
-			<?php if ($d->count > 1): ?>
-				<?php $string .= ' x ' . $d->count . ', '; ?>
-			<?php else: ?>
-				<?php $string .= ', '; ?>
-			<?php endif; ?>
-		<?php endforeach; ?>
-		<?php $string = rtrim($string, ', '); ?>
-		<?php echo '<div class="amenities">' . $string . '</div>' ?>
+		<div class="amenity grid-x grid-margin-x small-up-2 large-up-3">
+			<?php foreach ($data as $d): ?>
+			<div class="cell">
+				<i class="fa-regular fa-circle-dot fa-xs"></i>&nbsp;
+				<?php $string = $Translations->getText('propertyfeature', $d->id); ?>
+				<?php if ($d->count > 1): ?>
+					<?php $string .= ' x ' . $d->count; ?>
+				<?php endif; ?>
+				<?php echo $string; ?>
+			</div>
+			<?php endforeach; ?>
+		</div>
 	<?php endforeach; ?>
 <?php endif; ?>

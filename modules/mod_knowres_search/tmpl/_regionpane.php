@@ -10,8 +10,9 @@
 defined('_JEXEC') or die;
 ?>
 
-<div class="dropdown-pane" id="kr-searchregion-drop" data-auto-focus="true" data-closable
-     data-close-on-click="true" data-dropdown data-h-offset="-2" data-v-offset="8">
+<div class="dropdown-pane noscroll" id="kr-searchregion-drop" data-auto-focus="true" data-closable
+     data-close-on-click="true" data-dropdown data-h-offset="-2" data-v-offset="8"
+     style="height:400px;overflow:scroll;width:"<?php echo $width; ?>>
 	<div class="dropdown-body">
 		<?php $c = 0; ?>
 		<?php foreach ($regions as $k => $v): ?>

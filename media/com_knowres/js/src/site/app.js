@@ -68,12 +68,12 @@ let scloaded = false;
                     $modal.open();
                 }
             });
-        }).on('show.zf.dropdown', '#kr-searchregion-drop', function () {
-            $("#kr-searchregion-drop").css('opacity', '1');
-        }).on('show.zf.dropdown', '#kr-searchguest-drop', function () {
-            $('#kr-searchguest-drop').css('opacity', '1');
-        }).on('hide.zf.dropdown', '#kr-searchregion-drop, #kr-searchguest-drop', function () {
-            $('body').css('opacity', '1');
+        }).on('show.zf.dropdown', '.noscroll', function () {
+            $('body').addClass("staticpane");
+            $(this).css('opacity', '1');
+        }).on('hide.zf.dropdown', '.noscroll', function () {
+            $('body').removeClass("staticpane");
+            $(this).css('opacity', '0');
         }).on('hide.zf.dropdown', '#kr-quote-form', function () {
             $('#guests').trigger('change');
         }).on('open.zf.reveal', '.kr-ajax-modal[data-reveal]', function (e) {
@@ -248,6 +248,7 @@ let scloaded = false;
     }
 
     function setSearchData(response, action = '') {
+        let $sidebar;
         if (response) {
             $('#kr-properties-data').empty().fadeIn('slow').html(response['items']).foundation();
             if (action !== 'thumb') {
@@ -256,17 +257,10 @@ let scloaded = false;
             $('.kr-pager.bottom').html(response['pagination']);
             $("#kr-offcanvas-properties-filter").html(response['filters']);
             $("#kr-offcanvas-properties-sortby").html(response['sortby']);
-            if (response['search'].length && $('#arrivaldsp').length) {
-                $('body').trigger('initajaxsearch');
+            $sidebar = $("#kr-sidebar-search");
+            if ($sidebar.length && response['search'].length) {
+                $sidebar.empty().html(response['search']);
             }
-
-            $('.sidebar .kr-filters ul.filter-sort-list li.head').each(function () {
-                if ($(this).hasClass('active')) {
-                    $(this).parent().children('li.filter-item').show();
-                } else {
-                    $(this).parent().children('li.filter-item').hide();
-                }
-            });
 
             if (action === 'page') {
                 window.scrollTo(0, 0);

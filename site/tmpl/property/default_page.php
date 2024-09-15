@@ -33,19 +33,19 @@ defined('_JEXEC') or die;
 		</div>
 	<?php endif; ?>
 
-	<!--  Rooms -->
-	<?php if (!empty($this->rooms) && count($this->rooms)): ?>
-		<h3 class="header"><?php echo KrMethods::plain('COM_KNOWRES_PROPERTY_TAB_ROOMS'); ?></h3>
-		<div class="rooms">
-			<?php echo KrMethods::render('property.rooms', ['rooms' => $this->rooms]); ?>
-		</div>
-	<?php endif; ?>
-
 	<!--  Amenities -->
 	<?php if (!empty($this->features) && count($this->features)): ?>
 		<h3 class="header"><?php echo KrMethods::plain('COM_KNOWRES_PROPERTY_TAB_AMENITIES'); ?></h3>
 		<div class="rooms">
 			<?php echo KrMethods::render('property.features', ['features' => $this->features]); ?>
+		</div>
+	<?php endif; ?>
+
+	<!--  Rooms -->
+	<?php if (!empty($this->rooms) && count($this->rooms)): ?>
+		<h3 class="header"><?php echo KrMethods::plain('COM_KNOWRES_PROPERTY_TAB_ROOMS'); ?></h3>
+		<div class="rooms">
+			<?php echo KrMethods::render('property.rooms', ['rooms' => $this->rooms]); ?>
 		</div>
 	<?php endif; ?>
 

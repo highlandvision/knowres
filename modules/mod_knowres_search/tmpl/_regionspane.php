@@ -11,7 +11,7 @@ defined('_JEXEC') or die;
 ?>
 
 <!--Multi region selection pane not currently in use-->
-<div class="dropdown-pane large" id="kr-searchregion-drop" data-auto-focus="true" data-closable
+<div class="dropdown-pane large noscroll" id="kr-searchregion-drop" data-auto-focus="true" data-closable
      data-close-on-click="true" data-dropdown data-h-offset="-2" data-v-offset="8">
 	<div class="dropdown-body">
 		<?php $c = 0; ?>

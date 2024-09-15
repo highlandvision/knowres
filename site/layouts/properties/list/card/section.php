@@ -20,6 +20,7 @@ extract($displayData);
  *
  * @var false|object $item         Property item.
  * @var Registry     $params       KR params.
+ * @var string       $currency     Property currency
  * @var string       $plink        Property link.
  * @var array        $key_features Key (filter) property features.
  * @var Translations $Translations Translations object.

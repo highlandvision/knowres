@@ -27,7 +27,7 @@ extract($displayData);
  */
 ?>
 
-<div class="dropdown-pane" id="kr-searchguest-drop" data-auto-focus="true" data-closable
+<div class="dropdown-pane noscroll" id="kr-searchguest-drop" data-auto-focus="true" data-closable
      data-close-on-click="true" data-dropdown data-h-offset="0" data-v-offset="8">
 	<div class="dropdown-body">
 		<div class="grid-x grid-margin-x">

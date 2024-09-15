@@ -120,9 +120,9 @@ class Search
 			try {
 				$Calendar =
 					new Calendar\Search($id,
-					                    $this->searchData->arrival,
-					                    $this->searchData->departure,
-					                    $rates[$id] ?? []);
+						$this->searchData->arrival,
+						$this->searchData->departure,
+						$rates[$id] ?? []);
 				if ($Calendar->checkSearchDates()) {
 					$valid[] = $id;
 				}
@@ -150,12 +150,14 @@ class Search
 				continue;
 			}
 
-			$free =
-				SiteHelper::setFreeGuests($item->sleeps_infant_max,
-				                          $item->sleeps_infant_age,
-				                          $this->searchData->child_ages);
+			$free = SiteHelper::setFreeGuests($item->sleeps_infant_max,
+					$item->sleeps_infant_age,
+					$this->searchData->child_ages);
 
-			if ($this->searchData->guests > $item->sleeps + $item->sleeps_extra + $free) {
+			$guests = !empty($this->searchData->guests) ?
+				$this->searchData->guests : $this->searchData->adults + $this->searchData->children;
+
+			if ($guests > $item->sleeps + $item->sleeps_extra + $free) {
 				if ($this->searchData->guests > $item->sleeps + $item->sleeps_extra) {
 					continue;
 				}
@@ -163,7 +165,7 @@ class Search
 
 			if ($this->searchData->children > 0 && is_countable($this->searchData->child_ages)) {
 				if (count($this->searchData->child_ages) > 0 &&
-					count($this->searchData->child_ages) < $this->searchData->children) {
+				    count($this->searchData->child_ages) < $this->searchData->children) {
 					continue;
 				}
 			}
@@ -185,9 +187,9 @@ class Search
 	{
 		$rates =
 			$this->setForProperty(KrFactory::getListModel('rates')
-			                               ->getRatesForProperty($this->searchData->baseIds,
-			                                                     $this->searchData->arrival,
-			                                                     $this->searchData->departure));
+				->getRatesForProperty($this->searchData->baseIds,
+					$this->searchData->arrival,
+					$this->searchData->departure));
 		$this->checkCalendarData($rates);
 		if (!count($this->searchData->baseIds)) {
 			return;
@@ -197,7 +199,7 @@ class Search
 			$this->setForProperty(KrFactory::getListModel('discounts')->getDiscounts($this->searchData->baseIds));
 		$extras      =
 			$this->setForProperty(KrFactory::getListModel('extras')
-			                               ->getPricingExtras($this->searchData->baseIds, true));
+				->getPricingExtras($this->searchData->baseIds, true));
 		$ratemarkups =
 			$this->setForProperty(KrFactory::getListModel('ratemarkups')->getMarkups($this->searchData->baseIds));
 		$seasons     = KrFactory::getListModel('seasons')->getSeasons();

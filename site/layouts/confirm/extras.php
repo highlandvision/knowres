@@ -103,13 +103,14 @@ foreach ($extras as $extra) {
 	$one['dropdown'] = HTMLHelper::_('select.genericlist',
 		$options,
 		'extra_quantities[]',
-		'class="kr-calculate kr-extra-select"',
+		'class="kr-calculate kr-extra-select no-margin-bottom"',
 		'value',
 		'text',
 		$default,
 		$id);
 
 	$one['hidden'] = '<input type="hidden" name="extra_ids[]" value="' . $extra->id . '">';
+	$one['id']     = $id;
 	$all[]         = $one;
 }
 
@@ -126,7 +127,7 @@ if (is_countable($all) && !count($all)) {
 				<div class="small-12 medium-3 cell">
 					<?php echo $a['dropdown'] . $a['hidden']; ?>
 				</div>
-				<div class="price small-12 medium-9 cell">
+				<label for="<?php echo $a['id']; ?>" class="price small-12 medium-9 cell">
 					<?php echo $a['name']; ?>
 					<?php if (!empty($a['description'])): ?>
 						<i class='fa-solid fa-info-circle has-tip' data-position="right" data-alignment="center"
@@ -135,7 +136,7 @@ if (is_countable($all) && !count($all)) {
 					<?php endif; ?>
 					<br>
 					<?php echo $a['price']; ?>
-				</div>
+				</label>
 			</div>
 		<?php endforeach; ?>
 	</div>

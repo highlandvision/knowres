@@ -19,18 +19,18 @@ $address = Utility::formatAddress($this->guestData->address1, $this->guestData->
 	$this->guestData->country_id, '<br>');
 ?>
 
-<div class="summary callout primary text-center">
-	<h2 class="color-primary">
+<div class="summary callout text-center">
+	<h2>
 		<?php if ($this->property->booking_type == 2) : ?>
 			<?php echo KrMethods::plain('COM_KNOWRES_CONFIRM_BOOK_PAYABLE_NOW'); ?>
 			<br>
-			<span class="paynow bigger">
+			<span class="paynow bigger red">
 				<?php echo Utility::displayValue($this->contractData->deposit, $this->contractData->currency); ?>
 			</span>
 		<?php else: ?>
 			<?php echo KrMethods::plain('COM_KNOWRES_CONFIRM_REQUEST_PAYABLE_NOW'); ?>
 			<br>
-			<span class="paynow">
+			<span class="paynow red">
 				<?php echo Utility::displayValue($this->contractData->deposit, $this->contractData->currency); ?>
 			</span>
 		<?php endif; ?>
@@ -39,16 +39,14 @@ $address = Utility::formatAddress($this->guestData->address1, $this->guestData->
 	<h3 style="margin-bottom:0;">
 		<?php echo $this->property->property_name; ?>
 	</h3>
-
 	<div class="total-summary">
 		<?php echo KrMethods::render('confirm.summary', ['data' => $this->contractData]); ?>
 	</div>
-	<br>
+
 	<h3 class="no-margin-bottom">
 		<?php echo KrMethods::plain('COM_KNOWRES_YOUR_DETAILS'); ?>
 	</h3>
-
-	<p>
+	<p class="small">
 		<?php echo $this->guestData->firstname . ' ' . $this->guestData->surname; ?>
 		<br>
 		<?php echo $address; ?>

@@ -17,7 +17,6 @@ use HighlandVision\KR\SiteHelper;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Utility;
 use Joomla\CMS\HTML\HTMLHelper;
-
 ?>
 
 <?php if (!empty($this->error)): ?>
@@ -74,18 +73,19 @@ use Joomla\CMS\HTML\HTMLHelper;
 
 		<div class="booknow">
 			<button class="button expanded medium" type="submit">
-				<?php echo KrFactory::getAdminModel('property')::bookingTypeText($this->quote->getValue('booking_type')); ?>
+				<?php echo KrFactory::getAdminModel('property')::bookingTypeText(
+					$this->quote->getValue('booking_type')); ?>
 			</button>
 		</div>
 
 		<div class="booking-summary text-center">
 			<p><?php echo KrMethods::plain('COM_KNOWRES_ARRIVAL'); ?>
 				<br><span class="color-primary"><?php echo TickTock::displayDate($this->quote->getValue('arrival'),
-				                                                                 'D, j F Y'); ?></span>
+						'D, j F Y'); ?></span>
 			</p>
 			<p><?php echo KrMethods::plain('COM_KNOWRES_DEPARTURE'); ?>
 				<br><span class="color-primary"><?php echo TickTock::displayDate($this->quote->getValue('departure'),
-				                                                                 'D, j F Y'); ?></span>
+						'D, j F Y'); ?></span>
 			</p>
 
 			<p>
@@ -97,13 +97,13 @@ use Joomla\CMS\HTML\HTMLHelper;
 						<?php if ($this->quote->getValue('children')): ?>
 							<br>
 							<?php echo KrMethods::plural('COM_KNOWRES_CONFIRM_CHILDREN',
-							                             $this->quote->getValue('children'),
-							                             Utility::displayAges($this->quote->getValue('child_ages'))); ?>
+								$this->quote->getValue('children'),
+								Utility::displayAges($this->quote->getValue('child_ages'))); ?>
 						<?php endif; ?>
 					</span>
 				<?php else: ?>
 					<span class="color-primary">
-						<?php echo KrMethods::plural('COM_KNOWRES_CONFIRM_GUESTS', $this->quote->getValue($data->adults)); ?>
+						<?php echo KrMethods::plural('COM_KNOWRES_CONFIRM_GUESTS', $this->quote->getValue('adults')); ?>
 					</span>
 				<?php endif; ?>
 			</p>

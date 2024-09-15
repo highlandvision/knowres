@@ -21,12 +21,6 @@
     <config>
         <fields name="params">
             <fieldset name="basic">
-                <field name="layout"
-                       class="form-select w-auto"
-                       type="modulelayout"
-                       validate="moduleLayout"
-                       label="JFIELD_ALT_LAYOUT_LABEL"
-                       description="MOD_KNOWRES_SEARCH_LAYOUT_DSC"/>
                 <field name="hero-position"
                        class="btn-group"
                        default="middle"

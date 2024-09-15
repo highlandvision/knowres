@@ -18,8 +18,8 @@ use Joomla\CMS\HTML\HTMLHelper;
 
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useScript('com_knowres.site')
-   ->useScript('form.validate')
-   ->useScript('keepalive');
+	->useScript('form.validate')
+	->useScript('keepalive');
 
 $Itemid = SiteHelper::getItemId('com_knowres', 'confirm', ['layout' => 'payment']);
 $action = KrMethods::route('index.php?option=com_knowres&view=confirm&layout=payment&Itemid=' . $Itemid);
@@ -35,7 +35,7 @@ $action = KrMethods::route('index.php?option=com_knowres&view=confirm&layout=pay
 				<h1><?php echo KrMethods::sprintf('COM_KNOWRES_CONFIRM_REQUEST_YOUR_RESERVATION',
 						$this->property->property_name); ?></h1>
 			<?php endif; ?>
-			<h5><?php echo KrMethods::plain('COM_KNOWRES_CONFIRM_BOOK_ENTER'); ?></h5>
+			<h5 class="red"><?php echo KrMethods::plain('COM_KNOWRES_CONFIRM_BOOK_ENTER'); ?></h5>
 		</div>
 	</div>
 
@@ -46,7 +46,8 @@ $action = KrMethods::route('index.php?option=com_knowres&view=confirm&layout=pay
 				<?php echo $this->loadTemplate('extras'); ?>
 				<?php echo $this->loadTemplate('guest'); ?>
 
-				<?php $gdpr = $this->Translations->getText('agency', $this->contractData->agency_id, 'gdpr_statement'); ?>
+				<?php $gdpr =
+					$this->Translations->getText('agency', $this->contractData->agency_id, 'gdpr_statement'); ?>
 				<?php if (!empty($gdpr)): ?>
 					<div class="callout small success">
 						<div class="smaller">
@@ -65,12 +66,14 @@ $action = KrMethods::route('index.php?option=com_knowres&view=confirm&layout=pay
 				<input type="hidden" name="jform[property_id]" value="<?php echo $this->contractData->property_id; ?>">
 				<input type="hidden" name="jform[arrival]" value="<?php echo $this->contractData->arrival; ?>">
 				<input type="hidden" name="jform[room_total]" value="<?php echo $this->contractData->room_total; ?>">
-				<input type="hidden" name="task" id="mytask" value="confirm.payment" />
+				<input type="hidden" name="task" id="mytask" value="confirm.payment"/>
 			</form>
 		</div>
 		<div class="small-12 medium-5 large-4 cell">
 			<?php echo $this->loadTemplate('ajaxed'); ?>
-			<?php echo HTMLHelper::_('image', $this->pimage, $this->property->property_name,
+			<?php echo HTMLHelper::_('image',
+				$this->pimage,
+				$this->property->property_name,
 				['width' => $this->params->get('max_property_width', 100)]);
 			?>
 

@@ -7,8 +7,25 @@
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
 
+use HighlandVision\KR\Framework\KrMethods;
+
 defined('_JEXEC') or die;
 ?>
+
+<h3 class="no-margin-bottom"><?php echo $this->item->property_name; ?></h3>
+
+<p>
+	<strong><?php echo KrMethods::plain("COM_KNOWRES_COLON_AREA"); ?></strong>
+	<?php echo $this->item->property_area . ', ' . $this->item->town_name; ?>
+	&nbsp; <strong><?php echo KrMethods::plain("COM_KNOWRES_COLON_BEDROOMS"); ?></strong>
+	<?php echo $this->item->bedrooms; ?>
+	&nbsp; <strong><?php echo KrMethods::plain("COM_KNOWRES_COLON_SLEEPS"); ?></strong>
+	<?php echo $this->item->sleeps; ?>
+	<?php if ($this->item->sleeps_extra) : ?>
+		+ <?php echo $this->item->sleeps_extra; ?><?php endif; ?>
+</p>
+
+<h4><?php echo $this->item->tagline; ?></h4>
 
 <div class="description">
 	<?php echo $this->item->p1; ?>

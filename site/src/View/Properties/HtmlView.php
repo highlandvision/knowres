@@ -125,7 +125,7 @@ class HtmlView extends KrHtmlView\Site
 				$searchData = $this->setInput($searchData, $searchSession);
 				if (!empty($searchData->arrival) && !empty($searchData->departure)) {
 					if ($searchData->arrival < $today || $searchData->departure < $today
-						|| $searchData->departure <= $searchData->arrival) {
+					    || $searchData->departure <= $searchData->arrival) {
 						$searchData = $searchSession->resetData($searchData->bar);
 						SiteHelper::redirectHome();
 					}
@@ -190,9 +190,8 @@ class HtmlView extends KrHtmlView\Site
 	#[NoReturn] protected function setCanonical(): void
 	{
 		$Itemid        = SiteHelper::getItemId('com_knowres', 'properties', ['region_id' => $this->default_region]);
-		$link          =
-			'index.php?option=com_knowres&view=properties&region_id=' . $this->default_region . '&Itemid=' .
-			$Itemid;
+		$link          = 'index.php?option=com_knowres&view=properties&region_id=' .
+		                 $this->default_region . '&Itemid=' . $Itemid;
 		$canonical_url = KrMethods::route($link);
 		$this->document->addHeadLink(KrMethods::getRoot() . ltrim($canonical_url, '/'), 'canonical');
 	}
@@ -210,7 +209,10 @@ class HtmlView extends KrHtmlView\Site
 	protected function setInput(stdClass $searchData, KrSession\Search $searchSession): stdClass
 	{
 		try {
-			$searchData->area      = KrMethods::inputString('area', '');
+			$searchData->area = KrMethods::inputString('area', '');
+			if (!empty($searchData->area)) {
+				$searchData->initial_area = $searchData->region_id . '^' . $searchData->area;
+			}
 			$searchData->region_id = KrMethods::inputInt('region_id', $this->default_region);
 			$searchData->arrival   = KrMethods::inputString('arrival', '');
 			Utility::validateInputDate($searchData->arrival);
@@ -221,16 +223,15 @@ class HtmlView extends KrHtmlView\Site
 			$searchData->feature_id  = KrMethods::inputInt('feature_id');
 			$searchData->bedrooms    = KrMethods::inputInt('bedrooms');
 			$searchData->flexible    = KrMethods::inputInt('flexible');
-			$searchData->guests      = KrMethods::inputInt('guests', 2);
 			$searchData->adults      = KrMethods::inputInt('adults', 2);
 			$searchData->children    = KrMethods::inputInt('children');
 			$searchData->child_ages  = KrMethods::inputArray('child_ages');
-			$searchData->limitstart  = KrMethods::inputint('limitstart');
-			$searchData->map_modal   = KrMethods::inputint('map_modal');
-
-			if (!empty($searchData->area)) {
-				$searchData->initial_area = $searchData->region_id . '^' . $searchData->area;
+			$searchData->guests      = KrMethods::inputInt('guests', 2);
+			if (KrMethods::getParams()->get('search_guests_expanded', 0)) {
+				$searchData->guests = $searchData->adults + $searchData->children;
 			}
+			$searchData->limitstart = KrMethods::inputint('limitstart');
+			$searchData->map_modal  = KrMethods::inputint('map_modal');
 
 			return $searchData;
 		} catch (Exception $e) {
@@ -264,11 +265,11 @@ class HtmlView extends KrHtmlView\Site
 	{
 		$description            = $data->region_name . ', ' . KrMethods::getCfg('sitename');
 		$this->meta_title       = KrMethods::sprintf('COM_KNOWRES_SEO_TITLE_PROPERTIES',
-		                                             $data->region_name,
-		                                             $data->country_name);
+			$data->region_name,
+			$data->country_name);
 		$this->meta_description = KrMethods::sprintf('COM_KNOWRES_SEO_DESCRIPTION_PROPERTIES',
-		                                             $data->region_name,
-		                                             $data->country_name);
+			$data->region_name,
+			$data->country_name);
 
 		return $description;
 	}

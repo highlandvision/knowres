@@ -18,9 +18,10 @@ extract($displayData);
 ?>
 
 <?php if (count($features)): ?>
-	<div class="amenities grid-x grid-margin-x small-up-2 large-up-3">
+	<div class="amenity grid-x grid-margin-x small-up-2 large-up-3">
 		<?php foreach ($features as $f): ?>
 			<div class="cell">
+				<i class="fa-solid fa-star fa-xs"></i>
 				<?php echo $f->name; ?>
 			</div>
 		<?php endforeach; ?>

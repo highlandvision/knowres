@@ -15,21 +15,13 @@ use Joomla\CMS\HTML\HTMLHelper;
 $wa = $this->document->getWebAssetManager();
 $wa->getRegistry()->addExtensionRegistryFile('com_knowres');
 $wa->useScript('com_knowres.site')
-   ->useScript('form.validate')
-   ->useScript('keepalive');
+	->useScript('form.validate')
+	->useScript('keepalive');
 
 HTMLHelper::_('script', trim(Utility::getGmapsURL()), [], ['async' => 'async', 'defer' => 'defer']);
 HTMLHelper::_('script', trim(Utility::getMarkerClustererURL()), [], ['async' => 'async', 'defer' => 'defer']);
 ?>
 
-<h1 id="kr-properties-filter-heading" class="h3 kr-properties-filter-heading show-for-medium">
-	<?php echo $this->header; ?>
-</h1>
-<?php echo $this->loadTemplate('searchbar'); ?>
-
-<div class="kr-properties" id="kr-properties-data"></div>
-<div class="small-only-text-center">
-	<div class="kr-pager bottom"></div>
-</div>
-
+<?php echo $this->loadTemplate('heading'); ?>
+<?php echo $this->loadTemplate('main'); ?>
 <?php echo $this->loadTemplate('modalmap'); ?>

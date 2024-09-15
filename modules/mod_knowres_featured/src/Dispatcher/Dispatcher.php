@@ -67,7 +67,6 @@ class Dispatcher extends AbstractModuleDispatcher implements HelperFactoryAwareI
 			$Helper               = $this->getHelperFactory()->getHelper('KnowresFeaturedHelper');
 			$data['title']        = $Helper->getMyTitle($params->get('title'));
 			$data['slidestoshow'] = $params->get('slidestoshow');
-
 			$properties = [];
 			for ($i = 1; $i <= 10; $i++) {
 				if ($params->get('property' . $i)) {

@@ -18,7 +18,7 @@ $width  = $this->params->get('max_slideshow_width');
 $height = $this->params->get('max_slideshow_height');
 ?>
 
-<div class="items basicgrid grid-x grid-margin-x small-up-1">
+<div class="items basicgrid small-up-1">
 	<?php foreach ($this->images as $image): ?>
 		<div class="column column-block">
 			<?php echo HTMLHelper::_('image', $path . $image->filename, $image->description, [

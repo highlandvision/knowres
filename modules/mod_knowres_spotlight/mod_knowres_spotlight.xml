@@ -90,6 +90,13 @@
                     <option value="new">Newest Properties</option>
                     <option value="discount">Discounted Properties</option>
                 </field>
+                <field name="link1"
+                       type="menuitem"
+                       default="-1"
+                       label="MOD_KNOWRES_SPOTLIGHT_LINK"
+                       description="MOD_KNOWRES_SPOTLIGHT_LINK_DSC">
+                    <option value="-1">COM_MODULES_NONE</option>
+                </field>
                 <field type="spacer"
                        name="spacer2"
                        label="&lt;b&gt;Image 2&lt;/b&gt;"/>
@@ -120,6 +127,13 @@
                     <option value="new">Newest Properties</option>
                     <option value="discount">Discounted Properties</option>
                 </field>
+                <field name="link2"
+                       type="menuitem"
+                       default="-1"
+                       label="MOD_KNOWRES_SPOTLIGHT_LINK"
+                       description="MOD_KNOWRES_SPOTLIGHT_LINK_DSC">
+                    <option value="-1">COM_MODULES_NONE</option>
+                </field>
                 <field type="spacer"
                        name="spacer3"
                        label="&lt;b&gt;Image 3&lt;/b&gt;"/>
@@ -149,6 +163,13 @@
                     <option value="-1">COM_MODULES_NONE</option>
                     <option value="new">Newest Properties</option>
                     <option value="discount">Discounted Properties</option>
+                </field>
+                <field name="link3"
+                       type="menuitem"
+                       default="-1"
+                       label="MOD_KNOWRES_SPOTLIGHT_LINK"
+                       description="MOD_KNOWRES_SPOTLIGHT_LINK_DSC">
+                    <option value="-1">COM_MODULES_NONE</option>
                 </field>
             </fieldset>
             <fieldset name="advanced">

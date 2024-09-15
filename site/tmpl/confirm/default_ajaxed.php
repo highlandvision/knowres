@@ -20,8 +20,6 @@ use HighlandVision\KR\Utility;
 			<div id="hilite_total" class="hilite-total"></div>
 			<div class="total-summary">
 				<?php echo KrMethods::render('confirm.summary', ['data' => $this->contractData]); ?>
-
-				<br><br>
 				<button type="button" data-toggle="kr-guest-totals" class="button secondary small milk">
 					<?php echo KrMethods::plain('COM_KNOWRES_PAYMENT_VIEW_BREAKDOWN'); ?>
 				</button>

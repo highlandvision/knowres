@@ -31,7 +31,7 @@ use HighlandVision\KR\Framework\KrMethods;
 		<div class="small-6 text-right cell">
 			<?php echo KrMethods::plain("COM_KNOWRES_SLEEPS"); ?>
 		</div>
-		<div class="small-3 end text-right cell">
+		<div class="small-6 end text-left cell">
 			<?php echo $this->item->sleeps; ?>
 			<?php if ($this->item->sleeps_extra) : ?>
 				+ <?php echo $this->item->sleeps_extra; ?>
@@ -40,20 +40,20 @@ use HighlandVision\KR\Framework\KrMethods;
 		<div class="small-6 text-right cell">
 			<?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_HEADER_BEDROOMS"); ?>
 		</div>
-		<div class="small-3 end text-right cell">
+		<div class="small-6 end text-left cell">
 			<?php echo $this->item->bedrooms; ?>
 		</div>
 		<div class="small-6 text-right cell">
 			<?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_HEADER_BATHROOMS"); ?>
 		</div>
-		<div class="small-3 end text-right cell">
+		<div class="small-6 end text-left cell">
 			<?php echo $this->item->bathrooms; ?>
 		</div>
 		<?php if ($this->item->area > 0): ?>
 			<div class="small-6 text-right cell">
 				<?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_HEADER_AREA"); ?>
 			</div>
-			<div class="small-3 end text-right cell">
+			<div class="small-6 end text-left cell">
 				<?php echo $this->item->area . '<span class="smaller">m2</span>'; ?>
 			</div>
 		<?php endif; ?>

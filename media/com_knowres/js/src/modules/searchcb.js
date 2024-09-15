@@ -24,14 +24,12 @@ for (let c = 0; c < cboxes.length; c++) {
 let observer = new MutationObserver(function (mutations) {
     mutations.forEach(function (mutation) {
         if (mutation.target.classList.contains('is-open')) {
-            document.getElementById("kr-overlay").style.display = "block";
             let cards = document.querySelectorAll(items);
             for (let i = 0; i < cards.length; i++) {
                 cards[i].style.cursor = "default";
                 cards[i].style.opacity = "0.2";
             }
         } else {
-            document.getElementById("kr-overlay").style.display = "none";
             let cards = document.querySelectorAll(items);
             for (let i = 0; i < cards.length; i++) {
                 cards[i].style.cursor = "pointer";

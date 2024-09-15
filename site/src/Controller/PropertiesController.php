@@ -260,13 +260,15 @@ class PropertiesController extends BaseController
 				unset($input[$k]);
 			}
 		}
+
 		$raw = http_build_query($input);
 
 		$Itemid = SiteHelper::getItemId('com_knowres', 'properties', ['region_id' => $region_id]);
-		$route  = KrMethods::route('index.php?option=com_knowres&view=properties&' .
-		                           'region_id=' . $region_id .
-		                           '&' . $raw .
+		$route  = KrMethods::route('index.php?option=com_knowres&view=properties' .
+		                           '&region_id=' . $region_id .
 		                           '&Itemid=' . $Itemid, false);
+
+		$route  = $route . '?' . $raw;
 
 		KrMethods::redirect($route);
 	}

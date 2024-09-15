@@ -35,6 +35,8 @@ class ListpartysizeField extends ListField
 	protected int $children = 0;
 	/** @var int Expanded guest option. */
 	protected int $expanded = 0;
+	/** @var bool Guests are fixed . */
+	protected bool $fixed = false;
 	/** @var int Free infant age limit. */
 	protected int $infant_age = 2;
 	/** @var int The max number of free infants. */
@@ -69,6 +71,7 @@ class ListpartysizeField extends ListField
 		$this->adults     = $options['adults'];
 		$this->child_ages = $options['child_ages'];
 		$this->children   = $options['children'];
+		$this->fixed      = !empty($options['fixed']) ? $options['fixed'] : false;
 		$this->max_guests = $options['max_guests'] ?: KrMethods::getParams()->get('search_maxguests', 16);
 		$this->infant_age = !empty($options['infant_age']) ?: 2;
 		$this->infant_max = !empty($options['infant_max']) ?: 1;
@@ -113,9 +116,8 @@ class ListpartysizeField extends ListField
 				$options[] = HTMLHelper::_('select.option', $i, Text::plural('MOD_KNOWRES_SEARCH_GUEST', $i));
 			}
 
-			$options[] = HTMLHelper::_('select.option',
-			                           $this->max_guests,
-			                           Text::plural('MOD_KNOWRES_SEARCH_GUEST', $this->max_guests . '+'));
+			$options[] = HTMLHelper::_('select.option', $this->max_guests,
+				Text::plural('MOD_KNOWRES_SEARCH_GUEST', $this->max_guests . '+'));
 		}
 
 		return array_merge(parent::getOptions(), $options);

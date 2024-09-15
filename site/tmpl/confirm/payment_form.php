@@ -37,7 +37,7 @@ $action = '/index.php?option=com_knowres&view=confirm&layout=payment&Itemid=' . 
 <form action="<?php echo $action; ?>" class="ajaxform form-validate" id="kr-form-payment" method="post">
 	<fieldset class="fieldset">
 		<div class="callout">
-			<h3 class="color-primary">
+			<h3>
 				<?php if ($this->contractData->contract_total == $this->contractData->deposit): ?>
 					<?php echo KrMethods::sprintf('COM_KNOWRES_CONFIRM_AMOUNT_DUE_FULL',
 						Utility::displayValue($this->contractData->deposit, $this->contractData->currency),
@@ -93,7 +93,7 @@ $action = '/index.php?option=com_knowres&view=confirm&layout=payment&Itemid=' . 
 		]);
 		?>
 
-		<div class="callout white">
+		<div class="callout small primary">
 			<input type="checkbox" class="checkover" name="agreecheck" id="agreecheck">
 			<label class="checklabel" for="agreecheck">
 				<?php echo KrMethods::plain('COM_KNOWRES_PAYMENT_TERMS1'); ?>

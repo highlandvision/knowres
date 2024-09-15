@@ -25,7 +25,9 @@ $count     = count($images);
 $pstyle   = '';
 $pclass[] = $params->get('horizontal');
 if ($textbg) {
+	$pstyle .= 'position:absolute;';
 	$pstyle .= 'background:' . $textbg . ';';
+	$pclass[] = 'withbg';
 }
 else {
 	$pclass[] = 'nobg';
@@ -41,14 +43,14 @@ if ($textsize) {
 }
 ?>
 
-<div class="kr-spotlight kr-equalize grid-x grid-margin-x">
+<div class="kr-spotlight grid-x grid-margin-x">
 	<?php
 		$num = 0;
 		foreach ($images as $d) {
 			echo match ($count) {
-				3       => '<div class="small-12 medium-4 cell">',
-				2       => '<div class="small-6 cell">',
-				default => '<div class="small-12 cell">',
+				3       => '<div class="small-12 medium-4 cell" style="position:relative;">',
+				2       => '<div class="small-6 cell" style="position:relative;">',
+				default => '<div class="small-12 cell" style="position:relative;">',
 			};
 
 			if (count($images) - 1 == $num) {
