@@ -35,7 +35,7 @@
   --large-h4-font-size: 18px;
   --large-h5-font-size: 17px;
   --paragraph-font-size: 16px;
-  --small-font-size: 75%;
+  --small-font-size: 14px;
   --topbar-background-top: hsl(208, 100%, 37%);
   --topbar-background: hsl(208, 100%, 16%);
   --topbar-submenu-background: hsl(207, 74%, 42%);
@@ -47,7 +47,6 @@
   --footer-icon: hsl(286, 24%, 58%);
   --footer-link: hsl(0, 0%, 96%);
   --footer-link-hover: hsl(0, 0%, 48%);
-  --form-background-color: hsl(0, 0%, 97%);
   --border-color: hsl(215, 54%, 36%);
 }
 
