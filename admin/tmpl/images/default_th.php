@@ -27,7 +27,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 		<?php echo HTMLHelper::_('searchtools.sort', 'JSTATUS', 'a.state', $this->listDirn, $this->listOrder); ?>
 	</th>
 	<th scope="col" class="w-20">
-		<?php echo HTMLHelper::_('searchtools.sort', 'COM_KNOWRES_NAME', 'a.name', $this->listDirn,
+		<?php echo HTMLHelper::_('searchtools.sort', 'COM_KNOWRES_NAME', 'a.filename', $this->listDirn,
 			$this->listOrder); ?>
 	</th>
 	<th scope="col" class="w-5 d-none d-md-table-cell">

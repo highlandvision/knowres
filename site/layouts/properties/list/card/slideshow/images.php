@@ -26,9 +26,9 @@ extract($displayData);
  * @var string       $plink        Property link.
  * @var Translations $Translations Translations object.
  */
+
 $image_filename = explode(',', $item->imagefilename);
 $image_id       = explode(',', $item->imageid);
-$image_order    = explode(',', $item->imageorder);
 $path           = Media\Images::getImagePath($item->id) . '/';
 $width          = $params->get('max_slideshow_width');
 $height         = $params->get('max_slideshow_height');
@@ -36,11 +36,11 @@ $height         = $params->get('max_slideshow_height');
 $slick_id = "kr-lazy-" . $item->id;
 $display  = [];
 $index    = 0;
-foreach ($image_order as $order) {
-	$display[(int) $order] = ['name' => $image_filename[$index], 'id' => $image_id[$index]];
+
+foreach ($image_id as $id) {
+	$display[$index] = ['name' => $image_filename[$index], 'id' => $id];
 	$index++;
 }
-ksort($display);
 ?>
 
 <div class="kr-properties-slideshow" id="<?php echo $slick_id; ?>">

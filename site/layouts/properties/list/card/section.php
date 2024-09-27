@@ -32,21 +32,22 @@ extract($displayData);
 		<?php echo $item->property_name; ?>
 	</h2>
 <?php else: ?>
-	<div class="grid-x grid-margin-x">
-		<div class="small-10 cell">
-			<h2 class="h4">
-				<?php echo $item->property_name; ?>
-			</h2>
-		</div>
-		<div class="small-2 cell rating">
-			<div>
-				<p>
-					<?php echo $item->avgrating; ?>&nbsp;
-					<i class='fa-solid fa-star'></i>
-				</p>
-			</div>
+
+<div class="grid-x grid-margin-x">
+	<div class="small-10 cell">
+		<h2 class="h4">
+			<?php echo $item->property_name; ?>
+		</h2>
+	</div>
+	<div class="small-2 cell rating">
+		<div>
+			<p>
+				<?php echo $item->avgrating; ?>&nbsp;
+				<i class='fa-solid fa-star'></i>
+			</p>
 		</div>
 	</div>
+</div>
 <?php endif; ?>
 
 <div class="info">

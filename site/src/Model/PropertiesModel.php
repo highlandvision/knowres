@@ -859,9 +859,8 @@ class PropertiesModel extends ListModel
 		             ' AND ' . $db->qn('d.valid_from') . '<=' . $db->q($today) .
 		             ' AND ' . $db->qn('d.valid_to') . '>=' . $db->q($today));
 
-		$query->select('GROUP_CONCAT(' . $db->qn('i.filename') . ') AS imagefilename');
-		$query->select('GROUP_CONCAT(' . $db->qn('i.id') . ') AS imageid');
-		$query->select('GROUP_CONCAT(' . $db->qn('i.property_order') . ') AS imageorder');
+		$query->select('GROUP_CONCAT(DISTINCT ' . $db->qn('i.filename') . 'ORDER BY i.property_order) AS imagefilename');
+		$query->select('GROUP_CONCAT(DISTINCT ' . $db->qn('i.id') . 'ORDER BY i.property_order) AS imageid');
 		$query->join('LEFT',
 		             $db->qn('#__knowres_image', 'i') . 'ON' . $db->qn('i.property_id') . '=' . $db->qn('a.id') .
 		             ' AND ' . $db->qn('i.state') . '=1');
