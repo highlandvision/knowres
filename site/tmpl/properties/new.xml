@@ -8,7 +8,8 @@
 	<fields name="request">
 		<fieldset name="request">
 			<field name="layout"
-				   value="new">
+				   value="new"
+				   type="hidden">
 			</field>
 		</fieldset>
 	</fields>
