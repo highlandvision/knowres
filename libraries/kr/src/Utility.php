@@ -18,6 +18,8 @@ use NumberFormatter;
 use RuntimeException;
 use stdClass;
 
+use function ceil;
+use function floor;
 use function implode;
 use function json_decode;
 use function json_encode;

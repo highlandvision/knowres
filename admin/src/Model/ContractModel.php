@@ -15,6 +15,7 @@ use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\AdminModel;
+use Highlandvision\KR\Model\DisplayModel;
 use HighlandVision\KR\Session as KrSession;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Utility;
@@ -163,19 +164,39 @@ class ContractModel extends AdminModel
 
 		$query->select($db->qn('c.contract_total') . ' +  IFNULL(SUM(' . $db->qn('cf.value') . ') ,0) - IFNULL(SUM('
 		               . $db->qn('cp.base_amount') . '),0) AS balance')
-		      ->from($db->qn('#__knowres_contract', 'c'))
-		      ->join('LEFT',
-		             $db->qn('#__knowres_contract_fee', 'cf') . ' ON '
-		             . $db->qn('cf.contract_id') . '=' . $contract_id)
-		      ->join('LEFT',
-		             $db->qn('#__knowres_contract_payment', 'cp') . ' ON '
-		             . $db->qn('cp.contract_id') . '=' . $contract_id . ' AND '
-		             . $db->qn('cp.state') . '=1')
-		      ->where($db->qn('c.id') . '=' . $contract_id);
+			->from($db->qn('#__knowres_contract', 'c'))
+			->join('LEFT',
+				$db->qn('#__knowres_contract_fee', 'cf') . ' ON '
+				. $db->qn('cf.contract_id') . '=' . $contract_id)
+			->join('LEFT',
+				$db->qn('#__knowres_contract_payment', 'cp') . ' ON '
+				. $db->qn('cp.contract_id') . '=' . $contract_id . ' AND '
+				. $db->qn('cp.state') . '=1')
+			->where($db->qn('c.id') . '=' . $contract_id);
 
 		$db->setQuery($query);
 
 		return $db->loadResult();
+	}
+
+	/**
+	 * Get gross rate from net rate
+	 * Net is net price x markup and rounding
+	 * Round net as required up / down plus unit
+	 *
+	 * @param  string  $net     Net rate
+	 * @param  string  $markup  Gross markup percentage
+	 * @param  int     $round   Up (1) or down (0)
+	 * @param  int     $unit    Unit for rounding
+	 *
+	 * @since  1.0.0
+	 * @return float Marked up rate
+	 */
+	public static function netRateMarkup(string $net, string $markup, int $round = 1, int $unit = 5): float
+	{
+		$rate = (float) $net + ($net * (float) $markup / 100);
+
+		return Utility::roundMe($rate, $round, $unit);
 	}
 
 	/**
@@ -213,8 +234,8 @@ class ContractModel extends AdminModel
 	 */
 	public function getForm($data = [],
 		$loadData = true,
-		                    ?string $source = 'contract',
-		                    int $property_id = 0): Form|false
+		?string $source = 'contract',
+		int $property_id = 0): Form|false
 	{
 		$form = parent::getForm($data, $loadData, $source);
 
@@ -321,8 +342,7 @@ class ContractModel extends AdminModel
 		$userSession = new KrSession\User();
 		if ($userSession->getAccessLevel() == 40) {
 			return true;
-		}
-		else {
+		} else {
 			return Factory::getUser()->authorise('core.delete', $this->option);
 		}
 	}
@@ -355,8 +375,8 @@ class ContractModel extends AdminModel
 	#[NoReturn] protected function prepareTable($table): void
 	{
 		if (!$table->black_booking) {
-			$hash                           = $table->tag . $table->guest_id;
-			$table->qkey                    = hash('ripemd160', $hash);
+			$hash        = $table->tag . $table->guest_id;
+			$table->qkey = hash('ripemd160', $hash);
 		}
 
 		if ($table->cancelled_timestamp == '0000-00-00 00:00:00' || $table->cancelled_timestamp == '') {
@@ -368,8 +388,7 @@ class ContractModel extends AdminModel
 				$table->created_at = TickTock::getTS();
 			}
 			$table->created_by = KrMethods::getUser()->id;
-		}
-		else {
+		} else {
 			$table->updated_at       = TickTock::getTS();
 			$table->updated_by       = KrMethods::getUser()->id;
 			$table->checked_out      = null;
