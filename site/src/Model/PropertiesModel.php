@@ -390,18 +390,10 @@ class PropertiesModel extends ListModel
 
 		$query->select('MIN(' . $db->qn('r.rate') . ') AS minrate');
 		$query->select('MAX(' . $db->qn('r.rate') . ') AS maxrate');
-		$query->join('LEFT',
-		             $db->qn('#__knowres_rate', 'r') .
-			' ON ' .
-			$db->qn('r.property_id') .
-			'=' .
-			$db->qn('a.id') .
-			' AND ' .
-			$db->qn('r.state') .
-			'=1 AND ' .
-			$db->qn('r.valid_to') .
-			'>=' .
-			$db->q(date('Y-m-d')));
+		$query->join('LEFT', $db->qn('#__knowres_rate', 'r') .
+			' ON ' . $db->qn('r.property_id') . '=' . $db->qn('a.id') .
+			' AND ' . $db->qn('r.state') . '=1 AND ' .
+			$db->qn('r.valid_to') . '>=' . $db->q(date('Y-m-d')));
 
 		if (is_numeric($properties)) {
 			$query->where($db->qn('a.id') . '=' . (int) $properties);
@@ -415,9 +407,7 @@ class PropertiesModel extends ListModel
 		}
 
 		$query->where($db->qn('a.state') . '=1')->where($db->qn('a.approved') . '=1');
-
 		$query->group($db->qn('id'));
-
 		$db->setQuery($query);
 
 		return $db->loadObjectList();

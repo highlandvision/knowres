@@ -30,10 +30,8 @@ $KRparams = KrMethods::getParams();
 				                         'height' => $KRparams->get('max_property_height')
 			                         ]);
 			?>
-			<?php if ($item['summary']) : ?>
-				<?php require ModuleHelper::getLayoutPath('mod_knowres_featured',
+			<?php require ModuleHelper::getLayoutPath('mod_knowres_featured',
 				                                          $params->get('layout', 'default') . '_pricesummary'); ?>
-			<?php endif; ?>
 		</div>
 
 		<div class="content no-margin-bottom">
