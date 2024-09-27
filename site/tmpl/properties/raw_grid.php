@@ -28,14 +28,14 @@ foreach ($results as $r) {
 <?php endif; ?>
 
 <?php echo KrMethods::render('properties.grid.list', ['items'          => $this->items,
-                                                        'params'         => $this->params,
-                                                        'currency'       => $this->Response->searchData->currency,
-                                                        'favs'           => $this->Response->searchData->favs,
-                                                        'bar'            => $this->Response->searchData->bar,
-                                                        'byAvailability' => $this->Response->searchData->byAvailability,
-                                                        'net'            => $this->Response->searchData->rateNet,
-                                                        'discount'       => $this->Response->searchData->rateDiscount,
-                                                        'rating'         => $this->Response->searchData->rating,
-                                                        'key_features'   => $key_features
+                                                      'params'         => $this->params,
+                                                      'currency'       => $this->Response->searchData->currency,
+                                                      'favs'           => $this->Response->searchData->favs,
+                                                      'bar'            => $this->Response->searchData->bar,
+                                                      'byAvailability' => $this->Response->searchData->byAvailability,
+                                                      'net'            => $this->Response->searchData->rateNet,
+                                                      'discount'       => $this->Response->searchData->rateDiscount,
+                                                      'rating'         => $this->Response->searchData->rating,
+                                                      'key_features'   => $key_features
 ]);
 ?>

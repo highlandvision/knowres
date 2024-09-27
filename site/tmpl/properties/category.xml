@@ -12,7 +12,7 @@
                    filter="integer"
                    required="true"
                    type="listcategories"
-                   label="COM_KNOWRES_TITLE_PROPERTIES_CATEGORY_LBL"
+                   label="COM_KNOWRES_TITLE_PROPERTIES_CATEGORY"
                    description="COM_KNOWRES_TITLE_PROPERTIES_CATEGORY_SELECT">
             </field>
         </fieldset>

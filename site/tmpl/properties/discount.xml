@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <metadata>
-	<layout title="COM_KNOWRES_TITLE_PROPERTIES_DISCOUNT" option="COM_KNOWRES_TITLE_PROPERTIES_DISCOUNT_OPT">
-		<message>
-			<![CDATA[COM_KNOWRES_TITLE_PROPERTIES_DISCOUNT_DSC]]>
-		</message>
-	</layout>
-	<fields name="request">
-		<fieldset name="request">
-			<field name="layout"
-				   value="discount">
-			</field>
-		</fieldset>
-	</fields>
+    <layout title="COM_KNOWRES_TITLE_PROPERTIES_DISCOUNt" option="COM_KNOWRES_TITLE_PROPERTIES_DISCOUNT_OPT">
+        <message>
+            <![CDATA[COM_KNOWRES_TITLE_PROPERTIES_DISCOUNT_DSC]]>
+        </message>
+    </layout>
+    <fields name="request">
+        <fieldset name="request">
+            <field name="layout"
+                   value="discount"
+                   type="hidden">
+            </field>
+        </fieldset>
+    </fields>
 </metadata>

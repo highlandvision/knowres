@@ -12,34 +12,24 @@
 defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrMethods;
-use Joomla\CMS\Factory;
 
 $wa = $this->document->getWebAssetManager();
 $wa->useScript('com_knowres.site')
-   ->useScript('keepalive');
+	->useScript('keepalive');
 
 $items     = [];
 $discounts = [];
 $prev_id   = 0;
 
-foreach ($this->items as $i)
-{
-	if ($prev_id == $i->property_id)
-	{
+foreach ($this->items as $i) {
+	if ($prev_id == $i->property_id) {
 		$discounts[$i->property_id][] = $i;
 	}
-	if ($prev_id != $i->property_id)
-	{
+	if ($prev_id != $i->property_id) {
 		$items[]                      = $i;
 		$discounts[$i->property_id][] = $i;
 		$prev_id                      = $i->property_id;
 	}
-}
-
-$menu = Factory::getApplication()->getMenu()->getActive();
-if ($menu)
-{
-	$menu_params = $menu->getParams();
 }
 
 echo KrMethods::render('properties.discounts', [
@@ -48,6 +38,6 @@ echo KrMethods::render('properties.discounts', [
 	'params'         => $this->params,
 	'title'          => KrMethods::plain('COM_KNOWRES_BROWSE_DISCOUNTS'),
 	'currencies'     => $this->currencies,
-	'per_row_medium' => $menu_params->get('per_row_medium', 2),
-	'per_row_large'  => $menu_params->get('per_row_large', 3)
+	'per_row_medium' => KrMethods::getParams()->get('per_row_medium', 2),
+	'per_row_large'  => KrMethods::getParams()->get('per_row_large', 3)
 ]);
