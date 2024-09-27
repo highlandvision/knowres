@@ -183,7 +183,8 @@ class PropertiesController extends BaseController
 					KrMethods::route('index.php?option=com_knowres&view=properties&Itemid=' .
 					                 $Itemid .
 					                 '&region_id=' .
-					                 $r->region_id, false);
+					                 $r->region_id,
+						false);
 
 				$options[] =
 					['icon'   => 'fa-solid fa-map-marker-alt',
@@ -243,17 +244,17 @@ class PropertiesController extends BaseController
 	 */
 	#[NoReturn] public function search(): void
 	{
-		$input                  = [];
-		$region_id              = KrMethods::inputInt('region_id', KrMethods::getParams()->get('default_region'));
-		$input['area']          = KrMethods::inputString('area');
-		$input['arrival']       = KrMethods::inputString('arrival');
-		$input['departure']     = KrMethods::inputString('departure');
-		$input['flexible']      = KrMethods::inputInt('flexible');
-		$input['guests']        = KrMethods::inputInt('guests');
-		$input['adults']        = KrMethods::inputInt('adults');
-		$input['child_ages']    = KrMethods::inputArray('child_ages');
-		$input['children']      = KrMethods::inputInt('children');
-		$input['map_modal']     = KrMethods::inputInt('map_modal');
+		$input               = [];
+		$region_id           = KrMethods::inputInt('region_id', KrMethods::getParams()->get('default_region'));
+		$input['area']       = KrMethods::inputString('area');
+		$input['arrival']    = KrMethods::inputString('arrival');
+		$input['departure']  = KrMethods::inputString('departure');
+		$input['flexible']   = KrMethods::inputInt('flexible');
+		$input['guests']     = KrMethods::inputInt('guests');
+		$input['adults']     = KrMethods::inputInt('adults');
+		$input['child_ages'] = KrMethods::inputArray('child_ages');
+		$input['children']   = KrMethods::inputInt('children');
+		$input['map_modal']  = KrMethods::inputInt('map_modal');
 
 		foreach ($input as $k => $v) {
 			if (empty($v)) {
@@ -264,11 +265,8 @@ class PropertiesController extends BaseController
 		$raw = http_build_query($input);
 
 		$Itemid = SiteHelper::getItemId('com_knowres', 'properties', ['region_id' => $region_id]);
-		$route  = KrMethods::route('index.php?option=com_knowres&view=properties' .
-		                           '&region_id=' . $region_id .
-		                           '&Itemid=' . $Itemid, false);
-
-		$route  = $route . '?' . $raw;
+		$route =
+			'index.php?option=com_knowres&view=properties&region_id=' . $region_id . '&Itemid=' . $Itemid . '?' . $raw;
 
 		KrMethods::redirect($route);
 	}
@@ -429,10 +427,10 @@ class PropertiesController extends BaseController
 				$image   = Media\Images::getMarkerImageLink($m->id);
 				$content =
 					KrMethods::render('properties.mapmarker',
-					                  ['image' => $image,
-					                   'name'  => $m->name,
-					                   'text'  => $m->description
-					                  ]);
+						['image' => $image,
+						 'name'  => $m->name,
+						 'text'  => $m->description
+						]);
 
 				$tmp            = [];
 				$tmp['lat']     = trim($m->lat);

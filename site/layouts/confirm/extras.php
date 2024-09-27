@@ -83,7 +83,7 @@ foreach ($extras as $extra) {
 
 	$values    = [];
 	$default   = 1;
-	$values[0] = KrMethods::plain('JSELECT');
+	$values[0] = KrMethods::plain('COM_KNOWRES_NO');
 	$default   = 0;
 
 	if (is_array($data) && array_key_exists($extra->id, $data)) {
@@ -128,8 +128,8 @@ if (is_countable($all) && !count($all)) {
 					<?php echo $a['dropdown'] . $a['hidden']; ?>
 				</div>
 				<label for="<?php echo $a['id']; ?>" class="price small-12 medium-9 cell">
-					<?php echo $a['name']; ?>
-					<?php if (!empty($a['description'])): ?>
+					<b><?php echo $a['name']; ?></b>
+					<?php if (strlen($a['description']) > 0): ?>
 						<i class='fa-solid fa-info-circle has-tip' data-position="right" data-alignment="center"
 						   data-tooltip title="<?php echo $a['description']; ?>">
 						</i>

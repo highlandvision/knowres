@@ -80,61 +80,6 @@ class Upgrade
 	}
 
 	/**
-	 * Update guest and owner service xrefs from client and owner tables (V4.0)
-	 *
-	 * @param  string  $table  Table name
-	 *
-	 * @throws Exception
-	 * @since  4.0.0
-	 */
-	public static function fkToServiceXref(string $table): void
-	{
-		$sid      = false;
-		$services = KrFactory::getListModel('services')->getServicesByType('s');
-		foreach ($services as $s) {
-			if ($s->plugin == 'factura') {
-				$sid = $s->id;
-				break;
-			}
-		}
-
-		if (!$sid) {
-			return;
-		}
-
-		$db = KrFactory::getDatabase();
-		if ($table == 'guest') {
-			$columns = $db->getTableColumns('#__knowres_guest');
-		} else {
-			$columns = $db->getTableColumns('#__knowres_owner');
-		}
-		if (!isset($columns['foreign_key'])) {
-			return;
-		}
-
-		$db    = KrFactory::getDatabase();
-		$query = $db->getQuery(true);
-		$query->select($db->qn(['id', 'foreign_key']))
-		      ->where($db->qn('foreign_key') . '<>' . $db->q(''));
-
-		if ($table == 'guest') {
-			$query->from($db->qn('#__knowres_guest'));
-		} else {
-			$query->from($db->qn('#__knowres_owner'));
-		}
-
-		$db->setQuery($query);
-		$rows = $db->loadObjectList();
-		if (!count($rows)) {
-			return;
-		}
-
-		foreach ($rows as $r) {
-			ServicexrefModel::insertServiceXref($sid, $table, $r->id, $r->foreign_key);
-		}
-	}
-
-	/**
 	 * Create the data for tables using Content History
 	 *
 	 * @throws InvalidArgumentException

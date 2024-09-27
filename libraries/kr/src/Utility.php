@@ -51,22 +51,18 @@ class Utility
 		if (is_a($errors, 'Exception') || is_subclass_of($errors, 'Exception')) {
 			if (KrMethods::isAdmin()) {
 				$messages[] = $errors->getMessage();
-			}
-			else {
+			} else {
 				$messages[] = KrMethods::plain('COM_KNOWRES_ERROR_FATAL');
 			}
-		}
-		else if (is_countable($errors) && count($errors)) {
+		} else if (is_countable($errors) && count($errors)) {
 			for ($i = 0, $n = count($errors); $i < $n && $i < 3; $i++) {
 				if (is_a($errors[$i], 'Exception')) {
 					$messages[] = $errors[$i]->getMessage();
-				}
-				else {
+				} else {
 					$messages[] = $errors[$i];
 				}
 			}
-		}
-		else {
+		} else {
 			$messages[] = KrMethods::plain('COM_KNOWRES_ERROR_FATAL');
 		}
 
@@ -99,26 +95,6 @@ class Utility
 	public static function compareFloat(float $one, float $two, int $decimal = 2): bool
 	{
 		return round($one, $decimal) == round($two, $decimal);
-	}
-
-	/**
-	 * Generate stripe metadata based on paymentdata session with some fields removed
-	 *
-	 * @param  stdClass  $paymentData
-	 *
-	 * @since  5.1.0
-	 * @return array
-	 */
-	public static function setStripeMeta(stdClass $paymentData):array {
-		$tmp = (array) $paymentData;
-		unset($tmp['gateway_name']);
-		unset($tmp['gateway_description']);
-		unset($tmp['gateways']);
-		unset($tmp['merchantParameters']);
-		unset($tmp['merchantSignature']);
-		$data = (object) $tmp;
-
-		return json_decode(json_encode($data), true);
 	}
 
 	/**
@@ -157,8 +133,7 @@ class Utility
 			if (!is_countable($data)) {
 				$data = [];
 			}
-		}
-		else {
+		} else {
 			$data = json_decode($data);
 			if (is_null($data)) {
 				$data = new stdClass();
@@ -199,8 +174,7 @@ class Utility
 		$params = KrMethods::getParams();
 		if ($params->get('decimal_comma') && !$separator) {
 			return number_format($value, $dp, ',', '');
-		}
-		else {
+		} else {
 			return number_format($value, $dp, '.', '');
 		}
 	}
@@ -216,10 +190,10 @@ class Utility
 	 * @since  3.5.0
 	 * @return string
 	 */
-	public static function displayValue(mixed  $value,
-	                                    string $currency,
-	                                    bool   $decimals = true,
-	                                    string $lang_code = ''): string
+	public static function displayValue(mixed $value,
+		string $currency,
+		bool $decimals = true,
+		string $lang_code = ''): string
 	{
 		if (empty($value)) {
 			$value = 0;
@@ -253,8 +227,7 @@ class Utility
 		if (is_array($data) || is_object($data)) {
 			if ($numeric) {
 				return json_encode($data, JSON_NUMERIC_CHECK);
-			}
-			else {
+			} else {
 				return json_encode($data);
 			}
 		}
@@ -278,12 +251,12 @@ class Utility
 	 * @return ?string
 	 */
 	public static function formatAddress(?string $address1,
-	                                     ?string $address2,
-	                                     ?string $postcode,
-	                                     ?string $town,
-	                                     mixed   $region,
-	                                     mixed   $country,
-	                                     ?string $string): ?string
+		?string $address2,
+		?string $postcode,
+		?string $town,
+		mixed $region,
+		mixed $country,
+		?string $string): ?string
 	{
 		$Translations = new Translations();
 
@@ -345,7 +318,12 @@ class Utility
 	{
 		$params = KrMethods::getParams();
 		$key    = $params->get('gmapkey', '');
-		$url    = "https://maps.googleapis.com/maps/api/geocode/json?v=3.55&latlng=" . $latlng . '&key=' . $key . '&loading=async&callback=initMap';
+		$url    =
+			"https://maps.googleapis.com/maps/api/geocode/json?v=3.55&latlng=" .
+			$latlng .
+			'&key=' .
+			$key .
+			'&loading=async&callback=initMap';
 		$data   = self::decodeJson(file_get_contents($url));
 
 		if (isset($data->results[0]->formatted_address)) {
@@ -368,9 +346,9 @@ class Utility
 	 * @return array|string
 	 */
 	public static function getAddressValue(Translations $Translations,
-	                                       string       $item,
-	                                       mixed        $value,
-	                                       string       $field = 'name'): array|string
+		string $item,
+		mixed $value,
+		string $field = 'name'): array|string
 	{
 		return is_numeric($value) ? $Translations->getText($item, $value, $field) : $value;
 	}
@@ -398,8 +376,7 @@ class Utility
 				99      => KrMethods::plain('COM_KNOWRES_CONTRACTS_BOOKING_STATUS_99'),
 				default => KrMethods::plain('COM_KNOWRES_CONTRACTS_BOOKING_STATUS_0'),
 			};
-		}
-		else {
+		} else {
 			return match ($booking_status) {
 				1       => KrMethods::plain('COM_KNOWRES_CONTRACTS_BOOKING_STATUS_SHORT_1'),
 				5       => KrMethods::plain('COM_KNOWRES_CONTRACTS_BOOKING_STATUS_SHORT_5'),
@@ -429,8 +406,7 @@ class Utility
 		$country = KrFactory::getAdminModel('country')->getItem($country_id);
 		if (isset($country->id) && $country->dial_code) {
 			return $paypal ? '' : '+' . $country->dial_code;
-		}
-		else {
+		} else {
 			return '';
 		}
 	}
@@ -445,7 +421,7 @@ class Utility
 	{
 		$url = 'https://maps.googleapis.com/maps/api/js';
 
-		$key    = KrMethods::getParams()->get('gmapkey', '');
+		$key = KrMethods::getParams()->get('gmapkey', '');
 		if ($key) {
 			$url .= '?key=' . $key;
 		}
@@ -454,17 +430,6 @@ class Utility
 		$url .= '&callback=Function.prototype';
 
 		return $url;
-	}
-
-	/**
-	 * Return URL for Google Maps
-	 *
-	 * @since  2.3.0
-	 * @return string
-	 */
-	public static function getMarkerClustererURL(): string
-	{
-		return 'https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js';
 	}
 
 	/**
@@ -483,10 +448,20 @@ class Utility
 
 		if (is_null($gobackto)) {
 			return false;
-		}
-		else {
+		} else {
 			return $gobackto;
 		}
+	}
+
+	/**
+	 * Return URL for Google Maps
+	 *
+	 * @since  2.3.0
+	 * @return string
+	 */
+	public static function getMarkerClustererURL(): string
+	{
+		return 'https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js';
 	}
 
 	/**
@@ -539,7 +514,7 @@ class Utility
 	/**
 	 * Convert new lines to paragraph tags
 	 *
-	 * @param  string  $string String to convert
+	 * @param  string  $string  String to convert
 	 *
 	 * @since  5.0.0
 	 * @return string
@@ -548,7 +523,7 @@ class Utility
 	{
 		$string = str_replace(['<p>', '</p>', '<br>', '<br />'], '', $string);
 
-		return  '<p>' . preg_replace('/[\r\n]+/', '</p><p>', $string) . '</p>';
+		return '<p>' . preg_replace('/[\r\n]+/', '</p><p>', $string) . '</p>';
 	}
 
 	/**
@@ -569,17 +544,14 @@ class Utility
 		if (is_a($errors, 'Exception') || is_subclass_of($errors, 'Exception')) {
 			if (KrMethods::isAdmin()) {
 				KrMethods::message($errors->getMessage(), 'error');
-			}
-			else {
+			} else {
 				KrMethods::plain('COM_KNOWRES_ERROR_FATAL');
 			}
-		}
-		else {
+		} else {
 			for ($i = 0, $n = count($errors); $i < $n && $i < 3; $i++) {
 				if (is_a($errors[$i], 'Exception') || is_subclass_of($errors[$i], 'Exception')) {
 					KrMethods::message($errors[$i]->getMessage(), $type);
-				}
-				else {
+				} else {
 					KrMethods::message($errors[$i], $type);
 				}
 			}
@@ -599,6 +571,31 @@ class Utility
 	{
 		KrMethods::message(KrMethods::plain($message));
 		KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&' . $redirect, false));
+	}
+
+	/**
+	 * Round monetary value
+	 *
+	 * @param  float  $value  Value to be rounded
+	 * @param  int    $round  Up (1) or down (0)
+	 * @param  int    $unit   Unit for rounding
+	 *
+	 * @since  3.3.0
+	 * @return float
+	 */
+	public static function roundMe(float $value, int $round = 1, int $unit = 5): float
+	{
+		if (!$unit) {
+			return $value;
+		}
+
+		if (!$round) {
+			$worker = floor($value / $unit) * $unit;
+		} else {
+			$worker = ceil($value / $unit) * $unit;
+		}
+
+		return (float) $worker;
 	}
 
 	/**
@@ -626,25 +623,68 @@ class Utility
 		return $value;
 	}
 
-    /**
-     * Set the payment amount for stripe (no dp)
-     *
-     * @throws Exception
-     * @since  5.1.0
-     */
-    public static function setStripeAmount(float $amount, string $currency): string
-    {
-        $KrCurrency = new Currency($currency);
-        $dp         = $KrCurrency->getDp();
-        if ($dp > 0) {
-            $multiplier = pow(10, $dp);
-            $amount     = (string)$amount * $multiplier;
-        } else {
-            $amount = (string)$amount;
-        }
+	/**
+	 * Set rows for search layouts
+	 *
+	 * @param  int     $columns  Number of columns to display
+	 * @param  string  $width    Screen width (medium or large)
+	 *
+	 * @since  5.1.0
+	 */
+	public static function setColumns(int $columns, string $width): string
+	{
+		if ($columns == 2)
+			return $width . '-6';
 
-        return $amount;
-    }
+		if ($columns == 3)
+			return $width . '-4';
+
+		if ($columns == 4)
+			return $width . '-3';
+
+		return $width . '-12';
+	}
+
+	/**
+	 * Set the payment amount for stripe (no dp)
+	 *
+	 * @throws Exception
+	 * @since  5.1.0
+	 */
+	public static function setStripeAmount(float $amount, string $currency): string
+	{
+		$KrCurrency = new Currency($currency);
+		$dp         = $KrCurrency->getDp();
+		if ($dp > 0) {
+			$multiplier = pow(10, $dp);
+			$amount     = (string) $amount * $multiplier;
+		} else {
+			$amount = (string) $amount;
+		}
+
+		return $amount;
+	}
+
+	/**
+	 * Generate stripe metadata based on paymentdata session with some fields removed
+	 *
+	 * @param  stdClass  $paymentData
+	 *
+	 * @since  5.1.0
+	 * @return array
+	 */
+	public static function setStripeMeta(stdClass $paymentData): array
+	{
+		$tmp = (array) $paymentData;
+		unset($tmp['gateway_name']);
+		unset($tmp['gateway_description']);
+		unset($tmp['gateways']);
+		unset($tmp['merchantParameters']);
+		unset($tmp['merchantSignature']);
+		$data = (object) $tmp;
+
+		return json_decode(json_encode($data), true);
+	}
 
 	/**
 	 * Validate input date

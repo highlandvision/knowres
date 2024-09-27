@@ -28,6 +28,7 @@ if (!empty($this->items) && count($this->items)) {
 	$data['items']      = $this->loadTemplate($this->Response->searchData->bar);
 	$data['filters']    = $this->favs_bar ? '' : $this->loadTemplate('filters');
 	$data['sortby']     = $this->loadTemplate('sortby');
+	$data['search']     = false;
 	$data['pagination'] = $pagination;
 } else {
 	$data['items']   = $this->loadTemplate('sorry');
@@ -35,7 +36,6 @@ if (!empty($this->items) && count($this->items)) {
 	$data['filters'] = '';
 }
 
-$data['search'] = true;
 echo Utility::encodeJson($data);
 
 $lifetime = 3600 * 24 * 30;
