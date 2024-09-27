@@ -14,8 +14,8 @@ use HighlandVision\KR\Framework\KrMethods;
 $wa = $this->document->getWebAssetManager();
 $wa->getRegistry()->addExtensionRegistryFile('com_knowres');
 $wa->useScript('com_knowres.site')
-   ->useScript('form.validate')
-   ->useScript('keepalive');
+	->useScript('form.validate')
+	->useScript('keepalive');
 ?>
 
 <?php if ($this->item) : ?>
@@ -30,7 +30,11 @@ $wa->useScript('com_knowres.site')
 			<?php endif; ?>
 			<div class="grid-x grid-margin-x align-bottom">
 				<div class="small-12 medium-12 cell">
-					<h1><?php echo $this->item->property_name . ' - ' . $this->item->region_name . ' / ' . $this->item->property_area; ?></h1>
+					<h1><?php echo $this->item->property_name .
+					               ' - ' .
+					               $this->item->region_name .
+					               ' / ' .
+					               $this->item->property_area; ?></h1>
 				</div>
 			</div>
 			<div class="grid-x grid-margin-x">

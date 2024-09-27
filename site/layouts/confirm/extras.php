@@ -103,7 +103,7 @@ foreach ($extras as $extra) {
 	$one['dropdown'] = HTMLHelper::_('select.genericlist',
 		$options,
 		'extra_quantities[]',
-		'class="kr-calculate kr-extra-select no-margin-bottom"',
+		'class="kr-calculate kr-extra-select"',
 		'value',
 		'text',
 		$default,

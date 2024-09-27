@@ -24,7 +24,7 @@ extract($displayData);
  */
 
 $toggle = "kr-discount-data" . $property_id;
-$count = 0;
+$count  = 0;
 ?>
 
 <button aria-label="<?php echo KrMethods::plain('COM_KNOWRES_HOVER_FOR_DISCOUNTS'); ?>"

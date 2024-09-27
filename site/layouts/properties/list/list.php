@@ -81,12 +81,13 @@ $count   = 0;
 
 				<div class="card-section">
 					<a class="suppress-underline" href="<?php echo $plink; ?>">
-						<?php echo KrMethods::render('properties.list.card.section', ['item'         => $item,
-						                                                              'params'       => $params,
-																					  'currency'     => $currency,
-						                                                              'plink'        => $plink,
-						                                                              'key_features' => $key_features,
-						                                                              'Translations' => $Translations
+						<?php echo KrMethods::render('properties.list.card.section', [
+							'item'         => $item,
+                            'params'       => $params,
+					        'currency'     => $currency,
+                            'plink'        => $plink,
+                            'key_features' => $key_features,
+                            'Translations' => $Translations
 						]); ?>
 					</a>
 				</div>

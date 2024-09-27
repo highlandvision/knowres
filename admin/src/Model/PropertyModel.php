@@ -133,11 +133,8 @@ class PropertyModel extends AdminModel
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
-		$fields = [$db->qn('state') . '=-99'
-		];
-
-		$conditions = [$db->qn('id') . ' IN (' . implode(',', array_map('intval', $cid)) . ')'
-		];
+		$fields = [$db->qn('state') . '=-99'];
+		$conditions = [$db->qn('id') . ' IN (' . implode(',', array_map('intval', $cid)) . ')'];
 
 		$query->update($db->qn('#__knowres_property'))->set($fields)->where($conditions);
 

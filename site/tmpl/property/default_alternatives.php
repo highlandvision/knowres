@@ -16,6 +16,7 @@ use HighlandVision\KR\Media;
 use HighlandVision\KR\SiteHelper;
 use HighlandVision\KR\Utility;
 use Joomla\CMS\HTML\HTMLHelper;
+
 ?>
 
 <div id="kr-alternatives">
@@ -48,14 +49,16 @@ use Joomla\CMS\HTML\HTMLHelper;
 			?>
 
 			<div class="small-12 cell">
-				<a href="<?php echo $plink; ?>" class="property" title="<?php echo $item->property_name; ?>">
+				<a href="<?php echo $plink; ?>" class="property suppress-underline"
+				   title="<?php echo $item->property_name; ?>">
 					<div class="image-wrapper">
-						<?php echo HTMLHelper::_('image', Media\Images::getImagePath($item->id, 'solo', $image),
-						                         $item->property_name,
-						                         [
-							                         'width'  => $this->params->get('max_property_width'),
-							                         'height' => $this->params->get('max_property_height')
-						                         ]);
+						<?php echo HTMLHelper::_('image',
+							Media\Images::getImagePath($item->id, 'solo', $image),
+							$item->property_name,
+							[
+								'width'  => $this->params->get('max_property_width'),
+								'height' => $this->params->get('max_property_height')
+							]);
 						?>
 
 						<?php echo KrMethods::render('properties.pricesummary', [
@@ -77,9 +80,9 @@ use Joomla\CMS\HTML\HTMLHelper;
 							<i class='fa-solid fa-female fa-lg color-accent'></i>
 							<i class='fa-solid fa-male fa-lg color-accent'></i>
 							<?php echo ' ' . ($item->sleeps + $item->sleeps_extra)
-								. ' ' . KrMethods::plain('COM_KNOWRES_FEATURED_PERSONS')
-								.  ' | ' . $item->bedrooms . ' '
-								. KrMethods::plain('COM_KNOWRES_BEDROOMS');
+							           . ' ' . KrMethods::plain('COM_KNOWRES_FEATURED_PERSONS')
+							           . ' | ' . $item->bedrooms . ' '
+							           . KrMethods::plain('COM_KNOWRES_BEDROOMS');
 							?>
 						</p>
 					</div>

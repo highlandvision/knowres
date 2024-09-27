@@ -20,7 +20,6 @@ use HighlandVision\KR\SiteHelper;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Translations;
 use HighlandVision\KR\Utility;
-use Joomla\CMS\Factory;
 use stdClass;
 
 use function count;
@@ -249,7 +248,7 @@ class HtmlView extends KrHtmlView\Site
 			}
 		}
 		if ($this->booking_type) {
-			Factory::getLanguage()->load('mod_knowres_search', JPATH_SITE . '/modules/mod_knowres_search');
+			KrMethods::getLanguage()->load('mod_knowres_search', JPATH_SITE . '/modules/mod_knowres_search');
 
 			if ($this->arrival && $this->arrival < $this->today && $this->departure) {
 				$this->arrival = '';
