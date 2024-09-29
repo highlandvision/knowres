@@ -18,19 +18,22 @@
 		<field
 			name="item"
 			type="filteritem"
-			class="js-select-submit-on-change">
+			class="js-select-submit-on-change"
+			layout="joomla.form.field.list-fancy-select">
 			<option value="">COM_KNOWRES_SELECT_ITEM</option>
 		</field>
 		<field
 			name="item_id"
 			type="filteritemid"
-			class="js-select-submit-on-change">
+			class="js-select-submit-on-change"
+			layout="joomla.form.field.list-fancy-select">
 			<option value="">COM_KNOWRES_SELECT_PROPERTY</option>
 		</field>
 		<field
 			name="field"
 			type="filterfield"
-			class="js-select-submit-on-change">
+			class="js-select-submit-on-change"
+			layout="joomla.form.field.list-fancy-select">
 			<option value="">COM_KNOWRES_SELECT_FIELD</option>
 		</field>
 		<field

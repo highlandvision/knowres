@@ -14,8 +14,8 @@
             <option value="">JOPTION_SELECT_PUBLISHED</option>
         </field>
         <field name="country_id"
-               layout="joomla.form.field.list-fancy-select"
                class="js-select-submit-on-change"
+               layout="joomla.form.field.list-fancy-select"
                table="#__knowres_region"
                type="filtercountry">
             <option value="">COM_KNOWRES_SELECT_COUNTRY</option>
