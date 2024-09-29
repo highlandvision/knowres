@@ -28,10 +28,10 @@ use function in_array;
  */
 class HtmlView extends KrHtmlView
 {
-	/** @var string The form field type */
-	public string $orphans = 'FilterItem';
 	/** @var Translations Translations object */
 	public Translations $Translations;
+	/** @var string The form field type */
+	public string $orphans = 'FilterItem';
 
 	/**
 	 * Display the view
@@ -57,8 +57,7 @@ class HtmlView extends KrHtmlView
 		$this->orphans      = $this->state->get('filter.orphans');
 		$this->Translations = new Translations();
 
-		if (!$this->checkEmpty())
-		{
+		if (!$this->checkEmpty()) {
 			$this->checkErrors();
 			ToolbarHelper::title(KrMethods::plain('COM_KNOWRES_TRANSLATIONS_TITLE'), 'tasks knowres');
 			$this->addListToolbar($this->get('name'));

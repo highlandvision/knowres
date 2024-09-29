@@ -24,6 +24,7 @@
         <field name="property_id"
                type="filterproperty"
                class="js-select-submit-on-change"
+               layout="joomla.form.field.list-fancy-select"
                table="#__knowres_contract">
             <option value="">COM_KNOWRES_SELECT_PROPERTY</option>
         </field>
@@ -35,18 +36,21 @@
         </field>
         <field name="region_id"
                type="filterregionjoin"
-               class="js-select-submit-on-change">
+               class="js-select-submit-on-change"
+               layout="joomla.form.field.list-fancy-select">
             <option value="">COM_KNOWRES_SELECT_REGION</option>
         </field>
         <field name="owner_id"
                type="filterownerrestrict"
                class="js-select-submit-on-change"
+               layout="joomla.form.field.list-fancy-select"
                table="#__knowres_property">
             <option value="">COM_KNOWRES_SELECT_OWNER</option>
         </field>
         <field name="manager_id"
                type="filtermanager"
                class="js-select-submit-on-change"
+               layout="joomla.form.field.list-fancy-select"
                table="#__knowres_contract">
             <option value="">COM_KNOWRES_SELECT_MANAGER</option>
         </field>

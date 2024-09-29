@@ -31,6 +31,7 @@
         <field name="key"
                type="filterkey"
                class="js-select-submit-on-change"
+               layout="joomla.form.field.list-fancy-select"
                table="#__knowres_service_xref">
             <option value="">COM_KNOWRES_SELECT_SERVICEXREF_KEY</option>
         </field>

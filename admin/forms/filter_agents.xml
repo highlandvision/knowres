@@ -18,6 +18,7 @@
 			name="service_id"
 			type="filterservice"
 			class="js-select-submit-on-change"
+			layout="joomla.form.field.list-fancy-select"
 			table="#__knowres_agent">
 			<option value="">COM_KNOWRES_SELECT_SERVICE</option>
 		</field>

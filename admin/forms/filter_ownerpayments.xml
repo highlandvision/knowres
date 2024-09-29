@@ -26,6 +26,7 @@
 			name="owner_id"
 			type="filterowner"
 			class="js-select-submit-on-change"
+			layout="joomla.form.field.list-fancy-select"
 			table="#__knowres_owner_payment">
 			<option value="">COM_KNOWRES_SELECT_OWNER</option>
 		</field>

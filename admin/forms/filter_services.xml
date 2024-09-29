@@ -31,6 +31,8 @@
         </field>
         <field name="property_id"
                type="filterproperty"
+               class="js-select-submit-on-change"
+               layout="joomla.form.field.list-fancy-select"
                table="#__knowres_service">
             <option value="0">COM_KNOWRES_SELECT_PROPERTY</option>
         </field>

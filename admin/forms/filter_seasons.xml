@@ -18,6 +18,7 @@
 			name="cluster_id"
 			type="filtercluster"
 			class="js-select-submit-on-change"
+			layout="joomla.form.field.list-fancy-select"
 			table="#__knowres_season">
 			<option value="">COM_KNOWRES_SELECT_CLUSTER</option>
 		</field>

@@ -15,18 +15,21 @@
         <field name="service_id"
                type="filterservice"
                class="js-select-submit-on-change"
+               layout="joomla.form.field.list-fancy-select"
                table="#__knowres_service_queue">
             <option value="">COM_KNOWRES_SELECT_SERVICE</option>
         </field>
         <field name="method"
                type="filtermethod"
                class="js-select-submit-on-change"
+               layout="joomla.form.field.list-fancy-select"
                table="#__knowres_service_queue">
             <option value="">COM_KNOWRES_SELECT_METHOD</option>
         </field>
         <field name="property_id"
                type="filterproperty"
                class="js-select-submit-on-change"
+               layout="joomla.form.field.list-fancy-select"
                table="#__knowres_service_queue">
             <option value="">COM_KNOWRES_SELECT_PROPERTY</option>
         </field>
