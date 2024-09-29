@@ -194,8 +194,8 @@
         </field>
         <field name="property_meta"
                type="radio"
-               default="1"
                class="btn-group btn-group-yesno"
+               default="1"
                label="COM_KNOWRES_CONFIG_SITE_META"
                description="COM_KNOWRES_CONFIG_SITE_META_DSC">
             <option value="1">JYES</option>
@@ -206,6 +206,15 @@
                type="text"
                label="COM_KNOWRES_CONFIG_SITE_SEO_SEARCH"
                description="COM_KNOWRES_CONFIG_SITE_SEO_SEARCH_DSC">
+        </field>
+        <field name="seo_search_country"
+               type="radio"
+               class="btn-group btn-group-yesno"
+               default="0"
+               label="COM_KNOWRES_CONFIG_SITE_SEO_SEARCH_COUNTRY"
+               description="COM_KNOWRES_CONFIG_SITE_SEO_SEARCH_COUNTRY_DSC">
+            <option value="1">JYES</option>
+            <option value="0">JNO</option>
         </field>
         <field name="seo_property"
                type="list"

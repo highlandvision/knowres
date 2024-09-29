@@ -143,7 +143,12 @@ class Knowres extends Base
 			case 'properties':
 				$Translations = new Translations;
 				if ($region_id) {
-					$sefSegments[] = $Translations->getText('region', $region_id);
+					if ($params->get('seo_search_country', 0)) {
+						$item = KrFactory::getAdminModel('region')->getItem($region_id);
+						$sefSegments[] = $Translations->getText('region', $region_id) . '-' . $item->country_name;
+					} else {
+						$sefSegments[] = $Translations->getText('region', $region_id);
+					}
 				} elseif ($category_id) {
 					$sefSegments[] = $Translations->getText('category', $category_id);
 				} elseif ($layout) {

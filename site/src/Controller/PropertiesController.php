@@ -264,9 +264,9 @@ class PropertiesController extends BaseController
 
 		$raw = http_build_query($input);
 
-		$Itemid = SiteHelper::getItemId('com_knowres', 'properties', ['region_id' => $region_id]);
-		$route =
-			'index.php?option=com_knowres&view=properties&region_id=' . $region_id . '&Itemid=' . $Itemid . '?' . $raw;
+		$Itemid = SiteHelper::getItemId('com_knowres', 'properties');
+		$route  = KrMethods::route('index.php?option=com_knowres&view=properties&region_id=' . $region_id . '&Itemid='
+		                           . $Itemid) . '?' . $raw;
 
 		KrMethods::redirect($route);
 	}
