@@ -11,16 +11,17 @@ defined('_JEXEC') or die;
 ?>
 
 <div class="dropdown-pane noscroll" id="kr-searchregion-drop" data-auto-focus="true" data-closable
-     data-close-on-click="true" data-dropdown data-h-offset="-2" data-v-offset="8"
-     style="height:400px;overflow:scroll;width:"<?php echo $width; ?>>
+     data-close-on-click="true" data-dropdown data-h-offset="-2" data-v-offset="8">
 	<div class="dropdown-body">
 		<?php $c = 0; ?>
-		<?php foreach ($regions as $k => $v): ?>
-			<div class="grid-x grid-margin-x">
-				<div class="small-6 large-5 cell">
+		<div class="grid-x grid-margin-x">
+			<?php foreach ($regions as $k => $v): ?>
+				<div class="small-2 cell country <?php if ($c > 2)
+					echo 'spacer'; ?>">
 					<?php echo $k; ?>
 				</div>
-				<div class="small-6 large-7 cell end">
+				<div class="small-4 cell <?php if ($c > 2)
+					echo 'spacer'; ?>">
 					<?php foreach ($v as $id => $r): ?>
 						<?php if ($id == $initial->region_id) : ?>
 							<input type="radio" class="radioover region" checked="checked"
@@ -41,7 +42,7 @@ defined('_JEXEC') or die;
 						<?php $c++; ?>
 					<?php endforeach; ?>
 				</div>
-			</div>
-		<?php endforeach; ?>
+			<?php endforeach; ?>
+		</div>
 	</div>
 </div>

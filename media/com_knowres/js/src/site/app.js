@@ -38,7 +38,9 @@ let scloaded = false;
         if ($ctrigger.length && !calendarLoaded) {
             loadCalendar($ctrigger.data('pid'), $ctrigger.data('target'));
             calendarLoaded = true;
-            $('.sticky').foundation('_calc', true);
+            if ('.sticky'.length) {
+                $('.sticky').foundation('_calc', true);
+            }
         }
 
         $(document).on('submit', '.ajaxform', function (e) {

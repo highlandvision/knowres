@@ -20,13 +20,11 @@ HTMLHelper::script(trim(Utility::getGmapsURL()));
 $this->lat  = $this->item->lat;
 $this->lng  = $this->item->lng;
 $this->zoom = $this->params->get('default_zoom', 12);
-if (is_null($this->lat))
-{
+if (is_null($this->lat)) {
 	$this->lat = $this->params->get('default_lat');
 	$this->lng = $this->params->get('default_lng');
 }
-if (!$this->item->map_max_zoom)
-{
+if (!$this->item->map_max_zoom) {
 	$this->item->map_max_zoom = $this->zoom;
 }
 

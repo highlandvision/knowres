@@ -153,7 +153,7 @@ class ServiceController extends BaseController
 	}
 
 	/**
-	 * Send all properties to channel
+	 * Send all properties to channel (manual usage))
 	 *
 	 * @throws Exception
 	 * @since 3.1.0

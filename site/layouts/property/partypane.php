@@ -14,15 +14,23 @@ use HighlandVision\KR\Framework\KrMethods;
 $tadults   = KrMethods::plain('MOD_KNOWRES_SEARCH_ADULTS');
 $tchildren = KrMethods::plain('MOD_KNOWRES_SEARCH_PLURAL_CHILDREN');
 $tchild    = KrMethods::plain('MOD_KNOWRES_SEARCH_PLURAL_CHILDREN_1');
+
+extract($displayData);
+/**
+ * Layout variables
+ * -----------------
+ *
+ * @var   int   $adults     #Adults.
+ * @var   int   $children   #Children
+ * @var   array $child_ages Child ages
+ * @var   int   $max_guests Max guests
+ */
 ?>
 
-<div class="dropdown-pane noscroll" id="kr-searchguest-drop" data-auto-focus="true" data-closable
+<div class="dropdown-pane" id="kr-searchguest-drop" data-auto-focus="true" data-closable
      data-close-on-click="true" data-dropdown data-h-offset="0" data-v-offset="8">
 	<div class="dropdown-body">
 		<div class="grid-x grid-margin-x">
-			<button class="close-button" aria-label="Close alert" type="button" data-close>
-				<span aria-hidden="true">&times;</span>
-			</button>
 			<div class="small-6 cell">
 				<label for="adults">
 					<?php echo KrMethods::plain('MOD_KNOWRES_SEARCH_SHOW_GUESTS_ADULTS'); ?>
@@ -44,7 +52,7 @@ $tchild    = KrMethods::plain('MOD_KNOWRES_SEARCH_PLURAL_CHILDREN_1');
 						</button>
 					</div>
 					<input class="input-number" id="adults" name="adults" type="number"
-					       value="<?php echo $initial->adults; ?>" min="1" max="50" readonly>
+					       value="<?php echo $adults; ?>" min="1" max="<?php echo $max_guests; ?>" readonly>
 					<div class="input-group-button">
 						<button type="button" id="aplus" class="input-number-increment"
 						        title="<?php echo KrMethods::plain('MOD_KNOWRES_SEARCH_INCREMENT'); ?>"
@@ -66,7 +74,7 @@ $tchild    = KrMethods::plain('MOD_KNOWRES_SEARCH_PLURAL_CHILDREN_1');
 						</button>
 					</div>
 					<input class="input-number" id="children" name="children" type="number"
-					       value="<?php echo $initial->children; ?>" min="0" max="10" readonly>
+					       value="<?php echo $children; ?>" min="0" max="10" readonly>
 					<div class="input-group-button">
 						<button type="button" id="cplus" class="input-number-increment"
 						        title="<?php echo KrMethods::plain('MOD_KNOWRES_SEARCH_INCREMENT'); ?>"
@@ -78,12 +86,12 @@ $tchild    = KrMethods::plain('MOD_KNOWRES_SEARCH_PLURAL_CHILDREN_1');
 				</div>
 			</div>
 			<div class="small-12 cell">
-				<?php $hideme = $initial->children == 0 ? 'hidden' : ''; ?>
+				<?php $hideme = $children == 0 ? 'hidden' : ''; ?>
 				<label for="child-ages-container" id="age-help" <?php echo $hideme; ?>>
 					<?php echo KrMethods::plain('MOD_KNOWRES_SEARCH_SHOW_GUESTS_AGES'); ?>
 				</label>
 				<div id="child-ages-container">
-					<?php foreach ($initial->child_ages as $k => $age): ?>
+					<?php foreach ($child_ages as $k => $age): ?>
 						<?php $id = 'child_ages_' . $k + 1; ?>
 						<?php $aria = KrMethods::sprintf('MOD_KNOWRES_SEARCH_SHOW_GUESTS_LBL', $k + 1); ?>
 						<input aria-label="<?php echo $aria; ?>" class="form-control valid form-control-success"

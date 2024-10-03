@@ -81,11 +81,11 @@ class Hub
 		$this->validateId();
 
 		$this->settings = KrFactory::getListModel('propertysettings')
-		                           ->getPropertysettings($this->getValue('property_id'));
+			->getPropertysettings($this->getValue('property_id'));
 		$this->setValue('currency', $this->settings['currency']);
 		$this->setValue('decimals',
-		                KrFactory::getListModel('currencies')
-		                         ->getDp($this->settings['currency']));
+			KrFactory::getListModel('currencies')
+				->getDp($this->settings['currency']));
 		if ($contractData->expiry_days == 0) {
 			$this->setValue('expiry_days', $this->settings['expiry_days']);
 		}
@@ -94,7 +94,7 @@ class Hub
 		}
 		$this->setValue('nights', TickTock::differenceDays($this->getValue('arrival'), $this->getValue('departure')));
 		$this->setValue('date_range',
-		                TickTock::allDatesBetween($this->getValue('arrival'), $this->getValue('departure'), true));
+			TickTock::allDatesBetween($this->getValue('arrival'), $this->getValue('departure'), true));
 		$this->setValue('booking_type', $this->property->booking_type);
 
 		$this->params = KrMethods::getParams();
@@ -163,8 +163,7 @@ class Hub
 		foreach ($nightly as $date => $rate) {
 			if ($date == $last) {
 				$nightly[$date] = $rate - $remaining;
-			}
-			else {
+			} else {
 				$nightly[$date] = $rate + $per_night;
 			}
 
@@ -191,12 +190,10 @@ class Hub
 					$this->setValue($key, $value, 'guestData');
 				}
 			}
-		}
-		else {
+		} else {
 			if (!(int) $this->params->get('create_user', 0)) {
 				$this->setValue('id', 0, 'guestData');
-			}
-			else {
+			} else {
 				$this->createUser();
 			}
 		}
@@ -283,15 +280,12 @@ class Hub
 			if ($this->getValue('deposit') != $this->getValue('contract_total')) {
 				if (!$this->getValue('balance_days')) {
 					$booking_status = 39;
-				}
-				else if ($this->getValue('balance_date') >= TickTock::getDate()) {
+				} else if ($this->getValue('balance_date') >= TickTock::getDate()) {
 					$booking_status = 10;
-				}
-				else {
+				} else {
 					$booking_status = 30;
 				}
-			}
-			else {
+			} else {
 				$booking_status = 40;
 			}
 		}
@@ -570,11 +564,10 @@ class Hub
 			$userData    = $userSession->getData();
 			$this->setValue('agency_id', $userData->agency_id);
 			$this->setValue('manager_id', $userData->manager_id);
-		}
-		else {
+		} else {
 			$this->setValue('manager_id', $this->settings['default_manager']);
 			$this->setValue('agency_id',
-			                KrFactory::getListModel('managers')->getAgency($this->settings['default_manager']));
+				KrFactory::getListModel('managers')->getAgency($this->settings['default_manager']));
 		}
 	}
 
@@ -635,22 +628,21 @@ class Hub
 			}
 
 			$free = SiteHelper::setFreeGuests($this->property->sleeps_infant_max,
-			                                  $this->property->sleeps_infant_age,
-			                                  $this->getValue('child_ages'));
+				$this->property->sleeps_infant_age,
+				$this->getValue('child_ages'));
 			if ($guests > $this->property->sleeps + $this->property->sleeps_extra + $free) {
 				if ($this->property->sleeps_infant_max > 1) {
 					throw new UnexpectedValueException(KrMethods::sprintf('COM_KNOWRES_QUOTE_ERROR_GUESTS',
-					                                                      $this->property->sleeps +
-					                                                      $this->property->sleeps_extra,
-					                                                      $this->property->sleeps_infant_max,
-					                                                      $this->property->sleeps_infant_age));
-				}
-				else {
+						$this->property->sleeps +
+						$this->property->sleeps_extra,
+						$this->property->sleeps_infant_max,
+						$this->property->sleeps_infant_age));
+				} else {
 					throw new UnexpectedValueException(KrMethods::sprintf('COM_KNOWRES_QUOTE_ERROR_GUESTS_1',
-					                                                      $this->property->sleeps +
-					                                                      $this->property->sleeps_extra,
-					                                                      $this->property->sleeps_infant_max,
-					                                                      $this->property->sleeps_infant_age));
+						$this->property->sleeps +
+						$this->property->sleeps_extra,
+						$this->property->sleeps_infant_max,
+						$this->property->sleeps_infant_age));
 				}
 			}
 
@@ -672,8 +664,7 @@ class Hub
 				if (!count($child_ages)) {
 					throw new UnexpectedValueException('Please enter the ages of the children');
 				}
-			}
-			else if ($children == 0 && is_countable($child_ages) && count($child_ages) > 0) {
+			} else if ($children == 0 && is_countable($child_ages) && count($child_ages) > 0) {
 				throw new UnexpectedValueException('Number of children must match number of ages');
 			}
 		}

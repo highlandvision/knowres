@@ -44,7 +44,7 @@ $picker    = $departure;
 		       class="form-control typeahead shadow-none"
 		       placeholder="<?php echo KrMethods::plain('COM_KNOWRES_GANTT_SEARCH') ?>"
 		       type="text">
-		<span class="input-group-text" style="padding:0 0.5rem;height:40px;">
+		<span class="input-group-text" style="padding:0 0.5rem;height:37px;">
             <i class='fa-solid fa-search'></i>
 		</span>
 	</div>

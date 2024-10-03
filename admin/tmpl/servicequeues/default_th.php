@@ -23,8 +23,9 @@ use Joomla\CMS\HTML\HTMLHelper;
 				'asc', 'JGRID_HEADING_ORDERING', 'icon-sort'); ?>
 		</th>
 	<?php endif; ?>
-	<th class='w-5 text-center'>
-		<?php echo KrMethods::plain('COM_KNOWRES_VIEW'); ?>
+
+	<th scope="col" class="w-10 text-center">
+		<?php echo HTMLHelper::_('searchtools.sort', 'JSTATUS', 'a.state', $this->listDirn, $this->listOrder); ?>
 	</th>
 	<th scope="col" class="w-10">
 		<?php echo HTMLHelper::_('searchtools.sort', 'COM_KNOWRES_SERVICEQUEUES_SERVICE_ID', 'a.service_name',

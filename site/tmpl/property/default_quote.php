@@ -34,12 +34,13 @@ $max = $this->item->sleeps + $this->item->sleeps_extra + $this->item->sleeps_inf
 			                                    null,
 			                                    TickTock::getDate($this->departure, 'j M Y')); ?>
 		</div>
+
 		<div class="small-12 cell">
 			<?php echo $this->form->renderField('guests', null, $this->searchData->guests, [
 				'adults'     => $this->searchData->adults ?: 2,
 				'children'   => $this->searchData->children ?: 0,
 				'child_ages' => $this->searchData->child_ages ?: [],
-				'max_guests' => $this->item->sleeps + $this->item->sleeps_extra + $this->item->sleeps_infant_max,
+				'max_guests' => $max,
 				'infant_max' => $this->item->sleeps_infant_max,
 				'infant_age' => $this->item->sleeps_infant_age,
 				'fixed'      => true,
@@ -47,7 +48,7 @@ $max = $this->item->sleeps + $this->item->sleeps_extra + $this->item->sleeps_inf
 		</div>
 	</div>
 
-	<?php echo KrMethods::render('form.field.search.partypane',
+	<?php echo KrMethods::render('property.partypane',
 	                             ['adults'     => $this->searchData->adults ?: 2,
 	                              'children'   => $this->searchData->children ?: 0,
 	                              'child_ages' => $this->searchData->child_ages ?: [],
