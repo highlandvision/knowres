@@ -10,9 +10,10 @@
 defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrMethods;
+
 ?>
 
-<div id="geriatric-key" style="text-align:center;">
+<div id="geriatric-key">
 	<table class="legend">
 		<tr>
 			<td>
