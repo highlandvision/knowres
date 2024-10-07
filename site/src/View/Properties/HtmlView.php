@@ -72,15 +72,14 @@ class HtmlView extends KrHtmlView\Site
 		$model                = $this->getModel();
 		$this->state          = $model->getState();
 		$this->params         = KrMethods::getParams();
-		$layout               = KrMethods::inputString('layout', 'default');
+		$layout               = KrMethods::inputString('layout', '');
 		$today                = TickTock::getDate();
 		$description          = false;
 		$this->default_region = $this->params->get('default_region', 0);
 
 		$searchSession = new KrSession\Search();
 		$searchData    = $searchSession->getData();
-
-		$retain = KrMethods::inputInt('retain');
+		$retain        = KrMethods::inputInt('retain');
 		if ($retain == 2) {
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_EXPIRED_SESSION'));
 			$retain = 1;
@@ -88,8 +87,10 @@ class HtmlView extends KrHtmlView\Site
 
 		$init = false;
 		if (!$retain || !count($searchData->baseIds)) {
-			$searchData = $searchSession->resetData($searchData->bar);
-			$init       = true;
+			if (!$layout) {
+				$searchData = $searchSession->resetData($searchData->bar);
+			}
+			$init = true;
 		}
 
 		if ($init) {

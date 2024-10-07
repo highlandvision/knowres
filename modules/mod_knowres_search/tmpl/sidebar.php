@@ -20,7 +20,7 @@ $wa->useScript('com_knowres.site-modules');
 
 $form         = KrFactory::getAdhocForm('mod_knowres_search', 'search.xml', 'module', null);
 $show_regions = $params->get('show_regions');
-$link         = "/index.php?option=com_knowres&task=properties.search";
+$link         = '/index.php?option=com_knowres&task=properties.search';
 ?>
 
 <div class="sidebar">
@@ -28,26 +28,25 @@ $link         = "/index.php?option=com_knowres&task=properties.search";
 		<div class="small-12 cell">
 			<form action="<?php echo $link; ?>" class="vertical" method="post" name="search-default">
 				<?php if ($show_regions): ?>
-					<div class="small-12 cell">
-						<?php echo $options; ?>
-					</div>
+					<?php echo $options; ?>
 				<?php endif; ?>
 				<?php if ($show_datepickers): ?>
-					<?php echo $form->renderField('arrivaldsp', null,
-					                              TickTock::getDate((string) $initial->arrival, 'j M Y')); ?>
-					<?php echo $form->renderField('departuredsp', null,
-					                              TickTock::getDate((string) $initial->departure, 'j M Y')); ?>
-					<input type="hidden" id="arrival" name="arrival">
-					<input type="hidden" id="departure" name="departure">
+					<?php echo $form->renderField('arrivaldsp',
+						null,
+						TickTock::getDate((string) $initial->arrival, 'j M Y')); ?>
+					<?php echo $form->renderField('departuredsp',
+						null,
+						TickTock::getDate((string) $initial->departure, 'j M Y')); ?>
+					<input type="hidden" id="arrival" name="arrival" value="">
+					<input type="hidden" id="departure" name="departure" value="">
 				<?php endif; ?>
 				<?php if ($show_guests): ?>
 					<?php echo $form->renderField('guests', null, $initial->guests,
-					                              ['show_guests' => $show_guests,
-					                               'adults'      => $initial->adults,
-					                               'children'    => $initial->children,
-					                               'child_ages'  => $initial->child_ages ?: [],
-					                               'max_guests'  => $max_guests
-					                              ]);
+						['adults'     => $initial->adults,
+						 'children'   => $initial->children,
+						 'child_ages' => $initial->child_ages ?: [],
+						 'max_guests' => $max_guests
+						]);
 					?>
 				<?php endif; ?>
 				<?php if ($show_flexible): ?>

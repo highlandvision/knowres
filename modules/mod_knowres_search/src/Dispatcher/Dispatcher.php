@@ -22,6 +22,7 @@ use Joomla\CMS\Helper\HelperFactoryAwareTrait;
 
 use function defined;
 use function is_dir;
+
 use const JPATH_ROOT;
 
 /**
@@ -73,13 +74,11 @@ class Dispatcher extends AbstractModuleDispatcher implements HelperFactoryAwareI
 			$data['show_flexible']    = $params->get('show_flexible', 0);
 			$data['show_guests']      = $params->get('show_guests', 0);
 			$data['expanded_guests']  = KrMethods::getParams()->get('search_guests_expanded', 0);
-			$data['region_id']        = KrMethods::getParams()->get('default_region', 0);
 
 			if ((int) $params->get('show_regions', 0)) {
 				$data['regions'] = $Helper::getRegions();
-				$data['options'] = $Helper::regionOptgroup($data['regions'],
-				                                          $data['params']->get('show_regions_expanded', 0),
-				                                          $data['initial']->region_id);
+				$data['options'] =
+					$Helper::regionOptgroup($data['regions'], $data['params']->get('show_regions_expanded', 0));
 			}
 		}
 

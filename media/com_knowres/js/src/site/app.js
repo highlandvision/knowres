@@ -262,6 +262,7 @@ let scloaded = false;
             $sidebar = $("#kr-sidebar-search");
             if ($sidebar.length && response['search'].length) {
                 $sidebar.empty().html(response['search']);
+                $('body').trigger('initajaxsearch');
             }
 
             if (action === 'page') {

@@ -403,18 +403,14 @@ class Search
 	 */
 	private function validateRegion(): void
 	{
-		if ($this->searchData->layout) {
-			$this->searchData->region_id = 0;
-		} else {
-			if (!$this->searchData->region_id && !$this->searchData->layout) {
-				$this->searchData->region_id = $this->params->get('default_region');
-			}
-
-			$region                         = KrFactory::getAdminModel('region')->getItem($this->searchData->region_id);
-			$this->searchData->region_name  = $this->Translations->getText('region', $region->id);
-			$this->searchData->country_name = $this->Translations->getText('country', $region->country_id);
-			$this->searchData->map_zoom     = min($region->map_zoom, $this->searchData->map_zoom);
-			$this->searchData->map_zoom_max = max($region->map_zoom_max, $this->searchData->map_zoom_max);
+		if (!$this->searchData->region_id && !$this->searchData->layout) {
+			$this->searchData->region_id = $this->params->get('default_region');
 		}
+
+		$region                         = KrFactory::getAdminModel('region')->getItem($this->searchData->region_id);
+		$this->searchData->region_name  = $this->Translations->getText('region', $region->id);
+		$this->searchData->country_name = $this->Translations->getText('country', $region->country_id);
+		$this->searchData->map_zoom     = min($region->map_zoom, $this->searchData->map_zoom);
+		$this->searchData->map_zoom_max = max($region->map_zoom_max, $this->searchData->map_zoom_max);
 	}
 }

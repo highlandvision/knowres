@@ -36,7 +36,7 @@ class RawView extends KrHtmlView
 	/** @var string Set to value of layout for favs */
 	protected string $favs_bar = '';
 	/** @var string Modules output */
-	protected string $modules;
+	protected string $modules = '';
 
 	/**
 	 * Display the view

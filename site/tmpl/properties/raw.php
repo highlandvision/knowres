@@ -28,12 +28,13 @@ if (!empty($this->items) && count($this->items)) {
 	$data['items']      = $this->loadTemplate($this->Response->searchData->bar);
 	$data['filters']    = $this->favs_bar ? '' : $this->loadTemplate('filters');
 	$data['sortby']     = $this->loadTemplate('sortby');
-	$data['search']     = false;
+	$data['search']     = $this->modules;
 	$data['pagination'] = $pagination;
 } else {
 	$data['items']   = $this->loadTemplate('sorry');
 	$data['sortby']  = '';
 	$data['filters'] = '';
+	$data['search']  = $this->modules;
 }
 
 echo Utility::encodeJson($data);

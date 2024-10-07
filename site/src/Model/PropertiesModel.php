@@ -134,17 +134,13 @@ class PropertiesModel extends ListModel
 		$query->select('(' . self::transSQ($db, 'region', 'a.region_id') . ') AS ' . $db->q('a.region_name'));
 		$query->select('(' . self::transSQ($db, 'country', 'a.country_id') . ') AS ' . $db->q('a.country_name'));
 
-		if ($data->region_id) {
+		if ((!$data->layout) && $data->region_id) {
 			$query->where($db->qn('a.region_id') . '=' . (int)$data->region_id);
 		}
 
 		if ($data->layout == 'category' && $data->category_id) {
 			$query = self::jsonFindInSet($db, $query, $data->category_id, 'a.categories');
 		}
-
-//		if ($data->layout == 'discount') {
-//			$query = self::jsonFindInSet($db, $query, $data->category_id, 'categories');
-//		}
 
 		if ((int) $data->byAvailability && !(int) $data->flexible) {
 			$subQuery = $db->getQuery(true);
@@ -849,8 +845,8 @@ class PropertiesModel extends ListModel
 		             ' AND ' . $db->qn('d.valid_from') . '<=' . $db->q($today) .
 		             ' AND ' . $db->qn('d.valid_to') . '>=' . $db->q($today));
 
-		$query->select('GROUP_CONCAT(DISTINCT ' . $db->qn('i.filename') . 'ORDER BY i.property_order) AS imagefilename');
-		$query->select('GROUP_CONCAT(DISTINCT ' . $db->qn('i.id') . 'ORDER BY i.property_order) AS imageid');
+		$query->select('GROUP_CONCAT(DISTINCT' . $db->qn('i.filename') . 'ORDER BY i.property_order) AS imagefilename');
+		$query->select('GROUP_CONCAT(DISTINCT' . $db->qn('i.id') . 'ORDER BY i.property_order) AS imageid');
 		$query->join('LEFT',
 		             $db->qn('#__knowres_image', 'i') . 'ON' . $db->qn('i.property_id') . '=' . $db->qn('a.id') .
 		             ' AND ' . $db->qn('i.state') . '=1');

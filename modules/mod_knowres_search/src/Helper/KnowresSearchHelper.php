@@ -41,7 +41,6 @@ class KnowresSearchHelper
 	{
 		$searchSession = new KrSession\Search();
 		$searchData    = $searchSession->getData();
-
 		try {
 			$input            = new stdClass;
 			$input->region_id = KrMethods::inputInt('region_id', $searchData->region_id);
@@ -70,6 +69,21 @@ class KnowresSearchHelper
 	}
 
 	/**
+	 * Returns the current selected search region
+	 *
+	 * @throws RuntimeException
+	 * @since  5.1
+	 * @return int
+	 */
+	public static function getCurrentRegion(): int
+	{
+		$searchSession = new KrSession\Search();
+		$searchData    = $searchSession->getData();
+
+		return $searchData->region_id;
+	}
+
+	/**
 	 * Creates the country regions array for grouped dropdown and region pane
 	 *
 	 * @throws RuntimeException
@@ -93,12 +107,11 @@ class KnowresSearchHelper
 	 *
 	 * @param  array  $regions   Property regions
 	 * @param  bool   $expand    Expand to show region pane
-	 * @param  int    $selected  Selected value
 	 *
 	 * @since  1.0.0
 	 * @return mixed
 	 */
-	public static function regionOptgroup(array $regions, bool $expand, int $selected): mixed
+	public static function regionOptgroup(array $regions, bool $expand): mixed
 	{
 		$groups = [];
 		$a      = [];
@@ -119,6 +132,7 @@ class KnowresSearchHelper
 			$a[] = ' data-toggle="kr-searchregion-drop"';
 		}
 
-		return HTMLHelper::_('select.genericlist', $groups, 'region_id', implode(' ', $a), 'value', 'text', $selected);
+		return HTMLHelper::_('select.genericlist', $groups, 'region_id', implode(' ', $a), 'value', 'text',
+			self::getCurrentRegion());
 	}
 }
