@@ -30,3 +30,11 @@ defined('_JEXEC') or die;
 <div class="description">
 	<?php echo $this->item->p1; ?>
 </div>
+
+<!--  Features -->
+<?php if (!empty($this->features) && count($this->features)): ?>
+	<h3 class="header"><?php echo KrMethods::plain('COM_KNOWRES_PROPERTY_TAB_AMENITIES'); ?></h3>
+	<div class="facilities">
+		<?php echo KrMethods::render('property.features', ['features' => $this->features]); ?>
+	</div>
+<?php endif; ?>

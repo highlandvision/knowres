@@ -62,7 +62,12 @@ class PropertyController extends FormController
 		$response        = [];
 		$key             = KrMethods::getParams()->get('gmapkey', '');
 		$address         = urlencode($address);
-		$url             = 'https://maps.googleapis.com/maps/api/geocode/json?v=3.55&address=' . $address . '&key=' . $key . '&loading=async&callback=initMap';
+		$url             =
+			'https://maps.googleapis.com/maps/api/geocode/json?v=3.55&address=' .
+			$address .
+			'&key=' .
+			$key .
+			'&loading=async&callback=initMap';
 		$geocodeResponse = Utility::decodeJson(file_get_contents($url));
 		if ($geocodeResponse->status == 'OK') {
 			foreach ($geocodeResponse->results as $result) {
@@ -90,8 +95,7 @@ class PropertyController extends FormController
 		if (empty($id)) {
 			Logger::logme('ID not received for property approval', 'error');
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN'));
-		}
-		else {
+		} else {
 			$data           = new stdClass();
 			$data->id       = $id;
 			$data->approved = 1;
@@ -139,8 +143,7 @@ class PropertyController extends FormController
 			Logger::logme('ID not received for property checkin', 'error');
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN'));
 			KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&view=properties', false));
-		}
-		else {
+		} else {
 			$this->setRedirect(KrMethods::route('index.php?option=com_knowres&task=property.dashboard&id=' . $id,
 				false));
 
@@ -148,8 +151,7 @@ class PropertyController extends FormController
 			$model = $this->getModel();
 			if (!$model->checkin($id)) {
 				KrMethods::message($model->getError(), 'error');
-			}
-			else {
+			} else {
 				KrMethods::message(KrMethods::plain('COM_KNOWRES_ITEM_CHECKED_IN'));
 			}
 		}
@@ -176,12 +178,10 @@ class PropertyController extends FormController
 			$newid = $Cloner->cloneProperty($jform);
 			if (!$newid) {
 				echo false;
-			}
-			else {
+			} else {
 				echo $newid;
 			}
-		}
-		else if ($id && $newid && $type != '') {
+		} else if ($id && $newid && $type != '') {
 			$Cloner->clonePropertyChild($newid, $type, $jform);
 		}
 
@@ -203,8 +203,7 @@ class PropertyController extends FormController
 
 		if ($target == 'region_id') {
 			$form->setValue('country_id', null, $parent_id);
-		}
-		else if ($target == 'town_id') {
+		} else if ($target == 'town_id') {
 			$form->setValue('region_id', null, $parent_id);
 		}
 
@@ -242,7 +241,12 @@ class PropertyController extends FormController
 		$view->upcoming = KrFactory::getListModel('contracts')->getUpcomingForProperty($id, $view->today);
 
 		$Itemid             = SiteHelper::getItemId('com_knowres', 'property', ['id' => 0]);
-		$view->preview_link = KrMethods::route(KrMethods::getRoot() . 'index.php?option=com_knowres&view=property&layout=preview&id=' . $id . '&Itemid=' . $Itemid);
+		$view->preview_link =
+			KrMethods::route(KrMethods::getRoot() .
+			                 'index.php?option=com_knowres&view=property&layout=preview&id=' .
+			                 $id .
+			                 '&Itemid=' .
+			                 $Itemid);
 		$view->edit_link    = KrMethods::route('index.php?option=com_knowres&task=property.edit&id=' . $id);
 
 		if ($view->item->owner_id) {
@@ -275,8 +279,7 @@ class PropertyController extends FormController
 			Logger::logme('ID not received for property delete PDF', 'error');
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN'));
 			KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&view=properties', false));
-		}
-		else {
+		} else {
 			$this->setRedirect(KrMethods::route('index.php?option=com_knowres&view=media&id=' . $id, false));
 
 			$pdfNameArray = $this->input->get('pdf', [], 'array');
@@ -320,11 +323,9 @@ class PropertyController extends FormController
 
 		if ($address) {
 			echo Utility::encodeJson(self::geoCodeAddress($address));
-		}
-		else if ($latlng) {
+		} else if ($latlng) {
 			echo Utility::geoCodeLatLng($latlng);
-		}
-		else {
+		} else {
 			echo Utility::encodeJson($data);
 		}
 
@@ -361,7 +362,7 @@ class PropertyController extends FormController
 
 		$this->setRedirect(KrMethods::route('index.php?option=com_knowres&view=media&id=' . $property_id, false));
 
-		$name     = $_FILES['image']['name'];
+		$name = $_FILES['image']['name'];
 		if (!$name) {
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_FORM_ERROR_PROPERTY_IMAGE'), 'error');
 
@@ -389,7 +390,7 @@ class PropertyController extends FormController
 	 * Save the video field
 	 *
 	 * @throws Exception
-	 * @since  3.0.0
+	 * @since        3.0.0
 	 * @noinspection PhpUnused
 	 */
 	public function savevideo(): void
@@ -486,8 +487,7 @@ class PropertyController extends FormController
 		$access_level = $userSession->getAccessLevel();
 		if ($access_level > 10 || !$params->get('property_add')) {
 			return parent::allowAdd();
-		}
-		else if ($access_level == 10 && $params->get('property_add')) {
+		} else if ($access_level == 10 && $params->get('property_add')) {
 			return true;
 		}
 	}
@@ -544,16 +544,18 @@ class PropertyController extends FormController
 				$userData->properties = implode(',', $properties);
 				$userSession->setData($userData);
 			}
-		}
-		else {
+		} else {
 			$old_security_amount = KrMethods::inputString('old_security_amount', '0');
 			$old_security_cash   = KrMethods::inputString('old_security_cash', '0');
 
-			if ((isset($validData['security_amount']) && $validData['security_amount'] !== $old_security_amount) || (isset($validData['security_cash']) && $validData['security_cash'] !== $old_security_cash)) {
+			if ((isset($validData['security_amount']) && $validData['security_amount'] !== $old_security_amount) ||
+			    (isset($validData['security_cash']) && $validData['security_cash'] !== $old_security_cash)) {
 				KrFactory::getAdminModel('propertysetting')->updateSetting('security_changes', $validData['id']);
 			}
 
-			KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updateProperty', (int) $validData['id'], 0,
+			KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updateProperty',
+				(int) $validData['id'],
+				0,
 				'ru');
 		}
 	}
@@ -568,13 +570,13 @@ class PropertyController extends FormController
 	 */
 	protected function setAccess(ViewInterface $view): ViewInterface
 	{
-		$userSession        = new KrSession\User();
-		$userData           = $userSession->getData();
+		$userSession = new KrSession\User();
+		$userData    = $userSession->getData();
 
 		/** @var CalendarView $view */
 		$view->access_level = $userData->access_level;
-		$view->allow_book  = !($view->access_level == 10 && !KrMethods::getParams()->get('contract_add'));
-		$view->allow_block = !($view->access_level == 10 && !KrMethods::getParams()->get('block_add'));
+		$view->allow_book   = !($view->access_level == 10 && !KrMethods::getParams()->get('contract_add'));
+		$view->allow_block  = !($view->access_level == 10 && !KrMethods::getParams()->get('block_add'));
 
 		$userData->cr_property_id   = (int) $view->item->id;
 		$userData->cr_property_name = (string) $view->item->property_name;

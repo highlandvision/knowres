@@ -20,8 +20,7 @@ $counter = 0;
 		$counter++;
 		$this->month++;
 
-		if ($this->month > 12)
-		{
+		if ($this->month > 12) {
 			$this->year  += 1;
 			$this->month = 1;
 		}
