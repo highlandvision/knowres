@@ -30,6 +30,7 @@ use function count;
 use function in_array;
 use function max;
 use function min;
+use function print_r;
 
 /**
  * Site search for properties
@@ -90,6 +91,10 @@ class Search
 
 			if (!count($this->searchData->baseIds)) {
 				return;
+			}
+
+			if ($this->searchData->byAvailability && !empty($this->searchData->layout)) {
+				$this->searchData->byAvailability = 0;
 			}
 
 			if ($this->searchData->byAvailability) {
