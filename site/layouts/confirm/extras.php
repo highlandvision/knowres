@@ -60,6 +60,7 @@ foreach ($extras as $extra) {
 			break;
 	}
 
+	$one = [];
 	$one['name']        = $Translations->getText('extra', $extra->id);
 	$one['description'] = '';
 	$description        = $Translations->getText('extra', $extra->id, 'description');
@@ -124,12 +125,12 @@ if (is_countable($all) && !count($all)) {
 	<div class="callout small">
 		<?php foreach ($all as $a) : ?>
 			<div class="grid-x grid-margin-x extras">
-				<div class="small-12 medium-3 cell">
+				<div class="small-4 medium-3 cell">
 					<?php echo $a['dropdown'] . $a['hidden']; ?>
 				</div>
-				<label for="<?php echo $a['id']; ?>" class="price small-12 medium-9 cell">
-					<b><?php echo $a['name']; ?></b>
-					<?php if (strlen($a['description']) > 0): ?>
+				<label for="<?php echo $a['id']; ?>" class="price small-8 medium-9 cell">
+					<?php echo $a['name']; ?>
+					<?php if (!empty($a['description'])): ?>
 						<i class='fa-solid fa-info-circle has-tip' data-position="right" data-alignment="center"
 						   data-tooltip title="<?php echo $a['description']; ?>">
 						</i>

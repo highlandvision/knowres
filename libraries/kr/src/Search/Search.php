@@ -30,7 +30,6 @@ use function count;
 use function in_array;
 use function max;
 use function min;
-use function print_r;
 
 /**
  * Site search for properties

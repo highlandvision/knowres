@@ -34,8 +34,8 @@ extract($displayData);
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 <head>
 	<meta name="viewport"
-	      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 	<title><?php echo KrMethods::getCfg('sitename'); ?></title>
 
 	<?php echo KrMethods::render('emails.style', ['body_bg'      => $body_bg,
@@ -49,7 +49,8 @@ extract($displayData);
 </head>
 
 <body style="color:<?php echo $font_color; ?>;background-color:<?php echo $body_bg; ?>;font-family:<?php echo $font; ?>;
-	font-size:<?php echo $font_size; ?>;mso-line-height-rule:exactly;line-height:120%;margin:0;padding:0;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;">
+	font-size:<?php echo $font_size; ?>;mso-line-height-rule:exactly;line-height:120%;margin:0;padding:0;
+	-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;">
 
 	<span style="color:transparent;visibility:hidden;display:none;opacity:0;height:0;width:0;font-size:0;">
 		<?php echo KrMethods::plain('COM_KNOWRES_EMAIL_PREHEADER'); ?>
@@ -61,9 +62,9 @@ extract($displayData);
 			<td>
 				<!--CENTERED CONTAINER-->
 				<table class="main"
-				       style="text-align:left;margin:0 auto 20px auto;background-color:<?php echo $content_bg; ?>;border:none;
-					       border-collapse:separate;mso-table-lspace:0;mso-table-rspace:0;width:620px;max-width:620px;"
-				       role="presentation">
+				       style="text-align:left;margin:0 auto 20px auto;background-color:<?php echo $content_bg; ?>;
+					       border:none;border-collapse:separate;mso-table-lspace:0;mso-table-rspace:0;width:620px;
+					       max-width:620px;" role="presentation">
 					<!--HEADER AREA-->
 					<tr>
 						<td class="wrapper" style="box-sizing:border-box;padding:20px 20px 20px 20px;">

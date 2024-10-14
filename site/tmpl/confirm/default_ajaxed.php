@@ -13,14 +13,14 @@ use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Utility;
 ?>
 
-<div id="kr-totals">
+<div id="kr-totals" class="callout primary" >
 	<div class="grid-x grid-margin-x">
 		<div class="small-12 cell">
 			<div class="total-text"><?php echo KrMethods::plain('COM_KNOWRES_CONFIRM_TOTAL'); ?></div>
 			<div id="hilite_total" class="hilite-total"></div>
 			<div class="total-summary">
 				<?php echo KrMethods::render('confirm.summary', ['data' => $this->contractData]); ?>
-				<button type="button" data-toggle="kr-guest-totals" class="button secondary small milk">
+				<button type="button" data-toggle="kr-guest-totals" class="button accent small">
 					<?php echo KrMethods::plain('COM_KNOWRES_PAYMENT_VIEW_BREAKDOWN'); ?>
 				</button>
 			</div>
@@ -29,20 +29,20 @@ use HighlandVision\KR\Utility;
 
 	<div id="kr-guest-totals" data-toggler=".hideme" class="text-left hideme">
 		<div class="grid-x grid-margin-x">
-			<div id="room_total_gross_text" class="small-7 cell"></div>
+			<div id="room_total_gross_text" class="small-7 cell text-left"></div>
 			<div id="room_total_gross" class="small-5 cell text-right"></div>
 		</div>
 		<div class="grid-x grid-margin-x">
-			<div id="discount_text" class="small-5 cell red"></div>
+			<div id="discount_text" class="small-5 cell red text-left"></div>
 			<div id="discount" class="small-4 cell red text-right"></div>
 		</div>
 		<div class="grid-x grid-margin-x">
-			<div id="coupon_text" class="small-5 cell red"></div>
+			<div id="coupon_text" class="small-5 cell red text-left"></div>
 			<div id="coupon_discount" class="small-4 cell red text-right"></div>
 		</div>
 		<div class="grid-x grid-margin-x">
 			<div id="hr" class="small-12 cell"></div>
-			<div id="room_total_text" class="small-7 cell"></div>
+			<div id="room_total_text" class="small-7 cell text-left"></div>
 			<div id="room_total" class="small-5 cell text-right"></div>
 		</div>
 
@@ -50,7 +50,7 @@ use HighlandVision\KR\Utility;
 		<div id="extrasbreakdown"></div>
 
 		<div class="grid-x grid-margin-x">
-			<div class="small-7 cell strong">
+			<div class="small-7 cell strong text-left">
 				<?php echo strtoupper(KrMethods::plain('COM_KNOWRES_CONFIRM_TOTAL')); ?>
 			</div>
 			<div id="contract_total" class="small-5 cell strong text-right"></div>
@@ -70,14 +70,13 @@ use HighlandVision\KR\Utility;
 			<div id="balance"></div>
 
 			<?php if ((float) $this->property->security_amount > 0): ?>
-				<div><?php echo KrMethods::plain('COM_KNOWRES_SECURITY_DEPOSIT'); ?></div>
-				<div class="security">
-					<?php echo Utility::displayValue($this->property->security_amount,
-						$this->contractData->currency); ?>
+				<div class="security no-margin-bottom">
+					<h6><?php echo KrMethods::plain('COM_KNOWRES_SECURITY_DEPOSIT'); ?></h6>
+					<?php echo Utility::displayValue($this->property->security_amount, $this->contractData->currency);?>
+					<p>
+						<?php echo $this->property->security_text; ?>
+					</p>
 				</div>
-				<small style="padding:0 0.5rem;">
-					<?php echo $this->property->security_text; ?>
-				</small>
 			<?php endif; ?>
 		</div>
 	</div>

@@ -22,21 +22,19 @@ extract($displayData);
  * @var int    $id    Tax ID.
  */
 
-if ($id)
-{
+if ($id) {
 	$Translations = new Translations();
 	$name         = $Translations->getText('taxrate', $id);
 }
-if (!$name)
-{
+if (!$name) {
 	$name = KrMethods::plain('COM_KNOWRES_CONTRACTS_TAX');
 }
 ?>
 
 <div class="grid-x grid-margin-x">
 	<?php if ($type == 1): ?>
-		<div class="small-12 medium-6 cell"><?php echo $name; ?></div>
-		<div class="small-12 medium-6 cell text-right"><?php echo $value; ?></div>
+		<div class="small-7 cell text-left"><?php echo $name; ?></div>
+		<div class="small-5 cell text-right"><?php echo $value; ?></div>
 	<?php elseif ($type == 2): ?>
 		<div class="small-12 cell">
 			<?php echo KrMethods::sprintf('COM_KNOWRES_CONFIRM_TAX_TYPE_INCLUDED', $name, $value); ?>

@@ -141,9 +141,9 @@ class ConfirmController extends FormController
 		}
 
 		if (!KrFactory::getListModel('contracts')
-		              ->isPropertyAvailable($contractData->property_id,
-		                                    $contractData->arrival,
-		                                    $contractData->departure)) {
+			->isPropertyAvailable($contractData->property_id,
+				$contractData->arrival,
+				$contractData->departure)) {
 			$contractSession->resetData();
 			SiteHelper::expiredSession($jform['property_id'], true);
 		}
@@ -193,7 +193,8 @@ class ConfirmController extends FormController
 	 * Saves the contract and guest data before displaying gateway payment choices
 	 *
 	 * @param  null  $key     The name of the primary key of the URL variable.
-	 * @param  null  $urlVar  The name of the URL variable if different from the primary key (sometimes required to avoid router collisions).
+	 * @param  null  $urlVar  The name of the URL variable if different from the primary key
+	 *                        (sometimes required to avoid router collisions).
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -336,11 +337,9 @@ class ConfirmController extends FormController
 				$valueDsp = $Hub->currencyDisplay($value);
 			}
 
-			$display .= '<div class="grid-x grid-margin-x"><span class="small-8 cell">' .
+			$display .= '<div class="grid-x grid-margin-x"><span class="small-8 cell text-left">' .
 			            $name .
-			            '</span><span class="small-4 cell text-right">' .
-			            $valueDsp .
-			            '</span></div>';
+			            '</span><span class="small-4 cell text-right">' . $valueDsp . '</span></div>';
 		}
 
 		return $display;
@@ -408,11 +407,11 @@ class ConfirmController extends FormController
 			if ($Hub->getValue('contract_total') == $Hub->getValue('deposit')) {
 				$output->deposit_date =
 					KrMethods::sprintf('COM_KNOWRES_CONFIRM_REQUEST_FULL_PAYMENT',
-					                   TickTock::displayDate($Hub->getValue('expiry_date')));
+						TickTock::displayDate($Hub->getValue('expiry_date')));
 			} else {
 				$output->deposit_date =
 					KrMethods::sprintf('COM_KNOWRES_CONFIRM_REQUEST_DEPOSIT_DUE',
-					                   TickTock::displayDate($Hub->getValue('expiry_date')));
+						TickTock::displayDate($Hub->getValue('expiry_date')));
 			}
 
 			$output->request_note = KrMethods::plain('COM_KNOWRES_CONFIRM_REQUEST_NOTE');
@@ -434,7 +433,7 @@ class ConfirmController extends FormController
 			} else {
 				$output->balance_date =
 					KrMethods::sprintf('COM_KNOWRES_CONFIRM_BALANCE_DUE',
-					                   TickTock::displayDate($Hub->getValue('balance_date')));
+						TickTock::displayDate($Hub->getValue('balance_date')));
 			}
 		}
 
@@ -473,15 +472,12 @@ class ConfirmController extends FormController
 				$tax_type += 1;
 			}
 
-			// Check for when type wasn't included in the output
-			//			if ($tax_type == 2 && (int) $type)
-			//			{
-			$display .= KrMethods::render('confirm.summary.taxbreakdown', ['type'  => $tax_type,
-			                                                               'value' => $Hub->currencyDisplay($v['value']),
-			                                                               'code'  => $code,
-			                                                               'id'    => $v['id'] ?? 0
-			]);
-			//			}
+			$display .= KrMethods::render('confirm.summary.taxbreakdown',
+				['type'  => $tax_type,
+                 'value' => $Hub->currencyDisplay($v['value']),
+                 'code'  => $code,
+                 'id'    => $v['id'] ?? 0
+			     ]);
 		}
 
 		return $display;
