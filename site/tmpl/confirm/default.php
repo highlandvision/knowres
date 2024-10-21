@@ -41,50 +41,39 @@ $action = KrMethods::route('index.php?option=com_knowres&view=confirm&layout=pay
 
 	<form action="<?php echo $action; ?>" class="form-validate" id="kr-form-confirm" method="post">
 		<div class="grid-x grid-margin-x">
-			<div class="small-12 medium-7 large-8 cell">
+			<div class="small-12 medium-8 cell">
 				<?php echo $this->loadTemplate('coupon'); ?>
 				<?php echo $this->loadTemplate('extras'); ?>
 				<?php echo $this->loadTemplate('guest'); ?>
+			</div>
+			<div class="medium-4 cell show-for-medium">
+				<?php echo HTMLHelper::_('image',
+					$this->pimage,
+					$this->property->property_name,
+					['width' => $this->params->get('max_property_width', 100)]);
+				?>
+				<br><br>
+				<?php echo KrMethods::loadInternal('{loadposition propertyview}'); ?>
+			</div>
+		</div>
+
+		<div class="grid-x grid-margin-x align-bottom">
+			<div class="small-12 medium-8 cell">
+				<?php echo $this->loadTemplate('ajaxed'); ?>
+
+				<button class="button expanded large primary align-bottom" type="submit">
+					<?php echo KrMethods::plain('COM_KNOWRES_CONFIRM_REQUEST_PAYMENT'); ?>
+				</button>
+
 				<?php if (!empty($gdpr)): ?>
-					<div class="callout small success">
+					<br>
+					<div class="callout small warning">
 						<div class="smaller">
 							<?php echo $gdpr; ?>
 						</div>
 					</div>
 				<?php endif; ?>
 			</div>
-			<div class="medium-5 large-4 cell show-for-medium">
-				<?php echo KrMethods::loadInternal('{loadposition propertyview}'); ?>
-			</div>
-		</div>
-
-		<div class="grid-x grid-margin-x align-bottom">
-			<div class="small-12 medium-4 large-4 cell">
-				<?php echo $this->loadTemplate('ajaxed'); ?>
-			</div>
-			<div class="medium-3 large-4 cell">
-				<div class="show-for-medium">
-					<?php echo HTMLHelper::_('image',
-						$this->pimage,
-						$this->property->property_name,
-						['width' => $this->params->get('max_property_width', 100)]);
-					?>
-					<br><br><br>
-				</div>
-				<button class="button expanded large primary align-bottom" type="submit">
-					<?php echo KrMethods::plain('COM_KNOWRES_CONFIRM_REQUEST_PAYMENT'); ?>
-				</button>
-			</div>
-		</div>
-
-		<div class="small-12 cell hide-for-medium">
-			<?php if (!empty($gdpr)): ?>
-				<div class="callout small success">
-					<div class="smaller">
-						<?php echo $gdpr; ?>
-					</div>
-				</div>
-			<?php endif; ?>
 		</div>
 
 		<?php echo HTMLHelper::_('form.token'); ?>
