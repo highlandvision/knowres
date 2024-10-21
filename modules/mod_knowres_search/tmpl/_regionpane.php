@@ -16,11 +16,11 @@ defined('_JEXEC') or die;
 		<?php $c = 0; ?>
 		<div class="grid-x grid-margin-x">
 			<?php foreach ($regions as $k => $v): ?>
-				<div class="small-2 cell country <?php if ($c > 2)
+				<div class="small-4 medium-2 cell country <?php if ($c > 2)
 					echo 'spacer'; ?>">
 					<?php echo $k; ?>
 				</div>
-				<div class="small-4 cell <?php if ($c > 2)
+				<div class="small-8 medium-4 cell <?php if ($c > 2)
 					echo 'spacer'; ?>">
 					<?php foreach ($v as $id => $r): ?>
 						<?php if ($id == $initial->region_id) : ?>
