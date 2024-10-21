@@ -170,8 +170,7 @@ class PlgOSMapKnowres extends Base implements ContentInterface
 
 			if (empty($row->updated_at) || $row->updated_at == '0000-00-00 00:00:00') {
 				$node->modified = $row->created_at;
-			}
-			else {
+			} else {
 				$node->modified = $row->updated_at;
 			}
 			$node->priority   = $params['priority'];
