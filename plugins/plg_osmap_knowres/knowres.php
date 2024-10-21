@@ -80,8 +80,7 @@ class PlgOSMapKnowres extends Base implements ContentInterface
 
 		if (empty($layout)) {
 			self::processTreeProperties($collector, $parent, $params);
-		}
-		else if ($layout == 'search') {
+		} else if ($layout == 'search') {
 			self::processTreeRegions($collector, $parent, $params);
 		}
 	}
@@ -112,15 +111,15 @@ class PlgOSMapKnowres extends Base implements ContentInterface
 			return false;
 		}
 
-		$view = ArrayHelper::getValue($linkVars, 'view', '');
-		if ($view != 'properties') {
-			return false;
-		}
+			$view = ArrayHelper::getValue($linkVars, 'view', '');
+			if ($view != 'properties') {
+				return false;
+			}
 
 		$layout = ArrayHelper::getValue($linkVars, 'layout', '');
 		if ($layout == '' || $layout == 'search' || $layout == 'category') {
-			return true;
-		}
+				return true;
+			}
 
 		return false;
 	}
@@ -145,10 +144,10 @@ class PlgOSMapKnowres extends Base implements ContentInterface
 		                        'property_name',
 		                        'created_at',
 		                        'updated_at'
-		                       ]));
+		]));
 		$query->from($db->qn('#__knowres_property'))
-		      ->where($db->qn('state') . '=1')
-		      ->order($db->qn('property_name'));
+			->where($db->qn('state') . '=1')
+			->order($db->qn('property_name'));
 
 		$db->setQuery($query);
 		$rows = $db->loadObjectList();
@@ -226,7 +225,6 @@ class PlgOSMapKnowres extends Base implements ContentInterface
 	 */
 	private static function processTreeRegions(Collector $collector, Item $menuItem, object $params): void
 	{
-		//TODO v5.1 Put this into a menu item
 		static::checkMemory();
 
 		$rows = KrFactory::getListModel('regions')->getDistinctRegions();
@@ -244,8 +242,7 @@ class PlgOSMapKnowres extends Base implements ContentInterface
 
 			if (empty($row->updated_at) || $row->updated_at == '0000-00-00 00:00:00') {
 				$node->modified = $row->created_at;
-			}
-			else {
+			} else {
 				$node->modified = $row->updated_at;
 			}
 			$node->priority   = $params['priority'];
@@ -261,9 +258,7 @@ class PlgOSMapKnowres extends Base implements ContentInterface
 	}
 
 	/**
-	 * Returns the element of the component which this plugin supports.
-	 *
-	 * @return string
+	 * @inheritDoc
 	 */
 	public function getComponentElement(): string
 	{
