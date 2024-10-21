@@ -12,6 +12,7 @@ namespace HighlandVision\Component\Knowres\Site\View\Properties;
 defined('_JEXEC') or die;
 
 use Exception;
+use HighlandVision\Component\Knowres\Site\Model\PropertiesModel;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\HtmlView\Site as KrHtmlView;
 use HighlandVision\KR\Search\Response;
@@ -49,7 +50,9 @@ class RawView extends KrHtmlView
 	public function display($tpl = null): void
 	{
 		$this->setLayout('raw');
-		$this->state  = $this->get('state');
+		/** @var PropertiesModel $model */
+		$model = $this->getModel();
+		$this->state  = $model->getState();
 		$this->params = KrMethods::getParams();
 		$default_view = $this->params->get('default_view', 'list');
 
@@ -67,8 +70,8 @@ class RawView extends KrHtmlView
 		$action       = KrMethods::inputString('action', '');
 		$action_value = KrMethods::inputString('action_value', '');
 		if (empty($action) && empty($action_value) && !empty($searchData->initial_area)) {
-			$action                    = 'property_area';
-			$action_value              = $searchData->initial_area;
+			$action                   = 'property_area';
+			$action_value             = $searchData->initial_area;
 			$searchData->initial_area = '';
 		}
 
@@ -104,16 +107,16 @@ class RawView extends KrHtmlView
 			$this->state->set('list.direction', $this->Response->searchData->direction);
 			$this->state->set('list.limit', $this->params->get('list_limit'));
 
-			$this->items = $this->get('items');
-			$result      = $this->get('countitems');
+			$this->items = $model->getItems();
+			$result      = $model->getCountItems();
 			$this->Response->countAjaxFilters($result[0],
-			                                  $result[1],
-			                                  $result[2],
-			                                  $result[3],
-			                                  $result[4],
-			                                  $result[5],
-			                                  $result[6],
-			                                  $result[7]);
+				$result[1],
+				$result[2],
+				$result[3],
+				$result[4],
+				$result[5],
+				$result[6],
+				$result[7]);
 		}
 
 		$this->order      = $this->Response->searchData->order != '' ? $this->Response->searchData->order :
@@ -200,7 +203,7 @@ class RawView extends KrHtmlView
 	private function filterPrice(): void
 	{
 		if (is_countable($this->Response->searchData->filterPrice) &&
-			count($this->Response->searchData->filterPrice)) {
+		    count($this->Response->searchData->filterPrice)) {
 			$uids = [];
 			foreach ($this->Response->searchData->baseIds as $p) {
 				foreach ($this->Response->searchData->filterPrice as $k => $f) {

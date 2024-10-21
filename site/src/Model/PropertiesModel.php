@@ -660,7 +660,6 @@ class PropertiesModel extends ListModel
 		$query->select($db->qn('a.region_id'));
 		$query->from($db->qn('#__knowres_property', 'a'));
 		$query = $this->doFiltering($db, $query);
-
 		$db->setQuery($query);
 		$data = $db->loadObjectList();
 

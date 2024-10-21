@@ -224,7 +224,7 @@ let scloaded = false;
 
     function getProperties(bar, action = '', action_value = '') {
         $.ajax({
-            url: '/index.php?option=com_knowres&view=properties&format=raw',
+            url: '/index.php?option=com_knowres&task=properties.raw',
             type: 'POST',
             data: {'bar': bar, 'action': action, 'action_value': action_value},
             dataType: 'json',

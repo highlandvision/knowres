@@ -211,6 +211,20 @@ class PropertiesController extends BaseController
 	}
 
 	/**
+	 * Ajax return search properties
+	 *
+	 * @throws Exception
+	 * @since  5.1.0
+	 */
+	#[NoReturn] public function raw(): void
+	{
+		/* @var HighlandVision\Component\Knowres\Site\View\Properties\RawView $view * */
+		$view = $this->getView('properties', 'raw');
+		$view->setModel($this->getModel('Properties'), true);
+		$view->display();
+	}
+
+	/**
 	 * Ajax request when search map refreshes to send current proprties in list
 	 *
 	 * @throws Exception
