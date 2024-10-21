@@ -147,7 +147,9 @@ class DisplayController extends BaseController
 			'propertysetting',
 			'media',
 			'rate',
-			'rates'
+			'rates',
+			'review',
+			'reviews'
 		];
 
 		if ((int) $userData->access_level < 40 && !in_array($view, $valid)) {
@@ -172,7 +174,7 @@ class DisplayController extends BaseController
 			'propertyrooms',
 			'propertyroom',
 			'rate',
-			'rates',
+			'rates'
 		];
 
 		if ((int) $userData->access_level < 20 && !in_array($view, $valid10)) {
@@ -207,7 +209,8 @@ class DisplayController extends BaseController
 			'propertyicals',
 			'propertyoptions',
 			'propertyrooms',
-			'rates'
+			'rates',
+			'reviews'
 		];
 
 		if (in_array($view, $requireProperty)) {

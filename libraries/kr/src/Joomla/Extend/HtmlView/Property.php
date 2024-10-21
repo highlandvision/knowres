@@ -222,7 +222,7 @@ class Property extends KrHtmlView
 			             ->url($link);
 		}
 
-		if ($name !== 'reviews' && $this->access_level == 40) {
+		if ($name !== 'reviews' && $this->access_level >= 20) {
 			$link = KrMethods::route('index.php?option=com_knowres&view=reviews');
 			$ChildToolbar->linkButton('reviews', 'COM_KNOWRES_REVIEWS_TITLE')
 			             ->icon('fa-solid fa-comment knowres')
