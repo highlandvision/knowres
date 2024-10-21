@@ -14,89 +14,97 @@ use HighlandVision\KR\Framework\KrMethods;
 
 <ul class="tabs" id="kr-property-tabs" data-tabs data-deep-link="true" data-update-history="true">
 	<li class="tabs-title is-active" role="presentation">
+		<?php $help = KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_OVERVIEW"); ?>
 		<a href="#overview"
-		   aria-label="<?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_OVERVIEW"); ?>">
+		   aria-label="<?php echo $help; ?>" title="<?php echo $help; ?>">
 			<i class='fa-solid fa-eye fa-lg hide-for-medium'></i>
 			<span class="show-for-medium">
-		<?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_OVERVIEW"); ?>
-	</span>
-		</a>
-	</li>
-	<li class="tabs-title" role="presentation">
-		<a href="#facilities" data-tabs-target="facilities"
-		   aria-label="<?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_FACILITIES"); ?>">
-			<i class='fa-solid fa-info-circle fa-lg hide-for-medium'></i>
-			<span class="show-for-medium">
-				<?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_FACILITIES"); ?>
+				<?php echo $help; ?>
 			</span>
 		</a>
 	</li>
 	<li class="tabs-title" role="presentation">
+		<?php $help = KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_FACILITIES"); ?>
+		<a href="#facilities" data-tabs-target="facilities"
+		   aria-label="<?php echo $help; ?>" title="<?php echo $help; ?>">
+			<i class='fa-solid fa-info-circle fa-lg hide-for-medium'></i>
+			<span class="show-for-medium">
+				<?php echo $help; ?>
+			</span>
+		</a>
+	</li>
+	<li class="tabs-title" role="presentation">
+		<?php $help = KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_PHOTO_TOUR"); ?>
 		<a href="#phototour" data-tabs-target="phototour"
-		   aria-label="<?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_PHOTO_TOUR"); ?>">
+		   aria-label="<?php echo $help; ?>" title="<?php echo $help; ?>">
 			<i class='fa-solid fa-camera fa-lg hide-for-medium'></i>
 			<span class="show-for-medium">
-		<?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_PHOTO_TOUR"); ?>
-	</span>
+				<?php echo $help; ?>
+			</span>
 		</a>
 	</li>
 	<?php if ($this->item->property_videolink) : ?>
+		<?php $help = KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_VIDEO"); ?>
 		<li class="tabs-title" role="presentation">
 			<a href="#video" data-tabs-target="video"
-			   aria-label="<?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_VIDEO"); ?>">
+			   aria-label="<?php echo $help; ?>" title="<?php echo $help; ?>">
 				<i class='fa-solid fa-video fa-lg hide-for-medium'></i>
 				<span class="show-for-medium">
-			<?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_VIDEO"); ?>
-		</span>
+					<?php echo $help; ?>
+				</span>
 			</a>
 		</li>
 	<?php endif; ?>
 	<?php if ((int) $this->settings['display_calendar']) : ?>
+		<?php $help = KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_AVAILABILITY_PRICE"); ?>
 		<li class="tabs-title" role="presentation">
 			<a href="#calendar" id="kr-geriatric-calendar" data-tabs-target="calendar"
 			   data-pid="<?php echo $this->item->id; ?>"
-			   aria-label="<?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_AVAILABILITY_PRICE"); ?>">
+			   aria-label="<?php echo $help; ?>" title="<?php echo $help; ?>">
 				<i class='fa-solid fa-calendar-alt fa-lg hide-for-medium'></i>
 				<span class="show-for-medium">
-					<?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_AVAILABILITY_PRICE"); ?>
+					<?php echo $help; ?>
 				</span>
 			</a>
 		</li>
 	<?php endif; ?>
 	<?php if (is_countable($this->units) && count($this->units)) : ?>
+		<?php $help = KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_UNITS"); ?>
 		<li class="tabs-title" role="presentation">
 			<a href="#units" data-tabs-target="units"
-			   aria-label="<?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_UNITS"); ?>">
+			   aria-label="<?php echo $help; ?>" title="<?php echo $help; ?>">
 				<i class='fa-solid fa-building fa-lg hide-for-medium'></i>
 				<span class="show-for-medium">
-			<?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_UNITS"); ?>
-		</span>
+					<?php echo $help; ?>
+				</span>
 			</a>
 		</li>
 	<?php endif; ?>
 	<?php if ($this->item->lat && $this->item->lng) : ?>
+		<?php $help = KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_MAP"); ?>
 		<li class="tabs-title" role="presentation">
 			<a href="#map" id="kr-map-solo-trigger" data-tabs-target="map"
-			   aria-label="<?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_MAP"); ?>"
-			   data-zoom="<?php echo $this->map_zoom; ?>"
-			   data-zoommax="<?php echo $this->item->map_max_zoom; ?>" data-target="kr-map-solo"
-			   data-type="solo" data-pid="<?php echo $this->item->id; ?>"
-			   data-maptypeid="<?php echo $this->params->get('property_map_type', "roadmap"); ?>">
+			   aria-label="<?php echo $help; ?>" title="<?php echo $help; ?>"
+				data-zoom="<?php echo $this->map_zoom; ?>"
+				data-zoommax="<?php echo $this->item->map_max_zoom; ?>" data-target="kr-map-solo"
+				data-type="solo" data-pid="<?php echo $this->item->id; ?>"
+				data-maptypeid="<?php echo $this->params->get('property_map_type', "roadmap"); ?>">
 				<i class='fa-solid fa-map hide-for-medium'></i>
 				<span class="show-for-medium">
-					<?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_MAP"); ?>
+					<?php echo $help; ?>
 				</span>
 			</a>
 		</li>
 	<?php endif; ?>
 	<?php if (count($this->reviews)) : ?>
+		<?php $help = KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_REVIEWS"); ?>
 		<li class="tabs-title" role="presentation">
 			<a data-link="#reviews" data-tabs-target="reviews"
-			   aria-label="<?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_REVIEWS"); ?>">
+			   aria-label="<?php echo $help; ?>" title="<?php echo $help; ?>">
 				<i class='fa-solid fa-comments hide-for-medium'></i>
 				<span class="show-for-medium">
-			<?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_REVIEWS"); ?>
-		</span>
+					<?php echo $help; ?>
+				</span>
 			</a>
 		</li>
 	<?php endif; ?>
