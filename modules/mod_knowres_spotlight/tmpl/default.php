@@ -49,7 +49,7 @@ if ($textsize) {
 		foreach ($images as $d) {
 			echo match ($count) {
 				3       => '<div class="small-12 medium-4 cell" style="position:relative;">',
-				2       => '<div class="small-6 cell" style="position:relative;">',
+				2       => '<div class="small-12 medium-6 cell" style="position:relative;">',
 				default => '<div class="small-12 cell" style="position:relative;">',
 			};
 

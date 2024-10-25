@@ -111,15 +111,15 @@ class PlgOSMapKnowres extends Base implements ContentInterface
 			return false;
 		}
 
-			$view = ArrayHelper::getValue($linkVars, 'view', '');
-			if ($view != 'properties') {
-				return false;
-			}
+		$view = ArrayHelper::getValue($linkVars, 'view', '');
+		if ($view != 'properties') {
+			return false;
+		}
 
 		$layout = ArrayHelper::getValue($linkVars, 'layout', '');
 		if ($layout == '' || $layout == 'search' || $layout == 'category') {
-				return true;
-			}
+			return true;
+		}
 
 		return false;
 	}
