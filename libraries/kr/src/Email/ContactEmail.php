@@ -125,7 +125,7 @@ class ContactEmail extends Email
 			$this->dispatchEmail($this->owner_email, $this->guest_name);
 		}
 
-		if ($trigger->send_agent && $this->agency_email) {
+		if ($trigger->send_agency && $this->agency_email) {
 			$this->reply_to   = $this->guest_email;
 			$this->reply_name = $this->guest_name;
 

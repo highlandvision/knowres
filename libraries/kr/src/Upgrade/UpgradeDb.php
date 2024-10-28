@@ -390,6 +390,8 @@ class UpgradeDb
 		self::add($db, '#__knowres_contract', 'on_request_paid', 'qkey', 'TINYINT(1) DEFAULT NULL');
 		// DROP TABLE `#__knowres_bed_type`;
 		self::dropTable($db, '#__knowres_bedtype');
+		//ALTER TABLE `#__knowres_email_trigger` CHANGE `send_agent` `send_agency` TINYINT(1) DEFAULT 0;
+		self::change($db, '#__knowres_owner', 'iban', 'iban', 'VARCHAR(50) DEFAULT NULL');
 	}
 
 	/**

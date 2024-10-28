@@ -57,7 +57,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 			$this->listDirn, $this->listOrder); ?>
 	</th>
 	<th scope="col" class='w-2 text-center d-none d-md-table-cell'>
-		<?php echo HTMLHelper::_('searchtools.sort', 'COM_KNOWRES_EMAILTRIGGERS_SEND_AGENT', 'a.send_agent',
+		<?php echo HTMLHelper::_('searchtools.sort', 'COM_KNOWRES_EMAILTRIGGERS_SEND_AGENCY', 'a.send_agency',
 			$this->listDirn, $this->listOrder); ?>
 	</th>
 	<th scope="col" class='w-2 text-center d-none d-md-table-cell'>

@@ -62,12 +62,11 @@
 			<option value="a.send_owner ASC">COM_KNOWRES_OWNER COM_KNOWRES_ASCENDING</option>
 			<option value="a.send_owner DESC">COM_KNOWRES_OWNER COM_KNOWRES_DESCENDING</option>
 			<option value="a.send_caretaker ASC">COM_KNOWRES_EMAILTRIGGERS_SEND_CARETAKER COM_KNOWRES_ASCENDING</option>
-			<option value="a.send_caretaker DESC">COM_KNOWRES_EMAILTRIGGERS_SEND_CARETAKER COM_KNOWRES_DESCENDING
-			</option>
+			<option value="a.send_caretaker DESC">COM_KNOWRES_EMAILTRIGGERS_SEND_CARETAKER COM_KNOWRES_DESCENDING</option>
 			<option value="a.send_admin ASC">COM_KNOWRES_EMAILTRIGGERS_SEND_ADMIN COM_KNOWRES_ASCENDING</option>
 			<option value="a.send_admin DESC">COM_KNOWRES_EMAILTRIGGERS_SEND_ADMIN COM_KNOWRES_DESCENDING</option>
-			<option value="a.send_agent ASC">COM_KNOWRES_EMAILTRIGGERS_SEND_AGENT COM_KNOWRES_ASCENDING</option>
-			<option value="a.send_agent DESC">COM_KNOWRES_EMAILTRIGGERS_SEND_AGENT COM_KNOWRES_DESCENDING</option>
+			<option value="a.send_agency ASC">COM_KNOWRES_EMAILTRIGGERS_SEND_AGENCY COM_KNOWRES_ASCENDING</option>
+			<option value="a.send_agency DESC">COM_KNOWRES_EMAILTRIGGERS_SEND_AGENCY COM_KNOWRES_DESCENDING</option>
 			<option value="a.id ASC">JGRID_HEADING_ID_ASC</option>
 			<option value="a.id DESC">JGRID_HEADING_ID_DESC</option>
 		</field>

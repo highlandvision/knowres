@@ -529,7 +529,7 @@ class ContractEmail extends Email
 				$this->output_subject = 'COPY ' . $this->output_subject;
 			}
 
-			if ($trigger->send_agent && $this->agency_email)
+			if ($trigger->send_agency && $this->agency_email)
 			{
 				$this->dispatchEmail($this->agency_email);
 			}

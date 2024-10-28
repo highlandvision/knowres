@@ -58,7 +58,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 			<?php echo $this->item->send_caretaker ? KrMethods::plain('JYES') : KrMethods::plain('JNO'); ?>
 		</td>
 		<td class="text-center d-none d-md-table-cell">
-			<?php echo $this->item->send_agent ? KrMethods::plain('JYES') : KrMethods::plain('JNO'); ?>
+			<?php echo $this->item->send_agency ? KrMethods::plain('JYES') : KrMethods::plain('JNO'); ?>
 		</td>
 		<td class="text-center d-none d-md-table-cell">
 			<?php echo $this->item->send_admin ? KrMethods::plain('JYES') : KrMethods::plain('JNO'); ?>

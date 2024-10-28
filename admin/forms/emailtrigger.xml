@@ -109,13 +109,13 @@
 			<option value="1">JYES</option>
 			<option value="0">JNO</option>
 		</field>
-		<field name="send_agent"
+		<field name="send_agency"
 			type="radio"
 			default="0"
 			required="true"
 			class="btn-group btn-group-yesno"
-			label="COM_KNOWRES_EMAILTRIGGER_SEND_AGENT_LBL"
-			description="COM_KNOWRES_EMAILTRIGGER_SEND_AGENT_DSC">
+			label="COM_KNOWRES_EMAILTRIGGER_SEND_AGENCY_LBL"
+			description="COM_KNOWRES_EMAILTRIGGER_SEND_AGENCY_DSC">
 			<option value="1">JYES</option>
 			<option value="0">JNO</option>
 		</field>
