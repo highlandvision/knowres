@@ -138,7 +138,7 @@ class Search extends Session
 		$data->layout         = '';
 		$data->limitstart     = 0;
 		$data->map_modal      = 0;
-		$data->map_zoom       = 20;
+		$data->map_zoom       = 12;
 		$data->map_zoom_max   = 20;
 		$data->nights         = 0;
 		$data->order          = '';
