@@ -27,7 +27,7 @@ defined('_JEXEC') or die;
 		&nbsp;
 	</div>
 	<div class="small-12 medium-6 large-3 text-center cell">
-		<?php echo KrMethods::loadInternal('{loadposition dashboard-bottom4}'); ?>
+		<?php echo KrMethods::loadInternal('{loadposition help}'); ?>
 		&nbsp;
 	</div>
 </div>

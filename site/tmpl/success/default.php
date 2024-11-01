@@ -47,6 +47,6 @@ $wa->useScript('com_knowres.site')
 	</div>
 	<div id="sidebar-right" class="small-12 medium-4 large-3 cell">
 		<?php echo KrMethods::loadInternal('{loadposition carhireform}'); ?>
-		<?php echo KrMethods::loadInternal('{loadposition propertyview}'); ?>
+		<?php echo KrMethods::loadInternal('{loadposition help}'); ?>
 	</div>
 </div>

@@ -19,7 +19,7 @@ $address = Utility::formatAddress($this->guestData->address1, $this->guestData->
 	$this->guestData->country_id, '<br>');
 ?>
 
-<div class="summary callout text-center">
+<div class="summary callout primary text-center">
 	<h2>
 		<?php if ($this->property->booking_type == 2) : ?>
 			<?php echo KrMethods::plain('COM_KNOWRES_CONFIRM_BOOK_PAYABLE_NOW'); ?>
@@ -68,8 +68,6 @@ $address = Utility::formatAddress($this->guestData->address1, $this->guestData->
 	</p>
 </div>
 
-<div class="summary callout text-center">
-	<div class="show-for-medium">
-		<?php echo KrMethods::loadInternal('{loadposition propertyview, html5}'); ?>
-	</div>
+<div class="show-for-medium">
+	<?php echo KrMethods::loadInternal('{loadposition help, html5}'); ?>
 </div>

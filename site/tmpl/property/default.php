@@ -64,12 +64,6 @@ $wa->useScript('com_knowres.site')
 
 				<?php echo $this->loadTemplate('summary'); ?>
 
-				<?php if (!empty($this->modules)): ?>
-					<div class="text-center">
-						<?php echo $this->modules; ?>
-					</div>
-				<?php endif; ?>
-
 				<?php if (is_countable($this->alternatives) && count($this->alternatives)): ?>
 					<?php echo $this->loadTemplate('alternatives'); ?>
 				<?php endif; ?>

@@ -36,7 +36,7 @@ const lang = "en";
 		mapMarkers:      [],
 		mapTypeId:       '',
 		mapZoom:         0,
-		mapMaxZoom:      20,
+	    mapMaxZoom:      20,
 		mapType:         '',
 		mapId:           '',
 		markerColor:     'red',

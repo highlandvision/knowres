@@ -53,7 +53,7 @@ $action = KrMethods::route('index.php?option=com_knowres&view=confirm&layout=pay
 					['width' => $this->params->get('max_property_width', 100)]);
 				?>
 				<br><br>
-				<?php echo KrMethods::loadInternal('{loadposition propertyview}'); ?>
+				<?php echo KrMethods::loadInternal('{loadposition help}'); ?>
 			</div>
 		</div>
 
