@@ -36,6 +36,7 @@ extract($displayData);
 		</tr>
 		</thead>
 		<tbody>
+
 		<?php foreach ($lines as $l): ?>
 			<?php $clink = KrMethods::route('index.php?option=com_knowres&task=contract.show&id=' . $l['id']); ?>
 			<?php $plink = KrMethods::route('index.php?option=com_knowres&task=property.dashboard&id='

@@ -152,11 +152,11 @@ class DailyView extends KrHtmlView
 			} else if ($c->booking_status == 1 && !(int) $c->on_request) {
 				$this->lines['option'][] = $line;
 			} else if ($c->booking_status == 5) {
-				$this->lines['dueDeposit'][] = $line;
+				$this->lines['duedeposit'][] = $line;
 			} else if ($c->booking_status == 30) {
-				$this->lines['overdueBalance'][] = $line;
+				$this->lines['overduebalance'][] = $line;
 			} else if ($c->booking_status == 35) {
-				$this->lines['dueBalance'] = $line;
+				$this->lines['duebalance'][] = $line;
 			} else if ($c->booking_status == 99) {
 				$this->lines['cancelled'][] = $line;
 			} else if ($c->arrival == $this->today) {

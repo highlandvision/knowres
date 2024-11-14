@@ -13,8 +13,7 @@ defined('_JEXEC') or die;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Utility;
 
-if (empty($this->lines['duedeposit']))
-{
+if (empty($this->lines['duedeposit'])) {
 	return;
 }
 ?>
