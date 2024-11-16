@@ -10,6 +10,15 @@
         'dev' => true,
     ),
     'versions' => array(
+        'carbonphp/carbon-doctrine-types' => array(
+            'pretty_version' => '3.2.0',
+            'version' => '3.2.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../carbonphp/carbon-doctrine-types',
+            'aliases' => array(),
+            'reference' => '18ba5ddfec8976260ead6e866180bd5d2f71aa1d',
+            'dev_requirement' => false,
+        ),
         'composer/installers' => array(
             'pretty_version' => 'v2.1.0',
             'version' => '2.1.0.0',
@@ -83,13 +92,28 @@
             'dev_requirement' => false,
         ),
         'nesbot/carbon' => array(
-            'pretty_version' => '2.62.1',
-            'version' => '2.62.1.0',
+            'pretty_version' => '2.72.5',
+            'version' => '2.72.5.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../nesbot/carbon',
             'aliases' => array(),
-            'reference' => '01bc4cdefe98ef58d1f9cb31bdbbddddf2a88f7a',
+            'reference' => 'afd46589c216118ecd48ff2b95d77596af1e57ed',
             'dev_requirement' => false,
+        ),
+        'psr/clock' => array(
+            'pretty_version' => '1.0.0',
+            'version' => '1.0.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../psr/clock',
+            'aliases' => array(),
+            'reference' => 'e41a24703d4560fd0acb709162f73b8adfc3aa0d',
+            'dev_requirement' => false,
+        ),
+        'psr/clock-implementation' => array(
+            'dev_requirement' => false,
+            'provided' => array(
+                0 => '1.0',
+            ),
         ),
         'stefangabos/zebra_image' => array(
             'pretty_version' => '2.6.0',
@@ -152,12 +176,12 @@
             ),
         ),
         'tecnickcom/tcpdf' => array(
-            'pretty_version' => '6.5.0',
-            'version' => '6.5.0.0',
+            'pretty_version' => '6.7.7',
+            'version' => '6.7.7.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../tecnickcom/tcpdf',
             'aliases' => array(),
-            'reference' => 'cc54c1503685e618b23922f53635f46e87653662',
+            'reference' => 'cfbc0028cc23f057f2baf9e73bdc238153c22086',
             'dev_requirement' => false,
         ),
     ),

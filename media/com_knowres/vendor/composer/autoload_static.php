@@ -28,6 +28,10 @@ class ComposerStaticInit19da6a9c6fd1845dd6033c928f02e4f5
         array (
             'ReCaptcha\\' => 10,
         ),
+        'P' => 
+        array (
+            'Psr\\Clock\\' => 10,
+        ),
         'K' => 
         array (
             'Kigkonsult\\Icalcreator\\' => 23,
@@ -39,6 +43,7 @@ class ComposerStaticInit19da6a9c6fd1845dd6033c928f02e4f5
         'C' => 
         array (
             'Composer\\Installers\\' => 20,
+            'Carbon\\Doctrine\\' => 16,
             'Carbon\\' => 7,
         ),
     );
@@ -68,6 +73,10 @@ class ComposerStaticInit19da6a9c6fd1845dd6033c928f02e4f5
         array (
             0 => __DIR__ . '/..' . '/google/recaptcha/src/ReCaptcha',
         ),
+        'Psr\\Clock\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/clock/src',
+        ),
         'Kigkonsult\\Icalcreator\\' => 
         array (
             0 => __DIR__ . '/..' . '/kigkonsult/icalcreator/src',
@@ -81,6 +90,10 @@ class ComposerStaticInit19da6a9c6fd1845dd6033c928f02e4f5
         'Composer\\Installers\\' => 
         array (
             0 => __DIR__ . '/..' . '/composer/installers/src/Composer/Installers',
+        ),
+        'Carbon\\Doctrine\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/carbonphp/carbon-doctrine-types/src/Carbon/Doctrine',
         ),
         'Carbon\\' => 
         array (
