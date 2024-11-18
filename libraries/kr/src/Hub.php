@@ -89,9 +89,9 @@ class Hub
 		if ($contractData->expiry_days == 0) {
 			$this->setValue('expiry_days', $this->settings['expiry_days']);
 		}
-		if ($contractData->balance_days == 0) {
-			$this->setValue('balance_days', $this->settings['balance_days']);
-		}
+//		if ($contractData->balance_days == 0) {
+//			$this->setValue('balance_days', $this->settings['balance_days']);
+//		}
 		$this->setValue('nights', TickTock::differenceDays($this->getValue('arrival'), $this->getValue('departure')));
 		$this->setValue('date_range',
 			TickTock::allDatesBetween($this->getValue('arrival'), $this->getValue('departure'), true));

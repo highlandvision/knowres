@@ -19,6 +19,7 @@ defined('_JEXEC') or die;
 			<?php echo $this->form->renderField('expiry_days'); ?>
 		</div>
 		<div class="col-md-4">
+			<?php $this->form->setValue('balance_days', '', $this->settings['balance_days']); ?>
 			<?php echo $this->form->renderField('balance_days'); ?>
 		</div>
 		<div class="col-md-4">

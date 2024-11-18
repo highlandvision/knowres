@@ -86,7 +86,7 @@
 			description="COM_KNOWRES_CONTRACT_EXPIRY_DAYS_DSC"/>
 		<field name="balance_days"
 			class="kr-calculate"
-			default="30"
+			default="0"
 			filter="integer"
 			type="number"
 			min="0"
