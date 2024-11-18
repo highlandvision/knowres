@@ -80,10 +80,10 @@ class Dispatcher extends AbstractModuleDispatcher
 			$data['destination'] = $destination;
 			$Itemid              = SiteHelper::getItemId('com_knowres', 'properties', ['region_id' => $region_id]);
 			if ($area) {
-				$data['link'] = '/index.php?option=com_knowres&task=properties.search&region_id=' .
+				$data['link'] = 'index.php?option=com_knowres&task=properties.search&region_id=' .
 				                                 $region_id . '&area=' . $area  . '&Itemid=' . $Itemid;
 			} else {
-				$data['link'] = '/index.php?option=com_knowres&task=properties.search&region_id=' .
+				$data['link'] = 'index.php?option=com_knowres&task=properties.search&region_id=' .
 				                                 $region_id . '&Itemid=' . $Itemid;
 			}
 

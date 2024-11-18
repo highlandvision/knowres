@@ -121,8 +121,12 @@ class Translations
 	 * @since  1.0.0
 	 * @return array
 	 */
-	public function addTranslationToObject(array  $items, string $item, string $key = 'id', string $field = 'name',
-	                                       string $new = 'name', bool $sort = true): array
+	public function addTranslationToObject(array $items,
+		string $item,
+		string $key = 'id',
+		string $field = 'name',
+		string $new = 'name',
+		bool $sort = true): array
 	{
 		if (is_countable($this->translations)) {
 			if (!count($this->translations) || !array_key_exists($item, $this->translations)) {
@@ -282,8 +286,12 @@ class Translations
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function updateDefault(string $item, int $item_id, string $field, string $text, bool $remove_cache = true,
-	                              string $language = '')
+	public function updateDefault(string $item,
+		int $item_id,
+		string $field,
+		string $text,
+		bool $remove_cache = true,
+		string $language = '')
 	{
 		if (!$language) {
 			$language = $this->language;
@@ -328,6 +336,15 @@ class Translations
 			$data->updated_by = KrMethods::getUser()->id;
 			$data->language   = $language;
 			KrFactory::update('translation', $data);
+		}
+
+		if ($item == 'image') {
+			// Read image to get property and update servicequeue
+			$image = KrFactory::getAdminModel('image')->getItem($item_id);
+			KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updateProperty',
+			                                                             (int) $image->property_id,
+			                                                             0,
+			                                                             'ru');
 		}
 
 		if ($remove_cache) {

@@ -43,8 +43,7 @@ class ImageController extends FormController
 		$description = (string) $validData['description'];
 		$alt_text    = (string) $validData['alt_text'];
 
-		if ($this->input->get('task') == 'save2copy')
-		{
+		if ($this->input->get('task') == 'save2copy') {
 			$description = StringHelper::increment($description);
 		}
 

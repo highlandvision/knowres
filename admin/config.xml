@@ -440,7 +440,9 @@
                    class="w-auto"
                    type="menuitem"
                    label="COM_KNOWRES_CONFIG_SEARCH_OPTIONS_BREADCRUMBS"
-                   description="COM_KNOWRES_CONFIG_SEARCH_OPTIONS_BREADCRUMBS_DSC"/>
+                   description="COM_KNOWRES_CONFIG_SEARCH_OPTIONS_BREADCRUMBS_DSC">
+                <option value="0">COM_KNOWRES_NODAY</option>
+            </field>
             <field name="list_limit"
                    class="w-auto"
                    default="1"

@@ -11,514 +11,457 @@
 const lang = "en";
 
 (function ($) {
-	const markershape = {
-		type:   'poly',
-		coords: [1, 1, 1, 32, 37, 32, 32, 1]
-	};
+    const markershape = {
+        type: 'poly',
+        coords: [1, 1, 1, 32, 37, 32, 32, 1]
+    };
 
-	let myKrmap;
-	let mapData = false;
-	let map;
-	let mapZoom;
-	let infoWindow;
-	let infoWindow2;
-	let bounds;
-	let propertydiv;
-	let propertyicon;
-	let mc;
-//	let bicon;
-//	let hicon;
-//	let large_slideshow = false;
+    let myKrmap;
+    let mapData = false;
+    let map;
+    let infoWindow;
+    let infoWindow2;
+    let bounds;
+    let propertydiv;
+    let propertyicon;
+    let mc;
 
-	let settings = {
-		propertyMarkers: [],
-		filterIds:       [],
-		mapMarkers:      [],
-		mapTypeId:       '',
-		mapZoom:         0,
-	    mapMaxZoom:      20,
-		mapType:         '',
-		mapId:           '',
-		markerColor:     'red',
-	};
+    let settings = {
+        propertyMarkers: [],
+        filterIds: [],
+        mapMarkers: [],
+        mapTypeId: '',
+        mapZoom: 12,
+        mapMaxZoom: 20,
+        mapType: '',
+        mapId: '',
+        markerColor: 'red',
+    };
 
-	class Krmap {
-		constructor(settings) {
-			this.settings = settings;
+    class Krmap {
+        constructor(settings) {
+            this.settings = settings;
+            //Initialise map options
+            this.gmOptions = {
+                scrollwheel: false,
+                zoom: this.settings.mapZoom,
+                maxZoom: this.settings.mapMaxZoom,
+                mapTypeId: this.settings.mapTypeId,
+                streetViewControl: false
+            };
 
-			//Initialise map options
-			this.gmOptions = {
-				scrollwheel:       false,
-				zoom:              this.settings.mapZoom,
-				maxZoom:           this.settings.mapMaxZoom,
-				mapTypeId:         this.settings.mapTypeId,
-				streetViewControl: false
-			};
+            this.gmarkers = [];
+            this.count = 0;
+            this.initMap();
+        }
 
-			mapZoom = this.settings.mapZoom;
-			this.gmarkers = [];
-			this.count = 0;
+        static closeKrInfowindow() {
+            $('#kr-infowindow').hide();
+            infoWindow.close();
+            infoWindow2.close();
+        }
 
-			this.initMap();
-		}
+        // only show visible markers
+        static showVisibleMarkers(markers) {
+            let bounds = map.getBounds();
+            let count = 0;
 
-		static closeKrInfowindow() {
-			$('#kr-infowindow').hide();
-			infoWindow.close();
-			infoWindow2.close();
-		}
+            for (let d = 0; d < markers.length; d++) {
+                let marker = markers[d];
+                if (marker.type === 'map') {
+                    if (bounds.contains(marker.getPosition()) === true) {
+                        marker.setVisible(true);
+                        count++;
+                    } else {
+                        marker.setVisible(false);
+                    }
+                }
+            }
 
-		// only show visible markers
-		static showVisibleMarkers(markers) {
-			let bounds = map.getBounds();
-			let count = 0;
+            return count;
+        }
 
-			for (let d = 0; d < markers.length; d++) {
-				let marker = markers[d];
+        // Check Markers array for duplicate position and offset a little
+        checkDuplicate(current) {
+            if (this.gmarkers.length > 0) {
+                let dups = 0;
+                for (let index = 0; index < this.gmarkers.length; index++) {
+                    let pos = this.gmarkers[index].getPosition();
+                    if (current.equals(pos)) {
+                        dups++;
+                        let a = 360.0 / dups;
+                        let newLat = pos.lat() + -.00002 * Math.cos((+a * dups) / 180 * Math.PI);  //x
+                        let newLng = pos.lng() + -.00000 * Math.sin((+a * dups) / 180 * Math.PI);  //Y
+                        current = new google.maps.LatLng(newLat, newLng);
+                    }
+                }
+            }
 
-				if (marker.type === 'map') {
-					if (bounds.contains(marker.getPosition()) === true) {
-						marker.setVisible(true);
-						count++;
-					} else {
-						marker.setVisible(false);
-					}
-				}
-			}
+            return current;
+        }
 
-			return count;
-		}
+        checkZoom() {
+            if (this.settings.mapZoom > 0) {
+                let mylistener = map.addListener('idle', function () {
+                    if (map.getZoom() !== this.settings.mapZoom) {
+                        map.setZoom(this.settings.mapZoom);
+                        mylistener.remove();
+                    }
+                });
+            }
+        }
 
-		// Check Markers array for duplicate position and offset a little
-		checkDuplicate(current) {
-			if (this.gmarkers.length > 0) {
-				let dups = 0;
+        clusterMap() {
+            const mcOptions = {
+                gridSize: 20,
+                ignoreHiddenMarkers: true,
+                imagePath: '/media/com_knowres/images/markerclusterer/m'
+            };
 
-				for (let index = 0; index < this.gmarkers.length; index++) {
-					let pos = this.gmarkers[index].getPosition();
-					if (current.equals(pos)) {
-						dups++;
-						let a = 360.0 / dups;
-						let newLat = pos.lat() + -.00002 * Math.cos((+a * dups) / 180 * Math.PI);  //x
-						let newLng = pos.lng() + -.00000 * Math.sin((+a * dups) / 180 * Math.PI);  //Y
-						current = new google.maps.LatLng(newLat, newLng);
-					}
-				}
-			}
+            map.maxDefaultZoom = this.settings.mapZoom;
+            if (this.settings.mapZoom > 0) {
+                google.maps.event.addListenerOnce(map, "bounds_changed", function () {
+                    this.setZoom(Math.min(this.getZoom(), this.maxDefaultZoom));
+                });
+            }
 
-			return current;
-		}
+            this.setPropertyMarkers();
+            this.setMapMarkers();
 
-		checkZoom() {
-			if (mapZoom > 0) {
-				let mylistener = map.addListener('idle', function () {
-					if (mapZoom > 0 && map.getZoom() !== mapZoom) {
-						map.setZoom(mapZoom);
-						mylistener.remove();
-					}
-				});
-			}
-		}
+            for (let d = 0; d < this.gmarkers.length; d++) {
+                let marker = this.gmarkers[d];
+                if (marker.type === 'property') {
+                    if (this.settings.filterIds.includes(marker.pid)) {
+                        marker.setVisible(true);
+                    } else {
+                        marker.setVisible(false);
+                    }
+                }
+            }
 
-		clusterMap() {
-			const mcOptions = {
-				gridSize:            20,
-				ignoreHiddenMarkers: true,
-				imagePath:           '/media/com_knowres/images/markerclusterer/m'
-			};
+            mc = new MarkerClusterer(map, this.gmarkers, mcOptions);
+            google.maps.event.addListener(mc, "clusterclick", function () {
+                $('#kr-infowindow').hide();
+                infoWindow.close();
+            });
 
-			this.setPropertyMarkers();
-			this.setMapMarkers();
+            map.fitBounds(bounds);
+            map.setCenter(bounds.getCenter());
+        }
 
-			for (let d = 0; d < this.gmarkers.length; d++) {
-				let marker = this.gmarkers[d];
-				if (marker.type === 'property') {
-					if (this.settings.filterIds.includes(marker.pid)) {
-						marker.setVisible(true);
-					} else {
-						marker.setVisible(false);
-					}
-				}
-			}
+        // Create the Map
+        createMap() {
+            map = new google.maps.Map(document.getElementById(this.settings.mapId), this.gmOptions);
+            infoWindow = new google.maps.InfoWindow();
+            infoWindow2 = new google.maps.InfoWindow();
+            bounds = new google.maps.LatLngBounds();
+        }
 
-			mc = new MarkerClusterer(map, this.gmarkers, mcOptions);
-			google.maps.event.addListener(mc, "clusterclick", function () {
-				$('#kr-infowindow').hide();
-				infoWindow.close();
-			});
+        // Create the marker and set up the event window
+        createMapMarker(point, html, image, boxinfo, link, title) {
+            let marker = new google.maps.Marker({
+                shape: markershape,
+                link: link,
+                icon: image,
+                position: point,
+                title: title,
+                map: map,
+                zIndex: 999
+            });
 
-			map.fitBounds(bounds);
-			map.setCenter(bounds.getCenter());
-		}
+            google.maps.event.addListener(marker, 'mouseover', (function (html) {
+                return function () {
+                    infoWindow2.setContent(html);
+                    infoWindow2.open(map, marker);
+                };
+            })(html));
 
-		// Create the Map
-		createMap() {
-			map = new google.maps.Map(document.getElementById(this.settings.mapId), this.gmOptions);
-			infoWindow = new google.maps.InfoWindow();
-			infoWindow2 = new google.maps.InfoWindow();
-			bounds = new google.maps.LatLngBounds();
-		}
+            google.maps.event.addListener(marker, 'mouseout', (function () {
+                return function () {
+                    infoWindow2.close();
+                };
+            })());
 
-		// Create the marker and set up the event window
-		createMapMarker(point, html, image, boxinfo, link, title) {
-			let marker = new google.maps.Marker({
-				shape:    markershape,
-				link:     link,
-				icon:     image,
-				position: point,
-				title:    title,
-				map:      map,
-				zIndex:   999
-			});
+            google.maps.event.addListener(marker, 'closeclick', function () {
+                infoWindow2.close();
+            });
 
-			google.maps.event.addListener(marker, 'mouseover', (function (html) {
-				return function () {
-					infoWindow2.setContent(html);
-					infoWindow2.open(map, marker);
-				};
-			})(html));
+            this.gmarkers.push(marker);
 
-			google.maps.event.addListener(marker, 'mouseout', (function () {
-				return function () {
-					infoWindow2.close();
-				};
-			})());
+            this.count++;
+        }
 
-			google.maps.event.addListener(marker, 'closeclick', function () {
-				infoWindow2.close();
-			});
+        createPropertyMarker(point, html, boxinfo, link, title, color, id, image, pid) {
+            let marker = new google.maps.Marker({
+                position: point,
+                link: link,
+                map: map,
+                icon: image,
+                title: title,
+                pid: pid,
+                type: 'property',
+                zIndex: this.count + 1000
+            });
 
-			this.gmarkers.push(marker);
+            propertydiv = document.getElementById(id);
+            marker.addListener('mousedown', (function (boxinfo) {
+                return function () {
+                    infoWindow.close();
+                    $('#kr-infowindow').hide();
+                    infoWindow.setContent(html);
+                    infoWindow.open(map, marker);
 
-			this.count++;
-		}
+                    $.ajax({
+                        type: "POST",
+                        url: '/index.php?option=com_knowres&task=property.mapinfowindow',
+                        data: {
+                            id: parseInt(boxinfo)
+                        },
+                        success: function (data) {
+                            $('#kr-infowindow').fadeIn(400).html(data).show();
+                            $(".kr-infowindow-slideshow").not('.slick-initialized').slick({
+                                nextArrow: '<i class="slick-nav next fa-solid fa-chevron-right "></i>',
+                                prevArrow: '<i class="slick-nav prev fa-solid fa-chevron-left "></i>',
+                                autoplay: true
+                            });
+                        }
+                    });
+                };
+            })(boxinfo));
 
-		createPropertyMarker(point, html, boxinfo, link, title, color, id, image, pid) {
-			let marker = new google.maps.Marker({
-				position: point,
-				link:     link,
-				map:      map,
-				icon:     image,
-				title:    title,
-				pid:      pid,
-				type:     'property',
-				zIndex:   this.count + 1000
-			});
+            google.maps.event.addListener(marker, 'closeclick', function () {
+                $('#kr-infowindow').hide();
+                infoWindow.close();
+            });
 
-			propertydiv = document.getElementById(id);
-			// if (propertydiv !== null) {
-			// 	google.maps.event.addDomListener(propertydiv, 'mouseover', function () {
-			// 		marker.setIcon(
-			// 			hicon
-			// 		)
-			// 		marker.setZIndex(marker.getZIndex() + 1000);
-			// 	});
-			// 	google.maps.event.addDomListener(propertydiv, 'mouseout', function () {
-			// 		marker.setIcon(
-			// 			bicon
-			// 		)
-			// 		marker.setZIndex(marker.getZIndex() - 1000);
-			// 	});
-			// }
+            this.gmarkers.push(marker);
+            bounds.extend(point);
 
-			// marker.addListener('mouseover', (function () {
-			// 	marker.setIcon(
-			// 		hicon
-			// 	)
-			// 	marker.setZIndex(marker.getZIndex() + 1000);
-			// }));
-			//
-			// marker.addListener('mouseout', (function () {
-			// 	marker.setIcon(
-			// 		bicon
-			// 	)
-			// 	marker.setZIndex(marker.getZIndex() - 1000);
-			// }));
+            this.count++;
+        }
 
-			// google.maps.event.addListener(marker, 'click', function() {
-			// 	marker.setVisible(false); // maps API hide call
-			// });
+        //Initialise map
+        initMap() {
+            this.createMap();
+            if (this.settings.mapType === 'cluster') {
+                this.clusterMap();
+            } else {
+                this.soloMap();
+            }
+        }
 
-			marker.addListener('mousedown', (function (boxinfo) {
-				return function () {
-					infoWindow.close();
-					$('#kr-infowindow').hide();
-					infoWindow.setContent(html);
-					infoWindow.open(map, marker);
+        // Reset map to initial state
+        refreshMap($mapmodal) {
+            if (this.settings.mapType === 'solo')
+                return;
 
-					$.ajax({
-						type:    "POST",
-						url:     '/index.php?option=com_knowres&task=property.mapinfowindow',
-						data:    {
-							id: parseInt(boxinfo)
-						},
-						success: function (data) {
-							$('#kr-infowindow').fadeIn(400).html(data).show();
-							$(".kr-infowindow-slideshow").not('.slick-initialized').slick({
-								nextArrow: '<i class="slick-nav next fa-solid fa-chevron-right "></i>',
-								prevArrow: '<i class="slick-nav prev fa-solid fa-chevron-left "></i>',
-								autoplay:  true
-							});
-						}
-					});
-				};
-			})(boxinfo));
+            let self = this;
+            jQuery.ajax({
+                url: '/index.php?option=com_knowres&task=properties.refreshmap',
+                type: 'POST',
+                dataType: 'json',
+                success: function (result) {
+                    if (result.success) {
+                        self.settings.filterIds = result.data.filterIds;
+                        for (let d = 0; d < self.gmarkers.length; d++) {
+                            let marker = self.gmarkers[d];
+                            if (marker.type === 'property') {
+                                if (self.settings.filterIds.includes(marker.pid)) {
+                                    marker.setVisible(true);
+                                } else {
+                                    marker.setVisible(false);
+                                }
+                            }
+                        }
 
-			google.maps.event.addListener(marker, 'closeclick', function () {
-				$('#kr-infowindow').hide();
-				infoWindow.close();
-			});
+                        mc.repaint();
+                        new Foundation.Reveal($mapmodal);
+                        $mapmodal.foundation('open');
+                        google.maps.event.trigger(map, 'resize');
+                        $mapmodal.foundation('open');
+                    } else {
+                        window.alert(result.message);
+                    }
+                }
+            });
+        }
 
-			this.gmarkers.push(marker);
-			bounds.extend(point);
+        // Reset map to initial state
+        resetMap() {
+            infoWindow.close();
+            infoWindow2.close();
+            $('#kr-infowindow').hide();
+            map.fitBounds(bounds);
+            map.setCenter(bounds.getCenter());
+        }
 
-			this.count++;
-		}
+        // loop to set map markers
+        setMapMarkers() {
+            let point;
+            let amark;
 
-		//Initialise map
-		initMap() {
-			this.createMap();
-			if (this.settings.mapType === 'cluster') {
-				this.clusterMap();
-			} else {
-				this.soloMap();
-			}
-		}
+            for (let d = 0; d < this.settings.mapMarkers.length; d++) {
+                amark = this.settings.mapMarkers[d];
+                let markericon = {
+                    url: amark['icon'],
+                    size: new google.maps.Size(32, 37),
+                    // OR scaledSize: new google.maps.Size(40, 47)
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(0, 18)
+                };
 
-		// Reset map to initial state
-		refreshMap($mapmodal) {
-			if (this.settings.mapType === 'solo')
-				return;
+                point = new google.maps.LatLng(amark['lat'], amark['lng']);
+                point = this.checkDuplicate(point);
+                this.createMapMarker(point, amark['html'], markericon, '', '', amark['title']);
+            }
+        }
 
-			let self = this;
-			jQuery.ajax({
-				url:      '/index.php?option=com_knowres&task=properties.refreshmap',
-				type:     'POST',
-				dataType: 'json',
-				success:  function (result) {
-					if (result.success) {
-						self.settings.filterIds = result.data.filterIds;
-						for (let d = 0; d < self.gmarkers.length; d++) {
-							let marker = self.gmarkers[d];
-							if (marker.type === 'property') {
-								if (self.settings.filterIds.includes(marker.pid)) {
-									marker.setVisible(true);
-								} else {
-									marker.setVisible(false);
-								}
-							}
-						}
+        // loop to set property markers
+        setPropertyMarkers() {
+            let point;
+            let amark;
 
-						mc.repaint();
-						new Foundation.Reveal($mapmodal);
-						$mapmodal.foundation('open');
-						google.maps.event.trigger(map, 'resize');
-						$mapmodal.foundation('open');
-					} else {
-						window.alert(result.message);
-					}
-				}
-			});
-		}
+            for (let d = 0; d < this.settings.propertyMarkers.length; d++) {
+                amark = this.settings.propertyMarkers[d];
+                if (!d) {
+                    propertyicon = {
+                        url: amark['icon'],
+                        size: new google.maps.Size(32, 37),
+                        origin: new google.maps.Point(0, 0),
+                        anchor: new google.maps.Point(0, 20)
+                    };
+                }
 
-		// Reset map to initial state
-		resetMap() {
-			infoWindow.close();
-			infoWindow2.close();
-			$('#kr-infowindow').hide();
-			map.fitBounds(bounds);
-			map.setCenter(bounds.getCenter());
-		}
+                point = new google.maps.LatLng(amark['lat'], amark['lng']);
+                point = this.checkDuplicate(point);
+                this.createPropertyMarker(point, amark['html'], amark['boxinfo'], amark['link'], amark['title'],
+                    amark['color'], amark['id'], propertyicon, amark['pid']);
+            }
+        }
 
-		// loop to set map markers
-		setMapMarkers() {
-			let point;
-			let amark;
+        soloMap() {
+            this.setPropertyMarkers();
+            this.setMapMarkers();
 
-			for (let d = 0; d < this.settings.mapMarkers.length; d++) {
-				amark = this.settings.mapMarkers[d];
-				let markericon = {
-					url:  amark['icon'],
-					size: new google.maps.Size(32, 37),
-					// OR scaledSize: new google.maps.Size(40, 47)
-					origin: new google.maps.Point(0, 0),
-					anchor: new google.maps.Point(0, 18)
-				};
+            map.fitBounds(bounds);
+            map.setCenter(bounds.getCenter());
+            this.checkZoom();
 
-				point = new google.maps.LatLng(amark['lat'], amark['lng']);
-				point = this.checkDuplicate(point);
-				this.createMapMarker(point, amark['html'], markericon, '', '', amark['title']);
-			}
-		}
+            if (this.settings.mapMarkers.length > 0) {
+                const self = this;
 
-		// setMarkerIcons() {
-		// 	bicon = {
-		// 		path:         '/media/com_knowres/assets/images/svg',
-		// 		fillColor:    this.settings.markerColor,
-		// 		fillOpacity:  0.9,
-		// 		anchor:       new google.maps.Point(9, 35),
-		// 		strokeColor:  "#efefef",
-		// 		strokeWeight: 0.5,
-		// 		scale:        1
-		// 	};
-		// 	hicon = {
-		// 		path:         '/media/com_knowres/assets/images/svg',
-		// 		fillColor:    "green",
-		// 		fillOpacity:  1,
-		// 		anchor:       new google.maps.Point(9, 35),
-		// 		strokeColor:  "#efefef",
-		// 		strokeWeight: 0.8,
-		// 		scale:        1.5
-		// 	};
-		// }
+                let myListener = google.maps.event.addListener(map, 'idle', function () {
+                    let found = 0;
+                    let currentZoom = map.getZoom();
+                    while (!found) {
+                        found = Krmap.showVisibleMarkers(self.gmarkers);
+                        if (found) {
+                            myListener.remove();
+                            map.setZoom(currentZoom);
+                            break;
+                        }
+                        currentZoom = currentZoom - 1;
+                        if (currentZoom < 10) {
+                            break;
+                        }
+                    }
+                });
+            }
+        }
+    }
 
-		// loop to set property markers
-		setPropertyMarkers() {
-			let point;
-			let amark;
+    $(function () {
+        let $mapmodal;
 
-			for (let d = 0; d < this.settings.propertyMarkers.length; d++) {
-				amark = this.settings.propertyMarkers[d];
+        $('body').on('click', '.map-trigger', function (e) {
+            e.preventDefault();
+            if (mapData) {
+                myKrmap.refreshMap($mapmodal);
+            } else {
+                kickMap($(this));
+                $mapmodal = $('#kr-search-map-modal');
+                $mapmodal.foundation('open');
+            }
+        }).on('click', '.resetmap', function (e) {
+            e.preventDefault();
+            myKrmap.resetMap();
+        }).on('click', '#kr-search-map-full-infowindow-close', function (e) {
+            e.preventDefault();
+            Krmap.closeKrInfowindow();
+        }).on('click', '.closemap', function (e) {
+            e.preventDefault();
+            $mapmodal.foundation('close');
+            $.ajax({
+                type: "POST",
+                url: '/index.php?option=com_knowres&task=properties.mapsession',
+                success: function () {
+                    $('.kr-searchbar .button.map').removeClass('is-active');
+                    return true;
+                }
+            });
+        }).on('open.zf.reveal', '#kr-search-map-modal', function (e) {
+            e.preventDefault();
+            $('#kr-search-map-full').height($('#kr-search-map-modal').height());
+            google.maps.event.trigger(map, "resize");
+            $.ajax({
+                type: "POST",
+                url: '/index.php?option=com_knowres&task=properties.mapsession',
+                data: {map_modal: '1'},
+                success: function () {
+                    return true;
+                }
+            });
+        });
 
-				if (!d) {
-					propertyicon = {
-						url:    amark['icon'],
-						size:   new google.maps.Size(32, 37),
-						origin: new google.maps.Point(0, 0),
-						anchor: new google.maps.Point(0, 20)
-					};
-				}
+        // Doesn't trigger if included above ??
+        if (!mapData) {
+            const $soloTrigger = $('#kr-map-solo-trigger');
+            $soloTrigger.one('click', function () {
+                kickMap($soloTrigger);
+            });
 
-				point = new google.maps.LatLng(amark['lat'], amark['lng']);
-				point = this.checkDuplicate(point);
-				this.createPropertyMarker(point, amark['html'], amark['boxinfo'], amark['link'], amark['title'], amark['color'], amark['id'], propertyicon, amark['pid']);
-			}
-		}
+            if (window.location.href.indexOf('#map') !== -1 && $soloTrigger.length) {
+                kickMap($soloTrigger);
+            }
+        }
 
-		soloMap() {
-			this.setPropertyMarkers();
-			this.setMapMarkers();
+        // Test for force map
+        const $trigger = $('.map-trigger');
+        if ($trigger.data('forcemap')) {
+            $trigger.trigger('click');
+        }
 
-			map.fitBounds(bounds);
-			map.setCenter(bounds.getCenter());
-//			this.checkZoom();
+        function kickMap($elem) {
+            const type = $elem.data('type');
+            let pid = 0;
+            if (type === 'solo') {
+                pid = $elem.data('pid');
+            }
 
-			if (this.settings.mapMarkers.length > 0) {
-				const self = this;
+            jQuery.ajax({
+                url: '/index.php?option=com_knowres&task=properties.mapdata&pid=' + pid,
+                type: "POST",
+                dataType: "json",
+                success: function (result) {
+                    if (result.success) {
+                        settings = {
+                            mapId: $elem.data('target'),
+                            mapType: $elem.data('type'),
+                            mapTypeId: $elem.data('maptypeid'),
+                            mapZoom: parseInt($elem.data('zoom')),
+                            mapMaxZoom: parseInt($elem.data('zoommax')),
+                            propertyMarkers: result.data.propertyMarkers,
+                            mapMarkers: result.data.mapMarkers,
+                            filterIds: result.data.filterIds
+                        };
 
-				let myListener = google.maps.event.addListener(map, 'idle', function () {
-					let found = 0;
-					let currentZoom = map.getZoom();
-
-					while (!found) {
-						found = Krmap.showVisibleMarkers(self.gmarkers);
-						if (found) {
-							myListener.remove();
-							map.setZoom(currentZoom);
-							break;
-						}
-						currentZoom = currentZoom - 1;
-						if (currentZoom < 10) {
-							break;
-						}
-					}
-				});
-			}
-		}
-	}
-
-	$(function () {
-		let $mapmodal;
-
-		$('body').on('click', '.map-trigger', function (e) {
- 			e.preventDefault();
- 			if (mapData) {
- 				myKrmap.refreshMap($mapmodal);
- 			} else {
- 				kickMap($(this));
-				$mapmodal = $('#kr-search-map-modal');
-				$mapmodal.foundation('open');
- 			}
-		}).on('click', '.resetmap', function (e) {
-			e.preventDefault();
-			myKrmap.resetMap();
-		}).on('click', '#kr-search-map-full-infowindow-close', function (e) {
-			e.preventDefault();
-			Krmap.closeKrInfowindow();
-		}).on('click', '.closemap', function (e) {
-			e.preventDefault();
-			$mapmodal.foundation('close');
-			$.ajax({
-				type:    "POST",
-				url:     '/index.php?option=com_knowres&task=properties.mapsession',
-				success: function () {
-					$('.kr-searchbar .button.map').removeClass('is-active');
-					return true;
-				}
-			});
-		}).on('open.zf.reveal', '#kr-search-map-modal', function (e) {
-			e.preventDefault();
-			$('#kr-search-map-full').height($('#kr-search-map-modal').height());
-			google.maps.event.trigger(map, "resize");
-			$.ajax({
-				type:    "POST",
-				url:     '/index.php?option=com_knowres&task=properties.mapsession',
-				data:    {map_modal: '1'},
-				success: function () {
-					return true;
-				}
-			});
-		});
-
-		// Doesn't trigger if included above ??
-		if (!mapData) {
-			const $soloTrigger = $('#kr-map-solo-trigger');
-			$soloTrigger.one('click', function () {
-				kickMap($soloTrigger);
-			});
-
-			if (window.location.href.indexOf('#map') !== -1 && $soloTrigger.length) {
-				kickMap($soloTrigger);
-			}
-		}
-
-		// Test for force map
-		const $trigger = $('.map-trigger');
-		if ($trigger.data('forcemap')) {
-			$trigger.trigger('click');
-		}
-
-		function kickMap($elem) {
-			const type = $elem.data('type');
-			let pid = 0;
-			if (type === 'solo') {
-				pid = $elem.data('pid');
-			}
-
-			jQuery.ajax({
-				url:      '/index.php?option=com_knowres&task=properties.mapdata&pid=' + pid,
-				type:     "POST",
-				dataType: "json",
-				success:  function (result) {
-					if (result.success) {
-						settings = {
-							mapId:           $elem.data('target'),
-							mapType:         $elem.data('type'),
-							mapTypeId:       $elem.data('maptypeid'),
-							mapZoom:         parseInt($elem.data('zoom')),
-							mapMaxZoom:      parseInt($elem.data('zoommax')),
-							propertyMarkers: result.data.propertyMarkers,
-							mapMarkers:      result.data.mapMarkers,
-							filterIds:       result.data.filterIds
-						};
-
-						myKrmap = new Krmap(settings);
-						mapData = true;
-					} else {
-						window.alert(result.message);
-					}
-				}
-			});
-		}
-	});
+                        myKrmap = new Krmap(settings);
+                        mapData = true;
+                    } else {
+                        window.alert(result.message);
+                    }
+                }
+            });
+        }
+    });
 }(jQuery));

@@ -414,7 +414,7 @@ class Search
 		$region                         = KrFactory::getAdminModel('region')->getItem($this->searchData->region_id);
 		$this->searchData->region_name  = $this->Translations->getText('region', $region->id);
 		$this->searchData->country_name = $this->Translations->getText('country', $region->country_id);
-		$this->searchData->map_zoom     = min($region->map_zoom, $this->searchData->map_zoom);
+		$this->searchData->map_zoom     = max($region->map_zoom, $this->searchData->map_zoom);
 		$this->searchData->map_zoom_max = min($region->map_zoom_max, $this->searchData->map_zoom_max);
 	}
 }

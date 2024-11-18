@@ -31,7 +31,7 @@ use function jexit;
 class AjaxController extends BaseController
 {
 	/**
-	 * Edit from jinplace (edit in place)
+	 * Ajax edit from jinplace (edit in place)
 	 *
 	 * @throws Exception
 	 * @since  2.4.0
@@ -42,17 +42,14 @@ class AjaxController extends BaseController
 		$column = KrMethods::inputString('column');
 		$text   = KrMethods::inputString('text');
 
-		if (empty($column) || empty($table))
-		{
+		if (empty($column) || empty($table)) {
 			echo new JsonResponse(null, KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN'), true);
 			jexit();
 		}
 
 		$translate = explode('~', $table);
-		if ($translate[0] == 'translate')
-		{
-			try
-			{
+		if ($translate[0] == 'translate') {
+			try {
 				$Translations = new Translations();
 				$Translations->updateDefault($translate[1], $translate[2], $column, $text);
 
@@ -61,9 +58,7 @@ class AjaxController extends BaseController
 				$data->updated_at = TickTock::getTS();
 				$data->updated_by = (int) KrMethods::getUser()->id;
 				KrFactory::update($translate[1], $data);
-			}
-			catch (Exception $e)
-			{
+			} catch (Exception $e) {
 				echo new JsonResponse(null, KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN'), true);
 				jexit();
 			}
@@ -85,7 +80,8 @@ class AjaxController extends BaseController
 	 * @since  2.0.0
 	 * @return bool|BaseDatabaseModel
 	 */
-	public function getModel($name = 'editinplace', $prefix = 'Administrator',
+	public function getModel($name = 'editinplace',
+		$prefix = 'Administrator',
 		$config = ['ignore_request' => true]): BaseDatabaseModel|bool
 	{
 		return parent::getModel($name, $prefix, $config);

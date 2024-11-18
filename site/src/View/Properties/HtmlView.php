@@ -264,12 +264,17 @@ class HtmlView extends KrHtmlView\Site
 	 */
 	protected function setSearchDescription(stdClass $data): string
 	{
-		$description            = $data->region_name . ', ' . KrMethods::getCfg('sitename');
+		$meta = $data->region_name;
+		if ($data->area) {
+			$description = $data->area . ', ';
+			$meta        = $data->area . ', ' . $data->region_name;
+		}
+		$description            .= $data->region_name . ', ' . KrMethods::getCfg('sitename');
 		$this->meta_title       = KrMethods::sprintf('COM_KNOWRES_SEO_TITLE_PROPERTIES',
-			$data->region_name,
+			$meta,
 			$data->country_name);
 		$this->meta_description = KrMethods::sprintf('COM_KNOWRES_SEO_DESCRIPTION_PROPERTIES',
-			$data->region_name,
+			$meta,
 			$data->country_name);
 
 		return $description;

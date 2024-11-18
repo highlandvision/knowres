@@ -21,9 +21,7 @@ extract($displayData);
 
 <div class="kr-mapmarker">
 	<h6><?php echo $name; ?></h6>
-	<p>
-		<?php echo $text; ?>
-	</p>
+	<p><?php echo $text; ?></p>
 	<?php if ($image): ?>
 		<div class="bground" style="background-image:url('<?php echo $image; ?>');"></div>
 	<?php endif; ?>
