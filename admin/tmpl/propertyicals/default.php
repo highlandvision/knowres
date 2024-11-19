@@ -37,3 +37,4 @@ include(JPATH_ADMINISTRATOR . '/components/com_knowres/layouts/html/list/include
 <?php include(JPATH_ADMINISTRATOR . '/components/com_knowres/layouts/html/list/includes/list-form-end.php'); ?>
 
 <?php echo $this->loadTemplate('icalexport'); ?>
+<?php echo $this->loadTemplate('icalimport'); ?>

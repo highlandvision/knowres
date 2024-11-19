@@ -26,7 +26,6 @@ use Joomla\String\StringHelper;
  */
 class RateController extends FormController
 {
-
 	/**
 	 * Process additional requirements after save
 	 *

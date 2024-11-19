@@ -52,8 +52,7 @@ class HtmlView extends KrHtmlView\Property
 		$this->ordering      = in_array('ordering', $model->getFilterFields());
 		$this->form_name     = 'propertyical';
 
-		if (!$this->checkEmpty())
-		{
+		if (!$this->checkEmpty()) {
 			$this->checkErrors();
 			ToolbarHelper::title(KrMethods::plain('COM_KNOWRES_PROPERTYICALS_TITLE'), 'tasks knowres');
 			$this->addListToolbar($this->get('name'));
@@ -74,38 +73,36 @@ class HtmlView extends KrHtmlView\Property
 	protected function addCustomToolbar(Toolbar $Toolbar): Toolbar
 	{
 		$dropdown = $Toolbar->dropdownButton('propertyical-manage-group')
-		                    ->text('COM_KNOWRES_PROPERTYICALS_MANAGE')
-		                    ->toggleSplit(false)
-		                    ->icon('fa-solid fa-user')
-		                    ->buttonClass('btn btn-action');
+			->text('COM_KNOWRES_PROPERTYICALS_MANAGE')
+			->toggleSplit(false)
+			->icon('fa-solid fa-user')
+			->buttonClass('btn btn-action');
 
 		$ChildToolbar = $dropdown->getChildToolbar();
 
-		if ($this->canDo->get('core.delete', 'com_knowres'))
-		{
+		if ($this->canDo->get('core.delete', 'com_knowres')) {
 			$ChildToolbar->confirmButton('kr-icals-purge')
-			             ->buttonClass('btn btn-danger')
-			             ->icon('icon-trash')
-			             ->listCheck(true)
-			             ->message('COM_KNOWRES_ARE_YOU_SURE')
-			             ->task('propertyicals.purge')
-			             ->text('COM_KNOWRES_PROPERTYICALS_DELETE');
+				->buttonClass('btn btn-danger')
+				->icon('icon-trash')
+				->listCheck(true)
+				->message('COM_KNOWRES_ARE_YOU_SURE')
+				->task('propertyicals.purge')
+				->text('COM_KNOWRES_PROPERTYICALS_DELETE');
 		}
 
-		if ($this->canDo->get('core.edit', 'com_knowres'))
-		{
+		if ($this->canDo->get('core.edit', 'com_knowres')) {
 			$ChildToolbar->popupButton('icalexport')
-			             ->text('COM_KNOWRES_PROPERTYICALS_EXPORT')
-			             ->selector('icalexportModal')
-			             ->icon('icon-download')
-			             ->listCheck(false);
+				->icon('icon-download')
+				->listCheck(false)
+				->selector('icalexportModal')
+				->text('COM_KNOWRES_PROPERTYICALS_EXPORT');
 
-			$ChildToolbar->confirmButton('kr-icals-import')
-			             ->icon('icon-upload')
-			             ->listCheck(true)
-			             ->message('COM_KNOWRES_ARE_YOU_SURE')
-			             ->task('propertyicals.import')
-			             ->text('COM_KNOWRES_PROPERTYICALS_IMPORT');
+			$ChildToolbar->popupButton('icalimport')
+				->icon('icon-upload')
+				->listCheck(false)
+				->selector('icalimportModal')
+				->task('propertyicals.import')
+				->text('COM_KNOWRES_PROPERTYICALS_IMPORT');
 		}
 
 		return $Toolbar;

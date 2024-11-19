@@ -18,13 +18,14 @@ use Joomla\CMS\HTML\HTMLHelper;
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h3><?php echo KrMethods::plain('COM_KNOWRES_PROPERTYICALS_IMPORT'); ?></h3>
+				<h2 class="modal-title" id="icalimportModalLabel">
+					<?php echo KrMethods::plain('COM_KNOWRES_PROPERTYICALS_IMPORT'); ?>
+				</h2>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div class="modal-body">
 				<form action="<?php echo KrMethods::route('index.php?option=com_knowres&task=propertyical.import'); ?>"
-				      enctype="multipart/form-data" method="post"
-				      name="kr-ical-import-form">
+				      enctype="multipart/form-data" method="post" name="kr-ical-import-form">
 					<div class="row">
 						<div class="col">
 							<label for="formFile" class="form-label">
