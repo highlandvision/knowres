@@ -80,11 +80,12 @@ class Ical extends Service
 			$IcalBlock = new IcalBlock($property_id, $this->directory, $this->filename, $this->service->id, $icsdata);
 			$icsdata   = $IcalBlock->import();
 			KrFactory::getListModel('propertyicals')->updateLastUpdated($ical_id, $icsdata);
+			KrMethods::message(KrMethods::plain('COM_KNOWRES_ACTION_SUCCESS'));
 		}
 		catch (Exception $e)
 		{
 			Logger::logMe($e->getMessage());
-			KrMethods::message('COM_KNOWRES_ERROR_TRY_AGAIN_CHECK');
+			KrMethods::message($e->getMessage());
 		}
 
 		if (file_exists($this->directory . $this->filename))
