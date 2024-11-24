@@ -19,9 +19,17 @@ $type      = $this->params->get('property_slideshow', 'centered');
 $width     = $this->params->get('max_slideshow_width');
 $height    = $this->params->get('max_slideshow_height');
 $thumbs    = $this->params->get('property_thumbs', 0);
+
+$mixed = "";
+$landscape = $this->params->get('crop_slideshow', 1);
+if (!$landscape) {
+	$mixed ="mixed-width";
+}
 ?>
 
-<div id="kr-property-slideshow" class="kr-slick mixed-width <?php echo $type; ?>" data-type="<?php echo $type; ?>"
+<div id="kr-property-slideshow" class="kr-slick <?php echo $type; ?> <?php echo $mixed; ?>"
+     data-type="<?php echo $type;
+?>"
      data-thumbs="<?php echo $thumbs; ?>">
 	<?php foreach ($this->images as $image): ?>
 		<div>
