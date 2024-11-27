@@ -47,8 +47,11 @@ class ServicexrefpropertyRule extends FormRule
 	 * @since  3.4.0
 	 * @return bool  True if the value is valid, false otherwise.
 	 */
-	public function test(SimpleXMLElement $element, $value, $group = null, Registry $input = null,
-	                     Form             $form = null): bool
+	public function test(SimpleXMLElement $element,
+		$value,
+		$group = null,
+		Registry $input = null,
+		Form $form = null): bool
 	{
 		$service_id = ($input instanceof Registry) ? $input->get('service_id') : '';
 		$sell       = ($input instanceof Registry) ? $input->get('sell', 1) : '0';
@@ -88,13 +91,13 @@ class ServicexrefpropertyRule extends FormRule
 			$error = true;
 		}
 
-		if (!$item->lat
-			|| !$item->bedrooms
-			|| !$item->sleeps
-			|| !$item->p1
-			|| !$item->checkin_time
-			|| !$item->checkin_time_to
-			|| !$item->cancellation_penalty) {
+		if (!$item->lat ||
+		    !$item->bedrooms ||
+		    !$item->sleeps ||
+		    !$item->p1 ||
+		    !$item->checkin_time ||
+		    !$item->checkin_time_to ||
+		    !$item->cancellation_penalty) {
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_SERVICEXREF_ERROR2'), 'error');
 
 			$error = true;
@@ -179,8 +182,8 @@ class ServicexrefpropertyRule extends FormRule
 		foreach ($images as $i) {
 			list($width, $height) = getimagesize($path . '/' . $i->filename);
 			if ($width < 1190 || $height < 790) {
-				KrMethods::message(KrMethods::plain("Image $i->filename is too small width = $width px and height = $height px"),
-				                   'error');
+				KrMethods::message(KrMethods::sprintf('COM_KNOWRES_SERVICEXREF_IMAGESIZE',
+					$i->filename, $width, $height), 'error');
 				$error = true;
 			}
 		}
@@ -225,8 +228,8 @@ class ServicexrefpropertyRule extends FormRule
 
 				if ($guests > 10) {
 					$element->addAttribute('message',
-					                       KrMethods::plain('Guest numbers in Rates exceeds the limit of 10 imposed by HomeAway. Please consolidate some of the Rates entry lines or use Includes all guests'),
-					                       'error');
+						KrMethods::plain('Guest numbers in Rates exceeds the limit of 10 imposed by HomeAway. Please consolidate some of the Rates entry lines or use Includes all guests'),
+						'error');
 					$error = true;
 				}
 			}
