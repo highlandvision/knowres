@@ -20,7 +20,7 @@ use JetBrains\PhpStorm\NoReturn;
  *
  * @since   1.0.0
  */
-class MapInfoWindowView extends KrHtmlView\Site
+class MapinfowindowView extends KrHtmlView\Site
 {
 	/**
 	 * Display the view

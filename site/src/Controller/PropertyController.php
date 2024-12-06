@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 
 use Exception;
 use HighlandVision\Component\Knowres\Site\View\Property\GeriatricView;
-use HighlandVision\Component\Knowres\Site\View\Property\MapInfoWindowView;
+use HighlandVision\Component\Knowres\Site\View\Property\MapinfowindowView;
 use HighlandVision\Component\Knowres\Site\View\Property\QuoteView;
 use HighlandVision\Component\Knowres\Site\View\Property\TermsView;
 use HighlandVision\KR\Calendar;
@@ -119,7 +119,7 @@ class PropertyController extends BaseController
 		$searchSession = new KrSession\Search();
 		$searchData    = $searchSession->getData();
 
-		/** @var MapInfoWindowView $view */
+		/** @var MapinfowindowView $view */
 		$view                 = $this->getView('property', 'mapinfowindow');
 		$id                   = KrMethods::inputInt('id');
 		$view->item           = KrFactory::getAdminModel('property')->getItem($id);
