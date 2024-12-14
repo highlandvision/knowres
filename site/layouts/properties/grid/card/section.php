@@ -11,6 +11,7 @@ defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Translations;
+use HighlandVision\KR\Utility;
 use Joomla\Registry\Registry;
 
 extract($displayData);
@@ -25,9 +26,9 @@ extract($displayData);
  */
 ?>
 
-<h3 class="h6" style="flex-grow:1">
+<h2 class="h5" style="flex-grow:1">
 	<?php echo $item->property_name; ?>
-</h3>
+</h2>
 <div class="info small">
 	<?php echo Translations::getCountryName($item->country_id) . ','; ?>
 	<?php echo $item->region_name . ','; ?>
@@ -51,4 +52,15 @@ extract($displayData);
 		<?php echo KrMethods::plain('COM_KNOWRES_PETS'); ?>
 		<?php echo $item->pets; ?>
 	<?php endif; ?>
+</div>
+
+<div class="amenities">
+	<?php $pf = Utility::decodeJson($item->property_features, true); ?>
+	<?php foreach ($pf as $f): ?>
+		<?php if (isset($key_features[(int) $f])): ?>
+			<span class="badge">
+				<?php echo $key_features[$f]; ?>
+			</span>
+		<?php endif; ?>
+	<?php endforeach; ?>
 </div>

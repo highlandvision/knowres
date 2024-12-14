@@ -72,10 +72,11 @@ class HtmlView extends KrHtmlView\Site
 		$model                = $this->getModel();
 		$this->state          = $model->getState();
 		$this->params         = KrMethods::getParams();
-		$layout               = KrMethods::inputString('layout', '');
+		$layout               = KrMethods::inputString('layout', 'l');
 		$today                = TickTock::getDate();
 		$description          = false;
 		$this->default_region = $this->params->get('default_region', 0);
+		$default_view         = $this->params->get('default_view', 'grid');
 
 		$searchSession = new KrSession\Search();
 		$searchData    = $searchSession->getData();
@@ -105,19 +106,22 @@ class HtmlView extends KrHtmlView\Site
 				}
 				/** @var CategoryModel $category */
 				$category                = KrFactory::getAdminModel('category')->getItem($this->category_id);
-				$searchData->layout      = 'category';
 				$searchData->category_id = $this->category_id;
+				$searchData->layout      = 'category';
+				$searchData->bar         = $default_view;
 				$description             = KrMethods::sprintf('COM_KNOWRES_VIEW_BROWSE', $category->name);
 				$this->blurb             = $category->blurb;
 				$this->meta_title        = KrMethods::sprintf('COM_KNOWRES_BROWSE_CATEGORY', $category->name);
 				$this->meta_description  = KrMethods::sprintf('COM_KNOWRES_BROWSE_CATEGORY_DSC', $category->name);
 			} elseif ($layout === 'new') {
 				$searchData->layout     = $layout;
+				$searchData->bar        = $default_view;
 				$description            = KrMethods::plain('COM_KNOWRES_BROWSE_NEW_VILLAS');
 				$this->meta_title       = KrMethods::plain('COM_KNOWRES_BROWSE_NEW_VILLAS');
 				$this->meta_description = KrMethods::plain('COM_KNOWRES_BROWSE_NEW_VILLAS_DSC');
 			} elseif ($layout === 'discount') {
 				$searchData->layout     = $layout;
+				$searchData->bar        = $default_view;
 				$description            = KrMethods::plain('COM_KNOWRES_BROWSE_DISCOUNTS');
 				$this->meta_title       = KrMethods::plain('COM_KNOWRES_BROWSE_DISCOUNTS');
 				$this->meta_description = KrMethods::plain('COM_KNOWRES_BROWSE_DISCOUNTS_DSC');
@@ -151,9 +155,6 @@ class HtmlView extends KrHtmlView\Site
 		}
 		if ($this->params->get('search_list', 0)) {
 			$this->layouts['list'] = true;
-		}
-		if ($this->params->get('search_thumb', 0)) {
-			$this->layouts['thumb'] = true;
 		}
 
 		$this->Search->searchData->description = $description;

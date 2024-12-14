@@ -109,7 +109,7 @@ class Search extends Session
 		$data->adults         = 2;
 		$data->area           = '';
 		$data->arrival        = '';
-		$data->bar            = KrMethods::getParams()->get('default_view', 'list');
+		$data->bar            = KrMethods::getParams()->get('default_view', 'grid');
 		$data->baseIds        = [];
 		$data->bedrooms       = 0;
 		$data->byAvailability = false;

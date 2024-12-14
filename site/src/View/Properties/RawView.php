@@ -54,7 +54,7 @@ class RawView extends KrHtmlView
 		$model = $this->getModel();
 		$this->state  = $model->getState();
 		$this->params = KrMethods::getParams();
-		$default_view = $this->params->get('default_view', 'list');
+		$default_view = $this->params->get('default_view', 'grid');
 
 		$searchSession  = new KrSession\Search();
 		$searchData     = $searchSession->getData();

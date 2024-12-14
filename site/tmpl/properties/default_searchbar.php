@@ -40,8 +40,7 @@ use HighlandVision\KR\Framework\KrMethods;
 			<?php if (isset($this->layouts['grid'])): ?>
 				<?php $text =  KrMethods::plain('COM_KNOWRES_VIEW_GRID'); ?>
 				<a class="button getResponseSearch grid" data-bar="grid"
-				   title="<?php echo $text; ?>"
-				   aria-label="<?php echo $text; ?>">
+				   title="<?php echo $text; ?>" aria-label="<?php echo $text; ?>">
 					<i class="fa-solid fa-table-cells-large"></i>
 					<span class="show-for-large">
 						<?php echo $text; ?>
@@ -49,13 +48,14 @@ use HighlandVision\KR\Framework\KrMethods;
 				</a>
 			<?php endif; ?>
 
-			<?php if (isset($this->layouts['thumb'])): ?>
-				<a class="button getResponseSearch thumb" data-bar="thumb"
-				   title="<?php echo KrMethods::plain('COM_KNOWRES_VIEW_THUMB'); ?>"
-				   aria-label="<?php echo KrMethods::plain('COM_KNOWRES_VIEW_THUMB'); ?>">
-					<i class="fa-solid fa-table-cells"></i>
+			<?php if (isset($this->layouts['list'])): ?>
+				<?php $text =  KrMethods::plain('COM_KNOWRES_VIEW_LIST'); ?>
+				<a class="button getResponseSearch list" data-bar="list"
+				   title="<?php echo $text; ?>"
+				   aria-label="<?php echo $text; ?>">
+					<i class="fa-solid fa-list"></i>
 					<span class="show-for-large">
-						<?php echo KrMethods::plain('COM_KNOWRES_VIEW_THUMB'); ?>
+						<?php echo $text; ?>
 					</span>
 				</a>
 			<?php endif; ?>

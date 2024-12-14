@@ -263,7 +263,7 @@ class Search
 	private function setBar(): void
 	{
 		if (!$this->searchData->bar) {
-			$this->searchData->bar = $this->params->get('default_view', 'list');
+			$this->searchData->bar = $this->params->get('default_view', 'grid');
 		}
 	}
 

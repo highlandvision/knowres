@@ -399,19 +399,16 @@
         <fieldset name="searchview"
                   label="COM_KNOWRES_CONFIG_SEARCH_VIEW"
                   description="COM_KNOWRES_CONFIG_SEARCH_VIEW_DSC">
-            <field name="default_view"
+            <field name="search_breadcrumbs"
                    class="w-auto"
-                   default="list"
-                   type="list"
-                   label="COM_KNOWRES_CONFIG_SEARCH_VIEW_DEFAULT"
-                   description="COM_KNOWRES_CONFIG_SEARCH_VIEW_DEFAULT_DSC">
-                <option value="grid">COM_KNOWRES_CONFIG_SEARCH_VIEW_GRID</option>
-                <option value="list">COM_KNOWRES_CONFIG_SEARCH_VIEW_LIST</option>
-                <option value="thumb">COM_KNOWRES_CONFIG_SEARCH_VIEW_THUMB</option>
+                   type="menuitem"
+                   label="COM_KNOWRES_CONFIG_SEARCH_OPTIONS_BREADCRUMBS"
+                   description="COM_KNOWRES_CONFIG_SEARCH_OPTIONS_BREADCRUMBS_DSC">
+                <option value="0">COM_KNOWRES_NODAY</option>
             </field>
             <field name="search_grid"
                    type="radio"
-                   default="0"
+                   default="1"
                    class="btn-group btn-group-yesno"
                    label="COM_KNOWRES_CONFIG_SEARCH_VIEW_SHOW_GRID"
                    description="COM_KNOWRES_CONFIG_SEARCH_VIEW_SHOW_GRID_DSC">
@@ -419,15 +416,6 @@
                 <option value="0">JNO</option>
             </field>
             <field name="search_list"
-                   type="radio"
-                   default="1"
-                   class="btn-group btn-group-yesno"
-                   label="COM_KNOWRES_CONFIG_SEARCH_VIEW_SHOW_LIST"
-                   description="COM_KNOWRES_CONFIG_SEARCH_VIEW_SHOW_LIST_DSC">
-                <option value="1">JYES</option>
-                <option value="0">JNO</option>
-            </field>
-            <field name="search_thumb"
                    type="radio"
                    default="0"
                    class="btn-group btn-group-yesno"
@@ -460,26 +448,6 @@
                 <option value="24">24</option>
                 <option value="25">J25</option>
                 <option value="50">J50</option>
-            </field>
-            <field name="per_row_medium"
-                   class="w-auto"
-                   default="2"
-                   min="1"
-                   max="3"
-                   step="1"
-                   type="number"
-                   label="COM_KNOWRES_CONFIG_SEARCH_VIEW_MEDIUM"
-                   description="COM_KNOWRES_CONFIG_SEARCH_VIEW_MEDIUM_DSC">
-            </field>
-            <field name="per_row_large"
-                   class="w-auto"
-                   default="3"
-                   min="1"
-                   max="4"
-                   step="1"
-                   type="number"
-                   label="COM_KNOWRES_CONFIG_SEARCH_VIEW_LARGE"
-                   description="COM_KNOWRES_CONFIG_SEARCH_VIEW_LARGE_DSC">
             </field>
             <field name="search_new"
                    class="w-auto"

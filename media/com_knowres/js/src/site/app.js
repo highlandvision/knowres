@@ -253,9 +253,7 @@ let scloaded = false;
         let $sidebar;
         if (response) {
             $('#kr-properties-data').empty().fadeIn('slow').html(response['items']).foundation();
-            if (action !== 'thumb') {
-                $('.kr-pager').html(response['pagination']);
-            }
+            $('.kr-pager').html(response['pagination']);
             $('.kr-pager.bottom').html(response['pagination']);
             $("#kr-offcanvas-properties-filter").html(response['filters']);
             $("#kr-offcanvas-properties-sortby").html(response['sortby']);

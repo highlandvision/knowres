@@ -91,5 +91,5 @@ $params       = KrMethods::getParams();
 </a>
 <a class="button viewproperty" href="<?php echo $plink; ?>">
 	<?php echo KrFactory::getAdminModel('property')::bookingTypeText($booking_type); ?>
-	<i class='fa-solid fa-chevron-right'></i>
+	<i class='fa-solid fa-circle-chevron-right'></i>
 </a>
