@@ -60,7 +60,7 @@
             if (showthumbs) {
                 const $thumbs = $('#kr-property-thumbs');
                 const twidth = $thumbs.data('twidth');
-                const show = Math.floor($slides.width() / (twidth + 6));
+                const show = Math.floor($slides.width() / (twidth));
                 if ($thumbs.length) {
                     $thumbs.slick({
                         slidesToShow: show,
@@ -70,7 +70,6 @@
                         infinite: true,
                         arrows: false,
                         lazyLoad: 'ondemand',
-                        centerMode: true,
                         focusOnSelect: true
                     });
                 }
@@ -117,17 +116,26 @@
             slidesToShow: 1
         });
 
-        $('.kr-featured').slick({
+        const $featured  = $('.kr-featured');
+        const $sts = $featured.data('slidestoshow');
+        $featured.slick({
+            adaptiveHeight: true,
             appendArrows: '.kr-double-arrows',
             prevArrow: '<i class="featured slick-nav prev fa-solid fa-chevron-left"></i>',
             nextArrow: '<i class="featured slick-nav next fa-solid fa-chevron-right"></i>',
             lazyload: 'ondemand',
             infinite: false,
+            mobileFirst: true,
             slidesToScroll: 1,
             speed: 300,
             responsive: [
-                {breakpoint: 741, settings: {slidesToShow: 2, slidesToScroll: 1}},
-                {breakpoint: 501, settings: {slidesToShow: 1, slidesToScroll: 1}}
+                {breakpoint: 1200, settings: {slidesToShow: $sts}},
+                {breakpoint: 800,
+                    settings: {
+                        slidesToShow: $sts < 3 ? $sts : 3}},
+                {breakpoint: 400,
+                    settings: {
+                        slidesToShow: $sts < 2 ? $sts : 2}}
             ]
         });
 
