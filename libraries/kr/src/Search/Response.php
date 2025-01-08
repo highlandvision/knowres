@@ -67,13 +67,13 @@ class Response
 	 * @since 1.0.0
 	 */
 	public function countAjaxFilters(array $totalAreas = [],
-	                                 array $totalBedrooms = [],
-	                                 array $totalBook = [],
-	                                 array $totalCategory = [],
-	                                 array $totalFeature = [],
-	                                 array $totalPets = [],
-	                                 array $totalPrice = [],
-	                                 array $totalTypes = []): void
+		array $totalBedrooms = [],
+		array $totalBook = [],
+		array $totalCategory = [],
+		array $totalFeature = [],
+		array $totalPets = [],
+		array $totalPrice = [],
+		array $totalTypes = []): void
 	{
 		if ($this->params->get('filter_area')) {
 			$this->presetFilterCountArea($this->searchData->filterArea, $totalAreas);
@@ -85,8 +85,7 @@ class Response
 			foreach ($totalBedrooms as $t) {
 				if ($t->id >= $max_bedrooms) {
 					$this->setFilterCount($this->searchData->filterBedrooms, $max_bedrooms, $t->total);
-				}
-				else {
+				} else {
 					$this->setFilterCount($this->searchData->filterBedrooms, (int) $t->id, $t->total);
 				}
 			}
@@ -136,8 +135,7 @@ class Response
 	 * @param  string  $action_value  Action value
 	 *
 	 * @throws Exception
-	 * @since        1.0.0
-	 * @noinspection PhpStatementHasEmptyBodyInspection
+	 * @since  1.0.0
 	 */
 	public function setSearchData(string $bar, string $action = '', string $action_value = ''): void
 	{
@@ -148,34 +146,31 @@ class Response
 		}
 		if ($action == 'page') {
 			$this->searchData->start = $action_value;
-		}
-		else if ($action == 'order') {
+		} else if ($action == 'order') {
 			$this->setOrder($action_value);
-		}
-		else if ($action === 'currency') {
-			// TODO-v5.2 Pricing by currency
-			// Set currency, get updated dropdown and refresh current page
-			//			$currency                                                  = $value;
-			//			$tmpBookingHandler->user_settings['current_exchange_rate'] = $currency;
-			//
-			//			if ( is_null( $tmpBookingHandler->user_settings['current_exchange_rate'] ) )
-			//				$tmpBookingHandler->user_settings['current_exchange_rate'] = '';
-			//
-			//			jr_import( 'jomres_currency_conversion' );
-			//			$conversion = new jomres_currency_conversion();
-			//
-			//			if ( !$conversion->check_currency_code_valid( $tmpBookingHandler->user_settings['current_exchange_rate'] ) )
-			//				$tmpBookingHandler->user_settings['current_exchange_rate'] = '';
-			//
-			//			$componentArgs               = [];
-			//			$componentArgs['returnData'] = true;
-			//
-			//			$cDropdown = $MiniComponents->specificEvent( '06000', 'exchange_rate_conversion_selector', $componentArgs );
-			//
-			//			$uids           = $filter_results;
-			//			$num_properties = count( $uids );
-		}
-		else if ($action === 'clear' || $action === 'toggle') {
+//		} else if ($action === 'currency') {
+//			 TODO-v5.3 Pricing by currency
+//			 Set currency, get updated dropdown and refresh current page
+//			$currency                                                  = $value;
+//			$tmpBookingHandler->user_settings['current_exchange_rate'] = $currency;
+//
+//			if ( is_null( $tmpBookingHandler->user_settings['current_exchange_rate'] ) )
+//				$tmpBookingHandler->user_settings['current_exchange_rate'] = '';
+//
+//			jr_import( 'jomres_currency_conversion' );
+//			$conversion = new jomres_currency_conversion();
+//
+//			if ( !$conversion->check_currency_code_valid( $tmpBookingHandler->user_settings['current_exchange_rate']))
+//				$tmpBookingHandler->user_settings['current_exchange_rate'] = '';
+//
+//			$componentArgs               = [];
+//			$componentArgs['returnData'] = true;
+//
+//			$cDropdown = $MiniComponents->specificEvent('06000', 'exchange_rate_conversion_selector', $componentArgs);
+//
+//			$uids           = $filter_results;
+//			$num_properties = count( $uids );
+		} else if ($action === 'clear' || $action === 'toggle') {
 			$this->clearFilter($this->searchData->filterArea);
 			$this->clearFilter($this->searchData->filterBedrooms);
 			$this->clearFilter($this->searchData->filterBook);
@@ -184,8 +179,7 @@ class Response
 			$this->clearFilter($this->searchData->filterPets);
 			$this->clearFilter($this->searchData->filterPrice);
 			$this->clearFilter($this->searchData->filterType);
-		}
-		else if ($action) {
+		} else if ($action) {
 			match ($action) {
 				'property_area' => $this->checkSelection($this->searchData->filterArea, $action_value, false),
 				'bedrooms'      => $this->checkSelection($this->searchData->filterBedrooms, $action_value, false),
@@ -196,8 +190,7 @@ class Response
 				'price'         => $this->checkSelection($this->searchData->filterPrice, $action_value, false),
 				'type'          => $this->checkSelection($this->searchData->filterType, $action_value, false)
 			};
-		}
-		else {
+		} else {
 			$this->searchData->action = $action;
 		}
 	}
@@ -269,6 +262,11 @@ class Response
 	 */
 	private function presetFilterCountArea(array &$saved, array $new): void
 	{
+		// Reset selected
+		foreach ($saved as $k => $v) {
+			$saved[$k][1] = 0;
+		}
+		// Add new
 		foreach ($new as $k => $v) {
 			$saved[$k][1] = $v[1];
 		}
