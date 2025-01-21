@@ -12,6 +12,7 @@ defined('_JEXEC') or die;
 use HighlandVision\KR\Framework\KrMethods;
 ?>
 
-<p style="font-size:130%;">
+<h3>
 	<?php echo KrMethods::plain('COM_KNOWRES_NILRESULT_RAW'); ?>
-</p>
+	<br><br>
+</h3>

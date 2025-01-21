@@ -29,7 +29,7 @@ if (!empty($this->items) && count($this->items)) {
 	$data['filters']    = $this->favs_bar ? '' : $this->loadTemplate('filters');
 	$data['sortby']     = $this->loadTemplate('sortby');
 	$data['search']     = $this->modules;
-	$data['pagination'] = $pagination;
+	$data['pagination'] = $pagination == '&nbsp;' ? '' : $pagination;
 } else {
 	$data['items']   = $this->loadTemplate('sorry');
 	$data['sortby']  = '';
