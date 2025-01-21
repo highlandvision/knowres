@@ -92,7 +92,7 @@ class SiteHelper
 	 * @since  4.0.0
 	 * @return string
 	 */
-	public static function buildPropertyLink(int $id, string $append = null, bool $external = false): string
+	public static function buildPropertyLink(int $id, ?string $append = null, bool $external = false): string
 	{
 		$Itemid = self::getItemId('com_knowres', 'property', ['id' => $id]);
 		$link   = 'index.php?option=com_knowres&view=property&id=' . $id . '&Itemid=' . $Itemid;

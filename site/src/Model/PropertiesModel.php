@@ -131,8 +131,8 @@ class PropertiesModel extends ListModel
 		             ' AND ' . $db->qn('r.state') . '=1' .
 		             ' AND ' . $db->qn('r.held') . '=0');
 
-		$query->select('(' . self::transSQ($db, 'region', 'a.region_id') . ') AS ' . $db->q('a.region_name'));
-		$query->select('(' . self::transSQ($db, 'country', 'a.country_id') . ') AS ' . $db->q('a.country_name'));
+		$query->select('(' . self::transSQ($db, 'region', 'a.region_id') . ') AS ' . $db->q('region_name'));
+		$query->select('(' . self::transSQ($db, 'country', 'a.country_id') . ') AS ' . $db->q('country_name'));
 
 		if ((!$data->layout) && $data->region_id) {
 			$query->where($db->qn('a.region_id') . '=' . (int)$data->region_id);
