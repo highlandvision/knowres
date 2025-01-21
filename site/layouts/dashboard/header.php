@@ -33,13 +33,14 @@ $image  = Media\Images::getPropertyImageName($contract->property_id);
 
 <div class="grid-x grid-margin-x">
 	<div class="small-12 cell">
-		<h2 class="h4 color-dark">
+		<h3>
 			<?php echo $contract->property_name; ?>
 			<?php echo trim($contract->property_area); ?>,&nbsp;
 			<?php echo $contract->country_name; ?>
-		</h2>
+		</h3>
 	</div>
-	<div class="small-6 medium-5 large-6 cell">
+
+	<div class="small-5 large-6 cell">
 		<?php
 		$options = [
 			'src'    => Media\Images::getImagePath($contract->property_id, 'solo', $image),
@@ -51,8 +52,8 @@ $image  = Media\Images::getPropertyImageName($contract->property_id);
 		echo KrMethods::render('joomla.html.image', $options);
 		?>
 	</div>
-	<div class="small-12 medium-7 large-6 cell">
-		<dl class="fancylist" style="margin-bottom:0;">
+	<div class="small-7 large-6 cell">
+		<dl class="fancylist">
 			<div>
 				<dt><?php echo KrMethods::plain('COM_KNOWRES_REFERENCE'); ?></dt>
 				<dd><?php echo $contract->tag; ?></dd>

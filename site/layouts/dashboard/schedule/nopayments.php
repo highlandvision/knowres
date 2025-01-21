@@ -19,7 +19,6 @@ extract($displayData);
  *
  * @var false|object $contract The contract item.
  * @var mixed        $fees     Contract fees.
- * @var mixed        $payments Contract payments
  * @var float        $balance  Outstanding balance
  */
 

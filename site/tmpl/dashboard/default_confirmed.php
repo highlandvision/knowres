@@ -39,7 +39,7 @@ $paymentformlink           = SiteHelper::buildDashboardLink($this->item, 'paymen
 $contractguestdataformlink = SiteHelper::buildDashboardLink($this->item, 'contractguestdataform');
 
 $overview_modal = 'kr-overview-modal-' . $this->item->id;
-$overview_url   = 'index.php?option=com_knowres&view=dashboard&format=statement&key=' . $this->item->id;
+$overview_url   = KrMethods::route('index.php?option=com_knowres&task=dashboard.statement&key=' . $this->item->id);
 
 if ($this->item->guestdata_id > 0)
 {
