@@ -377,7 +377,7 @@ class ServicesModel extends ListModel
 	 *
 	 * @since 1.0.0
 	 */
-	protected function populateState($ordering = 'a.name', $direction = 'asc'): void
+	protected function populateState($ordering = 'a.ordering', $direction = 'asc'): void
 	{
 		$this->setState('filter.search',
 		                $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '',
@@ -406,8 +406,9 @@ class ServicesModel extends ListModel
 		$this->setState('params', $params);
 
 		$this->setState('list.select',
-		                'a.id, a.name, a.currency, a.property_id, a.agency_id, a.plugin, a.type, a.parameters, a.ordering, a.state,
-			 a.checked_out, a.checked_out_time, a.created_by, a.created_at, a.updated_by, a.updated_at, a.version');
+		                'a.id, a.name, a.currency, a.property_id, a.agency_id, a.plugin, a.type, a.parameters, 
+		                 a.ordering, a.state, a.checked_out, a.checked_out_time, a.created_by, a.created_at, 
+		                 a.updated_by, a.updated_at, a.version');
 
 		parent::populateState($ordering, $direction);
 	}
