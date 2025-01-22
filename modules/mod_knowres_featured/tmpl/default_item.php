@@ -20,18 +20,19 @@ $KRparams = KrMethods::getParams();
 ?>
 
 <div class="small-12 medium-4 cell">
-	<a href="<?php echo $item['plink']; ?>" class="property text-left suppress-underline" title="<?php echo $item['property_name']; ?>">
+	<a href="<?php echo $item['plink']; ?>" class="property text-left suppress-underline"
+	   title="<?php echo $item['property_name']; ?>">
 		<div class="image-wrapper">
 			<?php echo HTMLHelper::_('image',
-			                         Media\Images::getImagePath($item['id'], 'solo', $item['image']),
-			                         $item['property_name'],
-			                         [
-				                         'width'  => $KRparams->get('max_property_width'),
-				                         'height' => $KRparams->get('max_property_height')
-			                         ]);
+				Media\Images::getImagePath($item['id'], 'solo', $item['image']),
+				$item['property_name'],
+				[
+					'width'  => $KRparams->get('max_property_width'),
+					'height' => $KRparams->get('max_property_height')
+				]);
 			?>
 			<?php require ModuleHelper::getLayoutPath('mod_knowres_featured',
-				                                          $params->get('layout', 'default') . '_pricesummary'); ?>
+				$params->get('layout', 'default') . '_pricesummary'); ?>
 		</div>
 
 		<div class="content no-margin-bottom">

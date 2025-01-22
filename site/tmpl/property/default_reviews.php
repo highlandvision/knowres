@@ -18,7 +18,7 @@ use HighlandVision\KR\TickTock;
 <div class="kr-reviews">
 	<?php if (isset($this->ratings->avgcount) && $this->ratings->avgrating > 0) : ?>
 		<div class="grid-x grid-margin-x ">
-			<div class="small-12 large-9 cell">
+			<div class="small-12 large-10 cell">
 				<dl class="chart">
 					<?php for ($i = 0; $i < 7; $i++) : ?>
 						<?php $param = "review_rating" . ($i + 1); ?>
@@ -26,27 +26,27 @@ use HighlandVision\KR\TickTock;
 						<?php if ($text && $this->scores[$i] > 0) : ?>
 							<dt><?php echo $text; ?></dt>
 							<dd>
-							<span style="width:<?php echo (int) $this->scores[$i] * 10 . "%"; ?>;">
-								<?php echo $this->scores[$i]; ?>
-							</span>
+								<span style="width:<?php echo (int) $this->scores[$i] * 10 . "%"; ?>;">
+									<?php echo $this->scores[$i]; ?>
+								</span>
 							</dd>
 						<?php endif; ?>
 					<?php endfor; ?>
 				</dl>
 				<br>
 			</div>
-			<div class="small-12 large-3 text-center cell">
+			<div class="small-12 large-2 text-center cell">
 				<?php if (isset($this->ratings->avgrating) && $this->ratings->avgrating > 0) : ?>
 					<div class="review-score">
-						<span class="strong xbig color-accent">
+						<span class="big color-accent">
 							<?php echo $this->ratings->avgrating; ?>
 						</span>
-						<span class="xbig font-vlight">/10</span>
-						<p class="nospacing-vertical strong small">
-							<?php echo KrMethods::sprintf('COM_KNOWRES_PROPERTY_HEADER_GUEST_REVIEW_COUNT',
-								count($this->reviews)); ?>
-						</p>
+						<span class="bigger color-light">/10</span>
 					</div>
+					<p class="small">
+						<?php echo KrMethods::sprintf('COM_KNOWRES_PROPERTY_HEADER_GUEST_REVIEW_COUNT',
+							count($this->reviews)); ?>
+					</p>
 				<?php endif; ?>
 			</div>
 		</div>
@@ -58,14 +58,12 @@ use HighlandVision\KR\TickTock;
 				<?php if (isset($this->ratings->avgrating)): ?>
 					<div class="small-12 medium-10 cell">
 						<?php if ($r->title): ?>
-							<h4 class="color-accent">
+							<h6 class="color-primary">
 								<?php echo $r->title; ?>
-							</h4>
+							</h6>
 						<?php endif; ?>
 						<?php if ($r->review): ?>
-							<p>
-								<?php echo nl2br($r->review); ?>
-							</p>
+							<p class="small"><?php echo nl2br($r->review); ?></p>
 						<?php endif; ?>
 					</div>
 					<div class="small-12 text-right medium-2 cell">
@@ -74,9 +72,9 @@ use HighlandVision\KR\TickTock;
 						<?php if ($rating > 0): ?>
 							<?php $rating = round($rating / 6, 1); ?>
 							<div>
-								<span class="big strong color-accent">
+								<span class="big color-accent">
 									<?php echo $rating; ?></span>
-								<span class="big color-vlight">/10</span>
+								<span class="bigger color-light">/10</span>
 								<br>
 							</div>
 						<?php endif; ?>
@@ -87,17 +85,15 @@ use HighlandVision\KR\TickTock;
 							<h4 class="color-accent"><?php echo $r->title; ?></h4>
 						<?php endif; ?>
 						<?php if ($r->review): ?>
-							<p>
-								<?php echo nl2br($r->review); ?>
-							</p>
+							<p class="small"><?php echo nl2br($r->review); ?></p>
 						<?php endif; ?>
 					</div>
 				<?php endif; ?>
 				<div class="small-12 cell">
-					<p style="font-size:14px;margin-bottom:0;">
+					<p class="vsmall no-margin-bottom">
 						<?php echo $r->guest_name; ?>
 					</p>
-					<p style="margin-top:0;margin-bottom:0;font-size:12px;">
+					<p class="vsmall no-margin-bottom">
 						<?php echo TickTock::displayDate($r->created_at, 'M Y'); ?>&nbsp;
 						<?php echo $r->guest_location; ?>
 					</p>
@@ -115,7 +111,5 @@ use HighlandVision\KR\TickTock;
 			<?php echo KrMethods::plain('COM_KNOWRES_READ_MORE'); ?></a>
 	<?php endif; ?>
 
-	<p class="smaller">
-		<?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_HEADER_GUEST_REVIEW_INFO"); ?>
-	</p>
+	<p class="vsmall"><?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_HEADER_GUEST_REVIEW_INFO"); ?></p>
 </div>

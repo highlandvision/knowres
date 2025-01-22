@@ -300,9 +300,6 @@
       "name": "com_knowres.vendor-jqueryui",
       "type": "script",
       "uri": "com_knowres/admin.jquery-ui.min.js",
-      "dependencies": [
-        "jquery"
-      ],
       "attributes": {
         "defer": true
       }
@@ -311,9 +308,6 @@
       "name": "com_knowres.vendor-typeahead",
       "type": "script",
       "uri": "media/com_knowres/vendor/corejavascript/typeahead.js/dist/typeahead.bundle.min.js",
-      "dependencies": [
-        "jquery"
-      ],
       "attributes": {
         "defer": true
       },
@@ -327,8 +321,7 @@
       "dependencies": [
         "com_knowres.site-foundation",
         "com_knowres.site-common",
-        "com_knowres.site-runtime",
-        "jquery"
+        "com_knowres.site-runtime"
       ],
       "attributes": {
         "defer": true
@@ -343,8 +336,7 @@
         "com_knowres.module-search",
         "com_knowres.site-foundation",
         "com_knowres.site-common",
-        "com_knowres.site-runtime",
-        "jquery"
+        "com_knowres.site-runtime"
       ],
       "attributes": {
         "defer": true
@@ -355,15 +347,6 @@
       "description": "Module search helper functions",
       "type": "script",
       "uri": "com_knowres/modulesearch.min.js",
-      "attributes": {
-        "defer": true
-      }
-    },
-    {
-      "name": "jquery",
-      "description": "Jquery",
-      "type": "script",
-      "uri": "media/vendor/jquery/js/jquery.min.js",
       "attributes": {
         "defer": true
       }

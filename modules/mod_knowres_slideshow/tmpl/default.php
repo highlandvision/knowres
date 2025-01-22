@@ -19,23 +19,28 @@ if ($params->get('layout', 'default') == 'default') {
 	$app->bootComponent('com_knowres')->getMVCFactory()->createModel('Slideshow', 'Site', ['ignore_request' => true]);
 }
 
+$heights = explode("|", $params->get('height'));
 $wa = $app->getDocument()->getWebAssetManager();
 $wa->getRegistry()->addExtensionRegistryFile('com_knowres');
 $wa->useScript('com_knowres.site-modules');
 ?>
 
-<div class="show-for-small hide-for-large">
+<div class="show-for-small hide-for-medium">
+	<?php $bgcolor = $params->get('bgcolor'); ?>
+	<div style="background:<?php echo $bgcolor; ?>;height:<?php echo $heights[0] . 'px'; ?>"></div>
+</div>
+<div class="show-for-medium hide-for-large">
 	<?php foreach ($slides as $s): ?>
 		<?php $options = ['src'         => $s['image'],
 		                  'alt'         => $s['alt'],
 		                  'description' => $s['description'],
+		                  'style'       => 'height:' . $heights[1]  . 'px'
 		]; ?>
 		<?php echo KrMethods::render('joomla.html.image', $options); ?>
 		<?php break; ?>
 	<?php endforeach; ?>
 </div>
 <div class="show-for-large">
-	<?php $height = $params->get('height') . 'px'; ?>
 	<div class="kr-slideshow kr-slick" style="height:<?php echo $height; ?>">
 		<?php foreach ($slides as $s): ?>
 			<div>
@@ -43,7 +48,7 @@ $wa->useScript('com_knowres.site-modules');
 				                  'alt'         => $s['alt'],
 				                  'description' => $s['description'],
 				                  'class'       => 'responsive',
-				                  'style'       => 'height:' . $height
+				                  'style'       => 'height:' . $heights[2]  . 'px'
 				]; ?>
 				<?php echo KrMethods::render('joomla.html.image', $options); ?>
 

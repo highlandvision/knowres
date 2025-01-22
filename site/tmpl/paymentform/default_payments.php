@@ -22,7 +22,7 @@ $balance_payable = $this->contract->contract_total - $this->contract->deposit;
 $balance_date    = max($this->contract->balance_date, $this->today);
 ?>
 
-<div class="callout">
+<div class="callout small">
 	<?php if ($this->contract->booking_status < 10): ?>
 		<?php $lang = !$balance_payable ? 'COM_KNOWRES_PAYMENT_FULL_OF' : 'COM_KNOWRES_PAYMENT_DEPOSIT_OF'; ?>
 		<?php $text = KrMethods::plain($lang); ?>

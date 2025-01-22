@@ -24,12 +24,12 @@ $wa->useScript('com_knowres.site')
 <div class="grid-x grid-margin-x">
 	<div class="small-12 medium-10 cell">
 		<?php if (!$this->contract_id): ?>
-			<h1 class="h4"><?php echo KrMethods::plain('COM_KNOWRES_DASHBOARD_EDIT_GUEST'); ?></h1>
+			<h1><?php echo KrMethods::plain('COM_KNOWRES_DASHBOARD_EDIT_GUEST'); ?></h1>
 			<div class="callout small alert">
 				<p class="small"><?php echo KrMethods::plain('COM_KNOWRES_DASHBOARD_EDIT_GUEST2'); ?></p>
 			</div>
 		<?php else: ?>
-			<h1 class="h4"><?php echo KrMethods::plain('COM_KNOWRES_DASHBOARD_PAYMENT_GUEST'); ?></h1>
+			<h1><?php echo KrMethods::plain('COM_KNOWRES_DASHBOARD_PAYMENT_GUEST'); ?></h1>
 		<?php endif; ?>
 
 		<form action="<?php echo 'index.php?option=com_knowres'; ?>"

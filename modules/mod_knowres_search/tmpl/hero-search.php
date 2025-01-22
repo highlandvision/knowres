@@ -25,12 +25,12 @@ $link         = '/index.php?option=com_knowres&task=properties.search';
 
 <div class="grid-x grid-margin-x">
 	<div class="small-12 medium-4 large-12 cell">
-		<div class="kr-search hero-search">
+		<div class="hero-search">
 			<form action="<?php echo $link; ?>" method="post" name="search-default">
 				<div class="grid-x grid-margin-x">
 					<?php if (!empty($search_text) && $show_regions < 1): ?>
 						<div class="small-12 medium-12 large-3 cell hero-search-text">
-							<h3 class="h4 no-margin-bottom"><?php echo $search_text; ?></h3>
+							<h3 class="h4"><?php echo $search_text; ?></h3>
 						</div>
 					<?php endif; ?>
 					<?php if ($show_regions): ?>

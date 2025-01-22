@@ -15,8 +15,7 @@ use HighlandVision\KR\Framework\KrMethods;
 <ul class="tabs" id="kr-property-tabs" data-tabs data-deep-link="true" data-update-history="true">
 	<li class="tabs-title is-active" role="presentation">
 		<?php $help = KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_OVERVIEW"); ?>
-		<a href="#overview"
-		   aria-label="<?php echo $help; ?>" title="<?php echo $help; ?>">
+		<a href="#overview" aria-label="<?php echo $help; ?>" title="<?php echo $help; ?>">
 			<i class='fa-solid fa-eye fa-lg hide-for-large'></i>
 			<span class="show-for-large">
 				<?php echo $help; ?>
@@ -83,11 +82,14 @@ use HighlandVision\KR\Framework\KrMethods;
 	<?php if ($this->item->lat && $this->item->lng) : ?>
 		<?php $help = KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_MAP"); ?>
 		<li class="tabs-title" role="presentation">
-			<a href="#map" id="kr-map-solo-trigger" data-tabs-target="map"
-			   aria-label="<?php echo $help; ?>" title="<?php echo $help; ?>"
+			<a href="#map" id="kr-map-solo-trigger" aria-label="<?php echo $help; ?>"
+			    title="<?php echo $help; ?>"
 				data-zoom="<?php echo $this->map_zoom; ?>"
-				data-zoommax="<?php echo $this->item->map_max_zoom; ?>" data-target="kr-map-solo"
-				data-type="solo" data-pid="<?php echo $this->item->id; ?>"
+				data-zoommax="<?php echo $this->item->map_max_zoom; ?>"
+                data-tabs-target="map"
+                data-target="kr-map-solo"
+				data-type="solo"
+                data-pid="<?php echo $this->item->id; ?>"
 				data-maptypeid="<?php echo $this->params->get('property_map_type', "roadmap"); ?>">
 				<i class='fa-solid fa-map hide-for-large'></i>
 				<span class="show-for-large">

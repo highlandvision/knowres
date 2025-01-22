@@ -113,7 +113,7 @@ class DashboardController extends BaseController
 			$Itemid = SiteHelper::getItemId('com_knowres', 'dashboard');
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_FATAL'), 'error');
 			KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&view=dashboard&Itemid=' . $Itemid),
-			                    false);
+				false);
 		}
 
 		jexit();
@@ -148,7 +148,7 @@ class DashboardController extends BaseController
 			$Itemid = SiteHelper::getItemId('com_knowres', 'dashboard');
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_FATAL'), 'error');
 			KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&view=dashboard&Itemid=' . $Itemid),
-			                    false);
+				false);
 		}
 
 		jexit();
@@ -245,6 +245,32 @@ class DashboardController extends BaseController
 	}
 
 	/**
+	 * Ajax sisplay statement modal
+	 *
+	 * @throws Exception
+	 * @since        5.1.0
+	 */
+	public function statement(): void
+	{
+		KrMethods::loadLanguage();
+
+		/** @var StatementView $view */
+		$view = $this->getView('dashboard', 'statement');
+		list($guest_id, $contract_id) = SiteHelper::validateDashboardSession();
+		$view->audience = 'guest';
+		$view->item     = KrFactory::getAdminModel('contract')->getItem($contract_id);
+		$view->guest    = KrFactory::getAdminModel('guest')->getItem($guest_id);
+		$view->notes    = KrFactory::getListModel('contractnotes')->getForContract($contract_id, 1);
+		$view->payments = KrFactory::getListModel('contractpayments')->getForContract($contract_id);
+		$view->fees     = KrFactory::getListModel('contractfees')->getForContract($contract_id);
+		[$view->balance, $view->balance_all] = KrFactory::getAdminModel('contractpayment')::setBalances($view->item,
+			$view->payments,
+			$view->fees);
+
+		$view->display();
+	}
+
+	/**
 	 * Display for successful payments
 	 *
 	 * @throws Exception
@@ -252,7 +278,6 @@ class DashboardController extends BaseController
 	 */
 	public function success(): void
 	{
-//		KrMethods::message(KrMethods::plain('COM_KNOWRES_PAYMENT_SUCCESS_POST'));
 		SiteHelper::redirectDashboard();
 	}
 
@@ -285,7 +310,7 @@ class DashboardController extends BaseController
 			$Itemid = SiteHelper::getItemId('com_knowres', 'dashboard');
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_FATAL'), 'error');
 			KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&view=dashboard&Itemid=' . $Itemid),
-			                    false);
+				false);
 		}
 
 		jexit();

@@ -62,7 +62,7 @@ $link = KrMethods::route('index.php?' . implode('&', $vars));
 	<a href="<?php echo $link; ?>" aria-labelledby="<?php echo $id; ?>" class="btn btn-sm btn-primary">
 		<i class="fa-lg fa-solid <?php echo $icon; ?>"></i>
 	</a>
-	<div id="<?php echo $id; ?>" role="tooltip" style="font-weight:400;min-width:200px;max-width:200px;width:auto;">
+	<div id="<?php echo $id; ?>" role="tooltip" style="min-width:200px;max-width:200px;width:auto;">
 		<?php echo HTMLHelper::_('tooltipText', '', $label, 0, false); ?>
 	</div>
 </div>

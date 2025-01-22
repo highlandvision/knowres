@@ -86,8 +86,7 @@ extract($displayData);
 				</div>
 			</div>
 			<div class="small-12 cell">
-				<?php $hideme = $children == 0 ? 'hidden' : ''; ?>
-				<label for="child-ages-container" id="age-help" <?php echo $hideme; ?>>
+				<label for="child-ages-container" id="age-help">
 					<?php echo KrMethods::plain('MOD_KNOWRES_SEARCH_SHOW_GUESTS_AGES'); ?>
 				</label>
 				<div id="child-ages-container">

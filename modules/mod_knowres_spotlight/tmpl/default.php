@@ -27,6 +27,7 @@ $pclass[] = $params->get('horizontal');
 if ($textbg) {
 	$pstyle .= 'position:absolute;';
 	$pstyle .= 'background:' . $textbg . ';';
+	$pstyle .= 'display:flex;justify-content:center;align-items:center;';
 	$pclass[] = 'withbg';
 }
 else {

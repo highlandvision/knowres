@@ -42,7 +42,7 @@ if ($absolute) {
 <div id="kr-autosearch-wrapper" style="<?php echo $pstyle; ?>">
 	<div class="input-group">
 		<label class="input-group-label" for="kr-autosearch">
-			<i class="fa-solid fa-magnifying-glass"></i>
+			<i class="fa-solid fa-lg fa-magnifying-glass"></i>
 		</label>
 		<input class="kr-autosearch input-group-field" id="kr-autosearch"
 		       placeholder="<?php echo KrMethods::plain('MOD_KNOWRES_AUTOSEARCH_PLACEHOLDER'); ?>" type="text">

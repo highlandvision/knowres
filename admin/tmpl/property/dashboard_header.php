@@ -59,7 +59,7 @@ $changerates = KrMethods::route('index.php?option=com_knowres&task=propertysetti
 	</div>
 	<div class="col-12 col-md-8 col-lg-4">
 		<h3><?php echo $this->item->property_name; ?></h3>
-		<h5 style="font-weight:normal;">
+		<h5 style="font-weight:400;">
 			<?php echo $this->item->property_area . ', ' . $region_name . ', ' . $country_name; ?>
 		</h5>
 		<?php if (!empty($this->owner->id)) : ?>

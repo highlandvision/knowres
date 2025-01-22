@@ -40,7 +40,7 @@ export function guestIncrement(updown, target, atext, ctext, ctext1) {
                     }
                     cac.append(createAgeField(value));
                 } else {
-                    if (value === 1) {
+                    if (value === 0) {
                         agehelp.hidden = true;
                     }
                     removeAgeField(value + 1)

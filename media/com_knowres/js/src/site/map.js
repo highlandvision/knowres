@@ -166,7 +166,7 @@ const lang = "en";
                 position: point,
                 title: title,
                 map: map,
-                zIndex: 999
+               zIndex: 999
             });
 
             google.maps.event.addListener(marker, 'mouseover', (function (html) {
@@ -426,9 +426,9 @@ const lang = "en";
         }
 
         // Test for force map
-        const $trigger = $('.map-trigger');
-        if ($trigger.data('forcemap')) {
-            $trigger.trigger('click');
+        const $mtrigger = $('.map-trigger');
+        if ($mtrigger.length && $mtrigger.data('forcemap')) {
+             $mtrigger.trigger('click');
         }
 
         function kickMap($elem) {

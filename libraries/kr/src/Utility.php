@@ -392,6 +392,23 @@ class Utility
 	}
 
 	/**
+	 * Return textual booking type
+	 *
+	 * @param  int  $booking_type  Property booking type
+	 *
+	 * @since  5.1.0
+	 * @return string
+	 */
+	public static function getBookingTypeText(int $booking_type): string
+	{
+		return match ($booking_type) {
+			2       => KrMethods::plain('COM_KNOWRES_BOOK_INSTANT'),
+			1       => KrMethods::plain('COM_KNOWRES_ON_REQUEST'),
+			default => KrMethods::plain('COM_KNOWRES_BOOK_ENQUIRY'),
+		};
+	}
+
+	/**
 	 * Get dialling code from country
 	 *
 	 * @param  int   $country_id  ID of country
@@ -426,10 +443,11 @@ class Utility
 			$url .= '?key=' . $key;
 		}
 
+		$url .= '&libraries=marker';
 		$url .= '&loading=async';
-		$url .= '&callback=Function.prototype';
 
 		return $url;
+
 	}
 
 	/**
@@ -641,6 +659,9 @@ class Utility
 
 		if ($columns == 4)
 			return $width . '-3';
+
+		if ($columns == 6)
+			return $width . '-2';
 
 		return $width . '-12';
 	}

@@ -170,8 +170,7 @@ class PrePayment
 	 */
 	protected function getServiceGateways(array $currencies): array
 	{
-		$services = KrFactory::getListModel('services')->getGateways($currencies,
-			$this->paymentData->agency_id,
+		$services = KrFactory::getListModel('services')->getGateways($currencies, $this->paymentData->agency_id,
 			$this->paymentData->property_id);
 
 		$property = [];

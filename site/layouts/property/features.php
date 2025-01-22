@@ -21,8 +21,7 @@ extract($displayData);
 	<div class="amenity grid-x grid-margin-x small-up-2 large-up-3">
 		<?php foreach ($features as $f): ?>
 			<div class="cell">
-				<i class="fa-solid fa-star fa-xs"></i>
-				<?php echo $f->name; ?>
+				<p><?php echo $f->name; ?></p>
 			</div>
 		<?php endforeach; ?>
 	</div>

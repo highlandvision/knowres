@@ -31,16 +31,17 @@ $Translations = new Translations();
 		<h6><?php echo $r->name; ?></h6>
 		<?php $data = Utility::decodeJson($r->features); ?>
 		<?php $string = ''; ?>
-		<div class="amenity grid-x grid-margin-x small-up-2 large-up-3">
+		<div class="amenity room grid-x grid-margin-x small-up-2 large-up-3">
 			<?php foreach ($data as $d): ?>
-			<div class="cell">
-				<i class="fa-regular fa-circle-dot fa-xs"></i>&nbsp;
-				<?php $string = $Translations->getText('propertyfeature', $d->id); ?>
-				<?php if ($d->count > 1): ?>
-					<?php $string .= ' x ' . $d->count; ?>
-				<?php endif; ?>
-				<?php echo $string; ?>
-			</div>
+				<div class="cell">
+					<p>
+						<?php $string = $Translations->getText('propertyfeature', $d->id); ?>
+						<?php if ($d->count > 1): ?>
+							<?php $string .= ' x ' . $d->count; ?>
+						<?php endif; ?>
+						<?php echo $string; ?>
+					</p>
+				</div>
 			<?php endforeach; ?>
 		</div>
 	<?php endforeach; ?>

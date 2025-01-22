@@ -35,13 +35,13 @@ $wa->useScript('com_knowres.site')
 			<?php endif; ?>
 
 			<?php if ($first): ?>
-				<h1 class="h2">
+				<h2>
 					<?php if ($i == 1): ?>
 						<?php echo KrMethods::plain('COM_KNOWRES_YOUR_PREVIOUS'); ?>
 					<?php else: ?>
 						<?php echo KrMethods::plain('COM_KNOWRES_YOUR_RESERVATIONS'); ?>
 					<?php endif; ?>
-				</h1>
+				</h2>
 				<?php $first = false; ?>
 			<?php endif; ?>
 

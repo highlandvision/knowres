@@ -38,6 +38,7 @@ foreach ($results as $r) {
                                                       'net'            => $this->Response->searchData->rateNet,
                                                       'discount'       => $this->Response->searchData->rateDiscount,
                                                       'rating'         => $this->Response->searchData->rating,
-                                                      'key_features'   => $key_features
+                                                      'key_features'   => $key_features,
+                                                      'nights'         => $this->Response->searchData->nights
 ]);
 ?>

@@ -15,21 +15,16 @@ use HighlandVision\KR\Framework\KrMethods;
 
 /** @var HighlandVision\Component\Knowres\Administrator\View\Property\HtmlView $this */
 
-if ($this->item->booking_type === 0)
-{
+if ($this->item->booking_type === 0) {
 	$this->form->setFieldAttribute('price_summary', 'type', 'text');
 }
 
-if (!empty($this->item->id))
-{
+if (!empty($this->item->id)) {
 	$channels = KrFactory::getListModel('servicexrefs')->getChannels($this->item->id);
-	if (empty($channels))
-	{
+	if (empty($channels)) {
 		$this->form->setFieldAttribute('channel_name', 'type', 'hidden');
 	}
-}
-else
-{
+} else {
 	$this->form->setFieldAttribute('channel_name', 'type', 'hidden');
 }
 ?>

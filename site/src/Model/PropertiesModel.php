@@ -21,6 +21,7 @@ use HighlandVision\KR\Joomla\Extend\Pagination;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Utility;
 use InvalidArgumentException;
+use JetBrains\PhpStorm\NoReturn;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Database\Exception\DatabaseNotFoundException;
@@ -97,7 +98,7 @@ class PropertiesModel extends ListModel
 	 * @since  1.0.0
 	 * @return array
 	 */
-	public function getBaseItems(object $data): array
+	#[NoReturn] public function getBaseItems(object $data): array
 	{
 		$today = TickTock::getDate();
 
@@ -556,6 +557,7 @@ class PropertiesModel extends ListModel
 		$query = self::intFilter($db, $query, 'a.pets', $this->state->get('filter.pets'));
 		$query = self::stringFilter($db, $query, 'a.property_area', $this->state->get('filter.property_area'));
 		$query = self::intFilter($db, $query, 'a.region_id', $this->state->get('filter.region_id'));
+		$query = self::intFilter($db, $query, 'a.country_id', $this->state->get('filter.country_id'));
 		$query = self::jsonFindInSet($db, $query, $this->state->get('filter.feature'), 'property_features');
 
 		return self::jsonFindInSet($db, $query, $this->state->get('filter.category'), 'categories');

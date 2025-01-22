@@ -36,7 +36,7 @@ $address = Utility::formatAddress($this->guestData->address1, $this->guestData->
 		<?php endif; ?>
 	</h2>
 
-	<h3 style="margin-bottom:0;">
+	<h3 class="no-margin-bottom">
 		<?php echo $this->property->property_name; ?>
 	</h3>
 	<div class="total-summary">

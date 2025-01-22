@@ -27,7 +27,7 @@
 		icon:              "",
 		detour:            "",
 		mapZoom:           9,
-		mapMaxZoom:        20,
+		mapMaxZoom:        18,
 		mapTypeId:         "roadmap",
 		mapId:             "kr-map-route",
 		directionsPanel:   "kr-directions-panel",

@@ -78,9 +78,11 @@ class HtmlView extends KrHtmlView\Site
 		$this->default_region = $this->params->get('default_region', 0);
 		$default_view         = $this->params->get('default_view', 'grid');
 
-		$searchSession = new KrSession\Search();
-		$searchData    = $searchSession->getData();
-		$retain        = KrMethods::inputInt('retain');
+		$searchSession      = new KrSession\Search();
+		$searchData         = $searchSession->getData();
+		$searchData->layout = '';
+
+		$retain = KrMethods::inputInt('retain');
 		if ($retain == 2) {
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_EXPIRED_SESSION'));
 			$retain = 1;

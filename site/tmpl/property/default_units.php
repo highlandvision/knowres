@@ -37,7 +37,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 				?>
 			</a>
 			<div class="callout small">
-				<h5 class="h6 no-margin-bottom">
+				<h5 class="no-margin-bottom">
 					<a href="<?php echo $plink; ?>" class="suppress-underline"
 					   title="<?php echo $unit->property_name; ?>">
 						<?php echo $unit->property_name; ?>

@@ -29,7 +29,8 @@ extract($displayData);
  * @var array  $net            Net rates.
  * @var array  $discount       Discount value.
  * @var array  $rating         Review value.
- * @var array  $key_features   Features assigned for filtering
+ * @var array  $key_features   Features assigned for filtering.
+ * @var int    $nights         Nights.
  */
 
 $Translations = new Translations();
@@ -68,7 +69,8 @@ $large        = Utility::setColumns($params->get('per_row_large', 3), 'large');
 					 'net'            => $net[$item->id] ?? 0,
 					 'discount'       => $discount[$item->id] ?? 0,
 					 'weekly'         => $weekly[$item->id] ?? $weekly[0],
-					 'plink'          => $plink
+					 'plink'          => $plink,
+					 'nights'         => $nights
 					]);
 				?>
 

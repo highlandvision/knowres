@@ -28,7 +28,7 @@ $action = KrMethods::route('index.php?option=com_knowres&view=confirm&layout=pay
 
 <div id="kr-confirm">
 	<div class="grid-x grid-margin-x">
-		<div class="small-12 cell">
+		<div class="small-12 text-center medium-text-left cell">
 			<?php if ($this->property->booking_type == 2) : ?>
 				<h1><?php echo KrMethods::sprintf('COM_KNOWRES_CONFIRM_BOOK_YOUR_RESERVATION',
 						$this->property->property_name); ?></h1>

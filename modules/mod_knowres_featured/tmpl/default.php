@@ -21,8 +21,8 @@ $Currency = new Currency();
 ?>
 
 <div class="grid-x">
-	<div class="small-12 large-10 cell">
-		<h3 class="h2">
+	<div class="small-10 cell">
+		<h3>
 			<?php if (!$title): ?>
 				<?php echo KrMethods::plain('MOD_KNOWRES_FEATURED_FEATURED'); ?>
 				<span class="color-custom">
@@ -37,13 +37,13 @@ $Currency = new Currency();
 			<?php endif; ?>
 		</h3>
 	</div>
-	<div class="show-for-large large-2 cell">
+	<div class="small-2 cell">
 		<div class="kr-double-arrows"></div>
 	</div>
 </div>
 
-<div class="grid-x kr-featured kr-slick" data-slick='{"slidesToShow": <?php echo $slidestoshow; ?>}'>
-	<?php foreach ($items as $item): ?>
+<div class="grid-x kr-featured kr-slick" data-slidestoshow="<?php echo $slidestoshow; ?>">
+		<?php foreach ($items as $item): ?>
 		<?php require ModuleHelper::getLayoutPath('mod_knowres_featured', $params->get('layout', 'default') . '_item'); ?>
 	<?php endforeach; ?>
 </div>

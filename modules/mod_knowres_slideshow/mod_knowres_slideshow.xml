@@ -28,13 +28,13 @@
 				   description="MOD_KNOWRES_SLIDESHOW_LAYOUT_DSC"/>
 				<field name="bgcolor"
 					   default="#fefefe"
-					   showon="layout:_:solid"
+					   showon="layout:_:solid[OR]layout:_:default"
 					   type="color"
 					   label="MOD_KNOWRES_SLIDESHOW_BGCOLOR"
 					   description="MOD_KNOWRES_SLIDESHOW_BGCOLOR_DSC"/>
 				<field name="height"
 					   addonAfter="px"
-					   default="330"
+					   default="250|330|400"
 					   type="text"
 					   label="MOD_KNOWRES_SLIDESHOW_HEIGHT"
 					   description="MOD_KNOWRES_SLIDESHOW_HEIGHT_DSC"/>
@@ -205,11 +205,6 @@
 					   description="MOD_KNOWRES_SLIDESHOW_DESCRIPTION_DSC"/>
 			</fieldset>
 			<fieldset name="advanced">
-				<field name="layout"
-					   class="form-select"
-					   type="modulelayout"
-					   validate="moduleLayout"
-					   label="JFIELD_ALT_LAYOUT_LABEL"/>
 				<field name="moduleclass_sfx"
 					type="textarea"
 					rows="1"

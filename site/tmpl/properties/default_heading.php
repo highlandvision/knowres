@@ -10,6 +10,6 @@
 defined('_JEXEC') or die;
 ?>
 
-<h1 id="kr-properties-filter-heading" class="h3 kr-properties-filter-heading show-for-medium">
+<h1 id="kr-properties-filter-heading" class="kr-properties-filter-heading">
 	<?php echo $this->header; ?>
 </h1>

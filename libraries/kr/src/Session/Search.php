@@ -116,7 +116,8 @@ class Search extends Session
 		$data->category_id    = 0;
 		$data->children       = 0;
 		$data->child_ages     = [];
-		$data->country_name   = [];
+		$data->country_id     = 0;
+		$data->country_name   = '';
 		$data->currency       = '';
 		$data->departure      = '';
 		$data->description    = '';

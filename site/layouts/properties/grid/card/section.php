@@ -26,26 +26,25 @@ extract($displayData);
  */
 ?>
 
-<h2 class="h5" style="flex-grow:1">
-	<?php echo $item->property_name; ?>
-</h2>
-<div class="info small">
+<h3><?php echo $item->property_name; ?></h3>
+<div class="geo">
 	<?php echo Translations::getCountryName($item->country_id) . ','; ?>
 	<?php echo $item->region_name . ','; ?>
 	<?php echo strtoupper($item->property_area); ?>
-	<br>
+</div>
+<div class="info">
 	<?php echo KrMethods::plain('COM_KNOWRES_SLEEPS'); ?>
 	<?php echo $item->sleeps; ?>
 	<?php if ($item->sleeps_extra): ?>
 		+ <?php echo $item->sleeps_extra; ?>
 	<?php endif; ?>
-	<?php echo ' / '; ?>
+	<?php echo ' | '; ?>
 	<?php echo KrMethods::plain('COM_KNOWRES_BEDROOMS'); ?>
 	<?php echo $item->bedrooms; ?>
-	<?php echo ' / '; ?>
+	<?php echo ' | '; ?>
 	<?php echo KrMethods::plain('COM_KNOWRES_BATHROOMS'); ?>
 	<?php echo $item->bathrooms; ?>
-	<?php echo ' / '; ?>
+	<?php echo ' | '; ?>
 	<?php if (!$item->pets): ?>
 		<?php echo KrMethods::plain('COM_KNOWRES_NO_PETS'); ?>
 	<?php else: ?>

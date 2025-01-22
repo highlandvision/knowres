@@ -38,7 +38,8 @@ let scloaded = false;
         if ($ctrigger.length && !calendarLoaded) {
             loadCalendar($ctrigger.data('pid'), $ctrigger.data('target'));
             calendarLoaded = true;
-            if ('.sticky'.length) {
+            const sticky = $('.sticky');
+            if (sticky.length) {
                 $('.sticky').foundation('_calc', true);
             }
         }
@@ -234,7 +235,7 @@ let scloaded = false;
                     return;
                 }
 
-                const vals = ['list', 'grid', 'thumb', 'favs', 'map'];
+                const vals = ['grid', 'list', 'favs', 'map'];
                 if (vals.includes(data.bar)) {
                     setActiveMenu(data.bar);
                 }

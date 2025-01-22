@@ -28,9 +28,7 @@ if (!$landscape) {
 ?>
 
 <div id="kr-property-slideshow" class="kr-slick <?php echo $type; ?> <?php echo $mixed; ?>"
-     data-type="<?php echo $type;
-?>"
-     data-thumbs="<?php echo $thumbs; ?>">
+     data-type="<?php echo $type;?>" data-thumbs="<?php echo $thumbs; ?>">
 	<?php foreach ($this->images as $image): ?>
 		<div>
 			<?php
@@ -57,7 +55,7 @@ if (!$landscape) {
 <?php if ($thumbs): ?>
 	<?php $thumb_width = $this->params->get('max_slideshow_thumb_width'); ?>
 	<?php $thumb_height = $this->params->get('max_slideshow_thumb_height'); ?>
-	<div id="kr-property-thumbs" class="kr-slick hide-for-medium-down" data-twidth="<?php echo $thumb_width; ?>">
+	<div id="kr-property-thumbs" class="kr-slick show-for-large" data-twidth="<?php echo $thumb_width; ?>">
 		<?php foreach ($this->images as $image): ?>
 			<div>
 				<?php echo HTMLHelper::_('image', $thumbpath . $image->filename, $image->alt_text, [

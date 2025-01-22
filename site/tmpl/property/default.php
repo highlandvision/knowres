@@ -28,24 +28,22 @@ $wa->useScript('com_knowres.site')
 					<?php echo KrMethods::plain('COM_KNOWRES_SEARCH_RESULTS'); ?>
 				</a>
 			<?php endif; ?>
-			<div class="grid-x grid-margin-x align-bottom">
-				<div class="small-12 medium-12 cell">
-					<h1><?php echo $this->item->property_name .
-					               ' - ' .
-					               $this->item->region_name .
-					               ' / ' .
-					               $this->item->property_area; ?></h1>
-				</div>
-			</div>
+
 			<div class="grid-x grid-margin-x">
 				<div class="small-12 cell">
+					<h1 class="small-margin-bottom">
+						<?php echo $this->item->property_name; ?>
+					</h1>
+
+					<?php echo KrMethods::render('property.geo', ['item' => $this->item]); ?>
+					<?php echo KrMethods::render('property.capacity', ['item' => $this->item]); ?>
 					<?php echo $this->loadTemplate('slideshow'); ?>
 				</div>
 			</div>
 		</div>
 
 		<div class="grid-x grid-margin-x">
-			<div class="small-12 medium-8 cell">
+			<div class="small-12 small-order-2 medium-7 large-8 medium-order-1 cell">
 				<?php if ($this->tabs): ?>
 					<?php echo $this->loadTemplate('tabs'); ?>
 				<?php else: ?>
@@ -53,7 +51,7 @@ $wa->useScript('com_knowres.site')
 				<?php endif; ?>
 			</div>
 
-			<div id="sidebar-right" class="small-12 medium-4 cell">
+			<div id="sidebar-right" class="small-12 small-order-1 medium-5 large-4 medium-order-2 cell">
 				<div class="kr-property-quote">
 					<?php if ((int) $this->booking_type) : ?>
 						<?php echo $this->loadTemplate('quote'); ?>
@@ -62,11 +60,13 @@ $wa->useScript('com_knowres.site')
 					<?php endif; ?>
 				</div>
 
-				<?php echo $this->loadTemplate('summary'); ?>
+				<div class="show-for-large">
+					<?php echo $this->loadTemplate('summary'); ?>
 
-				<?php if (is_countable($this->alternatives) && count($this->alternatives)): ?>
-					<?php echo $this->loadTemplate('alternatives'); ?>
-				<?php endif; ?>
+					<?php if (is_countable($this->alternatives) && count($this->alternatives)): ?>
+						<?php echo $this->loadTemplate('alternatives'); ?>
+					<?php endif; ?>
+				</div>
 			</div>
 		</div>
 	</div>

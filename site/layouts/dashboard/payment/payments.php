@@ -25,22 +25,22 @@ extract($displayData);
  */
 ?>
 
-<div class="grid-x grid-margin-x">
-	<div class="small-6 cell" style="border-right:1px solid #ccc;">
-		<h4 style="margin-bottom:5px;">
+<div class="grid-x grid-margin-x payment-info">
+	<div class="small-7 cell" style="border-right:1px solid #ccc;">
+		<h4 class="vsmall-margin-bottom">
 			<?php echo $text . ' ' . Utility::displayValue($value, $currency); ?>
 		</h4>
 		<p class="no-margin-bottom">
 			<?php echo $date; ?>
 		</p>
 	</div>
-	<div class="small-6 cell">
+	<div class="small-5 cell">
 		<?php if (!$due): ?>
 			<h4>
 				<?php echo $right; ?>
 			</h4>
 		<?php else: ?>
-			<a class="button no-margin-bottom" id="showgateways">
+			<a class="button" id="showgateways">
 				<?php echo KrMethods::plain('COM_KNOWRES_PAYMENT_OPTIONS'); ?>
 			</a>
 		<?php endif; ?>

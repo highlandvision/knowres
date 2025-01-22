@@ -12,18 +12,14 @@ use HighlandVision\KR\Framework\KrMethods;
 defined('_JEXEC') or die;
 ?>
 
-<h2 class="h3"><?php echo $this->item->tagline; ?></h2>
-<p><?php echo KrMethods::render('property.area_beds_sleeps', ['item' => $this->item]); ?> </p>
-
 <div class="page">
-	<!--  Overview -->
-	<h3 class="header"><?php echo $this->item->hp1 ?></h3>
+	<h3><?php echo $this->item->tagline; ?></h3>
 	<?php echo $this->item->p1; ?>
 
 	<!--  Video -->
 	<?php if ($this->item->property_videolink) : ?>
-		<h3 class="header"><?php echo KrMethods::plain('COM_KNOWRES_PROPERTY_TAB_VIDEO'); ?></h3>
-		<div>
+		<h5 class="header"><?php echo KrMethods::plain('COM_KNOWRES_PROPERTY_TAB_VIDEO'); ?></h5>
+		<div class="section">
 			<div class="responsive-embed">
 				<iframe width="500" height="auto"
 				        src='https://www.youtube.com/embed/<?php echo $this->item->property_videolink; ?>'
@@ -35,17 +31,9 @@ defined('_JEXEC') or die;
 
 	<!--  Amenities -->
 	<?php if (!empty($this->features) && count($this->features)): ?>
-		<h3 class="header"><?php echo KrMethods::plain('COM_KNOWRES_PROPERTY_TAB_AMENITIES'); ?></h3>
-		<div class="rooms">
+		<h5 class="header"><?php echo KrMethods::plain('COM_KNOWRES_PROPERTY_TAB_AMENITIES'); ?></h5>
+		<div class="section rooms">
 			<?php echo KrMethods::render('property.features', ['features' => $this->features]); ?>
-		</div>
-	<?php endif; ?>
-
-	<!--  Rooms -->
-	<?php if (!empty($this->rooms) && count($this->rooms)): ?>
-		<h3 class="header"><?php echo KrMethods::plain('COM_KNOWRES_PROPERTY_TAB_ROOMS'); ?></h3>
-		<div class="rooms">
-			<?php echo KrMethods::render('property.rooms', ['rooms' => $this->rooms]); ?>
 		</div>
 	<?php endif; ?>
 
@@ -55,16 +43,16 @@ defined('_JEXEC') or die;
 			<?php $label = 'hp' . $pf->id; ?>
 			<?php $field = 'p' . $pf->id; ?>
 			<?php if (!empty(strip_tags($this->item->{$field}))): ?>
-				<h3 class="header"><?php echo $this->item->{$label}; ?></h3>
-				<?php echo $this->item->{$field}; ?>
+				<h5 class="header"><?php echo $this->item->{$label}; ?></h5>
+				<div class="section"><?php echo $this->item->{$field}; ?></div>
 			<?php endif; ?>
 		<?php endif; ?>
 	<?php endforeach; ?>
 
 	<!--  Geriatric calendar -->
 	<?php if ((int) $this->settings['display_calendar']) : ?>
-		<h3 class="header"><?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_AVAILABILITY_PRICE"); ?></h3>
-		<div id="kr-page-geriatric-calendar"></div>
+		<h5 class="header"><?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_AVAILABILITY_PRICE"); ?></h5>
+		<div id="kr-page-geriatric-calendar" class="section"></div>
 		<a href="#" id="kr-page-geriatric-calendar-trigger" data-pid="<?php echo $this->item->id; ?>"
 		   data-target="#kr-page-geriatric-calendar"
 		   aria-label="<?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_AVAILABILITY_PRICE"); ?>">
@@ -73,14 +61,16 @@ defined('_JEXEC') or die;
 
 	<!--  Units -->
 	<?php if (is_countable($this->units) && count($this->units)) : ?>
-		<h3 class="header"><?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_UNITS"); ?></h3>
-		<?php echo $this->loadTemplate('units'); ?>
+		<h5 class="header"><?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_UNITS"); ?></h5>
+		<div class="section">
+			<?php echo $this->loadTemplate('units'); ?>
+		</div>
 	<?php endif; ?>
 
 	<!--  Map -->
 	<?php if ($this->item->lat && $this->item->lng) : ?>
-		<h3 class="header"><?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_MAP"); ?></h3>
-		<div id="kr-map-solo"></div>
+		<h5 class="header"><?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_MAP"); ?></h5>
+		<div id="kr-map-solo" class="section"></div>
 		<a href="#" id="kr-map-solo-trigger" class="map-trigger"
 		   aria-label="<?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_MAP"); ?>"
 		   data-forcemap="true"
@@ -91,9 +81,19 @@ defined('_JEXEC') or die;
 		</a>
 	<?php endif; ?>
 
+	<!--  Rooms -->
+	<?php if (!empty($this->rooms) && count($this->rooms)): ?>
+		<h5 class="header"><?php echo KrMethods::plain('COM_KNOWRES_PROPERTY_TAB_ROOMS'); ?></h5>
+		<div class="section rooms">
+			<?php echo KrMethods::render('property.rooms', ['rooms' => $this->rooms]); ?>
+		</div>
+	<?php endif; ?>
+
 	<!--  Reviews -->
 	<?php if (is_countable($this->reviews) && count($this->reviews)): ?>
-		<h3 class="header"><?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_REVIEWS"); ?></h3>
-		<?php echo $this->loadTemplate('reviews'); ?>
+		<h5 class="header"><?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_REVIEWS"); ?></h5>
+		<div class="section">
+			<?php echo $this->loadTemplate('reviews'); ?>
+		</div>
 	<?php endif; ?>
 </div>

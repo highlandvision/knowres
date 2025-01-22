@@ -52,13 +52,14 @@ class PropertyModel extends AdminModel
 	/**
 	 * Get the text relevant to the booking type
 	 *
-	 * @param  int  $booking_type  Property booking type
+	 * @param  int   $booking_type  Property booking type
+	 * @param  bool  $search        True for site search
 	 *
 	 * @throws Exception
 	 * @since  1.2.2
 	 * @return string
 	 */
-	public static function bookingTypeText(int $booking_type): string
+	public static function bookingTypeText(int $booking_type, bool $search = false): string
 	{
 		if (KrMethods::isAdmin()) {
 			return match ($booking_type) {
@@ -68,7 +69,19 @@ class PropertyModel extends AdminModel
 			};
 		}
 		else {
-			return KrMethods::plain('COM_KNOWRES_VIEW');
+			if (!$search) {
+				return match ($booking_type) {
+					0 => KrMethods::plain('COM_KNOWRES_BOOK_ENQUIRY'),
+					1 => KrMethods::plain('COM_KNOWRES_ON_REQUEST'),
+					2 => KrMethods::plain('COM_KNOWRES_BOOK_NOW')
+				};
+			} else {
+				return match ($booking_type) {
+					0 => KrMethods::plain('COM_KNOWRES_BOOK_ENQUIRY'),
+					1 => KrMethods::plain('COM_KNOWRES_ON_REQUEST'),
+					2 => KrMethods::plain('COM_KNOWRES_BOOK_INSTANT')
+				};
+			}
 		}
 	}
 

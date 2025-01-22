@@ -529,13 +529,13 @@ class Filter
 
 		$highest = array_pop($rates);
 		if ($highest == $this->highval) {
-			$ranges[$this->highval] = KrMethods::plain('COM_KNOWRES_SEARCH_REQUEST');
+			$ranges[$this->highval] = KrMethods::plain('COM_KNOWRES_ON_REQUEST');
 		}
 
 		$low = 0;
 		foreach ($ranges as $k => $r) {
 			if ($k == $this->highval) {
-				$text = KrMethods::plain('COM_KNOWRES_SEARCH_REQUEST');
+				$text = KrMethods::plain('COM_KNOWRES_ON_REQUEST');
 			} else {
 				$text = Utility::displayValue($low, $currency, false);
 				$text .= ' - ';

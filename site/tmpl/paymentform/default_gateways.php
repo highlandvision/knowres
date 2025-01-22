@@ -71,7 +71,7 @@ $surcharge_displayed = false;
 				</a>
 			</label>
 		</div>
-		<button type="submit" id="checkterms" class="button expanded validate">
+		<button type="submit" id="checkterms" class="button large expanded validate">
 			<span><?php echo KrMethods::plain('COM_KNOWRES_PAY_NOW'); ?></span>
 		</button>
 	</div>

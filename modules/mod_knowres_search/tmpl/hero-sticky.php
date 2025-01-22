@@ -20,10 +20,10 @@ $wa->useScript('com_knowres.site-modules');
 
 $form         = KrFactory::getAdhocForm('mod_knowres_search', 'search.xml', 'module', null);
 $show_regions = $params->get('show_regions');
-$link         = "/index.php?option=com_knowres&task=properties.search";
+$link         = '/index.php?option=com_knowres&task=properties.search';
 ?>
 
-<div class="kr-search hero-sticky">
+<div class="hero-sticky">
 	<button class="close-button primary show-for-small" aria-label="Close menu" type="button" data-close>
 		<span aria-hidden="true">&times;</span>
 	</button>

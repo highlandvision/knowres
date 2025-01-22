@@ -25,7 +25,7 @@ import {Magellan}       from '../../../../../../node_modules/foundation-sites/js
 import {OffCanvas}      from '../../../../../../node_modules/foundation-sites/js/foundation.offcanvas';
 //import { Orbit } from 'foundation.orbit';
 import {ResponsiveMenu} from '../../../../../../node_modules/foundation-sites/js/foundation.responsiveMenu';
-//import { ResponsiveToggle } from 'foundation.responsiveToggle';
+import {ResponsiveToggle} from '../../../../../../node_modules/foundation-sites/js/foundation.responsiveToggle';
 import {Reveal}         from '../../../../../../node_modules/foundation-sites/js/foundation.reveal';
 //import { Slider } from 'foundation.slider';
 //import { SmoothScroll } from 'foundation.smoothScroll';
@@ -73,7 +73,7 @@ Foundation.plugin(Magellan, 'Magellan');
 Foundation.plugin(OffCanvas, 'OffCanvas');
 //Foundation.plugin(Orbit, 'Orbit');
 Foundation.plugin(ResponsiveMenu, 'ResponsiveMenu');
-//Foundation.plugin(ResponsiveToggle, 'ResponsiveToggle');
+Foundation.plugin(ResponsiveToggle, 'ResponsiveToggle');
 Foundation.plugin(Reveal, 'Reveal');
 //Foundation.plugin(Slider, 'Slider');
 //Foundation.plugin(SmoothScroll, 'SmoothScroll');
