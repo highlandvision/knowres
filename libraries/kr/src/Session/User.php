@@ -101,8 +101,7 @@ class User extends Session
 		$data = $this->getSession();
 		if (is_null($data)) {
 			$data = $this->init();
-		}
-		else {
+		} else {
 			$data->cr_property_id   = 0;
 			$data->cr_property_name = '';
 			$data->cr_country_id    = 0;
@@ -148,8 +147,7 @@ class User extends Session
 					if ($item->properties) {
 						$tmp              = Utility::decodeJson($item->properties, true);
 						$data->properties = implode(',', $tmp);
-					}
-					else {
+					} else {
 						$data->properties = '';
 					}
 
@@ -157,27 +155,23 @@ class User extends Session
 					if ($item->access_level == 10 && !count(Utility::decodeJson($item->properties, true))) {
 						$params = KrMethods::getParams();
 						if ($params->get('property_add', 0)) {
-							KrMethods::message(KrMethods::plain('Please start entering your property details below'));
-							KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&view=property&layout=edit&id=0',
-							                                     false));
-						}
-						else {
-							KrMethods::message(KrMethods::plain('You are not authorised to access this system. Please contact your system administrator.'),
-							                   'error');
+							KrMethods::message(KrMethods::plain('COM_KNOWRES_MANAGER_OWNER_PROPERTY'));
+							KrMethods::redirect(KrMethods::route(
+								'index.php?option=com_knowres&view=property&layout=edit&id=0',
+								false));
+						} else {
+							KrMethods::message(KrMethods::plain('COM_KNOWRES_MANAGER_OWNER_ACCESS'), 'error');
 							KrMethods::redirect(KrMethods::route('index.php', false));
 						}
 
 						return;
 					}
 				}
-			}
-			else {
-				KrMethods::message(KrMethods::plain('You are not authorised to access the requested page. Please contact your system administrator.'),
-				                   'error');
+			} else {
+				KrMethods::message(KrMethods::plain('COM_KNOWRES_MANAGER_OWNER_ACCESS_CONTACT'), 'error');
 				KrMethods::redirect(KrMethods::route('index.php'));
 			}
-		}
-		else {
+		} else {
 			$data->access_level = 1;
 			$data->properties   = '';
 			$data->agency_id    = 0;
