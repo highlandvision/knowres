@@ -6,12 +6,12 @@
  * @license    See the file "LICENSE.txt" for the full license governing this code.
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
-/** @noinspection PhpUnhandledExceptionInspection */
 
 defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrMethods;
 use Joomla\CMS\HTML\HTMLHelper;
+
 ?>
 
 <?php foreach ($this->items as $i => $this->item): ?>
@@ -25,7 +25,11 @@ use Joomla\CMS\HTML\HTMLHelper;
 			</td>
 		<?php endif; ?>
 		<td class="text-center">
-			<?php echo HTMLHelper::_('jgrid.published', $this->item->state, $i, $this->name . '.', $this->canChange,
+			<?php echo HTMLHelper::_('jgrid.published',
+				$this->item->state,
+				$i,
+				$this->name . '.',
+				$this->canChange,
 				'cb'); ?>
 		</td>
 		<th scope="row">
@@ -33,7 +37,8 @@ use Joomla\CMS\HTML\HTMLHelper;
 				['data' => $this, 'item' => $this->item, 'i' => $i]); ?>
 		</th>
 		<td class="text-center">
-			<?php echo KrMethods::render('joomla.html.image', ['src' => '/' . $this->item->mapicon, 'alt' => $this->item->name]); ?>
+			<?php echo KrMethods::render('joomla.html.image',
+				['src' => '/' . $this->item->mapicon, 'alt' => $this->item->name]); ?>
 		</td>
 		<td class="d-none d-md-table-cell">
 			<?php echo (int) $this->item->id; ?>

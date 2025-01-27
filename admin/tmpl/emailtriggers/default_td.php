@@ -6,7 +6,6 @@
  * @license    See the file "LICENSE.txt" for the full license governing this code.
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
-/** @noinspection PhpUnhandledExceptionInspection */
 
 defined('_JEXEC') or die;
 
@@ -35,7 +34,9 @@ use Joomla\CMS\HTML\HTMLHelper;
 			<?php echo $this->item->trigger_actual; ?>
 		</td>
 		<td>
-			<?php $link = KrMethods::route('index.php?option=com_knowres&task=emailtemplate.edit&id=' . $this->item->email_template_id); ?>
+			<?php
+			$link = KrMethods::route('index.php?option=com_knowres&task=emailtemplate.edit&id=' . $this->item->email_template_id);
+			?>
 			<a href="<?php echo $link; ?>">
 				<?php echo $this->escape($this->item->email_template_name); ?>
 			</a>

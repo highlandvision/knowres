@@ -6,7 +6,6 @@
  * @license     See the file "LICENSE.txt" for the full license governing this code.
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
-/** @noinspection PhpUnhandledExceptionInspection */
 
 defined('_JEXEC') or die;
 
@@ -26,11 +25,6 @@ $wa->useScript('keepalive')
 $iban = $this->form->getValue('iban');
 $Iban = new IBAN($iban);
 $this->form->setValue('iban', '', $Iban->HumanFormat());
-
-//if (!$this->form->getValue('mobile_country_id'))
-//{
-//	$this->form->setValue('mobile_country_id', null, KrMethods::getParams()->get('default_country'));
-//}
 ?>
 
 <form action="<?php echo KrMethods::route('index.php?option=com_knowres&layout=edit&id=' . (int) $this->item->id); ?>"

@@ -6,13 +6,13 @@
  * @license    See the file "LICENSE.txt" for the full license governing this code.
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
-/** @noinspection PhpUnhandledExceptionInspection */
 
 defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Utility;
 use Joomla\CMS\HTML\HTMLHelper;
+
 ?>
 
 <?php foreach ($this->items as $i => $this->item): ?>
@@ -26,15 +26,20 @@ use Joomla\CMS\HTML\HTMLHelper;
 			</td>
 		<?php endif; ?>
 		<td class="text-center">
-			<?php echo HTMLHelper::_('jgrid.published', $this->item->state, $i, $this->name . '.', $this->canChange,
+			<?php echo HTMLHelper::_('jgrid.published',
+				$this->item->state,
+				$i,
+				$this->name . '.',
+				$this->canChange,
 				'cb'); ?>
 		</td>
 		<th scope="row">
-			<?php echo KrMethods::render('html.list.editable', ['data' => $this, 'item' => $this->item, 'i' => $i, 'column' => 'payment_date']); ?>
+			<?php echo KrMethods::render('html.list.editable',
+				['data' => $this, 'item' => $this->item, 'i' => $i, 'column' => 'payment_date']); ?>
 		</th>
 		<td>
 			<a href="<?php echo KrMethods::route('index.php?option=com_knowres&task=contract.show&id='
-				. (int) $this->item->contract_id); ?>">
+			                                     . (int) $this->item->contract_id); ?>">
 				<?php echo $this->item->contract_tag; ?>
 			</a>
 		</td>
