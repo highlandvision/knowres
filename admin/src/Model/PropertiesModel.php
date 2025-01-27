@@ -44,8 +44,7 @@ class PropertiesModel extends ListModel
 	 */
 	public function __construct(array $config = [])
 	{
-		if (empty($config['filter_fields']))
-		{
+		if (empty($config['filter_fields'])) {
 			$config['filter_fields'] = KrListField::setPropertyFilterFields();
 		}
 
@@ -70,11 +69,11 @@ class PropertiesModel extends ListModel
 		$query = $db->getQuery(true);
 
 		$query->select('GREATEST(MAX(' . $db->qn('p.created_at') . '), MAX(' . $db->qn('p.updated_at') . '))  as '
-			. $db->qn('maxdate'))
-		      ->select($db->qn('p.id', 'pid'))
-		      ->from($db->qn('#__knowres_property', 'p'))
-		      ->where($db->qn('p.state') . ' = 1')
-		      ->group($db->qn('pid'));
+		               . $db->qn('maxdate'))
+			->select($db->qn('p.id', 'pid'))
+			->from($db->qn('#__knowres_property', 'p'))
+			->where($db->qn('p.state') . ' = 1')
+			->group($db->qn('pid'));
 
 		$db->setQuery($query);
 
@@ -98,11 +97,11 @@ class PropertiesModel extends ListModel
 		$query = $db->getQuery(true);
 
 		$query->select('GREATEST(MAX(' . $db->qn('s.created_at') . '), MAX(' . $db->qn('s.updated_at') . '))  as '
-			. $db->qn('maxdate'))
-		      ->select($db->qn('s.property_id'))
-		      ->from($db->qn($table, 's'))
-		      ->where($db->qn('s.state') . ' IN(0,1)')
-		      ->group($db->qn('property_id'));
+		               . $db->qn('maxdate'))
+			->select($db->qn('s.property_id'))
+			->from($db->qn($table, 's'))
+			->where($db->qn('s.state') . ' IN(0,1)')
+			->group($db->qn('property_id'));
 		$db->setQuery($query);
 
 		return $db->loadAssocList('property_id');
@@ -125,22 +124,17 @@ class PropertiesModel extends ListModel
 
 		$query->select($db->qn('a.property_area'));
 		$query->from($db->qn('#__knowres_property', 'a'))
-		      ->where($db->qn('a.state') . '=1')
-		      ->where($db->qn('a.approved') . '=1');
+			->where($db->qn('a.state') . '=1')
+			->where($db->qn('a.approved') . '=1');
 
-		if ($region_id)
-		{
+		if ($region_id) {
 			$query->where($db->qn('a.region_id') . '=' . $region_id);
 		}
 
-		if (!is_null($search))
-		{
-			if (stripos($search, 'id:') === 0)
-			{
+		if (!is_null($search)) {
+			if (stripos($search, 'id:') === 0) {
 				$query->where($db->qn('a.id') . ' = ' . (int) substr($search, 3));
-			}
-			else
-			{
+			} else {
 				$search = $db->q('%' . $db->escape($search) . '%');
 				$query->where($db->qn('a.property_area') . ' LIKE ' . $search);
 			}
@@ -171,28 +165,27 @@ class PropertiesModel extends ListModel
 		$item           = 'region';
 		$subQueryRegion = $db->getQuery(true);
 		$subQueryRegion->select('sub.text')
-		               ->from($db->qn('#__knowres_translation', 'sub'))
-		               ->where($db->qn('sub.item') . ' = ' . $db->q($item))
-		               ->where($db->qn('sub.item_id') . ' = ' . $db->qn('p.region_id'))
-		               ->order('(CASE WHEN ' . $db->qn('sub.language') . ' = ' . $db->q($lang) . ' THEN 1 ELSE 2 END )')
-		               ->setLimit(1);
+			->from($db->qn('#__knowres_translation', 'sub'))
+			->where($db->qn('sub.item') . ' = ' . $db->q($item))
+			->where($db->qn('sub.item_id') . ' = ' . $db->qn('p.region_id'))
+			->order('(CASE WHEN ' . $db->qn('sub.language') . ' = ' . $db->q($lang) . ' THEN 1 ELSE 2 END )')
+			->setLimit(1);
 
 		$query = $db->getQuery(true)
-		            ->select($db->qn(array(
-			            'p.id',
-			            'p.property_name',
-			            'p.region_id',
-			            'p.property_area'
-		            )))
-		            ->from($db->qn('#__knowres_property', 'p'));
+			->select($db->qn(array(
+				'p.id',
+				'p.property_name',
+				'p.region_id',
+				'p.property_area'
+			)))
+			->from($db->qn('#__knowres_property', 'p'));
 
 		$query->select('(' . $subQueryRegion->__toString() . ') ' . $db->q('region_name'));
 
 		$query->where($db->qn('p.state') . '=1')
-		      ->where($db->qn('p.approved') . '=1');
+			->where($db->qn('p.approved') . '=1');
 
-		if ($name)
-		{
+		if ($name) {
 			$name = $db->q('%' . $db->escape($name) . '%');
 			$query->where($db->qn('p.property_name') . ' LIKE ' . $name);
 		}
@@ -222,56 +215,64 @@ class PropertiesModel extends ListModel
 		$query = $db->getQuery(true);
 
 		$query->select($db->qn([
-			'a.id', 'a.property_name',
-			'a.region_id', 'a.country_id',
-			'a.sleeps', 'a.sleeps_extra',
+			'a.id',
+			'a.property_name',
+			'a.region_id',
+			'a.country_id',
+			'a.sleeps',
+			'a.sleeps_extra',
 			'a.owner_id',
-			'a.checked_out', 'a.checked_out_time',
-			'a.property_area', 'a.booking_type',
-			'a.state', 'a.property_email',
-			'a.bedrooms', 'a.bathrooms', 'a.wc',
+			'a.checked_out',
+			'a.checked_out_time',
+			'a.property_area',
+			'a.booking_type',
+			'a.state',
+			'a.property_email',
+			'a.bedrooms',
+			'a.bathrooms',
+			'a.wc',
 			'a.town_id'
 		]));
 
 		$query->from($db->qn('#__knowres_property', 'a'))
-		      ->where($db->qn('a.id') . '=' . $id);
+			->where($db->qn('a.id') . '=' . $id);
 
 		$query->select('COUNT(DISTINCT op.id) AS ownerpayments')
-		      ->join('LEFT',
-			      $db->qn('#__knowres_service', 'op') . 'ON' . $db->qn('op.property_id') . '=' . $db->qn('a.id') . 'AND'
-			      . $db->qn('op.type') . '=' . $db->q('g') . 'AND' . $db->qn('op.state') . '=1');
+			->join('LEFT',
+				$db->qn('#__knowres_service', 'op') . 'ON' . $db->qn('op.property_id') . '=' . $db->qn('a.id') . 'AND'
+				. $db->qn('op.type') . '=' . $db->q('g') . 'AND' . $db->qn('op.state') . '=1');
 
 		$query->select('COUNT(DISTINCT x.id) AS channels')
-		      ->join('LEFT',
-			      $db->qn('#__knowres_service_xref', 'x') . 'ON' . $db->qn('x.property_id') . '=' . $db->qn('a.id')
-			      . 'AND' . $db->qn('x.state') . '=1');
+			->join('LEFT',
+				$db->qn('#__knowres_service_xref', 'x') . 'ON' . $db->qn('x.property_id') . '=' . $db->qn('a.id')
+				. 'AND' . $db->qn('x.state') . '=1');
 
 		$query->select('COUNT(DISTINCT ical.id) AS icals')
-		      ->join('LEFT',
-			      $db->qn('#__knowres_property_ical', 'ical') . 'ON' . $db->qn('ical.property_id') . '='
-			      . $db->qn('a.id') . 'AND'
-			      . $db->qn('ical.state') . '=1');
+			->join('LEFT',
+				$db->qn('#__knowres_property_ical', 'ical') . 'ON' . $db->qn('ical.property_id') . '='
+				. $db->qn('a.id') . 'AND'
+				. $db->qn('ical.state') . '=1');
 
 		$query->select('COUNT(DISTINCT rm.id) AS ratemarkups')
-		      ->join('LEFT',
-			      $db->qn('#__knowres_rate_markup', 'rm') . 'ON' . $db->qn('rm.property_id') . '=' . $db->qn('a.id')
-			      . 'AND'
-			      . $db->qn('rm.state') . '=1 AND' . $db->qn('rm.valid_to') . '>=' . $db->q($today));
+			->join('LEFT',
+				$db->qn('#__knowres_rate_markup', 'rm') . 'ON' . $db->qn('rm.property_id') . '=' . $db->qn('a.id')
+				. 'AND'
+				. $db->qn('rm.state') . '=1 AND' . $db->qn('rm.valid_to') . '>=' . $db->q($today));
 
 		$query->select('COUNT(DISTINCT c.id) AS coupons')
-		      ->join('LEFT',
-			      $db->qn('#__knowres_coupon', 'c') . 'ON' . $db->qn('c.property_id') . '=' . $db->qn('a.id') . 'AND'
-			      . $db->qn('c.state') . '=1 AND' . $db->qn('c.valid_to') . '>=' . $db->q($today));
+			->join('LEFT',
+				$db->qn('#__knowres_coupon', 'c') . 'ON' . $db->qn('c.property_id') . '=' . $db->qn('a.id') . 'AND'
+				. $db->qn('c.state') . '=1 AND' . $db->qn('c.valid_to') . '>=' . $db->q($today));
 
 		$query->select('COUNT(DISTINCT d.id) AS discounts')
-		      ->join('LEFT',
-			      $db->qn('#__knowres_discount', 'd') . 'ON' . $db->qn('d.property_id') . '=' . $db->qn('a.id') . 'AND'
-			      . $db->qn('d.state') . '=1 AND' . $db->qn('d.valid_to') . '>=' . $db->q($today));
+			->join('LEFT',
+				$db->qn('#__knowres_discount', 'd') . 'ON' . $db->qn('d.property_id') . '=' . $db->qn('a.id') . 'AND'
+				. $db->qn('d.state') . '=1 AND' . $db->qn('d.valid_to') . '>=' . $db->q($today));
 
 		$query->select('COUNT(DISTINCT e.id) AS extras')
-		      ->join('LEFT',
-			      $db->qn('#__knowres_extra', 'e') . 'ON' . $db->qn('e.property_id') . '=' . $db->qn('a.id') . 'AND'
-			      . $db->qn('e.state') . '=1');
+			->join('LEFT',
+				$db->qn('#__knowres_extra', 'e') . 'ON' . $db->qn('e.property_id') . '=' . $db->qn('a.id') . 'AND'
+				. $db->qn('e.state') . '=1');
 
 		$query->group($db->qn('id'));
 
@@ -330,10 +331,9 @@ class PropertiesModel extends ListModel
 			'a.region_id'
 		]));
 		$query->from($db->qn('#__knowres_property', 'a'))
-		      ->where($db->qn('a.state') . '=1');
+			->where($db->qn('a.state') . '=1');
 
-		if (!empty($this->user_properties))
-		{
+		if (!empty($this->user_properties)) {
 			$query->where($db->qn('a.id') . ' IN (' . $this->user_properties . ')');
 		}
 
@@ -372,13 +372,12 @@ class PropertiesModel extends ListModel
 		                             'property_area')));
 
 		$query->from($db->qn('#__knowres_property'))
-		      ->where($db->qn('state') . '=1')
+			->where($db->qn('state') . '=1')
 		      ->where($db->qn('approved') . '=0')
 		      ->select('(' . $subQueryRegion->__toString() . ') ' . $db->q('region_name'))
 		      ->order($db->qn('created_at'));
 
-		if (!empty($this->user_properties))
-		{
+		if (!empty($this->user_properties)) {
 			$query->where('id IN (' . $this->user_properties . ')');
 		}
 
@@ -402,10 +401,9 @@ class PropertiesModel extends ListModel
 		$query = $db->getQuery(true);
 
 		$query->select($db->qn('id'))
-		      ->from($db->qn('#__knowres_property'));
+			->from($db->qn('#__knowres_property'));
 
-		if ($state)
-		{
+		if ($state) {
 			$query->where($db->qn('state') . '=' . $state);
 		}
 
@@ -434,26 +432,34 @@ class PropertiesModel extends ListModel
 
 		$subQuery = $db->getQuery(true);
 		$subQuery->select('sub.text')
-		         ->from($db->qn('#__knowres_translation', 'sub'))
-		         ->where($db->qn('sub.item') . '=' . $db->q($item))
-		         ->where($db->qn('sub.item_id') . '=' . $db->qn('r.id'))
-		         ->where($db->qn('sub.field') . '=' . $db->q('name'))
-		         ->order('(CASE WHEN ' . $db->qn('sub.language') . '=' . $db->q($lang) . ' THEN 1 ELSE 2 END )')
-		         ->setLimit(1);
+			->from($db->qn('#__knowres_translation', 'sub'))
+			->where($db->qn('sub.item') . '=' . $db->q($item))
+			->where($db->qn('sub.item_id') . '=' . $db->qn('r.id'))
+			->where($db->qn('sub.field') . '=' . $db->q('name'))
+			->order('(CASE WHEN ' . $db->qn('sub.language') . '=' . $db->q($lang) . ' THEN 1 ELSE 2 END )')
+			->setLimit(1);
 
 		$query = $db->getQuery(true);
 		$query->select($db->qn(array(
-			'id', 'property_id',
-			'valid_from', 'valid_to',
-			'rate', 'min_nights', 'max_nights', 'min_guests', 'max_guests', 'ignore_pppn',
-			'start_day', 'more_guests',
+			'id',
+			'property_id',
+			'valid_from',
+			'valid_to',
+			'rate',
+			'min_nights',
+			'max_nights',
+			'min_guests',
+			'max_guests',
+			'ignore_pppn',
+			'start_day',
+			'more_guests',
 			'state'
 		)))
-		      ->from($db->qn('#__knowres_rate', 'r'))
-		      ->select('(' . $subQuery->__toString() . ') ' . $db->q('name'))
-		      ->where($db->qn('r.property_id') . '=' . $id)
-		      ->where($db->qn('r.valid_from') . '>=' . $db->q($date))
-		      ->order($db->qn('r.valid_to') . 'DESC');
+			->from($db->qn('#__knowres_rate', 'r'))
+			->select('(' . $subQuery->__toString() . ') ' . $db->q('name'))
+			->where($db->qn('r.property_id') . '=' . $id)
+			->where($db->qn('r.valid_from') . '>=' . $db->q($date))
+			->order($db->qn('r.valid_to') . 'DESC');
 
 		$db->setQuery($query);
 
@@ -477,21 +483,21 @@ class PropertiesModel extends ListModel
 		$item           = 'region';
 		$subQueryRegion = $db->getQuery(true);
 		$subQueryRegion->select('sub.text')
-		               ->from($db->qn('#__knowres_translation', 'sub'))
-		               ->where($db->qn('sub.item') . ' = ' . $db->q($item))
-		               ->where($db->qn('sub.item_id') . ' = ' . $db->qn('a.region_id'))
-		               ->where($db->qn('sub.field') . ' = ' . $db->q('name'))
-		               ->order('(CASE WHEN ' . $db->qn('sub.language') . ' = ' . $db->q($lang) . ' THEN 1 ELSE 2 END )')
-		               ->setLimit(1);
+			->from($db->qn('#__knowres_translation', 'sub'))
+			->where($db->qn('sub.item') . ' = ' . $db->q($item))
+			->where($db->qn('sub.item_id') . ' = ' . $db->qn('a.region_id'))
+			->where($db->qn('sub.field') . ' = ' . $db->q('name'))
+			->order('(CASE WHEN ' . $db->qn('sub.language') . ' = ' . $db->q($lang) . ' THEN 1 ELSE 2 END )')
+			->setLimit(1);
 
 		$item         = 'type';
 		$subQueryType = $db->getQuery(true);
 		$subQueryType->select('sub.text')
-		             ->from($db->qn('#__knowres_translation', 'sub'))
-		             ->where($db->qn('sub.item') . '=' . $db->q($item))
-		             ->where($db->qn('sub.item_id') . '=' . $db->qn('a.type_id'))
-		             ->order('(CASE WHEN ' . $db->qn('sub.language') . ' = ' . $db->q($lang) . ' THEN 1 ELSE 2 END )')
-		             ->setLimit(1);
+			->from($db->qn('#__knowres_translation', 'sub'))
+			->where($db->qn('sub.item') . '=' . $db->q($item))
+			->where($db->qn('sub.item_id') . '=' . $db->qn('a.type_id'))
+			->order('(CASE WHEN ' . $db->qn('sub.language') . ' = ' . $db->q($lang) . ' THEN 1 ELSE 2 END )')
+			->setLimit(1);
 
 		$query->select($this->getState('list.select', 'a.*'));
 		$query->from($db->qn('#__knowres_property', 'a'));
@@ -505,66 +511,47 @@ class PropertiesModel extends ListModel
 		$query->select('updated_by.name AS updated_by');
 		$query->join('LEFT', '#__users AS updated_by ON updated_by.id = a.updated_by');
 
-		if (!empty($this->user_properties))
-		{
+		if (!empty($this->user_properties)) {
 			$query->where('a.id IN (' . $this->user_properties . ')');
 		}
 
 		$filter_id = $this->state->get('filter.id');
-		if ($filter_id)
-		{
-			if (is_numeric($filter_id))
-			{
+		if ($filter_id) {
+			if (is_numeric($filter_id)) {
 				$query->where($db->qn('a.id') . ' = ' . (int) $filter_id);
-			}
-			else if (is_array($filter_id))
-			{
+			} else if (is_array($filter_id)) {
 				$query->where($db->qn('a.id') . ' IN (' . implode(',', array_map('intval', $filter_id)) . ')');
-			}
-			else if (is_string($filter_id) && strlen($filter_id))
-			{
+			} else if (is_string($filter_id) && strlen($filter_id)) {
 				$ids = explode(",", $filter_id);
 				$query->where($db->qn('a.id') . ' IN (' . implode(',', array_map('intval', $ids)) . ')');
 			}
 		}
 
 		$state = $this->getState('filter.state');
-		if (is_numeric($state))
-		{
+		if (is_numeric($state)) {
 			$query->where($db->qn('a.state') . ' = ' . (int) $state);
-		}
-		else if ($state === '')
-		{
+		} else if ($state === '') {
 			$query->where($db->qn('a.state') . ' = 1');
 		}
 
 		$book = $this->getState('filter.booking_type');
-		if (is_numeric($book))
-		{
+		if (is_numeric($book)) {
 			$query->where('a.booking_type = ' . (int) $book);
-		}
-		else if (is_array($book))
-		{
+		} else if (is_array($book)) {
 			$data = [];
-			foreach ($book as $f)
-			{
+			foreach ($book as $f) {
 				$data[] = 'a.booking_type = ' . (int) $f;
 			}
 			$query->where('(' . implode(" OR ", $data) . ')');
 		}
 
 		$filter_owner_id = $this->state->get('filter.owner_id');
-		if ($filter_owner_id)
-		{
-			if (is_numeric($filter_owner_id))
-			{
+		if ($filter_owner_id) {
+			if (is_numeric($filter_owner_id)) {
 				$query->where('a.owner_id = ' . (int) $filter_owner_id);
-			}
-			else if (is_array($filter_owner_id))
-			{
+			} else if (is_array($filter_owner_id)) {
 				$data = [];
-				foreach ($filter_owner_id as $f)
-				{
+				foreach ($filter_owner_id as $f) {
 					$data[] = 'a.owner_id = ' . (int) $f;
 				}
 				$query->where('(' . implode(" OR ", $data) . ')');
@@ -572,17 +559,12 @@ class PropertiesModel extends ListModel
 		}
 
 		$filter_type_id = $this->state->get('filter.type_id');
-		if ($filter_type_id)
-		{
-			if (is_numeric($filter_type_id))
-			{
+		if ($filter_type_id) {
+			if (is_numeric($filter_type_id)) {
 				$query->where('a.type_id = ' . (int) $filter_type_id);
-			}
-			else if (is_array($filter_type_id))
-			{
+			} else if (is_array($filter_type_id)) {
 				$data = [];
-				foreach ($filter_type_id as $f)
-				{
+				foreach ($filter_type_id as $f) {
 					$data[] = 'a.type_id = ' . (int) $f;
 				}
 				$query->where('(' . implode(" OR ", $data) . ')');
@@ -590,27 +572,19 @@ class PropertiesModel extends ListModel
 		}
 
 		$filter_region_id = $this->state->get('filter.region_id');
-		if ($filter_region_id)
-		{
-			if (is_numeric($filter_region_id))
-			{
+		if ($filter_region_id) {
+			if (is_numeric($filter_region_id)) {
 				$query->where('a.region_id = ' . (int) $filter_region_id);
-			}
-			else if (is_array($filter_region_id))
-			{
+			} else if (is_array($filter_region_id)) {
 				$query->where('a.region_id IN (' . implode(',', array_map('intval', $filter_region_id)) . ')');
 			}
 		}
 
 		$search = $this->getState('filter.search');
-		if (!empty($search))
-		{
-			if (stripos($search, 'id:') === 0)
-			{
+		if (!empty($search)) {
+			if (stripos($search, 'id:') === 0) {
 				$query->where($db->qn('a.id') . ' = ' . (int) substr($search, 3));
-			}
-			else
-			{
+			} else {
 				$search = $db->q('%' . $db->escape($search) . '%');
 				$query->where($db->qn('a.property_name') . ' LIKE ' . $search);
 			}
@@ -618,17 +592,13 @@ class PropertiesModel extends ListModel
 
 		$query->group($db->qn('id'));
 
-		if ($this->state->get('list.ordercustom'))
-		{
+		if ($this->state->get('list.ordercustom')) {
 			$orderCustom = $this->state->get('list.ordercustom');
 			$query->order($db->escape($orderCustom));
-		}
-		else
-		{
+		} else {
 			$orderCol  = $this->state->get('list.ordering');
 			$orderDirn = $this->state->get('list.direction');
-			if ($orderCol && $orderDirn)
-			{
+			if ($orderCol && $orderDirn) {
 				$query->order($db->escape($orderCol . ' ' . $orderDirn));
 			}
 		}
@@ -676,8 +646,7 @@ class PropertiesModel extends ListModel
 		$this->setState('filter.state',
 			$this->getUserStateFromRequest($this->context . '.filter.state', 'filter_state', '', 'string'));
 		$this->setState('filter.booking_type',
-			$this->getUserStateFromRequest($this->context . '.filter.booking_type', 'filter_booking_type', '',
-				'string'));
+			$this->getUserStateFromRequest($this->context . '.filter.booking_type', 'filter_booking_type', '', 'string'));
 		$this->setState('filter.id',
 			$this->getUserStateFromRequest($this->context . '.filter.id', 'filter_id', '', 'string'));
 		$this->setState('filter.region_id',

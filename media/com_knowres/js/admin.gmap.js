@@ -64,7 +64,7 @@
 				this.settings.lng = lng;
 			}
 			if (maxzoom) {
-				this.settings.maxZoom = parseInt(maxzoom);
+				this.settings.zoom = parseInt(maxzoom);
 			}
 
 			this.initMap();

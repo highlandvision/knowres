@@ -52,7 +52,6 @@ extract($displayData);
 		<?php echo $item->pets; ?>
 	<?php endif; ?>
 </div>
-
 <div class="amenities">
 	<?php $pf = Utility::decodeJson($item->property_features, true); ?>
 	<?php foreach ($pf as $f): ?>

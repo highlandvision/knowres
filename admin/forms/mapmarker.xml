@@ -22,6 +22,7 @@
 			required="true"
 			label="COM_KNOWRES_MAPMARKER_CATEGORY_ID_LBL"
 			description="COM_KNOWRES_MAPMARKER_CATEGORY_ID_DSC"/>
+
 		<field name="country_id"
 			allowproperty="1"
 			class="countrychain"

@@ -113,7 +113,7 @@ const lang = "en";
 
         clusterMap() {
             const mcOptions = {
-                gridSize: 20,
+                gridSize: 50,
                 ignoreHiddenMarkers: true,
                 imagePath: '/media/com_knowres/images/markerclusterer/m'
             };
