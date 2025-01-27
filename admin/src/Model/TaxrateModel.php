@@ -51,8 +51,7 @@ class TaxrateModel extends AdminModel
 	public function getItem($pk = null): false|object
 	{
 		$item = parent::getItem($pk);
-		if ($item)
-		{
+		if ($item) {
 			$item->agent  = Utility::decodeJson($item->agent, true);
 			$Translations = new Translations();
 			$item->name   = $Translations->getText('taxrate', $item->id);
@@ -71,8 +70,7 @@ class TaxrateModel extends AdminModel
 	protected function loadFormData(): mixed
 	{
 		$data = KrMethods::getUserState('com_knowres.edit.taxrate.data', []);
-		if (empty($data))
-		{
+		if (empty($data)) {
 			$data = $this->getItem();
 		}
 
@@ -80,7 +78,7 @@ class TaxrateModel extends AdminModel
 	}
 
 	/**
-	 * Prepare and sanitise the table prior to saving.
+	 * Prepare and sanitize the table prior to saving.
 	 *
 	 * @param  TaxrateTable  $table  Table object
 	 *
@@ -91,8 +89,7 @@ class TaxrateModel extends AdminModel
 	{
 		$jform = Factory::getApplication()->input->post->get('jform', [], 'array');
 
-		if (empty($jform['agent']))
-		{
+		if (empty($jform['agent'])) {
 			$table->agent = '';
 		}
 

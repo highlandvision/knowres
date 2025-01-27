@@ -53,7 +53,9 @@ class Gateway extends Service
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function __construct(int $service_id, stdClass $paymentData, int $manual = 0,
+	public function __construct(int $service_id,
+		stdClass $paymentData,
+		int $manual = 0,
 		array $payment_types = ['OBD', 'PBD', 'PBB'])
 	{
 		parent::__construct($service_id);
@@ -77,11 +79,9 @@ class Gateway extends Service
 	{
 		if ($gateway_name == 'bankia') {
 			$class = '\\HighlandVision\\KR\\Service\\Gateway\\Redsys\\' . ucfirst($gateway_name);
-		}
-		else if ($gateway_name == 'wireint') {
+		} else if ($gateway_name == 'wireint') {
 			$class = '\\HighlandVision\\KR\\Service\\Gateway\\Wire\\' . ucfirst($gateway_name);
-		}
-		else {
+		} else {
 			$class = '\\HighlandVision\\KR\\Service\\Gateway\\' . ucfirst($gateway_name);
 		}
 
@@ -129,28 +129,28 @@ class Gateway extends Service
 	{
 		if ($this->paymentData->manual) {
 			$this->paymentData->note =
-				KrMethods::sprintf('COM_KNOWRES_PAYMENT_NOTE', $this->service->name,
-				                   Utility::displayValue($this->paymentData->amount, $this->paymentData->currency),
-				                   TickTock::displayDate($this->paymentData->due_date, 'D j M Y'));
-		}
-		else {
+				KrMethods::sprintf('COM_KNOWRES_PAYMENT_NOTE',
+					$this->service->name,
+					Utility::displayValue($this->paymentData->amount, $this->paymentData->currency),
+					TickTock::displayDate($this->paymentData->due_date, 'D j M Y'));
+		} else {
 			if ($this->paymentData->payment_type == 'PBB') {
 				$type = KrMethods::plain('COM_KNOWRES_PAYMENT_BALANCE_PAYMENT');
-			}
-			else {
+			} else {
 				if ($this->contract->deposit != $this->contract->contract_total) {
 					$type = KrMethods::plain('COM_KNOWRES_DEPOSIT');
-				}
-				else {
+				} else {
 					$type = KrMethods::plain('COM_KNOWRES_FULL_PAYMENT');
 				}
 			}
 
 			$this->paymentData->note =
-				KrMethods::sprintf('COM_KNOWRES_PAYMENT_DESCRIPTION', $type,
-				                   Utility::displayValue($this->paymentData->amount, $this->paymentData->currency),
-				                   $this->contract->property_name, TickTock::displayDate($this->contract->arrival),
-				                   TickTock::displayDate($this->contract->departure));
+				KrMethods::sprintf('COM_KNOWRES_PAYMENT_DESCRIPTION',
+					$type,
+					Utility::displayValue($this->paymentData->amount, $this->paymentData->currency),
+					$this->contract->property_name,
+					TickTock::displayDate($this->contract->arrival),
+					TickTock::displayDate($this->contract->departure));
 		}
 	}
 
@@ -185,8 +185,7 @@ class Gateway extends Service
 				$this->paymentData->expiry_date = TickTock::getDueDate($wedays, $this->parameters->expirydays);
 				$this->paymentData->due_date    = $this->paymentData->expiry_date;
 			}
-		}
-		else {
+		} else {
 			$this->paymentData->due_date = $this->contract->balance_date;
 		}
 	}

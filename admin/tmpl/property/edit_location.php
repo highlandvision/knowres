@@ -43,24 +43,58 @@ $this->form->setFieldAttribute('town_id', 'required', "true");
 		</div>
 		<br>
 		<div class="row">
-			<div class="col">
+			<div class="col-4">
 				<div class="control-label"><?php echo $this->form->getLabel('lat'); ?></div>
+			</div>
+			<div class="col-4">
+				<div class="control-label"><?php echo $this->form->getLabel('lng'); ?></div>
+			</div>
+			<div class="col-4">
+				<div class="control-label"><?php echo $this->form->getLabel('map_max_zoom'); ?></div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-4">
 				<div class="controls"><?php echo $this->form->getInput('lat'); ?></div>
 			</div>
-			<div class="col">
-				<div class="control-label"><?php echo $this->form->getLabel('lng'); ?></div>
+			<div class="col-4">
 				<div class="controls"><?php echo $this->form->getInput('lng'); ?></div>
 			</div>
+			<div class="col-4">
+				<div class="controls"><?php echo $this->form->getInput('map_max_zoom', null, $this->zoom); ?></div>
+			</div>
+		</div>
+		<div class="row">
 			<div class="col">
-				<div class="control-label"><?php echo $this->form->getLabel('map_max_zoom'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('map_max_zoom'); ?></div>
+				<div class="form-text">
+					<?php $text = $this->form->getFieldAttribute('lat', 'description'); ?>
+					<div class="control-label">
+						<?php echo KrMethods::plain($text); ?>
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<div class="form-text">
+					<?php $text = $this->form->getFieldAttribute('lng', 'description'); ?>
+					<div class="control-label">
+						<?php echo KrMethods::plain($text); ?>
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<div class="form-text">
+					<?php $text = $this->form->getFieldAttribute('map_max_zoom', 'description'); ?>
+					<div class="control-label">
+						<?php echo KrMethods::plain($text); ?>
+					</div>
+				</div>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col">
 				<br>
 				<div id="mapdrag" data-lat="<?php echo $this->lat; ?>" data-lng="<?php echo $this->lng; ?>"
-				     data-maxzoom="<?php echo $this->item->map_max_zoom; ?>" data-zoom="<?php echo $this->zoom; ?>">
+				     data-maxzoom="20" data-zoom="<?php echo $this->zoom; ?>">
 				</div>
 			</div>
 		</div>

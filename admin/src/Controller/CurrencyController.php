@@ -31,8 +31,10 @@ class CurrencyController extends FormController
 	 * Override to update json field so that updated values get stored in input and as such user state for redisplay
 	 * Can't seem to do this anywhere else as the save() reads the data from input again and no way to override
 	 *
-	 * @param   string  $key     The name of the primary key of the URL variable.
-	 * @param   string  $urlVar  The name of the URL variable if different from the primary key (sometimes required to avoid router collisions).
+	 * @param   string  $key    The name of the primary key of the URL variable.
+	 * @param   string  $urlVar  The name of the URL variable if different from the primary key sometimes required to avoid
+	 *                          router collisions.
+	 *
 	 *
 	 * @since  2.5.0
 	 */

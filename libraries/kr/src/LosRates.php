@@ -37,7 +37,7 @@ class LosRates
 	protected bool $do_discounts;
 	/** @var Hub Computations controller */
 	protected Hub $Hub;
-	/** @var bool Hub initialise required */
+	/** @var bool Hub initialize required */
 	protected bool $init_hub = true;
 	/** @var int Percentage rate markup */
 	protected int $markup = 0;

@@ -86,6 +86,7 @@ else
 ?>
 
 <div class="subform-repeatable-wrapper subform-table-layout subform-table-sublayout-<?php echo $sublayout; ?>">
+	<!--suppress HtmlUnknownTag -->
 	<joomla-field-subform class="subform-repeatable" name="<?php echo $name; ?>"
 	                      button-add=".group-add" button-remove=".group-remove"
 	                      button-move="<?php echo empty($buttons['move']) ? '' : '.group-move' ?>"

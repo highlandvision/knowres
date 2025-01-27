@@ -86,7 +86,8 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 	 *                          charset: the character set to use for display
 	 *                          escape: the name (optional) of the function to use for escaping strings
 	 *                          base_path: the parent path (optional) of the view directory (defaults to the component folder)
-	 *                          template_plath: the path (optional) of the layout directory (defaults to base_path + /views/ + view name
+	 *                          template_plath: the path (optional) of the layout directory (defaults to
+	 *                          base_path + /views/ + view name
 	 *                          helper_path: the path (optional) of the helper files (defaults to base_path + /helpers/)
 	 *                          layout: the layout (optional) to use to display the view
 	 *

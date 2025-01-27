@@ -117,7 +117,9 @@ class Redsys extends Gateway
 	{
 		$signature = $this->getReplySignature();
 		if ($signature != $this->paymentData->merchantSignature) {
-			throw new RuntimeException("ERROR - Generated signature $signature and sent signature $this->paymentData->merchantSignature do not match");
+			throw new RuntimeException(
+				"ERROR - Generated signature $signature and sent signature $this->paymentData->merchantSignature do not match"
+			);
 		}
 
 		$this->validateResponseData();

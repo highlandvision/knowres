@@ -37,7 +37,7 @@ class Manager extends Calendar
 	 * @throws Exception
 	 * @since  3.4.0
 	 */
-	public function __construct(int $property_id, int $edit_id = 0, string $first = null, string $final = null,
+	public function __construct(int $property_id, int $edit_id = 0, ?string $first = null, ?string $final = null,
 		int $days = 0)
 	{
 		parent::__construct($property_id, $first, $final, $days, $edit_id);

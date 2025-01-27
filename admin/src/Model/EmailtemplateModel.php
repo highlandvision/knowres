@@ -81,7 +81,7 @@ class EmailtemplateModel extends AdminModel
 	}
 
 	/**
-	 * Prepare and sanitise the table prior to saving.
+	 * Prepare and sanitize the table prior to saving.
 	 *
 	 * @param $table
 	 *

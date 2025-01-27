@@ -64,7 +64,7 @@ class PropertyIcs
 	/**
 	 * Create the calendar ics and dispatch
 	 *
-	 * @param  string  $action  Despatch action 'dl to download or echo
+	 * @param  string  $action  Despatch action dl to download or echo
 	 *
 	 * @throws Exception
 	 * @since  3.3.0

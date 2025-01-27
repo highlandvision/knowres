@@ -9,7 +9,6 @@
 
 defined('_JEXEC') or die;
 
-use HighlandVision\KR\Framework\KrMethods;
 use Joomla\CMS\HTML\HTMLHelper;
 ?>
 

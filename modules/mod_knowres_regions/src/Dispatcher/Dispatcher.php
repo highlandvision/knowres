@@ -58,7 +58,11 @@ class Dispatcher extends AbstractModuleDispatcher
 	 */
 	protected function getLayoutData(): array
 	{
-		$data   = parent::getLayoutData();
+		$data = parent::getLayoutData();
+		if (!$data) {
+			return [];
+		}
+
 		$params = $data['params'];
 
 		$regions = [];
@@ -78,7 +82,6 @@ class Dispatcher extends AbstractModuleDispatcher
 				$pdata['Itemid'] =
 					SiteHelper::getItemId("com_knowres", "properties", ['region_id' => $params->get('region' . $i)]);
 
-				// TODO-v51 Needs false return attrib removed in getLayoutData()
 				$data['regions'][$i] = $pdata;
 			}
 		}

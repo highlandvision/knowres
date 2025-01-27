@@ -6,7 +6,6 @@
  * @license     See the file "LICENSE.txt" for the full license governing this code.
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
-/** @noinspection PhpUnhandledExceptionInspection */
 
 defined('_JEXEC') or die;
 
@@ -26,12 +25,6 @@ if ($this->access_level > 10): ?>
 					['contract' => $this->item]
 				);
 				?>
-				<!--				--><?php //echo KrMethods::render('contract.summary.taxbreakdown',
-				//					['taxes'    => $this->item->taxes,
-				//					 'currency' => $this->item->currency
-				//					]
-				//				);
-				//				?>
 			</div>
 		</div>
 	</div>

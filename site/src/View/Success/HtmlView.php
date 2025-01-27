@@ -7,8 +7,6 @@
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
 
-/** @noinspection PhpPossiblePolymorphicInvocationInspection */
-
 namespace HighlandVision\Component\Knowres\Site\View\Success;
 
 defined('_JEXEC') or die;

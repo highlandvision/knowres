@@ -30,7 +30,9 @@ $height = $this->params->get('max_slideshow_height');
 				<?php if ($image->description): ?>
 					<?php echo $image->description; ?>
 				<?php else: ?>
-					<?php echo $this->item->property_name . ' - ' . $this->item->region_name . ', ' . $this->item->country_name; ?>
+					<?php echo $this->item->property_name . ' - ' .
+					           $this->item->region_name . ', ' .
+					           $this->item->country_name; ?>
 				<?php endif; ?>
 			</p>
 		</div>

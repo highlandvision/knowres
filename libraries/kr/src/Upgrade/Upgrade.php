@@ -32,11 +32,6 @@ use RuntimeException;
 use stdClass;
 use UnexpectedValueException;
 
-use function count;
-use function defined;
-use function explode;
-use function implode;
-
 /**
  * Helper upgrade install scripts
  *
@@ -155,8 +150,8 @@ class Upgrade
 		$db    = KrFactory::getDatabase();
 		$query = $db->getQuery(true);
 		$query->select($db->qn(['id', 'generic']))
-		      ->from($db->qn('#__knowres_property_feature'))
-		      ->where($db->qn('id') . '>=' . 10000);
+			->from($db->qn('#__knowres_property_feature'))
+			->where($db->qn('id') . '>=' . 10000);
 
 		$db->setQuery($query);
 		$rows = $db->loadObjectList();
@@ -172,8 +167,8 @@ class Upgrade
 		// Check for generic features
 		$query = $db->getQuery(true);
 		$query->select($db->qn(array('id', 'generic')))
-		      ->from($db->qn('#__knowres_property_feature'))
-		      ->where($db->qn('generic') . '<> ""');
+			->from($db->qn('#__knowres_property_feature'))
+			->where($db->qn('generic') . '<> ""');
 
 		$db->setQuery($query);
 		$rows = $db->loadObjectList();
@@ -1224,16 +1219,16 @@ class Upgrade
 		$db    = KrFactory::getDatabase();
 		$query = $db->getQuery(true);
 		$query->select($db->qn(['id', 'name']))
-		      ->from($db->qn('#__knowres_agency'))
-		      ->setLimit(1);
+			->from($db->qn('#__knowres_agency'))
+			->setLimit(1);
 		$db->setQuery($query);
 		$rows = $db->loadObjectList();
 		if (is_countable($rows) && !count($rows)) {
 			$query = $db->getQuery(true);
 			$query->select($db->qn('user_id'))
-			      ->from($db->qn('#__user_usergroup_map'))
-			      ->where($db->qn('group_id') . '=8')
-			      ->setLimit(1);
+				->from($db->qn('#__user_usergroup_map'))
+				->where($db->qn('group_id') . '=8')
+				->setLimit(1);
 			$db->setQuery($query);
 			$user = $db->loadObject();
 
@@ -1286,7 +1281,7 @@ class Upgrade
 		$db    = KrFactory::getDatabase();
 		$query = $db->getQuery(true);
 		$query->select($db->qn(array('id', 'akey')))
-		      ->from($db->qn('#__knowres_property_setting'));
+			->from($db->qn('#__knowres_property_setting'));
 
 		$db->setQuery($query);
 		$rows = $db->loadObjectList();
@@ -1420,8 +1415,8 @@ class Upgrade
 			$query = $db->getQuery(true);
 			$query->select($db->qn('id'));
 			$query->from($db->qn('#__knowres_agency'))
-			      ->where($db->qn('state') . '=1')
-			      ->setLimit(1);
+				->where($db->qn('state') . '=1')
+				->setLimit(1);
 			$db->setQuery($query);
 			$id = $db->loadResult();
 
@@ -1486,13 +1481,13 @@ class Upgrade
 			$contentType->type_title = $title;
 			$contentType->type_alias = $alias;
 			$contentType->table      = Utility::encodeJson(array(
-				                                               'special' => array(
-					                                               'dbtable' => $table->getTableName(),
-					                                               'key'     => $table->getKeyName(),
-					                                               'type'    => ucfirst($name),
-					                                               'prefix'  => 'KnowresTable'
-				                                               )
-			                                               ));
+				'special' => array(
+					'dbtable' => $table->getTableName(),
+					'key'     => $table->getKeyName(),
+					'type'    => ucfirst($name),
+					'prefix'  => 'KnowresTable'
+				)
+			));
 
 			$contentType->field_mappings = Utility::encodeJson(array());
 
@@ -1922,14 +1917,12 @@ class Upgrade
 			}
 
 			$contentType->content_history_options = Utility::encodeJson([
-				                                                            'formFile'      => 'administrator/components/com_knowres/models/forms/' .
-					                                                            $name .
-					                                                            '.xml',
-				                                                            'hideFields'    => $hide,
-				                                                            'ignoreChanges' => $ignore,
-				                                                            'convertToInt'  => $convert,
-				                                                            'displayLookup' => $lookup
-			                                                            ]);
+				'formFile'      => 'administrator/components/com_knowres/models/forms/' . $name . '.xml',
+				'hideFields'    => $hide,
+				'ignoreChanges' => $ignore,
+				'convertToInt'  => $convert,
+				'displayLookup' => $lookup
+			]);
 
 			$contentType->router = '';
 			$contentType->store();
@@ -1948,7 +1941,7 @@ class Upgrade
 		$db = KrFactory::getDatabase();
 
 		$query = 'UPDATE ' . $db->qn('#__knowres_property_feature') . ' SET ' . $db->qn('id') . ' = (' . $db->qn('id')
-			. '+ 10000), ' . $db->qn('room_type') . '=' . $db->q('property');
+		         . '+ 10000), ' . $db->qn('room_type') . '=' . $db->q('property');
 
 		$db->setQuery($query);
 		$db->execute();
@@ -1956,8 +1949,8 @@ class Upgrade
 		// Update property to match
 		$query = $db->getQuery(true);
 		$query->select($db->qn(['id', 'property_features']))
-		      ->from($db->qn('#__knowres_property'))
-		      ->where($db->qn('property_features') . '<>' . $db->q(''));
+			->from($db->qn('#__knowres_property'))
+			->where($db->qn('property_features') . '<>' . $db->q(''));
 
 		$db->setQuery($query);
 		$rows = $db->loadObjectList();
@@ -1990,7 +1983,7 @@ class Upgrade
 		// Update all custom to id + 10000
 		$db    = KrFactory::getDatabase();
 		$query = 'UPDATE ' . $db->qn('#__knowres_translation') . ' SET ' . $db->qn('item_id') . ' = ('
-			. $db->qn('item_id') . '+ 10000) WHERE `item` = "propertyfeature"';
+		         . $db->qn('item_id') . '+ 10000) WHERE `item` = "propertyfeature"';
 
 		$db->setQuery($query);
 		$db->execute();

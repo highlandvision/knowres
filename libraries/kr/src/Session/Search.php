@@ -62,7 +62,7 @@ class Search extends Session
 	 * @since 3.3.0
 	 * @return stdClass
 	 */
-	public function resetData(string $bar = null): stdClass
+	public function resetData(?string $bar = null): stdClass
 	{
 		$data = $this->init();
 		if (!empty($bar)) {

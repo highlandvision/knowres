@@ -37,15 +37,16 @@ class AgentRule extends FormRule
 	 * @param   null              $group    The field name group control value. This acts as an array container for the field.
 	 *                                      For example if the field name="foo" and the group value is set to "bar" then the
 	 *                                      full field name would end up being "bar[foo]".
-	 * @param   Registry|null     $input    An optional Registry object with the entire data set to validate against the entire form.
-	 * @param   Form|null         $form     The form object for which the field is being tested.
+	 * @param  Registry|null      $input    An optional Registry object with the entire data set to validate against
+	 *                                      the entire form.
+	 * @param  Form|null          $form     The form object for which the field is being tested.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 * @return bool  True if the value is valid, false otherwise.
 	 */
-	public function test(SimpleXMLElement $element, $value, $group = null, Registry $input = null,
-		Form $form = null): bool
+	public function test(SimpleXMLElement $element, $value, $group = null, ?Registry $input = null,
+		?Form $form = null): bool
 	{
 		if (!$value)
 		{

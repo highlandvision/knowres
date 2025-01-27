@@ -35,7 +35,8 @@ class ContractguestdataController extends FormController
 	 * @since  2.5.0
 	 * @return BaseDatabaseModel
 	 */
-	public function getModel($name = 'contractguestdata', $prefix = 'Site',
+	public function getModel($name = 'contractguestdata',
+		$prefix = 'Site',
 		$config = ['ignore_request' => true]): BaseDatabaseModel
 	{
 		return parent::getModel($name, $prefix, $config);
@@ -45,12 +46,13 @@ class ContractguestdataController extends FormController
 	 * Method to save a record.
 	 *
 	 * @param ?string  $key     The name of the primary key of the URL variable.
-	 * @param ?string  $urlVar  The name of the URL variable if different from the primary key (sometimes required to avoid router collisions).
+	 * @param ?string  $urlVar  The name of the URL variable if different from the primary key. Sometimes required to
+	 *                          avoid router collisions.
 	 *
 	 * @throws Exception
 	 * @since  4.0.0
 	 */
-	public function save($key = null, $urlVar = null): bool
+	public function save(?string $key = null, ?string $urlVar = null): bool
 	{
 		$this->checkToken();
 

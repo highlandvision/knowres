@@ -57,7 +57,7 @@ class IcalBlock
 	/** @var ?string ics data from previous run */
 	protected ?string $previous_date_ranges = '';
 	/** @var array Messages */
-	protected array $messages = [];
+	public array $messages = [];
 	/** @var array New ICS date ranges */
 	protected array $new_date_ranges = [];
 	/** @var int ID of property */
@@ -362,7 +362,7 @@ class IcalBlock
 	 * @since  3.0.0
 	 * @return void
 	 */
-	protected function updateBlock(object $data, string $arrival = null, string $departure = null): void
+	protected function updateBlock(object $data, ?string $arrival = null, ?string $departure = null): void
 	{
 		$block              = new stdClass();
 		$block->id          = 0;

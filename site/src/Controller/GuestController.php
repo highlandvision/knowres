@@ -88,7 +88,8 @@ class GuestController extends FormController
 	 * Method to save a record.
 	 *
 	 * @param  string  $key     The name of the primary key of the URL variable.
-	 * @param  string  $urlVar  The name of the URL variable if different from the primary key (sometimes required to avoid router collisions).
+	 * @param  string  $urlVar  The name of the URL variable if different from the primary key. Sometimes required
+	 *                          to avoid router collisions.
 	 *
 	 * @throws Exception
 	 * @since  4.0.0

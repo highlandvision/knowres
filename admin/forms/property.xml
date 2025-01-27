@@ -178,7 +178,8 @@
                description="COM_KNOWRES_STREET_DSC"/>
         <field name="property_postcode"
                type="text"
-               class="input-mini" filter="string"
+               class="input-mini"
+               filter="string"
                maxlength="20"
                label="COM_KNOWRES_POSTCODE"
                description="COM_KNOWRES_POSTCODE_DSC"/>

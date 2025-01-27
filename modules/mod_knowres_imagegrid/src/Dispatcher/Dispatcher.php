@@ -60,6 +60,10 @@ class Dispatcher extends AbstractModuleDispatcher
 	protected function getLayoutData(): array
 	{
 		$data   = parent::getLayoutData();
+		if (!$data) {
+			return [];
+		}
+
 		$params = $data['params'];
 		if ($params->get('show_images')) {
 			$params->set('layout', 'default');

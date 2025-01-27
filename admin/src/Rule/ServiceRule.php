@@ -46,8 +46,8 @@ class ServiceRule extends FormRule
 	 * @since  3.4.0
 	 * @return bool  True if the value is valid, false otherwise.
 	 */
-	public function test(SimpleXMLElement $element, $value, $group = null, Registry $input = null,
-		Form $form = null): bool
+	public function test(SimpleXMLElement $element, $value, $group = null, ?Registry $input = null,
+		?Form $form = null): bool
 	{
 		/*
 		 * Here we match the value with a specific format. You may also use any kind of validation,

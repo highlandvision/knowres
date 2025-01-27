@@ -29,47 +29,6 @@ class FilterpropertyField extends KrListField
 	public $type = 'Filterproperty';
 
 	/**
-	 * Method to populate the propertys filter list
-	 *
-	 * @throws RuntimeException|Exception
-	 * @since  2.5.1
-	 * @return array  The field option objects.
-	 */
-	protected function getOptions(): array
-	{
-		$userSession = new KrSession\User();
-		$userData    = $userSession->getData();
-		$properties  = $userData->properties;
-		$state       = self::getState($this->form);
-		$table       = $this->getAttribute('table');
-		$departure   = self::getDeparture($this->form);
-
-		if ($table != 'own')
-		{
-			$options = self::filteringForeign('#__knowres_property', $table, 'property_id', 'id',
-				'property_name', $state, $departure);
-		}
-		else
-		{
-			$options = self::filtering('#__knowres_property', 'id', 'property_name', $state);
-		}
-
-		if ($properties)
-		{
-			$properties = explode(',', $properties);
-			foreach ($options as $k => $o)
-			{
-				if (!in_array((int) $o->value, $properties))
-				{
-					unset($options[$k]);
-				}
-			}
-		}
-
-		return array_merge(parent::getOptions(), $options);
-	}
-
-	/**
 	 * Get value for state
 	 *
 	 * @param  Form  $form  The form object
@@ -85,5 +44,39 @@ class FilterpropertyField extends KrListField
 		}
 
 		return $departure;
+	}
+
+	/**
+	 * Method to populate the propertys filter list
+	 *
+	 * @throws RuntimeException|Exception
+	 * @since  2.5.1
+	 * @return array  The field option objects.
+	 */
+	protected function getOptions(): array
+	{
+		$userSession = new KrSession\User();
+		$userData    = $userSession->getData();
+		$properties  = $userData->properties;
+		$state       = self::getState($this->form);
+		$table       = $this->getAttribute('table');
+		$departure   = self::getDeparture($this->form);
+
+		if ($table != 'own') {
+			$options = self::filteringForeign('#__knowres_property', $table, 'property_id', 'id', 'property_name', $state);
+		} else {
+			$options = self::filtering('#__knowres_property', 'id', 'property_name', $state);
+		}
+
+		if ($properties) {
+			$properties = explode(',', $properties);
+			foreach ($options as $k => $o) {
+				if (!in_array((int) $o->value, $properties)) {
+					unset($options[$k]);
+				}
+			}
+		}
+
+		return array_merge(parent::getOptions(), $options);
 	}
 }

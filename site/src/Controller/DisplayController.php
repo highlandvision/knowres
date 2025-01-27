@@ -28,7 +28,8 @@ class DisplayController extends BaseController
 	 * Method to display a view.
 	 *
 	 * @param  boolean     $cachable   If true, the view output will be cached
-	 * @param  array|bool  $urlparams  An array of safe url parameters and their variable types, for valid values see {@link JFilterInput::clean()}
+	 * @param  array|bool  $urlparams  An array of safe url parameters and their variable types,
+	 *                                 for valid values see {@link JFilterInput::clean()}
 	 *
 	 * @throws Exception
 	 * @since  1.0.0

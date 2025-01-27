@@ -51,7 +51,6 @@ $wa->useScript('com_knowres.site-modules');
 				                  'style'       => 'height:' . $heights[2]  . 'px'
 				]; ?>
 				<?php echo KrMethods::render('joomla.html.image', $options); ?>
-
 				<?php if (!empty($s['property_id'])): ?>
 					<?php $Itemid =
 						SiteHelper::getItemId('com_knowres', 'property', ['id' => (int) $s['property_id']]); ?>

@@ -25,7 +25,7 @@ extract($displayData);
  * @var string $font_primary Primary font color.
  * @var int    $font_size    Font size.
  * @var string $affiliates   Affiliates text.
- * @var string $message      Text message..
+ * @var string $message      Text message.
  */
 ?>
 

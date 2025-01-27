@@ -137,7 +137,8 @@ class ContractsModel extends ListModel
 		$db    = KrFactory::getDatabase();
 		$query = $db->getQuery(true);
 
-		$query->select('GREATEST(MAX(' . $db->qn('c.created_at') . '), MAX(' . $db->qn('c.updated_at') . '))  as ' . $db->qn('maxdate'))
+		$query->select('GREATEST(MAX(' . $db->qn('c.created_at') . '), MAX(' . $db->qn('c.updated_at') . '))  as ' .
+		               $db->qn('maxdate'))
 		      ->select($db->qn('c.id', 'cid'))
 		      ->from($db->qn('#__knowres_contract', 'c'))
 		      ->where($db->qn('c.state') . '=1')
@@ -251,7 +252,8 @@ class ContractsModel extends ListModel
 		}
 
 		$query->group($db->qn('id'));
-		$query->having($db->qn('payments') . '<>' . $db->qn('fees') . '+' . $db->qn('a.contract_total') . ' OR ' . $db->qn('unconfirmed') . '<> 0');
+		$query->having($db->qn('payments') . '<>' . $db->qn('fees') . '+' . $db->qn('a.contract_total') . ' OR ' .
+		               $db->qn('unconfirmed') . '<> 0');
 		$query->order($db->qn('a.arrival'));
 
 		$db->setQuery($query);
@@ -948,7 +950,8 @@ class ContractsModel extends ListModel
 		$db    = KrFactory::getDatabase();
 		$query = $db->getQuery(true);
 
-		$query->select('GREATEST(MAX(' . $db->qn('c.created_at') . '), MAX(' . $db->qn('c.updated_at') . '))  as ' . $db->qn('maxdate'))
+		$query->select('GREATEST(MAX(' . $db->qn('c.created_at') . '), MAX(' . $db->qn('c.updated_at') . '))  as ' .
+		               $db->qn('maxdate'))
 		      ->select($db->qn('c.property_id', 'pid'))
 		      ->from($db->qn('#__knowres_contract', 'c'))
 		      ->where($db->qn('c.state') . '=1')
@@ -1009,7 +1012,14 @@ class ContractsModel extends ListModel
 		$query->where($db->qn('c.departure') . '>=' . $db->q($today))
 		      ->where($db->qn('c.black_booking') . '=0')
 		      ->where($db->qn('c.state') . '=1')
-		      ->where('(( c.booking_status = 0 )' . ' OR (c.booking_status = 1 )' . ' OR (c.booking_status = 5 )' . ' OR (c.booking_status = 10 AND c.created_at > ' . $db->q($yesterday) . ')' . ' OR (c.booking_status = 40 AND c.created_at > ' . $db->q($yesterday) . ')' . ' OR (c.booking_status = 39 AND c.created_at > ' . $db->q($yesterday) . ')' . ' OR (c.booking_status = 30) OR (c.booking_status = 35 )' . ' OR (c.cancelled <> 0 AND c.cancelled_timestamp > ' . $db->q($yesterday) . ')' . ' OR (c.booking_status >= 39 AND c.booking_status <= 40 AND c.arrival = ' . $db->q($today) . ')' . ' OR (c.booking_status >= 39 AND c.booking_status <= 40 AND c.departure = ' . $db->q($today) . '))');
+		      ->where('(( c.booking_status = 0 )' . ' OR (c.booking_status = 1 )' . ' OR (c.booking_status = 5 )' .
+		              ' OR (c.booking_status = 10 AND c.created_at > ' . $db->q($yesterday) . ')' .
+		              ' OR (c.booking_status = 40 AND c.created_at > ' . $db->q($yesterday) . ')' .
+		              ' OR (c.booking_status = 39 AND c.created_at > ' . $db->q($yesterday) . ')' .
+		              ' OR (c.booking_status = 30) OR (c.booking_status = 35 )' .
+		              ' OR (c.cancelled <> 0 AND c.cancelled_timestamp > ' . $db->q($yesterday) . ')' .
+		              ' OR (c.booking_status >= 39 AND c.booking_status <= 40 AND c.arrival = ' . $db->q($today) . ')'
+		              . ' OR (c.booking_status >= 39 AND c.booking_status <= 40 AND c.departure = ' . $db->q($today) . '))');
 
 		if (!empty($this->user_properties)) {
 			$query->where($db->qn('c.property_id') . ' IN (' . $this->user_properties . ')');

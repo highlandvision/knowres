@@ -7,8 +7,6 @@
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
-/** @noinspection PhpUnhandledExceptionInspection */
-
 use HighlandVision\KR\Framework\KrMethods;
 
 defined('_JEXEC') or die;

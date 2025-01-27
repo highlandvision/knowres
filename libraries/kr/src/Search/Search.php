@@ -20,6 +20,7 @@ use HighlandVision\KR\Session as KrSession;
 use HighlandVision\KR\SiteHelper;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Translations;
+use JetBrains\PhpStorm\NoReturn;
 use Joomla\Registry\Registry;
 use RuntimeException;
 use stdClass;
@@ -75,7 +76,7 @@ class Search
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	public function doBaseSearch(): void
+	#[NoReturn] public function doBaseSearch(): void
 	{
 		$this->validateRegion();
 		$this->setInputAvailability();

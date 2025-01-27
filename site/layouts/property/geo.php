@@ -9,9 +9,8 @@
 
 defined('_JEXEC') or die;
 
-use HighlandVision\KR\Framework\KrMethods;
-
 extract($displayData);
+
 /**
  * Layout variables
  *

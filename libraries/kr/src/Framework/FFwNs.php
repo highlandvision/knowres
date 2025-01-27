@@ -20,8 +20,8 @@ use const KRFRAMEWORK;
  */
 class FFwNs
 {
-	const KRFRAMEWORKDB = '\HighlandVision\\KR\\' . KRFRAMEWORK . '\\FDatabase';
-	const KRFRAMEWORKNS = '\HighlandVision\\KR\\' . KRFRAMEWORK . '\\FMethods';
+	const string KRFRAMEWORKDB = '\HighlandVision\\KR\\' . KRFRAMEWORK . '\\FDatabase';
+	const string KRFRAMEWORKNS = '\HighlandVision\\KR\\' . KRFRAMEWORK . '\\FMethods';
 
 	/**
 	 * Get namespace for Models

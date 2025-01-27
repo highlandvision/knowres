@@ -39,10 +39,9 @@ class PropertysettingsController extends AdminController
 
 		if (!$property_id) {
 			$this->setRedirect(KrMethods::route('index.php?option=com_knowres&view=propertysettings', false));
-		}
-		else {
-			$this->setRedirect(KrMethods::route('index.php?option=com_knowres&task=propertysettings.solo&property_id=' . $property_id,
-				false));
+		} else {
+			$this->setRedirect(KrMethods::route('index.php?option=com_knowres&task=propertysettings.solo&property_id=' .
+			                                    $property_id, false));
 		}
 	}
 
@@ -58,8 +57,7 @@ class PropertysettingsController extends AdminController
 		if ($return) {
 			KrMethods::setUserState('com_knowres.gobackto', null);
 			KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&' . $return, false));
-		}
-		else {
+		} else {
 			KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&view=properties', false));
 		}
 	}
@@ -74,7 +72,8 @@ class PropertysettingsController extends AdminController
 	 * @since  1.6
 	 * @return bool|BaseDatabaseModel
 	 */
-	public function getModel($name = 'propertysetting', $prefix = 'Administrator',
+	public function getModel($name = 'propertysetting',
+		$prefix = 'Administrator',
 		$config = ['ignore_request' => true]): BaseDatabaseModel|bool
 	{
 		return parent::getModel($name, $prefix, $config);

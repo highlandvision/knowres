@@ -47,11 +47,7 @@ class ServicexrefpropertyRule extends FormRule
 	 * @since  3.4.0
 	 * @return bool  True if the value is valid, false otherwise.
 	 */
-	public function test(SimpleXMLElement $element,
-		$value,
-		$group = null,
-		Registry $input = null,
-		Form $form = null): bool
+	public function test(SimpleXMLElement $element, $value, $group = null, ?Registry $input = null, ?Form $form = null): bool
 	{
 		$service_id = ($input instanceof Registry) ? $input->get('service_id') : '';
 		$sell       = ($input instanceof Registry) ? $input->get('sell', 1) : '0';
@@ -226,10 +222,12 @@ class ServicexrefpropertyRule extends FormRule
 					}
 				}
 
+
 				if ($guests > 10) {
-					$element->addAttribute('message',
-						KrMethods::plain('Guest numbers in Rates exceeds the limit of 10 imposed by HomeAway. Please consolidate some of the Rates entry lines or use Includes all guests'),
-						'error');
+					$text = 'Guest numbers in Rates exceeds the limit of 10 imposed by HomeAway. Please consolidate ' .
+					        'some of the Rates entry lines or use Includes all guests';
+					KrMethods::plain($text);
+					$element->addAttribute('message', $text, 'error');
 					$error = true;
 				}
 			}

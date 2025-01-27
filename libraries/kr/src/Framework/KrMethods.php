@@ -524,7 +524,7 @@ class KrMethods
 	/**
 	 * Translate language plural
 	 *
-	 * @param  mixed  ...$string  String to pluralise
+	 * @param  mixed  ...$string  String to pluralize
 	 *
 	 * @since  3.3.0
 	 * @return string

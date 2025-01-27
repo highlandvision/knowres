@@ -146,7 +146,8 @@ class UpgradeDb
 		self::add($db, '#__knowres_service_xref', 'sell', 'new', 'TINYINT(1) NOT NULL DEFAULT 1');
 		//ALTER TABLE `#__knowres_agent` CHANGE `interface_id` `service_id` INT(11) NOT NULL DEFAULT 0;
 		self::change($db, '#__knowres_agent', 'interface_id', 'service_id', 'INT(11) NOT NULL DEFAULT 0');
-		//ALTER TABLE `#__knowres_contract` CHANGE `interface_commission` `channel_commission` DECIMAL(11,2) NOT NULL DEFAULT 0.00;
+		//ALTER TABLE `#__knowres_contract` CHANGE `interface_commission` `channel_commission`
+			       // DECIMAL(11,2) NOT NULL DEFAULT 0.00;
 		self::change($db, '#__knowres_contract', 'interface_commission', 'channel_commission',
 		             'DECIMAL(11,2) NOT NULL DEFAULT 0.00');
 		//ALTER TABLE `#__knowres_contract` CHANGE `interface_id` `service_id` INT(11) NOT NULL DEFAULT 0;
@@ -169,7 +170,8 @@ class UpgradeDb
 		self::drop($db, '#__knowres_contract', 'rate_rules');
 		//ALTER TABLE `#__knowres_contract` DROP COLUMN `rooms_tariffs`;
 		self::drop($db, '#__knowres_contract', 'rooms_tariffs');
-		//ALTER TABLE `#__knowres_contract` CHANGE `email_poststay` `review_requested` TINYINT(1) NOT NULL DEFAULT 0 AFTER `reviewed`;
+		//ALTER TABLE `#__knowres_contract` CHANGE `email_poststay` `review_requested` TINYINT(1) NOT NULL DEFAULT 0 AFTER
+		// `reviewed`;
 		self::change($db, '#__knowres_contract', 'email_poststay', 'review_requested', 'TINYINT(1) NOT NULL DEFAULT 0');
 		//ALTER TABLE `#__knowres_contract_payment` CHANGE `interface_id` `service_id` 'INT(11) NOT NULL DEFAULT 0';
 		self::change($db, '#__knowres_contract_payment', 'interface_id', 'service_id', 'INT(11) NOT NULL DEFAULT 0');
@@ -257,7 +259,8 @@ class UpgradeDb
 		self::addIndex($db, '#__knowres_contract', 'byAvailability', '`property_id`, `departure`, `cancelled`');
 		//ALTER TABLE `#__knowres_ical_block` ADD INDEX `byAvailability` (`property_id`, `departure`);
 		self::addIndex($db, '#__knowres_ical_block', 'byAvailability', '`property_id`, `departure`');
-		//ALTER TABLE `#__knowres_agent` ADD COLUMN `owner_deposit_payment` TINYINT(1) NOT NULL DEFAULT 0 AFTER `foreign_key_reqd`;
+		//ALTER TABLE `#__knowres_agent` ADD COLUMN `owner_deposit_payment` TINYINT(1) NOT NULL DEFAULT 0 AFTER
+		// `foreign_key_reqd`;
 		self::add($db, '#__knowres_agent', 'owner_deposit_payment', 'foreign_key_reqd',
 		          'TINYINT(1) NOT NULL DEFAULT 0');
 		//ALTER TABLE `#__knowres_property` ADD COLUMN `service_id` INT(11) NOT NULL DEFAULT 0 AFTER `approved`;
@@ -329,7 +332,8 @@ class UpgradeDb
 		self::drop($db, '#__knowres_review', 'ordering');
 		//ALTER TABLE `#__knowres_agent` DROP COLUMN `agent_markup`;
 		self::drop($db, '#__knowres_agent', 'agent_markup');
-		// INSERT INTO `#__knowres_property_setting` (`id`, `property_id`, `akey`, `value`, `created_at`, `created_by`, `updated_at`, `updated_by`, `version`) VALUES (0, 0, 'tax_ignore', '0', NOW(), '0', NULL, '0', '1');
+		// INSERT INTO `#__knowres_property_setting` (`id`, `property_id`, `akey`, `value`, `created_at`, `created_by`,
+		// `updated_at`, `updated_by`, `version`) VALUES (0, 0, 'tax_ignore', '0', NOW(), '0', NULL, '0', '1');
 		self::addPS($db, 'tax_ignore', 0);
 
 		// DELETE FROM `#__knowres_service` WHERE `agency_id` = 0;

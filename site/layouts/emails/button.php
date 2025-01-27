@@ -23,8 +23,10 @@ extract($displayData);
 		<td>
 			<table style="border:none;border-collapse:collapse;">
 				<tr>
-					<td style="text-align:center;background-color:<?php echo $button_bg; ?>;border-radius:10px;font-family:<?php echo $font; ?>;">
-						<a href="<?php echo $link; ?>" style="border:1px solid <?php echo $button_bg; ?>;border-radius:10px;color:#fefefe;
+					<td style="text-align:center;background-color:<?php echo $button_bg; ?>;border-radius:10px;
+						font-family:<?php echo $font; ?>;">
+						<a href="<?php echo $link; ?>"
+						   style="border:1px solid <?php echo $button_bg; ?>;border-radius:10px;color:#fefefe;
 							   display:inline-block;font-weight:600;font-family:<?php echo $font; ?>;font-size:16px;
 							   padding:8px 16px 8px 16px;text-align:center;text-decoration:none;">
 							<?php echo $text; ?>

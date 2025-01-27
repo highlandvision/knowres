@@ -28,7 +28,9 @@ extract($displayData);
 	<div class="grid-x grid-margin-x">
 		<div class="small-12 meium-6 large-4">
 			<div class="list-discount">
-				<?php $value = $d->is_pc ? (float) $d->discount . '%' : Utility::displayValue($d->discount, $currency); ?>
+				<?php
+				$value = $d->is_pc ? (float) $d->discount . '%' : Utility::displayValue($d->discount, $currency);
+				?>
 				<?php if ($d->model == 1): ?>
 					<?php $text1 = KrMethods::sprintf('COM_KNOWRES_DISCOUNT_DATE_RANGE_1', $value); ?>
 					<?php $text2 = KrMethods::sprintf('COM_KNOWRES_DISCOUNT_DATE_RANGE_2',

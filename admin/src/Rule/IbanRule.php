@@ -49,8 +49,8 @@ class IbanRule extends FormRule
 	 * @since  3.4.0
 	 * @return bool  True if the value is valid, false otherwise.
 	 */
-	public function test(SimpleXMLElement $element, $value, $group = null, Registry $input = null,
-		Form $form = null): bool
+	public function test(SimpleXMLElement $element, $value, $group = null, ?Registry $input = null,
+		?Form $form = null): bool
 	{
 
 		$payment_schedule = ($input instanceof Registry) ? $input->get('payment_schedule') : '';

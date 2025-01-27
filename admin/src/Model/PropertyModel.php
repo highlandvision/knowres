@@ -67,8 +67,7 @@ class PropertyModel extends AdminModel
 				1 => KrMethods::plain('COM_KNOWRES_PROPERTIES_BOOKING_TYPE_PROVISIONAL'),
 				2 => KrMethods::plain('COM_KNOWRES_PROPERTIES_BOOKING_TYPE_CONFIRMED')
 			};
-		}
-		else {
+		} else {
 			if (!$search) {
 				return match ($booking_type) {
 					0 => KrMethods::plain('COM_KNOWRES_BOOK_ENQUIRY'),
@@ -129,30 +128,6 @@ class PropertyModel extends AdminModel
 	}
 
 	/**
-	 * Mark property for deletion
-	 *
-	 * @param  array  $cid  IDs of property to be actioned
-	 *
-	 * @throws RuntimeException
-	 * @since  3.0.0
-	 * @return bool
-	 */
-	public function markForDeletion(array $cid): bool
-	{
-		$db    = $this->getDatabase();
-		$query = $db->getQuery(true);
-
-		$fields = [$db->qn('state') . '=-99'];
-		$conditions = [$db->qn('id') . ' IN (' . implode(',', array_map('intval', $cid)) . ')'];
-
-		$query->update($db->qn('#__knowres_property'))->set($fields)->where($conditions);
-
-		$db->setQuery($query);
-
-		return $db->execute();
-	}
-
-	/**
 	 * Mark properties for trash
 	 *
 	 * @param  array  $cid  IDs of property to be actioned
@@ -171,6 +146,30 @@ class PropertyModel extends AdminModel
 		$query .= ' SET ' . $db->qn('p.state') . ' = (CASE WHEN `c`.`id` IS NULL THEN -2 ELSE 2 END)';
 		//	Do not use $db->qn('c.id') above as throws error
 		$query .= ' WHERE ' . $db->qn('p.id') . ' IN (' . implode(',', array_map('intval', $cid)) . ')';
+		$db->setQuery($query);
+
+		return $db->execute();
+	}
+
+	/**
+	 * Mark property for deletion
+	 *
+	 * @param  array  $cid  IDs of property to be actioned
+	 *
+	 * @throws RuntimeException
+	 * @since  3.0.0
+	 * @return bool
+	 */
+	public function markForDeletion(array $cid): bool
+	{
+		$db    = $this->getDatabase();
+		$query = $db->getQuery(true);
+
+		$fields     = [$db->qn('state') . '=-99'];
+		$conditions = [$db->qn('id') . ' IN (' . implode(',', array_map('intval', $cid)) . ')'];
+
+		$query->update($db->qn('#__knowres_property'))->set($fields)->where($conditions);
+
 		$db->setQuery($query);
 
 		return $db->execute();
@@ -245,7 +244,7 @@ class PropertyModel extends AdminModel
 				if (!KrMethods::isAdmin() && $f->format == 2) {
 					$item->{$name} = Utility::nl2p($item->{$name});
 				}
-				$item->buttons ="true";
+				$item->buttons = "true";
 				$hvar          = 'h' . $name;
 				$item->{$hvar} = $label;
 			}
@@ -275,8 +274,10 @@ class PropertyModel extends AdminModel
 
 		$jform                         = KrMethods::inputArray('jform');
 		$data['categories']            = !empty($jform['categories']) ? Utility::encodeJson($jform['categories']) : [];
-		$data['property_alternatives'] = !empty($jform['property_alternatives']) ? Utility::encodeJson($jform['property_alternatives']) : [];
-		$data['property_features']     = !empty($jform['property_features']) ? Utility::encodeJson($jform['property_features']) : [];
+		$data['property_alternatives'] =
+			!empty($jform['property_alternatives']) ? Utility::encodeJson($jform['property_alternatives']) : [];
+		$data['property_features']     =
+			!empty($jform['property_features']) ? Utility::encodeJson($jform['property_features']) : [];
 		$data['property_units']        = !empty($jform['property_units']) ? Utility::encodeJson($jform['property_units']) : [];
 
 		return parent::validate($form, $data, $group);
@@ -295,8 +296,7 @@ class PropertyModel extends AdminModel
 		$userSession = new KrSession\User();
 		if ($userSession->getAccessLevel() == 40) {
 			return true;
-		}
-		else {
+		} else {
 			return Factory::getUser()->authorise('core.delete', $this->option);
 		}
 	}
@@ -319,7 +319,7 @@ class PropertyModel extends AdminModel
 	}
 
 	/**
-	 * Prepare and sanitise the table prior to saving.
+	 * Prepare and sanitize the table prior to saving.
 	 *
 	 * @param  PropertyTable  $table  Table object
 	 *
@@ -387,13 +387,11 @@ class PropertyModel extends AdminModel
 				if ($f->format == 1) {
 					$fieldXml->addAttribute('type', 'text');
 					$fieldXml->addAttribute('filter', 'string');
-				}
-				else if ($f->format == 2) {
+				} else if ($f->format == 2) {
 					$fieldXml->addAttribute('type', 'textarea');
 					$fieldXml->addAttribute('filter', 'safehtml');
 					$fieldXml->addAttribute('rows', '6');
-				}
-				else if ($f->format == 3) {
+				} else if ($f->format == 3) {
 					$fieldXml->addAttribute('type', 'editor');
 					$fieldXml->addAttribute('filter', 'safehtml');
 					$fieldXml->addAttribute('buttons', 'true');

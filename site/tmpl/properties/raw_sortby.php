@@ -15,26 +15,26 @@ if (empty($this->items)) {
 	return;
 }
 if (!$this->params->get('order_ordering') &&
-	$this->params->get('order_name') &&
-	$this->params->get('order_sleeps') &&
-	$this->params->get('order_bedrooms') &&
-	$this->params->get('order_price') &&
-	$this->params->get('order_area') &&
-	$this->params->get('order_rating')) {
+    $this->params->get('order_name') &&
+    $this->params->get('order_sleeps') &&
+    $this->params->get('order_bedrooms') &&
+    $this->params->get('order_price') &&
+    $this->params->get('order_area') &&
+    $this->params->get('order_rating')) {
 	return;
 }
 ?>
 
-<div class="actions">
-	<div class="small button-group expanded">
-		<a id="kr-order-close" class="button clear small" data-close>
+	<div class="actions">
+		<div class="small button-group expanded">
+			<a id="kr-order-close" class="button clear small" data-close>
 		<span aria-hidden="true">
 			<i class='fa-solid fa-times-circle' aria-hidden="true"></i>&nbsp;
 			<?php echo KrMethods::plain('COM_KNOWRES_CLOSE'); ?>
 		</span>
-		</a>
+			</a>
+		</div>
 	</div>
-</div>
 
 <?php if ($this->params->get('order_ordering')): ?>
 	<?php echo KrMethods::render('properties.filtersort', ['order'    => $this->order,

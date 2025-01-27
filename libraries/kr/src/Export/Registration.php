@@ -153,8 +153,12 @@ class Registration
 	 * Create the type 2 and 3 records
 	 * Record Type = 2
 	 * Number of identification of 11 Spanish Should Spanish ID card, passport and driving license.
-	 * Number of passport or other identity document of 14 foreign passport, or identity card for citizens of the European Union, Andorra, Iceland, Switzerland, Norway, Malta, Monaco and San Marino. Passport to other foreigners. Spanish residence permit in force for foreign residents in Spain. Residence permit issued by another Member State of the European Union.
-	 * Type 1 D ID: ID, Q: passport, C: driving license (only for Spanish citizens), I: identity card or, N: Spanish residence permit, X: residence permit of another Member State of the European Union.
+	 * Number of passport or other identity document of 14 foreign passport, or identity card for citizens of the
+	 * European Union, Andorra, Iceland, Switzerland, Norway, Malta, Monaco and San Marino. Passport to other foreigners.
+	 * Spanish residence permit in force for foreign residents in Spain. Residence permit issued by another Member State
+	 * of the European Union.
+	 * Type 1 D ID: ID, Q: passport, C: driving license (only for Spanish citizens), I: identity card or,
+	 * N: Spanish residence permit, X: residence permit of another Member State of the European Union.
 	 * Date of issue of ID 8 Format YYYYMMDD
 	 * 30 Surname
 	 * 30 Second surname

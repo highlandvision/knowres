@@ -78,7 +78,11 @@ class ServiceController extends FormController
 			$existing = Utility::decodeJson(KrMethods::inputString('existing'), true);
 			$new      = Utility::decodeJson($validData['parameters'], true);
 			if ((is_countable($new) && count($new)) && (is_countable($existing) && count($existing))) {
-				if ($new['bookingPolicy'] != $existing['bookingPolicy'] || $new['cancellationPolicy'] != $existing['cancellationPolicy'] || $new['pricingPolicy'] != $existing['pricingPolicy'] || $new['checkInTime'] != $existing['checkInTime'] || $new['checkOutTime'] != $existing['checkOutTime']) {
+				if ($new['bookingPolicy'] != $existing['bookingPolicy']
+				    || $new['cancellationPolicy'] != $existing['cancellationPolicy']
+				    || $new['pricingPolicy'] != $existing['pricingPolicy']
+				    || $new['checkInTime'] != $existing['checkInTime']
+				    || $new['checkOutTime'] != $existing['checkOutTime']) {
 					KrFactory::getAdminModel('propertysetting')->updateSetting('security_changes', 0);
 				}
 

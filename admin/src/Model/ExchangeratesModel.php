@@ -30,15 +30,14 @@ class ExchangeratesModel extends ListModel
 	/**
 	 * Constructor.
 	 *
-	 * @param   array  $config  An optional associative array of configuration settings.
+	 * @param  array  $config  An optional associative array of configuration settings.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
 	public function __construct($config = [])
 	{
-		if (empty($config['filter_fields']))
-		{
+		if (empty($config['filter_fields'])) {
 			$config['filter_fields'] = array(
 				'id',
 				'a.id',
@@ -61,8 +60,8 @@ class ExchangeratesModel extends ListModel
 	/**
 	 * Read the latest rate
 	 *
-	 * @param   string  $from  From currency iso
-	 * @param   string  $to    To currency iso
+	 * @param  string  $from  From currency iso
+	 * @param  string  $to    To currency iso
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
@@ -74,11 +73,11 @@ class ExchangeratesModel extends ListModel
 		$query = $db->getQuery(true);
 
 		$query->select($this->getState('list.select', 'a.*'))
-		      ->from($db->qn('#__knowres_exchange_rate', 'a'))
-		      ->where($db->qn('a.state') . '= 1')
-		      ->where($db->qn('a.currency_from') . '=' . $db->q($from))
-		      ->where($db->qn('a.currency_to') . '=' . $db->q($to))
-		      ->setLimit(1);
+			->from($db->qn('#__knowres_exchange_rate', 'a'))
+			->where($db->qn('a.state') . '= 1')
+			->where($db->qn('a.currency_from') . '=' . $db->q($from))
+			->where($db->qn('a.currency_to') . '=' . $db->q($to))
+			->setLimit(1);
 
 		$query = self::order($db, $query, 'a.updated_at', 'DESC');
 
@@ -111,31 +110,28 @@ class ExchangeratesModel extends ListModel
 		$query->join('LEFT', '#__users AS updated_by ON updated_by.id = a.updated_by');
 
 		$state = $this->getState('filter.state');
-		if (is_numeric($state))
-		{
+		if (is_numeric($state)) {
 			$query->where('a.state = ' . (int) $state);
-		}
-		else
-		{
+		} else {
 			$query->where('a.state = 1');
 		}
 
 		$filter_currency_from = $this->state->get("filter.currency_from");
-		if ($filter_currency_from)
-		{
+		if ($filter_currency_from) {
 			$query->where("a.currency_from = '" . $db->escape($filter_currency_from) . "'");
 		}
 
 		$filter_currency_to = $this->state->get("filter.currency_to");
-		if ($filter_currency_to)
-		{
+		if ($filter_currency_to) {
 			$query->where("a.currency_to = '" . $db->escape($filter_currency_to) . "'");
 		}
 
 		$search = $this->getState('filter.search');
 		$query  = self::search($db, $query, $search, 'a.currency_from');
 
-		return self::order($db, $query, $this->state->get('list.ordering'),
+		return self::order($db,
+			$query,
+			$this->state->get('list.ordering'),
 			$this->state->get('list.direction'));
 	}
 
@@ -145,7 +141,7 @@ class ExchangeratesModel extends ListModel
 	 * different modules that might need different sets of data or different
 	 * ordering requirements.
 	 *
-	 * @param   string  $id  A prefix for the store id.
+	 * @param  string  $id  A prefix for the store id.
 	 *
 	 * @since  1.0.0
 	 * @return    string        A store id.
@@ -164,8 +160,8 @@ class ExchangeratesModel extends ListModel
 	 * Method to autopopulate the model state.
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @param   null|string  $ordering
-	 * @param   null|string  $direction
+	 * @param  null|string  $ordering
+	 * @param  null|string  $direction
 	 *
 	 * @since 1.0.0
 	 */
@@ -176,14 +172,17 @@ class ExchangeratesModel extends ListModel
 		$this->setState('filter.state',
 			$this->getUserStateFromRequest($this->context . '.filter.state', 'filter_state', '', 'string'));
 		$this->setState('filter.currency_from',
-			$this->getUserStateFromRequest($this->context . '.filter.currency_from', 'filter_currency_from', '',
+			$this->getUserStateFromRequest($this->context . '.filter.currency_from',
+				'filter_currency_from',
+				'',
 				'string'));
 		$this->setState('filter.currency_to',
 			$this->getUserStateFromRequest($this->context . '.filter.currency_to', 'filter_currency_to', '', 'string'));
 
 		$this->setState('params', KrMethods::getParams());
 		$this->setState('list.select',
-			'a.id, a.currency_from, a.currency_to, a.rate, a.factor, a.state, a.checked_out, a.checked_out_time, a.created_by, a.created_at, a.updated_by, a.updated_at');
+			'a.id, a.currency_from, a.currency_to, a.rate, a.factor, a.state, a.checked_out, a.checked_out_time, a.created_by, 
+			a.created_at, a.updated_by, a.updated_at');
 
 		parent::populateState($ordering, $direction);
 	}

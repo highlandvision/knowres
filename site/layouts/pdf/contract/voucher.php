@@ -28,14 +28,18 @@ extract($displayData);
  */
 
 $checkintime = strtolower(KrMethods::sprintf('COM_KNOWRES_ARRIVAL_FROM', $property->checkin_time));
-if ($property->checkin_time_to)
-{
+if ($property->checkin_time_to) {
 	$checkintime .= ' - ' . $property->checkin_time_to;
 }
 $checkouttime = strtolower(KrMethods::sprintf('COM_KNOWRES_DEPARTURE_BY', $property->checkout_time));
 
-$address = Utility::formatAddress($property->property_street, '', $property->property_postcode, $property->town_name,
-	$property->region_name, $property->country_name, '<br>');
+$address = Utility::formatAddress($property->property_street,
+	'',
+	$property->property_postcode,
+	$property->town_name,
+	$property->region_name,
+	$property->country_name,
+	'<br>');
 
 $lat = '';
 $lng = '';
@@ -55,7 +59,7 @@ $lng = floatval(trim($property->lng_actual)) ? trim($property->lng_actual) : tri
 </table>
 
 <hr>
-<div><br /></div>
+<div><br/></div>
 
 <table style="width:100%;border:none;border-collapse:collapse;">
 	<tr>
@@ -87,7 +91,7 @@ $lng = floatval(trim($property->lng_actual)) ? trim($property->lng_actual) : tri
 	</tr>
 </table>
 
-<?php echo KrMethods::render('pdf.contract.guestdata.partysize', ['contract'  => $contract]); ?>
+<?php echo KrMethods::render('pdf.contract.guestdata.partysize', ['contract' => $contract]); ?>
 
 <table style="width:100%;border:none;border-collapse:collapse;">
 	<tr style="font-size:92%;color:#999;">
@@ -117,7 +121,7 @@ $lng = floatval(trim($property->lng_actual)) ? trim($property->lng_actual) : tri
 	<?php endif; ?>
 
 	<?php if ((float) $property->security_amount > 0
-		|| (isset($property->security_text) && trim($property->security_text))) : ?>
+	          || (isset($property->security_text) && trim($property->security_text))) : ?>
 		<tr>
 			<td><?php echo KrMethods::plain('COM_KNOWRES_PDF_ACCOMMODATION_VOUCHER_SECURITY_DEPOSIT'); ?></td>
 			<td>
@@ -170,7 +174,9 @@ $lng = floatval(trim($property->lng_actual)) ? trim($property->lng_actual) : tri
 
 	<?php if ($property->contact_name): ?>
 		<tr>
-			<td style="width:25%;"><?php echo KrMethods::plain('COM_KNOWRES_PDF_ACCOMMODATION_VOUCHER_CONTACT_NAME'); ?></td>
+			<td style="width:25%;">
+				<?php echo KrMethods::plain('COM_KNOWRES_PDF_ACCOMMODATION_VOUCHER_CONTACT_NAME'); ?>
+			</td>
 			<td style="width:75%;"><?php echo $property->contact_name; ?></td>
 		</tr>
 	<?php endif; ?>

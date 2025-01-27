@@ -6,7 +6,6 @@
  * @license     See the file "LICENSE.txt" for the full license governing this code.
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
-/** @noinspection PhpUnhandledExceptionInspection */
 
 defined('_JEXEC') or die;
 
@@ -23,7 +22,7 @@ $contractSession->updateData($this->item);
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<form action="<?php echo KrMethods::route('index.php?option=com_knowres&id='
-				. (int) $this->item->id); ?>"
+			                                          . (int) $this->item->id); ?>"
 			      class="form-validate" id="kr-contract-resurrect-form" method="post" name="adminForm">
 				<div class="modal-header">
 					<h3 class="modal-title" id="resurrectModalLabel">

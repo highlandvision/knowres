@@ -17,8 +17,8 @@ $settings = KrFactory::getListModel('propertysettings')->getPropertysettings($th
 
 $wa = $this->document->getWebAssetManager();
 $wa->useScript('com_knowres.site')
-   ->useScript('form.validate')
-   ->useScript('keepalive');
+	->useScript('form.validate')
+	->useScript('keepalive');
 ?>
 
 <div class="grid-x grid-margin-x">
@@ -70,10 +70,18 @@ $wa->useScript('com_knowres.site')
 									<div class="smaller">
 										<p><?php echo KrMethods::plain('COM_KNOWRES_DOCUMENT_TYPE_TEXT_DSC'); ?></p>
 										<ul style="list-style-type:disc;padding-left: 1rem;margin-left:1rem;">
-											<li><?php echo KrMethods::plain('COM_KNOWRES_DOCUMENT_TYPE_TEXT1_DSC'); ?></li>
-											<li><?php echo KrMethods::plain('COM_KNOWRES_DOCUMENT_TYPE_TEXT2_DSC'); ?></li>
-											<li><?php echo KrMethods::plain('COM_KNOWRES_DOCUMENT_TYPE_TEXT3_DSC'); ?></li>
-											<li><?php echo KrMethods::plain('COM_KNOWRES_DOCUMENT_TYPE_TEXT4_DSC'); ?></li>
+											<li>
+												<?php echo KrMethods::plain('COM_KNOWRES_DOCUMENT_TYPE_TEXT1_DSC'); ?>
+											</li>
+											<li>
+												<?php echo KrMethods::plain('COM_KNOWRES_DOCUMENT_TYPE_TEXT2_DSC'); ?>
+											</li>
+											<li>
+												<?php echo KrMethods::plain('COM_KNOWRES_DOCUMENT_TYPE_TEXT3_DSC'); ?>
+											</li>
+											<li>
+												<?php echo KrMethods::plain('COM_KNOWRES_DOCUMENT_TYPE_TEXT4_DSC'); ?>
+											</li>
 										</ul>
 									</div>
 								</div>

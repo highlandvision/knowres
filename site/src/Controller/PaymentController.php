@@ -59,7 +59,9 @@ class PaymentController extends FormController
 
 			if ($contract_id !== (int) $paymentData->contract_id) {
 				$paymentSession->resetData();
-				throw new RuntimeException("Contract ID = $contract_id and Payment Contract ID = $paymentData->contract_id do not match");
+				throw new RuntimeException(
+					"Contract ID = $contract_id and Payment Contract ID = $paymentData->contract_id do not match"
+				);
 			}
 
 			$class       = Gateway::setGatewayClass($gateway_name);

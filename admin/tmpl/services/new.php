@@ -6,12 +6,12 @@
  * @license     See the file "LICENSE.txt" for the full license governing this code.
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
-/** @noinspection PhpUnhandledExceptionInspection */
 
 defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Service;
+
 ?>
 
 <div class="row row-cols-1 row-cols-md-4 g-4">
@@ -41,7 +41,8 @@ use HighlandVision\KR\Service;
 							<?php echo KrMethods::plain('COM_KNOWRES_SERVICE_ENQUIRY'); ?>
 						</a>
 					<?php elseif ($type[2] == 1): ?>
-						<?php $link = KrMethods::route("index.php?option=com_knowres&view=service&layout=edit&plugin=" . $plugin); ?>
+						<?php $link =
+							KrMethods::route("index.php?option=com_knowres&view=service&layout=edit&plugin=" . $plugin); ?>
 						<a href="<?php echo $link; ?>" class="button btn btn-primary">
 							<?php echo KrMethods::plain('COM_KNOWRES_SERVICES_NEW'); ?>
 						</a>

@@ -16,14 +16,14 @@ use Joomla\CMS\HTML\HTMLHelper;
 
 $wa = $this->document->getWebAssetManager();
 $wa->useScript('com_knowres.site')
-   ->useScript('form.validate')
-   ->useScript('keepalive');
+	->useScript('form.validate')
+	->useScript('keepalive');
 
 $action = '/index.php?option=com_knowres&task=contact.submit';
 ?>
 
 <h1 class="title"><?php echo KrMethods::plain('COM_KNOWRES_CONTACT_TITLE'); ?></h1>
-<p class="small"><?php echo KrMethods::plain( 'COM_KNOWRES_CONTACT_LEGEND' ); ?></p>
+<p class="small"><?php echo KrMethods::plain('COM_KNOWRES_CONTACT_LEGEND'); ?></p>
 
 <div>
 	<p class="vsmall"><?php echo KrMethods::plain('COM_KNOWRES_CONTACT_REQUIRED'); ?></p>
@@ -102,7 +102,8 @@ $action = '/index.php?option=com_knowres&task=contact.submit';
 						<span><?php echo KrMethods::plain('COM_KNOWRES_CONTACT_SEND'); ?></span>
 					</button>
 					<p class="smaller text-center">
-						<?php echo KrMethods::sprintf('COM_KNOWRES_CONTACT_SEND_3RDPARTY', KrMethods::getCfg('sitename')); ?>
+						<?php echo KrMethods::sprintf('COM_KNOWRES_CONTACT_SEND_3RDPARTY',
+							KrMethods::getCfg('sitename')); ?>
 					</p>
 				</div>
 			</div>

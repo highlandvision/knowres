@@ -45,8 +45,8 @@ class DaterangeRule extends FormRule
 	 * @since  1.0.0
 	 * @return bool  True if the value is valid, false otherwise.
 	 */
-	public function test(SimpleXMLElement $element, $value, $group = null, Registry $input = null,
-		Form $form = null): bool
+	public function test(SimpleXMLElement $element, $value, $group = null, ?Registry $input = null,
+		?Form $form = null): bool
 	{
 		$valid_from = ($input instanceof Registry) ? $input->get('valid_from') : '';
 		if ($value < $valid_from)

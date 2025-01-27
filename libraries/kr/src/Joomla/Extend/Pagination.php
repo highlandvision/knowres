@@ -43,7 +43,7 @@ class Pagination extends JoomlaPagination
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function __construct($total, $limitstart, $limit, $prefix = '', CMSApplication $app = null)
+	public function __construct($total, $limitstart, $limit, $prefix = '', ?CMSApplication $app = null)
 	{
 		parent::__construct($total, $limitstart, $limit, $prefix, $app);
 

@@ -7,8 +7,6 @@
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
-/** @noinspection PhpUnhandledExceptionInspection */
-
 defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrMethods;
@@ -52,8 +50,9 @@ $params = KrMethods::getParams();
 	<div id="template" class="file-row" style="float:left;margin-right:10px;margin-bottom:10px;">
 		<div>
 			<span class="preview">
-				<!--suppress RequiredAttributes -->
-				<img data-dz-thumbnail /></span>
+				<!--suppress HtmlRequiredAltAttribute -->
+				<img data-dz-thumbnail />
+			</span>
 		</div>
 		<div>
 			<p class="size" data-dz-size></p>
