@@ -100,7 +100,7 @@ class ContentHelper extends \Joomla\CMS\Helper\ContentHelper
 							$result->set($action->name, $user->authorise($action->name, $assetName));
 						}
 					}
-					else if ($section == 'contracty')
+					else if ($section == 'contract')
 					{
 						if ($params->get('contract_add'))
 						{
@@ -117,6 +117,13 @@ class ContentHelper extends \Joomla\CMS\Helper\ContentHelper
 					else if ($section == 'discount')
 					{
 						if ($params->get('discount_manage'))
+						{
+							$result->set($action->name, $user->authorise($action->name, $assetName));
+						}
+					}
+					else if ($section == 'extra')
+					{
+						if ($params->get('extra_manage'))
 						{
 							$result->set($action->name, $user->authorise($action->name, $assetName));
 						}
@@ -148,6 +155,13 @@ class ContentHelper extends \Joomla\CMS\Helper\ContentHelper
 					else if ($section == 'discount')
 					{
 						if ($params->get('discount_manage'))
+						{
+							$result->set($action->name, $user->authorise($action->name, $assetName));
+						}
+					}
+					else if ($section == 'extra')
+					{
+						if ($params->get('extra_manage'))
 						{
 							$result->set($action->name, $user->authorise($action->name, $assetName));
 						}
