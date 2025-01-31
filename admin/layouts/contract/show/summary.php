@@ -96,10 +96,10 @@ extract($displayData);
 <?php endif; ?>
 
 <?php echo KrMethods::render('contract.show.taxes',
-                             ['taxes'     => $item->taxes,
-                              'tax_total' => $item->tax_total,
-                              'currency'  => $item->currency
-                             ]
+	['taxes'     => $item->taxes,
+	 'tax_total' => $item->tax_total,
+	 'currency'  => $item->currency
+	]
 )
 ?>
 
@@ -207,7 +207,7 @@ extract($displayData);
 		$fex    = '';
 		if ($p->amount != $p->base_amount) {
 			$fex = '(' . Utility::displayValue($p->amount, $p->currency) . ' @ ' . $p->rate
-				. ')&nbsp;&nbsp;&nbsp;';
+			       . ')&nbsp;&nbsp;&nbsp;';
 		}
 		if ($p->confirmed) {
 			$payment_total += $p->base_amount;
@@ -220,7 +220,7 @@ extract($displayData);
 			<div class="col-4 indent">
 				<?php if ($p->service_plugin): ?>
 					<?php echo TickTock::displayDate($p->payment_date, 'dMy') . ' '
-						. KrMethods::sprintf('COM_KNOWRES_CONTRACTPAYMENTS_BY', ucfirst($p->service_plugin)); ?>
+					           . KrMethods::sprintf('COM_KNOWRES_CONTRACTPAYMENTS_BY', ucfirst($p->service_plugin)); ?>
 				<?php else: ?>
 					<?php echo TickTock::displayDate($p->payment_date, 'dMy'); ?>
 				<?php endif; ?>
@@ -232,8 +232,8 @@ extract($displayData);
 			<?php else: ?>
 				<div class="col-5 red text-end">
 					<?php echo KrMethods::plain('COM_KNOWRES_REFUND') .
-						' -' .
-						Utility::displayValue($p->base_amount * -1, $item->currency); ?>
+					           ' -' .
+					           Utility::displayValue($p->base_amount * -1, $item->currency); ?>
 				</div>
 			<?php endif; ?>
 		</div>
@@ -270,29 +270,18 @@ extract($displayData);
 		</div>
 	<?php endif; ?>
 
-	<!--	<div class="row">-->
-	<!--		<div class="col-5 divider">-->
-	<!--			--><?php //echo KrMethods::plain('COM_KNOWRES_CONTRACT_CONTRACT_TOTAL_LBL'); ?>
-	<!--		</div>-->
-	<!--		<div class="col-4">-->
-	<!--		</div>-->
-	<!--		<div class="col-3 heading strong text-end">-->
-	<!--			--><?php //echo Utility::displayValue($item->contract_total + $fee_total, $item->currency); ?>
-	<!--		</div>-->
-	<!--	</div>-->
-
 	<?php $due = ''; ?>
 	<?php if ($balance_all > 0): ?>
 		<?php if (!$item->balance_days && $payment_total): ?>
 			<?php $due = KrMethods::plain('COM_KNOWRES_CONTRACTPAYMENTS_PAYMENT_ON_ARRIVAL'); ?>
 		<?php elseif ($item->balance_date > TickTock::getDate() && $item->booking_status >= 10): ?>
 			<?php $due = KrMethods::plain('COM_KNOWRES_BALANCE') . ' ('
-				. KrMethods::sprintf('COM_KNOWRES_DUE_BY', TickTock::displayDate($item->balance_date)) . ')'; ?>
+			             . KrMethods::sprintf('COM_KNOWRES_DUE_BY', TickTock::displayDate($item->balance_date)) . ')'; ?>
 		<?php elseif ($item->balance_date <= TickTock::getDate()): ?>
 			<?php $due = KrMethods::plain('COM_KNOWRES_BALANCE')
-				. ' ('
-				. KrMethods::plain('COM_KNOWRES_DUE_NOW')
-				. ')'; ?>
+			             . ' ('
+			             . KrMethods::plain('COM_KNOWRES_DUE_NOW')
+			             . ')'; ?>
 		<?php else: ?>
 			<?php $due = KrMethods::plain('COM_KNOWRES_BALANCE'); ?>
 		<?php endif; ?>

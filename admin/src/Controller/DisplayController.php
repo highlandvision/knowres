@@ -50,8 +50,10 @@ class DisplayController extends BaseController
 	 * @throws Exception
 	 * @since  3.0
 	 */
-	public function __construct($config = [], MVCFactoryInterface $factory = null, ?CMSApplication $app = null,
-	                            ?Input $input = null)
+	public function __construct($config = [],
+		?MVCFactoryInterface $factory = null,
+		?CMSApplication $app = null,
+		?Input $input = null)
 	{
 		$userSession = new KrSession\User();
 		$userData    = $userSession->getData();
@@ -71,27 +73,24 @@ class DisplayController extends BaseController
 					} else {
 						$userData->properties = '';
 					}
-					$userSession->setData($userData);
 
 					if ($manager->access_level == 10 && !count($manager->properties)) {
-						KrMethods::message(KrMethods::plain('You have not been assigned any properties. Please contact your system administrator.'),
-						                   'error');
-						$this->setRedirect(KrMethods::route('index.php', false));
+						if (KrMethods::getParams()->get('property_add', 0)) {
+							$this->setRedirect(KrMethods::route('index.php?option=com_knowres&task=property.add', false));
+							return;
+						}
 
+						$this->onYerBike($user->id);
 						return;
 					}
-				} else {
-					KrMethods::message(KrMethods::plain('You are not authorised to access the requested page. Please contact your system administrator.'),
-					                   'error');
-					$this->setRedirect(KrMethods::route('index.php', false));
 
+					$userSession->setData($userData);
+				} else {
+					$this->onYerBike($user->id);
 					return;
 				}
 			} else {
-				KrMethods::message(KrMethods::plain('You are not authorised to access the requested page. Please contact your system administrator.'),
-				                   'error');
-				$this->setRedirect(KrMethods::route('index.php', false));
-
+				$this->onYerBike($user->id);
 				return;
 			}
 		}
@@ -103,7 +102,8 @@ class DisplayController extends BaseController
 	 * Method to display a view.
 	 *
 	 * @param  bool   $cachable   If true, the view output will be cached
-	 * @param  array  $urlparams  An array of safe url parameters and their variable types, for valid values see {@link FilterInput::clean()}
+	 * @param  array  $urlparams  An array of safe url parameters and their variable types,
+	 *                            for valid values see {@link FilterInput::clean()}
 	 *
 	 * @throws  Exception
 	 * @since   1.0.0
@@ -163,6 +163,8 @@ class DisplayController extends BaseController
 			'contracts',
 			'discount',
 			'discounts',
+			'extra',
+			'extras',
 			'gantt',
 			'image',
 			'images',
@@ -246,5 +248,23 @@ class DisplayController extends BaseController
 		$userSession->setData($userData);
 
 		return parent::display();
+	}
+
+	/**
+	 * No access so on yer bike.
+	 *
+	 * @param  int  $user_id  ID of user,
+	 *
+	 * @throws Exception
+	 * @since  5.1.0
+	 */
+	private function onYerBike(int $user_id): void
+	{
+		$text = 'You are not authorised to access the requested page. Please contact your system administrator';
+		KrMethods::message(KrMethods::plain($text), 'error');
+		$this->setRedirect(KrMethods::route('index.php', false));
+
+		Factory::getApplication();
+		$app->logout($user_id);
 	}
 }

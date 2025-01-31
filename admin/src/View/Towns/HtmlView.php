@@ -48,8 +48,7 @@ class HtmlView extends KrHtmlView
 		$this->ordering      = in_array('ordering', $model->getFilterFields());
 		$this->form_name     = 'town';
 
-		if (!$this->checkEmpty())
-		{
+		if (!$this->checkEmpty()) {
 			$this->checkErrors();
 			ToolbarHelper::title(KrMethods::plain('COM_KNOWRES_TOWNS_TITLE'), 'tasks knowres');
 			$this->addListToolbar($this->get('name'));

@@ -373,7 +373,6 @@ class PropertyController extends FormController
 		$error    = $_FILES['image']['error'];
 		$size     = $_FILES['image']['size'];
 
-
 		$ImagesProperty = new Media\Images\Property($property_id, 'solo');
 		try {
 			$ImagesProperty->validate($name, $tmp_name, $error);

@@ -37,14 +37,15 @@ class ImagesController extends AdminController
 	/**
 	 * Proxy for getModel.
 	 *
-	 * @param   string  $name    Model name
-	 * @param   string  $prefix  Model prefix administrator or site (defaults to administrator)
-	 * @param   array   $config  Configuration options
+	 * @param  string  $name    Model name
+	 * @param  string  $prefix  Model prefix administrator or site (defaults to administrator)
+	 * @param  array   $config  Configuration options
 	 *
 	 * @since  1.6
 	 * @return bool|BaseDatabaseModel
 	 */
-	public function getModel($name = 'image', $prefix = 'Administrator',
+	public function getModel($name = 'image',
+		$prefix = 'Administrator',
 		$config = ['ignore_request' => true]): BaseDatabaseModel|bool
 	{
 		return parent::getModel($name, $prefix, $config);
@@ -75,14 +76,12 @@ class ImagesController extends AdminController
 	 */
 	#[NoReturn] public function upload(): void
 	{
-		if (!$this->checkToken('post', false))
-		{
+		if (!$this->checkToken('post', false)) {
 			$this->returnError(KrMethods::plain('JINVALID_TOKEN_NOTICE'));
 		}
 
 		$property_id = KrMethods::inputInt('property_id');
-		if (!$property_id)
-		{
+		if (!$property_id) {
 			Logger::logMe('Property ID was not received');
 			$this->returnError();
 		}
@@ -93,32 +92,25 @@ class ImagesController extends AdminController
 		$size     = $_FILES['file']['size'];
 
 		$count = count($name);
-		if (!$count)
-		{
+		if (!$count) {
 			$this->returnError(KrMethods::plain('COM_KNOWRES_FORM_ERROR_PROPERTY_IMAGE'));
 		}
 
 		$ImagesProperty = new Images\Property($property_id);
-		for ($i = 0; $i < $count; $i++)
-		{
-			try
-			{
+		for ($i = 0; $i < $count; $i++) {
+			try {
 				$ImagesProperty->validate($name[$i], $tmp_name[$i], $error[$i]);
 				$ImagesProperty->processOriginal();
 				$ImagesProperty->resize();
-			}
-			catch (RuntimeException $e)
-			{
+			} catch (RuntimeException $e) {
 				$this->returnError($e->getMessage());
 			}
 
-			if (!$ImagesProperty->getExists())
-			{
-				$sname = $ImagesProperty->getName();
+			if (!$ImagesProperty->getExists()) {
+				$sname = $ImagesProperty->name;
 				/** @var ImageModel $model */
 				$model = $this->getModel();
-				if (!$model->store($sname))
-				{
+				if (!$model->store($sname)) {
 					Logger::logMe('Image ' . $sname . ' could not be saved');
 					$this->returnError();
 				}
@@ -135,14 +127,13 @@ class ImagesController extends AdminController
 	/**
 	 * Send error back to dropzone
 	 *
-	 * @param   string|null  $message  Error message
+	 * @param  string|null  $message  Error message
 	 *
 	 * @since  4.0.0
 	 */
-	#[NoReturn] protected function returnError(string $message = null): void
+	#[NoReturn] protected function returnError(?string $message = null): void
 	{
-		if (is_null($message))
-		{
+		if (is_null($message)) {
 			$message = KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN');
 		}
 

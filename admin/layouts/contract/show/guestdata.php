@@ -26,14 +26,14 @@ extract($displayData);
 $params = KrMethods::getParams();
 ?>
 
-<div class="row">
-	<div class="col-12">
-		<?php if (empty($guestdata->id)): ?>
-			<?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATA_PENDING'); ?>
-			<?php return; ?>
-		<?php endif; ?>
+	<div class="row">
+		<div class="col-12">
+			<?php if (empty($guestdata->id)): ?>
+				<?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATA_PENDING'); ?>
+				<?php return; ?>
+			<?php endif; ?>
+		</div>
 	</div>
-</div>
 
 <?php echo KrMethods::render('contract.show.guestdata.boa', ['contract' => $contract, 'balance' => $balance]); ?>
 <?php echo KrMethods::render('contract.show.guestdata.guestinfo', ['guestdata' => $guestdata]); ?>
@@ -44,8 +44,7 @@ $params = KrMethods::getParams();
 	<?php echo KrMethods::render('contract.show.guestdata.emergency', ['guestdata' => $guestdata]); ?>
 <?php endif; ?>
 
-<?php $options = KrFactory::getListModel('propertyoptions')
-                          ->getPropertyOptionsForProperty($contract->property_id); ?>
+<?php $options = KrFactory::getListModel('propertyoptions')->getPropertyOptionsForProperty($contract->property_id); ?>
 <?php if (is_countable($options) && count($options)): ?>
 	<?php echo KrMethods::render('contract.show.guestdata.options',
 		['guestdata' => $guestdata, 'options' => $options]); ?>

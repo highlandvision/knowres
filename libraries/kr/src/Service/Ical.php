@@ -70,8 +70,7 @@ class Ical extends Service
 	 */
 	public function processManual(int $ical_id, int $property_id, string $link, ?string $icsdata): void
 	{
-		try
-		{
+		try {
 			$this->method  = 'processManual';
 			$this->request = $link;
 			$this->readProperty($property_id);
@@ -81,15 +80,12 @@ class Ical extends Service
 			$icsdata   = $IcalBlock->import();
 			KrFactory::getListModel('propertyicals')->updateLastUpdated($ical_id, $icsdata);
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_ACTION_SUCCESS'));
-		}
-		catch (Exception $e)
-		{
+		} catch (Exception $e) {
 			Logger::logMe($e->getMessage());
 			KrMethods::message($e->getMessage());
 		}
 
-		if (file_exists($this->directory . $this->filename))
-		{
+		if (file_exists($this->directory . $this->filename)) {
 			unlink($this->directory . $this->filename);
 		}
 	}
@@ -105,31 +101,26 @@ class Ical extends Service
 	public function processSchedule(int $hours): void
 	{
 		$due = KrFactory::getListModel('propertyicals')->getByTime($this->service->id, $hours);
-		foreach ($due as $d)
-		{
+		foreach ($due as $d) {
 			$this->method      = 'processSchedule';
 			$this->request     = $d->link;
 			$this->property_id = $d->property_id;
 
-			try
-			{
+			try {
 				$this->readProperty($this->property_id);
 				$this->response = $this->fetchIcal();
 
 				$IcalBlock      = new IcalBlock($this->property_id, $this->directory, $this->filename,
 					$this->service->id, $d->icsdata);
 				$icsdata        = $IcalBlock->import();
-				$this->messages = $IcalBlock->getMessages();
+				$this->messages = $IcalBlock->messages;
 				KrFactory::getListModel('propertyicals')->updateLastUpdated($d->id, $icsdata);
-			}
-			catch (Exception $e)
-			{
+			} catch (Exception $e) {
 				$this->exception = $e;
 				$this->addLog(false);
 			}
 
-			if (file_exists($this->directory . $this->filename))
-			{
+			if (file_exists($this->directory . $this->filename)) {
 				unlink($this->directory . $this->filename);
 			}
 		}
@@ -159,8 +150,7 @@ class Ical extends Service
 		curl_exec($ch);
 
 		$http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-		if ($http_status != 200)
-		{
+		if ($http_status != 200) {
 			$error   = [];
 			$error[] = 'Error reading calendar from Host site';
 			$error[] = 'Service: ' . $this->service->name;
@@ -169,9 +159,7 @@ class Ical extends Service
 			$error[] = 'CURL Services Failure ' . curl_errno($ch);
 			$error[] = 'Curl error message ' . curl_error($ch);
 			throw new RuntimeException(implode("\r\n", $error));
-		}
-		else if (curl_errno($ch))
-		{
+		} else if (curl_errno($ch)) {
 			$error   = [];
 			$error[] = 'Error reading calendar from Host site';
 			$error[] = 'Service: ' . $this->service->name;

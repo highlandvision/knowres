@@ -20,14 +20,11 @@ $soloPath .= "/*.{jpg,gif,png,JPG,GIF,PNG}";
 $files    = glob($soloPath, GLOB_BRACE);
 $params   = KrMethods::getParams();
 
-if (count($files))
-{
+if (count($files)) {
 	$path_parts  = pathinfo($files[0]);
 	$this->image = $path_parts['filename'] . "." . $path_parts['extension'];
 	$text        = KrMethods::plain('COM_KNOWRES_PROPERTY_IMAGE_REPLACE_DSC');
-}
-else
-{
+} else {
 	$this->image = "";
 	$text        = KrMethods::plain('COM_KNOWRES_PROPERTY_IMAGE_UPLOAD_DSC');
 }
@@ -56,8 +53,10 @@ else
 			</div>
 			<?php if ($this->image) : ?>
 				<div class="col-lg-9" style="margin-top:10px;">
-					<?php echo HTMLHelper::_('image', Media\Images::getImagePath($this->item->id, 'solo', $this->image),
-						$this->item->property_name, [
+					<?php echo HTMLHelper::_('image',
+						Media\Images::getImagePath($this->item->id, 'solo', $this->image),
+						$this->item->property_name,
+						[
 							'width'  => $params->get('max_property_width'),
 							'height' => $params->get('max_property_height')
 						]); ?>

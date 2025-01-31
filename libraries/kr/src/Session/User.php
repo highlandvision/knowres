@@ -134,6 +134,11 @@ class User extends Session
 	 */
 	public function setLogin(): void
 	{
+		// Text used for errors as language file not accessible at this stage
+		$m1 = 'Please enter your property details below';
+		$m2 = 'You are not authorised to access this system. Please contact your system administrator';
+		$m3 = 'You are not authorised to access the requested page. Please contact your system administrator';
+
 		$data = $this->getData();
 		if (!isset($data->access_level) || $data->access_level == 0) {
 			$user = KrMethods::getUser();
@@ -151,16 +156,16 @@ class User extends Session
 						$data->properties = '';
 					}
 
-					// If owner access and no properties and property add is allowed then redirect to property add page
 					if ($item->access_level == 10 && !count(Utility::decodeJson($item->properties, true))) {
-						$params = KrMethods::getParams();
-						if ($params->get('property_add', 0)) {
-							KrMethods::message(KrMethods::plain('COM_KNOWRES_MANAGER_OWNER_PROPERTY'));
-							KrMethods::redirect(KrMethods::route(
-								'index.php?option=com_knowres&view=property&layout=edit&id=0',
+						if (KrMethods::getParams()->get('property_add', 0)) {
+							// Allowed to add a property so redirect to property add
+							KrMethods::message(KrMethods::plain($m1));
+							KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&view=property&layout=edit&id=0',
 								false));
 						} else {
-							KrMethods::message(KrMethods::plain('COM_KNOWRES_MANAGER_OWNER_ACCESS'), 'error');
+							// Not allowed to add so refer to system admin
+							KrMethods::logoutUser($user->id);
+							KrMethods::message(KrMethods::plain($m2), 'error');
 							KrMethods::redirect(KrMethods::route('index.php', false));
 						}
 
@@ -168,7 +173,8 @@ class User extends Session
 					}
 				}
 			} else {
-				KrMethods::message(KrMethods::plain('COM_KNOWRES_MANAGER_OWNER_ACCESS_CONTACT'), 'error');
+				KrMethods::logoutUser($user->id);
+				KrMethods::message(KrMethods::plain($m3), 'error');
 				KrMethods::redirect(KrMethods::route('index.php'));
 			}
 		} else {

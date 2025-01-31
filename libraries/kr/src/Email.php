@@ -32,6 +32,8 @@ use function str_replace;
  */
 abstract class Email
 {
+	/** @var Translations Translations */
+	protected Translations $Translations;
 	/** @var ?object Agency data */
 	protected ?object $agency;
 	/** @var string Agency email */
@@ -73,9 +75,19 @@ abstract class Email
 	/** @var string Manager namey */
 	protected string $manager_name = '';
 	/** @var string Email body */
-	protected string $output_message = '';
+	protected string $output_message = '' {
+		/** Output message getter */
+		get {
+			return $this->output_message;
+		}
+	}
 	/** @var string Email subject */
-	protected string $output_subject = '';
+	protected string $output_subject = '' {
+		/** Output subject getter */
+		get {
+			return $this->output_subject;
+		}
+	}
 	/** @var Registry KR params */
 	protected Registry $params;
 	/** @var object|false Property data */
@@ -92,15 +104,13 @@ abstract class Email
 	protected bool $testing = false;
 	/** @var string Today as Y--m-d */
 	protected string $today = '';
-	/** @var Translations Translations */
-	protected Translations $Translations;
 	/** @var string The email trigger */
 	protected string $trigger = '';
 	/** @var int ID of trigger */
 	protected int $trigger_id = 0;
 
 	/**
-	 * Constructor initialise
+	 * Constructor initialize
 	 *
 	 * @param  string  $trigger  Email trigger
 	 *
@@ -109,11 +119,11 @@ abstract class Email
 	 */
 	public function __construct(string $trigger)
 	{
-		if (!$trigger)
-		{
+		if (!$trigger) {
 			throw new InvalidArgumentException(
 				KrMethods::sprintf(
-					'COM_KNOWRES_THROW_MISSING_PARAMETER', 'trigger'
+					'COM_KNOWRES_THROW_MISSING_PARAMETER',
+					'trigger'
 				)
 			);
 		}
@@ -153,53 +163,6 @@ abstract class Email
 	}
 
 	/**
-	 * Returns email message
-	 *
-	 * @since 1.0.0
-	 * @return string
-	 */
-	public function getOutputMessage(): string
-	{
-		return $this->output_message;
-	}
-
-	/**
-	 * Returns email subject
-	 *
-	 * @since 1.0.0
-	 * @return string
-	 */
-	public function getOutputSubject(): string
-	{
-		return $this->output_subject;
-	}
-
-	/**
-	 * Get email template
-	 *
-	 * @param  int  $template_id  ID of template
-	 *
-	 * @throws Exception
-	 * @since  4.0.0
-	 * @return object
-	 */
-	protected function getTemplate(int $template_id): object
-	{
-		if (!$template_id)
-		{
-			throw new RuntimeException('Email template_id is not set');
-		}
-
-		$template = KrFactory::getAdminModel('emailtemplate')->getItem($template_id);
-		if (!$template)
-		{
-			throw new RuntimeException('Email template not found for ID ' . $template_id);
-		}
-
-		return $template;
-	}
-
-	/**
 	 * Check for any custom by date emails past their normal due date
 	 *
 	 * @throws Exception
@@ -208,18 +171,14 @@ abstract class Email
 	protected function checkCustomByDate(): void
 	{
 		$emails = KrFactory::getListModel('emailtriggers')->getTriggers('CUSTOMBYDATE');
-		if ($emails)
-		{
-			foreach ($emails as $e)
-			{
-				if (!$e->days_before || !$e->send_guest)
-				{
+		if ($emails) {
+			foreach ($emails as $e) {
+				if (!$e->days_before || !$e->send_guest) {
 					continue;
 				}
 
 				$due_date = TickTock::modifyDays($this->today, $e->days);
-				if ($due_date < $actual_date)
-				{
+				if ($due_date < $actual_date) {
 					continue;
 				}
 
@@ -243,8 +202,7 @@ abstract class Email
 
 		$this->output_message = $template->blurb;
 		$this->output_subject = $template->subject;
-		foreach ($this->data as $k => $v)
-		{
+		foreach ($this->data as $k => $v) {
 			$this->output_message = str_replace("[$k]", $v, $this->output_message);
 			$this->output_subject = str_replace("[$k]", $v, $this->output_subject);
 		}
@@ -264,7 +222,9 @@ abstract class Email
 	 * @throws Exception
 	 * @since  3.2.0
 	 */
-	protected function dispatchEmail(string $email_to, ?string $firstname = null, ?string $surname = null,
+	protected function dispatchEmail(string $email_to,
+		?string $firstname = null,
+		?string $surname = null,
 		array $tags = []): void
 	{
 		$optional                = [];
@@ -279,21 +239,19 @@ abstract class Email
 		$optional['reply_to']    = $this->reply_to;
 		$optional['reply_name']  = $this->reply_name;
 
-		try
-		{
-			if ($this->helpscout)
-			{
-				HelpScoutEmailService::dispatchEmail($email_to, $this->getOutputSubject(),
-					$this->getOutputMessage(), $optional);
+		try {
+			if ($this->helpscout) {
+				HelpScoutEmailService::dispatchEmail($email_to,
+					$this->output_subject,
+					$this->output_message,
+					$optional);
+			} else {
+				JoomlaEmailService::dispatchEmail($email_to,
+					$this->output_subject,
+					$this->output_message,
+					$optional);
 			}
-			else
-			{
-				JoomlaEmailService::dispatchEmail($email_to, $this->getOutputSubject(),
-					$this->getOutputMessage(), $optional);
-			}
-		}
-		catch (Exception $e)
-		{
+		} catch (Exception $e) {
 			Logger::logMe($e->getMessage(), 'alert');
 		}
 	}
@@ -307,16 +265,13 @@ abstract class Email
 	protected function gatherData(): void
 	{
 		$emails = KrFactory::getListModel('emailtriggers')->getTriggers($this->trigger, $this->trigger_id);
-		if (count($emails))
-		{
+		if (count($emails)) {
 			$this->setData();
-			foreach ($emails as $e)
-			{
+			foreach ($emails as $e) {
 				$this->sendEmails($e);
 			}
 
-			if ($this->trigger == 'BOOKCONFIRM' || $this->trigger == 'PAYRECEIPT')
-			{
+			if ($this->trigger == 'BOOKCONFIRM' || $this->trigger == 'PAYRECEIPT') {
 				$this->checkCustomByDate();
 			}
 		}
@@ -331,8 +286,7 @@ abstract class Email
 	 */
 	protected function getFromEmail(): string
 	{
-		if (empty($this->agency_email))
-		{
+		if (empty($this->agency_email)) {
 			return $this->fromemail;
 		}
 
@@ -347,12 +301,34 @@ abstract class Email
 	 */
 	protected function getFromName()
 	{
-		if (empty($this->agency_name))
-		{
+		if (empty($this->agency_name)) {
 			return $this->fromname;
 		}
 
 		return $this->agency_name;
+	}
+
+	/**
+	 * Get email template
+	 *
+	 * @param  int  $template_id  ID of template
+	 *
+	 * @throws Exception
+	 * @since  4.0.0
+	 * @return object
+	 */
+	protected function getTemplate(int $template_id): object
+	{
+		if (!$template_id) {
+			throw new RuntimeException('Email template_id is not set');
+		}
+
+		$template = KrFactory::getAdminModel('emailtemplate')->getItem($template_id);
+		if (!$template) {
+			throw new RuntimeException('Email template not found for ID ' . $template_id);
+		}
+
+		return $template;
 	}
 
 	/**
@@ -390,11 +366,9 @@ abstract class Email
 	 */
 	protected function setAgency(?int $agency_id = 0): void
 	{
-		if (empty($agency_id))
-		{
+		if (empty($agency_id)) {
 			$agency_id = KrMethods::getParams()->get('default_agency');
-			if (!$agency_id)
-			{
+			if (!$agency_id) {
 				throw new RunTimeException('Please set Default agency in KR Options');
 			}
 		}
@@ -410,11 +384,11 @@ abstract class Email
 	 */
 	protected function setHelpScout(): void
 	{
-		$this->helpscout = KrFactory::getListModel('services')::checkForSingleService(false, 'helpscout',
+		$this->helpscout = KrFactory::getListModel('services')::checkForSingleService(false,
+			'helpscout',
 			$this->agency->id);
 
-		if ($this->helpscout && !is_dir(JPATH_LIBRARIES . '/helpscout/src'))
-		{
+		if ($this->helpscout && !is_dir(JPATH_LIBRARIES . '/helpscout/src')) {
 			throw new RunTimeException('Please install Helpscout Library or disable Helpscout Service');
 		}
 	}

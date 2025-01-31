@@ -31,6 +31,8 @@ defined('_JEXEC') or die;
  */
 class PropertyIcs
 {
+	/** @var  Vcalendar Vcalender object */
+	protected Vcalendar $Calendar;
 	/* @var bool Individual Booking data required */
 	protected bool $amalgamate = true;
 	/* @var string Name of custom ical */
@@ -39,8 +41,6 @@ class PropertyIcs
 	protected int $property_id = 0;
 	/** @var  string Name of property */
 	protected string $property_name = '';
-	/** @var  Vcalendar Vcalender object */
-	protected Vcalendar $Calendar;
 
 	/**
 	 * Initialise
@@ -59,6 +59,24 @@ class PropertyIcs
 		if ($this->custom == 'split') {
 			$this->amalgamate = false;
 		}
+	}
+
+	/**
+	 * Format check in / out times
+	 *
+	 * @param ?string  $time  Either check in / out time from property
+	 *
+	 * @since  4.2.0
+	 * @return string
+	 */
+	private static function setCheckTime(?string $time): string
+	{
+		$new = '000000';
+		if (!empty($time)) {
+			$new = str_replace(':', '', $time) . '00';
+		}
+
+		return $new;
 	}
 
 	/**
@@ -82,8 +100,7 @@ class PropertyIcs
 		if (is_countable($booked) && count($booked)) {
 			if ($this->amalgamate) {
 				$this->addAmalgamated($booked);
-			}
-			else {
+			} else {
 				$this->setTimezone();
 				foreach ($booked as $b) {
 					$this->addBookingEvent($b);
@@ -93,54 +110,8 @@ class PropertyIcs
 
 		if ($action == 'dl') {
 			$this->Calendar->returnCalendar();
-		}
-		else {
+		} else {
 			echo $this->Calendar->createCalendar();
-		}
-	}
-
-	/**
-	 * Set the timezone for booking calendars
-	 *
-	 * @throws Exception
-	 * @since  4.1.0
-	 */
-	private function setTimeZone(): void
-	{
-		$this->Calendar->setXprop($this->Calendar::X_WR_TIMEZONE, KrMethods::getCfg('offset'));
-	}
-
-	/**
-	 * Get booked dates for property
-	 *
-	 * @throws Exception
-	 * @since  3.3.0
-	 * @return array
-	 */
-	private function getBookedDates(): array
-	{
-		$bookings = KrFactory::getListModel('contracts')->getBookedDates($this->property_id);
-		$booked   = [];
-
-		if ($this->amalgamate) {
-			foreach ($bookings as $b) {
-				$dates = TickTock::allDatesBetween($b->arrival, $b->departure, true);
-				foreach ($dates as $d) {
-					$booked[] = $d;
-				}
-			}
-
-			return array_unique($booked);
-		}
-		else {
-			$newtz = $this->Calendar->newVtimezone();
-			$newtz->setTzid(KrMethods::getCfg('offset'));
-
-			foreach ($bookings as $b) {
-				$booked[] = $b;
-			}
-
-			return $booked;
 		}
 	}
 
@@ -220,11 +191,9 @@ class PropertyIcs
 
 		if (!empty($b->tag)) {
 			$vevent->setComment($b->firstname . ' ' . $b->surname . ' ID:' . $b->tag);
-		}
-		else if ($b->black_booking == 1) {
+		} else if ($b->black_booking == 1) {
 			$vevent->setComment('Block');
-		}
-		else if ($b->black_booking == 2) {
+		} else if ($b->black_booking == 2) {
 			$vevent->setComment('Ical Block');
 		}
 
@@ -232,20 +201,46 @@ class PropertyIcs
 	}
 
 	/**
-	 * Format check in / out times
+	 * Get booked dates for property
 	 *
-	 * @param ?string  $time  Either check in / out time from property
-	 *
-	 * @since  4.2.0
-	 * @return string
+	 * @throws Exception
+	 * @since  3.3.0
+	 * @return array
 	 */
-	private static function setCheckTime(?string $time): string
+	private function getBookedDates(): array
 	{
-		$new = '000000';
-		if (!empty($time)) {
-			$new = str_replace(':', '', $time) . '00';
-		}
+		$bookings = KrFactory::getListModel('contracts')->getBookedDates($this->property_id);
+		$booked   = [];
 
-		return $new;
+		if ($this->amalgamate) {
+			foreach ($bookings as $b) {
+				$dates = TickTock::allDatesBetween($b->arrival, $b->departure, true);
+				foreach ($dates as $d) {
+					$booked[] = $d;
+				}
+			}
+
+			return array_unique($booked);
+		} else {
+			$newtz = $this->Calendar->newVtimezone();
+			$newtz->setTzid(KrMethods::getCfg('offset'));
+
+			foreach ($bookings as $b) {
+				$booked[] = $b;
+			}
+
+			return $booked;
+		}
+	}
+
+	/**
+	 * Set the timezone for booking calendars
+	 *
+	 * @throws Exception
+	 * @since  4.1.0
+	 */
+	private function setTimeZone(): void
+	{
+		$this->Calendar->setXprop($this->Calendar::X_WR_TIMEZONE, KrMethods::getCfg('offset'));
 	}
 }

@@ -10,6 +10,7 @@
 defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrMethods;
+
 ?>
 
 <div class="modal" id="icalexportModal" aria-labelledby="icalexportModalLabel">
@@ -26,7 +27,8 @@ use HighlandVision\KR\Framework\KrMethods;
 					<div class="col">
 						<p><?php echo KrMethods::plain('COM_KNOWRES_PROPERTIES_ICS_LINK'); ?></p>
 						<p class="lead">
-							<?php echo KrMethods::getRoot(); ?>index.php?option=com_knowres&task=property.ics&id=<?php echo $this->property_id; ?>
+							<?php $url = 'index.php?option=com_knowres&task=property.ics&id=' . $this->property_id; ?>
+							<?php echo KrMethods::getRoot() . $url; ?>
 						</p>
 					</div>
 				</div>
@@ -36,7 +38,8 @@ use HighlandVision\KR\Framework\KrMethods;
 					<div class="col">
 						<p><?php echo KrMethods::plain('COM_KNOWRES_PROPERTIES_ICS_DOWNLOAD'); ?></p>
 						<p class="lead">
-							<?php echo KrMethods::getRoot(); ?>index.php?option=com_knowres&task=property.ics&action=dl&id=<?php echo $this->property_id; ?>
+							<?php $url = 'index.php?option=com_knowres&task=property.ics&action=dl&id=' . $this->property_id; ?>
+							<?php echo KrMethods::getRoot() . $url; ?>
 						</p>
 					</div>
 				</div>

@@ -22,6 +22,7 @@ use RuntimeException;
 use function array_map;
 use function count;
 use function implode;
+use function is_countable;
 use function is_numeric;
 
 /**
@@ -41,28 +42,46 @@ class ContractpaymentsModel extends ListModel
 	 */
 	public function __construct($config = [])
 	{
-		if (empty($config['filter_fields']))
-		{
+		if (empty($config['filter_fields'])) {
 			$config['filter_fields'] = array(
-				'id', 'a.id',
-				'contract_id', 'a.contract_id',
-				'service_id', 'a.service_id',
-				'payment_date', 'a.payment_date',
-				'amount', 'a.amount',
-				'rate', 'a.rate',
-				'base_amount', 'a.base_amount',
-				'currency', 'a.currency',
-				'payment_ref', 'a.payment_ref',
-				'note', 'a.note',
-				'confirmed', 'a.confirmed',
-				'service_ref', 'a.service_ref',
-				'actioned', 'a.actioned',
-				'state', 'a.state',
-				'created_by', 'a.created_by',
-				'created_at', 'a.created_at',
-				'updated_by', 'a.updated_by',
-				'updated_at', 'a.updated_at',
-				'contract_tag', 'service_name'
+				'id',
+				'a.id',
+				'contract_id',
+				'a.contract_id',
+				'service_id',
+				'a.service_id',
+				'payment_date',
+				'a.payment_date',
+				'amount',
+				'a.amount',
+				'rate',
+				'a.rate',
+				'base_amount',
+				'a.base_amount',
+				'currency',
+				'a.currency',
+				'payment_ref',
+				'a.payment_ref',
+				'note',
+				'a.note',
+				'confirmed',
+				'a.confirmed',
+				'service_ref',
+				'a.service_ref',
+				'actioned',
+				'a.actioned',
+				'state',
+				'a.state',
+				'created_by',
+				'a.created_by',
+				'created_at',
+				'a.created_at',
+				'updated_by',
+				'a.updated_by',
+				'updated_at',
+				'a.updated_at',
+				'contract_tag',
+				'service_name'
 			);
 		}
 
@@ -85,13 +104,13 @@ class ContractpaymentsModel extends ListModel
 		$query = $db->getQuery(true);
 
 		$query->select($db->qn('id'))
-		      ->from($db->qn('#__knowres_contract_payment'))
-		      ->where($db->qn('contract_id') . '=' . $contract_id)
-		      ->where($db->qn('payment_date') . ' IS NULL')
-		      ->where($db->qn('payment_ref') . '=' . $db->q($payment_ref))
-		      ->where($db->qn('state') . '=1')
-		      ->where($db->qn('confirmed') . '=0')
-		      ->setLimit(1);
+			->from($db->qn('#__knowres_contract_payment'))
+			->where($db->qn('contract_id') . '=' . $contract_id)
+			->where($db->qn('payment_date') . ' IS NULL')
+			->where($db->qn('payment_ref') . '=' . $db->q($payment_ref))
+			->where($db->qn('state') . '=1')
+			->where($db->qn('confirmed') . '=0')
+			->setLimit(1);
 
 		$db->setQuery($query);
 
@@ -121,10 +140,10 @@ class ContractpaymentsModel extends ListModel
 		]));
 
 		$query->select($db->qn('c.currency', 'base_currency'))
-		      ->select($db->qn('p.property_name'))
-		      ->select($db->qn('ag.name', 'agency_name'))
-		      ->select($db->qn('i.plugin', 'service_plugin'))
-		      ->select($db->qn('r.id', 'region_id'));
+			->select($db->qn('p.property_name'))
+			->select($db->qn('ag.name', 'agency_name'))
+			->select($db->qn('i.plugin', 'service_plugin'))
+			->select($db->qn('r.id', 'region_id'));
 
 		$query->from($db->qn('#__knowres_contract_payment', 'a'));
 
@@ -146,53 +165,76 @@ class ContractpaymentsModel extends ListModel
 		$query = self::filterProperty($db, $query, $data['property_id']);
 
 		$filter_region_id = $data['region_id'];
-		if ($filter_region_id)
-		{
-			if (is_numeric($filter_region_id))
-			{
+		if ($filter_region_id) {
+			if (is_numeric($filter_region_id)) {
 				$query->where('p.region_id = ' . (int) $filter_region_id);
 			}
 		}
 
 		$filter_service_id = $data['service_id'];
-		if ($filter_service_id)
-		{
-			if (is_numeric($filter_service_id))
-			{
+		if ($filter_service_id) {
+			if (is_numeric($filter_service_id)) {
 				$query->where('a.service_id = ' . (int) $filter_service_id);
 			}
 		}
 
 		$filter_agency_id = $data['agency_id'];
-		if ($filter_agency_id)
-		{
-			if (is_numeric($filter_agency_id))
-			{
+		if ($filter_agency_id) {
+			if (is_numeric($filter_agency_id)) {
 				$query->where($db->qn('c.agency_id') . '=' . (int) $filter_agency_id);
 			}
 		}
 
-		if (!$data['cancelled'])
-		{
+		if (!$data['cancelled']) {
 			$query->where($db->qn('c.cancelled') . ' = 0');
 		}
 
-		if (!$data['datetype'])
-		{
+		if (!$data['datetype']) {
 			$ts_a = $data['valid_from'] . ' 00:00:00';
 			$ts_d = $data['valid_to'] . ' 23:59:59';
 			$query->where($db->qn('a.created_at') . ' >= ' . $db->q($ts_a));
 			$query->where($db->qn('a.created_at') . ' <= ' . $db->q($ts_d));
-		}
-		else
-		{
+		} else {
 			$query->where($db->qn('a.payment_date') . ' >= ' . $db->q($data['valid_from']));
 			$query->where($db->qn('a.payment_date') . ' <= ' . $db->q($data['valid_to']));
 		}
 
 		$query->where($db->qn('c.black_booking') . '=0')
-		      ->where($db->qn('c.state') . '=1')
-		      ->order('a.id');
+			->where($db->qn('c.state') . '=1')
+			->order('a.id');
+
+		$db->setQuery($query);
+
+		return $db->loadObjectList();
+	}
+
+	/**
+	 * Get payments for contract
+	 *
+	 * @param  int  $contract_id  ID of contract
+	 *
+	 * @throws RuntimeException
+	 * @throws RuntimeException
+	 * @since  1.0.0
+	 * @return mixed
+	 */
+	public function getForContract(int $contract_id): mixed
+	{
+		$db    = $this->getDatabase();
+		$query = $db->getQuery(true);
+
+		$query->select($this->getState('list.select', 'a.*'))
+			->from($db->qn('#__knowres_contract_payment', 'a'))
+			->select($db->qn('c.tag', 'contract_tag'))
+			->select($db->qn('c.currency', 'contract_currency'))
+			->join('LEFT',
+				$db->qn('#__knowres_contract', 'c') . 'ON' . $db->qn('c.id') . '=' . $db->qn('a.contract_id'))
+			->select($db->qn('i.name', 'service_name'))
+			->select($db->qn('i.plugin', 'service_plugin'))
+			->join('LEFT', $db->qn('#__knowres_service', 'i') . 'ON' . $db->qn('i.id') . '=' . ('a.service_id'))
+			->where($db->qn('a.contract_id') . '=' . $contract_id)
+			->where($db->qn('a.state') . '=1')
+			->order($db->qn('id'));
 
 		$db->setQuery($query);
 
@@ -214,27 +256,37 @@ class ContractpaymentsModel extends ListModel
 		$query = $db->getQuery(true);
 
 		$query->select($db->qn([
-			'cp.id', 'cp.contract_id',
-			'cp.payment_date', 'cp.amount', 'cp.rate', 'cp.base_amount',
-			'c.tag', 'c.booking_status', 'c.property_id',
-			'c.currency', 'c.contract_total',
-			'p.id', 'p.property_name', 'g.firstname', 'g.surname',
+			'cp.id',
+			'cp.contract_id',
+			'cp.payment_date',
+			'cp.amount',
+			'cp.rate',
+			'cp.base_amount',
+			'c.tag',
+			'c.booking_status',
+			'c.property_id',
+			'c.currency',
+			'c.contract_total',
+			'p.id',
+			'p.property_name',
+			'g.firstname',
+			'g.surname',
 			's.plugin'
 		]));
 
 		$query->from($db->qn('#__knowres_contract_payment', 'cp'))
-		      ->join('LEFT',
-			      $db->qn('#__knowres_contract', 'c') . 'ON' . $db->qn('c.id') . '=' . $db->qn('cp.contract_id'))
-		      ->join('LEFT',
-			      $db->qn('#__knowres_property', 'p') . 'ON' . $db->qn('p.id') . '=' . $db->qn('c.property_id'))
-		      ->join('LEFT',
-			      $db->qn('#__knowres_guest', 'g') . 'ON' . $db->qn('g.id') . '=' . $db->qn('c.guest_id'))
-		      ->join('LEFT',
-			      $db->qn('#__knowres_service', 's') . 'ON' . $db->qn('s.id') . '=' . $db->qn('cp.service_id'))
-		      ->where($db->qn('cp.confirmed') . '=1')
-		      ->where($db->qn('cp.created_at') . '>' . $db->q($yesterdayTS))
-		      ->where($db->qn('cp.state') . '=1')
-		      ->order($db->qn('cp.created_at'));
+			->join('LEFT',
+				$db->qn('#__knowres_contract', 'c') . 'ON' . $db->qn('c.id') . '=' . $db->qn('cp.contract_id'))
+			->join('LEFT',
+				$db->qn('#__knowres_property', 'p') . 'ON' . $db->qn('p.id') . '=' . $db->qn('c.property_id'))
+			->join('LEFT',
+				$db->qn('#__knowres_guest', 'g') . 'ON' . $db->qn('g.id') . '=' . $db->qn('c.guest_id'))
+			->join('LEFT',
+				$db->qn('#__knowres_service', 's') . 'ON' . $db->qn('s.id') . '=' . $db->qn('cp.service_id'))
+			->where($db->qn('cp.confirmed') . '=1')
+			->where($db->qn('cp.created_at') . '>' . $db->q($yesterdayTS))
+			->where($db->qn('cp.state') . '=1')
+			->order($db->qn('cp.created_at'));
 
 		$db->setQuery($query);
 
@@ -256,36 +308,35 @@ class ContractpaymentsModel extends ListModel
 		$query = $db->getQuery(true);
 
 		$query->select($this->getState('list.select', 'cp.*'))
-		      ->from($db->qn('#__knowres_contract_payment', 'cp'))
-		      ->select($db->qn('c.arrival', 'arrival'))
-		      ->select($db->qn('c.booking_status', 'booking_status'))
-		      ->select($db->qn('c.tag', 'tag'))
-		      ->select($db->qn('c.departure', 'departure'))
-		      ->select($db->qn('c.deposit', 'deposit'))
-		      ->join('LEFT',
-			      $db->qn('#__knowres_contract', 'c') . 'ON' . $db->qn('c.id') . '=' . $db->qn('cp.contract_id'))
-		      ->select($db->qn('p.owner_id', 'owner_id'))
-		      ->select($db->qn('p.property_name', 'property_name'))
-		      ->join('LEFT',
-			      $db->qn('#__knowres_property', 'p') . 'ON' . $db->qn('c.property_id') . '=' . $db->qn('p.id'))
-		      ->select($db->qn('s.plugin', 'plugin'))
-		      ->join('LEFT',
-			      $db->qn('#__knowres_service', 's') . 'ON' . $db->qn('s.id') . '=' . $db->qn('cp.service_id'))
-		      ->select($db->qn('o.commission', 'commission'))
-		      ->select($db->qn('o.days', 'days'))
-		      ->select($db->qn('o.pay_deposit', 'pay_deposit'))
-		      ->select($db->qn('o.deposit_days', 'deposit_days'))
-		      ->select($db->qn('o.payment_schedule', 'schedule'))
-		      ->select($db->qn('o.whopays', 'whopays'))
-		      ->join('LEFT',
-			      $db->qn('#__knowres_owner', 'o') . 'ON' . $db->qn('o.id') . '=' . $db->qn('p.owner_id'))
-		      ->select($db->qn('p.owner_id', 'owner_id'))
-		      ->where($db->qn('cp.state') . '=1')
-		      ->where($db->qn('cp.actioned') . '=0')
-		      ->where($db->qn('cp.confirmed') . '=1');
+			->from($db->qn('#__knowres_contract_payment', 'cp'))
+			->select($db->qn('c.arrival', 'arrival'))
+			->select($db->qn('c.booking_status', 'booking_status'))
+			->select($db->qn('c.tag', 'tag'))
+			->select($db->qn('c.departure', 'departure'))
+			->select($db->qn('c.deposit', 'deposit'))
+			->join('LEFT',
+				$db->qn('#__knowres_contract', 'c') . 'ON' . $db->qn('c.id') . '=' . $db->qn('cp.contract_id'))
+			->select($db->qn('p.owner_id', 'owner_id'))
+			->select($db->qn('p.property_name', 'property_name'))
+			->join('LEFT',
+				$db->qn('#__knowres_property', 'p') . 'ON' . $db->qn('c.property_id') . '=' . $db->qn('p.id'))
+			->select($db->qn('s.plugin', 'plugin'))
+			->join('LEFT',
+				$db->qn('#__knowres_service', 's') . 'ON' . $db->qn('s.id') . '=' . $db->qn('cp.service_id'))
+			->select($db->qn('o.commission', 'commission'))
+			->select($db->qn('o.days', 'days'))
+			->select($db->qn('o.pay_deposit', 'pay_deposit'))
+			->select($db->qn('o.deposit_days', 'deposit_days'))
+			->select($db->qn('o.payment_schedule', 'schedule'))
+			->select($db->qn('o.whopays', 'whopays'))
+			->join('LEFT',
+				$db->qn('#__knowres_owner', 'o') . 'ON' . $db->qn('o.id') . '=' . $db->qn('p.owner_id'))
+			->select($db->qn('p.owner_id', 'owner_id'))
+			->where($db->qn('cp.state') . '=1')
+			->where($db->qn('cp.actioned') . '=0')
+			->where($db->qn('cp.confirmed') . '=1');
 
-		if ($agency_id)
-		{
+		if ($agency_id) {
 			$query->where($db->qn('c.agency_id') . '=' . $agency_id);
 		}
 
@@ -311,51 +362,18 @@ class ContractpaymentsModel extends ListModel
 		$query = $db->getQuery(true);
 
 		$query->select('SUM(base_amount) AS total')
-		      ->from('#__knowres_contract_payment')
-		      ->where($db->qn('contract_id') . '=' . $contract_id)
-		      ->where($db->qn('state') . '=1');
+			->from('#__knowres_contract_payment')
+			->where($db->qn('contract_id') . '=' . $contract_id)
+			->where($db->qn('state') . '=1');
 
 		$db->setQuery($query);
 
 		$value = $db->loadResult();
-		if (is_null($value))
-		{
+		if (is_null($value)) {
 			$value = 0;
 		}
 
 		return (float) $value;
-	}
-
-	/**
-	 * Get payments for contract
-	 *
-	 * @param  int  $contract_id  ID of contract
-	 *
-	 * @throws RuntimeException
-	 * @throws RuntimeException
-	 * @since  1.0.0
-	 * @return mixed
-	 */
-	public function getForContract(int $contract_id): mixed
-	{
-		$db    = $this->getDatabase();
-		$query = $db->getQuery(true);
-
-		$query->select($this->getState('list.select', 'a.*'))
-		      ->from($db->qn('#__knowres_contract_payment', 'a'))
-		      ->select($db->qn('c.tag', 'contract_tag'))
-		      ->select($db->qn('c.currency', 'contract_currency'))
-		      ->join('LEFT',
-			      $db->qn('#__knowres_contract', 'c') . 'ON' . $db->qn('c.id') . '=' . $db->qn('a.contract_id'))
-		      ->select($db->qn('i.name', 'service_name'))
-		      ->select($db->qn('i.plugin', 'service_plugin'))
-		      ->join('LEFT', $db->qn('#__knowres_service', 'i') . 'ON' . $db->qn('i.id') . '=' . ('a.service_id'))
-		      ->where($db->qn('a.contract_id') . '=' . $contract_id)
-		      ->where($db->qn('a.state') . '=1')
-		      ->order($db->qn('id'));
-
-		$db->setQuery($query);
-		return $db->loadObjectList();
 	}
 
 	/**
@@ -375,12 +393,12 @@ class ContractpaymentsModel extends ListModel
 
 		$query->select($this->getState('list.select', 'a.*'));
 		$query->from($db->qn('#__knowres_contract_payment', 'a'))
-		      ->where($db->qn('a.state') . '=0')
-		      ->where($db->qn('a.contract_id') . '=' . $contract_id)
-		      ->where($db->qn('a.service_id') . '=' . $service_id)
-		      ->where($db->qn('a.service_ref') . '<>' . $db->q(''))
-		      ->order($db->qn('a.id') . ' DESC')
-		      ->setLimit(1);
+			->where($db->qn('a.state') . '=0')
+			->where($db->qn('a.contract_id') . '=' . $contract_id)
+			->where($db->qn('a.service_id') . '=' . $service_id)
+			->where($db->qn('a.service_ref') . '<>' . $db->q(''))
+			->order($db->qn('a.id') . ' DESC')
+			->setLimit(1);
 
 		$db->setQuery($query);
 
@@ -402,53 +420,14 @@ class ContractpaymentsModel extends ListModel
 		$query = $db->getQuery(true);
 
 		$query->select('SUM(CASE WHEN confirmed = 1 THEN base_amount ELSE 0 END) AS confirmed')
-		      ->select('SUM(base_amount) AS total')
-		      ->from($db->qn('#__knowres_contract_payment'))
-		      ->where($db->qn('contract_id') . '=' . $contract_id)
-		      ->where($db->qn('state') . '=1')
-		      ->group($db->qn('contract_id'));
+			->select('SUM(base_amount) AS total')
+			->from($db->qn('#__knowres_contract_payment'))
+			->where($db->qn('contract_id') . '=' . $contract_id)
+			->where($db->qn('state') . '=1')
+			->group($db->qn('contract_id'));
 		$db->setQuery($query);
 
 		return $db->loadObject();
-	}
-
-	/**
-	 * Update actioned payments
-	 *
-	 * @param  array  $ids  Array of IDs to be updated
-	 *
-	 * @throws RuntimeException
-	 * @throws Exception
-	 * @since  3.2.0
-	 */
-	public function updateActionedPayments(array $ids): void
-	{
-		if (!is_countable($ids) || !count($ids))
-		{
-			return;
-		}
-
-		try
-		{
-			$db    = $this->getDatabase();
-			$query = $db->getQuery(true);
-
-			$db->transactionStart();
-
-			$query->update($db->qn('#__knowres_contract_payment'))
-			      ->set($db->qn('actioned') . '=1')
-			      ->set($db->qn('actioned_at') . '=' . $db->q(TickTock::getTS()))
-			      ->where($db->qn('id') . '=' . implode(' OR ' . $db->qn('id') . '=', $ids));
-			$db->setQuery($query);
-			$db->execute();
-
-			$db->transactionCommit();
-		}
-		catch (ExecutionFailureException $e)
-		{
-			$db->transactionRollback();
-			throw $e;
-		}
 	}
 
 	/**
@@ -464,8 +443,7 @@ class ContractpaymentsModel extends ListModel
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
-		try
-		{
+		try {
 			$db->transactionStart();
 			$query = $db->getQuery(true);
 
@@ -478,16 +456,49 @@ class ContractpaymentsModel extends ListModel
 			];
 
 			$query->update($db->qn('#__knowres_contract_payment'))
-			      ->set($fields)
-			      ->where($conditions);
+				->set($fields)
+				->where($conditions);
 
 			$db->setQuery($query);
 			$db->execute();
 
 			$db->transactionCommit();
+		} catch (ExecutionFailureException $e) {
+			$db->transactionRollback();
+			throw $e;
 		}
-		catch (ExecutionFailureException $e)
-		{
+	}
+
+	/**
+	 * Update actioned payments
+	 *
+	 * @param  array  $ids  Array of IDs to be updated
+	 *
+	 * @throws RuntimeException
+	 * @throws Exception
+	 * @since  3.2.0
+	 */
+	public function updateActionedPayments(array $ids): void
+	{
+		if (!is_countable($ids) || !count($ids)) {
+			return;
+		}
+
+		try {
+			$db    = $this->getDatabase();
+			$query = $db->getQuery(true);
+
+			$db->transactionStart();
+
+			$query->update($db->qn('#__knowres_contract_payment'))
+				->set($db->qn('actioned') . '=1')
+				->set($db->qn('actioned_at') . '=' . $db->q(TickTock::getTS()))
+				->where($db->qn('id') . '=' . implode(' OR ' . $db->qn('id') . '=', $ids));
+			$db->setQuery($query);
+			$db->execute();
+
+			$db->transactionCommit();
+		} catch (ExecutionFailureException $e) {
 			$db->transactionRollback();
 			throw $e;
 		}
@@ -509,41 +520,38 @@ class ContractpaymentsModel extends ListModel
 
 		$fieldlist = $db->qn(array('p.contract_id'));
 		$query->select($fieldlist)
-		      ->from($db->qn('#__knowres_contract_payment', 'p'))
-		      ->join('LEFT',
-			      $db->qn('#__knowres_contract', 'c') . ' ON ' . $db->qn('c.id') . '=' . $db->qn('p.contract_id'))
-		      ->where($db->qn('p.actioned') . '=1')
-		      ->where($db->qn('c.agency_id') . '=' . $agency_id)
-		      ->where($db->qn('p.actioned_at') . '=' . $db->q('0000-00-00 00:00:00'))
-		      ->where($db->qn('p.state') . '=1')
-		      ->where($db->qn('p.confirmed') . '=1');
+			->from($db->qn('#__knowres_contract_payment', 'p'))
+			->join('LEFT',
+				$db->qn('#__knowres_contract', 'c') . ' ON ' . $db->qn('c.id') . '=' . $db->qn('p.contract_id'))
+			->where($db->qn('p.actioned') . '=1')
+			->where($db->qn('c.agency_id') . '=' . $agency_id)
+			->where($db->qn('p.actioned_at') . '=' . $db->q('0000-00-00 00:00:00'))
+			->where($db->qn('p.state') . '=1')
+			->where($db->qn('p.confirmed') . '=1');
 
 		$db->setQuery($query);
 		$cids = $db->loadColumn();
-		if (is_countable($cids) && count($cids))
-		{
-			try
-			{
+		if (is_countable($cids) && count($cids)) {
+			try {
 				$db->transactionStart();
 
 				$query = $db->getQuery(true)
-				            ->update($db->qn('#__knowres_contract_payment'))
-				            ->set($db->qn('actioned') . '=1')
-				            ->where($db->qn('contract_id') . ' IN (' . implode(',', array_map('intval', $cids)) . ')');
+					->update($db->qn('#__knowres_contract_payment'))
+					->set($db->qn('actioned') . '=1')
+					->where($db->qn('contract_id') . ' IN (' . implode(',', array_map('intval', $cids)) . ')');
 				$db->setQuery($query);
 				$db->execute();
 
 				$query = $db->getQuery(true)
-				            ->update($db->qn('#__knowres_contract_fee'))
-				            ->set($db->qn('actioned') . ' = 1')
-				            ->where($db->qn('contract_id') . ' IN (' . implode(',', array_map('intval', $cids)) . ')');
+					->update($db->qn('#__knowres_contract_fee'))
+					->set($db->qn('actioned') . ' = 1')
+					->where($db->qn('contract_id') . ' IN (' . implode(',', array_map('intval', $cids)) . ')');
 
 				$db->setQuery($query);
 				$db->execute();
-			}
-			catch (ExecutionFailureException $e)
-			{
-				KrMethods::message(KrMethods::plain('Payment and Fee records could not be set to actioned for Xero initialise. Please contact support'),
+			} catch (ExecutionFailureException $e) {
+				KrMethods::message(KrMethods::plain(
+					'Payment and Fee records could not be set to actioned for Xero initialise. Please contact support'),
 					'error');
 			}
 		}
@@ -568,25 +576,23 @@ class ContractpaymentsModel extends ListModel
 		$fieldlist[0] = 'DISTINCT ' . $fieldlist[0];
 
 		$query->select($fieldlist)
-		      ->from($db->qn('#__knowres_contract_payment'))
-		      ->where($db->qn('actioned') . '  = 1')
-		      ->where($db->qn('actioned_at') . ' = ' . $db->q('0000-00-00 00:00:00'))
-		      ->where($db->qn('state') . ' = 1')
-		      ->where($db->qn('confirmed') . ' = 1')
-		      ->where($db->qn('contract_id') . ' IN (' . implode(',', array_map('intval', $ids)) . ')');
+			->from($db->qn('#__knowres_contract_payment'))
+			->where($db->qn('actioned') . '  = 1')
+			->where($db->qn('actioned_at') . ' = ' . $db->q('0000-00-00 00:00:00'))
+			->where($db->qn('state') . ' = 1')
+			->where($db->qn('confirmed') . ' = 1')
+			->where($db->qn('contract_id') . ' IN (' . implode(',', array_map('intval', $ids)) . ')');
 
 		$db->setQuery($query);
 		$contracts = $db->loadColumn();
 
-		if (!count($contracts))
-		{
+		if (!count($contracts)) {
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_ACTION_SUCCESS'), 'info');
 
 			return true;
 		}
 
-		try
-		{
+		try {
 			$db->transactionStart();
 			$query = $db->getQuery(true);
 
@@ -598,8 +604,8 @@ class ContractpaymentsModel extends ListModel
 			);
 
 			$query->update($db->qn('#__knowres_contract_payment'))
-			      ->set($fields)
-			      ->where($conditions);
+				->set($fields)
+				->where($conditions);
 
 			$db->setQuery($query);
 			$db->execute();
@@ -607,16 +613,14 @@ class ContractpaymentsModel extends ListModel
 			$query = $db->getQuery(true);
 
 			$query->update($db->qn('#__knowres_contract_fee'))
-			      ->set($fields)
-			      ->where($conditions);
+				->set($fields)
+				->where($conditions);
 
 			$db->setQuery($query);
 			$db->execute();
 
 			$db->transactionCommit();
-		}
-		catch (ExecutionFailureException $e)
-		{
+		} catch (ExecutionFailureException $e) {
 			KrMethods::message(KrMethods::plain($e->getMessage()), 'error');
 			KrMethods::message(KrMethods::plain('KrFactory error, please try again or contact support'), 'error');
 
@@ -655,66 +659,52 @@ class ContractpaymentsModel extends ListModel
 		$query->join('LEFT', '#__users AS updated_by ON updated_by.id = a.updated_by');
 
 		$state = $this->getState('filter.state');
-		if (is_numeric($state))
-		{
+		if (is_numeric($state)) {
 			$query->where('a.state = ' . (int) $state);
-		}
-		else if ($state === '')
-		{
+		} else if ($state === '') {
 			$query->where($db->qn('a.state') . '= 1');
 		}
 
 		$filter_contract_id = $this->state->get('filter.contract_id');
-		if ($filter_contract_id)
-		{
+		if ($filter_contract_id) {
 			$query->where($db->qn('a.contract_id') . '= ' . (int) $filter_contract_id);
 		}
 
 		$filter_service_id = $this->state->get("filter.service_id");
-		if ($filter_service_id)
-		{
+		if ($filter_service_id) {
 			$query->where($db->qn('a.service_id') . '= ' . (int) $filter_service_id);
 		}
 
 		$filter_payment_ref = $this->state->get("filter.payment_ref");
-		if ($filter_payment_ref)
-		{
+		if ($filter_payment_ref) {
 			$query->where($db->qn('a.payment_ref') . '= ' . $db->q($filter_payment_ref));
 		}
 
 		$filter_currency = $this->state->get("filter.currency");
-		if ($filter_currency)
-		{
+		if ($filter_currency) {
 			$query->where($db->qn('a.currency') . '= ' . $db->q($filter_currency));
 		}
 
 		$filter_payment_date = $this->state->get("filter.payment_date");
-		if ($filter_payment_date)
-		{
+		if ($filter_payment_date) {
 			$query->where($db->qn('a.payment_date') . ' >= ' . $db->q($filter_payment_date));
 		}
 
 		$confirmed = $this->getState('filter.confirmed');
-		if (is_numeric($confirmed))
-		{
+		if (is_numeric($confirmed)) {
 			$query->where($db->qn('a.confirmed') . '=' . (int) $confirmed);
 		}
 
 		$actioned = $this->getState('filter.actioned');
-		if (is_numeric($actioned))
-		{
+		if (is_numeric($actioned)) {
 			$query->where($db->qn('a.actioned') . '=' . (int) $actioned);
 		}
 
 		$search = $this->getState('filter.search');
-		if (!empty($search))
-		{
-			if (stripos($search, 'id:') === 0)
-			{
+		if (!empty($search)) {
+			if (stripos($search, 'id:') === 0) {
 				$query->where('a.id = ' . (int) substr($search, 3));
-			}
-			else
-			{
+			} else {
 				$search = $db->q('%' . $db->escape(trim($search), true) . '%');
 				$query->having('( a.payment_ref LIKE ' . $search . ' OR ( contract_tag LIKE ' . $search . ' ) )');
 			}
@@ -722,8 +712,7 @@ class ContractpaymentsModel extends ListModel
 
 		$orderCol  = $this->state->get('list.ordering');
 		$orderDirn = $this->state->get('list.direction');
-		if ($orderCol && $orderDirn)
-		{
+		if ($orderCol && $orderDirn) {
 			$query->order($db->qn($orderCol) . ' ' . $orderDirn);
 		}
 
@@ -780,8 +769,10 @@ class ContractpaymentsModel extends ListModel
 			$this->getUserStateFromRequest($this->context . '.filter.service_id', 'filter_service_id', 0, 'integer'));
 
 		$this->setState('filter.payment_date',
-			$this->getUserStateFromRequest($this->context . '.filter.payment_date', 'filter_payment_date',
-				TickTock::modifyMonths('now', 1, '-'), 'string'));
+			$this->getUserStateFromRequest($this->context . '.filter.payment_date',
+				'filter_payment_date',
+				TickTock::modifyMonths('now', 1, '-'),
+				'string'));
 
 		$this->setState('filter.payment_ref',
 			$this->getUserStateFromRequest($this->context . '.filter.payment_ref', 'filter_payment_ref', '', 'string'));

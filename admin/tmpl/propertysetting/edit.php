@@ -6,26 +6,27 @@
  * @license     See the file "LICENSE.txt" for the full license governing this code.
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
-/** @noinspection PhpUnhandledExceptionInspection */
 
 defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrMethods;
 use Joomla\CMS\HTML\HTMLHelper;
+
 ?>
 
+<!--suppress JSCheckFunctionSignatures -->
 <script>
-	Joomla.submitbutton = function (task) {
-		if (task === 'propertysetting.cancel') {
-			Joomla.submitform(task, document.getElementById('propertysetting-form'));
-		} else {
-			if (task !== 'propertysetting.cancel' && document.formvalidator.isValid(document.getElementById('propertysetting-form'))) {
-				Joomla.submitform(task, document.getElementById('propertysetting-form'));
-			} else {
-				alert('<?php echo $this->escape(KrMethods::plain('JGLOBAL_VALIDATION_FORM_FAILED')); ?>');
-			}
-		}
-	}
+    Joomla.submitbutton = function (task) {
+        if (task === 'propertysetting.cancel') {
+            Joomla.submitform(task, document.getElementById('propertysetting-form'));
+        } else {
+            if (task !== 'propertysetting.cancel' && document.formvalidator.isValid(document.getElementById('propertysetting-form'))) {
+                Joomla.submitform(task, document.getElementById('propertysetting-form'));
+            } else {
+                alert('<?php echo $this->escape(KrMethods::plain('JGLOBAL_VALIDATION_FORM_FAILED')); ?>');
+            }
+        }
+    }
 </script>
 
 <form action="<?php echo KrMethods::route('index.php?option=com_knowres&layout=edit&id=' . (int) $this->item->id); ?>"
@@ -43,7 +44,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 					foreach ((array) $this->item->property_id as $value):
 						if (!is_array($value)):
 							echo '<input type="hidden" class="property_id" name="jform[property_idhidden][' . $value
-								. ']" value="' . $value . '" />';
+							     . ']" value="' . $value . '" />';
 						endif;
 					endforeach;
 					?>
@@ -71,7 +72,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 			</div>
 		</div>
 
-		<input type="hidden" name="jform[id]" value="<?php echo $this->item->id; ?>" />
+		<input type="hidden" name="jform[id]" value="<?php echo $this->item->id; ?>"/>
 		<input type="hidden" name="task" value="">
 		<?php echo HTMLHelper::_('form.token'); ?>
 	</div>

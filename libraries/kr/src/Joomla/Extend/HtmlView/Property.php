@@ -6,6 +6,7 @@
  * @license     See the file "LICENSE.txt" for the full license governing this code.
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
+
 /** @noinspection PhpPossiblePolymorphicInvocationInspection */
 
 namespace HighlandVision\KR\Joomla\Extend\HtmlView;
@@ -31,8 +32,17 @@ class Property extends KrHtmlView
 {
 	/** @var array Property related views */
 	public array $related
-		= ['coupons', 'discounts', 'extras', 'images', 'media', 'propertyicals', 'propertyrooms', 'propertyoptions',
-		   'ratemarkups', 'rates', 'reviews'];
+		= ['coupons',
+		   'discounts',
+		   'extras',
+		   'images',
+		   'media',
+		   'propertyicals',
+		   'propertyrooms',
+		   'propertyoptions',
+		   'ratemarkups',
+		   'rates',
+		   'reviews'];
 
 	/**
 	 * Constructor
@@ -61,10 +71,10 @@ class Property extends KrHtmlView
 		}
 
 		$dropdown = $Toolbar->dropdownButton('property-booking-group')
-		                    ->text('COM_KNOWRES_CONTRACT_TITLE')
-		                    ->toggleSplit(false)
-		                    ->icon('fa-solid fa-calendar')
-		                    ->buttonClass('btn btn-action');
+			->text('COM_KNOWRES_CONTRACT_TITLE')
+			->toggleSplit(false)
+			->icon('fa-solid fa-calendar')
+			->buttonClass('btn btn-action');
 
 		$ChildToolbar = $dropdown->getChildToolbar();
 
@@ -72,19 +82,19 @@ class Property extends KrHtmlView
 			if ($this->allow_block) {
 				$link = KrMethods::route('index.php?option=com_knowres&view=contract&task=edit&layout=block');
 				$ChildToolbar->linkButton('block', 'COM_KNOWRES_CONTRACT_BLOCK_TITLE_LONG')
-				             ->icon('fa-solid fa-lock')
-				             ->url($link);
+					->icon('fa-solid fa-lock')
+					->url($link);
 			}
 			if ($this->allow_book) {
 				$link = KrMethods::route('index.php?option=com_knowres&view=contract&task=edit&layout=manager');
 				$ChildToolbar->linkButton('block', 'COM_KNOWRES_CONTRACT_MANAGER_TITLE_LONG')
-				             ->icon('fa-solid fa-suitcase')
-				             ->url($link);
+					->icon('fa-solid fa-suitcase')
+					->url($link);
 
 				$link = KrMethods::route('index.php?option=com_knowres&view=contract&task=agent&layout=manager');
 				$ChildToolbar->linkButton('block', 'COM_KNOWRES_CONTRACT_AGENT_TITLE_LONG')
-				             ->icon('fa-solid fa-headphones')
-				             ->url($link);
+					->icon('fa-solid fa-headphones')
+					->url($link);
 			}
 		}
 
@@ -104,8 +114,8 @@ class Property extends KrHtmlView
 	{
 		$link = KrMethods::route('index.php?option=com_knowres&task=property.dashboard&id=' . $this->property_id);
 		$Toolbar->linkButton('dashboard', 'COM_KNOWRES_DASHBOARD')
-		        ->icon('fa-solid fa-tachometer-alt knowres')
-		        ->url($link);
+			->icon('fa-solid fa-tachometer-alt knowres')
+			->url($link);
 
 		return $Toolbar;
 	}
@@ -123,8 +133,8 @@ class Property extends KrHtmlView
 	{
 		$link = KrMethods::route('index.php?option=com_knowres&view=properties');
 		$Toolbar->linkButton('properties', 'COM_KNOWRES_PROPERTIES_TITLE')
-		        ->icon('fa-solid fa-home knowres')
-		        ->url($link);
+			->icon('fa-solid fa-home knowres')
+			->url($link);
 
 		return $Toolbar;
 	}
@@ -142,10 +152,10 @@ class Property extends KrHtmlView
 	public function addRelated(Toolbar $Toolbar, string $name): Toolbar
 	{
 		$dropdown = $Toolbar->dropdownButton('property-edit-group')
-		                    ->text('COM_KNOWRES_TOOLBAR_PROPERTY_DATA')
-		                    ->toggleSplit(false)
-		                    ->icon('fa-solid fa-network-wired')
-		                    ->buttonClass('btn btn-action');
+			->text('COM_KNOWRES_TOOLBAR_PROPERTY_DATA')
+			->toggleSplit(false)
+			->icon('fa-solid fa-network-wired')
+			->buttonClass('btn btn-action');
 		if ($name == 'properties') {
 			$dropdown->listCheck(true);
 		}
@@ -155,92 +165,92 @@ class Property extends KrHtmlView
 		if ($name !== 'propertyoptions' && $this->access_level > 10) {
 			$link = KrMethods::route('index.php?option=com_knowres&view=propertyoptions');
 			$ChildToolbar->linkButton('propertyoptions', 'COM_KNOWRES_PROPERTYOPTIONS_TITLE')
-			             ->icon('fa-solid fa-question-circle knowres')
-			             ->url($link);
+				->icon('fa-solid fa-question-circle knowres')
+				->url($link);
 		}
 
 		if ($name !== 'coupons' && $this->access_level > 10) {
 			$link = KrMethods::route('index.php?option=com_knowres&view=coupons');
 			$ChildToolbar->linkButton('coupons', 'COM_KNOWRES_COUPONS_TITLE')
-			             ->icon('fa-solid fa-money-bill knowres')
-			             ->url($link);
+				->icon('fa-solid fa-money-bill knowres')
+				->url($link);
 		}
 
 		if ($name !== 'discounts' && $this->checkAccess('discount_manage')) {
 			$link = KrMethods::route('index.php?option=com_knowres&view=discounts');
 			$ChildToolbar->linkButton('discounts', 'COM_KNOWRES_DISCOUNTS_TITLE')
-			             ->icon('fa-solid fa-percent knowres')
-			             ->url($link);
+				->icon('fa-solid fa-percent knowres')
+				->url($link);
 		}
 
 		if ($name !== 'extras' && $this->checkAccess('extra_manage')) {
 			$link = KrMethods::route('index.php?option=com_knowres&view=extras');
 			$ChildToolbar->linkButton('extras', 'COM_KNOWRES_EXTRAS_TITLE')
-			             ->icon('fa-solid fa-plus knowres')
-			             ->url($link);
+				->icon('fa-solid fa-plus knowres')
+				->url($link);
 		}
 
 		if ($name !== 'propertyicals' && $this->access_level > 10) {
 			$link = KrMethods::route('index.php?option=com_knowres&view=propertyicals');
 			$ChildToolbar->linkButton('icals', 'COM_KNOWRES_PROPERTYICALS_TITLE')
-			             ->icon('fa-solid fa-calendar knowres')
-			             ->url($link);
+				->icon('fa-solid fa-calendar knowres')
+				->url($link);
 		}
 
 		if ($name !== 'media' && $this->access_level > 10) {
 			$link = KrMethods::route('index.php?option=com_knowres&view=media&id=' . $this->property_id);
 			$ChildToolbar->linkButton('media', 'COM_KNOWRES_TITLE_PROPERTY_MEDIA')
-			             ->icon('fa-solid fa-image knowres')
-			             ->url($link);
+				->icon('fa-solid fa-image knowres')
+				->url($link);
 		}
 
 		if ($name !== 'ratemarkups' && $this->access_level > 10) {
 			$link = KrMethods::route('index.php?option=com_knowres&view=ratemarkups');
 			$ChildToolbar->linkButton('ratemarkups', 'COM_KNOWRES_RATEMARKUPS_TITLE')
-			             ->icon('fa-solid fa-chart-line knowres')
-			             ->url($link);
+				->icon('fa-solid fa-chart-line knowres')
+				->url($link);
 		}
 
-		if ($name !== 'property' && $this->checkAccess('property_edit')) {
+		if ($name !== 'property' && $name !== 'dashboard' && $this->checkAccess('property_edit')) {
 			$link = KrMethods::route('index.php?option=com_knowres&task=property.edit&id=' . $this->property_id);
 			$ChildToolbar->linkButton('icals', 'COM_KNOWRES_PROPERTY')
-			             ->icon('fa-solid fa-calendar knowres')
-			             ->url($link);
+				->icon('fa-solid fa-calendar knowres')
+				->url($link);
 		}
 
 		if ($name !== 'propertysettings' && $this->access_level > 10) {
 			$link = KrMethods::route('index.php?option=com_knowres&task=propertysettings.solo');
 			$ChildToolbar->linkButton('media', 'COM_KNOWRES_PROPERTYSETTINGS_TITLE')
-			             ->icon('fa-solid fa-home knowres')
-			             ->url($link);
+				->icon('fa-solid fa-home knowres')
+				->url($link);
 		}
 
 		if ($name !== 'rates' && $this->checkAccess('rate_manage')) {
 			$link = KrMethods::route('index.php?option=com_knowres&view=rates');
 			$ChildToolbar->linkButton('rates', 'COM_KNOWRES_RATES_TITLE')
-			             ->icon('fa-solid fa-euro-sign knowres')
-			             ->url($link);
+				->icon('fa-solid fa-euro-sign knowres')
+				->url($link);
 		}
 
 		if ($name !== 'reviews' && $this->access_level >= 20) {
 			$link = KrMethods::route('index.php?option=com_knowres&view=reviews');
 			$ChildToolbar->linkButton('reviews', 'COM_KNOWRES_REVIEWS_TITLE')
-			             ->icon('fa-solid fa-comment knowres')
-			             ->url($link);
+				->icon('fa-solid fa-comment knowres')
+				->url($link);
 		}
 
 		if ($name !== 'propertyrooms' && $this->access_level > 10) {
 			$link = KrMethods::route('index.php?option=com_knowres&view=propertyrooms');
 			$ChildToolbar->linkButton('propertyrooms', 'COM_KNOWRES_PROPERTYROOMS_TITLE')
-			             ->icon('fa-solid fa-bed knowres')
-			             ->url($link);
+				->icon('fa-solid fa-bed knowres')
+				->url($link);
 		}
 
 		if ($name !== 'images' && $this->checkAccess('property_add')) {
 			$link = KrMethods::route('index.php?option=com_knowres&view=images');
 			$ChildToolbar->linkButton('images', 'COM_KNOWRES_IMAGES_TITLE')
-			             ->icon('fa-solid fa-images knowres')
-			             ->url($link);
+				->icon('fa-solid fa-images knowres')
+				->url($link);
 		}
 
 		return $Toolbar;
@@ -261,21 +271,21 @@ class Property extends KrHtmlView
 					$this->related) || $name == 'media') && $name != 'calendar' && $this->checkAccess('property_edit')) {
 			$link = KrMethods::route('index.php?option=com_knowres&task=property.edit&id=' . $this->property_id);
 			$Toolbar->linkButton('property', 'JTOOLBAR_EDIT')
-			        ->icon('fa-solid fa-edit knowres')
-			        ->url($link);
+				->icon('fa-solid fa-edit knowres')
+				->url($link);
 		}
 
 		if (!empty($this->switch)) {
 			$title = KrMethods::plain('COM_KNOWRES_PROPERTY_SWITCH_TITLE');
 			$html  = KrMethods::render('toolbar.property.switch', ['title' => $title]);
 			$Toolbar->customButton('propertyswitch')
-			        ->html($html);
+				->html($html);
 		}
 		if (!empty($this->clone)) {
 			$title = KrMethods::plain('COM_KNOWRES_PROPERTY_CLONE_TOOLBAR_FROM');
 			$html  = KrMethods::render('toolbar.property.clone', ['title' => $title]);
 			$Toolbar->customButton('propertyclone')
-			        ->html($html);
+				->html($html);
 		}
 
 		$Toolbar = $this->addRelated($Toolbar, $name);
@@ -287,19 +297,19 @@ class Property extends KrHtmlView
 		if (!in_array($name, $this->related) && $name !== 'calendar') {
 			$link = KrMethods::route('index.php?option=com_knowres&task=property.calendar&property_id=' . $this->property_id);
 			$Toolbar->linkButton('calendar', 'COM_KNOWRES_TITLE_PROPERTY_CALENDAR')
-			        ->icon('fa-solid fa-calendar knowres')
-			        ->url($link);
+				->icon('fa-solid fa-calendar knowres')
+				->url($link);
 		}
 		if ($name !== 'dashboard') {
 			$link = KrMethods::route('index.php?option=com_knowres&task=property.dashboard&id=' . $this->property_id);
 			$Toolbar->linkButton('dashboard', 'COM_KNOWRES_PROPERTYDASHBOARD_TITLE')
-			        ->icon('fa-solid fa-tachometer-alt knowres')
-			        ->url($link);
+				->icon('fa-solid fa-tachometer-alt knowres')
+				->url($link);
 		}
 		if (!empty($this->preview_link)) {
 			$Toolbar->linkButton('link', 'COM_KNOWRES_TOOLBAR_PREVIEW')
-			        ->target('_blank')
-			        ->url($this->preview_link);
+				->target('_blank')
+				->url($this->preview_link);
 		}
 
 //		$Toolbar = $this->addConfigToolbar($Toolbar);
@@ -308,9 +318,9 @@ class Property extends KrHtmlView
 
 		$link = KrMethods::route('index.php?option=com_knowres&view=properties');
 		$Toolbar->linkButton('close', 'JTOOLBAR_CLOSE')
-		        ->buttonClass('btn btn-danger')
-		        ->icon('fa-solid fa-times knowres')
-		        ->url($link);
+			->buttonClass('btn btn-danger')
+			->icon('fa-solid fa-times knowres')
+			->url($link);
 
 		if ($this->canDo->get('core.admin')) {
 			ToolbarHelper::preferences('com_knowres');
@@ -338,12 +348,11 @@ class Property extends KrHtmlView
 			$task = $this->form_name . '.add';
 			if (!$multiple) {
 				$Toolbar->addNew($task);
-			}
-			else {
+			} else {
 				$Toolbar->standardButton('new')
-				        ->icon('fa-solid fa-plus knowres')
-				        ->onclick((array) "Joomla.submitform('$task', document.getElementById('adminForm'));")
-				        ->text('JTOOLBAR_NEW');
+					->icon('fa-solid fa-plus knowres')
+					->onclick((array) "Joomla.submitform('$task', document.getElementById('adminForm'));")
+					->text('JTOOLBAR_NEW');
 			}
 		}
 
@@ -355,8 +364,7 @@ class Property extends KrHtmlView
 			$Toolbar = $this->addRelated($Toolbar, $list_name);
 			$Toolbar = $this->addDashboardLink($Toolbar);
 			$Toolbar = $this->addPropertiesLink($Toolbar);
-		}
-		else if ($this->access_level == 40) {
+		} else if ($this->access_level == 40) {
 			$Toolbar = $this->addPropertiesDropdown($Toolbar);
 		}
 
@@ -388,70 +396,70 @@ class Property extends KrHtmlView
 	protected function addPropertiesDropdown(Toolbar $Toolbar, ?string $list_name = null): Toolbar
 	{
 		$dropdown     = $Toolbar->dropdownButton('settings-property-group')
-		                        ->text('COM_KNOWRES_TOOLBAR_PROPERTIES_DATA')
-		                        ->toggleSplit(false)
-		                        ->icon('fa-solid fa-home knowres')
-		                        ->buttonClass('btn btn-action');
+			->text('COM_KNOWRES_TOOLBAR_PROPERTIES_DATA')
+			->toggleSplit(false)
+			->icon('fa-solid fa-home knowres')
+			->buttonClass('btn btn-action');
 		$ChildToolbar = $dropdown->getChildToolbar();
 
 		if ($list_name != 'propertyfeatures') {
 			$ChildToolbar->linkButton('propertyfeatures', 'COM_KNOWRES_PROPERTYFEATURES_TITLE')
-			             ->icon('fa-solid fa-laptop-house knowres')
-			             ->url(KrMethods::route('index.php?option=com_knowres&view=propertyfeatures'));
+				->icon('fa-solid fa-laptop-house knowres')
+				->url(KrMethods::route('index.php?option=com_knowres&view=propertyfeatures'));
 		}
 
 		if ($list_name != 'categories') {
 			$ChildToolbar->linkButton('categories', 'COM_KNOWRES_CATEGORIES_TITLE')
-			             ->icon('fa-solid fa-project-diagram knowres')
-			             ->url(KrMethods::route('index.php?option=com_knowres&view=categories'));
+				->icon('fa-solid fa-project-diagram knowres')
+				->url(KrMethods::route('index.php?option=com_knowres&view=categories'));
 		}
 
 		if ($list_name != 'clusters') {
 			$ChildToolbar->linkButton('clusters', 'COM_KNOWRES_CLUSTERS_TITLE')
-			             ->icon('fa-solid fa-object-group knowres')
-			             ->url(KrMethods::route('index.php?option=com_knowres&view=clusters'));
+				->icon('fa-solid fa-object-group knowres')
+				->url(KrMethods::route('index.php?option=com_knowres&view=clusters'));
 		}
 
 		if ($list_name != 'propertyfields') {
 			$ChildToolbar->linkButton('propertyfields', 'COM_KNOWRES_PROPERTYFIELDS_TITLE')
-			             ->icon('fa-solid fa-ellipsis-h knowres')
-			             ->url(KrMethods::route('index.php?option=com_knowres&view=propertyfields'));
+				->icon('fa-solid fa-ellipsis-h knowres')
+				->url(KrMethods::route('index.php?option=com_knowres&view=propertyfields'));
 		}
 
 		if ($list_name != 'managers') {
 			$ChildToolbar->linkButton('managers', 'COM_KNOWRES_MANAGERS_TITLE')
-			             ->icon('fa-solid fa-users knowres')
-			             ->url(KrMethods::route('index.php?option=com_knowres&view=managers'));
+				->icon('fa-solid fa-users knowres')
+				->url(KrMethods::route('index.php?option=com_knowres&view=managers'));
 		}
 
 		if ($list_name != 'propertysettings') {
 			$ChildToolbar->linkButton('propertysettings', 'COM_KNOWRES_PROPERTYSETTINGS_DEFAULT_TITLE')
-			             ->icon('fa-solid fa-wrench knowres')
-			             ->url(KrMethods::route('index.php?option=com_knowres&view=propertysettings'));
+				->icon('fa-solid fa-wrench knowres')
+				->url(KrMethods::route('index.php?option=com_knowres&view=propertysettings'));
 		}
 
 		if ($list_name != 'owners') {
 			$ChildToolbar->linkButton('owners', 'COM_KNOWRES_OWNERS_TITLE')
-			             ->icon('fa-solid fa-house-user knowres')
-			             ->url(KrMethods::route('index.php?option=com_knowres&view=owners'));
+				->icon('fa-solid fa-house-user knowres')
+				->url(KrMethods::route('index.php?option=com_knowres&view=owners'));
 		}
 
 		if ($list_name != 'seasons') {
 			$ChildToolbar->linkButton('seasons', 'COM_KNOWRES_SEASONS_TITLE')
-			             ->icon('fa-solid fa-cloud-sun-rain knowres')
-			             ->url(KrMethods::route('index.php?option=com_knowres&view=seasons'));
+				->icon('fa-solid fa-cloud-sun-rain knowres')
+				->url(KrMethods::route('index.php?option=com_knowres&view=seasons'));
 		}
 
 		if ($list_name != 'rooms' && $this->params->get('property_rooms', 0)) {
 			$ChildToolbar->linkButton('rooms', 'COM_KNOWRES_ROOMS_TITLE')
-			             ->icon('fa-solid fa-person-booth knowres')
-			             ->url(KrMethods::route('index.php?option=com_knowres&view=rooms'));
+				->icon('fa-solid fa-person-booth knowres')
+				->url(KrMethods::route('index.php?option=com_knowres&view=rooms'));
 		}
 
 		if ($list_name != 'types') {
 			$ChildToolbar->linkButton('types', 'COM_KNOWRES_TYPES_TITLE')
-			             ->icon('fa-solid fa-keyboard knowres')
-			             ->url(KrMethods::route('index.php?option=com_knowres&view=types'));
+				->icon('fa-solid fa-keyboard knowres')
+				->url(KrMethods::route('index.php?option=com_knowres&view=types'));
 		}
 
 		return $Toolbar;

@@ -63,7 +63,7 @@ class Hub
 	protected stdClass $contractData;
 
 	/**
-	 * Constructor initialise
+	 * Constructor initialize
 	 *
 	 * @param  stdClass  $contractData  Contract session data
 	 *
@@ -717,7 +717,7 @@ class Hub
 	 * @throws InvalidArgumentException
 	 * @since  3.3.0
 	 */
-	protected function validateSession(string $session, string $key = null): void
+	protected function validateSession(string $session, ?string $key = null): void
 	{
 		if (!in_array($session, $this->valid_sessions)) {
 			throw new InvalidArgumentException('Invalid session value of ' . $session . ' requested');

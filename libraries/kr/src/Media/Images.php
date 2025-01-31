@@ -41,6 +41,13 @@ define('KNOWRES_TEMP_PATH', JPATH_SITE . '/tmp');
  */
 class Images extends Media
 {
+	/** @var string The name of the uploaded image. */
+	public string $name = '' {
+		/** Return the image name */
+		get {
+			return $this->name;
+		}
+	}
 	/** @var array The acceptable image types for upload. */
 	protected array $accepted = ['jpeg', 'jpg', 'png', 'gif'];
 	/** @var boolean Set to true if uploaded file already exists. */
@@ -49,8 +56,6 @@ class Images extends Media
 	protected int $id = 0;
 	/** @var int The server max upload size. */
 	protected int $max_upload = 0;
-	/** @var string The name of the uploaded image. */
-	protected string $name = '';
 	/** @var string The path to the folder to store the original image. */
 	protected string $original_path = '';
 	/** @var Registry KR params. */
@@ -113,8 +118,7 @@ class Images extends Media
 				if ($object != "." && $object != "..") {
 					if (filetype($dir . "/" . $object) == "dir") {
 						self::deleteAll($dir . "/" . $object);
-					}
-					else {
+					} else {
 						unlink($dir . "/" . $object);
 					}
 				}
@@ -251,7 +255,7 @@ class Images extends Media
 	 *
 	 * @throws Exception
 	 * @since  2.4.0
-	 * @return  array
+	 * @return array
 	 */
 	public static function getPath(int $property_id, string $type = '', string $image = ''): array
 	{
@@ -263,8 +267,7 @@ class Images extends Media
 		if ($params->get('image_folder')) {
 			$property = KrFactory::getAdminModel('property')->getItem($property_id);
 			$folder   = Utility::makeFolderName($property->property_name);
-		}
-		else {
+		} else {
 			$folder = $property_id;
 		}
 
@@ -367,16 +370,15 @@ class Images extends Media
 	 * @since  1.0.0
 	 */
 	public static function resizeImage(string $source,
-	                                   string $target,
-	                                   int    $width,
-	                                   int    $height,
-	                                   int    $quality = 80,
-	                                   int    $crop = 0): void
+		string $target,
+		int $width,
+		int $height,
+		int $quality = 80,
+		int $crop = 0): void
 	{
 		if ($crop && $width == 0 && $height == 0) {
 			throw new RuntimeException(KrMethods::plain('Width or height must be provided'));
-		}
-		else if ($width == 0 && $height == 0) {
+		} else if ($width == 0 && $height == 0) {
 			throw new RuntimeException(KrMethods::plain('Width and height must be provided'));
 		}
 
@@ -391,8 +393,7 @@ class Images extends Media
 		if ($crop) {
 			$ZebraImage->preserve_aspect_ratio = true;
 			$result                            = $ZebraImage->resize($width, $height);
-		}
-		else {
+		} else {
 			$ZebraImage->preserve_aspect_ratio = false;
 			$result                            = $ZebraImage->resize($width, $height, ZEBRA_IMAGE_BOXED);
 		}
@@ -440,17 +441,6 @@ class Images extends Media
 		if (File::exists($file)) {
 			$this->exists = true;
 		}
-	}
-
-	/**
-	 * Return true if file already existed
-	 *
-	 * @since  4.0.0
-	 * @return string
-	 */
-	public function getname(): string
-	{
-		return $this->name;
 	}
 
 	/**
@@ -525,8 +515,8 @@ class Images extends Media
 		$max_upload_size = $this->params->get('max_upload_size', 4) * 1000000;
 		if ($max_upload_size < $file_size) {
 			$message = $this->name . ': ' . round($file_size / 1000000, 2) . 'MB '
-				. KrMethods::plain('Maximum Allowed Size')
-				. ': ' . $max_upload_size / 1000000 . 'MB - ';
+			           . KrMethods::plain('Maximum Allowed Size')
+			           . ': ' . $max_upload_size / 1000000 . 'MB - ';
 
 			Logger::logme($message);
 			throw new RuntimeException(KrMethods::plain($this->name . ' is too large please upload a smaller image'));
@@ -675,8 +665,7 @@ class Images extends Media
 		if (!in_array($extension, $this->accepted)) {
 			if (empty($extension)) {
 				$message = $this->name . ' ' . KrMethods::plain('the uploaded file had no extension');
-			}
-			else {
+			} else {
 				$message = $this->name . ' ' . KrMethods::plain('Invalid extension');
 			}
 

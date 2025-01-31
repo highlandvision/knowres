@@ -51,11 +51,10 @@ class HtmlView extends KrHtmlView\Property
 		$this->ordering      = in_array('ordering', $model->getFilterFields());
 		$this->form_name     = 'extra';
 
-		if (!$this->checkEmpty())
-		{
+		if (!$this->checkEmpty()) {
 			$this->checkErrors();
 			$title = KrMethods::plain('COM_KNOWRES_EXTRAS_TITLE') . ' - ' . $this->property_name;
-			ToolbarHelper::title($title);
+			ToolbarHelper::title($title, 'tasks knowres');
 			$this->addListToolbar($this->get('name'));
 
 			parent::display($tpl);
