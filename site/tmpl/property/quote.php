@@ -58,7 +58,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 				</p>
 
 				<?php if (!empty($discount)): ?>
-					<p class="discount">
+					<p class="discount no-margin-bottom">
 						<i class='fa-solid fa-cut fa-1x'>&nbsp;</i>
 						<?php echo KrMethods::plain('COM_KNOWRES_QUOTE_DISCOUNT_TEXT1'); ?>
 						<del><?php echo $full; ?></del>
