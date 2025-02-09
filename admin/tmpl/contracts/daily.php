@@ -32,26 +32,25 @@ $wa->useScript('keepalive')
 	<?php return; ?>
 <?php endif; ?>
 
-<div class="accordion">
-	<div class="row no-gutters">
-		<div class="col">
-			<?php echo $this->loadTemplate('requests'); ?>
-			<?php echo $this->loadTemplate('payments'); ?>
-			<?php echo $this->loadTemplate('enquiry'); ?>
-			<?php echo $this->loadTemplate('option'); ?>
-			<?php echo $this->loadTemplate('new'); ?>
-			<?php echo $this->loadTemplate('duedeposit'); ?>
-			<?php echo $this->loadTemplate('overduebalance'); ?>
-			<?php echo $this->loadTemplate('duebalance'); ?>
-			<?php echo $this->loadTemplate('cancelled'); ?>
-			<?php echo $this->loadTemplate('arrivals'); ?>
-			<?php echo $this->loadTemplate('departures'); ?>
-			<?php echo $this->loadTemplate('ownerpayments'); ?>
-			<?php echo $this->loadTemplate('reviews'); ?>
-			<?php echo $this->loadTemplate('approvals'); ?>
+	<div class="accordion">
+		<div class="row no-gutters">
+			<div class="col">
+				<?php echo $this->loadTemplate('requests'); ?>
+				<?php echo $this->loadTemplate('payments'); ?>
+				<?php echo $this->loadTemplate('option'); ?>
+				<?php echo $this->loadTemplate('new'); ?>
+				<?php echo $this->loadTemplate('duedeposit'); ?>
+				<?php echo $this->loadTemplate('overduebalance'); ?>
+				<?php echo $this->loadTemplate('duebalance'); ?>
+				<?php echo $this->loadTemplate('cancelled'); ?>
+				<?php echo $this->loadTemplate('arrivals'); ?>
+				<?php echo $this->loadTemplate('departures'); ?>
+				<?php echo $this->loadTemplate('ownerpayments'); ?>
+				<?php echo $this->loadTemplate('reviews'); ?>
+				<?php echo $this->loadTemplate('approvals'); ?>
+			</div>
 		</div>
 	</div>
-</div>
 
 <?php if ($this->registration) : ?>
 	<?php echo $this->loadTemplate('registrationmodal'); ?>

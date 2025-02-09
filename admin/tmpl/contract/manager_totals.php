@@ -11,6 +11,7 @@ defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Utility;
+
 ?>
 
 <div class="manager-totals">
@@ -33,7 +34,8 @@ use HighlandVision\KR\Utility;
 			</div>
 			<div class="col text-end">
 				<?php $this->form->setFieldAttribute('room_total_gross', 'required', true); ?>
-				<?php $this->form->setValue('room_total_gross', '',
+				<?php $this->form->setValue('room_total_gross',
+					'',
 					Utility::displayMoney($this->item->room_total_gross, $this->dp)); ?>
 				<?php echo $this->form->getInput('room_total_gross'); ?>
 			</div>
@@ -123,7 +125,8 @@ use HighlandVision\KR\Utility;
 				</label>
 			</div>
 			<div class="col text-end">
-				<?php $this->form->setValue('deposit', '',
+				<?php $this->form->setValue('deposit',
+					'',
 					Utility::displayMoney($this->item->deposit, $this->dp)); ?>
 				<?php echo $this->form->getInput('deposit'); ?>
 			</div>
@@ -142,13 +145,24 @@ use HighlandVision\KR\Utility;
 
 		<div id="jform_taxbreakdown2"></div>
 	</fieldset>
-</div><br>
-<div class="row">
-	<div>
-		<button type="button" id="manual" data-override="manual" class="btn btn-primary kr-calculate">
-			<?php echo KrMethods::plain('COM_KNOWRES_UPDATE_OVERRIDE'); ?>
-		</button>
-	</div>
-	<br><br>
-	<small><?php echo KrMethods::plain('COM_KNOWRES_UPDATE_WARNING'); ?></small>
+</div>
+<br>
+<div class="manager-totals">
+	<br>
+	<fieldset>
+		<div class="row">
+			<div class="d-grid gap-2 col-8 mx-auto">
+				<button type="button" id="manual" data-override="manual" class="btn btn-primary kr-calculate">
+					<?php echo KrMethods::plain('COM_KNOWRES_UPDATE_OVERRIDE'); ?>
+				</button>
+			</div>
+		</div>
+		<br>
+		<div class="row">
+			<small class="text-center" style="padding: 0 7rem;">
+				<?php echo KrMethods::plain('COM_KNOWRES_UPDATE_WARNING'); ?>
+			</small>
+		</div>
+	</fieldset>
+	<br>
 </div>

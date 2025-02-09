@@ -10,6 +10,7 @@
 defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrMethods;
+
 ?>
 
 <fieldset>
@@ -18,8 +19,6 @@ use HighlandVision\KR\Framework\KrMethods;
 		<div class="col-xxl-6">
 			<?php echo $this->form->renderField('guest_note'); ?>
 		</div>
-	</div>
-	<div class="row">
 		<div class="col-xxl-6">
 			<?php echo $this->form->renderField('owner_note'); ?>
 		</div>

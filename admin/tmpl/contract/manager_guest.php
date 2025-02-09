@@ -10,23 +10,24 @@
 defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrMethods;
+
 ?>
 
 <fieldset>
 	<legend><?php echo KrMethods::plain('COM_KNOWRES_LEGEND_CONTRACTS_GUEST_DETAILS'); ?></legend>
 	<div class="row">
-		<div class="col-lg-5">
+		<div class="col-lg-7">
 			<?php echo $this->guestForm->renderField('email'); ?>
 		</div>
 	</div>
 
 	<?php if ($this->guestForm->getFieldAttribute('firstname', 'type', 'hidden') != 'hidden'
-		|| $this->guestForm->getFieldAttribute('surname', 'type', 'hidden') != 'hidden'): ?>
+	          || $this->guestForm->getFieldAttribute('surname', 'type', 'hidden') != 'hidden'): ?>
 		<div class="row">
-			<div class="col-lg-5">
+			<div class="col-lg-6">
 				<?php echo $this->guestForm->renderField('firstname'); ?>
 			</div>
-			<div class="col-lg-5">
+			<div class="col-lg-6">
 				<?php echo $this->guestForm->renderField('surname'); ?>
 			</div>
 		</div>
@@ -34,10 +35,10 @@ use HighlandVision\KR\Framework\KrMethods;
 
 	<?php if ($this->guestForm->getFieldAttribute('mobile', 'type', 'hidden') != 'hidden'): ?>
 		<div class="row">
-			<div class="col-lg-5">
+			<div class="col-lg-6">
 				<?php echo $this->guestForm->renderField('mobile_country_id'); ?>
 			</div>
-			<div class="col-lg-5">
+			<div class="col-lg-6">
 				<?php echo $this->guestForm->renderField('mobile'); ?>
 			</div>
 		</div>

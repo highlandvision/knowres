@@ -1003,7 +1003,8 @@ class ContractController extends FormController
 		$output->currency         = $Hub->getValue('currency');
 		$output->deposit          = $Hub->valueDisplay($Hub->getValue('deposit'));
 		$output->expiry_date      = TickTock::displayDate($Hub->getValue('expiry_date'));
-		$output->balance          = $Hub->currencyDisplay($Hub->getValue('contract_total') - $Hub->getValue('deposit'));
+		$output->balance          = $Hub->currencyDisplay(
+			(float) $Hub->getValue('contract_total') - (float) $Hub->getValue('deposit'));
 		$output->net_price_system = $Hub->currencyDisplay($Hub->getValue('net_price_system'));
 		$output->commission       = $Hub->currencyDisplay($Hub->getValue('commission'));
 
@@ -1015,7 +1016,7 @@ class ContractController extends FormController
 				TickTock::displayDate($Hub->getValue('expiry_date')));
 		}
 
-		if ($Hub->getvalue('contract_total') - $Hub->getValue('deposit') == 0) {
+		if ((float) $Hub->getvalue('contract_total') - (float) $Hub->getValue('deposit') == 0) {
 			$output->balance_date = KrMethods::plain('COM_KNOWRES_BALANCE');
 		} elseif (!(int) $Hub->getValue('balance_days')) {
 			$output->balance_date = KrMethods::plain('COM_KNOWRES_CONTRACTS_BOOKING_STATUS_39');
