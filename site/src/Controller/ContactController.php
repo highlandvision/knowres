@@ -7,6 +7,8 @@
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
 
+/** @noinspection PhpUnused */
+
 namespace HighlandVision\Component\Knowres\Site\Controller;
 
 defined('_JEXEC') or die;
@@ -66,8 +68,9 @@ class ContactController extends FormController
 	 * @since  1.0.0
 	 * @return BaseDatabaseModel
 	 */
-	public function getModel($name = 'contact', $prefix = 'Site',
-	                         $config = ['ignore_request' => true]): BaseDatabaseModel
+	public function getModel($name = 'contact',
+		$prefix = 'Site',
+		$config = ['ignore_request' => true]): BaseDatabaseModel
 	{
 		return parent::getModel($name, $prefix, $config);
 	}
@@ -86,14 +89,12 @@ class ContactController extends FormController
 		$data = KrMethods::inputArray('jform');
 		$id   = KrMethods::inputInt('id');
 
-		$params    = KrMethods::getParams();
+		$params = KrMethods::getParams();
 		if ($id > 0) {
 			$Itemid    = SiteHelper::getItemId('com_knowres', 'property');
-			$return    =
-				KrMethods::route('index.php?option=com_knowres&view=property&Itemid=' . $Itemid . '&id=' . $id, false);
-			$return_ok =
-				KrMethods::route('index.php?option=com_knowres&view=property&sent=1&Itemid=' . $Itemid . '&id=' . $id,
-				                 false);
+			$return    = KrMethods::route('index.php?option=com_knowres&view=property&Itemid=' . $Itemid . '&id=' . $id, false);
+			$return_ok = KrMethods::route('index.php?option=com_knowres&view=property&sent=1&Itemid=' . $Itemid . '&id=' . $id,
+				false);
 		} else {
 			$Itemid    = SiteHelper::getItemId('com_knowres', 'contact');
 			$return    =
@@ -144,12 +145,12 @@ class ContactController extends FormController
 		$errors    = [];
 		$gresponse = $this->input->post->getString('g-recaptcha-response', '');
 		if (!$gresponse) {
-			$errors[] = KrMethods::plain('Please complete the ReCaptcha entry box');
+			$errors[] = KrMethods::plain('COM_KNOWRES_CONTACT_RECAPTCHA_ERROR_ENTRY_BOX');
 		} else {
 			$recaptcha = new ReCaptcha($params->get('grsecretkey'));
 			$resp      = $recaptcha->verify($gresponse, $_SERVER['REMOTE_ADDR']);
 			if (!$resp->isSuccess()) {
-				$errors[] = KrMethods::plain('Please check the ReCaptcha entry box');
+				$errors[] = KrMethods::plain('COM_KNOWRES_CONTACT_RECAPTCHA_ERROR_ENTRY_BOX');
 				foreach ($resp->getErrorCodes() as $code) {
 					$errors[] = $code;
 				}
@@ -184,20 +185,20 @@ class ContactController extends FormController
 			}
 		}
 
-		$input                 = [];
-		$input['ARRIVAL']      = $arrival;
-		$input['REQNAME']      = $data['contact_name'];
-		$input['REQEMAIL']     = PunycodeHelper::emailToPunycode($data['contact_email']);
-		$input['REQCOUNTRY']   = Translations::getCountryName($data['contact_country']);
-		$input['REQPHONE']     = $data['contact_phone'];
-		$input['REQMESSAGE']   = $data['message'];
-		$input['MESSAGE']      = $data['message'];
-		$input['#NIGHTS']      = $data['nights'];
-		$input['#ADULTS']      = $data['guests'];
-		$input['#CHILDREN']    = $data['children'];
-		$input['CHILDAGES']    = $data['ages'];
-		$input['BUDGET']       = $data['budget'] ?? "--";
-		$input['LOCATION']     = $data['region'] ?? '--';
+		$input               = [];
+		$input['ARRIVAL']    = $arrival;
+		$input['REQNAME']    = $data['contact_name'];
+		$input['REQEMAIL']   = PunycodeHelper::emailToPunycode($data['contact_email']);
+		$input['REQCOUNTRY'] = Translations::getCountryName($data['contact_country']);
+		$input['REQPHONE']   = $data['contact_phone'];
+		$input['REQMESSAGE'] = $data['message'];
+		$input['MESSAGE']    = $data['message'];
+		$input['#NIGHTS']    = $data['nights'];
+		$input['#ADULTS']    = $data['guests'];
+		$input['#CHILDREN']  = $data['children'];
+		$input['CHILDAGES']  = $data['ages'];
+		$input['BUDGET']     = $data['budget'] ?? "--";
+		$input['LOCATION']   = $data['region'] ?? '--';
 
 		$email = new ContactEmail('BOOKENQUIRY');
 		$email->sendTheEmails($id, $input);

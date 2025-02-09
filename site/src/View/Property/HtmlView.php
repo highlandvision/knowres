@@ -137,7 +137,7 @@ class HtmlView extends KrHtmlView\Site
 			KrMethods::route('index.php?option=com_knowres&view=contact&id=' . $this->item->id . '&Itemid=' . $Itemid);
 
 		if (is_countable($this->searchData->baseIds) && count($this->searchData->baseIds)
-			&& $this->searchData->region_id == $this->item->region_id) {
+		    && $this->searchData->region_id == $this->item->region_id) {
 
 			$Itemid = SiteHelper::getItemId('com_knowres', 'properties', [
 				'layout'    => 'search',
@@ -156,13 +156,13 @@ class HtmlView extends KrHtmlView\Site
 		$this->tabs             = $this->params->get('property_tabs', 0);
 		$this->Itemid           = SiteHelper::getItemId('com_knowres', 'property', ['id' => 0]);
 		$this->meta_title       = $this->item->property_name . ' | ' . $this->item->region_name . ' | '
-			. $this->item->type_name;
+		                          . $this->item->type_name;
 		$this->meta_description = KrMethods::sprintf('COM_KNOWRES_SEO_DESCRIPTION_PROPERTY',
-		                                             $this->item->property_name,
-		                                             $this->item->tagline ?? '',
-		                                             $this->item->type_name,
-		                                             $this->item->property_area,
-		                                             $this->item->region_name);
+			$this->item->property_name,
+			$this->item->tagline ?? '',
+			$this->item->type_name,
+			$this->item->property_area,
+			$this->item->region_name);
 
 		if (!$this->params->get('property_meta', 1)) {
 			if ($this->item->meta_title) {
@@ -241,6 +241,7 @@ class HtmlView extends KrHtmlView\Site
 		}
 
 		$this->booking_type = $this->item->booking_type;
+		KrMethods::getLanguage()->load('mod_knowres_search', JPATH_SITE . '/modules/mod_knowres_search');
 		if ($this->booking_type) {
 			$current = KrFactory::getListModel('rates')->getCurrent($this->item->id);
 			if (!$current) {
@@ -248,8 +249,6 @@ class HtmlView extends KrHtmlView\Site
 			}
 		}
 		if ($this->booking_type) {
-			KrMethods::getLanguage()->load('mod_knowres_search', JPATH_SITE . '/modules/mod_knowres_search');
-
 			if ($this->arrival && $this->arrival < $this->today && $this->departure) {
 				$this->arrival = '';
 			}
@@ -291,7 +290,7 @@ class HtmlView extends KrHtmlView\Site
 
 		if (is_countable($this->item->property_alternatives) && count($this->item->property_alternatives)) {
 			$this->alternatives = KrFactory::getListSiteModel('properties')
-			                               ->getMinMaxRates($this->item->property_alternatives);
+				->getMinMaxRates($this->item->property_alternatives);
 			foreach ($this->alternatives as $a) {
 				KrFactory::getAdminModel('property')->setPropertyFields($a, $this->fields);
 			}
@@ -309,7 +308,7 @@ class HtmlView extends KrHtmlView\Site
 		$this->net_rates  = KrFactory::getListModel('propertysettings')->getOneSetting('net_rates');
 		$this->net_markup = KrFactory::getListModel('propertysettings')->getOneSetting('net_markup');
 		$this->weekly     = KrFactory::getListModel('propertysettings')
-		                             ->getOneSetting('tariffChargesStoredWeeklyYesNo');
+			->getOneSetting('tariffChargesStoredWeeklyYesNo');
 		$this->rooms      = KrFactory::getListModel('propertyrooms')->getForProperty($this->item->id);
 		$this->images     = KrFactory::getListModel('images')->forDisplay($this->item->id);
 

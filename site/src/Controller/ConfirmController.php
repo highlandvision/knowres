@@ -474,10 +474,10 @@ class ConfirmController extends FormController
 
 			$display .= KrMethods::render('confirm.summary.taxbreakdown',
 				['type'  => $tax_type,
-                 'value' => $Hub->currencyDisplay($v['value']),
-                 'code'  => $code,
-                 'id'    => $v['id'] ?? 0
-			     ]);
+				 'value' => $Hub->currencyDisplay($v['value']),
+				 'code'  => $code,
+				 'id'    => $v['id'] ?? 0
+				]);
 		}
 
 		return $display;

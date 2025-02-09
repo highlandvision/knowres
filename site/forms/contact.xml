@@ -1,37 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<form>
+<form addfieldprefix="HighlandVision\Component\Knowres\Site\Field">
     <fieldset name="contact">
         <field name="contact_name"
+               type="text"
                filter="string"
                required="true"
-               type="text"
                label="COM_KNOWRES_CONTACT_NAME_LBL"
                hint="COM_KNOWRES_CONTACT_NAME_DSC"/>
         <field name="contact_email"
+               type="email"
                filter="string"
                required="true"
-               type="email"
                label="COM_KNOWRES_CONTACT_EMAIL_LBL"
                hint="COM_KNOWRES_CONTACT_EMAIL_DSC"/>
         <field name="verify_email"
+               type="email"
                field="contact_email"
                filter="string"
                required="true"
-               type="email"
                validate="equals"
                hint="COM_KNOWRES_CONTACT_EMAIL_CONFIRM_DSC"
                label="COM_KNOWRES_CONTACT_EMAIL_CONFIRM_LBL"/>
         <field name="contact_phone"
+               type="text"
                filter="string"
                required="true"
-               type="text"
                hint="COM_KNOWRES_CONTACT_PHONE_DSC"
                label="COM_KNOWRES_CONTACT_PHONE_LBL"/>
         <field name="contact_country"
+               type="listcountry"
                addfieldprefix="HighlandVision\Component\Knowres\Administrator\Field"
                filter="integer"
                required="true"
-               type="listcountry"
                hint="COM_KNOWRES_CONTACT_COUNTRY_DSC"
                label="COM_KNOWRES_CONTACT_COUNTRY_LBL">
             <option value="0">COM_KNOWRES_SELECT_COUNTRY</option>
@@ -39,42 +39,42 @@
     </fieldset>
     <fieldset name="requirements">
         <field name="day"
+               type="number"
                default="1"
                filter="integer"
                required="true"
-               type="number"
                min="1"
                max="31"
                label="COM_KNOWRES_CONTACT_DAY_LBL"/>
         <field name="month"
+               type="listselectmonth"
                addfieldprefix="HighlandVision\Component\Knowres\Site\Field"
                filter="integer"
                required="true"
-               type="listselectmonth"
                label="COM_KNOWRES_CONTACT_MONTH_LBL">
             <option value="">COM_KNOWRES_MONTH</option>
         </field>
         <field name="nights"
+               type="number"
                default="7"
                filter="integer"
                required="true"
-               type="number"
                min="1"
                max="60"
                label="COM_KNOWRES_CONTACT_NIGHTS_LBL"/>
         <field name="guests"
+               type="number"
                default="4"
                filter="integer"
                required="true"
-               type="number"
                min="1"
                max="50"
                label="COM_KNOWRES_CONTACT_GUESTS_LBL"/>
         <field name="children"
+               type="number"
                default="0"
                filter="integer"
                required="true"
-               type="number"
                min="0"
                max="10"
                label="COM_KNOWRES_CONTACT_CHILDREN_LBL"/>
@@ -83,9 +83,9 @@
                filter="string"
                label="COM_KNOWRES_CONTACT_AGES_LBL"/>
         <field name="budget"
+               type="list"
                hiddenDescription="true"
                required="false"
-               type="list"
                label="COM_KNOWRES_CONTACT_BUDGET_LBL"
                description="COM_KNOWRES_CONTACT_BUDGET_LBL">
             <option value="">COM_KNOWRES_PLEASE_SELECT</option>
@@ -99,17 +99,17 @@
     </fieldset>
     <fieldset name="message">
         <field name="message"
+               type="textarea"
                cols="50"
                filter="string"
                rows="5"
-               type="textarea"
                hint="COM_KNOWRES_CONTACT_MESSAGE_DSC"
                label="COM_KNOWRES_CONTACT_MESSAGE_LBL"/>
     </fieldset>
     <fieldset name="recaptcha">
         <field name="grecaptcha"
-               filter="string"
                type="grecaptcha"
+               filter="string"
                label="COM_KNOWRES_CONTACT_RECAPTCHA_LBL"/>
     </fieldset>
 </form>

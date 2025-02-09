@@ -35,8 +35,7 @@ class MobisearchField extends FormField
 		$this->type = 'mobisearch';
 
 		$html = '<div class="datepicker-wrapper">';
-		if ($this->name == 'arrivaldsp')
-		{
+		if ($this->name == 'arrivaldsp') {
 			$params        = KrMethods::getParams();
 			$searchSession = new KrSession\Search();
 			$searchData    = $searchSession->getData();
@@ -49,9 +48,7 @@ class MobisearchField extends FormField
 			placeholder="' . KrMethods::plain($this->hint) . '" data-arrival="' . $arrival . '" 
 			data-departure="' . $departure . '" data-days="' . $params->get('search_days') . '" data-maxdays="730" 
 			data-atext="' . $atext . '" data-dtext="' . $dtext . '">';
-		}
-		else
-		{
+		} else {
 			$html .= '<input type="text" name="' . $this->name . '" id="' . $this->id . '" class="' . $this->class . '" 
 				placeholder="' . KrMethods::plain($this->hint) . '">';
 		}
