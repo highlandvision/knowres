@@ -9,12 +9,12 @@
                 description="COM_KNOWRES_CONTRACTPAYMENTS_SEARCH"
                 hint="COM_KNOWRES_SEARCH"/>
         <field name="payment_date"
+               type="uicalendar"
                addonBefore="Payments from"
                class="input-mini kr-search-date-filter"
                datepicker='{"minDate": "-10Y", "maxDate": "+0D", "altField": "#filter_payment_date"}'
                default="-1 Months"
                hiddenLabel="true"
-               type="uicalendar"
                label="COM_KNOWRES_FILTER_PAYMENT_DATE"/>
         <field
                 name="state"
@@ -33,9 +33,9 @@
         <field name="confirmed"
                type="list"
                class="js-select-submit-on-change">
-            <option value="">COM_KNOWRES_SELECT_CONFIRMED</option>
-            <option value="1">COM_KNOWRES_SELECT_CONFIRMED_ONLY</option>
-            <option value="0">COM_KNOWRES_SELECT_CONFIRMED_ALL</option>
+            <option value="1">COM_KNOWRES_SELECT_CONFIRMED</option>
+            <option value="0">COM_KNOWRES_SELECT_CONFIRMED_NO</option>
+            <option value="">COM_KNOWRES_SELECT_CONFIRMED_ALL</option>
         </field>
         <field name="currency"
                type="filtercurrency"

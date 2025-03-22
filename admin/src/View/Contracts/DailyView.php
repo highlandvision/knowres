@@ -37,20 +37,20 @@ use function ucfirst;
  */
 class DailyView extends KrHtmlView
 {
-	/** @var array New payments. */
-	public array $payments = [];
 	/** @var array New properties requiring approval. */
 	public array $approvals = [];
+	/** @var array Line data. */
+	public array $lines = [];
 	/** @var array New owner payments. */
 	public array $ownerpayments = [];
+	/** @var array New payments. */
+	public array $payments = [];
 	/** @var bool True to show registration download. */
 	public bool $registration = false;
 	/** @var Form Guest modal registration form. */
 	public Form $registrationform;
 	/** @var array Review requiring approval. */
 	public array $reviews = [];
-	/** @var array Line data. */
-	public array $lines = [];
 
 	/**
 	 * Display the view
@@ -110,14 +110,14 @@ class DailyView extends KrHtmlView
 			$title = KrMethods::plain('COM_KNOWRES_CONFIG_ADMIN_DOWNLOAD_REGISTRATION');
 			$html  = KrMethods::render('toolbar.contract.registration', ['title' => $title]);
 			$Toolbar->customButton('guestregistration')
-			        ->html($html);
+				->html($html);
 		}
 
 		/* @var Toolbar\LinkButton $Toolbar * */
 		$Toolbar->linkButton('refresh')
-		        ->icon('fa-solid fa-redo knowres')
-		        ->text('COM_KNOWRES_REFRESH')
-		        ->url(KrMethods::route('index.php?option=com_knowres&task=contracts.daily'));
+			->icon('fa-solid fa-redo knowres')
+			->text('COM_KNOWRES_REFRESH')
+			->url(KrMethods::route('index.php?option=com_knowres&task=contracts.daily'));
 
 		$Toolbar = $this->addConfigToolbar($Toolbar);
 		$Toolbar = $this->addQuickLinksToolbar($Toolbar);
@@ -125,47 +125,12 @@ class DailyView extends KrHtmlView
 
 		/* @var Toolbar\LinkButton $Toolbar * */
 		$Toolbar->linkButton('close')
-		        ->icon('fa-solid fa-times knowres')
-		        ->text('JTOOLBAR_CLOSE')
-		        ->url(KrMethods::route('index.php?option=com_knowres&task=gantt.cancel'));
+			->icon('fa-solid fa-times knowres')
+			->text('JTOOLBAR_CLOSE')
+			->url(KrMethods::route('index.php?option=com_knowres&task=gantt.cancel'));
 
 		if ($this->canDo->get('core.admin')) {
 			ToolbarHelper::preferences('com_knowres');
-		}
-	}
-
-	/**
-	 * Set the section / line data for output
-	 *
-	 * @throws Exception
-	 * @since  4.0.0
-	 */
-	#[NoReturn] protected function setLines(): void
-	{
-		foreach ($this->items as $c) {
-			$line = $this->setLine($c);
-
-			if (!$c->booking_status) {
-				$this->lines['enquiry'][] = $line;
-			} else if ($c->booking_status == 1 && (int) $c->on_request) {
-				$this->lines['requests'][] = $line;
-			} else if ($c->booking_status == 1 && !(int) $c->on_request) {
-				$this->lines['option'][] = $line;
-			} else if ($c->booking_status == 5) {
-				$this->lines['duedeposit'][] = $line;
-			} else if ($c->booking_status == 30) {
-				$this->lines['overduebalance'][] = $line;
-			} else if ($c->booking_status == 35) {
-				$this->lines['duebalance'][] = $line;
-			} else if ($c->booking_status == 99) {
-				$this->lines['cancelled'][] = $line;
-			} else if ($c->arrival == $this->today) {
-				$this->lines['arrivals'][] = $line;
-			} else if ($c->departure == $this->today) {
-				$this->lines['departures'][] = $line;
-			} else {
-				$this->lines['new'][] = $line;
-			}
 		}
 	}
 
@@ -214,5 +179,38 @@ class DailyView extends KrHtmlView
 		$line['property_name'] = '<a href="' . $link . '">' . $c->property_name . '</a>';
 
 		return $line;
+	}
+
+	/**
+	 * Set the section / line data for output
+	 *
+	 * @throws Exception
+	 * @since  4.0.0
+	 */
+	#[NoReturn] protected function setLines(): void
+	{
+		foreach ($this->items as $c) {
+			$line = $this->setLine($c);
+
+			if ($c->booking_status == 1 && (int) $c->on_request) {
+				$this->lines['requests'][] = $line;
+			} else if ($c->booking_status == 1 && !(int) $c->on_request) {
+				$this->lines['option'][] = $line;
+			} else if ($c->booking_status == 5) {
+				$this->lines['duedeposit'][] = $line;
+			} else if ($c->booking_status == 30) {
+				$this->lines['overduebalance'][] = $line;
+			} else if ($c->booking_status == 35) {
+				$this->lines['duebalance'][] = $line;
+			} else if ($c->booking_status == 99) {
+				$this->lines['cancelled'][] = $line;
+			} else if ($c->arrival == $this->today) {
+				$this->lines['arrivals'][] = $line;
+			} else if ($c->departure == $this->today) {
+				$this->lines['departures'][] = $line;
+			} else if ($c->booking_status) {
+				$this->lines['new'][] = $line;
+			}
+		}
 	}
 }
