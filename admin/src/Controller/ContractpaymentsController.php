@@ -34,25 +34,19 @@ class ContractpaymentsController extends AdminController
 	 */
 	public function delete(): bool
 	{
-		$this->checkToken();
+		$this->checkToken('get');
 
 		$cid = KrMethods::inputArray('cid');
-		if (!is_countable($cid) || count($cid) < 1)
-		{
+		if (!is_countable($cid) || count($cid) < 1) {
 			KrMethods::message(KrMethods::plain($this->text_prefix . '_NO_ITEM_SELECTED'));
-		}
-		else
-		{
+		} else {
 			/* @var ContractpaymentModel $model */
 			$model = $this->getModel();
 			ArrayHelper::toInteger($cid);
 
-			if ($model->delete($cid))
-			{
+			if ($model->delete($cid)) {
 				KrMethods::message(KrMethods::plural($this->text_prefix . '_N_ITEMS_DELETED', count($cid)));
-			}
-			else
-			{
+			} else {
 				KrMethods::message($model->getError());
 			}
 		}
@@ -62,16 +56,13 @@ class ContractpaymentsController extends AdminController
 		KrMethods::redirect(KrMethods::route('index.php?option=' . $this->option . '&view=' . $this->view_list, false));
 
 		$contract_id = KrMethods::getUserState('com_knowres.current.contract_id', 0);
-		if (!$contract_id)
-		{
+		if (!$contract_id) {
 			KrMethods::redirect(KrMethods::route('index.php?option=' . $this->option . '&view=' . $this->view_list
-				. $this->getRedirectToListAppend(),
+			                                     . $this->getRedirectToListAppend(),
 				false));
-		}
-		else
-		{
+		} else {
 			KrMethods::redirect(KrMethods::route('index.php?option=' . $this->option . '&task=contract.show&id='
-				. $contract_id,
+			                                     . $contract_id,
 				false));
 		}
 
@@ -81,14 +72,15 @@ class ContractpaymentsController extends AdminController
 	/**
 	 * Proxy for getModel.
 	 *
-	 * @param   string  $name    Model name
-	 * @param   string  $prefix  Model prefix administrator or site (defaults to administrator)
-	 * @param   array   $config  Configuration options
+	 * @param  string  $name    Model name
+	 * @param  string  $prefix  Model prefix administrator or site (defaults to administrator)
+	 * @param  array   $config  Configuration options
 	 *
 	 * @since  1.6
 	 * @return bool|BaseDatabaseModel
 	 */
-	public function getModel($name = 'contractpayment', $prefix = 'Administrator',
+	public function getModel($name = 'contractpayment',
+		$prefix = 'Administrator',
 		$config = ['ignore_request' => true]): BaseDatabaseModel|bool
 	{
 		return parent::getModel($name, $prefix, $config);

@@ -445,6 +445,9 @@ class ContractController extends FormController
 			KrMethods::setUserState('com_knowres.gobackto', 'view=gantt');
 		}
 
+		$contractSession = new KrSession\Contract();
+		$contractSession->resetData();
+
 		$html = KrMethods::render('contract.modal.book', [
 			'allow_block' => $allow_block,
 			'allow_book'  => !($access_level == 10 && !$params->get('contract_add')),
@@ -754,7 +757,6 @@ class ContractController extends FormController
 	#[NoReturn] public function save($key = null, $urlVar = null): void
 	{
 		$this->checkToken();
-
 		$action = KrMethods::inputString('action', '');
 		$jform  = KrMethods::inputArray('jform');
 

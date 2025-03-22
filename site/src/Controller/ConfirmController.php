@@ -127,15 +127,16 @@ class ConfirmController extends FormController
 
 		$contractSession = new KrSession\Contract();
 		$contractData    = $contractSession->getData();
-		if (!$contractData->contract_total) {
+		if (!is_float($contractData->contract_total) || $contractData->contract_total === 0.0) {
 			$contractSession->resetData();
 			SiteHelper::expiredSession(0, true);
 		}
 
 		$jform = KrMethods::inputArray('jform');
+		$rt    = Utility::roundValue($contractData->room_total, $contractData->currency);
 		if ($jform['property_id'] != $contractData->property_id ||
 		    $jform['arrival'] != $contractData->arrival ||
-		    $jform['room_total'] != $contractData->room_total) {
+		    $jform['room_total'] != Utility::roundValue($contractData->room_total, $contractData->currency)) {
 			$contractSession->resetData();
 			SiteHelper::expiredSession($jform['property_id'], true);
 		}
