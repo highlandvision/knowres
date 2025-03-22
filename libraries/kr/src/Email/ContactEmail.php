@@ -178,9 +178,8 @@ class ContactEmail extends Email
 	 */
 	protected function setPropertyData(): void
 	{
-		$this->data['PROPERTYNAME'] = '--';
-		$this->owner_email          = '--';
-		$this->owner_name           = '--';
+		$this->owner_email = '--';
+		$this->owner_name  = '--';
 
 		if ($this->property_id) {
 			$this->property = KrFactory::getAdminModel('property')->getItem($this->property_id);

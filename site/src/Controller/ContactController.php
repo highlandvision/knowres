@@ -185,20 +185,21 @@ class ContactController extends FormController
 			}
 		}
 
-		$input               = [];
-		$input['ARRIVAL']    = $arrival;
-		$input['REQNAME']    = $data['contact_name'];
-		$input['REQEMAIL']   = PunycodeHelper::emailToPunycode($data['contact_email']);
-		$input['REQCOUNTRY'] = Translations::getCountryName($data['contact_country']);
-		$input['REQPHONE']   = $data['contact_phone'];
-		$input['REQMESSAGE'] = $data['message'];
-		$input['MESSAGE']    = $data['message'];
-		$input['#NIGHTS']    = $data['nights'];
-		$input['#ADULTS']    = $data['guests'];
-		$input['#CHILDREN']  = $data['children'];
-		$input['CHILDAGES']  = $data['ages'];
-		$input['BUDGET']     = $data['budget'] ?? "--";
-		$input['LOCATION']   = $data['region'] ?? '--';
+		$input                 = [];
+		$input['ARRIVAL']      = $arrival;
+		$input['REQNAME']      = $data['contact_name'];
+		$input['REQEMAIL']     = PunycodeHelper::emailToPunycode($data['contact_email']);
+		$input['REQCOUNTRY']   = Translations::getCountryName($data['contact_country']);
+		$input['REQPHONE']     = $data['contact_phone'];
+		$input['REQMESSAGE']   = $data['message'];
+		$input['MESSAGE']      = $data['message'];
+		$input['#NIGHTS']      = $data['nights'];
+		$input['#ADULTS']      = $data['guests'];
+		$input['#CHILDREN']    = $data['children'];
+		$input['CHILDAGES']    = $data['ages'];
+		$input['BUDGET']       = $data['budget'] ?? "--";
+		$input['LOCATION']     = $data['location'] ?? '--';
+		$input['PROPERTYNAME'] = $data['property'] ?? '--';
 
 		$email = new ContactEmail('BOOKENQUIRY');
 		$email->sendTheEmails($id, $input);

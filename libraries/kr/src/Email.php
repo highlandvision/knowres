@@ -222,10 +222,7 @@ abstract class Email
 	 * @throws Exception
 	 * @since  3.2.0
 	 */
-	protected function dispatchEmail(string $email_to,
-		?string $firstname = null,
-		?string $surname = null,
-		array $tags = []): void
+	protected function dispatchEmail(string $email_to, ?string $firstname = null, ?string $surname = null, array $tags = []): void
 	{
 		$optional                = [];
 		$optional['firstname']   = $firstname;

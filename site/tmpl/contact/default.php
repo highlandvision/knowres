@@ -23,14 +23,15 @@ $action = '/index.php?option=com_knowres&task=contact.submit';
 ?>
 
 <h1 class="title"><?php echo KrMethods::plain('COM_KNOWRES_CONTACT_TITLE'); ?></h1>
-<p class="small"><?php echo KrMethods::plain('COM_KNOWRES_CONTACT_LEGEND'); ?></p>
+<p><?php echo KrMethods::plain('COM_KNOWRES_CONTACT_LEGEND'); ?></p>
 
 <div>
-	<p class="vsmall"><?php echo KrMethods::plain('COM_KNOWRES_CONTACT_REQUIRED'); ?></p>
+	<p class="small"><?php echo KrMethods::plain('COM_KNOWRES_CONTACT_REQUIRED'); ?></p>
+
 	<form action="<?php echo $action; ?>" class="form-validate" id="kr-contact-form"
 	      onsubmit="return verifyEmail();" method="post">
 		<fieldset class="fieldset">
-			<div class="callout">
+			<div class="callout secondary">
 				<div class="grid-x grid-margin-x">
 					<div class="small-12 medium-6 cell end">
 						<?php echo $this->form->renderField('contact_name'); ?>
@@ -54,8 +55,16 @@ $action = '/index.php?option=com_knowres&task=contact.submit';
 		</fieldset>
 
 		<fieldset class="fieldset">
-			<div class="callout">
+			<div class="callout secondary">
 				<div class="grid-x grid-margin-x">
+					<div class="small-12 cell">
+						<?php echo $this->form->renderField('property'); ?>
+					</div>
+					<br>
+					<div class="small-12 cell">
+						<?php echo $this->form->renderField('location'); ?>
+					</div>
+					<br>
 					<div class="small-4 cell">
 						<?php echo $this->form->renderField('day'); ?>
 					</div>
@@ -74,43 +83,48 @@ $action = '/index.php?option=com_knowres&task=contact.submit';
 					<div class="small-4 cell">
 						<?php echo $this->form->renderField('ages'); ?>
 					</div>
-					<div class="small-6 medium-4 cell end">
+					<div class="small-6 cell">
 						<?php echo $this->form->renderField('budget'); ?>
+					</div>
+					<div class="small-6 cell">
 					</div>
 				</div>
 			</div>
 		</fieldset>
 
 		<fieldset class="fieldset">
-			<div class="callout">
+			<div class="callout small secondary">
 				<div class="grid-x grid-margin-x">
 					<div class="small-12 medium-12 cell">
 						<?php echo $this->form->renderField('message'); ?>
+						<br>
 					</div>
 				</div>
 			</div>
 		</fieldset>
 
-		<div class="callout">
-			<div class="grid-x grid-margin-x">
-				<div class="small-12 medium-6 cell end text-center">
-					<?php echo $this->form->renderField('grecaptcha'); ?>
-				</div>
-				<div class="small-12 cell medium-6 text-center">
-					<br><br>
-					<button type="submit" class="button validate">
-						<span><?php echo KrMethods::plain('COM_KNOWRES_CONTACT_SEND'); ?></span>
-					</button>
-					<p class="smaller text-center">
-						<?php echo KrMethods::sprintf('COM_KNOWRES_CONTACT_SEND_3RDPARTY',
-							KrMethods::getCfg('sitename')); ?>
-					</p>
+		<fieldset class="fieldset">
+			<div class="callout secondary">
+				<div class="grid-x grid-margin-x">
+					<div class="small-12 medium-6 cell end text-center">
+						<?php echo $this->form->renderField('grecaptcha'); ?>
+					</div>
+					<div class="small-12 cell medium-6 text-center">
+						<br>
+						<button type="submit" class="button large validate small-margin-bottom">
+							<span><?php echo KrMethods::plain('COM_KNOWRES_CONTACT_SEND'); ?></span>
+						</button>
+						<p class="smaller text-center">
+							<?php echo KrMethods::sprintf('COM_KNOWRES_CONTACT_SEND_3RDPARTY',
+								KrMethods::getCfg('sitename')); ?>
+						</p>
+					</div>
 				</div>
 			</div>
-		</div>
+		</fieldset>
 
 		<?php echo HTMLHelper::_('form.token'); ?>
-		<input type="hidden" name="id" value="0">
+		<input type="hidden" name="id" value=" . $this->property_id . ">
 		<input type="hidden" name="task" value="contact.submit">
 	</form>
 </div>

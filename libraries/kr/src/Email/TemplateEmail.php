@@ -59,7 +59,7 @@ class TemplateEmail
 		$tags['REQCOUNTRY']      = 'Requester Country';
 		$tags['REQPHONE']        = 'Requester Phone';
 		$tags['REQMESSAGE']      = 'Requester Message';
-		$tags['PROPERTYNAME']    = 'Required Property';
+		$tags['PROPERTYNAME']    = 'Requested Property';
 		$tags['LOCATION']        = 'Required Location';
 		$tags['ARRIVAL']         = 'Arrival Date';
 		$tags['#NIGHTS']         = 'Number of Nights';
@@ -116,10 +116,9 @@ class TemplateEmail
 		$tags['GUESTNOTES']      = 'Guest Notes';
 		$tags['GUESTS']          = '#Guests';
 		$tags['LINKCARHIRE']     = 'Link to Car Hire affiliate with text - '
-			. KrMethods::plain('COM_KNOWRES_HERE');
+		                           . KrMethods::plain('COM_KNOWRES_HERE');
 		$tags['LINKGUESTTERMS']  = 'Link to Guest Terms with text - [sitename] Terms & Conditions';
-		if (KrMethods::getParams()->get('create_user', 0))
-		{
+		if (KrMethods::getParams()->get('create_user', 0)) {
 			$tags['LINKLOGIN'] = 'Link Login';
 		}
 		$tags['LINKPROPERTY']        = 'Link to Property Details with text - [property name]';
@@ -182,8 +181,7 @@ class TemplateEmail
 				'COM_KNOWRES_EMAIL_BUTTONOWNERLINK'
 			);
 
-		if (KrMethods::getParams()->get('property_rooms', 0))
-		{
+		if (KrMethods::getParams()->get('property_rooms', 0)) {
 			$tags['BOOKINGGUESTS']     = 'Booking Guests';
 			$tags['BOOKINGROOMTYPES']  = 'Booking Room Types';
 			$tags['PROPERTYADDRESS']   = 'Property Address (one line)';

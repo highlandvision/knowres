@@ -48,6 +48,9 @@ class HtmlView extends KrHtmlView\Site
 		/** @var ContactModel $model */
 		$model      = $this->getModel();
 		$this->form = $model->getForm();
+		if ($this->property_id) {
+			$this->form->setValue('property', '', $this->property->property_name);
+		}
 
 		$sitename               = KrMethods::getCfg('sitename');
 		$this->meta_title       = KrMethods::sprintf('COM_KNOWRES_CONTACT_TITLE', $sitename);
