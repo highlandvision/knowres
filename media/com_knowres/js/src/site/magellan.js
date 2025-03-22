@@ -15,12 +15,12 @@ let currentParagraph, hrElement;
 
 (function ($) {
     $(function () {
-        ovChildren = $('.readmore-overview').children('p');
+        ovChildren = $('.readmore-overview').children('p, h5, ul');
         ovPs = ovChildren.length;
-        if (ovPs > 5) {
-            ovChildren.slice(6).hide();
-            ovChildren.slice(ovPs - 1, ovPs).after('<a class="button hollow' +
-                ' accent readmore overview-toggle">Read more...</a>');
+        if (ovPs > 3) {
+            ovChildren.slice(3).hide();
+            ovChildren.slice(ovPs - 1, ovPs).after('<div class="text-center"><a class="button hollow' +
+                ' readmore overview-toggle">Read more...</a></div>');
             ovState = 'hidden';
         }
 
@@ -46,12 +46,12 @@ let currentParagraph, hrElement;
             e.preventDefault();
             $ovBtn = $(".overview-toggle");
             if (ovState === 'visible') {
-                ovChildren.slice(6).hide();
+                ovChildren.slice(3).hide();
                 $ovBtn.attr('value', 'Read more');
                 $ovBtn.text("Read more...");
                 ovState = 'hidden';
             } else if (ovState === 'hidden') {
-                $('.readmore-overview p').show();
+                $('.readmore-overview').find(':hidden').show();
                 $ovBtn.attr('value', 'Read less');
                 $ovBtn.text("Read less...");
                 ovState = 'visible';
