@@ -39,7 +39,8 @@ $month_end   = TickTock::parseString($month_start, 'Y-m-t');
 		<?php for ($i = 0; $i < 7; $i++) : ?>
 			<th><?php echo substr(TickTock::parseString($this->startday_name . ' +' . $i . ' Days', 'D'),
 					0,
-					-1); ?></th>
+					-1); ?>
+			</th>
 		<?php endfor; ?>
 	</tr>
 
