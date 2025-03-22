@@ -6,6 +6,7 @@
  * @license     See the file LICENSE.txt for the full license governing this code.
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
+
 /** @noinspection PhpPossiblePolymorphicInvocationInspection */
 
 namespace HighlandVision\KR;
@@ -39,64 +40,6 @@ class ExceptionHandling
 	}
 
 	/**
-	 * Set override error handler.
-	 *
-	 * @param  int     $severity  Error severity
-	 * @param  string  $message   Error message
-	 * @param  string  $file      Filename
-	 * @param  int     $line      Line number
-	 *
-	 * @throws Exception
-	 * @since  4.0.0
-	 */
-	public function exceptionErrorHandler(int $severity, string $message, string $file, int $line = 0): void
-	{
-		$level = $this->setLevel($severity);
-		if ($level !== 'ignore' && $level !== 'warning' )
-		{
-			Logger::logMe($message, $level);
-		}
-	}
-
-	/**
-	 * Set override exception handler.
-	 *
-	 * @param  Throwable  $error  Thrown exception
-	 *
-	 * @throws ExceptionHandling
-	 * @throws Exception
-	 * @throws Throwable
-	 * @since  3.5.0
-	 */
-	public function exceptionHandler(Throwable $error): void
-	{
-		$isException = $error instanceof Throwable;
-		if ($isException)
-		{
-			$class = get_class($error);
-			if ($class == 'ErrorException')
-			{
-				/* @var ErrorException $error */
-				$code  = $error->getSeverity();
-				$level = $this->setLevel($code);
-			}
-			else
-			{
-				$level = 'error';
-				$code  = $error->getCode();if ($class == 'InvalidArgumentException' || $code == 403 || $code == 404)
-				{
-					$level = 'notice';
-				}
-			}
-
-			new Logger($error->getMessage(), $code, $error->getFile(), $error->getLine(), $level,
-				$error->getTraceAsString());
-
-			// static::render($error);
-		}
-	}
-
-	/**
 	 * Render the error page based on an exception.
 	 *
 	 * @param  Throwable  $error  An Exception or Throwable (PHP 7+) object for which to render the error page.
@@ -107,16 +50,14 @@ class ExceptionHandling
 	 */
 	public static function render(Throwable $error): void
 	{
-		try
-		{
+		try {
 			$app = Factory::getApplication();
 
 			// Flag if we are on cli
 			$isCli = $app->isClient('cli');
 
 			// If site is offline, and it's a 404 error, just go to index (to see offline message, instead of 404)
-			if (!$isCli && $error->getCode() == '404' && $app->get('offline') == 1)
-			{
+			if (!$isCli && $error->getCode() == '404' && $app->get('offline') == 1) {
 				$app->redirect('index.php');
 			}
 
@@ -127,21 +68,15 @@ class ExceptionHandling
 			 * If a type does not exist for a format then try to use the format from the application's Input object
 			 * Lastly, if all else fails, we default onto the HTML format to at least render something
 			 */
-			if (Factory::$document)
-			{
+			if (Factory::$document) {
 				$format = Factory::$document->getType();
-			}
-			else
-			{
+			} else {
 				$format = $app->input->getString('format', 'html');
 			}
 
-			try
-			{
+			try {
 				$renderer = AbstractRenderer::getRenderer($format);
-			}
-			catch (InvalidArgumentException)
-			{
+			} catch (InvalidArgumentException) {
 				// Default to the HTML renderer
 				$renderer = AbstractRenderer::getRenderer('html');
 			}
@@ -153,17 +88,13 @@ class ExceptionHandling
 			$data = $renderer->render($error);
 
 			// If nothing was rendered, just use the message from the Exception
-			if (empty($data))
-			{
+			if (empty($data)) {
 				$data = $error->getMessage();
 			}
 
-			if ($isCli)
-			{
+			if ($isCli) {
 				echo $data;
-			}
-			else
-			{
+			} else {
 				/** @var CMSApplication $app */
 
 				// Do not allow cache
@@ -174,9 +105,7 @@ class ExceptionHandling
 
 			// This return is needed to ensure the test suite does not trigger the non-Exception handling below
 			return;
-		}
-		catch (Throwable $errorRendererError)
-		{
+		} catch (Throwable $errorRendererError) {
 			// Pass the error down
 		}
 
@@ -194,13 +123,63 @@ class ExceptionHandling
 		 * will take unhandled exception as previous.
 		 * So PHP will add $error Exception as previous to $errorRendererError Exception to keep full error stack.
 		 */
-		try
-		{
+		try {
 			throw $error;
-		}
-		finally
-		{
+		} finally {
 			throw $errorRendererError;
+		}
+	}
+
+	/**
+	 * Set override error handler.
+	 *
+	 * @param  int     $severity  Error severity
+	 * @param  string  $message   Error message
+	 * @param  string  $file      Filename
+	 * @param  int     $line      Line number
+	 *
+	 * @throws Exception
+	 * @since  4.0.0
+	 */
+	public function exceptionErrorHandler(int $severity, string $message, string $file, int $line = 0): void
+	{
+		$level = $this->setLevel($severity);
+		if ($level !== 'ignore' && $level !== 'warning') {
+			Logger::logMe($message, $level);
+		}
+	}
+
+	/**
+	 * Set override exception handler.
+	 *
+	 * @param  Throwable  $error  Thrown exception
+	 *
+	 * @throws ExceptionHandling
+	 * @throws Exception
+	 * @throws Throwable
+	 * @since  3.5.0
+	 */
+	public function exceptionHandler(Throwable $error): void
+	{
+		$isException = $error instanceof Throwable;
+		if ($isException) {
+			$class = get_class($error);
+			if ($class == 'ErrorException') {
+				/* @var ErrorException $error */
+				$code  = $error->getSeverity();
+				$level = $this->setLevel($code);
+			} else {
+				$level = 'error';
+				$code  = $error->getCode();
+				if ($class == 'InvalidArgumentException' || $code == 403 || $code == 404) {
+					$level = 'notice';
+				}
+			}
+
+			new Logger($error->getMessage(), $code, $error->getFile(), $error->getLine(), $level,
+				$error->getTraceAsString());
+
+			// static::render($error);
 		}
 	}
 
@@ -226,7 +205,6 @@ class ExceptionHandling
 		$level_xref[E_USER_ERROR]        = 'error';
 		$level_xref[E_USER_WARNING]      = 'warning';
 		$level_xref[E_USER_NOTICE]       = 'notice';
-		$level_xref[E_STRICT]            = 'notice';
 		$level_xref[E_RECOVERABLE_ERROR] = 'error';
 		$level_xref[E_DEPRECATED]        = 'ignore';
 		$level_xref[E_USER_DEPRECATED]   = 'ignore';

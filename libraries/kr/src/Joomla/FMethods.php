@@ -6,6 +6,7 @@
  * @license     See the file "LICENSE.txt" for the full license governing this code.
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
+
 /** @noinspection PhpPossiblePolymorphicInvocationInspection */
 
 namespace HighlandVision\KR\Joomla;
@@ -68,8 +69,11 @@ class FMethods
 	 *
 	 * @since 3.7.0
 	 */
-	public static function addLogLog(mixed $entry, int $priority, string $category, string $date = null,
-	                                 array $context = []): void
+	public static function addLogLog(mixed $entry,
+		int $priority,
+		string $category,
+		?string $date = null,
+		array $context = []): void
 	{
 		Log::add($entry, $priority, $category, $date, $context);
 	}
@@ -126,7 +130,7 @@ class FMethods
 	public static function getArticle(int $article_id): mixed
 	{
 		$model = Factory::getApplication()->bootComponent('com_content')
-		                ->getMVCFactory()->createModel('Article', 'Administrator', ['ignore_request' => true]);
+			->getMVCFactory()->createModel('Article', 'Administrator', ['ignore_request' => true]);
 
 		return $model->getItem($article_id);
 	}
@@ -357,12 +361,11 @@ class FMethods
 	 * @since  1.0.0
 	 * @return User
 	 */
-	public static function getUser(int $id = null): User
+	public static function getUser(?int $id = null): User
 	{
 		if (is_null($id)) {
 			return Factory::getApplication()->getIdentity();
-		}
-		else {
+		} else {
 			return Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById($id);
 		}
 	}
@@ -655,16 +658,16 @@ class FMethods
 	 * @return bool
 	 */
 	public static function sendEmail(mixed $from,
-	                                 mixed $fromName,
-	                                 mixed $to,
-	                                 mixed $subject,
-	                                 mixed $body,
-	                                 bool  $html = true,
-	                                 mixed $cc = null,
-	                                 mixed $bcc = null,
-	                                 mixed $reply = null,
-	                                 mixed $replyName = null,
-	                                 mixed $attachment = null): bool
+		mixed $fromName,
+		mixed $to,
+		mixed $subject,
+		mixed $body,
+		bool $html = true,
+		mixed $cc = null,
+		mixed $bcc = null,
+		mixed $reply = null,
+		mixed $replyName = null,
+		mixed $attachment = null): bool
 	{
 		$mail = self::getMailer();
 		$mail->setSender([$from, $fromName]);
@@ -673,14 +676,12 @@ class FMethods
 		if (is_null($reply)) {
 			if (version_compare(JVERSION, '3.5', 'ge')) {
 				$mail->addReplyTo($from, $fromName);
-			}
-			else {
+			} else {
 				$mail->addReplyTo([$from,
 				                   $fromName
-				                  ]);
+				]);
 			}
-		}
-		else {
+		} else {
 			$mail->addReplyTo($reply, $replyName);
 		}
 

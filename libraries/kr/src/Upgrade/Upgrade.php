@@ -18,7 +18,6 @@ if (!defined('KRFRAMEWORK')) {
 }
 
 use Exception;
-use HighlandVision\Component\Knowres\Administrator\Model\ServicexrefModel;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\TickTock;
@@ -31,6 +30,11 @@ use Joomla\Database\Exception\QueryTypeAlreadyDefinedException;
 use RuntimeException;
 use stdClass;
 use UnexpectedValueException;
+
+use function count;
+use function defined;
+use function explode;
+use function implode;
 
 /**
  * Helper upgrade install scripts
