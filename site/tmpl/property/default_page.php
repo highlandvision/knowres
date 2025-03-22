@@ -38,8 +38,8 @@ defined('_JEXEC') or die;
 	<?php endif; ?>
 
 	<!--  Text Fields -->
-	<?php foreach($this->fields as $pf): ?>
-		<?php if (!$pf->special && $pf->id > 1 ): ?>
+	<?php foreach ($this->fields as $pf): ?>
+		<?php if (!$pf->special && $pf->id > 1): ?>
 			<?php $label = 'hp' . $pf->id; ?>
 			<?php $field = 'p' . $pf->id; ?>
 			<?php if (!empty(strip_tags($this->item->{$field}))): ?>

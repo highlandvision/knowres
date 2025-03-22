@@ -14,15 +14,15 @@ use Joomla\CMS\HTML\HTMLHelper;
 
 $wa = $this->document->getWebAssetManager();
 $wa->useScript('com_knowres.site')
-   ->useScript('form.validate')
-   ->useScript('keepalive');
+	->useScript('form.validate')
+	->useScript('keepalive');
 
 $termsurl = KrMethods::route('index.php?option=com_knowres&task=property.terms&id=' . $this->property->id, false);
-$action = '/index.php?option=com_knowres&task=payment.router';
+$action   = '/index.php?option=com_knowres&task=payment.router';
 ?>
 
 <div id="kr-payment" class="grid-x grid-margin-x">
-	<div class="small-12 medium-10 medium-offset-1 large-8 large-offset-2 cell">
+	<div class="small-12 medium-10 large-8 cell">
 		<h1><?php echo KrMethods::plain('COM_KNOWRES_MAKE_A_PAYMENT'); ?></h1>
 
 		<form action="<?php echo $action; ?>" class="ajaxform form-validate" id="kr-form-payment" method="post">

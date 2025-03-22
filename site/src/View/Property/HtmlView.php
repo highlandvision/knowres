@@ -346,8 +346,11 @@ class HtmlView extends KrHtmlView\Site
 	 */
 	protected function setReviewData(): void
 	{
-		$this->list_limit = $this->params->get('list_limit', 10);
-		$this->ratings    = new stdClass();
+		$this->list_limit = $this->params->get('list_limit', 6);
+		if ($this->list_limit > 6) {
+			$this->list_limit = 6;
+		}
+		$this->ratings = new stdClass();
 
 		$this->reviews = KrFactory::getListModel('reviews')->forDisplay($this->item->id, $this->list_limit + 1);
 		if (is_countable($this->reviews) && count($this->reviews)) {

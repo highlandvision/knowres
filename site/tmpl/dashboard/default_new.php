@@ -15,8 +15,7 @@ use HighlandVision\KR\SiteHelper;
 
 $guestformlink  = SiteHelper::buildDashboardLink($this->item, 'guestform');
 $overview_modal = 'kr-overview-modal-' . $this->item->id;
-$overview_url   = 'https://jkr.test/index.php?option=com_knowres&view=dashboard&format=statement&key=' .
-                  $this->item->id;
+$overview_url   = KrMethods::route('index.php?option=com_knowres&task=dashboard.statement&key=' . $this->item->id);
 ?>
 
 <div class="stacked button-group">

@@ -12,7 +12,6 @@
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Utility;
-use Joomla\CMS\Session\Session;
 
 extract($displayData);
 /**
@@ -25,12 +24,12 @@ extract($displayData);
 $count = 0;
 ?>
 
-<div class="row">
-	<div class="col-2 strong"><?php echo KrMethods::plain('COM_KNOWRES_DATE'); ?></div>
-	<div class="col-4 strong"><?php echo KrMethods::plain('COM_KNOWRES_STATUS'); ?></div>
-	<div class="col-4 strong text-end"><?php echo KrMethods::plain('COM_KNOWRES_CONTRACTPAYMENTS_AMOUNT'); ?></div>
-	<div class="col-2 strong text-end"><?php echo KrMethods::plain('COM_KNOWRES_CONTRACTPAYMENTS_BASE_AMOUNT'); ?></div>
-</div>
+	<div class="row">
+		<div class="col-2 strong"><?php echo KrMethods::plain('COM_KNOWRES_DATE'); ?></div>
+		<div class="col-4 strong"><?php echo KrMethods::plain('COM_KNOWRES_STATUS'); ?></div>
+		<div class="col-4 strong text-end"><?php echo KrMethods::plain('COM_KNOWRES_CONTRACTPAYMENTS_AMOUNT'); ?></div>
+		<div class="col-2 strong text-end"><?php echo KrMethods::plain('COM_KNOWRES_CONTRACTPAYMENTS_BASE_AMOUNT'); ?></div>
+	</div>
 
 <?php foreach ($payments as $p): ?>
 	<?php if ($count): ?>
@@ -48,19 +47,14 @@ $count = 0;
 			<?php if ($p->confirmed) : ?>
 				<?php echo KrMethods::plain('COM_KNOWRES_CONFIRMED'); ?>
 			<?php else: ?>
-				<a href="<?php echo KrMethods::route('index.php?option=com_knowres&task=contractpayment.edit&id='
-					. $p->id, false); ?>">
-					<i class='fa-solid fa-check green'></i>&nbsp<?php echo KrMethods::plain('COM_KNOWRES_CONFIRM'); ?>
-				</a>
-				&nbsp;&nbsp;
-				<a onclick="return Joomla.submitbutton('contractpayments.delete')"
-				   href="<?php echo KrMethods::route('index.php?option=com_knowres&task=contractpayments.delete&cid='
-					   . $p->id . '&' . Session::getFormToken() . '=1', false); ?>">
-					<i class='fa-solid fa-trash red'></i>&nbsp;<?php echo KrMethods::plain('COM_KNOWRES_DELETE'); ?>
-				</a>
+				<?php echo KrMethods::plain('COM_KNOWRES_PENDING'); ?>
 			<?php endif; ?>
+			<a href="<?php echo KrMethods::route('index.php?option=com_knowres&task=contractpayment.edit&id=' .
+			                                     $p->id,
+				false); ?>" class="red" style="margin-left:0.5rem;">
+				<?php echo KrMethods::plain('COM_KNOWRES_EDIT'); ?>
+			</a>
 		</div>
-
 		<?php if ($p->currency != $contract->currency) : ?>
 			<div class="col-4 text-end">
 				<?php echo Utility::displayValue($p->amount, $p->currency); ?> @ <?php echo $p->rate; ?>
@@ -90,10 +84,9 @@ $count = 0;
 		<?php endif; ?>
 	</div>
 	<div class="row">
-		<div class="col-12">
+		<div class="col-12" style="margin-top:0.5rem;">
 			<?php echo $p->service_name . ' ' . $p->payment_ref; ?>
 		</div>
-
 		<div class="col-12">
 			<?php echo $p->note; ?>
 		</div>

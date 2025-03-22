@@ -51,8 +51,7 @@ class TickTock
 
 		if (!$ignoreLast) {
 			$period = CarbonPeriod::create($first, $last);
-		}
-		else {
+		} else {
 			$period = CarbonPeriod::create($first, $last, CarbonPeriod::EXCLUDE_END_DATE);
 		}
 
@@ -82,8 +81,7 @@ class TickTock
 
 		if (!$ignoreLast) {
 			$period = CarbonPeriod::create($first, $last);
-		}
-		else {
+		} else {
 			$period = CarbonPeriod::create($first, $last, CarbonPeriod::EXCLUDE_END_DATE);
 		}
 
@@ -139,8 +137,7 @@ class TickTock
 				$dt = new Carbon($date);
 
 				return $dt->format($format);
-			}
-			else {
+			} else {
 				return '';
 			}
 		} catch (Exception $e) {
@@ -285,8 +282,7 @@ class TickTock
 	{
 		if (!$date) {
 			$date = Carbon::today();
-		}
-		else {
+		} else {
 			$date = new Carbon($date);
 		}
 
@@ -302,6 +298,21 @@ class TickTock
 				$count++;
 			}
 		}
+
+		return $date->toDateString();
+	}
+
+	/**
+	 * Get next end of monmth
+	 *
+	 * @since  3.3.1
+	 * @return string
+	 */
+	public static function getEom(): string
+	{
+		$date = Carbon::now('UTC');
+		$date->addMonth();
+		$date->day = 0;
 
 		return $date->toDateString();
 	}
@@ -357,7 +368,7 @@ class TickTock
 	 * Add number of days to date
 	 *
 	 * @param  string  $date    Date to be used as base yyyy-mm-dd
-	 * @param  int     $days    Number of days to add or subtract
+	 * @param  ?int    $days    Number of days to add or subtract
 	 * @param  string  $sign    + or - to date
 	 * @param  string  $format  Output format
 	 *
@@ -365,14 +376,15 @@ class TickTock
 	 * @since  3.3.0
 	 * @return string
 	 */
-	public static function modifyDays(string $date = 'now', int $days = 1, string $sign = '+',
+	public static function modifyDays(string $date = 'now',
+		?int $days = 1,
+		string $sign = '+',
 		string $format = 'Y-m-d'): string
 	{
 		$date = new Carbon($date);
 		if ($sign == '+') {
 			$date->addDays($days);
-		}
-		else {
+		} else {
 			$date->subDays($days);
 		}
 
@@ -391,14 +403,15 @@ class TickTock
 	 * @since  3.3.0
 	 * @return string
 	 */
-	public static function modifyHours(string $ts = 'now', int $hours = 1, string $sign = '+',
+	public static function modifyHours(string $ts = 'now',
+		int $hours = 1,
+		string $sign = '+',
 		string $format = 'Y-m-d H:i:s'): string
 	{
 		$date = new Carbon($ts);
 		if ($sign == '+') {
 			$date->addHours($hours);
-		}
-		else {
+		} else {
 			$date->subHours($hours);
 		}
 
@@ -417,14 +430,15 @@ class TickTock
 	 * @since  3.3.0
 	 * @return string
 	 */
-	public static function modifyMonths(string $date = 'now', int $months = 1, string $sign = '+',
+	public static function modifyMonths(string $date = 'now',
+		int $months = 1,
+		string $sign = '+',
 		string $format = 'Y-m-d'): string
 	{
 		$date = new Carbon($date);
 		if ($sign == '+') {
 			$date->addMonths($months);
-		}
-		else {
+		} else {
 			$date->subMonths($months);
 		}
 
@@ -447,25 +461,9 @@ class TickTock
 		$date = new Carbon($date);
 		if ($sign == '+') {
 			$date->addYears($years);
-		}
-		else {
+		} else {
 			$date->subYears($years);
 		}
-
-		return $date->toDateString();
-	}
-
-	/**
-	 * Get next end of monmth
-	 *
-	 * @since  3.3.1
-	 * @return string
-	 */
-	public static function getEom(): string
-	{
-		$date = Carbon::now('UTC');
-		$date->addMonth();
-		$date->day = 0;
 
 		return $date->toDateString();
 	}
@@ -483,9 +481,9 @@ class TickTock
 	public static function parseString(string $string, string $format = 'Y-m-d'): string
 	{
 		return Carbon::parse($string)
-					 ->locale(KrMethods::getLanguageTag())
-		             ->setTimezone('UTC')
-		             ->translatedFormat($format);
+			->locale(KrMethods::getLanguageTag())
+			->setTimezone('UTC')
+			->translatedFormat($format);
 	}
 
 	/**
