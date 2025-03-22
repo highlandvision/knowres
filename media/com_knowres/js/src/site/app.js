@@ -40,7 +40,7 @@ let scloaded = false;
             calendarLoaded = true;
             const sticky = $('.sticky');
             if (sticky.length) {
-                $('.sticky').foundation('_calc', true);
+                sticky.foundation('_calc', true);
             }
         }
 
@@ -258,6 +258,7 @@ let scloaded = false;
             $('.kr-pager.bottom').html(response['pagination']);
             $("#kr-offcanvas-properties-filter").html(response['filters']);
             $("#kr-offcanvas-properties-sortby").html(response['sortby']);
+            $('#kr-properties-filter-count').html(response['pcount']);
             $sidebar = $("#kr-sidebar-search");
             if ($sidebar.length && response['search'].length) {
                 $sidebar.empty().html(response['search']);
@@ -265,7 +266,11 @@ let scloaded = false;
             }
 
             if (action === 'page') {
-                window.scrollTo(0, 0);
+                const sticky = $('.sticky');
+                if (sticky.length) {
+                    sticky.foundation('_calc', true);
+                    window.scrollTo(0, 0);
+                }
             }
         }
     }

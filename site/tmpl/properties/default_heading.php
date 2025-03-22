@@ -13,3 +13,5 @@ defined('_JEXEC') or die;
 <h1 id="kr-properties-filter-heading" class="kr-properties-filter-heading">
 	<?php echo $this->header; ?>
 </h1>
+<h4 id="kr-properties-filter-count" class="kr-properties-filter-count">
+</h4>

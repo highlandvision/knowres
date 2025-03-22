@@ -10,6 +10,7 @@
 
 defined('_JEXEC') or die;
 
+use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Utility;
 use Joomla\CMS\Factory;
 
@@ -30,6 +31,11 @@ if (!empty($this->items) && count($this->items)) {
 	$data['sortby']     = $this->loadTemplate('sortby');
 	$data['search']     = $this->modules;
 	$data['pagination'] = $pagination == '&nbsp;' ? '' : $pagination;
+	if (count($this->items) == 1)
+		$data['pcount'] = "<strong>1</strong> " . KrMethods::plain('COM_KNOWRES_PROPERTY');
+	else {
+		$data['pcount'] = "<strong>" . count($this->items) . '</strong> ' . KrMethods::plain('COM_KNOWRES_PROPERTIES');
+	}
 } else {
 	$data['items']   = $this->loadTemplate('sorry');
 	$data['sortby']  = '';
@@ -42,16 +48,16 @@ echo Utility::encodeJson($data);
 $lifetime = 3600 * 24 * 30;
 if (count($this->Response->searchData->favs)) {
 	Factory::getApplication()->getInput()->cookie->set('krsaved',
-	                                                   implode('xx', $this->Response->searchData->favs),
-	                                                   time() + $lifetime,
-	                                                   Factory::getApplication()->get('cookie_path', '/'),
-	                                                   Factory::getApplication()->get('cookie_domain'));
+		implode('xx', $this->Response->searchData->favs),
+		time() + $lifetime,
+		Factory::getApplication()->get('cookie_path', '/'),
+		Factory::getApplication()->get('cookie_domain'));
 } else {
 	Factory::getApplication()->getInput()->cookie->set('krsaved',
-	                                                   '',
-	                                                   time() - $lifetime,
-	                                                   Factory::getApplication()->get('cookie_path', '/'),
-	                                                   Factory::getApplication()->get('cookie_domain'));
+		'',
+		time() - $lifetime,
+		Factory::getApplication()->get('cookie_path', '/'),
+		Factory::getApplication()->get('cookie_domain'));
 }
 
 jexit();
