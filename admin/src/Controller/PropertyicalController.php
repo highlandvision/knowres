@@ -15,7 +15,6 @@ use Exception;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\IcalBlock;
 use HighlandVision\KR\Joomla\Extend\FormController;
-
 use HighlandVision\KR\Utility;
 
 /**
@@ -23,8 +22,7 @@ use HighlandVision\KR\Utility;
  *
  * @since 5.1.0
  */
-class PropertyicalController extends FormController
-{
+class PropertyicalController extends FormController {
 	/**
 	 * Import manually uploaded ics.
 	 *
