@@ -27,8 +27,7 @@ use SimpleXMLElement;
  *
  * @since          1.0.0
  */
-class ServicexrefpropertyRule extends FormRule
-{
+class ServicexrefpropertyRule extends FormRule {
 	/**
 	 * Method to test the value.
 	 *
@@ -196,6 +195,18 @@ class ServicexrefpropertyRule extends FormRule
 		if (!$item->licence_id) {
 			$country = KrFactory::getAdminModel('country')->getItem($item->country_id);
 			if ($country->property_licence) {
+				KrMethods::message(KrMethods::plain('COM_KNOWRES_SERVICEXREF_ERROR7'), 'error');
+
+				$error = true;
+			}
+			$region = KrFactory::getAdminModel('region')->getItem($item->region_id);
+			if ($region->property_licence) {
+				KrMethods::message(KrMethods::plain('COM_KNOWRES_SERVICEXREF_ERROR7'), 'error');
+
+				$error = true;
+			}
+			$town = KrFactory::getAdminModel('town')->getItem($item->town_id);
+			if ($town->property_licence) {
 				KrMethods::message(KrMethods::plain('COM_KNOWRES_SERVICEXREF_ERROR7'), 'error');
 
 				$error = true;

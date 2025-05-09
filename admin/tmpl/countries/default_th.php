@@ -10,6 +10,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
+
 ?>
 
 <tr>
@@ -40,6 +41,13 @@ use Joomla\CMS\HTML\HTMLHelper;
 	<th scope="col" class='w-10 d-none d-md-table-cell text-center'>
 		<?php echo HTMLHelper::_('searchtools.sort', 'COM_KNOWRES_COUNTRIES_COUNTRY_ISO', 'a.country_iso',
 			$this->listDirn, $this->listOrder); ?>
+	</th>
+	<th scope="col" class="w-10 d-none d-md-table-cell text-center">
+		<?php echo HTMLHelper::_('searchtools.sort',
+			'COM_KNOWRES_REGION_PROPERTY_LICENCE_LBL',
+			'a.property_licence',
+			$this->listDirn,
+			$this->listOrder); ?>
 	</th>
 	<th scope="col" class="w-5 d-none d-md-table-cell">
 		<?php echo HTMLHelper::_('searchtools.sort', 'JGRID_HEADING_ID', 'a.id', $this->listDirn, $this->listOrder); ?>

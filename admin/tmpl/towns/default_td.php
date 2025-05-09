@@ -11,6 +11,7 @@ defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrMethods;
 use Joomla\CMS\HTML\HTMLHelper;
+
 ?>
 
 <?php foreach ($this->items as $i => $this->item): ?>
@@ -38,6 +39,9 @@ use Joomla\CMS\HTML\HTMLHelper;
 		</td>
 		<td class="text-center">
 			<?php echo $this->item->allow_property ? KrMethods::plain('JYES') : KrMethods::plain('JNO'); ?>
+		</td>
+		<td class="text-center">
+			<?php echo $this->item->property_licence ? KrMethods::plain('JYES') : KrMethods::plain('JNO'); ?>
 		</td>
 		<td class="d-none d-md-table-cell">
 			<?php echo (int) $this->item->id; ?>
