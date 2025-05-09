@@ -30,11 +30,11 @@ StripeLib::setApiKey(trim($this->paymentData->secret_key));
 				<!--Stripe.js injects the Payment Element-->
 			</div>
 			<br>
-			<button id="submit" class="button expanded">
+			<button id="submit" class="button expanded" type="button">
 				<div class="spinner hidden" id="spinner"></div>
 				<span id="button-text">
 					<?php $payment_amount = Utility::displayValue($this->paymentData->amount,
-					                                              $this->paymentData->currency); ?>
+						$this->paymentData->currency); ?>
 					<?php echo KrMethods::sprintf('COM_KNOWRES_PAYMENT_CARD_SUBMIT', $payment_amount); ?>
 			</button>
 			<div id="payment-message" class="hidden"></div>

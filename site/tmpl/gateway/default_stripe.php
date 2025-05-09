@@ -28,10 +28,10 @@ StripeLib::setApiKey(trim($this->paymentData->secret_key));
 			</div>
 			<br>
 			<button id="submit" class="button expanded">
-				<div class="spinner hidden" id="spinner"></div>
+				<div class="spinner hidden" id="spinner" type="button"></div>
 				<span id="button-text">
 					<?php $payment_amount = Utility::displayValue($this->paymentData->amount,
-			                                              $this->paymentData->currency); ?>
+						$this->paymentData->currency); ?>
 					<?php echo KrMethods::sprintf('COM_KNOWRES_PAYMENT_CARD_SUBMIT', $payment_amount); ?>
 				</span>
 			</button>

@@ -18,8 +18,6 @@ use HighlandVision\KR\Joomla\Extend\FormController;
 
 use HighlandVision\KR\Utility;
 
-use function print_r;
-
 /**
  * Property ical controller form class
  *
@@ -38,8 +36,6 @@ class PropertyicalController extends FormController
 		$this->checkToken();
 
 		$property_id = KrMethods::inputInt('property_id');
-		echo print_r($_FILES, true);
-
 		$filename    = $_FILES['jform']['name']['files']['file'];
 		$filetype    = $_FILES['jform']['type']['files']['file'];
 		$tmp_name    = $_FILES['jform']['tmp_name']['files']['file'];
