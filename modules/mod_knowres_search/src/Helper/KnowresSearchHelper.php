@@ -28,46 +28,7 @@ use function implode;
  *
  * @since 1.0.0
  */
-class KnowresSearchHelper
-{
-	/**
-	 * Get search defaults
-	 *
-	 * @throws Exception
-	 * @since  4.0.0
-	 * @return stdClass
-	 */
-	public static function getSearchDefaults(): stdClass
-	{
-		$searchSession = new KrSession\Search();
-		$searchData    = $searchSession->getData();
-		try {
-			$input            = new stdClass;
-			$input->region_id = KrMethods::inputInt('region_id', $searchData->region_id);
-			$input->arrival   = KrMethods::inputString('arrival', $searchData->arrival);
-			Utility::validateInputDate($input->arrival);
-			$input->departure = KrMethods::inputString('departure', $searchData->departure);
-			Utility::validateInputDate($input->departure);
-			$input->flexible   = KrMethods::inputInt('flexible', $searchData->flexible);
-			if (KrMethods::getParams()->get('search_guests_expanded', 0)) {
-				$input->adults     = KrMethods::inputInt('adults', $searchData->adults);
-				$input->children   = KrMethods::inputInt('children', $searchData->children);
-				$input->child_ages = KrMethods::inputArray('child_ages', $searchData->child_ages);
-				$input->guests     = $input->adults + $input->children;
-			} else {
-				$input->guests     = KrMethods::inputInt('guests', $searchData->guests);
-				$input->adults     = 0;
-				$input->children   = 0;
-				$input->child_ages = [];
-			}
-		} catch (Exception $e) {
-			$searchData = $searchSession->resetData();
-			SiteModel::redirectHome();
-		}
-
-		return $input;
-	}
-
+class KnowresSearchHelper {
 	/**
 	 * Returns the current selected search region
 	 *
@@ -103,10 +64,49 @@ class KnowresSearchHelper
 	}
 
 	/**
+	 * Get search defaults
+	 *
+	 * @throws Exception
+	 * @since  4.0.0
+	 * @return stdClass
+	 */
+	public static function getSearchDefaults(): stdClass
+	{
+		$searchSession = new KrSession\Search();
+		$searchData    = $searchSession->getData();
+
+		try {
+			$input            = new stdClass;
+			$input->region_id = KrMethods::inputInt('region_id', $searchData->region_id);
+			$input->arrival   = KrMethods::inputString('arrival', $searchData->arrival);
+			Utility::validateInputDate($input->arrival);
+			$input->departure = KrMethods::inputString('departure', $searchData->departure);
+			Utility::validateInputDate($input->departure);
+			$input->flexible = KrMethods::inputInt('flexible', $searchData->flexible);
+			if (KrMethods::getParams()->get('search_guests_expanded', 0)) {
+				$input->adults     = KrMethods::inputInt('adults', $searchData->adults);
+				$input->children   = KrMethods::inputInt('children', $searchData->children);
+				$input->child_ages = KrMethods::inputArray('child_ages', $searchData->child_ages);
+				$input->guests     = $input->adults + $input->children;
+			} else {
+				$input->guests     = KrMethods::inputInt('guests', $searchData->guests);
+				$input->adults     = 0;
+				$input->children   = 0;
+				$input->child_ages = [];
+			}
+		} catch (Exception $e) {
+			$searchData = $searchSession->resetData();
+			SiteModel::redirectHome();
+		}
+
+		return $input;
+	}
+
+	/**
 	 * Creates the region option group select
 	 *
-	 * @param  array  $regions   Property regions
-	 * @param  bool   $expand    Expand to show region pane
+	 * @param  array  $regions  Property regions
+	 * @param  bool   $expand   Expand to show region pane
 	 *
 	 * @since  1.0.0
 	 * @return mixed
@@ -132,7 +132,12 @@ class KnowresSearchHelper
 			$a[] = ' data-toggle="kr-searchregion-drop"';
 		}
 
-		return HTMLHelper::_('select.genericlist', $groups, 'region_id', implode(' ', $a), 'value', 'text',
+		return HTMLHelper::_('select.genericlist',
+			$groups,
+			'region_id',
+			implode(' ', $a),
+			'value',
+			'text',
 			self::getCurrentRegion());
 	}
 }
