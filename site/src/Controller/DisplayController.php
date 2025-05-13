@@ -22,8 +22,7 @@ use function defined;
  *
  * @since  4.0.0
  */
-class DisplayController extends BaseController
-{
+class DisplayController extends BaseController {
 	/**
 	 * Method to display a view.
 	 *
