@@ -54,6 +54,8 @@
                     lazyLoad: 'ondemand',
                     fade: true,
                     asNavFor: showthumbs ? '#kr-property-thumbs' : '',
+                    variableWidth: true,
+                    mobileFirst: true,
                 });
             }
 
@@ -101,11 +103,9 @@
             lazyLoad: 'ondemand',
             adaptiveHeight: true,
         });
-
         if ($('#kr-property-slideshow').length) {
             kickSlideshow();
         }
-
         $('.kr-carousel').slick({
             arrows: false,
             autoplay: true,

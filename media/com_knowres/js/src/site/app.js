@@ -103,6 +103,13 @@ let scloaded = false;
             } else {
                 initializeStripe();
             }
+        }).on('open.zf.reveal', '#kr-property-slideshow-reveal[data-reveal]', function (e) {
+            const $pslider = $('#kr-property-slideshow');
+            $pslider.slick('setPosition');
+            $pslider.slick('refresh');
+            $('#kr-property-thumbs').slick();
+            $('#kr-property-arrows').slick();
+            $pslider.slick();
         }).on('click', '.favspan', function (e) {
             e.preventDefault();
             const pid = $(this).data('property');

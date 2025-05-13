@@ -1,233 +1,233 @@
 #ganttselections {
-	a {
-		font-size: 15px;
-		line-height: 3;
-		background: #d5d5d5;
-		padding: 5px;
-		margin-left: 5px;
-	}
-	.remove {
-		margin-right: 10px;
-	}
+    a {
+        font-size: 15px;
+        line-height: 3;
+        background: #d5d5d5;
+        padding: 5px;
+        margin-left: 5px;
+    }
+    .remove {
+        margin-right: 10px;
+    }
 }
 .fn-gantt-loader {
-	width: 300px;
-	height: 50px;
+    width: 300px;
+    height: 50px;
 }
 .fn-gantt-loader-spinner {
-	background-image: url(../../../media/com_knowres/images/ajax-loader.gif);
-	background-repeat: no-repeat;
-	height: 32px;
-	color: #aaaaaa;
-	padding-left: 40px;
-	line-height: 30px;
-	font-size: 18px;
+    background-image: url(../../../media/com_knowres/images/ajax-loader.gif);
+    background-repeat: no-repeat;
+    height: 32px;
+    color: #aaaaaa;
+    padding-left: 40px;
+    line-height: 30px;
+    font-size: 18px;
 }
 .btn-toolbar.kr-gantt-toolbar {
-	button:not(.ui-datepicker-trigger) {
-		margin: 1px 5px 0 10px;
-		height: 36px;
-	}
+    button:not(.ui-datepicker-trigger) {
+        margin: 1px 5px 0 10px;
+        height: 36px;
+    }
 }
 .kr-gantt {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 12px;
-	width: 100%;
-	&:after {
-		content: '.';
-		visibility: hidden;
-		display: block;
-		height: 0;
-		clear: both;
-	}
-	.fn-gantt {
-		.fn-content {
-			position: relative;
-			.grow {
-				line-height: 30px;
-				height: 30px;
-				float: left;
-				margin-left: 0;
-				width: 100%;
-				.cell {
-					float: left;
-					height: 30px;
-					&.day {
-						width: 30px;
-						border-left: 1px solid #ddd;
-					}
-					&.day.head {
-						line-height: 15px;
-					}
-					&.gheader.month {
-						border-left: 1px solid #ddd;
-						background: #0088cc;
-						color: #fff;
-						float: left;
-					}
-					.gantt-label {
-						background: #0088cc;
-						color: #fff;
-						text-align: center;
-					}
-				}
-				&.name {
-					height: 28px;
-					line-height: 36px;
-					background: #f9f9f9;
-					color: #212121;
-					border-top: 1px solid #ccc;
-					border-bottom: 1px solid #fff;
-					.cell {
-						height: 24px;
-						a {
-							color: #212121;
-							padding-left: 5px;
-							font-size: 13px;
-						}
-					}
-				}
-			}
-			.dataPanel {
-				width: 100%;
-				overflow-x: hidden;
-				height: 60px;
-			}
-			.rightPanel {
-				width: 100%;
-				height: 600px;
-				overflow-y: auto;
-				overflow-x: hidden;
-			}
-			.propertyPanel {
-				position: relative;
-				overflow: hidden;
-			}
-			.propertyPanel:after {
-				content: ".";
-				visibility: hidden;
-				display: block;
-				height: 0;
-				clear: both;
-			}
-			.propertyPanel .grow:last-child {
-				border-bottom: 1px solid #ddd;
-			}
-			.today {
-				background-color: #e2ebff !important;
-			}
-			.sa {
-				background-color: #eeeeee;
-			}
-			.sn {
-				background-color: #eeeeee;
-			}
-			.wd {
-				background-color: #ffffff;
-			}
-			.bar {
-				position: relative;
-				z-index: 0;
-				height: 29px;
-			}
-			.bar.arrivebefore {
-				float: left;
-			}
-			.bar:after,
-			.bar.leaveafter:after,
-			.bar.arrivebefore:after {
-				content: " ";
-				position: absolute;
-				display: block;
-				width: 100%;
-				height: 100%;
-				top: 1px;
-				z-index: -1;
-			}
-			.bar:not(.leaveafter):not(.arrivebefore):after {
-				-ms-transform: skew(-45deg);
-				transform: skew(-45deg);
-				margin-left: 15px;
-			}
-			.bar.leaveafter.arrivebefore:after {
-				-ms-transform: skew(0deg);
-				transform: skew(0deg);
-				margin-left: 0;
-			}
-			.bar.leaveafter:after {
-				transform-origin: top right;
-				-ms-transform: skew(-45deg, 0deg);
-				transform: skew(-45deg, 0deg);
-				margin-left: 30px;
-			}
-			.bar.arrivebefore:after {
-				transform-origin: bottom left;
-				-ms-transform: skew(-45deg, 0deg);
-				transform: skew(-45deg, 0deg);
-				margin-left: -30px;
-				padding-right: 30px;
-			}
-			.bar.ganttBlack:not(.leaveafter):not(.arrivebefore):after,
-			.bar.ganttBlack.leaveafter:after,
-			.bar.ganttBlack.arrivebefore:after {
-				background: #000000;
-			}
-			.bar.ganttBook:not(.leaveafter):not(.arrivebefore):after,
-			.bar.ganttBook.leaveafter:after,
-			.bar.ganttBook.arrivebefore:after {
-				background: #c60f13;
-			}
-			.bar.ganttProv:not(.leaveafter):not(.arrivebefore):after,
-			.bar.ganttProv.leaveafter:after,
-			.bar.ganttProv.arrivebefore:after {
-				background: #808000;
-			}
-			.bar.ganttGrey:not(.leaveafter):not(.arrivebefore):after,
-			.bar.ganttGrey.leaveafter:after,
-			.bar.ganttGrey.arrivebefore:after {
-				background: #999999;
-			}
-			.bar p {
-				overflow: hidden;
-				white-space: nowrap;
-				text-overflow: clip;
-				color: #fff;
-				padding-left: 23px;
-			}
-			.bar.arrivebefore p {
-				padding-left: 6px;
-			}
-			.bar:hover {
-				cursor: pointer;
-			}
-		}
-	}
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    width: 100%;
+    &:after {
+        content: '.';
+        visibility: hidden;
+        display: block;
+        height: 0;
+        clear: both;
+    }
+    .fn-gantt {
+        .fn-content {
+            position: relative;
+            .grow {
+                line-height: 30px;
+                height: 30px;
+                float: left;
+                margin-left: 0;
+                width: 100%;
+                .cell {
+                    float: left;
+                    height: 30px;
+                    &.day {
+                        width: 30px;
+                        border-left: 1px solid #ddd;
+                    }
+                    &.day.head {
+                        line-height: 15px;
+                    }
+                    &.gheader.month {
+                        border-left: 1px solid #ddd;
+                        background: #0088cc;
+                        color: #fff;
+                        float: left;
+                    }
+                    .gantt-label {
+                        background: #0088cc;
+                        color: #fff;
+                        text-align: center;
+                    }
+                }
+                &.name {
+                    height: 28px;
+                    line-height: 36px;
+                    background: #f9f9f9;
+                    color: #212121;
+                    border-top: 1px solid #ccc;
+                    border-bottom: 1px solid #fff;
+                    .cell {
+                        height: 24px;
+                        a {
+                            color: #212121;
+                            padding-left: 5px;
+                            font-size: 13px;
+                        }
+                    }
+                }
+            }
+            .dataPanel {
+                width: 100%;
+                overflow-x: hidden;
+                height: 60px;
+            }
+            .rightPanel {
+                width: 100%;
+                height: 600px;
+                overflow-y: auto;
+                overflow-x: hidden;
+            }
+            .propertyPanel {
+                position: relative;
+                overflow: hidden;
+            }
+            .propertyPanel:after {
+                content: ".";
+                visibility: hidden;
+                display: block;
+                height: 0;
+                clear: both;
+            }
+            .propertyPanel .grow:last-child {
+                border-bottom: 1px solid #ddd;
+            }
+            .today {
+                background-color: #e2ebff !important;
+            }
+            .sa {
+                background-color: #eeeeee;
+            }
+            .sn {
+                background-color: #eeeeee;
+            }
+            .wd {
+                background-color: #ffffff;
+            }
+            .bar {
+                position: relative;
+                z-index: 0;
+                height: 29px;
+            }
+            .bar.arrivebefore {
+                float: left;
+            }
+            .bar:after,
+            .bar.leaveafter:after,
+            .bar.arrivebefore:after {
+                content: " ";
+                position: absolute;
+                display: block;
+                width: 100%;
+                height: 100%;
+                top: 1px;
+                z-index: -1;
+            }
+            .bar:not(.leaveafter):not(.arrivebefore):after {
+                -ms-transform: skew(-45deg);
+                transform: skew(-45deg);
+                margin-left: 15px;
+            }
+            .bar.leaveafter.arrivebefore:after {
+                -ms-transform: skew(0deg);
+                transform: skew(0deg);
+                margin-left: 0;
+            }
+            .bar.leaveafter:after {
+                transform-origin: top right;
+                -ms-transform: skew(-45deg, 0deg);
+                transform: skew(-45deg, 0deg);
+                margin-left: 30px;
+            }
+            .bar.arrivebefore:after {
+                transform-origin: bottom left;
+                -ms-transform: skew(-45deg, 0deg);
+                transform: skew(-45deg, 0deg);
+                margin-left: -30px;
+                padding-right: 30px;
+            }
+            .bar.ganttBlack:not(.leaveafter):not(.arrivebefore):after,
+            .bar.ganttBlack.leaveafter:after,
+            .bar.ganttBlack.arrivebefore:after {
+                background: #000000;
+            }
+            .bar.ganttBook:not(.leaveafter):not(.arrivebefore):after,
+            .bar.ganttBook.leaveafter:after,
+            .bar.ganttBook.arrivebefore:after {
+                background: #c60f13;
+            }
+            .bar.ganttProv:not(.leaveafter):not(.arrivebefore):after,
+            .bar.ganttProv.leaveafter:after,
+            .bar.ganttProv.arrivebefore:after {
+                background: #808000;
+            }
+            .bar.ganttGrey:not(.leaveafter):not(.arrivebefore):after,
+            .bar.ganttGrey.leaveafter:after,
+            .bar.ganttGrey.arrivebefore:after {
+                background: #999999;
+            }
+            .bar p {
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: clip;
+                color: #fff;
+                padding-left: 23px;
+            }
+            .bar.arrivebefore p {
+                padding-left: 6px;
+            }
+            .bar:hover {
+                cursor: pointer;
+            }
+        }
+    }
 }
 #kr-gantt-show-modal .modal-header,
 #kr-gantt-book-modal .modal-header {
-	cursor: move;
+    cursor: move;
 }
 #ganttsearch .typeahead {
-	z-index: 1;
+    z-index: 1;
 }
 div.tooltip {
-	width: 300px;
-	height: auto;
-	background: #fff;
-	opacity: 1;
-	border: 1px outset #08c;
-	i.fa {
-		color: #08c;
-	}
+    width: 300px;
+    height: auto;
+    background: #fefefe;
+    opacity: 1;
+    border: 1px outset #08c;
+    i.fa {
+        color: #08c;
+    }
 }
 div.tooltip-inner {
-	background: #fff;
-	color: initial;
-	padding: 5px 10px;
-	line-height: 24px;
-	font-size: 14px;
-	opacity: 1;
+    background: #fefefe;
+    color: initial;
+    padding: 5px 10px;
+    line-height: 24px;
+    font-size: 14px;
+    opacity: 1;
 }
 div.tooltip.in {
-	opacity: 1;
+    opacity: 1;
 }

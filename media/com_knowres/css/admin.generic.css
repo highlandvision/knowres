@@ -1,1 +1,328 @@
-﻿.big{font-size:120%}.bookme{cursor:pointer}.bookme:hover{background-color:#90ee90 !important}.child-ages{margin-right:5px;margin-bottom:5px}div.divider hr,div.row-fluid hr{border:0;height:0;border-top:1px solid rgba(0,0,0,.1);border-bottom:1px solid rgba(255,255,255,.3);padding:0;margin:10px 0}.hasDatepicker{display:inline-block !important}.header-items .dropdown-toggle .kr{background-color:initial}.hideme,.hideinitial{display:none}.icon-back:before{content:""}img.ordering{padding:5px;cursor:move}.indent{text-indent:1rem}input[readonly].hasDatepicker{cursor:pointer;background:inherit}.input-mini{min-width:9rem !important;max-width:9rem !important;width:100% !important}.italic{font-style:italic}#jform_ajax_warning{background:rgba(235,171,173,.6);padding:10px;border:1px solid #999;width:100%;font-size:14px}#kr-media-images div{float:left;text-align:center}.label-right label{float:right;text-align:right}.manager-totals{padding:0 .5rem .5rem;background:#ededed;border-bottom:2px solid #ccc;border-right:2px solid #ccc;max-width:500px}.manager-totals .infolist{clear:both;font-size:14px;font-style:normal;line-height:18px;margin:5px 0 5px 5px}.manager-totals .infolist label{font-size:14px}.manager-totals .infolist.red,.manager-totals .infolist label{color:#a94442}.manager-totals .infolist span{min-height:20px !important}.manager-totals .text-end{margin-right:1rem}.manager-totals input.text-end{margin-left:1rem}#mapdrag{width:100%;height:45rem;margin-bottom:2rem}.nav-header{padding:3px 2px !important;font-size:12px !important}.nav-list{padding-left:20px !important}#piechart_year,#piechart_month,#piechart_week,#piechart_day{width:auto;margin:0 auto !important}.red{color:#c00}.row.inline input{margin-bottom:10px}.row.inline label{margin-bottom:0}.row.multi label{font-size:14px}small,.small{line-height:20px !important;display:block !important;font-size:14px !important}span.divider{padding-left:20px}.strong,strong{font-weight:700}.fw500{font-weight:500}.white{color:#fefefe}.tt-input.typeahead::placeholder{color:#c9c9c9;font-size:1rem}.tt-menu{width:350px;margin:0;padding:.5rem;background-color:#fefefe;text-align:left;-webkit-box-shadow:0 5px 10px rgba(0,0,0,.2);-moz-box-shadow:0 5px 10px rgba(0,0,0,.2);box-shadow:0 5px 10px rgba(0,0,0,.2)}.tt-menu .tt-dataset{font-size:13px;line-height:16px}.tt-menu .tt-dataset .tt-suggestion{padding:.25rem .4rem}.tt-menu .tt-dataset .tt-suggestion:hover{background:#e1e1e1;cursor:pointer}.tt-menu .tt-dataset .tt-suggestion a{font-size:13px}.tt-menu .tt-dataset .tt-suggestion a:hover{cursor:pointer;text-decoration:none}.tt-menu .tt-dataset .tt-suggestion a span{color:#999;padding:0 5px}.choices__input::placeholder{opacity:1 !important;font-style:normal !important}.content .card.kr-card{margin-bottom:.5rem}.content .card.kr-card .card-header{background:#f9f9f9 !important;border-bottom:1px solid #ccc;padding:.4rem 1rem !important;font-size:1rem !important}.content .card.kr-card .card-header a.showbefore:before{float:left !important;font-family:"Font Awesome 6 Free",sans-serif;font-size:1.2rem;font-weight:900;content:"";padding-right:10px}.content .card.kr-card .card-header a.showbefore.collapsed:before{color:#c00;content:""}.content .card.kr-daily{margin-bottom:.5rem}.content .card.kr-daily .card-header{background:#f9f9f9 !important;border-bottom:1px solid #ccc;padding:.5rem !important;font-size:1rem !important}.content .card.kr-daily .card-header a.showbefore:before{float:left !important;font-family:"Font Awesome 6 Free",sans-serif;font-size:1rem;font-weight:900;content:"";padding-right:10px}.content .card.kr-daily .card-header a.showbefore.collapsed:before{color:#c00;content:""}.content .card.kr-daily .card-body{padding:0 1rem !important}.control-group .controls{min-width:120px !important}.control-label span.spacer label{width:800px !important}input[type=file]{line-height:normal !important}input[type=number],.input-tiny{min-width:5rem !important;max-width:8rem !important;width:100% !important;padding-left:.8rem !important;padding-right:.8rem !important}.modal-batch.modal-body{overflow-y:visible !important;max-height:100% !important}legend{font-size:1.4rem !important;border-bottom:none !important;padding-top:1rem !important;margin-bottom:.5rem !important}.main-card{padding:2rem}.main-card.property-dashboard .alert-heading{font-size:1.1rem}.modal-header{padding:1rem !important}.modal-body{padding:1rem !important}.modal-body pre{word-break:break-all;font-size:14px;border:1px solid #ccc;background:#efefef;padding:5px}.table th.right,.table td.right{text-align:right}.form-control-feedback{display:inline !important}joomla-tab>joomla-tab-element{padding:1rem 2vw !important}/*# sourceMappingURL=admin.generic.css.map */
+.big {
+  font-size: 120%;
+}
+
+.bookme {
+  cursor: pointer;
+}
+.bookme:hover {
+  background-color: lightgreen !important;
+}
+
+.child-ages {
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+
+div.divider hr, div.row-fluid hr {
+  border: 0;
+  height: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 0;
+  margin: 10px 0;
+}
+
+.hasDatepicker {
+  display: inline-block !important;
+}
+
+.header-items .dropdown-toggle .kr {
+  background-color: initial;
+}
+
+.hideme, .hideinitial {
+  display: none;
+}
+
+.icon-back:before {
+  content: "\e008";
+}
+
+img.ordering {
+  padding: 5px;
+  cursor: move;
+}
+
+.indent {
+  text-indent: 16px;
+}
+
+input[readonly].hasDatepicker {
+  cursor: pointer;
+  background: inherit;
+}
+
+.input-mini {
+  min-width: 9rem !important;
+  max-width: 9rem !important;
+  width: 100% !important;
+}
+
+.italic {
+  font-style: italic;
+}
+
+#jform_ajax_warning {
+  background: rgba(235, 171, 173, 0.6);
+  padding: 10px;
+  border: 1px solid #999;
+  width: 100%;
+  font-size: 14px;
+}
+
+#kr-media-images div {
+  float: left;
+  text-align: center;
+}
+
+.label-right label {
+  float: right;
+  text-align: right;
+}
+
+.manager-totals {
+  padding: 0 0.5rem 0.5rem;
+  background: #ededed;
+  border-bottom: 2px solid #ccc;
+  border-right: 2px solid #ccc;
+  max-width: 500px;
+}
+.manager-totals .infolist {
+  clear: both;
+  font-size: 14px;
+  font-style: normal;
+  line-height: 18px;
+  margin: 5px 0 5px 5px;
+}
+.manager-totals .infolist label {
+  font-size: 14px;
+}
+.manager-totals .infolist.red, .manager-totals .infolist label {
+  color: #a94442;
+}
+.manager-totals .infolist span {
+  min-height: 20px !important;
+}
+.manager-totals .text-end {
+  margin-right: 1rem;
+}
+.manager-totals input.text-end {
+  margin-left: 1rem;
+}
+
+#mapdrag {
+  width: 100%;
+  height: 45rem;
+  margin-bottom: 2rem;
+}
+
+.nav-header {
+  padding: 3px 2px !important;
+  font-size: 12px !important;
+}
+
+.nav-list {
+  padding-left: 20px !important;
+}
+
+#piechart_year, #piechart_month, #piechart_week, #piechart_day {
+  width: auto;
+  margin: 0 auto !important;
+}
+
+.red {
+  color: #cc0000;
+}
+
+.row.inline input {
+  margin-bottom: 10px;
+}
+.row.inline label {
+  margin-bottom: 0;
+}
+
+.row.multi label {
+  font-size: 14px;
+}
+
+small, .small {
+  line-height: 20px !important;
+  display: block !important;
+  font-size: 14px !important;
+}
+
+span.divider {
+  padding-left: 20px;
+}
+
+.strong, strong {
+  font-weight: 700;
+}
+
+.fw500 {
+  font-weight: 500;
+}
+
+.white {
+  color: #fefefe;
+}
+
+.tt-input.typeahead::placeholder {
+  color: #c9c9c9;
+  font-size: 1rem;
+}
+
+.tt-menu {
+  width: 350px;
+  margin: 0;
+  padding: 0.5rem;
+  background-color: #fefefe;
+  text-align: left;
+  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+.tt-menu .tt-dataset {
+  font-size: 13px;
+  line-height: 16px;
+}
+.tt-menu .tt-dataset .tt-suggestion {
+  padding: 0.25rem 0.4rem;
+}
+.tt-menu .tt-dataset .tt-suggestion:hover {
+  background: #e1e1e1;
+  cursor: pointer;
+}
+.tt-menu .tt-dataset .tt-suggestion a {
+  font-size: 13px;
+}
+.tt-menu .tt-dataset .tt-suggestion a:hover {
+  cursor: pointer;
+  text-decoration: none;
+}
+.tt-menu .tt-dataset .tt-suggestion a span {
+  color: #999;
+  padding: 0 5px;
+}
+
+.choices__input::placeholder {
+  opacity: 1 !important;
+  font-style: normal !important;
+}
+
+.content .card.kr-card {
+  margin-bottom: 0.5rem;
+}
+.content .card.kr-card .card-header {
+  background: #f9f9f9 !important;
+  border-bottom: 1px solid #ccc;
+  padding: 0.4rem 1rem !important;
+  font-size: 1rem !important;
+}
+.content .card.kr-card .card-header a.showbefore:before {
+  float: left !important;
+  font-family: "Font Awesome 6 Free", sans-serif;
+  font-size: 1.2rem;
+  font-weight: 900;
+  content: "\f146";
+  padding-right: 10px;
+}
+.content .card.kr-card .card-header a.showbefore.collapsed:before {
+  color: #cc0000;
+  content: "\f0fe";
+}
+.content .card.kr-daily {
+  margin-bottom: 0.5rem;
+}
+.content .card.kr-daily .card-header {
+  background: #f9f9f9 !important;
+  border-bottom: 1px solid #ccc;
+  padding: 0.5rem !important;
+  font-size: 1rem !important;
+}
+.content .card.kr-daily .card-header a.showbefore:before {
+  float: left !important;
+  font-family: "Font Awesome 6 Free", sans-serif;
+  font-size: 1rem;
+  font-weight: 900;
+  content: "\f146";
+  padding-right: 10px;
+}
+.content .card.kr-daily .card-header a.showbefore.collapsed:before {
+  color: #cc0000;
+  content: "\f0fe";
+}
+.content .card.kr-daily .card-body {
+  padding: 0 1rem !important;
+}
+
+.control-group .controls {
+  min-width: 120px !important;
+}
+
+.control-label span.spacer label {
+  width: 800px !important;
+}
+
+input[type=file] {
+  line-height: normal !important;
+}
+
+input[type=number], .input-tiny {
+  min-width: 5rem !important;
+  max-width: 8rem !important;
+  width: 100% !important;
+  padding-left: 0.8rem !important;
+  padding-right: 0.8rem !important;
+}
+
+.modal-batch.modal-body {
+  overflow-y: visible !important;
+  max-height: 100% !important;
+}
+
+legend {
+  font-size: 1.4rem !important;
+  border-bottom: none !important;
+  padding-top: 1rem !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.main-card {
+  padding: 2rem;
+}
+.main-card.property-dashboard .alert-heading {
+  font-size: 1.1rem;
+}
+
+.modal-header {
+  padding: 1rem !important;
+}
+
+.modal-body {
+  padding: 1rem !important;
+}
+
+.modal-body pre {
+  word-break: break-all;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  background: #efefef;
+  padding: 5px;
+}
+
+.table th.right,
+.table td.right {
+  text-align: right;
+}
+
+.form-control-feedback {
+  display: inline !important;
+}
+
+joomla-tab > joomla-tab-element {
+  padding: 1rem 2vw !important;
+}
+
+/*# sourceMappingURL=admin.generic.css.map */

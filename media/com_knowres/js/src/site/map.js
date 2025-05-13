@@ -100,17 +100,6 @@ const lang = "en";
             return current;
         }
 
-        checkZoom() {
-            if (this.settings.mapZoom > 0) {
-                let mylistener = map.addListener('idle', function () {
-                    if (map.getZoom() !== this.settings.mapZoom) {
-                        map.setZoom(this.settings.mapZoom);
-                        mylistener.remove();
-                    }
-                });
-            }
-        }
-
         clusterMap() {
             const mcOptions = {
                 gridSize: 50,
@@ -345,7 +334,6 @@ const lang = "en";
 
             map.fitBounds(bounds);
             map.setCenter(bounds.getCenter());
-            this.checkZoom();
 
             if (this.settings.mapMarkers.length > 0) {
                 const self = this;
@@ -380,7 +368,9 @@ const lang = "en";
             } else {
                 kickMap($(this));
                 $mapmodal = $('#kr-search-map-modal');
-                $mapmodal.foundation('open');
+                if ($mapmodal.length) {
+                    $mapmodal.foundation('open');
+                }
             }
         }).on('click', '.resetmap', function (e) {
             e.preventDefault();
