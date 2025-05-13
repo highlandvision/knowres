@@ -30,8 +30,7 @@ use const JPATH_ROOT;
  *
  * @since  4.0.0
  */
-class Dispatcher extends AbstractModuleDispatcher implements HelperFactoryAwareInterface
-{
+class Dispatcher extends AbstractModuleDispatcher implements HelperFactoryAwareInterface {
 	use HelperFactoryAwareTrait;
 
 	/**
@@ -67,7 +66,7 @@ class Dispatcher extends AbstractModuleDispatcher implements HelperFactoryAwareI
 		if ($data && !empty($params)) {
 			$Helper                   = $this->getHelperFactory()->getHelper('KnowresSearchHelper');
 			$data['initial']          = $Helper::getSearchDefaults();
-			$data['Itemid']           = SiteHelper::getItemId('com_knowres', 'properties', ['layout' => 'search']);
+			$data['Itemid']           = SiteHelper::getItemId('com_knowres', 'properties');
 			$data['max_guests']       = KrMethods::getParams()->get('search_maxguests', 16);
 			$data['search_text']      = $params->get('search_text', '');
 			$data['show_datepickers'] = $params->get('show_datepickers', 0);

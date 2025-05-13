@@ -41,8 +41,7 @@ use function substr;
  *
  * @since 1.0.0
  */
-class ConfirmController extends FormController
-{
+class ConfirmController extends FormController {
 	/**
 	 * Computes the values for the reservation (ajax)
 	 *
@@ -65,7 +64,7 @@ class ConfirmController extends FormController
 			$searchSession       = new KrSession\Search();
 			$searchData          = $searchSession->getData();
 			$region_id           = $searchData->region_id ?? 0;
-			$Itemid              = SiteHelper::getItemId('com_knowres', 'properties', ['region_id' => $region_id]);
+			$Itemid              = SiteHelper::getItemId('com_knowres', 'properties');
 			$wrapper['redirect'] =
 				KrMethods::route('index.php?option=com_knowres&view=properties&retain=2&Itemid=' . $Itemid);
 			echo new JsonResponse($wrapper);

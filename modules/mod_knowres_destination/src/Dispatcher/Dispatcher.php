@@ -16,7 +16,6 @@ use Exception;
 use HighlandVision\KR\ExceptionHandling;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
-use HighlandVision\KR\SiteHelper;
 use HighlandVision\KR\Translations;
 use Joomla\CMS\Dispatcher\AbstractModuleDispatcher;
 
@@ -31,8 +30,7 @@ use const JPATH_ROOT;
  *
  * @since  4.0.0
  */
-class Dispatcher extends AbstractModuleDispatcher
-{
+class Dispatcher extends AbstractModuleDispatcher {
 	/**
 	 * Define tasks for before dispatch
 	 *
@@ -78,13 +76,9 @@ class Dispatcher extends AbstractModuleDispatcher
 			$data['region_id']   = $region_id;
 			$data['area']        = $area;
 			$data['destination'] = $destination;
-			$Itemid              = SiteHelper::getItemId('com_knowres', 'properties', ['region_id' => $region_id]);
+			$data['link']        = 'index.php?option=com_knowres&task=properties.search&region_id=' . $region_id;
 			if ($area) {
-				$data['link'] = 'index.php?option=com_knowres&task=properties.search&region_id=' .
-				                                 $region_id . '&area=' . $area  . '&Itemid=' . $Itemid;
-			} else {
-				$data['link'] = 'index.php?option=com_knowres&task=properties.search&region_id=' .
-				                                 $region_id . '&Itemid=' . $Itemid;
+				$data['link'] .= '&area=' . $area;
 			}
 
 			$data['text']     = KrMethods::sprintf('MOD_KNOWRES_DESTINATION_VIEW_PROPERTIES', $destination);

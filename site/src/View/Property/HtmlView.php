@@ -30,8 +30,7 @@ use function is_countable;
  *
  * @since 1.0.0
  */
-class HtmlView extends KrHtmlView\Site
-{
+class HtmlView extends KrHtmlView\Site {
 	/** @var Translations Translations object. */
 	public Translations $Translations;
 	/** @var int # Adults. */
@@ -115,7 +114,6 @@ class HtmlView extends KrHtmlView\Site
 		$this->params = KrMethods::getParams();
 		$this->item   = KrFactory::getAdminModel('property')->getItem($id);
 		$layout       = KrMethods::inputString('layout', 'default');
-
 		if (empty($this->item->id) || ($layout != 'preview' && $this->item->state != 1)) {
 			// Admin preview link for properties prior to publishing
 			$this->redirectToSearch();
@@ -139,11 +137,7 @@ class HtmlView extends KrHtmlView\Site
 		if (is_countable($this->searchData->baseIds) && count($this->searchData->baseIds)
 		    && $this->searchData->region_id == $this->item->region_id) {
 
-			$Itemid = SiteHelper::getItemId('com_knowres', 'properties', [
-				'layout'    => 'search',
-				'region_id' => $this->item->region_id
-			]);
-
+			$Itemid         = SiteHelper::getItemId('com_knowres', 'properties');
 			$this->backlink = KrMethods::route('index.php?option=com_knowres&view=properties&Itemid=' . $Itemid
 			                                   . '&region_id=' . $this->item->region_id);
 			$this->backlink .= '?retain=1';
@@ -266,10 +260,8 @@ class HtmlView extends KrHtmlView\Site
 	 */
 	protected function redirectToSearch(): void
 	{
-		$Itemid = SiteHelper::getItemId('com_knowres', 'properties', [
-			'layout' => 'search',
-		]);
-		$link   = 'index.php?Itemid=' . $Itemid . '&retain=1';
+		$Itemid = SiteHelper::getItemId('com_knowres', 'properties');
+		$link   = '/index.php?Itemid=' . $Itemid . '&retain=1';
 
 		if (isset($this->item->state) && $this->item->state != 1) {
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_UNPUBLISHED_PROPERTY'));

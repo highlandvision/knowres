@@ -56,10 +56,10 @@ if ($displayData['active']) {
 
 	if ($app->isClient('administrator')) {
 		$link = 'href="#" onclick="document.adminForm.' . $item->prefix . $limit
-			. '; Joomla.submitform();return false;"';
+		        . '; Joomla.submitform();return false;"';
 	} else if ($app->isClient('site')) {
 		$region_id = $searchData->region_id;
-		$Itemid    = SiteHelper::getItemId('com_knowres', 'properties', ['region_id' => $region_id]);
+		$Itemid    = SiteHelper::getItemId('com_knowres', 'properties');
 		$link      = KrMethods::route('index.php?option=com_knowres&view=properties&Itemid=' . $Itemid .
 		                              '&limitstart=' . $item->base);
 		if ($region_id > 0) {

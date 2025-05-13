@@ -177,14 +177,10 @@ class PropertiesController extends BaseController
 		if ($type == 'prefetch') {
 			$regions = KrFactory::getListModel('regions')->getDistinctRegions();
 			foreach ($regions as $r) {
-				$Itemid = SiteHelper::getItemId('com_knowres', 'properties', ['region_id' => $r->region_id]);
-
-				$link =
-					KrMethods::route('index.php?option=com_knowres&view=properties&Itemid=' .
-					                 $Itemid .
-					                 '&region_id=' .
-					                 $r->region_id,
-						false);
+				$Itemid = SiteHelper::getItemId('com_knowres', 'properties');
+				$link   = KrMethods::route('index.php?option=com_knowres&view=properties&Itemid=' . $Itemid .
+				                           '&region_id=' . $r->region_id,
+					false);
 
 				$options[] =
 					['icon'   => 'fa-solid fa-map-marker-alt',
@@ -220,7 +216,7 @@ class PropertiesController extends BaseController
 	{
 		/* @var HighlandVision\Component\Knowres\Site\View\Properties\RawView $view * */
 		$view = $this->getView('properties', 'raw');
-		$view->setModel($this->getModel('Properties'), true);
+		$view->setModel($this->getModel('properties'), true);
 		$view->display();
 	}
 
@@ -259,7 +255,6 @@ class PropertiesController extends BaseController
 	#[NoReturn] public function search(): void
 	{
 		$input               = [];
-		$region_id           = KrMethods::inputInt('region_id', KrMethods::getParams()->get('default_region'));
 		$input['area']       = KrMethods::inputString('area');
 		$input['arrival']    = KrMethods::inputString('arrival');
 		$input['departure']  = KrMethods::inputString('departure');
@@ -276,11 +271,11 @@ class PropertiesController extends BaseController
 			}
 		}
 
-		$raw = http_build_query($input);
-
-		$Itemid = SiteHelper::getItemId('com_knowres', 'properties');
-		$route  = KrMethods::route('index.php?option=com_knowres&view=properties&region_id=' . $region_id . '&Itemid='
-		                           . $Itemid) . '?' . $raw;
+		$raw       = http_build_query($input);
+		$region_id = KrMethods::inputInt('region_id', KrMethods::getParams()->get('default_region'));
+		$Itemid    = SiteHelper::getItemId('com_knowres', 'properties');
+		$route     = KrMethods::route('index.php?option=com_knowres&view=properties&region_id=' . $region_id . '&Itemid=' .
+		                              $Itemid) . '?&' . $raw;
 
 		KrMethods::redirect($route);
 	}

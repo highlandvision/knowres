@@ -5,6 +5,7 @@
  * @copyright  Copyright (C) 2005 - 2020 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+
 /** @noinspection PhpPossiblePolymorphicInvocationInspection */
 
 namespace HighlandVision\KR\Joomla\Extend\HtmlView;
@@ -29,8 +30,7 @@ use function count;
  *
  * @since  2.5.5
  */
-class Site extends KrHtmlView
-{
+class Site extends KrHtmlView {
 	/** @var int Joomla Itemid. */
 	public int $Itemid = 0;
 	/** @var stdClass Guest data. */
@@ -68,7 +68,7 @@ class Site extends KrHtmlView
 	{
 		$Itemid = SiteHelper::getItemId('com_knowres', 'confirm');
 		$pathway->addItem(Krmethods::plain('COM_KNOWRES_MAKE_A_RESERVATION'),
-		                  KrMethods::route('index.php?option=com_knowres&view=confirm&Itemid=' . $Itemid));
+			KrMethods::route('index.php?option=com_knowres&view=confirm&Itemid=' . $Itemid));
 
 		return $pathway;
 	}
@@ -85,7 +85,7 @@ class Site extends KrHtmlView
 	public static function dashboardPathway(Pathway $pathway): Pathway
 	{
 		$pathway->addItem(KrMethods::plain('COM_KNOWRES_TITLE_DASHBOARD'),
-		                  KrMethods::route('index.php?option=com_knowres&task=dashboard.cancel'));
+			KrMethods::route('index.php?option=com_knowres&task=dashboard.cancel'));
 
 		return $pathway;
 	}
@@ -104,15 +104,10 @@ class Site extends KrHtmlView
 	{
 		if (!empty($searchData) && count($searchData->baseIds)) {
 			$region_id = $searchData->region_id ?: KrMethods::getParams()->get('default_region');
-
-			$Itemid = SiteHelper::getItemId('com_knowres', 'properties', [
-				'layout'    => 'default',
-				'region_id' => $region_id
-			]);
-
-			$link = KrMethods::route('index.php?option=com_knowres&view=properties&Itemid=' . $Itemid
-			                         . '&region_id=' . $region_id);
-			$link .= '?retain=1';
+			$Itemid    = SiteHelper::getItemId('com_knowres', 'properties');
+			$link      = KrMethods::route('index.php?option=com_knowres&view=properties&Itemid=' . $Itemid
+			                              . '&region_id=' . $region_id);
+			$link      .= '?retain=1';
 			$pathway->addItem(KrMethods::plain('COM_KNOWRES_SEARCH_RESULTS'), $link);
 		}
 
@@ -150,9 +145,8 @@ class Site extends KrHtmlView
 	 */
 	public static function propertyRegionPathway(Pathway $pathway, int $region_id, string $region_name): Pathway
 	{
-		$Itemid = SiteHelper::getItemId('com_knowres', 'properties', ['layout' => 'search', 'region_id' => $region_id]);
-		$link   = KrMethods::route('index.php?option=com_knowres&view=properties' .
-		                           '&region_id=' . $region_id .
+		$Itemid = SiteHelper::getItemId('com_knowres', 'properties');
+		$link   = KrMethods::route('index.php?option=com_knowres&view=properties' . '&region_id=' . $region_id .
 		                           '&Itemid=' . $Itemid);
 		$pathway->addItem($region_name, $link);
 
@@ -237,7 +231,7 @@ class Site extends KrHtmlView
 
 		if (empty($description)) {
 			$this->document->setDescription(!empty($menu_description) ? $menu_description :
-				                                $app->get('meta_description', $description));
+				$app->get('meta_description', $description));
 		} else {
 			$this->document->setDescription($description);
 		}

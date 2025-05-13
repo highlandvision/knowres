@@ -5,4 +5,16 @@
             <![CDATA[COM_KNOWRES_TITLE_PROPERTIES_DSC]]>
         </message>
     </layout>
+	<!--    <fields name="request">-->
+	<!--        <fieldset name="request">-->
+	<!--            <field name="region_id"-->
+	<!--                   type="listregions"-->
+	<!--                   addfieldprefix="HighlandVision\Component\Knowres\Administrator\Field"-->
+	<!--                   filter="integer"-->
+	<!--                   required="true"-->
+	<!--                   label="COM_KNOWRES_TITLE_PROPERTIES_DEFAULT_LBL"-->
+	<!--                   description="COM_KNOWRES_TITLE_PROPERTIES_DEFAULT_SELECT">-->
+	<!--            </field>-->
+	<!--        </fieldset>-->
+	<!--    </fields>-->
 </metadata>

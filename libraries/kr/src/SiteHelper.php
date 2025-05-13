@@ -176,7 +176,7 @@ class SiteHelper
 			// retain=2 displays expired session message in properties
 			$Itemid = self::getItemId('com_knowres', 'properties', array('region_id' => 0));
 			$link   = KrMethods::route('index.php?option=com_knowres&Itemid=' . $Itemid . '&view=properties&retain=2',
-			                           false);
+				false);
 		}
 
 		if (!$ajax) {
@@ -365,8 +365,10 @@ class SiteHelper
 	 * @since  1.0.0
 	 * @return int
 	 */
-	public static function getItemId(string $component = 'com_knowres', string $view = '',
-	                                 array  $variables = [], array $alternatives = []): int
+	public static function getItemId(string $component = 'com_knowres',
+		string $view = '',
+		array $variables = [],
+		array $alternatives = []): int
 	{
 		$base = 'index.php?option=' . $component;
 		if ($view) {
@@ -478,9 +480,11 @@ class SiteHelper
 		$Itemid  = 0;
 		if (is_countable($regions) && count($regions) > 1) {
 			$Itemid = self::getItemId(
-				'com_knowres', 'properties', array('layout'    => 'search',
-				                                   'region_id' => $region_id
-				             )
+				'com_knowres',
+				'properties',
+				array('layout'    => 'search',
+				      'region_id' => $region_id
+				)
 			);
 		}
 
@@ -500,10 +504,10 @@ class SiteHelper
 		$query = $db->getQuery(true);
 
 		$query->select($db->qn('template'))
-		      ->from($db->qn('#__template_styles'))
-		      ->where($db->qn('home') . '=1')
-		      ->where($db->qn('client_id') . '=0')
-		      ->setLimit(1);
+			->from($db->qn('#__template_styles'))
+			->where($db->qn('home') . '=1')
+			->where($db->qn('client_id') . '=0')
+			->setLimit(1);
 
 		$db->setQuery($query);
 
@@ -577,10 +581,10 @@ class SiteHelper
 		if ($root) {
 			KrMethods::redirect(KrMethods::route(KrMethods::getBase() .
 			                                     '/index.php?option=com_knowres&view=dashboard&Itemid=' . $Itemid,
-			                                     false));
+				false));
 		} else {
 			KrMethods::redirect(KrMethods::route('/index.php?option=com_knowres&view=dashboard&Itemid=' . $Itemid,
-			                                     false));
+				false));
 		}
 	}
 
@@ -621,7 +625,7 @@ class SiteHelper
 		$Itemid = self::getItemId('com_knowres', 'property', ['id' => $id]);
 		KrMethods::redirect(
 			KrMethods::route('index.php?option=com_knowres&view=property&id=' . $id . '&Itemid=' . $Itemid,
-			                 false
+				false
 			)
 		);
 	}
@@ -641,12 +645,8 @@ class SiteHelper
 			$region_id = KrMethods::getParams()->get('default_region', 0);
 		}
 
-		$Itemid = SiteHelper::getItemId('com_knowres', 'properties', [
-			'layout'    => 'search',
-			'region_id' => $region_id
-		]);
-
-		$link = 'index.php?Itemid=' . $Itemid;
+		$Itemid = SiteHelper::getItemId('com_knowres', 'properties');
+		$link   = '/index.php?Itemid=' . $Itemid;
 
 		if ($message) {
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_UNPUBLISHED_PROPERTY'));
@@ -665,7 +665,7 @@ class SiteHelper
 	{
 		$Itemid = SiteHelper::getItemId('com_knowres', 'success');
 		KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&task=success.success&Itemid=' . $Itemid,
-		                                     false));
+			false));
 
 	}
 
@@ -681,7 +681,7 @@ class SiteHelper
 	{
 		$Itemid = self::getItemId('com_knowres', $view);
 		KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&view=' . $view . '&Itemid=' . $Itemid,
-		                                     false));
+			false));
 	}
 
 	/**

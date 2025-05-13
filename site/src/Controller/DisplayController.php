@@ -41,7 +41,7 @@ class DisplayController extends BaseController
 		$Itemid = KrMethods::inputInt('Itemid');
 
 		if (!$view) {
-			$Itemid = SiteHelper::getItemId('com_knowres', 'properties', ['region_id' => 0]);
+			$Itemid = SiteHelper::getItemId('com_knowres', 'properties');
 			KrMethods::redirect(KrMethods::route('index.php?Itemid=' . $Itemid, false));
 		}
 
