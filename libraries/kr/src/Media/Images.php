@@ -26,6 +26,7 @@ use RuntimeException;
 use Zebra_Image;
 
 use function filesize;
+use function implode;
 use function in_array;
 use function round;
 use function strtolower;
@@ -39,8 +40,7 @@ define('KNOWRES_TEMP_PATH', JPATH_SITE . '/tmp');
  *
  * @since 1.0.0
  */
-class Images extends Media
-{
+class Images extends Media {
 	/** @var string The name of the uploaded image. */
 	public string $name = '' {
 		/** Return the image name */

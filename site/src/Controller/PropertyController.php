@@ -40,8 +40,7 @@ use function jexit;
  *
  * @since 1.0.0
  */
-class PropertyController extends BaseController
-{
+class PropertyController extends BaseController {
 	/**
 	 * Ajax display geriatric calendar using property.js
 	 *
@@ -147,25 +146,30 @@ class PropertyController extends BaseController
 	 */
 	#[NoReturn] public function mobi(): void
 	{
-		KrMethods::loadLanguage();
-		$property_id = KrMethods::inputInt('pid');
-		if (!$property_id) {
-			SiteHelper::redirectSearch();
+		try {
+			KrMethods::loadLanguage();
+			$property_id = KrMethods::inputInt('pid');
+			if (!$property_id) {
+				throw new RuntimeException(KrMethods::plain('COM_KNOWRES_ERROR_FATAL'));
+			}
+
+			$start    = KrMethods::inputString('start', '');
+			$end      = KrMethods::inputString('end', '');
+			$Calendar = new Calendar\Quote($property_id, $start, $end);
+
+			$wrapper                 = [];
+			$wrapper['availability'] = Utility::encodeJson($Calendar->getAvailability());
+			$wrapper['weekly']       = Utility::encodeJson($Calendar->getWeekly());
+			$wrapper['minstay']      = Utility::encodeJson($Calendar->getMinStay());
+			$wrapper['maxstay']      = Utility::encodeJson($Calendar->getMaxStay());
+			$wrapper['changeover']   = Utility::encodeJson($Calendar->getChangeOvers());
+			list($wrapper['arrival'], $wrapper['departure']) = $Calendar->getFirstFreeDate();
+
+			echo new JsonResponse($wrapper);
+		} catch (Exception $e) {
+			echo new JsonResponse($e);
 		}
 
-		$start    = KrMethods::inputString('start', '');
-		$end      = KrMethods::inputString('end', '');
-		$Calendar = new Calendar\Quote($property_id, $start, $end);
-
-		$wrapper                 = [];
-		$wrapper['availability'] = Utility::encodeJson($Calendar->getAvailability());
-		$wrapper['weekly']       = Utility::encodeJson($Calendar->getWeekly());
-		$wrapper['minstay']      = Utility::encodeJson($Calendar->getMinStay());
-		$wrapper['maxstay']      = Utility::encodeJson($Calendar->getMaxStay());
-		$wrapper['changeover']   = Utility::encodeJson($Calendar->getChangeOvers());
-		list($wrapper['arrival'], $wrapper['departure']) = $Calendar->getFirstFreeDate();
-
-		echo new JsonResponse($wrapper);
 		jexit();
 	}
 

@@ -29,8 +29,7 @@ use function defined;
  * - Below are only the most important methods. For more advanced logic,
  * - Be sure to check the built-in plugins in /plugins/system/forsef/platform/extensions
  */
-class Knowres extends Base
-{
+class Knowres extends Base {
 	/**
 	 * Stores factory instance.
 	 *
@@ -55,7 +54,6 @@ class Knowres extends Base
 	public function build($uriToBuild, $platformUri, $originalUri): ?array
 	{
 		$sefSegments = parent::build($uriToBuild, $platformUri, $originalUri);
-
 		if ($uriToBuild->getVar('format') == 'raw') {
 			return [];
 		}
@@ -67,21 +65,20 @@ class Knowres extends Base
 		Factory::getLanguage()->load('com_knowres', JPATH_SITE . '/components/com_knowres');
 		$Translations = new Translations();
 		$params       = KrMethods::getParams();
-
-		$view        = $uriToBuild->getVar('view');
-		$area        = $uriToBuild->getVar('property_area');
-		$category_id = $uriToBuild->getVar('category_id');
-		$feature_id  = $uriToBuild->getVar('feature_id');
-		$id          = $uriToBuild->getVar('id', 0);
-		$Itemid      = $uriToBuild->getVar('Itemid');
-		$alias       = $this->setAlias($Itemid);
-		$layout      = $uriToBuild->getVar('layout');
-		$property_id = $uriToBuild->getVar('property_id', 0);
-		$region_id   = $uriToBuild->getVar('region_id', 0);
-		$search      = $uriToBuild->getVar('search', 0);
-		$solo_region = '';
-		$task        = $uriToBuild->getVar('task');
-		$type_id     = $uriToBuild->getVar('type_id');
+		$view         = $uriToBuild->getVar('view');
+		$area         = $uriToBuild->getVar('property_area');
+		$category_id  = $uriToBuild->getVar('category_id');
+		$feature_id   = $uriToBuild->getVar('feature_id');
+		$id           = $uriToBuild->getVar('id', 0);
+		$Itemid       = $uriToBuild->getVar('Itemid');
+		$alias        = $this->setAlias($Itemid);
+		$layout       = $uriToBuild->getVar('layout');
+		$property_id  = $uriToBuild->getVar('property_id', 0);
+		$region_id    = $uriToBuild->getVar('region_id', 0);
+		$search       = $uriToBuild->getVar('search', 0);
+		$solo_region  = '';
+		$task         = $uriToBuild->getVar('task');
+		$type_id      = $uriToBuild->getVar('type_id');
 
 		$delvar = true;
 		switch ($view) {
@@ -144,7 +141,7 @@ class Knowres extends Base
 				$Translations = new Translations;
 				if ($region_id) {
 					if ($params->get('seo_search_country', 0)) {
-						$item = KrFactory::getAdminModel('region')->getItem($region_id);
+						$item          = KrFactory::getAdminModel('region')->getItem($region_id);
 						$sefSegments[] = $Translations->getText('region', $region_id) . '-' . $item->country_name;
 					} else {
 						$sefSegments[] = $Translations->getText('region', $region_id);

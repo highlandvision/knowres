@@ -24,8 +24,7 @@ use function array_merge;
  *
  * @since 1.0.0
  */
-class ListregionsField extends ListField
-{
+class ListregionsField extends ListField {
 	/** @var string The form field type. */
 	protected $type = 'Listregions';
 
@@ -42,8 +41,7 @@ class ListregionsField extends ListField
 
 		$allow_property = $this->getAttribute('allow_property', true);
 		$items          = KrFactory::getListModel('regions')->getAllRegions($allow_property);
-		foreach ($items as $i)
-		{
+		foreach ($items as $i) {
 			$options[] = HTMLHelper::_('select.option', $i->id, $i->name);
 		}
 

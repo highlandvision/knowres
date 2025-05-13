@@ -25,8 +25,7 @@ use Joomla\Utilities\ArrayHelper;
 /**
  * Displays sitemap for KR properties
  */
-class PlgOSMapKnowres extends Base implements ContentInterface
-{
+class PlgOSMapKnowres extends Base implements ContentInterface {
 	/** @var ?PlgOSMapKnowres */
 	private static ?PlgOSMapKnowres $instance = null;
 
@@ -78,11 +77,11 @@ class PlgOSMapKnowres extends Base implements ContentInterface
 		parse_str(html_entity_decode($linkQuery['query']), $linkVars);
 		$layout = ArrayHelper::getValue($linkVars, 'layout', '');
 
-		if (empty($layout)) {
-			self::processTreeProperties($collector, $parent, $params);
-		} else if ($layout == 'search') {
-			self::processTreeRegions($collector, $parent, $params);
-		}
+//		if (empty($layout)) {
+		self::processTreeProperties($collector, $parent, $params);
+//		} else if ($layout == 'search') {
+//		self::processTreeRegions($collector, $parent, $params);
+//		}
 	}
 
 	/**
@@ -137,9 +136,9 @@ class PlgOSMapKnowres extends Base implements ContentInterface
 	{
 		static::checkMemory();
 
-		$db    = KrFactory::getDatabase();
-		$query = $db->getQuery(true);
+		$db = KrFactory::getDatabase();
 
+		$query = $db->getQuery(true);
 		$query->select($db->qn(['id',
 		                        'property_name',
 		                        'created_at',
@@ -231,8 +230,8 @@ class PlgOSMapKnowres extends Base implements ContentInterface
 			return;
 		}
 
+		$Itemid = SiteHelper::getItemId('com_knowres', 'properties');
 		foreach ($rows as $row) {
-			$Itemid           = SiteHelper::getItemId('com_knowres', 'properties', ['region_id' => $row->region_id]);
 			$node             = new stdclass;
 			$node->id         = $row->region_id;
 			$node->uid        = $menuItem->uid . 'r' . $row->region_id;
@@ -248,8 +247,8 @@ class PlgOSMapKnowres extends Base implements ContentInterface
 			$node->changefreq = $params['changefreq'];
 
 			$link       =
-				KrMethods::route('index.php?option=com_knowres&Itemid=' . $Itemid . '&view=properties&region_id='
-				                 . $row->region_id);
+				KrMethods::route('index.php?option=com_knowres&view=properties&region_id=' . $row->region_id . '&Itemid=' .
+				                 $Itemid);
 			$node->link = KrMethods::getRoot() . KrMethods::route($link);
 
 			$collector->printNode($node);

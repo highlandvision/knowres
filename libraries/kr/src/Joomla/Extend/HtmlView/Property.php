@@ -28,8 +28,7 @@ use function is_null;
  *
  * @since 4.0.0
  */
-class Property extends KrHtmlView
-{
+class Property extends KrHtmlView {
 	/** @var array Property related views */
 	public array $related
 		= ['coupons',
@@ -367,10 +366,6 @@ class Property extends KrHtmlView
 		} else if ($this->access_level == 40) {
 			$Toolbar = $this->addPropertiesDropdown($Toolbar);
 		}
-
-//		if ($list_name != 'properties') {
-//			$Toolbar = $this->addPropertiesLink($Toolbar);
-//		}
 
 		$Toolbar = $this->addCustomToolbar($Toolbar);
 		$Toolbar = $this->addConfigToolbar($Toolbar);
