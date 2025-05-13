@@ -35,8 +35,7 @@ use function trim;
  *
  * @since 1.0.0
  */
-class SiteHelper
-{
+class SiteHelper {
 	/**
 	 * Redirect user / guest to log in or home page
 	 *

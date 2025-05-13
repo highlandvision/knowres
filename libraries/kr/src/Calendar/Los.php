@@ -21,8 +21,7 @@ use function defined;
  *
  * @since 3.4.0
  */
-class Los extends Calendar
-{
+class Los extends Calendar {
 	/**
 	 * Initialise
 	 *
@@ -44,7 +43,7 @@ class Los extends Calendar
 	}
 
 	/**
-	 * Check if date is not a valid changeover date for weekly rates
+	 * Check if date is a valid changeover day for weekly rates
 	 *
 	 * @param  string  $date  Date to check
 	 *
@@ -55,31 +54,5 @@ class Los extends Calendar
 	public function weeklyChangeOverDay(string $date): bool
 	{
 		return !isset($this->weekly[$date]);
-	}
-
-	/**
-	 * Check if date is available for check out
-	 *
-	 * @param  string  $date  Date to check
-	 *
-	 * @since  3.4.0
-	 * @return bool
-	 */
-	private function checkMax(string $date): bool
-	{
-		if ($this->changeovers[$date] == 'O')
-		{
-			return false;
-		}
-		if ($this->changeovers[$date] == 'X' && !isset($this->weekly[$date]))
-		{
-			return false;
-		}
-		if ($this->changeovers[$date] == 'I' && isset($this->weekly[$date]))
-		{
-			return false;
-		}
-
-		return true;
 	}
 }

@@ -10,6 +10,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
+
 ?>
 
 <tr>
@@ -19,8 +20,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 	<?php if ($this->ordering): ?>
 		<th scope="col" class="w-1 text-center d-none d-md-table-cell">
 			<?php echo HTMLHelper::_('searchtools.sort', '', 'a.ordering', $this->listDirn, $this->listOrder, null,
-				'asc',
-				'JGRID_HEADING_ORDERING', 'icon-sort'); ?>
+				'asc', 'JGRID_HEADING_ORDERING', 'icon-sort'); ?>
 		</th>
 	<?php endif; ?>
 	<th scope="col" class="w-1 text-center">
@@ -36,6 +36,10 @@ use Joomla\CMS\HTML\HTMLHelper;
 	<th scope="col" class="w-10 d-none d-md-table-cell text-center">
 		<?php echo HTMLHelper::_('searchtools.sort', 'COM_KNOWRES_ALLOW_PROPERTY', 'a.allow_property', $this->listDirn,
 			$this->listOrder); ?>
+	</th>
+	<th scope="col" class="w-10 d-none d-md-table-cell text-center">
+		<?php echo HTMLHelper::_('searchtools.sort', 'COM_KNOWRES_REGION_PROPERTY_LICENCE_LBL', 'a.property_licence',
+			$this->listDirn, $this->listOrder); ?>
 	</th>
 	<th scope="col" class="w-5 d-none d-md-table-cell">
 		<?php echo HTMLHelper::_('searchtools.sort', 'JGRID_HEADING_ID', 'a.id', $this->listDirn, $this->listOrder); ?>

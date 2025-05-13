@@ -36,8 +36,7 @@ use function ltrim;
  *
  * @since 1.0.0
  */
-class HtmlView extends KrHtmlView\Site
-{
+class HtmlView extends KrHtmlView\Site {
 	/** @var Registry KR parameters */
 	public Registry $params;
 	/** @var Search Site search */
@@ -72,15 +71,14 @@ class HtmlView extends KrHtmlView\Site
 		$model                = $this->getModel();
 		$this->state          = $model->getState();
 		$this->params         = KrMethods::getParams();
-		$layout               = KrMethods::inputString('layout', 'l');
+		$layout               = KrMethods::inputString('layout', 'grid');
 		$today                = TickTock::getDate();
 		$description          = false;
 		$this->default_region = $this->params->get('default_region', 0);
 		$default_view         = $this->params->get('default_view', 'grid');
-
-		$searchSession      = new KrSession\Search();
-		$searchData         = $searchSession->getData();
-		$searchData->layout = '';
+		$searchSession        = new KrSession\Search();
+		$searchData           = $searchSession->getData();
+		$searchData->layout   = '';
 
 		$retain = KrMethods::inputInt('retain');
 		if ($retain == 2) {
@@ -160,6 +158,7 @@ class HtmlView extends KrHtmlView\Site
 		}
 
 		$this->Search->searchData->description = $description;
+		$this->Search->searchData->bar         = $defalt_view;
 		$searchSession->setData($this->Search->searchData);
 
 		$errors = $this->get('errors');
@@ -193,9 +192,9 @@ class HtmlView extends KrHtmlView\Site
 	 */
 	#[NoReturn] protected function setCanonical(): void
 	{
-		$Itemid        = SiteHelper::getItemId('com_knowres', 'properties', ['region_id' => $this->default_region]);
-		$link          = 'index.php?option=com_knowres&view=properties&region_id=' .
-		                 $this->default_region . '&Itemid=' . $Itemid;
+		$Itemid        = SiteHelper::getItemId('com_knowres', 'properties');
+		$link          = 'index.php?option=com_knowres&view=properties&region_id=' . $this->default_region .
+		                 '&Itemid=' . $Itemid;
 		$canonical_url = KrMethods::route($link);
 		$this->document->addHeadLink(KrMethods::getRoot() . ltrim($canonical_url, '/'), 'canonical');
 	}

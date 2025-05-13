@@ -40,8 +40,7 @@ use function trim;
  *
  * @since  1.0.0
  */
-class PropertiesController extends BaseController
-{
+class PropertiesController extends BaseController {
 	/**
 	 * Ajax add / remove favorite
 	 *

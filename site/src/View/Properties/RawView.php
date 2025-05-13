@@ -28,8 +28,7 @@ use function explode;
  *
  * @since   1.0.0
  */
-class RawView extends KrHtmlView
-{
+class RawView extends KrHtmlView {
 	/** @var Response Site search */
 	protected Response $Response;
 	/** @var bool True if favourites view is requested but no favourites are selected */

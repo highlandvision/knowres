@@ -14,10 +14,10 @@
             <option value="">JOPTION_SELECT_PUBLISHED</option>
         </field>
         <field name="country_id"
+               type="filtercountry"
                class="js-select-submit-on-change"
                layout="joomla.form.field.list-fancy-select"
-               table="#__knowres_region"
-               type="filtercountry">
+               table="#__knowres_region">
             <option value="">COM_KNOWRES_SELECT_COUNTRY</option>
         </field>
         <field name="allow_property"
@@ -28,13 +28,11 @@
             <option value="1">COM_KNOWRES_SELECT_ALLOW_PROPERTY_ONLY</option>
         </field>
         <field name="property_licence"
-               class="btn-group btn-group-yesno"
-               default="0"
-               type="radio"
-               label="COM_KNOWRES_REGION_PROPERTY_LICENCE_LBL"
-               description="COM_KNOWRES_REGION_PROPERTY_LICENCE_DSC">
-            <option value="0">JNO</option>
-            <option value="1">JYES</option>
+               type="list"
+               class="js-select-submit-on-change"
+               validate="options">
+	        <option value="">COM_KNOWRES_SELECT_PROPERTY_LICENCE</option>
+	        <option value="1">COM_KNOWRES_SELECT_PROPERTY_LICENCE_ONLY</option>
         </field>
     </fields>
     <fields name="list">
