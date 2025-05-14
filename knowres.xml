@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="component"
+           method="upgrade">
+	<name>com_knowres</name>
+	<author>Highland Vision</author>
+	<authorEmail>hazel@highlandvision.com</authorEmail>
+	<authorUrl>https://www.highlandvision.com</authorUrl>
+	<copyright>2023 Highland Vision, all rights reserved.</copyright>
+	<creationDate>2024-06-24</creationDate>
+	<license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
+	<version>5.1.0</version>
+	<description>COM_KNOWRES_DESCRIPTION</description>
+	<namespace path="src">HighlandVision\Component\Knowres</namespace>
+	<install>
+		<sql>
+			<file driver="mysql"
+			      charset="utf8">
+				queries/install.mysql.utf8.sql
+			</file>
+			<file driver="mysql"
+			      charset="utf8">
+				queries/install.mysql.country.utf8.sql
+			</file>
+			<file driver="mysql"
+			      charset="utf8">
+				queries/install.mysql.region.utf8.sql
+			</file>
+		</sql>
+	</install>
+	<uninstall>
+		<sql>
+			<file driver="mysql"
+			      charset="utf8">
+				queries/uninstall.mysql.utf8.sql
+			</file>
+		</sql>
+	</uninstall>
+	<update>
+		<schemas>
+			<schemapath type="mysql">queries/updates/mysql</schemapath>
+		</schemas>
+	</update>
+	<files folder="site">
+		<folder>forms</folder>
+		<folder>language</folder>
+		<folder>layouts</folder>
+		<folder>src</folder>
+		<folder>tmpl</folder>
+	</files>
+	<media folder="media">
+		<folder>com_knowres</folder>
+	</media>
+	<administration>
+		<menu img="class:sun">com_knowres</menu>
+		<submenu>
+			<menu link="option=com_knowres&amp;view=gantt"
+			      view="gantt"
+			      img="class:calendar-alt"
+			      alt="Knowres/Gantt">
+				COM_KNOWRES_GANTT_TITLE
+			</menu>
+			<menu link="option=com_knowres&amp;task=contracts.daily"
+			      view="contracts"
+			      img="class:calendar-check"
+			      alt="Knowres/Daily Overview">
+				COM_KNOWRES_CONTRACTS_DAILY_TITLE
+			</menu>
+			<menu link="option=com_knowres&amp;view=properties"
+			      view="properties"
+			      img="class:house-user"
+			      alt="Knowres/Properties">
+				COM_KNOWRES_PROPERTIES_TITLE
+			</menu>
+			<menu link="option=com_knowres&amp;view=contracts"
+			      view="contracts"
+			      img="class:list"
+			      alt="Knowres/Contracts">
+				COM_KNOWRES_CONTRACTS_TITLE
+			</menu>
+		</submenu>
+		<files folder="admin">
+			<filename>access.xml</filename>
+			<filename>config.xml</filename>
+			<folder>forms</folder>
+			<folder>language</folder>
+			<folder>layouts</folder>
+			<folder>presets</folder>
+			<folder>queries</folder>
+			<folder>services</folder>
+			<folder>src</folder>
+			<folder>tmpl</folder>
+		</files>
+	</administration>
+</extension>
