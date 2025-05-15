@@ -3,31 +3,31 @@
 	addruleprefix="HighlandVision\Component\Knowres\Administrator\Rule">
 	<fieldset name="krdata">
 		<field name="name"
+		       type="text"
 			filter="string"
 			required="true"
-			type="text"
 			label="COM_KNOWRES_NAME"
 			description="COM_KNOWRES_SERVICE_NAME_DSC"/>
 		<field name="currency"
+		       type="hidden"
 			class="input-mini"
 			filter="string"
-			type="hidden"
 			label="COM_KNOWRES_SERVICE_CURRENCY_LBL"
 			description="COM_KNOWRES_SERVICE_CURRENCY_DSC"/>
 		<field name="agency_id"
+		       type="listforeignkey"
 			key_field="id"
 			required="true"
 			table="#__knowres_agency"
-			type="listforeignkey"
 			validate="service"
 			value_field="name"
 			where="state=1"
 			label="COM_KNOWRES_SERVICE_AGENCY_LBL"
 			description="COM_KNOWRES_SERVICE_AGENCY_DSC"/>
 		<field name="property_id"
+		       type="hidden"
 			key_field="id"
 			table="#__knowres_property"
-			type="hidden"
 			value_field="property_name"
 			label="COM_KNOWRES_PROPERTY"
 			description="COM_KNOWRES_SERVICE_PROPERTY_DSC">
@@ -36,14 +36,14 @@
 	</fieldset>
 	<fieldset name="krplugin">
 		<field name="plugin"
-			filter="string"
 			type="text"
-			label="COM_KNOWRES_SERVICE_PLUGIN_LBL"
-			description="COM_KNOWRES_SERVICE_PLUGIN_DSC"/>
+			   filter="string"
+			   label="COM_KNOWRES_SERVICE_URL_LBL"
+			   description="COM_KNOWRES_SERVICE_URL_DSC"/>
 		<field name="type"
+		       type="text"
 			default="g"
 			size="1"
-			type="text"
 			label="COM_KNOWRES_SERVICE_TYPE_LBL"
 			description="COM_KNOWRES_SERVICE_TYPE_DSC">
 		</field>

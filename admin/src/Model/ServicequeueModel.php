@@ -6,6 +6,7 @@
  * @license    See the file "LICENSE.txt" for the full license governing this code.
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
+
 /** @noinspection PhpPossiblePolymorphicInvocationInspection */
 
 namespace HighlandVision\Component\Knowres\Administrator\Model;
@@ -36,8 +37,7 @@ use function is_countable;
  *
  * @since 1.0.0
  */
-class ServicequeueModel extends AdminModel
-{
+class ServicequeueModel extends AdminModel {
 	use VersionableControllerTrait;
 
 	/**  @var string The type alias. */
@@ -59,8 +59,11 @@ class ServicequeueModel extends AdminModel
 	 * @since  3.3.0
 	 * @return bool
 	 */
-	public static function checkCluster(int   $cluster_id, int $property_id, array $cluster, array $managed,
-	                                    array $beyond): bool
+	public static function checkCluster(int $cluster_id,
+		int $property_id,
+		array $cluster,
+		array $managed,
+		array $beyond): bool
 	{
 		$update = false;
 
@@ -94,7 +97,7 @@ class ServicequeueModel extends AdminModel
 			$db->qn('created_at') . ' < ' . $db->q($date)
 		);
 		$query->delete($db->qn('#__knowres_service_queue'))
-		      ->where($conditions);
+			->where($conditions);
 
 		$db->setQuery($query);
 		$db->execute();
@@ -111,8 +114,7 @@ class ServicequeueModel extends AdminModel
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	public static function insertQueue(object  $xref, string $method, ?string $arrival = null,
-	                                   ?string $departure = null): void
+	public static function insertQueue(object $xref, string $method, ?string $arrival = null, ?string $departure = null): void
 	{
 		$queue               = new stdClass();
 		$queue->id           = 0;
@@ -148,11 +150,14 @@ class ServicequeueModel extends AdminModel
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	public static function serviceQueueUpdate(string  $method, int $property_id = 0, int $cluster_id = 0,
-	                                          ?string $plugin = null, ?string $arrival = null,
-	                                          ?string $departure = null): void
+
+	public static function serviceQueueUpdate(string $method, int $property_id = 0, int $cluster_id = 0, ?string $plugin = null,
+		?string $arrival = null, ?string $departure = null): void
 	{
-		$result = KrFactory::getListModel('servicexrefs')->getPropertiesForAllServices($property_id, $method, $plugin);
+
+		$result = KrFactory::getListModel('servicexrefs')->getPropertiesForAllServices($property_id, $method, $plugin,
+			$arrival, $departure);
+
 		if (is_countable($result) && count($result)) {
 			if ($cluster_id) {
 				$settings_cluster       = KrFactory::getListModel('propertysettings')->getOneSetting('cluster');
@@ -169,8 +174,11 @@ class ServicequeueModel extends AdminModel
 				}
 
 				if ($cluster_id) {
-					if (!self::checkCluster($cluster_id, $r->property_id, $settings_cluster, $settings_managed_rates,
-					                        $settings_beyond_rates)) {
+					if (!self::checkCluster($cluster_id,
+						$r->property_id,
+						$settings_cluster,
+						$settings_managed_rates,
+						$settings_beyond_rates)) {
 						continue;
 					}
 				}
@@ -195,9 +203,9 @@ class ServicequeueModel extends AdminModel
 			$query = $db->getQuery(true);
 
 			$query->update($db->qn('#__knowres_service_queue'))
-			      ->set($db->qn('actioned') . '=1')
-			      ->set($db->qn('updated_at') . '=' . $db->q(TickTock::getTS()))
-			      ->where($db->qn('id') . ' IN (' . implode(',', array_map('intval', $ids)) . ')');
+				->set($db->qn('actioned') . '=1')
+				->set($db->qn('updated_at') . '=' . $db->q(TickTock::getTS()))
+				->where($db->qn('id') . ' IN (' . implode(',', array_map('intval', $ids)) . ')');
 			$db->setQuery($query);
 			$db->execute();
 		}
@@ -226,8 +234,8 @@ class ServicequeueModel extends AdminModel
 
 		$query = $db->getQuery(true);
 		$query->update($db->qn('#__knowres_service_queue', 'q'))
-		      ->set($fields)
-		      ->where($conditions);
+			->set($fields)
+			->where($conditions);
 
 		$db->setQuery($query);
 		$db->execute();

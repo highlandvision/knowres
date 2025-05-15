@@ -20,13 +20,14 @@ use Joomla\Database\Exception\QueryTypeAlreadyDefinedException;
 use Joomla\Database\QueryInterface;
 use RuntimeException;
 
+use function is_null;
+
 /**
  * Service xrefs list model.
  *
  * @since 2.0.0
  */
-class ServicexrefsModel extends ListModel
-{
+class ServicexrefsModel extends ListModel {
 	/**
 	 * Constructor.
 	 *
@@ -287,14 +288,15 @@ class ServicexrefsModel extends ListModel
 	 * @param  int      $property_id  ID of property
 	 * @param  ?string  $method       API method for checking queue
 	 * @param  ?string  $plugin       Specific plugin
+	 * @param  ?string  $arrival      Arrival date
+	 * @param  ?string  $departure    Departure date
 	 *
 	 * @throws RuntimeException
 	 * @since  2.0.0
 	 * @return mixed
 	 */
-	public function getPropertiesForAllServices(int $property_id = 0,
-		?string $method = null,
-		?string $plugin = null): mixed
+	public function getPropertiesForAllServices(int $property_id = 0, ?string $method = null, ?string $plugin = null,
+		?string $arrival = null, ?string $departure = null): mixed
 	{
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
@@ -302,11 +304,18 @@ class ServicexrefsModel extends ListModel
 		$subQuery = $db->getQuery(true);
 		$subQuery->select('q.id')
 			->from($db->qn('#__knowres_service_queue', 'q'))
-			->where($db->qn('q.property_id') . '=' . $db->qn('x.property_id'))
+			->where($db->qn('q.property_id') . '=' . $property_id)
 			->where($db->qn('q.actioned') . '=0')
 			->where($db->qn('q.state') . '=1')
 			->where($db->qn('q.service_id') . '=' . $db->qn('x.service_id'))
 			->where($db->qn('q.method') . '=' . $db->q($method));
+
+		if (!is_null($arrival)) {
+			$subQuery->where($db->qn('q.arrival') . '=' . $db->q($arrival));
+		}
+		if (!is_null($departure)) {
+			$subQuery->where($db->qn('q.departure') . '=' . $db->q($departure));
+		}
 
 		$query->select($db->qn([
 			'x.property_id',
@@ -338,7 +347,6 @@ class ServicexrefsModel extends ListModel
 		}
 
 		$db->setQuery($query);
-
 		return $db->loadObjectList();
 	}
 
