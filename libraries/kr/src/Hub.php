@@ -621,52 +621,59 @@ class Hub
 	 */
 	protected function validateGuests(): void
 	{
-		if (!$this->getValue('black_booking')) {
-			$guests = $this->getValue('guests');
-			if (!is_numeric($guests) || !$guests) {
-				throw new InvalidArgumentException('#Guests should consist of numbers only and should not be zero');
-			}
+		if ($this->getValue('black_booking')) {
+			return;
+		}
 
-			$free = SiteHelper::setFreeGuests($this->property->sleeps_infant_max,
-				$this->property->sleeps_infant_age,
-				$this->getValue('child_ages'));
-			if ($guests > $this->property->sleeps + $this->property->sleeps_extra + $free) {
-				if ($this->property->sleeps_infant_max > 1) {
-					throw new UnexpectedValueException(KrMethods::sprintf('COM_KNOWRES_QUOTE_ERROR_GUESTS',
-						$this->property->sleeps +
-						$this->property->sleeps_extra,
-						$this->property->sleeps_infant_max,
-						$this->property->sleeps_infant_age));
-				} else {
-					throw new UnexpectedValueException(KrMethods::sprintf('COM_KNOWRES_QUOTE_ERROR_GUESTS_1',
-						$this->property->sleeps +
-						$this->property->sleeps_extra,
-						$this->property->sleeps_infant_max,
-						$this->property->sleeps_infant_age));
-				}
-			}
+		$guests = $this->getValue('guests');
+		if (!is_numeric($guests) || !$guests) {
+			throw new InvalidArgumentException('#Guests should consist of numbers only and should not be zero');
+		}
 
-			$this->setValue('free_guests', $free);
-			$children   = $this->getValue('children');
-			$child_ages = $this->getValue('child_ages');
-			if ($children > 0 && is_countable($child_ages)) {
-				if (count($child_ages) > 0 && count($child_ages) < $children) {
-					throw new UnexpectedValueException('Please enter an age for each child');
-				}
-				if (count($child_ages) > 0 && count($child_ages) > $children) {
-					throw new UnexpectedValueException('Number of children must match number of ages');
-				}
-				foreach ($child_ages as $age) {
-					if ($age < 0 or $age > 18) {
-						throw new UnexpectedValueException('Please enter ages from 0 to 17 for each child');
-					}
-				}
-				if (!count($child_ages)) {
-					throw new UnexpectedValueException('Please enter the ages of the children');
-				}
-			} else if ($children == 0 && is_countable($child_ages) && count($child_ages) > 0) {
+		// Child ages not sent for all channels so bypass validation
+		if ($this->getValue('service_id')) {
+			return;
+		}
+
+		$free = SiteHelper::setFreeGuests($this->property->sleeps_infant_max,
+			$this->property->sleeps_infant_age,
+			$this->getValue('child_ages'));
+		if ($guests > $this->property->sleeps + $this->property->sleeps_extra + $free) {
+			if ($this->property->sleeps_infant_max > 1) {
+				throw new UnexpectedValueException(KrMethods::sprintf('COM_KNOWRES_QUOTE_ERROR_GUESTS',
+					$this->property->sleeps +
+					$this->property->sleeps_extra,
+					$this->property->sleeps_infant_max,
+					$this->property->sleeps_infant_age));
+			} else {
+				throw new UnexpectedValueException(KrMethods::sprintf('COM_KNOWRES_QUOTE_ERROR_GUESTS_1',
+					$this->property->sleeps +
+					$this->property->sleeps_extra,
+					$this->property->sleeps_infant_max,
+					$this->property->sleeps_infant_age));
+			}
+		}
+
+		$this->setValue('free_guests', $free);
+		$children   = $this->getValue('children');
+		$child_ages = $this->getValue('child_ages');
+		if ($children > 0 && is_countable($child_ages)) {
+			if (count($child_ages) > 0 && count($child_ages) < $children) {
+				throw new UnexpectedValueException('Please enter an age for each child');
+			}
+			if (count($child_ages) > 0 && count($child_ages) > $children) {
 				throw new UnexpectedValueException('Number of children must match number of ages');
 			}
+			foreach ($child_ages as $age) {
+				if ($age < 0 or $age > 18) {
+					throw new UnexpectedValueException('Please enter ages from 0 to 17 for each child');
+				}
+			}
+			if (!count($child_ages)) {
+				throw new UnexpectedValueException('Please enter the ages of the children');
+			}
+		} else if ($children == 0 && is_countable($child_ages) && count($child_ages) > 0) {
+			throw new UnexpectedValueException('Number of children must match number of ages');
 		}
 	}
 
