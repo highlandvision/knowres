@@ -56,7 +56,7 @@ $action   = '/index.php?option=com_knowres&task=payment.router';
 	</div>
 </div>
 
-<div id="errorModal" class="reveal tiny" data-reveal>
+<div id="errorModal" class="reveal red" data-reveal>
 	<button class="close-button" data-close aria-label="Close modal" type="button">
 		<span aria-hidden="true">&times;</span>
 	</button>

@@ -37,7 +37,8 @@ use function is_countable;
  *
  * @since 1.0.0
  */
-class ServicequeueModel extends AdminModel {
+class ServicequeueModel extends AdminModel
+{
 	use VersionableControllerTrait;
 
 	/**  @var string The type alias. */
