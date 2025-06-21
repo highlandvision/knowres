@@ -54,7 +54,7 @@
                     lazyLoad: 'ondemand',
                     fade: true,
                     asNavFor: showthumbs ? '#kr-property-thumbs' : '',
-                    variableWidth: true,
+                    variableWidth: false,
                     mobileFirst: true,
                 });
             }
