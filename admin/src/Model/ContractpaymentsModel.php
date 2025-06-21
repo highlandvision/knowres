@@ -505,7 +505,7 @@ class ContractpaymentsModel extends ListModel
 	}
 
 	/**
-	 * Update existing payment and fee records to actioned for new Xero service
+	 * Update existing payment and fee records to actioned for Xero service
 	 *
 	 * @param  int  $agency_id  ID of agency
 	 *

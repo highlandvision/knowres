@@ -39,6 +39,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 	}
 
 	$deposit = Utility::displayValue($this->quote->getValue('deposit'), $currency);
+
 	if ($this->quote->getValue('booking_type') == 2) {
 		$deposit_text = KrMethods::plain('COM_KNOWRES_CONFIRM_BOOK_DEPOSIT_DUE');
 	} else {

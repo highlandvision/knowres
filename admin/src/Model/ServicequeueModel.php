@@ -59,11 +59,7 @@ class ServicequeueModel extends AdminModel {
 	 * @since  3.3.0
 	 * @return bool
 	 */
-	public static function checkCluster(int $cluster_id,
-		int $property_id,
-		array $cluster,
-		array $managed,
-		array $beyond): bool
+	public static function checkCluster(int $cluster_id, int $property_id, array $cluster, array $managed, array $beyond): bool
 	{
 		$update = false;
 
@@ -154,7 +150,6 @@ class ServicequeueModel extends AdminModel {
 	public static function serviceQueueUpdate(string $method, int $property_id = 0, int $cluster_id = 0, ?string $plugin = null,
 		?string $arrival = null, ?string $departure = null): void
 	{
-
 		$result = KrFactory::getListModel('servicexrefs')->getPropertiesForAllServices($property_id, $method, $plugin,
 			$arrival, $departure);
 

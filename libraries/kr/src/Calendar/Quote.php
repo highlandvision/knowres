@@ -17,7 +17,7 @@ use HighlandVision\KR\Calendar;
 use function defined;
 
 /**
- * Calendar for search results
+ * Calendar for quote
  *
  * @since 3.4.0
  */

@@ -34,8 +34,7 @@ class ServicequeuesModel extends ListModel
 	 */
 	public function __construct($config = [])
 	{
-		if (empty($config['filter_fields']))
-		{
+		if (empty($config['filter_fields'])) {
 			$config['filter_fields'] = array(
 				'id', 'a.id',
 				'service_id', 'a.service_id',
@@ -67,7 +66,7 @@ class ServicequeuesModel extends ListModel
 	 * @param  int     $service_id    ID of service
 	 * @param  int     $availability  Block (0) release(1) (reverse of current action)
 	 * @param  int     $property_id   ID of property
-	 * @param  string  $arrival       Arrrival date
+	 * @param  string  $arrival       Arrival date
 	 * @param  string  $departure     Departure date
 	 *
 	 * @throws RuntimeException
@@ -81,16 +80,16 @@ class ServicequeuesModel extends ListModel
 		$query = $db->getQuery(true);
 
 		$query->select($db->qn('id'))
-		      ->from($db->qn('#__knowres_service_queue'))
-		      ->where($db->qn('state') . '=1')
-		      ->where($db->qn('actioned') . '=0')
-		      ->where($db->qn('service_id') . '=' . $service_id)
-		      ->where($db->qn('contract_id') . '=' . $contract_id)
-		      ->where($db->qn('availability') . '=' . $availability)
-		      ->where($db->qn('property_id') . '=' . $property_id)
-		      ->where($db->qn('arrival') . '=' . $db->q($arrival))
-		      ->where($db->qn('departure') . '=' . $db->q($departure))
-		      ->setLimit(1);
+			->from($db->qn('#__knowres_service_queue'))
+			->where($db->qn('state') . '=1')
+			->where($db->qn('actioned') . '=0')
+			->where($db->qn('service_id') . '=' . $service_id)
+			->where($db->qn('contract_id') . '=' . $contract_id)
+			->where($db->qn('availability') . '=' . $availability)
+			->where($db->qn('property_id') . '=' . $property_id)
+			->where($db->qn('arrival') . '=' . $db->q($arrival))
+			->where($db->qn('departure') . '=' . $db->q($departure))
+			->setLimit(1);
 		$db->setQuery($query);
 
 		return $db->loadResult();
@@ -113,22 +112,18 @@ class ServicequeuesModel extends ListModel
 
 		$query->select($this->getState('list.select', '*'));
 		$query->from($db->qn('#__knowres_service_queue'))
-		      ->where($db->qn('state') . '=1')
-		      ->where($db->qn('actioned') . '=0')
-		      ->where($db->qn('service_id') . '=' . $service_id);
+			->where($db->qn('state') . '=1')
+			->where($db->qn('actioned') . '=0')
+			->where($db->qn('service_id') . '=' . $service_id);
 
-		if ($method !== 'updateProperty')
-		{
+		if ($method !== 'updateProperty') {
 			$query->where($db->qn('foreign_key') . '>' . $db->q(''));
 		}
 
-		if ($method === 'updateAvailability')
-		{
+		if ($method === 'updateAvailability') {
 			$query->andWhere([$db->qn('method') . '=' . $db->q($method),
 			                  $db->qn('method') . '=' . $db->q('')]);
-		}
-		else
-		{
+		} else {
 			$query->where($db->qn('method') . '=' . $db->q($method));
 		}
 
@@ -205,67 +200,51 @@ class ServicequeuesModel extends ListModel
 		$query->join('LEFT', '#__users AS updated_by ON updated_by.id = a.updated_by');
 
 		$state = $this->getState('filter.state');
-		if (is_numeric($state))
-		{
+		if (is_numeric($state)) {
 			$query->where($db->qn('a.state') . '=' . (int) $state);
-		}
-		else if ($state === '')
-		{
+		} else if ($state === '') {
 			$query->where($db->qn('a.state') . '=1');
 		}
 
 		$filter_contract_id = $this->state->get('filter.contract_id');
-		if ($filter_contract_id)
-		{
+		if ($filter_contract_id) {
 			$query->where($db->qn('a.contract_id') . '=' . (int) $filter_contract_id);
 		}
 
 		$filter_property_id = $this->state->get("filter.property_id");
-		if ($filter_property_id)
-		{
+		if ($filter_property_id) {
 			$query->where($db->qn('a.property_id') . '=' . (int) $filter_property_id);
 		}
 
 		$filter_agent_id = $this->state->get('filter.agent_id');
-		if ($filter_agent_id)
-		{
+		if ($filter_agent_id) {
 			$query->where($db->qn('a.agent_id') . '=' . (int) $filter_agent_id);
 		}
 
 		$filter_service_id = $this->state->get('filter.service_id');
-		if ($filter_service_id)
-		{
+		if ($filter_service_id) {
 			$query->where($db->qn('a.service_id') . '=' . $db->escape($filter_service_id));
 		}
 
 		$filter_method = $this->state->get('filter.method');
-		if ($filter_method)
-		{
-			if ($filter_method == "availability")
-			{
+		if ($filter_method) {
+			if ($filter_method == "availability") {
 				$query->where($db->qn('a.method') . '=' . $db->q(''));
-			}
-			else
-			{
+			} else {
 				$query->where($db->qn('a.method') . '=' . $db->q($filter_method));
 			}
 		}
 
 		$filter_actioned = $this->state->get('filter.actioned');
-		if (is_numeric($filter_actioned))
-		{
+		if (is_numeric($filter_actioned)) {
 			$query->where($db->qn('a.actioned') . '=' . (int) $filter_actioned);
 		}
 
 		$search = $this->getState('filter.search');
-		if (!empty($search))
-		{
-			if (stripos($search, 'id:') === 0)
-			{
+		if (!empty($search)) {
+			if (stripos($search, 'id:') === 0) {
 				$query->where($db->qn('a.id') . '=' . (int) substr($search, 3));
-			}
-			else
-			{
+			} else {
 				$search = $db->q('%' . $db->escape($search) . '%');
 				$query->where('( a.foreign_key LIKE ' . $search . ' )');
 			}
@@ -273,8 +252,7 @@ class ServicequeuesModel extends ListModel
 
 		$orderCol  = $this->state->get('list.ordering');
 		$orderDirn = $this->state->get('list.direction');
-		if ($orderCol && $orderDirn)
-		{
+		if ($orderCol && $orderDirn) {
 			$query->order($db->escape($orderCol . ' ' . $orderDirn));
 		}
 

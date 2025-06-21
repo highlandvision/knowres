@@ -49,9 +49,8 @@ class Base
 		$property_id = $this->Hub->getValue('property_id');
 		$arrival     = $this->Hub->getValue('arrival');
 		$departure   = $this->Hub->getValue('departure');
-		$ratesDb = $this->getRates($property_id, $arrival, $departure);
-		if (!is_countable($ratesDb) || !count($ratesDb))
-		{
+		$ratesDb     = $this->getRates($property_id, $arrival, $departure);
+		if (!is_countable($ratesDb) || !count($ratesDb)) {
 			$this->Hub->setValue('room_total_gross', 0);
 			$this->Hub->setValue('room_total_gross_system', 0);
 			$this->Hub->setValue('booking_type', 0);
@@ -77,10 +76,9 @@ class Base
 	{
 		$old_departure = $departure;
 		list($departure, $nights, $date_range) = $this->checkShortBook($ratesDb, $arrival, $departure);
-		if ($old_departure < $departure)
-		{
+		if ($old_departure < $departure) {
 			$ratesDb = KrFactory::getListModel('rates')
-			                    ->getRatesForProperty($this->Hub->getValue('property_id'), $arrival, $departure);
+				->getRatesForProperty($this->Hub->getValue('property_id'), $arrival, $departure);
 		}
 
 		$guests = $this->Hub->getValue('guests') - $this->Hub->getValue('free_guests');
@@ -94,31 +92,24 @@ class Base
 		$rate       = 0;
 		$weekly     = (int) $this->Hub->settings['tariffChargesStoredWeeklyYesNo'] ? 7 : 1;
 
-		foreach ($ratesDb as $r)
-		{
-			if ($r->valid_from > $departure)
-			{
+		foreach ($ratesDb as $r) {
+			if ($r->valid_from > $departure) {
 				break;
 			}
 
-			if ($arrival <= $r->valid_to)
-			{
+			if ($arrival <= $r->valid_to) {
 				$thisrates = $this->mergeMoreGuests($r);
 
-				if ($first && $this->Hub->getValue('source') !== 'losrates')
-				{
-					if ((int) $this->Hub->settings['canwebook'])
-					{
+				if ($first && $this->Hub->getValue('source') !== 'losrates') {
+					if ((int) $this->Hub->settings['canwebook']) {
 						$this->setCanwebook($r->min_nights);
 					}
 					$first = false;
 				}
 
-				foreach ($thisrates as $a)
-				{
+				foreach ($thisrates as $a) {
 					$min_guests = $a['more_min'];
-					if ($min_guests > $guests)
-					{
+					if ($min_guests > $guests) {
 						continue;
 					}
 
@@ -127,69 +118,56 @@ class Base
 					$ignore_pppn = $a['more_pppn'];
 					$next_guest  = $next_guest > $guests ? 1 : $next_guest;
 
-					foreach ($date_range as $date)
-					{
-						if ($date > $r->valid_to)
-						{
+					foreach ($date_range as $date) {
+						if ($date > $r->valid_to) {
 							break;
 						}
 
 						$thisrate = $new_rate;
 						$pass     = true;
-						while (true)
-						{
-							if ($date < $r->valid_from || $nights > $r->max_nights)
-							{
+						while (true) {
+							if ($date < $r->valid_from || $nights > $r->max_nights) {
 								$pass = false;
 								break;
 							}
 
-							if ($next_guest < $min_guests || $next_guest > $max_guests)
-							{
+							if ($next_guest < $min_guests || $next_guest > $max_guests) {
 								$pass = false;
 								break;
 							}
 
-							if ($date == $arrival && $r->start_day < 7 && $r->start_day != TickTock::getDow($date))
-							{
+							if ($date == $arrival && $r->start_day < 7 && $r->start_day != TickTock::getDow($date)) {
 								$pass = false;
 								break;
 							}
 
-							if ($date == $departure && $r->start_day < 7 && $r->start_day != TickTock::getDow($date))
-							{
+							if ($date == $departure && $r->start_day < 7 && $r->start_day != TickTock::getDow($date)) {
 								$pass = false;
 								break;
 							}
 
-							if ($date == $arrival && $min_guests == 1 && $nights < $r->min_nights)
-							{
-								if (!(int) $this->Hub->settings['canwebook'])
-								{
+							if ($date == $arrival && $min_guests == 1 && $nights < $r->min_nights) {
+								if (!(int) $this->Hub->settings['canwebook']) {
 									$pass = false;
 									break;
 								}
 
-								if ((int) $this->Hub->getValue('canwebook') > 0)
-								{
-									if ($nights < (int) $this->Hub->getValue('canwebook'))
-									{
+								if ((int) $this->Hub->getValue('canwebook') > 0) {
+									if ($nights < (int) $this->Hub->getValue('canwebook')) {
 										$pass = false;
 										break;
 									}
 								}
 							}
 
-							if ($min_guests == 1)
-							{
+							if ($min_guests == 1) {
 								$count++;
 							}
 
 							$max      = $max_guests > $guests ? $guests + 1 : $max_guests + 1;
 							$thisrate = $ignore_pppn ? $thisrate : $thisrate * ($max - $min_guests);
 
-							if (!isset($nightly[$date]))
-							{
+							if (!isset($nightly[$date])) {
 								$nightly[$date] = 0;
 							}
 
@@ -199,8 +177,7 @@ class Base
 							break;
 						}
 
-						if (!$pass && $max && $max <= $guests)
-						{
+						if (!$pass && $max && $max <= $guests) {
 							$max = 1;
 						}
 					}
@@ -210,8 +187,7 @@ class Base
 			}
 		}
 
-		if ($count < $nights)
-		{
+		if ($count < $nights) {
 			$this->Hub->setValue('base_nightly', []);
 			$this->Hub->setValue('base_rate', 0);
 			$this->Hub->setValue('commission', 0);
@@ -222,16 +198,12 @@ class Base
 			$this->Hub->setValue('room_total', 0);
 			$this->Hub->setValue('room_total_gross', 0);
 			$this->Hub->setValue('room_total_gross_system', 0);
-		}
-		else
-		{
+		} else {
 			$rate = $this->Hub->round($rate / $weekly);
-			if ($weekly == 7)
-			{
+			if ($weekly == 7) {
 				$nightly = $this->roundNightly($nightly, $rate);
 			}
-			if ($this->Hub->getValue('adjustmentsRq'))
-			{
+			if ($this->Hub->getValue('adjustmentsRq')) {
 				$this->Hub->setAdjustments('Base Rate', $rate, '', $rate);
 			}
 
@@ -256,12 +228,10 @@ class Base
 	 */
 	private function checkCluster(int $min_nights, string $arrival): int
 	{
-		if ($this->Hub->settings['cluster'])
-		{
+		if ($this->Hub->settings['cluster']) {
 			$cluster = KrFactory::getListModel('seasons')
-			                    ->getMinimumNights((int) $this->Hub->settings['cluster'], $arrival);
-			if (!empty($cluster))
-			{
+				->getMinimumNights((int) $this->Hub->settings['cluster'], $arrival);
+			if (!empty($cluster)) {
 				$min_nights = $cluster;
 			}
 		}
@@ -285,31 +255,22 @@ class Base
 		$nights     = $this->Hub->getValue('nights');
 		$date_range = $this->Hub->getValue('date_range');
 
-		if ($this->Hub->settings['shortbook'])
-		{
+		if ($this->Hub->settings['shortbook']) {
 			$xmin = 9999;
-			if ($this->Hub->settings['managed_rates'])
-			{
+			if ($this->Hub->settings['managed_rates']) {
 				$xmin = $this->checkCluster($this->Hub->settings['minimuminterval'], $arrival);
-			}
-			else if ($this->Hub->settings['beyond_rates'])
-			{
+			} else if ($this->Hub->settings['beyond_rates']) {
 				$xmin = $this->checkCluster($this->Hub->settings['min_nights'], $arrival);
-			}
-			else
-			{
-				foreach ($ratesDb as $r)
-				{
-					if ($departure >= $r->valid_from && $arrival <= $r->valid_to)
-					{
+			} else {
+				foreach ($ratesDb as $r) {
+					if ($departure >= $r->valid_from && $arrival <= $r->valid_to) {
 						$xmin = $r->min_nights;
 						break;
 					}
 				}
 			}
 
-			if ($nights < $xmin && $nights >= $this->Hub->settings['shortbook'])
-			{
+			if ($nights < $xmin && $nights >= $this->Hub->settings['shortbook']) {
 				$this->Hub->setValue('shortbook', 1);
 				$this->Hub->setValue('shortbook_departure', $departure);
 				$this->Hub->setValue('shortbook_nights', $nights);
@@ -322,8 +283,7 @@ class Base
 				$this->Hub->setValue('departure', $departure);
 				$this->Hub->setValue('nights', $nights);
 				$this->Hub->setValue('date_range', $date_range);
-			}
-			else {
+			} else {
 				$this->Hub->setValue('shortbook', 0);
 			}
 		}
@@ -346,10 +306,8 @@ class Base
 	private function filterRates(array $rates, string $arrival, string $departure): array
 	{
 		$current = [];
-		foreach ($rates as $r)
-		{
-			if ($r->valid_to >= $arrival && $r->valid_from <= $departure)
-			{
+		foreach ($rates as $r) {
+			if ($r->valid_to >= $arrival && $r->valid_from <= $departure) {
 				$current[] = $r;
 			}
 		}
@@ -370,13 +328,10 @@ class Base
 	 */
 	private function getRates(int $property_id, string $arrival, string $departure): array
 	{
-		if ($this->Hub->getValue('ratesRq'))
-		{
+		if ($this->Hub->getValue('ratesRq')) {
 			$ratesDb = KrFactory::getListModel('rates')
-			                    ->getRatesForProperty($property_id, $arrival, $departure);
-		}
-		else
-		{
+				->getRatesForProperty($property_id, $arrival, $departure);
+		} else {
 			$ratesDb = $this->filterRates($this->Hub->getValue('ratesDb'), $arrival, $departure);
 		}
 
@@ -402,8 +357,7 @@ class Base
 		];
 
 		$more_guests = Utility::decodeJson($rate->more_guests, true);
-		foreach ($more_guests as $m)
-		{
+		foreach ($more_guests as $m) {
 			$thisrates[] = $m;
 		}
 
@@ -423,15 +377,13 @@ class Base
 	private function roundNightly(array $nightly, float $total): array
 	{
 		$sum = 0;
-		foreach ($nightly as $date => $rate)
-		{
+		foreach ($nightly as $date => $rate) {
 			$sum       += $rate;
 			$last_date = $date;
 			$last_rate = $rate;
 		}
 
-		if ($sum != $total)
-		{
+		if ($sum != $total) {
 			$nightly[$last_date] = $this->Hub->round($last_rate + ($total - $sum));
 		}
 

@@ -19,7 +19,7 @@ use HighlandVision\KR\TickTock;
 use function defined;
 
 /**
- * Calendar for search results
+ * Calendar for manager
  *
  * @since 3.4.0
  */
@@ -52,14 +52,56 @@ class Manager extends Calendar
 	 */
 	public function getBlockedDates(): array
 	{
-		if ($this->blocked_done)
-		{
+		if ($this->blocked_done) {
 			return $this->blocked;
 		}
 
 		$this->setBlockedDates();
 
 		return $this->blocked;
+	}
+
+	/**
+	 * Find the first available date
+	 *
+	 * @throws Exception
+	 * @since  3.4.0
+	 * @return array
+	 */
+	public function getFirstFreeDate(): array
+	{
+		$this->getBlockedDates();
+		$arrival   = '';
+		$departure = '';
+		$found     = false;
+
+		foreach ($this->range as $date) {
+			if ($found) {
+				if (!isset($this->blocked[$date])) {
+					$departure = $date;
+					break;
+				}
+
+				if ($this->blocked[$date] == '2') {
+					$departure = $date;
+					break;
+				}
+
+				$found = false;
+			}
+
+			if (isset($this->blocked[$date])) {
+				if ($this->blocked[$date] == '0' || $this->blocked[$date] == '1' || $this->blocked[$date] == '3') {
+					continue;
+				}
+			}
+
+			$arrival = $date;
+			$found   = true;
+		}
+
+		return [$arrival,
+		        $departure];
 	}
 
 	/**
@@ -77,55 +119,6 @@ class Manager extends Calendar
 	}
 
 	/**
-	 * Find the first available date
-	 *
-	 * @throws Exception
-	 * @since  3.4.0
-	 * @return array
-	 */
-	public function getFirstFreeDate(): array
-	{
-		$this->getBlockedDates();
-		$arrival   = '';
-		$departure = '';
-		$found     = false;
-
-		foreach ($this->range as $date)
-		{
-			if ($found)
-			{
-				if (!isset($this->blocked[$date]))
-				{
-					$departure = $date;
-					break;
-				}
-
-				if ($this->blocked[$date] == '2')
-				{
-					$departure = $date;
-					break;
-				}
-
-				$found = false;
-			}
-
-			if (isset($this->blocked[$date]))
-			{
-				if ($this->blocked[$date] == '0' || $this->blocked[$date] == '1' || $this->blocked[$date] == '3')
-				{
-					continue;
-				}
-			}
-
-			$arrival = $date;
-			$found   = true;
-		}
-
-		return [$arrival,
-		        $departure];
-	}
-
-	/**
 	 * Prepare blocked dates array
 	 * Blocked dates each have a value to indicate
 	 * 0 - booked (can allow nothing )
@@ -138,13 +131,10 @@ class Manager extends Calendar
 	 */
 	protected function setBlockedDates(): void
 	{
-		foreach ($this->bookings as $b)
-		{
-			if (!$this->edit_id || $b->black_booking == 2 || ($b->black_booking < 2 && $b->id != $this->edit_id))
-			{
+		foreach ($this->bookings as $b) {
+			if (!$this->edit_id || $b->black_booking == 2 || ($b->black_booking < 2 && $b->id != $this->edit_id)) {
 				$bdates = TickTock::allDatesBetween($b->arrival, $b->departure);
-				foreach ($bdates as $d)
-				{
+				foreach ($bdates as $d) {
 					$this->incrementBlockedDate($d, $b->arrival, $b->departure, false);
 				}
 			}
@@ -160,8 +150,7 @@ class Manager extends Calendar
 	 */
 	protected function setMaxStay(int $days = 0): void
 	{
-		foreach ($range as $d)
-		{
+		foreach ($range as $d) {
 			$this->maxstay[$d] = 365;
 		}
 	}

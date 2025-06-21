@@ -37,8 +37,7 @@ class RatesModel extends ListModel
 	 */
 	public function __construct($config = [])
 	{
-		if (empty($config['filter_fields']))
-		{
+		if (empty($config['filter_fields'])) {
 			$config['filter_fields'] = array(
 				'id', 'a.id',
 				'valid_from', 'a.valid_from',
@@ -70,8 +69,7 @@ class RatesModel extends ListModel
 		$db  = KrFactory::getDatabase();
 		$sql = [];
 
-		foreach ($updates as $row)
-		{
+		foreach ($updates as $row) {
 			$sql[] = '( 
 							' . (int) $row->id . ',
 				            ' . (int) $row->property_id . ',
@@ -90,8 +88,7 @@ class RatesModel extends ListModel
 				           )';
 		}
 
-		try
-		{
+		try {
 			$db->transactionStart();
 
 			$query = "INSERT INTO " . $db->qn('#__knowres_rate');
@@ -110,9 +107,7 @@ class RatesModel extends ListModel
 			$db->setQuery($query);
 			$db->execute();
 			$db->transactionCommit();
-		}
-		catch (Exception $e)
-		{
+		} catch (Exception $e) {
 			$db->transactionRollback();
 
 			throw new Exception($e);
@@ -138,10 +133,10 @@ class RatesModel extends ListModel
 
 		$query->select($this->getState('list.select', $db->qn('a.id')));
 		$query->from($db->qn('#__knowres_rate', 'a'))
-		      ->where($db->qn('a.state') . '=1')
-		      ->where($db->qn('a.property_id') . '=' . $property_id)
-		      ->where($db->qn('a.valid_to') . '>=' . $db->q($date))
-		      ->setLimit(1);
+			->where($db->qn('a.state') . '=1')
+			->where($db->qn('a.property_id') . '=' . $property_id)
+			->where($db->qn('a.valid_to') . '>=' . $db->q($date))
+			->setLimit(1);
 
 		$db->setQuery($query);
 
@@ -164,10 +159,10 @@ class RatesModel extends ListModel
 
 		$query->select($this->getState('list.select', $db->qn('a.valid_to')));
 		$query->from($db->qn('#__knowres_rate', 'a'))
-		      ->where($db->qn('a.state') . '=1')
-		      ->where($db->qn('a.property_id') . '=' . $property_id)
-		      ->order($db->qn('a.valid_to') . 'DESC')
-		      ->setLimit(1);
+			->where($db->qn('a.state') . '=1')
+			->where($db->qn('a.property_id') . '=' . $property_id)
+			->order($db->qn('a.valid_to') . 'DESC')
+			->setLimit(1);
 
 		$db->setQuery($query);
 
@@ -193,12 +188,12 @@ class RatesModel extends ListModel
 
 		$query->select($this->getState('list.select', $db->qn('a.max_guests')));
 		$query->from($db->qn('#__knowres_rate', 'a'))
-		      ->where($db->qn('a.state') . '=1')
-		      ->where($db->qn('a.property_id') . '=' . $property_id)
-		      ->where($db->qn('a.valid_to') . '>=' . $db->q($date))
-		      ->where($db->qn('a.min_guests') . '=1')
-		      ->order($db->qn('a.valid_from'))
-		      ->setLimit(1);
+			->where($db->qn('a.state') . '=1')
+			->where($db->qn('a.property_id') . '=' . $property_id)
+			->where($db->qn('a.valid_to') . '>=' . $db->q($date))
+			->where($db->qn('a.min_guests') . '=1')
+			->order($db->qn('a.valid_from'))
+			->setLimit(1);
 
 		$db->setQuery($query);
 
@@ -224,27 +219,20 @@ class RatesModel extends ListModel
 		$query->select($this->getState('list.select', $db->qn('a.property_id')));
 		$query->select('MIN(a.rate) as minrate');
 		$query->from($db->qn('#__knowres_rate', 'a'));
-		if (is_numeric($properties))
-		{
+		if (is_numeric($properties)) {
 			$query->where($db->qn('a.property_id') . '=' . (int) $properties);
-		}
-		else if (is_string($properties) && strlen($properties) > 0)
-		{
+		} else if (is_string($properties) && strlen($properties) > 0) {
 			$ids = explode(',', $properties);
 			$query->where($db->qn('a.property_id') . ' IN (' . implode(',', array_map('intval', $ids)) . ')');
-		}
-		else if (is_array($properties))
-		{
+		} else if (is_array($properties)) {
 			$query->where($db->qn('a.property_id') . ' IN (' . implode(',', array_map('intval', $properties)) . ')');
 		}
 
-		if ($date)
-		{
+		if ($date) {
 			$query->where($db->qn('a.valid_to') . '>=' . $db->q($date));
 		}
 
-		if ($guests)
-		{
+		if ($guests) {
 			$query->where($db->qn('a.min_guests') . '=' . $guests);
 		}
 
@@ -270,12 +258,10 @@ class RatesModel extends ListModel
 	 */
 	public function getRatesForProperty(mixed $properties, ?string $from = null, ?string $to = null): mixed
 	{
-		if (is_null($from))
-		{
+		if (is_null($from)) {
 			$from = TickTock::getDate();
 		}
-		if (is_null($to))
-		{
+		if (is_null($to)) {
 			$to = '2100-12-31';
 		}
 
@@ -283,49 +269,30 @@ class RatesModel extends ListModel
 		$query = $db->getQuery(true);
 
 		$query->select($this->getState('list.select',
-			[$db->qn('a.id'),
-			 $db->qn('a.property_id'),
-			 $db->qn('a.valid_from'),
-			 $db->qn('a.valid_to'),
-			 $db->qn('a.rate'),
-			 $db->qn('a.min_nights'),
-			 $db->qn('a.max_nights'),
-			 $db->qn('a.min_guests'),
-			 $db->qn('a.max_guests'),
-			 $db->qn('a.ignore_pppn'),
-			 $db->qn('a.start_day'),
-			 $db->qn('a.more_guests'),
-			 $db->qn('a.state'),
-			 $db->qn('a.checked_out'),
-			 $db->qn('a.checked_out_time'),
-			 $db->qn('a.created_by'),
-			 $db->qn('a.created_at'),
-			 $db->qn('a.updated_by'),
-			 $db->qn('a.updated_at')
+			[$db->qn('a.id'), $db->qn('a.property_id'), $db->qn('a.valid_from'), $db->qn('a.valid_to'), $db->qn('a.rate'),
+			 $db->qn('a.min_nights'), $db->qn('a.max_nights'), $db->qn('a.min_guests'), $db->qn('a.max_guests'),
+			 $db->qn('a.ignore_pppn'), $db->qn('a.start_day'), $db->qn('a.more_guests'), $db->qn('a.state'),
+			 $db->qn('a.checked_out'), $db->qn('a.checked_out_time'), $db->qn('a.created_by'), $db->qn('a.created_at'),
+			 $db->qn('a.updated_by'), $db->qn('a.updated_at')
 			]));
 
 		$query->from($db->qn('#__knowres_rate', 'a'))
-		      ->where($db->qn('a.state') . '=1')
-		      ->where($db->qn('a.valid_to') . '>=' . $db->q($from))
-		      ->where($db->qn('a.valid_from') . '<=' . $db->q($to));
+			->where($db->qn('a.state') . '=1')
+			->where($db->qn('a.valid_to') . '>=' . $db->q($from))
+			->where($db->qn('a.valid_from') . '<=' . $db->q($to));
 
-		if (is_numeric($properties))
-		{
+		if (is_numeric($properties)) {
 			$query->where($db->qn('a.property_id') . '=' . (int) $properties);
-		}
-		else if (is_array($properties))
-		{
+		} else if (is_array($properties)) {
 			$query->where('a.property_id IN (' . implode(',', array_map('intval', $properties)) . ')');
-		}
-		else if (is_string($properties) && strlen($properties) > 0)
-		{
+		} else if (is_string($properties) && strlen($properties) > 0) {
 			$ids = explode(',', $properties);
 			$query->where($db->qn('a.property_id') . ' IN (' . implode(',', array_map('intval', $ids)) . ')');
 		}
 
 		$query->order($db->qn('property_id'))
-		      ->order($db->qn('valid_from'))
-		      ->order($db->qn('min_guests'));
+			->order($db->qn('valid_from'))
+			->order($db->qn('min_guests'));
 		$db->setQuery($query);
 
 		return $db->loadObjectList();
@@ -350,12 +317,12 @@ class RatesModel extends ListModel
 
 		$query->select($this->getState('list.select', $db->qn(['valid_from', 'valid_to'])));
 		$query->from($db->qn('#__knowres_rate'))
-		      ->where($db->qn('id') . '<>' . $id)
-		      ->where($db->qn('property_id') . '=' . $property_id)
-		      ->where($db->qn('valid_from') . '<=' . $db->q($valid_from))
-		      ->where($db->qn('valid_to') . '>=' . $db->q($valid_to))
-		      ->where($db->qn('state') . '=1')
-		      ->order($db->qn('valid_from') . ' ASC');
+			->where($db->qn('id') . '<>' . $id)
+			->where($db->qn('property_id') . '=' . $property_id)
+			->where($db->qn('valid_from') . '<=' . $db->q($valid_from))
+			->where($db->qn('valid_to') . '>=' . $db->q($valid_to))
+			->where($db->qn('state') . '=1')
+			->order($db->qn('valid_from') . ' ASC');
 		$db->setQuery($query);
 
 		return $db->loadObjectList();
@@ -378,11 +345,11 @@ class RatesModel extends ListModel
 
 		$subQuery = $db->getQuery(true);
 		$subQuery->select('sub.text')
-		         ->from($db->qn('#__knowres_translation', 'sub'))
-		         ->where($db->qn('sub.item') . ' = ' . $db->q($item))
-		         ->where($db->qn('sub.item_id') . ' = ' . $db->qn('a.id'))
-		         ->order('(CASE WHEN ' . $db->qn('sub.language') . ' = ' . $db->q($lang) . ' THEN 1 ELSE 2 END )')
-		         ->setLimit(1);
+			->from($db->qn('#__knowres_translation', 'sub'))
+			->where($db->qn('sub.item') . ' = ' . $db->q($item))
+			->where($db->qn('sub.item_id') . ' = ' . $db->qn('a.id'))
+			->order('(CASE WHEN ' . $db->qn('sub.language') . ' = ' . $db->q($lang) . ' THEN 1 ELSE 2 END )')
+			->setLimit(1);
 
 		$query->select($this->getState('list.select',
 			[$db->qn('a.id'),
@@ -421,47 +388,35 @@ class RatesModel extends ListModel
 		$query->join('LEFT', '#__users AS updated_by ON updated_by.id = a.updated_by');
 
 		$state = $this->getState('filter.state');
-		if (is_numeric($state))
-		{
+		if (is_numeric($state)) {
 			$query->where($db->qn('a.state') . ' = ' . (int) $state);
-		}
-		else if ($state === '')
-		{
+		} else if ($state === '') {
 			$query->where($db->qn('a.state') . ' IN (0, 1)');
 		}
 
 		$filter_property_id = $this->state->get("filter.property_id");
-		if (is_numeric($filter_property_id))
-		{
+		if (is_numeric($filter_property_id)) {
 			$query->where($db->qn('a.property_id') . ' = ' . (int) $filter_property_id);
-		}
-		else if (is_string($filter_property_id) && strlen($filter_property_id) > 0)
-		{
+		} else if (is_string($filter_property_id) && strlen($filter_property_id) > 0) {
 			$ids = explode(",", $filter_property_id);
 			$query->where($db->qn('a.property_id') . ' IN (' . implode(',', array_map('intval', $ids)) . ')');
 		}
 
 		$filter_valid_from = $this->state->get("filter.valid_from");
-		if ($filter_valid_from)
-		{
+		if ($filter_valid_from) {
 			$query->where($db->qn('a.valid_from') . ' <= ' . $db->q($filter_valid_from));
 		}
 
 		$filter_valid_to = $this->state->get("filter.valid_to");
-		if ($filter_valid_to)
-		{
+		if ($filter_valid_to) {
 			$query->where($db->qn('a.valid_to') . ' >= ' . $db->q($filter_valid_to));
 		}
 
 		$search = $this->getState('filter.search');
-		if (!empty($search))
-		{
-			if (stripos($search, 'id:') === 0)
-			{
+		if (!empty($search)) {
+			if (stripos($search, 'id:') === 0) {
 				$query->where($db->qn('a.id') . ' = ' . (int) substr($search, 3));
-			}
-			else
-			{
+			} else {
 				$search = $db->q('%' . $db->escape($search) . '%');
 				$query->where('(' . $subQuery->__toString() . ') ' . ' LIKE ' . $search);
 			}
@@ -469,8 +424,7 @@ class RatesModel extends ListModel
 
 		$orderCol  = $this->state->get('list.ordering');
 		$orderDirn = $this->state->get('list.direction');
-		if ($orderCol && $orderDirn)
-		{
+		if ($orderCol && $orderDirn) {
 			$query->order($db->qn($orderCol) . $orderDirn);
 		}
 
