@@ -92,6 +92,7 @@ class Hub
 		if (!KrMethods::isAdmin() && $contractData->balance_days == 0) {
 			$this->setValue('balance_days', $this->settings['balance_days']);
 		}
+
 		$this->setValue('nights', TickTock::differenceDays($this->getValue('arrival'), $this->getValue('departure')));
 		$this->setValue('date_range',
 			TickTock::allDatesBetween($this->getValue('arrival'), $this->getValue('departure'), true));
