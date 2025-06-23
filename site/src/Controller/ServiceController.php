@@ -62,7 +62,7 @@ use function trim;
  *
  * @since   1.0.0
  */
-//TODO 5.2 Put responses into Library class (preprocesser for PostPayment)
+//TODO 6.0 Put responses into Library class (preprocesser for PostPayment)
 class ServiceController extends BaseController
 {
 	/** @var int Indicates that test is being run */
@@ -326,7 +326,7 @@ class ServiceController extends BaseController
 	 *
 	 * @throws RuntimeException
 	 * @throws Exception
-	 * @since  3.0
+	 * @since        3.0
 	 * @noinspection PhpUnused
 	 */
 	#[NoReturn] public function termspdf(): void
@@ -361,7 +361,7 @@ class ServiceController extends BaseController
 	 * Process international wire confirmation
 	 *
 	 * @throws Exception
-	 * @since  2.2.0
+	 * @since        2.2.0
 	 * @noinspection PhpUnused
 	 */
 	public function wireint(): void

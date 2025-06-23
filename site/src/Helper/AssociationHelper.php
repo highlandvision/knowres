@@ -5,6 +5,7 @@
  * @copyright   (C) 2012 Open Source Matters, Inc. <https://www.joomla.org>
  * @license         GNU General Public License version 2 or later; see LICENSE.txt
  */
+
 /** @noinspection PhpPossiblePolymorphicInvocationInspection */
 
 namespace HighlandVision\Component\Knowres\Site\Helper;
@@ -25,18 +26,18 @@ use function defined;
  */
 abstract class AssociationHelper extends AssociationExtensionHelper
 {
+	/** @var  bool Associations support */
+	protected $associationsSupport = false;
 	/** @var array The extension name */
 	protected $extension = 'com_knowres';
 	/** @var array Item types */
 	protected $itemTypes = [];
-	/** @var  bool Associations support */
-	protected $associationsSupport = false;
 
 	/**
 	 * Method to get the associations for a given item
 	 *
-	 * @param   integer  $id    ID of the item
-	 * @param  ?string   $view  Name of the view
+	 * @param  integer  $id    ID of the item
+	 * @param  ?string  $view  Name of the view
 	 *
 	 * @throws Exception
 	 * @since  3.0
@@ -49,21 +50,17 @@ abstract class AssociationHelper extends AssociationExtensionHelper
 		$associations = [];
 
 		$active = Factory::getApplication()->getMenu()->getActive();
-		if ($active)
-		{
+		if ($active) {
 			$associations = MenusHelper::getAssociations($active->id);
 		}
 
 		$input = Factory::getApplication()->input;
 		$view  = is_null($view) ? $input->get('view') : $view;
 
-		if ($view == 'property')
-		{
+		if ($view == 'property') {
 			$id = empty($id) ? $input->getInt('id') : $id;
-			if ($id)
-			{
-				foreach ($associations as $tag => $Itemid)
-				{
+			if ($id) {
+				foreach ($associations as $tag => $Itemid) {
 					$return[$tag] = 'index.php?option=com_knowres&Itemid=' . $Itemid . '&view=property&id=' . $id;
 				}
 
@@ -71,26 +68,21 @@ abstract class AssociationHelper extends AssociationExtensionHelper
 			}
 		}
 
-		if ($view == 'properties')
-		{
+		if ($view == 'properties') {
 			$region_id = $input->getInt('region_id', 0);
 			$arrival   = $input->getString('arrival', '');
 			$departure = $input->getString('departure', '');
 			$guests    = $input->getInt('guests', 0);
 
-			foreach ($associations as $tag => $Itemid)
-			{
+			foreach ($associations as $tag => $Itemid) {
 				$string = 'index.php?option=com_knowres&Itemid=' . $Itemid . '&view=properties&region_id=' . $region_id;
-				if ($arrival)
-				{
+				if ($arrival) {
 					$string .= '&arrival=' . $arrival;
 				}
-				if ($departure)
-				{
+				if ($departure) {
 					$string .= '&departure=' . $departure;
 				}
-				if ($guests)
-				{
+				if ($guests) {
 					$string .= '&guests=' . $guests;
 				}
 

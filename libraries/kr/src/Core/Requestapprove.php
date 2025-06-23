@@ -125,16 +125,16 @@ class Requestapprove
 				$db->transactionRollback();
 			}
 		} else {
-			//TODO do only for stripe
+			// TODO v6.0 do only for stripe
 			// Stripe only for now!
-			$paymentData             = $this->hub->getData('paymentData');
-			$guestData               = $this->hub->getData('guestData');
+			$paymentData = $this->hub->getData('paymentData');
+			$guestData   = $this->hub->getData('guestData');
 
-			$metadata                = Utility::setStripeMeta($paymentData);
+			$metadata                    = Utility::setStripeMeta($paymentData);
 			$metadata['on_request_paid'] = $on_request_paid;
-			$metadata['state']       = 1;
-			$metadata['service_ref'] = "na";
-			$metadata['payment_ref'] = '';
+			$metadata['state']           = 1;
+			$metadata['service_ref']     = "na";
+			$metadata['payment_ref']     = '';
 
 			try {
 				// Finalize payment, result sent to webhook processing

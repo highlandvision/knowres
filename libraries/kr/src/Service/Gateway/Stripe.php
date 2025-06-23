@@ -39,85 +39,85 @@ use function trim;
  */
 class Stripe extends Gateway
 {
-    /** @var string Current action. */
-    protected string $action = '';
-    /** @var array RBS exception for declined / authorization. */
-    protected array $card_exception = [];
-    /** @var string Current function for error handling. */
-    protected string $function = '';
-    /** @var bool Off session payment indicator. */
-    protected bool $off_session = false;
+	/** @var string Current action. */
+	protected string $action = '';
+	/** @var array RBS exception for declined / authorization. */
+	protected array $card_exception = [];
+	/** @var string Current function for error handling. */
+	protected string $function = '';
+	/** @var bool Off session payment indicator. */
+	protected bool $off_session = false;
 
-    /**
-     * Initialize
-     *
-     * @param  int       $service_id   ID of service
-     * @param  stdClass  $paymentData  Session payment data
-     * @param  string    $action       Action from Stripe
-     *
-     * @throws Exception
-     * @since  1.0.0
-     */
-    public function __construct(int $service_id, stdClass $paymentData, string $action = '')
-    {
-        parent::__construct($service_id, $paymentData, 0, ['OBD', 'OBR', 'RBD', 'PBD', 'PBB']);
+	/**
+	 * Initialize
+	 *
+	 * @param  int       $service_id   ID of service
+	 * @param  stdClass  $paymentData  Session payment data
+	 * @param  string    $action       Action from Stripe
+	 *
+	 * @throws Exception
+	 * @since  1.0.0
+	 */
+	public function __construct(int $service_id, stdClass $paymentData, string $action = '')
+	{
+		parent::__construct($service_id, $paymentData, 0, ['OBD', 'OBR', 'RBD', 'PBD', 'PBB']);
 
-        $this->action = $action;
-    }
+		$this->action = $action;
+	}
 
-    /**
-     * Set data for Stripe call
-     *
-     * @throws ApiErrorException
-     * @throws Exception
-     * @since  1.0.0
-     * @return stdClass
-     */
-    public function setOutputData(): stdClass
-    {
-        $this->readTables();
-        $this->setOutputForPaymentType();
+	/**
+	 * Set data for Stripe call
+	 *
+	 * @throws ApiErrorException
+	 * @throws Exception
+	 * @since  1.0.0
+	 * @return stdClass
+	 */
+	public function setOutputData(): stdClass
+	{
+		$this->readTables();
+		$this->setOutputForPaymentType();
 
-        $client_secret = false;
-        if ($this->paymentData->payment_type === 'OBR') {
-            StripeLib::setApiKey(trim($this->parameters->secret_key));
-            if (trim($this->parameters->api_version)) {
-                StripeLib::setApiVersion(trim($this->parameters->api_version));
-            }
-            $intent        = SetupIntent::create([]);
-            $client_secret = $intent->client_secret;
-        }
+		$client_secret = false;
+		if ($this->paymentData->payment_type === 'OBR') {
+			StripeLib::setApiKey(trim($this->parameters->secret_key));
+			if (trim($this->parameters->api_version)) {
+				StripeLib::setApiVersion(trim($this->parameters->api_version));
+			}
+			$intent        = SetupIntent::create([]);
+			$client_secret = $intent->client_secret;
+		}
 
-        $this->paymentData->api_version     = trim($this->parameters->api_version);
-        $this->paymentData->client_secret   = $client_secret;
-        $this->paymentData->publishable_key = trim($this->parameters->publishable_key);
-        $this->paymentData->secret_key      = trim($this->parameters->secret_key);
+		$this->paymentData->api_version     = trim($this->parameters->api_version);
+		$this->paymentData->client_secret   = $client_secret;
+		$this->paymentData->publishable_key = trim($this->parameters->publishable_key);
+		$this->paymentData->secret_key      = trim($this->parameters->secret_key);
 
-        return $this->paymentData;
-    }
+		return $this->paymentData;
+	}
 
-    //TODO-v5.2 Reinstate with correct stripe processing end email notifications
-    //	/**
-    //	 * Process channel booking balance (CBB) transaction
-    //	 * Create customer and take payment
-    //	 * Credit card info cannot be stored on server
-    //	 *
-    //	 * @throws Exception
-    //	 * @since 2.3.0
-    //	 * @return bool
-    //	 */
-    //	public function processCBB()
-    //	{
-    //		$this->function    = 'processCBB';
-    //		$this->off_session = true;
-    //
-    //		if ($this->chargeCustomer())
-    //		{
-    //			$this->setPayment();
-    //			$this->saveAll();
-    //			$this->sendEmails();
-    //		}
-    //	}
+	//TODO-v5.2 Reinstate with correct stripe processing end email notifications
+	//	/**
+	//	 * Process channel booking balance (CBB) transaction
+	//	 * Create customer and take payment
+	//	 * Credit card info cannot be stored on server
+	//	 *
+	//	 * @throws Exception
+	//	 * @since 2.3.0
+	//	 * @return bool
+	//	 */
+	//	public function processCBB()
+	//	{
+	//		$this->function    = 'processCBB';
+	//		$this->off_session = true;
+	//
+	//		if ($this->chargeCustomer())
+	//		{
+	//			$this->setPayment();
+	//			$this->saveAll();
+	//			$this->sendEmails();
+	//		}
+	//	}
 
 	/**
 	 * Do the Stripe call
@@ -131,57 +131,57 @@ class Stripe extends Gateway
 	 * @since  2.3.0
 	 * @return object|bool
 	 */
-    protected function doStripe(array $params, string $method): object|bool
-    {
-        if (!count($params) || !$method) {
-            throw new InvalidArgumentException('Params or method is missing');
-        }
+	protected function doStripe(array $params, string $method): object|bool
+	{
+		if (!count($params) || !$method) {
+			throw new InvalidArgumentException('Params or method is missing');
+		}
 
-        $data = $this->setOutputData();
-        StripeLib::setApiKey(trim($this->parameters->secret_key));
-        if (trim($this->parameters->api_version)) {
-            StripeLib::setApiVersion(trim($this->parameters->api_version));
-        }
+		$data = $this->setOutputData();
+		StripeLib::setApiKey(trim($this->parameters->secret_key));
+		if (trim($this->parameters->api_version)) {
+			StripeLib::setApiVersion(trim($this->parameters->api_version));
+		}
 
-        try {
-            if ($method === 'customer') {
-                return Customer::create($params);
-            } else {
-                if ($method === 'paymentmethod') {
-                    return $this->generatePaymentResponse(PaymentIntent::create($params));
-                } elseif ($method === 'paymentintent') {
-                    $response = PaymentIntent::retrieve($params['payment_intent_id']);
-                    $response->confirm();
+		try {
+			if ($method === 'customer') {
+				return Customer::create($params);
+			} else {
+				if ($method === 'paymentmethod') {
+					return $this->generatePaymentResponse(PaymentIntent::create($params));
+				} elseif ($method === 'paymentintent') {
+					$response = PaymentIntent::retrieve($params['payment_intent_id']);
+					$response->confirm();
 
-                    return $this->generatePaymentResponse($response);
-                }
-            }
-        } catch (CardException $e) {
-            if (!$this->off_session) {
-                $this->error_to_display = KrMethods::plain('COM_KNOWRES_ERROR_DECLINED');
-                $this->writeErrors($e);
-            } else {
-                $this->card_exception = $e->getJsonBody();
-                $this->messages       = [];
+					return $this->generatePaymentResponse($response);
+				}
+			}
+		} catch (CardException $e) {
+			if (!$this->off_session) {
+				$this->error_to_display = KrMethods::plain('COM_KNOWRES_ERROR_DECLINED');
+				$this->writeErrors($e);
+			} else {
+				$this->card_exception = $e->getJsonBody();
+				$this->messages       = [];
 
-                return false;
-            }
-        } catch (InvalidRequestException $e) {
-            $this->writeErrors($e, 'Invalid parameters supplied to Stripe API');
-        } catch (AuthenticationException $e) {
-            $this->writeErrors($e, 'Authentication with Stripe API failed');
-        } catch (ApiConnectionException $e) {
-            $this->writeErrors($e, 'Network communication with Stripe failed');
-        } catch (ApiErrorException $e) {
-            $this->writeErrors($e, 'Base error');
-        } catch (Exception $e) {
-            $this->writeErrors($e, 'Other exception');
-        } finally {
-            if (is_countable($this->messages) && count($this->messages)) {
-                throw new Exception(Utility::encodeJson($this->messages));
-            }
-        }
-    }
+				return false;
+			}
+		} catch (InvalidRequestException $e) {
+			$this->writeErrors($e, 'Invalid parameters supplied to Stripe API');
+		} catch (AuthenticationException $e) {
+			$this->writeErrors($e, 'Authentication with Stripe API failed');
+		} catch (ApiConnectionException $e) {
+			$this->writeErrors($e, 'Network communication with Stripe failed');
+		} catch (ApiErrorException $e) {
+			$this->writeErrors($e, 'Base error');
+		} catch (Exception $e) {
+			$this->writeErrors($e, 'Other exception');
+		} finally {
+			if (is_countable($this->messages) && count($this->messages)) {
+				throw new Exception(Utility::encodeJson($this->messages));
+			}
+		}
+	}
 
 //	/**
 //	 * Create Stripe customer for future use
@@ -208,107 +208,107 @@ class Stripe extends Gateway
 //		$this->paymentData->customer_ref = $response->id;
 //	}
 
-    /**
-     * Process response from payment intent
-     *
-     * @param  object  $response  Response from request
-     *
-     * @throws Exception
-     * @since  3.3.0
-     * @return object|bool
-     */
-    protected function generatePaymentResponse(object $response): object|bool
-    {
-        if (!$this->off_session) {
-            if ($response->status == 'requires_action' && $response->next_action->type == 'use_stripe_sdk') {
-                echo Utility::encodeJson([
-                    'requires_action'              => true,
-                    'payment_intent_client_secret' => $response->client_secret
-                ]);
+	/**
+	 * Process response from payment intent
+	 *
+	 * @param  object  $response  Response from request
+	 *
+	 * @throws Exception
+	 * @since  3.3.0
+	 * @return object|bool
+	 */
+	protected function generatePaymentResponse(object $response): object|bool
+	{
+		if (!$this->off_session) {
+			if ($response->status == 'requires_action' && $response->next_action->type == 'use_stripe_sdk') {
+				echo Utility::encodeJson([
+					'requires_action'              => true,
+					'payment_intent_client_secret' => $response->client_secret
+				]);
 
-                jexit();
-            } else {
-                if ($response->status === 'succeeded') {
-                    return $response;
-                } else {
-                    http_response_code(500);
-                    echo Utility::encodeJson(['error' => KrMethods::plain('COM_KNOWRES_ERROR_FATAL')]);
+				jexit();
+			} else {
+				if ($response->status === 'succeeded') {
+					return $response;
+				} else {
+					http_response_code(500);
+					echo Utility::encodeJson(['error' => KrMethods::plain('COM_KNOWRES_ERROR_FATAL')]);
 
-                    jexit();
-                }
-            }
-        } else {
-            if ($response->status === 'succeeded') {
-                return $response;
-            }
-        }
-    }
+					jexit();
+				}
+			}
+		} else {
+			if ($response->status === 'succeeded') {
+				return $response;
+			}
+		}
+	}
 
-    //	/**
-    //	 * Set up values for a channel balance payment
-    //	 * No gateways must be Stripe
-    //	 *
-    //	 * @throws RuntimeException
-    //	 * @throws Exception
-    //	 * @throws Exception
-    //	 * @since 1.0.0
-    //	 */
-    //	protected function outputChannelBalance()
-    //	{
-    //		TODO-v5.2 Automatic balance payments with notification emails etc,
-    //		TODO-v5.2 Move all of this to the calling routine
-    //		$this->readGuest();
-    //		if (!$this->guest->customer_ref)
-    //		{
-    //			$this->errors[] = "Stripe token missing for guest";
-    //
-    //			return false;
-    //		}
-    //
-    //		$this->readContract();
-    //		$amount = KrFactory::getListModel('contracts')->getCurrentBalance($this->contract_id);
-    //		if (!$amount || !$this->contract->currency)
-    //		{
-    //			$this->errors[] = "Balance amount or payment currency missing for balance payment";
-    //
-    //			return false;
-    //		}
-    //
-    //		$this->paymentData->amount = $amount;
-    //		$this->paymentData->currency = $this->contract->currency;
-    //		$this->paymentData->base_amount    = $tamount;
-    //		$this->paymentData->rate           = 1;
-    //		$this->paymentData->base_surcharge = 0;
-    //		$this->paymentData->customer_ref   = $this->guest->customer_ref;
-    //
-    //		$type = KrMethods::plain('COM_KNOWRES_PAYMENT_BALANCE_OF');
-    //		$this->paymentData->description = KrMethods::sprintf('COM_KNOWRES_PAYMENT_DESCRIPTION', $type,
-    //			Utility::displayValue($amount, $this->contract->currency), $this->contract->property_name,
-    //			TickTock::displayDate($this->contract->arrival), TickTock::displayDate($this->contract->departure));
-    //
-    //		return true;
-    //	}
+	//	/**
+	//	 * Set up values for a channel balance payment
+	//	 * No gateways must be Stripe
+	//	 *
+	//	 * @throws RuntimeException
+	//	 * @throws Exception
+	//	 * @throws Exception
+	//	 * @since 1.0.0
+	//	 */
+	//	protected function outputChannelBalance()
+	//	{
+	//		TODO-v6.0 Automatic balance payments with notification emails etc,
+	//		TODO-v6.0 Move all of this to the calling routine
+	//		$this->readGuest();
+	//		if (!$this->guest->customer_ref)
+	//		{
+	//			$this->errors[] = "Stripe token missing for guest";
+	//
+	//			return false;
+	//		}
+	//
+	//		$this->readContract();
+	//		$amount = KrFactory::getListModel('contracts')->getCurrentBalance($this->contract_id);
+	//		if (!$amount || !$this->contract->currency)
+	//		{
+	//			$this->errors[] = "Balance amount or payment currency missing for balance payment";
+	//
+	//			return false;
+	//		}
+	//
+	//		$this->paymentData->amount = $amount;
+	//		$this->paymentData->currency = $this->contract->currency;
+	//		$this->paymentData->base_amount    = $tamount;
+	//		$this->paymentData->rate           = 1;
+	//		$this->paymentData->base_surcharge = 0;
+	//		$this->paymentData->customer_ref   = $this->guest->customer_ref;
+	//
+	//		$type = KrMethods::plain('COM_KNOWRES_PAYMENT_BALANCE_OF');
+	//		$this->paymentData->description = KrMethods::sprintf('COM_KNOWRES_PAYMENT_DESCRIPTION', $type,
+	//			Utility::displayValue($amount, $this->contract->currency), $this->contract->property_name,
+	//			TickTock::displayDate($this->contract->arrival), TickTock::displayDate($this->contract->departure));
+	//
+	//		return true;
+	//	}
 
-    /**
-     * Set payment data for output payment types
-     *
-     * @throws RuntimeException|Exception
-     * @since  1.0.0
-     */
-    protected function setOutputForPaymentType(): void
-    {
-        if ($this->paymentData->payment_type == 'RBD') {
-            $this->setPaymentDataRBD();
-        } else {
-            if ($this->paymentData->payment_type == 'CBB') {
-                //TODO-v5.2 do this properly with emails etc and add to valid payment types above
-                //return $this->outputChannelBalance();
-                throw new RuntimeException('Payment type CBB not currently implemented');
-            } else {
-                $this->setPaymentData();
-            }
-        }
-    }
+	/**
+	 * Set payment data for output payment types
+	 *
+	 * @throws RuntimeException|Exception
+	 * @since  1.0.0
+	 */
+	protected function setOutputForPaymentType(): void
+	{
+		if ($this->paymentData->payment_type == 'RBD') {
+			$this->setPaymentDataRBD();
+		} else {
+			if ($this->paymentData->payment_type == 'CBB') {
+				//TODO-v6.0 do this properly with emails etc and add to valid payment types above
+				//return $this->outputChannelBalance();
+				throw new RuntimeException('Payment type CBB not currently implemented');
+			} else {
+				$this->setPaymentData();
+			}
+		}
+	}
 
 //	/**
 //	 * Attempt to charge customer
@@ -428,14 +428,14 @@ class Stripe extends Gateway
 //		$this->setNote();
 //	}
 
-    /**
-     * Process OBR transaction, create customer on stripe
-     * store customer id and update contract
-     *
-     * @throws Exception
-     * @throws ApiErrorException
-     * @since  1.0.0
-     */
+//	/**
+//	 * Process OBR transaction, create customer on stripe
+//	 * store customer id and update contract
+//	 *
+//	 * @throws Exception
+//	 * @throws ApiErrorException
+//	 * @since  1.0.0
+//	 */
 //	protected function setPaymentOBR(): void
 //	{
 //    	$this->function = 'setPaymentOBR';

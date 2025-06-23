@@ -199,11 +199,6 @@ class DashboardController extends BaseController
 			SiteHelper::checkUser();
 		}
 
-		//TODO-v5.2 Can be deleted 31-12-2024
-		if ($view == 'guestdataform') {
-			$view = 'contractguestdataform';
-		}
-
 		if ($view == 'reviewform') {
 			$contract = KrFactory::getAdminModel('contract')->getItem($contract_id);
 			if (!$contract->id || $contract->qkey != $qkey || $contract->guest_id != $guest_id) {

@@ -23,7 +23,7 @@ use function is_dir;
 
 use const JPATH_ROOT;
 
-//TODO v5.1 Add alt and description fields for images
+//TODO v5.2 Add alt and description fields for images
 
 /**
  * Dispatcher class for mod_knowres_Imagegrid
@@ -59,7 +59,7 @@ class Dispatcher extends AbstractModuleDispatcher
 	 */
 	protected function getLayoutData(): array
 	{
-		$data   = parent::getLayoutData();
+		$data = parent::getLayoutData();
 		if (!$data) {
 			return [];
 		}
@@ -79,18 +79,17 @@ class Dispatcher extends AbstractModuleDispatcher
 			if (empty($g->url)) {
 				if ($g->category_id <> -1) {
 					$Itemid = SiteHelper::getItemId('com_knowres', 'properties',
-					                                ['layout' => 'category', 'category_id' => $g->category_id],
-					                                ['layout' => 'category']);
-					$link   =
-						KrMethods::route('index.php?option=com_knowres&view=properties&layout=category&category_id=' .
-						                 $g->category_id . '&Itemid=' . $Itemid);
+						['layout' => 'category', 'category_id' => $g->category_id],
+						['layout' => 'category']);
+					$link   = KrMethods::route('index.php?option=com_knowres&view=properties&layout=category&category_id=' .
+					                           $g->category_id . '&Itemid=' . $Itemid);
 				} elseif ($g->link <> -1) {
 					$link = KrMethods::route('index.php?Itemid=' . $g->link);
 				}
 			}
 
 			if (!empty($link) || $g->url) {
-				// TODO v5.1 Check for false return attrib removed in getLayoutData()
+				// TODO v5.2 Check for false return attrib removed in getLayoutData()
 				$data['items'][] = [
 					'image' => $g->image,
 					'text'  => $g->text,

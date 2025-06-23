@@ -31,13 +31,15 @@ use function json_encode;
 use function ksort;
 use function trim;
 
-//TODO v5.1 Check if blocks can be entered as is and just ignored for booked dates on calendar
+//TODO v5.2 Check if blocks can be entered as is and just ignored for booked dates on calendar
 
 /**
  * Create blocks for Ical import
  */
 class IcalBlock
 {
+	/** @var array Messages */
+	public array $messages = [];
 	/** @var array Event arrival dates */
 	protected array $arrivals = [];
 	/** @var array New blocks for upddate */
@@ -48,26 +50,24 @@ class IcalBlock
 	protected array $departures = [];
 	/** @var string ICS file directory */
 	protected string $directory = '';
-	/** @var array Validated event dates and vevent data */
-	protected array $events = [];
 	/** @var array Basic event dates and data */
 	protected array $event_ranges = [];
+	/** @var array Validated event dates and vevent data */
+	protected array $events = [];
 	/** @var string ics file name */
 	protected string $filename = '';
-	/** @var ?string ics data from previous run */
-	protected ?string $previous_date_ranges = '';
-	/** @var array Messages */
-	public array $messages = [];
 	/** @var array New ICS date ranges */
 	protected array $new_date_ranges = [];
-	/** @var int ID of property */
-	private int $property_id;
+	/** @var ?string ics data from previous run */
+	protected ?string $previous_date_ranges = '';
 	/** @var int ID of service */
 	protected int $service_id = 0;
-	/** @var string Today as yyyy-mm-dd */
-	private string $today;
 	/** @var array Validated events */
 	protected array $vevents = [];
+	/** @var int ID of property */
+	private int $property_id;
+	/** @var string Today as yyyy-mm-dd */
+	private string $today;
 
 	/**
 	 * Constructor.
@@ -115,30 +115,15 @@ class IcalBlock
 		$this->validateFile();
 		$this->validateEvents();
 
-		if ($this->checkForNewEvents())
-		{
+		if ($this->checkForNewEvents()) {
 			$this->formatEvents();
 			$this->buildBlocks();
 			KrFactory::getAdminModel('icalblock')
-			         ->refreshIcalBlocks($this->property_id, $this->blocks, $this->service_id);
+				->refreshIcalBlocks($this->property_id, $this->blocks, $this->service_id);
 			KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updateAvailability', $this->property_id);
 		}
 
 		return !empty($this->new_date_ranges) ? json_encode($this->new_date_ranges) : $this->previous_date_ranges;
-	}
-
-	/**
-	 * Prepare ical blocks from event data
-	 *
-	 * @throws Exception
-	 * @since   3.3.0
-	 */
-	protected function buildBlocks(): void
-	{
-		foreach ($this->event_ranges as $data)
-		{
-			$this->buildBlock($data);
-		}
 	}
 
 	/**
@@ -158,6 +143,19 @@ class IcalBlock
 	}
 
 	/**
+	 * Prepare ical blocks from event data
+	 *
+	 * @throws Exception
+	 * @since   3.3.0
+	 */
+	protected function buildBlocks(): void
+	{
+		foreach ($this->event_ranges as $data) {
+			$this->buildBlock($data);
+		}
+	}
+
+	/**
 	 * Check for interlaced bookings and blocks
 	 * i.e. a string of separate bookings that are concatenated into one vEvent
 	 *
@@ -173,13 +171,11 @@ class IcalBlock
 		$block_start      = $data->arrival;
 		$block_end        = $data->departure;
 		$this->messages[] = 'Concatenated iCal block received from ' . TickTock::displayDate($block_start) . ' to '
-			. TickTock::displayDate($block_end);
+		                    . TickTock::displayDate($block_end);
 
 		// Create block for any unblocked dates
-		foreach ($booked as $b)
-		{
-			if ($block_start < $b->arrival)
-			{
+		foreach ($booked as $b) {
+			if ($block_start < $b->arrival) {
 				$block_dates[$block_start] = $b->arrival;
 			}
 
@@ -187,27 +183,37 @@ class IcalBlock
 		}
 
 		// Check the iCal departure date if we have found a booking
-		if ($block_start != $data->arrival && $block_end > $block_start)
-		{
+		if ($block_start != $data->arrival && $block_end > $block_start) {
 			$block_dates[$block_start] = $block_end;
 		}
 
-		if (count($block_dates))
-		{
-			foreach ($block_dates as $arrival => $departure)
-			{
-				if ($departure < $this->today)
-				{
+		if (count($block_dates)) {
+			foreach ($block_dates as $arrival => $departure) {
+				if ($departure < $this->today) {
 					continue;
 				}
-				if ($arrival < $departure)
-				{
+				if ($arrival < $departure) {
 					$this->updateBlock($data, $arrival, $departure);
 					$this->messages[] = 'Partial iCal block created from ' . TickTock::displayDate($arrival) . ' to '
-						. TickTock::displayDate($departure);
+					                    . TickTock::displayDate($departure);
 				}
 			}
 		}
+	}
+
+	/**
+	 * Match calendar file events with previous file events
+	 *
+	 * @since  3.3.1
+	 * @return bool
+	 */
+	protected function checkForNewEvents(): bool
+	{
+		if (json_encode($this->new_date_ranges) == $this->previous_date_ranges) {
+			return false;
+		}
+
+		return true;
 	}
 
 	/**
@@ -235,8 +241,7 @@ class IcalBlock
 	protected function formatEvent(Vevent $vevent): void
 	{
 		$dtend = $this->formatDate($vevent->getDtend());
-		if ($dtend < $this->today)
-		{
+		if ($dtend < $this->today) {
 			return;
 		}
 
@@ -245,11 +250,9 @@ class IcalBlock
 		$this->departures[] = $dtend;
 		$range              = TickTock::allDatesBetween($dtstart, $dtend);
 
-		foreach ($range as $d)
-		{
+		foreach ($range as $d) {
 			$this->events[$d]['new'] = false;
-			if ($dtstart == $d)
-			{
+			if ($dtstart == $d) {
 				$this->events[$d]['new'] = true;
 			}
 
@@ -273,23 +276,17 @@ class IcalBlock
 		$arrival  = false;
 		$previous = false;
 
-		foreach ($this->events as $date => $dsc)
-		{
-			if ($arrival)
-			{
+		foreach ($this->events as $date => $dsc) {
+			if ($arrival) {
 				$days = TickTock::differenceDays($previous, $date);
-				if ($days == 1 && !$dsc['new'])
-				{
+				if ($days == 1 && !$dsc['new']) {
 					$previous = $date;
 					continue;
 				}
 
-				if (in_array($date, $this->arrivals) && in_array($date, $this->departures))
-				{
+				if (in_array($date, $this->arrivals) && in_array($date, $this->departures)) {
 					$tmp->departure = $date;
-				}
-				else
-				{
+				} else {
 					$tmp->departure = $dsc['new'] || $days == 1 ? $previous : $date;
 				}
 				$this->event_ranges[] = $tmp;
@@ -317,12 +314,10 @@ class IcalBlock
 	 */
 	protected function formatEvents(): void
 	{
-		foreach ($this->vevents as $vevent)
-		{
+		foreach ($this->vevents as $vevent) {
 			$this->formatEvent($vevent);
 		}
-		if (count($this->events))
-		{
+		if (count($this->events)) {
 			$this->formatEventRanges();
 		}
 	}
@@ -339,8 +334,7 @@ class IcalBlock
 	{
 		$summary     = $event->summary ?? '';
 		$description = $event->description ?? '';
-		if ($summary === $description)
-		{
+		if ($summary === $description) {
 			$description = '';
 		}
 
@@ -387,23 +381,19 @@ class IcalBlock
 	protected function validateEvent(bool|Vevent $vevent): void
 	{
 		$departure = $this->formatDate($vevent->getDtend());
-		if (empty($departure))
-		{
+		if (empty($departure)) {
 			throw new RuntimeException('Error: Event departure date missing from ics file');
 		}
-		if ($departure < $this->today)
-		{
+		if ($departure < $this->today) {
 			return;
 		}
 
 		$arrival = $this->formatDate($vevent->getDtstart());
-		if (empty($arrival))
-		{
+		if (empty($arrival)) {
 			throw new RuntimeException('Error: Event arrival date missing from ics file');
 		}
 
-		if ($arrival > $departure)
-		{
+		if ($arrival > $departure) {
 			throw new RuntimeException('ERROR: Event arrival date is on or after departure date');
 		}
 
@@ -418,11 +408,9 @@ class IcalBlock
 	 */
 	protected function validateEvents(): void
 	{
-		while (true)
-		{
+		while (true) {
 			$vevent = $this->calendar->getComponent(IcalInterface::VEVENT);
-			if (empty($vevent))
-			{
+			if (empty($vevent)) {
 				break;
 			}
 
@@ -440,33 +428,14 @@ class IcalBlock
 	{
 		$this->calendar = new Vcalendar([IcalInterface::UNIQUE_ID => KrMethods::getCfg('sitename')]);
 
-		try
-		{
+		try {
 			$data = file_get_contents($this->directory . $this->filename);
 			$this->calendar->parse($data);
-		}
-		catch (Exception $e)
-		{
+		} catch (Exception $e) {
 			$message = 'Calendar file for property ' . $this->property_id . ' failed validation';
 			$message .= ' Error: ' . $e->getMessage();
 
 			throw new InvalidArgumentException($message);
 		}
-	}
-
-	/**
-	 * Match calendar file events with previous file events
-	 *
-	 * @since  3.3.1
-	 * @return bool
-	 */
-	protected function checkForNewEvents(): bool
-	{
-		if (json_encode($this->new_date_ranges) == $this->previous_date_ranges)
-		{
-			return false;
-		}
-
-		return true;
 	}
 }

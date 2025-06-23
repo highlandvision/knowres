@@ -94,7 +94,7 @@ $attributes = [
 	!empty($counterlabel) ? $counterlabel : '',
 	!empty($pattern) ? 'pattern="' . $pattern . '"' : '',
 
-	// @TODO add a proper string here!!!
+	// TODO add a proper string here!!!
 	!empty($validationtext) ? 'data-validation-text="' . $validationtext . '"' : '',
 ];
 
