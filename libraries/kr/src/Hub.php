@@ -90,6 +90,7 @@ class Hub
 			$this->setValue('expiry_days', $this->settings['expiry_days']);
 		}
 		if (!KrMethods::isAdmin() && $contractData->balance_days == 0) {
+			// Do not reset balance days for admin
 			$this->setValue('balance_days', $this->settings['balance_days']);
 		}
 
