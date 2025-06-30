@@ -754,7 +754,7 @@ class ServiceController extends BaseController
 		$this->checkSecret();
 
 		if ($this->test) {
-			$xmlstring = trim(file_get_contents('Z:\apps\ProjectKR\api\ru\test\staycation.xml'));
+			$xmlstring = trim(file_get_contents(Utility::getPath('root') . '/tmp/lnm.xml'));
 			$xml       = simplexml_load_string($xmlstring);
 		} else {
 			if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -799,8 +799,7 @@ class ServiceController extends BaseController
 							}
 
 							throw new RuntimeException(
-								'Bad data received from RU for LNM ' .
-								Utility::encodeJson($errors)
+								'Bad data received from RU for LNM ' . Utility::encodeJson($errors)
 							);
 						}
 					}
