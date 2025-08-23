@@ -24,6 +24,8 @@ use InvalidArgumentException;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Versioning\VersionableControllerTrait;
+use Joomla\Database\Exception\QueryTypeAlreadyDefinedException;
+use Joomla\DI\Exception\KeyNotFoundException;
 use RuntimeException;
 use stdClass;
 
@@ -55,18 +57,16 @@ class ServicequeueModel extends AdminModel
 	 * @param  int    $property_id  ID of property
 	 * @param  array  $cluster      Cluster setttings
 	 * @param  array  $managed      Managed settings
-	 * @param  array  $beyond       Beyond settings
 	 *
 	 * @since  3.3.0
 	 * @return bool
 	 */
-	public static function checkCluster(int $cluster_id, int $property_id, array $cluster, array $managed, array $beyond): bool
+	public static function checkCluster(int $cluster_id, int $property_id, array $cluster, array $managed): bool
 	{
 		$update = false;
 
 		$managed = $managed[$property_id] ?? $managed[0];
-		$beyond  = $beyond[$property_id] ?? $beyond[0];
-		if ($managed || $beyond) {
+		if ($managed) {
 			$property_cluster = $cluster[$property_id] ?? $cluster[0];
 			if ((int) $property_cluster == $cluster_id) {
 				$update = true;
@@ -94,7 +94,7 @@ class ServicequeueModel extends AdminModel
 			$db->qn('created_at') . ' < ' . $db->q($date)
 		);
 		$query->delete($db->qn('#__knowres_service_queue'))
-			->where($conditions);
+		      ->where($conditions);
 
 		$db->setQuery($query);
 		$db->execute();
@@ -111,7 +111,8 @@ class ServicequeueModel extends AdminModel
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	public static function insertQueue(object $xref, string $method, ?string $arrival = null, ?string $departure = null): void
+	public static function insertQueue(object  $xref, string $method, ?string $arrival = null,
+	                                   ?string $departure = null): void
 	{
 		$queue               = new stdClass();
 		$queue->id           = 0;
@@ -148,9 +149,15 @@ class ServicequeueModel extends AdminModel
 	 * @since  3.3.0
 	 */
 
-	public static function serviceQueueUpdate(string $method, int $property_id = 0, int $cluster_id = 0, ?string $plugin = null,
-		?string $arrival = null, ?string $departure = null): void
+	public static function serviceQueueUpdate(string  $method, int $property_id = 0, int $cluster_id = 0,
+	                                          ?string $plugin = null,
+	                                          ?string $arrival = null, ?string $departure = null): void
 	{
+
+		if ($method == 'updatePropertyRates' && class_exists('HighlandVision\PriceLabs\PriceLabs')) {
+			return;
+		}
+
 		$result = KrFactory::getListModel('servicexrefs')->getPropertiesForAllServices($property_id, $method, $plugin,
 			$arrival, $departure);
 
@@ -158,7 +165,6 @@ class ServicequeueModel extends AdminModel
 			if ($cluster_id) {
 				$settings_cluster       = KrFactory::getListModel('propertysettings')->getOneSetting('cluster');
 				$settings_managed_rates = KrFactory::getListModel('propertysettings')->getOneSetting('managed_rates');
-				$settings_beyond_rates  = KrFactory::getListModel('propertysettings')->getOneSetting('beyond_rates');
 			}
 
 			foreach ($result as $r) {
@@ -170,11 +176,7 @@ class ServicequeueModel extends AdminModel
 				}
 
 				if ($cluster_id) {
-					if (!self::checkCluster($cluster_id,
-						$r->property_id,
-						$settings_cluster,
-						$settings_managed_rates,
-						$settings_beyond_rates)) {
+					if (!self::checkCluster($cluster_id, $r->property_id, $settings_cluster, $settings_managed_rates)) {
 						continue;
 					}
 				}
@@ -199,9 +201,9 @@ class ServicequeueModel extends AdminModel
 			$query = $db->getQuery(true);
 
 			$query->update($db->qn('#__knowres_service_queue'))
-				->set($db->qn('actioned') . '=1')
-				->set($db->qn('updated_at') . '=' . $db->q(TickTock::getTS()))
-				->where($db->qn('id') . ' IN (' . implode(',', array_map('intval', $ids)) . ')');
+			      ->set($db->qn('actioned') . '=1')
+			      ->set($db->qn('updated_at') . '=' . $db->q(TickTock::getTS()))
+			      ->where($db->qn('id') . ' IN (' . implode(',', array_map('intval', $ids)) . ')');
 			$db->setQuery($query);
 			$db->execute();
 		}
@@ -212,7 +214,10 @@ class ServicequeueModel extends AdminModel
 	 *
 	 * @param  array  $pks  IDs to be resent
 	 *
+	 * @throws InvalidArgumentException
 	 * @throws RuntimeException
+	 * @throws KeyNotFoundException
+	 * @throws QueryTypeAlreadyDefinedException
 	 * @since  1.2.0
 	 */
 	public function resend(array $pks): void
@@ -230,8 +235,8 @@ class ServicequeueModel extends AdminModel
 
 		$query = $db->getQuery(true);
 		$query->update($db->qn('#__knowres_service_queue', 'q'))
-			->set($fields)
-			->where($conditions);
+		      ->set($fields)
+		      ->where($conditions);
 
 		$db->setQuery($query);
 		$db->execute();

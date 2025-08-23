@@ -8,7 +8,7 @@
     <copyright>2023 Highland Vision, all rights reserved.</copyright>
     <license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
     <namespace path="src">HighlandVision\Module\KnowresDestination</namespace>
-    <version>5.1.0</version>
+	<version>5.2.0</version>
     <description>MOD_KNOWRES_DESTINATION_DSC</description>
     <files>
         <folder module="mod_knowres_destination">services</folder>
@@ -32,13 +32,13 @@
                        <option value="">MOD_KNOWRES_DESTINATION_NA</option>
                 </field>
                 <field name="image"
-                       directory="destinations"
                        type="media"
+                       directory="destinations"
                        label="MOD_KNOWRES_DESTINATION_IMAGE"
                        description="MOD_KNOWRES_DESTINATION_IMAGE_DSC"/>
                 <field name="heading1"
-                       default=""
                        type="text"
+                       default=""
                        label="MOD_KNOWRES_DESTINATION_HEADING"
                        description="MOD_KNOWRES_DESTINATION_HEADING_DSC"/>
                 <field name="text1"
@@ -48,8 +48,8 @@
                        label="MOD_KNOWRES_DESTINATION_TEXT"
                        description="MOD_KNOWRES_DESTINATION_TEXT_DSC"/>
                 <field name="heading2"
-                       default=""
                        type="text"
+                       default=""
                        label="MOD_KNOWRES_DESTINATION_HEADING"
                        description="MOD_KNOWRES_DESTINATION_HEADING_DSC"/>
                 <field name="text2"
@@ -69,8 +69,8 @@
                        label="MOD_KNOWRES_DESTINATION_TEXT"
                        description="MOD_KNOWRES_DESTINATION_TEXT_DSC"/>
                 <field name="heading4"
-                       default=""
                        type="text"
+                       default=""
                        label="MOD_KNOWRES_DESTINATION_HEADING"
                        description="MOD_KNOWRES_DESTINATION_HEADING_DSC"/>
                 <field name="text4"
@@ -82,8 +82,8 @@
             </fieldset>
             <fieldset name="advanced">
                 <field name="layout"
-                       class="form-select"
                        type="modulelayout"
+                       class="form-select"
                        validate="moduleLayout"
                        label="JFIELD_ALT_LAYOUT_LABEL"/>
                 <field name="cache"

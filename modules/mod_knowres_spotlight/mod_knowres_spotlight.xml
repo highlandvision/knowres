@@ -9,7 +9,7 @@
     <description>MOD_KNOWRES_SPOTLIGHT_DSC</description>
     <license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
     <namespace path="src">HighlandVision\Module\KnowresSpotlight</namespace>
-    <version>5.1.0</version>
+	<version>5.2.0</version>
     <files>
         <folder module="mod_knowres_spotlight">services</folder>
         <folder>language</folder>
@@ -25,43 +25,43 @@
                        label="MOD_KNOWRES_SPOTLIGHT_HEIGHT"
                        description="MOD_KNOWRES_SPOTLIGHT_HEIGHT_DSC"/>
                 <field name="textcolor"
-                       default="#fefefe"
                        type="color"
+                       default="#fefefe"
                        label="MOD_KNOWRES_SPOTLIGHT_TEXTCOLOR"
                        description="MOD_KNOWRES_SPOTLIGHT_TEXTCOLOR_DSC"/>
                 <field name="textbg"
-                       default=""
                        type="color"
+                       default=""
                        label="MOD_KNOWRES_SPOTLIGHT_TEXTBG"
                        description="MOD_KNOWRES_SPOTLIGHT_TEXTBG_DSC"/>
                 <field name="textbold"
+                       type="radio"
                        class="btn-group btn-group-yesno"
                        default="0"
-                       type="radio"
                        label="MOD_KNOWRES_SPOTLIGHT_TEXTBOLD"
                        description="MOD_KNOWRES_SPOTLIGHT_TEXTBOLD_DSC">
                     <option value="0">JNO</option>
                     <option value="1">JYES</option>
                 </field>
                 <field name="textsize"
+                       type="number"
                        class="w-auto"
                        default="16"
-                       type="number"
                        min="10"
                        max="30"
                        label="MOD_KNOWRES_SPOTLIGHT_TEXTSIZE"
                        description="MOD_KNOWRES_SPOTLIGHT_TEXTSIZE_DSC"/>
                 <field name="horizontal"
+                       type="radio"
                        class="btn-group"
                        default="center"
-                       type="radio"
                        label="MOD_KNOWRES_SPOTLIGHT_HORIZONTAL"
                        description="MOD_KNOWRES_SPOTLIGHT_HORIZONTAL_DSC">
                     <option value="left">MOD_KNOWRES_SPOTLIGHT_LEFT</option>
                     <option value="center">MOD_KNOWRES_SPOTLIGHT_CENTER</option>
                 </field>
-                <field type="spacer"
-                       name="spacer1"
+	            <field name="spacer1"
+	                   type="spacer"
                        label="&lt;b&gt;Image 1&lt;/b&gt;"/>
                 <field name="image1"
                        type="media"
@@ -74,16 +74,16 @@
                        label="MOD_KNOWRES_SPOTLIGHT_TEXT"
                        description="MOD_KNOWRES_SPOTLIGHT_TEXT_DSC"/>
                 <field name="category_id1"
+                       type="listcategories"
                        addfieldprefix="HighlandVision\Component\Knowres\Administrator\Field"
                        default="-1"
-                       type="listcategories"
                        label="MOD_KNOWRES_SPOTLIGHT_CATEGORY"
                        description="MOD_KNOWRES_SPOTLIGHT_CATEGORY_DSC">
                     <option value="-1">COM_MODULES_NONE</option>
                 </field>
                 <field name="layout1"
-                       default="-1"
                        type="list"
+                       default="-1"
                        label="MOD_KNOWRES_SPOTLIGHT_LAYOUT"
                        description="MOD_KNOWRES_SPOTLIGHT_LAYOUT_DSC">
                     <option value="-1">COM_MODULES_NONE</option>
@@ -97,8 +97,8 @@
                        description="MOD_KNOWRES_SPOTLIGHT_LINK_DSC">
                     <option value="-1">COM_MODULES_NONE</option>
                 </field>
-                <field type="spacer"
-                       name="spacer2"
+	            <field name="spacer2"
+	                   type="spacer"
                        label="&lt;b&gt;Image 2&lt;/b&gt;"/>
                 <field name="image2"
                        type="media"
@@ -111,16 +111,16 @@
                        label="MOD_KNOWRES_SPOTLIGHT_TEXT"
                        description="MOD_KNOWRES_SPOTLIGHT_TEXT_DSC"/>
                 <field name="category_id2"
+                       type="listcategories"
                        addfieldprefix="HighlandVision\Component\Knowres\Administrator\Field"
                        default="-1"
-                       type="listcategories"
                        label="MOD_KNOWRES_SPOTLIGHT_CATEGORY"
                        description="MOD_KNOWRES_SPOTLIGHT_CATEGORY_DSC">
                     <option value="-1">COM_MODULES_NONE</option>
                 </field>
                 <field name="layout2"
-                       default="-1"
                        type="list"
+                       default="-1"
                        label="MOD_KNOWRES_SPOTLIGHT_LAYOUT"
                        description="MOD_KNOWRES_SPOTLIGHT_LAYOUT_DSC">
                     <option value="-1">COM_MODULES_NONE</option>
@@ -134,8 +134,8 @@
                        description="MOD_KNOWRES_SPOTLIGHT_LINK_DSC">
                     <option value="-1">COM_MODULES_NONE</option>
                 </field>
-                <field type="spacer"
-                       name="spacer3"
+	            <field name="spacer3"
+	                   type="spacer"
                        label="&lt;b&gt;Image 3&lt;/b&gt;"/>
                 <field name="image3"
                        type="media"
@@ -148,16 +148,16 @@
                        label="MOD_KNOWRES_SPOTLIGHT_TEXT"
                        description="MOD_KNOWRES_SPOTLIGHT_TEXT_DSC"/>
                 <field name="category_id3"
+                       type="listcategories"
                        addfieldprefix="HighlandVision\Component\Knowres\Administrator\Field"
                        default="-1"
-                       type="listcategories"
                        label="MOD_KNOWRES_SPOTLIGHT_CATEGORY"
                        description="MOD_KNOWRES_SPOTLIGHT_CATEGORY_DSC">
                     <option value="-1">COM_MODULES_NONE</option>
                 </field>
                 <field name="layout3"
-                       default="-1"
                        type="list"
+                       default="-1"
                        label="MOD_KNOWRES_SPOTLIGHT_LAYOUT"
                        description="MOD_KNOWRES_SPOTLIGHT_LAYOUT_DSC">
                     <option value="-1">COM_MODULES_NONE</option>
@@ -174,8 +174,8 @@
             </fieldset>
             <fieldset name="advanced">
                 <field name="layout"
-                       class="form-select"
                        type="modulelayout"
+                       class="form-select"
                        validate="moduleLayout"
                        label="JFIELD_ALT_LAYOUT_LABEL"/>
                 <field name="moduleclass_sfx"

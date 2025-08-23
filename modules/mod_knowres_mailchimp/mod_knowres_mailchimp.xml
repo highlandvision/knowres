@@ -9,7 +9,7 @@
 	<description>MOD_KNOWRES_MAILCHIMP_DSC</description>
 	<license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
 	<namespace path="src">HighlandVision\Module\KnowresMailchimp</namespace>
-	<version>5.1.0</version>
+	<version>5.2.0</version>
 	<files>
 		<folder module="mod_knowres_mailchimp">services</folder>
 		<folder>forms</folder>
@@ -22,17 +22,17 @@
 		<fields name="params">
 			<fieldset name="basic" addfieldprefix="HighlandVision\Component\Knowres\Site\Field">
 				<field name="id"
+				       type="listselectservice"
 					default="0"
 					filter="integer"
 					required="true"
-					type="listselectservice"
 					label="MOD_KNOWRES_MAILCHIMP_SERVICE"
 					description="MOD_KNOWRES_MAILCHIMP_SERVICE_DSC"/>
 			</fieldset>
 			<fieldset name="advanced">
 				<field name="layout"
-					class="form-select"
 					type="modulelayout"
+					   class="form-select"
 					validate="moduleLayout"
 					label="JFIELD_ALT_LAYOUT_LABEL"/>
 				<field name="moduleclass_sfx"

@@ -8,7 +8,7 @@
 	<copyright>2023 Highland Vision, all rights reserved.</copyright>
 	<license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
 	<namespace path="src">HighlandVision\Module\KnowresFeatured</namespace>
-	<version>5.1.0</version>
+	<version>5.2.0</version>
 	<description>MOD_KNOWRES_FEATURED_DSC</description>
 	<files>
 		<folder module="mod_knowres_featured">services</folder>
@@ -46,91 +46,91 @@
 					label="MOD_KNOWRES_FEATURED_SLIDESTOSHOW_LBL"
 					description="MOD_KNOWRES_FEATURED_SLIDESTOSHOW_DSC"/>
 				<field name="property1"
+				       type="listproperties"
 					default="0"
 					layout="joomla.form.field.list-fancy-select"
 					multiple="false"
-					type="listproperties"
 					label="MOD_KNOWRES_FEATURED_SELECT_LBL"
 					description="MOD_KNOWRES_FEATURED_SELECT_DSC">
 					<option value="0">MOD_KNOWRES_FEATURED_SELECT</option>
 				</field>
 				<field name="property2"
+				       type="listproperties"
 					default="0"
 					layout="joomla.form.field.list-fancy-select"
 					multiple="false"
-					type="listproperties"
 					label="MOD_KNOWRES_FEATURED_SELECT_LBL"
 					description="MOD_KNOWRES_FEATURED_SELECT_DSC">
 					<option value="0">MOD_KNOWRES_FEATURED_SELECT</option>
 				</field>
 				<field name="property3"
+				       type="listproperties"
 					default="0"
 					layout="joomla.form.field.list-fancy-select"
 					multiple="false"
-					type="listproperties"
 					label="MOD_KNOWRES_FEATURED_SELECT_LBL"
 					description="MOD_KNOWRES_FEATURED_SELECT_DSC">
 					<option value="0">MOD_KNOWRES_FEATURED_SELECT</option>
 				</field>
 				<field name="property4"
+				       type="listproperties"
 					default="0"
 					layout="joomla.form.field.list-fancy-select"
 					multiple="false"
-					type="listproperties"
 					label="MOD_KNOWRES_FEATURED_SELECT_LBL"
 					description="MOD_KNOWRES_FEATURED_SELECT_DSC">
 					<option value="0">MOD_KNOWRES_FEATURED_SELECT</option>
 				</field>
 				<field name="property5"
+				       type="listproperties"
 					default="0"
 					layout="joomla.form.field.list-fancy-select"
 					multiple="false"
-					type="listproperties"
 					label="MOD_KNOWRES_FEATURED_SELECT_LBL"
 					description="MOD_KNOWRES_FEATURED_SELECT_DSC">
 					<option value="0">MOD_KNOWRES_FEATURED_SELECT</option>
 				</field>
 				<field name="property6"
+				       type="listproperties"
 					default="0"
 					layout="joomla.form.field.list-fancy-select"
 					multiple="false"
-					type="listproperties"
 					label="MOD_KNOWRES_FEATURED_SELECT_LBL"
 					description="MOD_KNOWRES_FEATURED_SELECT_DSC">
 					<option value="0">MOD_KNOWRES_FEATURED_SELECT</option>
 				</field>
 				<field name="property7"
+				       type="listproperties"
 					default="0"
 					layout="joomla.form.field.list-fancy-select"
 					multiple="false"
-					type="listproperties"
 					label="MOD_KNOWRES_FEATURED_SELECT_LBL"
 					description="MOD_KNOWRES_FEATURED_SELECT_DSC">
 					<option value="0">MOD_KNOWRES_FEATURED_SELECT</option>
 				</field>
 				<field name="property8"
+				       type="listproperties"
 					default="0"
 					layout="joomla.form.field.list-fancy-select"
 					multiple="false"
-					type="listproperties"
 					label="MOD_KNOWRES_FEATURED_SELECT_LBL"
 					description="MOD_KNOWRES_FEATURED_SELECT_DSC">
 					<option value="0">MOD_KNOWRES_FEATURED_SELECT</option>
 				</field>
 				<field name="property9"
+				       type="listproperties"
 					default="0"
 					layout="joomla.form.field.list-fancy-select"
 					multiple="false"
-					type="listproperties"
 					label="MOD_KNOWRES_FEATURED_SELECT_LBL"
 					description="MOD_KNOWRES_FEATURED_SELECT_DSC">
 					<option value="0">MOD_KNOWRES_FEATURED_SELECT</option>
 				</field>
 				<field name="property10"
+				       type="listproperties"
 					default="0"
 					layout="joomla.form.field.list-fancy-select"
 					multiple="false"
-					type="listproperties"
 					label="MOD_KNOWRES_FEATURED_SELECT_LBL"
 					description="MOD_KNOWRES_FEATURED_SELECT_DSC">
 					<option value="0">MOD_KNOWRES_FEATURED_SELECT</option>
@@ -138,8 +138,8 @@
 			</fieldset>
 			<fieldset name="advanced">
 				<field name="layout"
-					class="form-select"
 					type="modulelayout"
+					   class="form-select"
 					validate="moduleLayout"
 					label="JFIELD_ALT_LAYOUT_LABEL"/>
 				<field name="moduleclass_sfx"

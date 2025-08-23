@@ -259,8 +259,6 @@ class Base
 			$xmin = 9999;
 			if ($this->Hub->settings['managed_rates']) {
 				$xmin = $this->checkCluster($this->Hub->settings['minimuminterval'], $arrival);
-			} else if ($this->Hub->settings['beyond_rates']) {
-				$xmin = $this->checkCluster($this->Hub->settings['min_nights'], $arrival);
 			} else {
 				foreach ($ratesDb as $r) {
 					if ($departure >= $r->valid_from && $arrival <= $r->valid_to) {

@@ -25,18 +25,17 @@ $country_name = $Translations->getText('country', $this->item->country_id);
 $image        = Media\Images::getPropertyImageName($this->item->id);
 
 $sleeps = $this->item->sleeps;
-if ((int) $this->item->sleeps_extra > 0)
-{
+if ((int) $this->item->sleeps_extra > 0) {
 	$sleeps .= ' + ' . $this->item->sleeps_extra;
 }
 
 $edit        = KrMethods::route('index.php?option=com_knowres&task=property.edit&id=' . $this->item->id);
 $changerates = KrMethods::route('index.php?option=com_knowres&task=propertysettings.solo&property_id=' . $this->item->id
-	. '#rates');
+                                . '#rates');
 ?>
 
 <?php if (!is_null($this->item->checked_out) && $this->item->checked_out
-	&& ($this->item->checked_out != KrMethods::getUser()->id)) : ?>
+          && ($this->item->checked_out != KrMethods::getUser()->id)) : ?>
 	<div class="row">
 		<div class="col">
 			<h3 style="color:red;">
@@ -124,11 +123,10 @@ $changerates = KrMethods::route('index.php?option=com_knowres&task=propertysetti
 				<?php echo KrMethods::plain('JSTATUS') . ":"; ?>
 			</dt>
 			<dd class="col-12 col-md-9">
-				<?php echo match ($this->item->state)
-				{
-					1 => KrMethods::plain('JPUBLISHED'),
-					0 => KrMethods::plain('JUNPUBLISHED'),
-					2 => KrMethods::plain('JARCHIVED'),
+				<?php echo match ($this->item->state) {
+					1  => KrMethods::plain('JPUBLISHED'),
+					0  => KrMethods::plain('JUNPUBLISHED'),
+					2  => KrMethods::plain('JARCHIVED'),
 					-2 => KrMethods::plain('JTRASHED')
 				};
 				?>
@@ -158,9 +156,7 @@ $changerates = KrMethods::route('index.php?option=com_knowres&task=propertysetti
 			</dt>
 			<dd class="col-12 col-md-9">
 				<?php echo $this->settings['currency'] . ' '; ?>
-				<?php if ($this->settings['beyond_rates']): ?>
-					<?php echo KrMethods::plain('COM_KNOWRES_PROPERTYSETTINGS_RATE_BEYOND'); ?>
-				<?php elseif ($this->settings['managed_rates']): ?>
+				<?php if ($this->settings['managed_rates']): ?>
 					<?php echo KrMethods::plain('COM_KNOWRES_PROPERTYSETTINGS_RATE_MANAGER'); ?>
 				<?php elseif ($this->settings['net_rates']): ?>
 					<?php echo KrMethods::plain('COM_KNOWRES_PROPERTYSETTINGS_RATE_NET'); ?>
@@ -176,8 +172,7 @@ $changerates = KrMethods::route('index.php?option=com_knowres&task=propertysetti
 				<?php endif; ?>
 			</dd>
 
-			<?php if ($this->settings['cluster']
-				&& ($this->settings['managed_rates'] || $this->settings['beyond_rates'])): ?>
+			<?php if ($this->settings['cluster'] && ($this->settings['managed_rates'])): ?>
 				<dt class="col-md-3">
 					<?php echo KrMethods::plain('COM_KNOWRES_CLUSTER_TITLE') . ':'; ?>
 				</dt>

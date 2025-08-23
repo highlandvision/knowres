@@ -24,7 +24,7 @@ if ($this->item->type == 'g') {
 	$this->form->setFieldAttribute('property_id', 'type', 'listforeignkey');
 	$this->form->setFieldAttribute('property_id', 'layout', 'joomla.form.field.list-fancy-select');
 }
-//TODO-v5.2 Sort out Xero
+//TODO-v5.3 Sort out Xero
 //if ($this->item->plugin === 'xero' && $this->item->id > 0)
 //{
 //	$xero = new Xero($this->item->id);

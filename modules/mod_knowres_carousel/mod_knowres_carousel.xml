@@ -9,7 +9,7 @@
 	<description>MOD_KNOWRES_CAROUSEL_DSC</description>
 	<license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
 	<namespace path="src">HighlandVision\Module\KnowresCarousel</namespace>
-	<version>5.1.0</version>
+	<version>5.2.0</version>
 	<files>
 		<folder module="mod_knowres_carousel">services</folder>
 		<folder>language</folder>
@@ -21,26 +21,26 @@
 		<fields name="params">
 			<fieldset name="basic">
 				<field name="folder"
+				       type="folderlist"
 					   directory="images"
 					   hide_none="true"
-					   type="folderlist"
 					   label="MOD_KNOWRES_CAROUSEL_SELECT_FOLDER"
 					   description="MOD_KNOWRES_CAROUSEL_SELECT_FOLDER_DSC"/>
 				<field name="speed"
+				       type="text"
 					   class="input-mini"
 					   default="50"
-					   type="text"
 					   label="MOD_KNOWRES_CAROUSEL_SPEED"
 					   description="MOD_KNOWRES_CAROUSEL_SPEED_DSC"/>
 				<field name="autoPlaySpeed"
+				       type="text"
 					   class="input-mini"
 					   default="5000"
-					   type="text"
 					   label="MOD_KNOWRES_CAROUSEL_AUTOPLAYSPEED"
 					   description="MOD_KNOWRES_CAROUSEL_AUTOPLAYSPEED_DSC"/>
 				<field name="url"
+				       type="menuitem"
 					   default=""
-					   type="menuitem"
 					   label="MOD_KNOWRES_CAROUSEL_URL"
 					   description="MOD_KNOWRES_CAROUSEL_URL_DSC">
 					<option value="0">JNO</option>
@@ -48,8 +48,8 @@
 			</fieldset>
 			<fieldset name="advanced">
 				<field name="layout"
-					   class="form-select"
 					   type="modulelayout"
+					   class="form-select"
 					   validate="moduleLayout"
 					   label="JFIELD_ALT_LAYOUT_LABEL"/>
 				<field name="moduleclass_sfx"

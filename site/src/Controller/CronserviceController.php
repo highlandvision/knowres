@@ -15,21 +15,19 @@ namespace HighlandVision\Component\Knowres\Site\Controller;
 defined('_JEXEC') or die;
 
 use Exception;
-use HighlandVision\Beyond\Rates;
 use HighlandVision\Factura\Factura;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Service\Ical;
 use HighlandVision\KR\Session as KrSession;
-use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Utility;
+use HighlandVision\PriceLabs\PriceLabs;
 use HighlandVision\Ru\Manager as RuManager;
 use HighlandVision\VintageTravel\VintageTravel;
 use HighlandVision\Vrbo\Manager as VrboManager;
 use JetBrains\PhpStorm\NoReturn;
 use Joomla\CMS\MVC\Controller\BaseController;
 use RuntimeException;
-use stdClass;
 
 use function class_exists;
 use function count;
@@ -52,58 +50,6 @@ class CronserviceController extends BaseController
 	protected int $test;
 
 	/**
-	 * Beyond pull lstings and rates
-	 *
-	 * @throws RuntimeException
-	 * @throws Exception
-	 * @since  2.4.0
-	 */
-	#[NoReturn] public function beyondpullrates(): void
-	{
-		$this->checkSecret();
-
-		$PullRates = new Rates\PullRates($this->test);
-		$PullRates->pullRates();
-
-		jexit();
-	}
-
-	/**
-	 * Beyond push rate updates
-	 *
-	 * @throws Exception
-	 * @throws RuntimeException
-	 * @since  2.4.0
-	 */
-	#[NoReturn] public function beyondpushrates(): void
-	{
-		$this->checkSecret();
-
-		$PushRates = new Rates\PushRates($this->test);
-		if (method_exists($PushRates, 'processQueue')) {
-			$services = self::getServicesByType('s');
-			foreach ($services as $s) {
-				if ($s->plugin == 'beyond') {
-					$queue = KrFactory::getListModel('servicequeues')->getQueueByServiceMethod($s->id, 'updateListing');
-					if (is_countable($queue) && count($queue)) {
-						foreach ($queue as $q) {
-							//TODO-v5.2 Pass all queues to class
-							$PushRates->processQueue($q);
-							$actioned             = new stdClass();
-							$actioned->id         = $q->id;
-							$actioned->actioned   = 1;
-							$actioned->updated_at = TickTock::getTS();
-							KrFactory::update('service_queue', $actioned);
-						}
-					}
-				}
-			}
-		}
-
-		jexit();
-	}
-
-	/**
 	 * Process channel availability queue
 	 *
 	 * @throws RuntimeException
@@ -117,7 +63,7 @@ class CronserviceController extends BaseController
 		$services = $this->getServicesByType('c');
 		foreach ($services as $s) {
 			$class = match ($s->plugin) {
-				'ru' => 'HighlandVision\Ru\Manager\Availability',
+				'ru'   => 'HighlandVision\Ru\Manager\Availability',
 				'vrbo' => 'HighlandVision\Vrbo\Manager\Availability'
 			};
 
@@ -126,7 +72,7 @@ class CronserviceController extends BaseController
 					KrFactory::getListModel('servicequeues')->getQueueByServiceMethod($s->id, 'updateAvailability');
 				if (is_countable($queue) && count($queue)) {
 					$Availability = match ($s->plugin) {
-						'ru' => new RuManager\Availability($this->test),
+						'ru'   => new RuManager\Availability($this->test),
 						'vrbo' => new VrboManager\Availability($this->test)
 					};
 
@@ -165,7 +111,7 @@ class CronserviceController extends BaseController
 		$services = self::getServicesByType('c');
 		foreach ($services as $s) {
 			$class = match ($s->plugin) {
-				'ru' => 'HighlandVision\Ru\Manager\Properties',
+				'ru'   => 'HighlandVision\Ru\Manager\Properties',
 				'vrbo' => 'HighlandVision\Vrbo\Manager\Properties'
 			};
 
@@ -174,7 +120,7 @@ class CronserviceController extends BaseController
 					$newbies = KrFactory::getListModel('servicexrefs')->getPropertiesForService($s->id, true);
 					if (is_countable($newbies) && count($newbies)) {
 						$Properties = match ($s->plugin) {
-							'ru' => new RuManager\Properties($this->test),
+							'ru'   => new RuManager\Properties($this->test),
 							'vrbo' => new VrboManager\Properties($this->test)
 						};
 
@@ -189,7 +135,7 @@ class CronserviceController extends BaseController
 						KrFactory::getListModel('servicequeues')->getQueueByServiceMethod($s->id, 'updateProperty');
 					if (is_countable($queue) && count($queue)) {
 						$Properties = match ($s->plugin) {
-							'ru' => new RuManager\Properties($this->test),
+							'ru'   => new RuManager\Properties($this->test),
 							'vrbo' => new VrboManager\Properties($this->test)
 						};
 
@@ -215,7 +161,7 @@ class CronserviceController extends BaseController
 		$services = self::getServicesByType('c');
 		foreach ($services as $s) {
 			$class = match ($s->plugin) {
-				'ru' => 'HighlandVision\Ru\Manager\Rates',
+				'ru'   => 'HighlandVision\Ru\Manager\Rates',
 				'vrbo' => 'HighlandVision\Vrbo\Manager\Rates'
 			};
 
@@ -224,7 +170,7 @@ class CronserviceController extends BaseController
 					KrFactory::getListModel('servicequeues')->getQueueByServiceMethod($s->id, 'updatePropertyRates');
 
 				$Rates = match ($s->plugin) {
-					'ru' => new RuManager\Rates($this->test),
+					'ru'   => new RuManager\Rates($this->test),
 					'vrbo' => new VrboManager\Rates($this->test)
 				};
 				$Rates->processQueue($queue);
@@ -310,6 +256,28 @@ class CronserviceController extends BaseController
 
 			$Ical = new Ical($s->id);
 			$Ical->processSchedule($schedule);
+		}
+
+		jexit();
+	}
+
+	/**
+	 * Price labs pull rates
+	 *
+	 * @throws RuntimeException
+	 * @throws Exception
+	 * @since  5.2.0
+	 */
+	#[NoReturn] public function pricelabs(): void
+	{
+		$this->checkSecret();
+
+		$services = self::getServicesByType('s');
+		foreach ($services as $s) {
+			if ($s->plugin == 'pricelabs') {
+				$PriceLabs = new PriceLabs($s->id, $this->test);
+				$PriceLabs->loadRates();
+			}
 		}
 
 		jexit();

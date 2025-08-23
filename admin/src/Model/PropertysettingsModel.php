@@ -12,7 +12,6 @@ namespace HighlandVision\Component\Knowres\Administrator\Model;
 defined('_JEXEC') or die;
 
 use Exception;
-use HighlandVision\Beyond;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\ListModel;
@@ -35,15 +34,14 @@ class PropertysettingsModel extends ListModel
 	/**
 	 * Constructor.
 	 *
-	 * @param   array  $config  An optional associative array of configuration settings.
+	 * @param  array  $config  An optional associative array of configuration settings.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
 	public function __construct($config = [])
 	{
-		if (empty($config['filter_fields']))
-		{
+		if (empty($config['filter_fields'])) {
 			$config['filter_fields'] = array(
 				'id', 'a.id',
 				'property_id', 'a.property_id',
@@ -76,13 +74,12 @@ class PropertysettingsModel extends ListModel
 		$query = $db->getQuery(true);
 
 		$query->select('GREATEST(MAX(' . $db->qn('s.created_at') . '), MAX(' . $db->qn('s.updated_at') . '))  as '
-			. $db->qn('maxdate'))
+		               . $db->qn('maxdate'))
 		      ->select($db->qn('s.property_id'))
 		      ->from($db->qn('#__knowres_property_setting', 's'));
 
 		$conditions = [];
-		foreach ($settings as $s)
-		{
+		foreach ($settings as $s) {
 			$conditions[] = $db->qn('s.akey') . ' = ' . $db->q($s);
 		}
 
@@ -97,7 +94,7 @@ class PropertysettingsModel extends ListModel
 	/**
 	 * Get one setting for a subset of properties
 	 *
-	 * @param   string  $akey  Value for akey
+	 * @param  string  $akey  Value for akey
 	 *
 	 * @throws RuntimeException
 	 * @throws RuntimeException
@@ -119,10 +116,8 @@ class PropertysettingsModel extends ListModel
 		$db->setQuery($query);
 		$items = $db->loadObjectList();
 
-		if (is_countable($items))
-		{
-			foreach ($items as $item)
-			{
+		if (is_countable($items)) {
+			foreach ($items as $item) {
 				$settings[$item->property_id] = $item->value;
 			}
 		}
@@ -145,18 +140,14 @@ class PropertysettingsModel extends ListModel
 		$settings = [];
 
 		$items = $this->setPropertysettings($property_id, $akey);
-		if (is_countable($items))
-		{
-			foreach ($items as $item)
-			{
+		if (is_countable($items)) {
+			foreach ($items as $item) {
 				$settings[$item->akey] = $item->value;
 			}
 		}
 
-		if ($akey === 'advanceBookingsLimit')
-		{
-			if (!isset($settings['advanceBookingsLimit']) || !$settings['advanceBookingsLimit'])
-			{
+		if ($akey === 'advanceBookingsLimit') {
+			if (!isset($settings['advanceBookingsLimit']) || !$settings['advanceBookingsLimit']) {
 				$settings['advanceBookingsLimit'] = 365;
 			}
 		}
@@ -175,20 +166,104 @@ class PropertysettingsModel extends ListModel
 		$settings = [];
 
 		$items = parent::getItems();
-		if (is_countable($items))
-		{
-			foreach ($items as $item)
-			{
+		if (is_countable($items)) {
+			foreach ($items as $item) {
 				$settings[$item->akey] = $item->value;
 			}
 		}
 
-		if (!$settings['advanceBookingsLimit'])
-		{
+		if (!$settings['advanceBookingsLimit']) {
 			$settings['advanceBookingsLimit'] = 365;
 		}
 
 		return $settings;
+	}
+
+	/**
+	 * Save the property settings to the database.
+	 *
+	 * @param  array  $settings     Changed settings
+	 * @param  int    $property_id  ID of specific property or 0 for all
+	 *
+	 * @throws RuntimeException
+	 * @throws Exception
+	 * @since  3.3.0
+	 */
+	public function saveSettings(array $settings, int $property_id): void
+	{
+		$rates_update   = false;
+		$deposit_update = false;
+
+		if (is_countable($settings) && count($settings)) {
+			$db      = KrFactory::getDatabase();
+			$columns = [
+				'id', 'property_id', 'akey', 'value', 'created_at', 'created_by'
+			];
+
+			$rows    = [];
+			$user_id = KrMethods::getUser()->get('id');
+
+			foreach ($settings as $akey => $value) {
+				if (!$rates_update && !str_contains($akey, 'requiredfields')) {
+					$rates_update = true;
+				}
+
+				if (!$deposit_update && str_contains($akey, 'deposit')) {
+					$deposit_update = true;
+				}
+
+				$row = [
+					!$property_id || $value[1] ? (int) $value[1] : 0,
+					$property_id,
+					$db->q($akey),
+					$db->q($value[0]),
+					$db->q(TickTock::getTS()),
+					(int) $user_id
+				];
+
+				$rows[] = $row;
+			}
+
+			if (count($rows)) {
+				foreach ($rows as &$row) {
+					$row = implode(', ', $row);
+				}
+
+				try {
+					$db->transactionStart();
+
+					$query = $db->getQuery(true);
+					$query->insert($db->qn('#__knowres_property_setting'))->columns($db->qn($columns))->values($rows);
+					$query .= ' ON DUPLICATE KEY UPDATE ';
+					$query .= $db->qn('value') . ' = VALUES(value), ';
+					$query .= $db->qn('updated_at') . ' = VALUES(created_at), ';
+					$query .= $db->qn('updated_by') . ' = VALUES(created_by)';
+
+					$db->setQuery($query);
+					$db->execute();
+
+					if ($rates_update) {
+						KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updatePropertyRates', $property_id);
+					}
+
+					if ($deposit_update) {
+						if ($property_id) {
+							KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updateProperty', $property_id);
+							KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updatePropertyRates', $property_id);
+						} else {
+							KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updateProperty');
+						}
+					}
+
+					$db->transactionCommit();
+
+					KrMethods::message(KrMethods::plain('COM_KNOWRES_ACTION_SUCCESS'));
+				} catch (Exception $e) {
+					$db->transactionRollback();
+					throw $e;
+				}
+			}
+		}
 	}
 
 	/**
@@ -214,19 +289,15 @@ class PropertysettingsModel extends ListModel
 		$query->join('LEFT', '#__users AS updated_by ON updated_by.id = a.updated_by');
 
 		$filter_property_id = $this->state->get('filter.property_id');
-		if ($filter_property_id)
-		{
+		if ($filter_property_id) {
 			$query->where($db->qn('a.property_id') . '=0 OR ' . $db->qn('a.property_id') . '='
-				. (int) $filter_property_id);
-		}
-		else
-		{
+			              . (int) $filter_property_id);
+		} else {
 			$query->where($db->qn('a.property_id') . '=0');
 		}
 
 		$filter_akey = $this->state->get("filter.akey");
-		if ($filter_akey)
-		{
+		if ($filter_akey) {
 			$query->where($db->qn('a.akey') . '=' . $db->q($filter_akey));
 		}
 
@@ -242,7 +313,7 @@ class PropertysettingsModel extends ListModel
 	 * different modules that might need different sets of data or different
 	 * ordering requirements.
 	 *
-	 * @param   string  $id  A prefix for the store id.
+	 * @param  string  $id  A prefix for the store id.
 	 *
 	 * @since  1.0.0
 	 * @return string        A store id.
@@ -259,8 +330,8 @@ class PropertysettingsModel extends ListModel
 	 * Method to autopopulate the model state.
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @param   null  $ordering
-	 * @param   null  $direction
+	 * @param  null  $ordering
+	 * @param  null  $direction
 	 *
 	 * @since 1.0.0@param   null  $direction
 	 */
@@ -272,119 +343,6 @@ class PropertysettingsModel extends ListModel
 			$this->getUserStateFromRequest($this->context . '.filter.akey', 'filter_akey', '', 'string'));
 
 		$this->setState('params', KrMethods::getParams());
-	}
-
-	/**
-	 * Save the property settings to the database.
-	 *
-	 * @param   array  $settings     Changed settings
-	 * @param   int    $property_id  ID of specific property or 0 for all
-	 *
-	 * @throws RuntimeException
-	 * @throws Exception
-	 * @since  3.3.0
-	 */
-	public function saveSettings(array $settings, int $property_id): void
-	{
-		$rates_update   = false;
-		$deposit_update = false;
-		$bp_update      = false;
-
-		if (is_countable($settings) && count($settings))
-		{
-			$db      = KrFactory::getDatabase();
-			$columns = [
-				'id', 'property_id', 'akey', 'value', 'created_at', 'created_by'
-			];
-
-			$rows    = [];
-			$user_id = KrMethods::getUser()->get('id');
-
-			foreach ($settings as $akey => $value)
-			{
-				if (!$rates_update && !str_contains($akey, 'requiredfields'))
-				{
-					$rates_update = true;
-				}
-
-				if (!$deposit_update && str_contains($akey, 'deposit'))
-				{
-					$deposit_update = true;
-				}
-
-				if (!$bp_update && ($akey == 'min_price' || $akey == 'base_price') && $value > 0)
-				{
-					$bp_update = true;
-				}
-
-				$row = [
-					!$property_id || $value[1] ? (int) $value[1] : 0,
-					$property_id,
-					$db->q($akey),
-					$db->q($value[0]),
-					$db->q(TickTock::getTS()),
-					(int) $user_id
-				];
-
-				$rows[] = $row;
-			}
-
-			if (count($rows))
-			{
-				foreach ($rows as &$row)
-				{
-					$row = implode(', ', $row);
-				}
-
-				try
-				{
-					$db->transactionStart();
-
-					$query = $db->getQuery(true);
-					$query->insert($db->qn('#__knowres_property_setting'))->columns($db->qn($columns))->values($rows);
-					$query .= ' ON DUPLICATE KEY UPDATE ';
-					$query .= $db->qn('value') . ' = VALUES(value), ';
-					$query .= $db->qn('updated_at') . ' = VALUES(created_at), ';
-					$query .= $db->qn('updated_by') . ' = VALUES(created_by)';
-
-					$db->setQuery($query);
-					$db->execute();
-
-					if ($rates_update)
-					{
-						KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updatePropertyRates', $property_id);
-					}
-
-					// Update beyond if min / base rates have changed and solo property
-					if ($bp_update && $property_id)
-					{
-						Beyond\Rates::settingRateUpdate($property_id);
-					}
-
-					if ($deposit_update)
-					{
-						if ($property_id)
-						{
-							KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updateProperty', $property_id);
-							KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updatePropertyRates', $property_id);
-						}
-						else
-						{
-							KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updateProperty');
-						}
-					}
-
-					$db->transactionCommit();
-
-					KrMethods::message(KrMethods::plain('COM_KNOWRES_ACTION_SUCCESS'));
-				}
-				catch (Exception $e)
-				{
-					$db->transactionRollback();
-					throw $e;
-				}
-			}
-		}
 	}
 
 	/**
@@ -410,18 +368,14 @@ class PropertysettingsModel extends ListModel
 		$query->select('updated_by.name AS updated_by');
 		$query->join('LEFT', '#__users AS updated_by ON updated_by.id = a.updated_by');
 
-		if ($property_id)
-		{
+		if ($property_id) {
 			$query->where('(' . $db->qn('a.property_id') . '=0 OR ' . $db->qn('a.property_id') . '=' . $property_id
-				. ')');
-		}
-		else
-		{
+			              . ')');
+		} else {
 			$query->where($db->qn('a.property_id') . '=0');
 		}
 
-		if (!is_null($akey))
-		{
+		if (!is_null($akey)) {
 			$query->where($db->qn('a.akey') . '=' . $db->q($akey));
 		}
 

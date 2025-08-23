@@ -9,17 +9,10 @@
 
 defined('_JEXEC') or die;
 
-use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use Joomla\CMS\HTML\HTMLHelper;
 
 /** @var HighlandVision\Component\Knowres\Administrator\View\Rate\HtmlView $this */
-
-$settings = KrFactory::getListModel('propertysettings')->getPropertysettings($this->item->property_id, 'beyond_rates');
-if ($settings['beyond_rates'])
-{
-	$this->form->setFieldAttribute('name', 'required', false);
-}
 
 $wa = $this->document->getWebAssetManager();
 $wa->useScript('keepalive')

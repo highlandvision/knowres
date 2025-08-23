@@ -1370,7 +1370,6 @@ class Upgrade
 			[83, 'manager_requiredfields_block_note', '0'],
 			[84, 'property_map_type', 'google.maps.MapTypeId.ROADMAP'],
 			[85, 'display_calendar', '1'],
-			[86, 'beyond_rates', '0'],
 			[87, 'base_price', '0'],
 			[88, 'min_price', '0'],
 			[89, 'base_guests', '2'],

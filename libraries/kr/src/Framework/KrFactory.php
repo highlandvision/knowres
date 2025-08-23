@@ -82,25 +82,22 @@ class KrFactory
 	 *
 	 * @param  string   $name     Form name
 	 * @param  string   $source   Name of XML file
-	 * @param  string   $area     Set to 'site' for Site or 'module' for Module or 'libraries' for Library
+	 * @param  string   $area     Set to 'site' for Site or 'module' for Module or 'library' for Library
 	 * @param  ?string  $control  Form control name
 	 *
 	 * @since  3.3.0
 	 * @return Form
 	 */
-	public static function getAdhocForm(string  $name, string  $source, string  $area = 'administrator',
+	public static function getAdhocForm(string  $name, string $source, string $area = 'administrator',
 	                                    ?string $control = 'jform'): Form
 	{
 		if ($area == 'site') {
 			$filepath = JPATH_COMPONENT_SITE . '/forms/' . $source;
-		}
-		else if ($area == 'module') {
+		} elseif ($area == 'module') {
 			$filepath = JPATH_SITE . '/modules/' . $name . '/forms/' . $source;
-		}
-		else if ($area == 'library') {
+		} elseif ($area == 'library') {
 			$filepath = JPATH_LIBRARIES . '/highlandvision/' . $name . '/forms/' . $source;
-		}
-		else {
+		} else {
 			$filepath = JPATH_COMPONENT_ADMINISTRATOR . '/forms/' . $source;
 		}
 

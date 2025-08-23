@@ -8,7 +8,7 @@
     <copyright>2023 Highland Vision, all rights reserved.</copyright>
     <license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
     <namespace path="src">HighlandVision\Module\KnowresImagegrid</namespace>
-    <version>5.1.0</version>
+	<version>5.2.0</version>
     <description>MOD_KNOWRES_IMAGEGRID_DSC</description>
     <files>
         <folder module="mod_knowres_imagegrid">services</folder>
@@ -22,18 +22,18 @@
         <fields name="params">
             <fieldset name="basic">
                 <field name="show_images"
+                       type="radio"
                        class="btn-group btn-group-yesno"
                        default="0"
-                       type="radio"
                        label="MOD_KNOWRES_IMAGEGRID_SHOW-IMAGES"
                        description="MOD_KNOWRES_IMAGEGRID_SHOW-IMAGES_DSC">
                     <option value="0">JNO</option>
                     <option value="1">JYES</option>
                 </field>
                 <field name="small_column_count"
+                       type="list"
                        class="w-auto"
                        default="1"
-                       type="list"
                        label="MOD_KNOWRES_IMAGEGRID_SMALL"
                        description="MOD_KNOWRES_IMAGEGRID_SMALL_DSC">
                     <option value="100%">MOD_KNOWRES_IMAGEGRID_IMAGES_ROW, 1</option>
@@ -42,9 +42,9 @@
                     <option value="25%">MOD_KNOWRES_IMAGEGRID_IMAGES_ROW, 4</option>
                 </field>
                 <field name="medium_column_count"
+                       type="list"
                        class="w-auto"
                        default="3"
-                       type="list"
                        label="MOD_KNOWRES_IMAGEGRID_MEDIUM"
                        description="MOD_KNOWRES_IMAGEGRID_MEDIUM_DSC">
                     <option value="100%">MOD_KNOWRES_IMAGEGRID_IMAGES_ROW, 1</option>
@@ -55,9 +55,9 @@
                     <option value="16.66%">MOD_KNOWRES_IMAGEGRID_IMAGES_ROW, 6</option>
                 </field>
                 <field name="large_column_count"
+                       type="list"
                        class="w-auto"
                        default="6"
-                       type="list"
                        label="MOD_KNOWRES_IMAGEGRID_LARGE"
                        description="MOD_KNOWRES_IMAGEGRID_LARGE_DSC">
                     <option value="100%">MOD_KNOWRES_IMAGEGRID_IMAGES_ROW, 1</option>
@@ -71,68 +71,68 @@
                     <option value="8.33%">MOD_KNOWRES_IMAGEGRID_IMAGES_ROW, 12</option>
                 </field>
                 <field name="textoverlay"
+                       type="radio"
                        class="btn-group btn-group-yesno"
                        default="0"
                        showon="show_images:1"
-                       type="radio"
                        label="MOD_KNOWRES_IMAGEGRID_TEXTOVERLAY"
                        description="MOD_KNOWRES_IMAGEGRID_TEXTOVERLAY_DSC">
                     <option value="0">JNO</option>
                     <option value="1">JYES</option>
                 </field>
                 <field name="textcolor"
-                       default="#fefefe"
                        type="color"
+                       default="#fefefe"
                        label="MOD_KNOWRES_IMAGEGRID_TEXTCOLOR"
                        description="MOD_KNOWRES_IMAGEGRID_TEXTCOLOR_DSC"/>
                 <field name="textbg"
-                       default=""
                        type="color"
+                       default=""
                        label="MOD_KNOWRES_IMAGEGRID_TEXTBG"
                        description="MOD_KNOWRES_IMAGEGRID_TEXTBG_DSC"/>
                 <field name="textshadow"
+                       type="radio"
                        class="btn-group btn-group-yesno"
                        default="0"
                        showon="textoverlay:1[AND]show-images:1"
-                       type="radio"
                        label="MOD_KNOWRES_IMAGEGRID_TEXTSHADOW"
                        description="MOD_KNOWRES_IMAGEGRID_TEXTSHADOW_DSC">
                        <option value="0">JNO</option>
                        <option value="1">JYES</option>
                 </field>
                 <field name="textsize"
+                       type="number"
                        addonAfter="px"
                        class="w-auto"
                        default="16"
-                       type="number"
                        min="10"
                        max="30"
                        label="MOD_KNOWRES_IMAGEGRID_TEXTSIZE"
                        description="MOD_KNOWRES_IMAGEGRID_TEXTSIZE_DSC"/>
                 <field name="textbold"
+                       type="radio"
                        class="btn-group btn-group-yesno"
                        default="0"
-                       type="radio"
                        label="MOD_KNOWRES_IMAGEGRID_TEXTBOLD"
                        description="MOD_KNOWRES_IMAGEGRID_TEXTBOLD_DSC">
                     <option value="0">JNO</option>
                     <option value="1">JYES</option>
                 </field>
                 <field name="texthorizontalalign"
+                       type="radio"
                        class="btn-group"
                        default="center"
                        showon="textoverlay:1[AND]show-images:1"
-                       type="radio"
                        label="MOD_KNOWRES_IMAGEGRID_TEXTHORIZONTAL"
                        description="MOD_KNOWRES_IMAGEGRID_TEXTHORIZONTAL_DSC">
                     <option value="left">MOD_KNOWRES_IMAGEGRID_LEFT</option>
                     <option value="center">MOD_KNOWRES_IMAGEGRID_CENTER</option>
                 </field>
                 <field name="textverticalalign"
+                       type="radio"
                        class="btn-group"
                        default="center"
                        showon="textoverlay:1[AND]show-images:1"
-                       type="radio"
                        label="MOD_KNOWRES_IMAGEGRID_TEXTVERTICAL"
                        description="MOD_KNOWRES_IMAGEGRID_TEXTVERTICAL_DSC">
                     <option value="top">MOD_KNOWRES_IMAGEGRID_TOP</option>
@@ -140,20 +140,20 @@
                     <option value="bottom">MOD_KNOWRES_IMAGEGRID_BOTTOM</option>
                 </field>
                 <field name="imagegrid"
+                       type="subform"
                        formsource="modules/mod_knowres_imagegrid/forms/images_subform.xml"
                        layout="joomla.form.field.subform.repeatable"
                        hiddenLabel="true"
                        min="1"
                        multiple="true"
                        required="true"
-                       type="subform"
                        label="MOD_KNOWRES_IMAGEGRID_IMAGES_LINKS_LBL"
                        description="MOD_KNOWRES_IMAGEGRID_IMAGES_LINKS_DSC"/>
             </fieldset>
             <fieldset name="advanced">
                 <field name="layout"
-                       class="form-select"
                        type="modulelayout"
+                       class="form-select"
                        validate="moduleLayout"
                        label="JFIELD_ALT_LAYOUT_LABEL"/>
                 <field name="moduleclass_sfx"

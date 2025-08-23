@@ -11,7 +11,6 @@ namespace HighlandVision\KR;
 
 use Exception;
 use HighlandVision\KR\Framework\KrMethods;
-
 use RuntimeException;
 
 use function implode;
@@ -43,20 +42,16 @@ class Gantt
 		$Translations = new Translations();
 		$options      = $this->propertyOptions($properties, $Translations);
 
-		foreach ($properties as $p)
-		{
+		foreach ($properties as $p) {
 			$found  = true;
 			$values = [];
 
-			while ($found)
-			{
-				if (isset($booked[$index]) && $booked[$index]['property_name'] === $p->property_name)
-				{
+			while ($found) {
+				if (isset($booked[$index]) && $booked[$index]['property_name'] === $p->property_name) {
 					$values[] = $this->setOneBlock($booked[$index]);
 					$index++;
 
-					if (isset($booked[$index]['firstname']))
-					{
+					if (isset($booked[$index]['firstname'])) {
 						$options[] = [
 							'type'          => 'guest',
 							'icon'          => 'fa-solid fa-calendar-alt',
@@ -67,18 +62,16 @@ class Gantt
 							'id'            => $booked[$index]['id']
 						];
 					}
-				}
-				else
-				{
+				} else {
 					$found = false;
 					$link  = $p->property_name . ', ' . $Translations->getText('region', $p->region_id);
+					$route =
+						KrMethods::route('index.php?option=com_knowres&task=property.dashboard&id=' . $p->id, false);
 
 					$p = ['id'            => $p->id,
 					      'property_name' => $p->property_name,
 					      'bookme'        => $allow,
-					      'name'          => '<a href="'
-						      . KrMethods::route('index.php?option=com_knowres&task=property.dashboard&id=' . $p->id,
-							      false) . '">' . $link . '</a>',
+					      'name'          => '<a href="' . $route . '">' . $link . '</a>',
 					      'values'        => $values
 					];
 
@@ -108,8 +101,7 @@ class Gantt
 	{
 		$rids = [];
 
-		foreach ($properties as $p)
-		{
+		foreach ($properties as $p) {
 			$rids[$p->region_id][] = $p->id;
 			$options[]             = [
 				'type'   => 'property',
@@ -120,8 +112,7 @@ class Gantt
 			];
 		}
 
-		foreach ($rids as $k => $v)
-		{
+		foreach ($rids as $k => $v) {
 			$options[] = array(
 				'type' => 'region',
 				'icon' => 'fa-solid fa-map-marker',
@@ -145,40 +136,35 @@ class Gantt
 	protected function setOneBlock(array $r): array
 	{
 		$customClass = 'ganttBook';
-		if ((int) $r['black_booking'] == 1)
-		{
+		if ((int) $r['black_booking'] == 1) {
 			$customClass = 'ganttBlack';
-		}
-		else if ((int) $r['black_booking'] == 2)
-		{
-			$customClass = 'ganttGrey';
-		}
-		else if ((int) $r['booking_status'] < 10)
-		{
-			$customClass = 'ganttProv';
+		} else {
+			if ((int) $r['black_booking'] == 2) {
+				$customClass = 'ganttGrey';
+			} else {
+				if ((int) $r['booking_status'] < 10) {
+					$customClass = 'ganttProv';
+				}
+			}
 		}
 
 		$tmp = [];
-		if ($r['agent_name'])
-		{
+		if ($r['agent_name']) {
 			$tmp[] = $r['agent_name'];
-		}
-		else if ($r['service_name'])
-		{
-			$tmp[] = $r['service_name'];
+		} else {
+			if ($r['service_name']) {
+				$tmp[] = $r['service_name'];
+			}
 		}
 
-		if ((int) $r['black_booking'] == 2)
-		{
+		if ((int) $r['black_booking'] == 2) {
 			$tmp[] = KrMethods::plain('COM_KNOWRES_GANTT_MANUAL_ICAL');
-		}
-		else if ((int) $r['black_booking'] == 1)
-		{
-			$tmp[] = KrMethods::plain('COM_KNOWRES_BLOCKED');
-		}
-		else
-		{
-			$tmp[] = $r['firstname'] . ' ' . $r['surname'];
+		} else {
+			if ((int) $r['black_booking'] == 1) {
+				$tmp[] = KrMethods::plain('COM_KNOWRES_BLOCKED');
+			} else {
+				$tmp[] = $r['firstname'] . ' ' . $r['surname'];
+			}
 		}
 
 		$days = TickTock::differenceDays($r['arrival'], $r['departure']);

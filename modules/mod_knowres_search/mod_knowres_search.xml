@@ -9,7 +9,7 @@
     <description>MOD_KNOWRES_SEARCH_DSC</description>
     <license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
     <namespace path="src">HighlandVision\Module\KnowresSearch</namespace>
-    <version>5.1.0</version>
+	<version>5.2.0</version>
     <files>
         <folder module="mod_knowres_search">services</folder>
         <folder>forms</folder>
@@ -22,63 +22,63 @@
         <fields name="params">
             <fieldset name="basic">
                 <field name="hero-position"
+                       type="radio"
                        class="btn-group"
                        default="middle"
                        showon="layout:_:hero"
-                       type="radio"
                        label="MOD_KNOWRES_SEARCH_HERO-POSITION"
                        description="MOD_KNOWRES_SEARCH_HERO-POSITION_DSC">
                     <option value="middle">MOD_KNOWRES_SEARCH_MIDDLE</option>
                     <option value="bottom">MOD_KNOWRES_SEARCH_BOTTOM</option>
                 </field>
                 <field name="search_text"
+                       type="text"
                        default=""
                        filter="raw"
-                       type="text"
                        label="MOD_KNOWRES_SEARCH_SHOW_TEXT"
                        description="MOD_KNOWRES_SEARCH_SHOW_TEXT_DSC">
                 </field>
                 <field name="show_regions"
+                       type="radio"
                        class="btn-group btn-group-yesno"
                        default="1"
-                       type="radio"
                        label="MOD_KNOWRES_SEARCH_SHOW_REGION"
                        description="MOD_KNOWRES_SEARCH_SHOW_REGION_DSC">
                     <option value="0">JNO</option>
                     <option value="1">JYES</option>
                 </field>
                 <field name="show_regions_expanded"
+                       type="radio"
                        class="btn-group btn-group-yesno"
                        default="0"
-                       type="radio"
                        label="MOD_KNOWRES_SEARCH_SHOW_REGION_EXPANDED"
                        description="MOD_KNOWRES_SEARCH_SHOW_REGION_EXPANDED_DSC">
                     <option value="0">JNO</option>
                     <option value="1">JYES</option>
                 </field>
                 <field name="show_datepickers"
+                       type="radio"
                        class="btn-group btn-group-yesno"
                        default="1"
-                       type="radio"
                        label="MOD_KNOWRES_SEARCH_SHOW_DATEPICKERS"
                        description="MOD_KNOWRES_SEARCH_SHOW_DATEPICKERS_DSC">
                     <option value="0">JNO</option>
                     <option value="1">JYES</option>
                 </field>
                 <field name="show_guests"
+                       type="radio"
                        class="btn-group btn-group-yesno"
                        default="1"
-                       type="radio"
                        label="MOD_KNOWRES_SEARCH_SHOW_GUESTS"
                        description="MOD_KNOWRES_SEARCH_SHOW_GUESTS_DSC">
                     <option value="0">JNO</option>
                     <option value="1">JYES</option>
                 </field>
                 <field name="show_flexible"
+                       type="radio"
                        class="btn-group btn-group-yesno"
                        default="0"
                        showon="layout:_:sidebar[OR]layout:_:searchresults"
-                       type="radio"
                        label="MOD_KNOWRES_SEARCH_SHOW_FLEXIBLE"
                        description="MOD_KNOWRES_SEARCH_SHOW_FLEXIBLE_DSC">
                     <option value="0">JNO</option>
@@ -87,13 +87,13 @@
             </fieldset>
             <fieldset name="advanced">
                 <field name="layout"
-                       class="form-select"
                        type="modulelayout"
+                       class="form-select"
                        validate="moduleLayout"
                        label="JFIELD_ALT_LAYOUT_LABEL"/>
                 <field name="moduleclass_sfx"
-                       default="kr-search"
                        type="textarea"
+                       default="kr-search"
                        rows="1"
                        validate="CssIdentifier"
                        label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"/>

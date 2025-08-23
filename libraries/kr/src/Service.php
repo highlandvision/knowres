@@ -133,71 +133,59 @@ abstract class Service
 	 */
 	public static function getServices(): array
 	{
-		// 0 - service type
+		// 0 - c = channel, g = gateway, i = ical, s =service(api)
 		// 1 - 0 = free, 1 = paid, 2 = proprietary
 		// 2 - 0 = not installed, 1 = not enabled 2 = unpublished 3 = all good
-		// TODO-v5.2 Reinstate Xero
+		// TODO-v5.3 Reinstate Xero
 		$services = [
-			'iCal'          => ['i', 0, 1],
-			'RU'            => ['c', 1, 0],
-			'VRBO'          => ['c', 2, 0],
-			'Wire'          => ['g', 0, 1],
+			// Free
 			'Bankia'        => ['g', 0, 0],
-			'Beyond'        => ['s', 1, 0],
 			'Check'         => ['g', 0, 1],
+			'Exchange'      => ['s', 0, 1],
+			'iCal'          => ['i', 0, 1],
+			'MailChimp'     => ['s', 0, 1],
 			'PayPal'        => ['g', 0, 1],
 			'Redsys'        => ['g', 0, 0],
 			'Stripe'        => ['g', 0, 1],
-			'Exchange'      => ['s', 0, 1],
-			'Factura'       => ['s', 2, 0],
+			'Wire'          => ['g', 0, 1],
+			// Paid
 			'HelpScout'     => ['s', 1, 0],
+			'RU'            => ['c', 1, 0],
+			//Proprietary
+			'Factura'       => ['s', 2, 0],
+			'PriceLabs'     => ['s', 2, 1],
 			'VintageTravel' => ['s', 2, 0],
-			'MailChimp'     => ['s', 0, 1]
+			'VRBO'          => ['c', 2, 0]
 		];
 
-		foreach ($services as $plugin => $data)
-		{
-			if ($data[1] > 0)
-			{
-				$lc = strtolower($plugin);
+		foreach ($services as $plugin => $data) {
+			if ($data[1] > 0) {
+				$lc                   = strtolower($plugin);
 				$services[$plugin][2] = 0;
 
-				if (file_exists(JPATH_LIBRARIES . '/highlandvision/' . $lc . '/lib_highlandvision_' . $lc . '.xml'))
-				{
+				if (file_exists(JPATH_LIBRARIES . '/highlandvision/' . $lc . '/lib_highlandvision_' . $lc . '.xml')) {
 					$services[$plugin][2] = 1;
 
 					$list = KrFactory::getListModel('services')->getServicesByPlugin($plugin, 0, null, false);
-					if (is_countable($list) && count($list))
-					{
-						foreach ($list as $l)
-						{
-							if ($l->state == 1)
-							{
+					if (is_countable($list) && count($list)) {
+						foreach ($list as $l) {
+							if ($l->state == 1) {
 								$services[$plugin][2] = 3;
 								break;
-							}
-							else
-							{
+							} else {
 								$services[$plugin][2] = 2;
 							}
 						}
 					}
 				}
-			}
-			else
-			{
+			} else {
 				$list = KrFactory::getListModel('services')->getServicesByPlugin($plugin, 0, null, false);
-				if (is_countable($list) && count($list))
-				{
-					foreach ($list as $l)
-					{
-						if ($l->state == 1)
-						{
+				if (is_countable($list) && count($list)) {
+					foreach ($list as $l) {
+						if ($l->state == 1) {
 							$services[$plugin][2] = 3;
 							break;
-						}
-						else
-						{
+						} else {
 							$services[$plugin][2] = 2;
 						}
 					}
@@ -218,13 +206,47 @@ abstract class Service
 	 */
 	public static function getType(string $type): string
 	{
-		return match ($type)
-		{
+		return match ($type) {
 			'c' => KrMethods::plain('COM_KNOWRES_SERVICE_TYPE_CHANNEL'),
 			'g' => KrMethods::plain('COM_KNOWRES_SERVICE_TYPE_GATEWAY'),
 			'i' => KrMethods::plain('COM_KNOWRES_SERVICE_TYPE_ICAL'),
 			's' => KrMethods::plain('COM_KNOWRES_SERVICE_TYPE_SERVICE')
 		};
+	}
+
+	/**
+	 * Display any errors found in xml string
+	 *
+	 * @param  object  $error  XML error data
+	 * @param  string  $xml    XML string
+	 *
+	 * @since  4.0.0
+	 * @return string
+	 */
+	public function displayXmlError(object $error, string $xml): string
+	{
+		$return[] = $xml[$error->line - 1];
+		$return[] = str_repeat('-', $error->column);
+
+		switch ($error->level) {
+			case LIBXML_ERR_WARNING:
+				$return[] = "Warning $error->code: ";
+				break;
+			case LIBXML_ERR_ERROR:
+				$return[] = "Error $error->code: ";
+				break;
+			case LIBXML_ERR_FATAL:
+				$return[] = "Fatal Error $error->code: ";
+				break;
+		}
+
+		$return[] = trim($error->message) . 'Line: ' . $error->line . "Column: " . $error->column;
+
+		if ($error->file) {
+			$return[] = "File: $error->file";
+		}
+
+		return implode('<br>', $return);
 	}
 
 	/**
@@ -235,12 +257,9 @@ abstract class Service
 	 */
 	public function getErrorToDisplay(): string
 	{
-		if ($this->error_to_display)
-		{
+		if ($this->error_to_display) {
 			return $this->error_to_display;
-		}
-		else
-		{
+		} else {
 			return KrMethods::plain('COM_KNOWRES_ERROR_FATAL');
 		}
 	}
@@ -275,8 +294,7 @@ abstract class Service
 		$log->created_at  = TickTock::getTS();
 		$log_id           = KrFactory::insert('service_log', $log);
 
-		if ($this->exception || $email)
-		{
+		if ($this->exception || $email) {
 			$subject = "Attention: Alert from " . KrMethods::getCfg('sitename');
 			$body    = 'An exception has occurred. Please see the details below.';
 			$body    .= ' Full details of the error can be found in Service Logs for ID ' . $log_id;
@@ -284,8 +302,7 @@ abstract class Service
 			$body    .= $error;
 
 			$to = KrMethods::getParams()->get('alert_email', '');
-			if (empty($to))
-			{
+			if (empty($to)) {
 				$to = KrMethods::getCfg('mailfrom');
 			}
 			KrMethods::sendEmail(KrMethods::getCfg('mailfrom'), KrMethods::getCfg('fromname'), $to, $subject, $body);
@@ -305,53 +322,13 @@ abstract class Service
 	 */
 	protected function checkCache($method): mixed
 	{
-		if ($this->cache_json)
-		{
+		if ($this->cache_json) {
 			$data = Utility::decodeJson($this->cache->get($method), true);
-		}
-		else
-		{
+		} else {
 			$data = $this->cache->get($method);
 		}
 
 		return $data ?: false;
-	}
-
-	/**
-	 * Display any errors found in xml string
-	 *
-	 * @param  object  $error  XML error data
-	 * @param  string  $xml    XML string
-	 *
-	 * @since  4.0.0
-	 * @return string
-	 */
-	public function displayXmlError(object $error, string $xml): string
-	{
-		$return[] = $xml[$error->line - 1];
-		$return[] = str_repeat('-', $error->column);
-
-		switch ($error->level)
-		{
-			case LIBXML_ERR_WARNING:
-				$return[] = "Warning $error->code: ";
-				break;
-			case LIBXML_ERR_ERROR:
-				$return[] = "Error $error->code: ";
-				break;
-			case LIBXML_ERR_FATAL:
-				$return[] = "Fatal Error $error->code: ";
-				break;
-		}
-
-		$return[] = trim($error->message) . 'Line: ' . $error->line . "Column: " . $error->column;
-
-		if ($error->file)
-		{
-			$return[] = "File: $error->file";
-		}
-
-		return implode('<br>', $return);
 	}
 
 	/**
@@ -366,17 +343,13 @@ abstract class Service
 	 */
 	#[Pure] protected function getErrorMessage(bool $success): string
 	{
-		if (is_a($this->exception, 'Exception') || is_subclass_of($this->exception, 'Exception'))
-		{
+		if (is_a($this->exception, 'Exception') || is_subclass_of($this->exception, 'Exception')) {
 			$text = 'ERROR:' . $this->exception->getMessage() . '<br>';
-		}
-		else
-		{
+		} else {
 			$text = $success ? '' : 'ERROR:<br>';
 		}
 
-		if (is_countable($this->messages) && count($this->messages))
-		{
+		if (is_countable($this->messages) && count($this->messages)) {
 			$text .= implode('<br>', $this->messages);
 		}
 
@@ -394,8 +367,7 @@ abstract class Service
 	 */
 	protected function getSettings(int $property_id): void
 	{
-		if (!$property_id)
-		{
+		if (!$property_id) {
 			throw new InvalidArgumentException('Property ID must be non zero');
 		}
 
@@ -412,14 +384,12 @@ abstract class Service
 	 */
 	protected function readContract(): void
 	{
-		if (!$this->contract_id)
-		{
+		if (!$this->contract_id) {
 			throw new InvalidArgumentException('Contract ID must be non zero');
 		}
 
 		$this->contract = KrFactory::getAdminModel('contract')->getItem($this->contract_id);
-		if (!$this->contract->id)
-		{
+		if (!$this->contract->id) {
 			throw new RuntimeException('Contract not found for id ' . $this->contract_id);
 		}
 	}
@@ -432,14 +402,12 @@ abstract class Service
 	 */
 	protected function readGuest(): void
 	{
-		if (!$this->contract->guest_id)
-		{
+		if (!$this->contract->guest_id) {
 			throw new InvalidArgumentException('Contract Guest ID must be non zero');
 		}
 
 		$this->guest = KrFactory::getAdminModel('guest')->getItem($this->contract->guest_id);
-		if (!$this->guest->id)
-		{
+		if (!$this->guest->id) {
 			throw new RuntimeException('Guest not found for ID ' . $this->contract->guest_id);
 		}
 	}
@@ -452,15 +420,13 @@ abstract class Service
 	 */
 	protected function readOwner(): void
 	{
-		if (!$this->property->owner_id)
-		{
+		if (!$this->property->owner_id) {
 			throw new InvalidArgumentException('Property ' . $this->property->property_name
-				. ' does not have an owner assigned');
+			                                   . ' does not have an owner assigned');
 		}
 
 		$this->owner = KrFactory::getAdminModel('owner')->getItem($this->property->owner_id);
-		if (!$this->owner->id)
-		{
+		if (!$this->owner->id) {
 			throw new RuntimeException('Owner not found for property owner id - ' . $this->property->owner_id);
 		}
 	}
@@ -476,14 +442,12 @@ abstract class Service
 	 */
 	protected function readProperty(int $property_id): void
 	{
-		if (!$property_id)
-		{
+		if (!$property_id) {
 			throw new InvalidArgumentException('Property ID must be non zero');
 		}
 
 		$this->property = KrFactory::getAdminModel('property')->getItem($property_id);
-		if (empty($this->property->id))
-		{
+		if (empty($this->property->id)) {
 			throw new RuntimeException('Property not found for ID ' . $property_id);
 		}
 	}
@@ -499,8 +463,7 @@ abstract class Service
 		/** @var ServiceModel $model */
 		$model         = KrFactory::getAdminModel('service');
 		$this->service = $model->getItem($this->service_id);
-		if (empty($this->service->id))
-		{
+		if (empty($this->service->id)) {
 			throw new RuntimeException('Service not found for id ' . $this->service_id);
 		}
 
@@ -518,8 +481,7 @@ abstract class Service
 	 */
 	protected function setContractId(int $contract_id): void
 	{
-		if (!is_numeric($contract_id) || !$contract_id)
-		{
+		if (!is_numeric($contract_id) || !$contract_id) {
 			throw new InvalidArgumentException('Contract ID should consist of numbers only and should not be zero');
 		}
 
@@ -534,8 +496,7 @@ abstract class Service
 	 */
 	protected function setQueueActioned(): void
 	{
-		if (is_countable($this->queue_ids) && count($this->queue_ids))
-		{
+		if (is_countable($this->queue_ids) && count($this->queue_ids)) {
 			ServicequeueModel::setQueueActioned($this->queue_ids);
 		}
 	}
@@ -551,8 +512,7 @@ abstract class Service
 	 */
 	protected function setService(int $service_id): void
 	{
-		if (!is_numeric($service_id) || !$service_id)
-		{
+		if (!is_numeric($service_id) || !$service_id) {
 			throw new InvalidArgumentException('Sorry we are unable to identify you so we cannot process your request');
 		}
 
@@ -570,12 +530,9 @@ abstract class Service
 	 */
 	protected function storeCache(array $data, string $method): void
 	{
-		if ($this->cache_json)
-		{
+		if ($this->cache_json) {
 			$this->cache->store(Utility::encodeJson($data), $method);
-		}
-		else
-		{
+		} else {
 			$this->cache->store($data, $method);
 		}
 	}

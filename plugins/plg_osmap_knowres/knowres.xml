@@ -7,7 +7,7 @@
 	<authorEmail>hazel@highlandvision.com</authorEmail>
 	<copyright>2022 Highland Vision. All rights reserved.</copyright>
 	<license>https://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
-	<version>5.1.0</version>
+	<version>5.2.0</version>
 	<description>Know Reservations OsMap plugin</description>
 	<files>
 		<folder>language</folder>
@@ -19,9 +19,9 @@
 			</fieldset>
 			<fieldset name="xml">
 				<field name="add_images"
+				       type="radio"
 					class="btn-group btn-yes-no"
-					default="1"
-					type="radio"
+					   default="1"
 					label="PLG_OSMAP_KNOWRES_SETTING_ADD_IMAGES"
 					description="PLG_OSMAP_KNOWRES_SETTING_ADD_IMAGES_DSC">
 					<option value="1">JYES</option>

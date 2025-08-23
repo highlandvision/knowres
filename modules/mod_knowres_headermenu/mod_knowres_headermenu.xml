@@ -7,7 +7,7 @@
 	<authorEmail>hazel@highlandvision.com</authorEmail>
 	<copyright>2023 Highland Vision, all rights reserved.</copyright>
 	<license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
-	<version>5.1.0</version>
+	<version>5.2.0</version>
 	<description>MOD_KNOWRES_HEADERMENU_DSC</description>
 	<namespace path="src">Knowres\Module\Headermenu</namespace>
 	<scriptfile>installation.script.php</scriptfile>
@@ -21,8 +21,8 @@
 		<fields name="params">
 			<fieldset name="advanced">
 				<field name="layout"
-					class="form-select"
 					type="modulelayout"
+					   class="form-select"
 					validate="moduleLayout"
 					label="JFIELD_ALT_LAYOUT_LABEL"/>
 				<field name="moduleclass_sfx"

@@ -74,10 +74,6 @@ $wa->useScript('keepalive')
 					<legend><?php echo KrMethods::plain('COM_KNOWRES_PROPERTYSETTINGS_RATE_MANAGER_ADMIN'); ?></legend>
 					<p><?php echo KrMethods::plain('COM_KNOWRES_PROPERTYSETTINGS_RATE_MANAGER_ADMIN_DSC'); ?></p>
 					<?php echo $this->form->renderFieldset('rates-right-net'); ?>
-					<?php echo $this->form->renderFieldset('rates-right-beyond'); ?>
-					<div id="beyond" class="label-right">
-						<?php echo $this->form->renderFieldset('rates-right-beyond-data'); ?>
-					</div>
 					<?php echo $this->form->renderFieldset('rates-right-managed'); ?>
 					<div id="managed" class="label-right">
 						<?php echo $this->form->renderFieldset('rates-right-managed-data'); ?>

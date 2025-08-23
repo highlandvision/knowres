@@ -57,7 +57,7 @@ class RatesModel extends ListModel
 	}
 
 	/**
-	 * Insert / update rate changes into database currently only Beyond
+	 * Insert / update multiple rate changes into database
 	 *
 	 * @param  array  $updates  Rate updates to be changed / inserted
 	 *

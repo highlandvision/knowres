@@ -7,7 +7,7 @@
     <authorEmail>hazel@highlandvision.com</authorEmail>
     <copyright>2023 Highland Vision, all rights reserved.</copyright>
     <license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
-    <version>5.1.0</version>
+	<version>5.2.0</version>
     <namespace path="src">HighlandVision\Module\KnowresRegions</namespace>
     <description>MOD_KNOWRES_REGIONS_DSC</description>
     <files>
@@ -33,8 +33,8 @@
                        label="MOD_KNOWRES_REGIONS_SELECT_LBL"
                        description="MOD_KNOWRES_REGIONS_SELECT_DSC"/>
                 <field name="image1"
-                       directory=""
                        type="media"
+                       directory=""
                        label="Image"
                        description="MOD_KNOWRES_REGIONS_SELECT_IMAGE"/>
                 <field type="spacer"
@@ -54,8 +54,8 @@
                     <option value="0">MOD_KNOWRES_REGIONS_SELECT</option>
                 </field>
                 <field name="image2"
-                       directory=""
                        type="media"
+                       directory=""
                        label="MOD_KNOWRES_REGIONS_IMAGE"
                        description="MOD_KNOWRES_REGIONS_SELECT_IMAGE"/>
                 <field type="spacer"
@@ -147,8 +147,8 @@
             </fieldset>
             <fieldset name="advanced">
                 <field name="layout"
-                       class="form-select"
                        type="modulelayout"
+                       class="form-select"
                        validate="moduleLayout"
                        label="JFIELD_ALT_LAYOUT_LABEL"/>
                 <field name="moduleclass_sfx"

@@ -9,7 +9,7 @@
 	<description>MOD_KNOWRES_AUTOSEARCH_DSC</description>
 	<license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
     <namespace path="src">HighlandVision\Module\KnowresAutosearch</namespace>
-	<version>5.1.0</version>
+	<version>5.2.0</version>
 	<files>
 		<folder module="mod_knowres_autosearch">services</folder>
 		<folder>language</folder>
@@ -59,13 +59,13 @@
 			</fieldset>
 			<fieldset name="advanced">
 				<field name="layout"
-					   class="form-select"
 					   type="modulelayout"
+					   class="form-select"
 					   validate="moduleLayout"
 					   label="JFIELD_ALT_LAYOUT_LABEL"/>
 				<field name="moduleclass_sfx"
-                    default="kr-autosearch"
-					type="textarea"
+				       type="textarea"
+				       default="kr-autosearch"
 					rows="1"
 					validate="CssIdentifier"
 					label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"/>

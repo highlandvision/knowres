@@ -137,7 +137,7 @@ class Calendar
 
 		if ($before + $after >= $nights) {
 			return 0;
-		} else if ($after >= $canwebook) {
+		} elseif ($after >= $canwebook) {
 			return $canwebook;
 		}
 
@@ -238,9 +238,7 @@ class Calendar
 		$arrival   = $date;
 		$departure = TickTock::modifyDays($date, $nights);
 
-		return [$arrival,
-		        $departure
-		];
+		return [$arrival, $departure];
 	}
 
 	/**
@@ -387,7 +385,7 @@ class Calendar
 	 * @since  3.4.0
 	 */
 	protected function incrementBlockedDate(string $d, string $first, string $last, bool $check_frozen = true,
-	                                        bool $paid = true): void
+	                                        bool   $paid = true): void
 	{
 		if ($check_frozen && isset($this->frozen[$d])) {
 			return;
@@ -405,7 +403,7 @@ class Calendar
 
 		if ($d === $first) {
 			$this->incrementBlocked($d, 1);
-		} else if ($d === $last) {
+		} elseif ($d === $last) {
 			$this->incrementBlocked($d, 2);
 		} else {
 			$this->incrementBlocked($d, 0);
@@ -454,7 +452,7 @@ class Calendar
 			}
 
 			if ($first && $date >= $r->valid_from) {
-				if ($this->settings['managed_rates'] || $this->settings['beyond_rates']) {
+				if ($this->settings['managed_rates']) {
 					$min_stay = $this->getSeasonNights($date, $r->min_nights);
 				} else {
 					$min_stay = $r->min_nights;
@@ -488,9 +486,7 @@ class Calendar
 			}
 		}
 
-		return [$min_stay,
-		        $start_day
-		];
+		return [$min_stay, $start_day];
 	}
 
 	/**

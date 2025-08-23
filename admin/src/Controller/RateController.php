@@ -24,7 +24,8 @@ use Joomla\String\StringHelper;
  *
  * @since 1.0.0
  */
-class RateController extends FormController {
+class RateController extends FormController
+{
 	/**
 	 * Process additional requirements after save
 	 *
@@ -46,6 +47,7 @@ class RateController extends FormController {
 
 		$Translations = new Translations();
 		$Translations->updateDefault('rate', $id, 'name', $name);
+
 		KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updateAvailability', (int) $validData['property_id']);
 		KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updatePropertyRates', (int) $validData['property_id'],
 			0, null, (string) $validData['valid_from'], (string) $validData['valid_to']);

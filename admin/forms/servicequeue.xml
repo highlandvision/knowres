@@ -8,7 +8,7 @@
 			table="#__knowres_service"
 			key_field="id"
 			value_field="name"
-			where="(type='e' OR `type` = 'c' OR `plugin` = 'beyond') AND agency_id > 0"
+			   where="(type = 's' OR `type` = 'c') AND agency_id > 0"
 			label="COM_KNOWRES_SERVICEQUEUE_SERVICE_ID_LBL"
 			description="COM_KNOWRES_SERVICEQUEUE_SERVICE_ID_DSC"/>
 		<field name="method"
@@ -17,7 +17,6 @@
 			default=""
 			label="COM_KNOWRES_SERVICEQUEUE_METHOD_LBL"
 			description="COM_KNOWRES_SERVICEQUEUE_METHOD_DSC">
-			<option value="updateListing">COM_KNOWRES_SERVICEQUEUE_METHOD_BEYOND</option>
 			<option value="updateAvailability">COM_KNOWRES_SERVICEQUEUE_METHOD_AVAILABILITY</option>
 			<option value="updateProperty">COM_KNOWRES_SERVICEQUEUE_METHOD_PROPERTY</option>
 			<option value="updateLodging">COM_KNOWRES_SERVICEQUEUE_METHOD_LODGING</option>
@@ -32,17 +31,17 @@
 			label="COM_KNOWRES_SERVICEQUEUE_PROPERTY_ID_LBL"
 			description="COM_KNOWRES_SERVICEQUEUE_PROPERTY_ID_DSC"/>
 		<field name="arrival"
+		       type="uicalendar"
 			class="input-mini"
 			datepicker='{"minDate": "0", "maxDate": "+3Y", "altField": "#jform_arrival"}'
 			showon="method:updateAvailability[OR]method:updatePropertyRates"
-			type="uicalendar"
 			label="COM_KNOWRES_SERVICEQUEUE_ARRIVAL_LBL"
 			description="COM_KNOWRES_SERVICEQUEUE_ARRIVAL_DSC"/>
 		<field name="departure"
+		       type="uicalendar"
 			class="input-mini"
 			datepicker='{"minDate": "0", "maxDate": "+3Y", "altField": "#jform_departure"}'
 			showon="method:updateAvailability[OR]method:updatePropertyRates"
-			type="uicalendar"
 			validate="daterangearrival"
 			label="COM_KNOWRES_SERVICEQUEUE_DEPARTURE_LBL"
 			description="COM_KNOWRES_SERVICEQUEUE_DEPARTURE_DSC"/>
@@ -75,8 +74,8 @@
 			<option value="1">JYES</option>
 		</field>
 		<field name="contract_id"
-			default="0"
-			type="hidden"/>
+		       type="hidden"
+		       default="0"/>
 	</fieldset>
 	<fieldset name="krcommon">
 		<field name="state"
