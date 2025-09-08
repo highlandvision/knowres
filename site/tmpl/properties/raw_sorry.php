@@ -10,9 +10,10 @@
 defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrMethods;
+
 ?>
 
-<h3>
+<h4>
 	<?php echo KrMethods::plain('COM_KNOWRES_NILRESULT_RAW'); ?>
 	<br><br>
-</h3>
+</h4>

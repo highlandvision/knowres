@@ -32,9 +32,9 @@ if (!empty($this->items) && count($this->items)) {
 	$data['search']     = $this->modules;
 	$data['pagination'] = $pagination == '&nbsp;' ? '' : $pagination;
 	if (count($this->items) == 1)
-		$data['pcount'] = "<strong>1</strong> " . KrMethods::plain('COM_KNOWRES_PROPERTY');
+		$data['pcount'] = "1 " . KrMethods::plain('COM_KNOWRES_PROPERTY');
 	else {
-		$data['pcount'] = "<strong>" . count($this->items) . '</strong> ' . KrMethods::plain('COM_KNOWRES_PROPERTIES');
+		$data['pcount'] = count($this->items) . ' ' . KrMethods::plain('COM_KNOWRES_PROPERTIES_FOUND');
 	}
 } else {
 	$data['items']   = $this->loadTemplate('sorry');

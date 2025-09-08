@@ -36,7 +36,8 @@ use function ltrim;
  *
  * @since 1.0.0
  */
-class HtmlView extends KrHtmlView\Site {
+class HtmlView extends KrHtmlView\Site
+{
 	/** @var Registry KR parameters */
 	public Registry $params;
 	/** @var Search Site search */
@@ -109,10 +110,11 @@ class HtmlView extends KrHtmlView\Site {
 				$searchData->category_id = $this->category_id;
 				$searchData->layout      = 'category';
 				$searchData->bar         = $default_view;
-				$description             = KrMethods::sprintf('COM_KNOWRES_VIEW_BROWSE', $category->name);
-				$this->blurb             = $category->blurb;
-				$this->meta_title        = KrMethods::sprintf('COM_KNOWRES_BROWSE_CATEGORY', $category->name);
-				$this->meta_description  = KrMethods::sprintf('COM_KNOWRES_BROWSE_CATEGORY_DSC', $category->name);
+//				$description             = KrMethods::sprintf('COM_KNOWRES_VIEW_BROWSE', $category->name);
+				$description            = $category->name;
+				$this->blurb            = $category->blurb;
+				$this->meta_title       = KrMethods::sprintf('COM_KNOWRES_BROWSE_CATEGORY', $category->name);
+				$this->meta_description = KrMethods::sprintf('COM_KNOWRES_BROWSE_CATEGORY_DSC', $category->name);
 			} elseif ($layout === 'new') {
 				$searchData->layout     = $layout;
 				$searchData->bar        = $default_view;
@@ -271,13 +273,10 @@ class HtmlView extends KrHtmlView\Site {
 			$description = $data->area . ', ';
 			$meta        = $data->area . ', ' . $data->region_name;
 		}
-		$description            .= $data->region_name . ', ' . KrMethods::getCfg('sitename');
-		$this->meta_title       = KrMethods::sprintf('COM_KNOWRES_SEO_TITLE_PROPERTIES',
-			$meta,
-			$data->country_name);
-		$this->meta_description = KrMethods::sprintf('COM_KNOWRES_SEO_DESCRIPTION_PROPERTIES',
-			$meta,
-			$data->country_name);
+//		$description            .= $data->region_name . ', ' . KrMethods::getCfg('sitename');
+		$description            .= $data->region_name;
+		$this->meta_title       = KrMethods::sprintf('COM_KNOWRES_SEO_TITLE_PROPERTIES', $meta, $data->country_name);
+		$this->meta_description = KrMethods::sprintf('COM_KNOWRES_SEO_DESCRIPTION_PROPERTIES', $meta, $data->country_name);
 
 		return $description;
 	}
