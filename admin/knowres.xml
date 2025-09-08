@@ -42,8 +42,8 @@
 		<folder>src</folder>
 		<folder>tmpl</folder>
 	</files>
-	<media folder="media">
-		<folder>com_knowres</folder>
+	<media folder="media"
+	       destination="com_knowres">
 	</media>
 	<administration>
 		<menu img="class:sun">com_knowres</menu>
