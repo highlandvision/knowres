@@ -1,0 +1,27 @@
+{
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "browsers": [
+            ">2.00%",
+            "not ie 11",
+            "not op_mini all"
+          ]
+        },
+        modules: false,
+        debug: true
+      }
+    ]
+  ],
+  "plugins": [
+    [
+      "@babel/transform-runtime",
+      {
+        helpers: false,
+        regenerator: true
+      },
+    ]
+  ]
+}

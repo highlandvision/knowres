@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PhingConfiguration">
+    <buildFilePaths>
+      <buildFile path="file://$PROJECT_DIR$/phingbuild.xml" />
+      <buildFile path="file://$PROJECT_DIR$/phingtpl.xml" />
+      <buildFile path="file://$PROJECT_DIR$/phingapi.xml" />
+    </buildFilePaths>
+    <phingPath>$PROJECT_DIR$/phing-latest.phar</phingPath>
+  </component>
+</project>

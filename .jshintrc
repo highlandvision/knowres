@@ -1,0 +1,14 @@
+{
+  "esversion": 6,
+  "globals": {
+    "$": false,
+    "jQuery": false,
+    "jquery": false,
+    "google": false,
+    "Foundation": false,
+    "window": false,
+    "sub": true,
+    "document": false,
+    "browser": true
+  }
+}

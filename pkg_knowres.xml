@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<extension type="package" method="upgrade">
+	<name>KR Package</name>
+	<author>Highland Vision</author>
+	<authoremail>hazel@highlandvision.com</authoremail>
+	<authorurl>https://www.highlandvision.com/</authorurl>
+	<blockChildUninstall>true</blockChildUninstall>
+	<copyright>2023 Highland Vision. All rights reserved.</copyright>
+	<creationDate>2024-08-19</creationDate>
+	<description>KR Package for Vacation Rentals</description>
+	<license>GNU/GPLv3 or later</license>
+	<packager>Highland Vision</packager>
+	<packagename>knowres</packagename>
+	<packageremail>hazel@highlandvision.com</packageremail>
+	<packagerurl>https://www.highlandvision.com/</packagerurl>
+	<scriptfile>pkg_knowres_installation.php</scriptfile>
+	<version>5.2.0</version>
+	<files folder="packages">
+		<file type="component" id="com_knowres">com_knowres.zip</file>
+		<file type="library" id="highlandvision/kr">lib_highlandvision_kr.zip</file>
+		<file type="module" id="mod_knowres_autosearch" client="site">mod_knowres_autosearch.zip</file>
+		<file type="module" id="mod_knowres_carousel" client="site">mod_knowres_carousel.zip</file>
+		<file type="module" id="mod_knowres_destination" client="site">mod_knowres_destination.zip</file>
+		<file type="module" id="mod_knowres_featured" client="site">mod_knowres_featured.zip</file>
+		<file type="module" id="mod_knowres_headermenu" client="administrator">mod_knowres_headermenu.zip</file>
+		<file type="module" id="mod_knowres_imagegrid" client="site">mod_knowres_imagegrid.zip</file>
+		<file type="module" id="mod_knowres_mailchimp" client="site">mod_knowres_mailchimp.zip</file>
+		<file type="module" id="mod_knowres_properties" client="site">mod_knowres_properties.zip</file>
+		<file type="module" id="mod_knowres_regions" client="site">mod_knowres_regions.zip</file>
+		<file type="module" id="mod_knowres_search" client="site">mod_knowres_search.zip</file>
+		<file type="module" id="mod_knowres_searchbymap" client="site">mod_knowres_searchbymap.zip</file>
+		<file type="module" id="mod_knowres_slideshow" client="site">mod_knowres_slideshow.zip</file>
+		<file type="module" id="mod_knowres_spotlight" client="site">mod_knowres_spotlight.zip</file>
+		<file type="plugin" id="knowres" group="forsef">plg_forsef_knowres.zip</file>
+		<file type="plugin" id="knowres" group="osmap">plg_osmap_knowres.zip</file>
+		<file type="plugin" id="knowresredirect" group="system">plg_system_knowresredirect.zip</file>
+	</files>
+</extension>

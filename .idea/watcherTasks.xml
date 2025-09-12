@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectTasksOptions">
+    <TaskOptions isEnabled="false">
+      <option name="arguments" value="--source-map-urls=relative $FileName$ $ProjectFileDir$/src/media/com_knowres/css/$FileNameWithoutExtension$.css" />
+      <option name="checkSyntaxErrors" value="true" />
+      <option name="description" />
+      <option name="exitCodeBehavior" value="ERROR" />
+      <option name="fileExtension" value="scss" />
+      <option name="immediateSync" value="true" />
+      <option name="name" value="J4 Admin SCSS to CSS" />
+      <option name="output" value="$ProjectFileDir$/src/media/com_knowres/css/$FileNameWithoutExtension$.css:$ProjectFileDir$/src/media/com_knowres/css/$FileNameWithoutExtension$.css.map" />
+      <option name="outputFilters">
+        <array />
+      </option>
+      <option name="outputFromStdout" value="false" />
+      <option name="program" value="$PROJECT_DIR$/../../Utilities/dart-sass/sass" />
+      <option name="runOnExternalChanges" value="true" />
+      <option name="scopeName" value="Admin SCSS" />
+      <option name="trackOnlyRoot" value="true" />
+      <option name="workingDir" value="$FileDir$" />
+      <envs />
+    </TaskOptions>
+    <TaskOptions isEnabled="false">
+      <option name="arguments" value="-i $FileName$ -o $FileNameWithoutExtension$.min.css" />
+      <option name="checkSyntaxErrors" value="true" />
+      <option name="description" />
+      <option name="exitCodeBehavior" value="ERROR" />
+      <option name="fileExtension" value="css" />
+      <option name="immediateSync" value="true" />
+      <option name="name" value="J4 Admin CSS to MIN" />
+      <option name="output" value="$FileNameWithoutExtension$.min.css" />
+      <option name="outputFilters">
+        <array />
+      </option>
+      <option name="outputFromStdout" value="false" />
+      <option name="program" value="csso" />
+      <option name="runOnExternalChanges" value="true" />
+      <option name="scopeName" value="Admin CSS to MIN" />
+      <option name="trackOnlyRoot" value="true" />
+      <option name="workingDir" value="$FileDir$" />
+      <envs />
+    </TaskOptions>
+    <TaskOptions isEnabled="true">
+      <option name="arguments" value="$ProjectFileDir$/src/media/com_knowres/js/$FileNameWithoutExtension$.js -o $ProjectFileDir$/src/media/com_knowres/js/$FileNameWithoutExtension$.min.js -c --source-map" />
+      <option name="checkSyntaxErrors" value="true" />
+      <option name="description" />
+      <option name="exitCodeBehavior" value="ERROR" />
+      <option name="fileExtension" value="js" />
+      <option name="immediateSync" value="true" />
+      <option name="name" value="J5 UglifyJS" />
+      <option name="output" value="$ProjectFileDir$/src/media/com_knowres/js" />
+      <option name="outputFilters">
+        <array />
+      </option>
+      <option name="outputFromStdout" value="false" />
+      <option name="program" value="$PROJECT_DIR$/node_modules/.bin/uglifyjs" />
+      <option name="runOnExternalChanges" value="true" />
+      <option name="scopeName" value="Admin JS" />
+      <option name="trackOnlyRoot" value="false" />
+      <option name="workingDir" value="$FileDir$" />
+      <envs />
+    </TaskOptions>
+    <TaskOptions isEnabled="true">
+      <option name="arguments" value="--source-map-urls=relative --load-path=./node_modules/foundation-sites/assets $FileName$ $ProjectFileDir$/templates/krtheme/css/$FileNameWithoutExtension$.css" />
+      <option name="checkSyntaxErrors" value="true" />
+      <option name="description" />
+      <option name="exitCodeBehavior" value="ERROR" />
+      <option name="fileExtension" value="scss" />
+      <option name="immediateSync" value="true" />
+      <option name="name" value="J5 Template KrTheme SCSS to CSS" />
+      <option name="output" value="$ProjectFileDir$/templates/krtheme/css/$FileNameWithoutExtension$.css:$ProjectFileDir$/templates/krtheme/css/$FileNameWithoutExtension$.css.map" />
+      <option name="outputFilters">
+        <array />
+      </option>
+      <option name="outputFromStdout" value="false" />
+      <option name="program" value="$PROJECT_DIR$/../../Utilities/dart-sass-1.89.2-windows-x64/dart-sass/sass" />
+      <option name="runOnExternalChanges" value="true" />
+      <option name="scopeName" value="J5 Template KrTheme SCSS to CSS" />
+      <option name="trackOnlyRoot" value="false" />
+      <option name="workingDir" value="$FileDir$" />
+      <envs />
+    </TaskOptions>
+    <TaskOptions isEnabled="true">
+      <option name="arguments" value="--source-map-urls=relative --load-path=./node_modules/foundation-sites/assets $FileName$:$ProjectFileDir$/templates/krtheme/css/global/$FileNameWithoutExtension$.css" />
+      <option name="checkSyntaxErrors" value="true" />
+      <option name="description" />
+      <option name="exitCodeBehavior" value="ERROR" />
+      <option name="fileExtension" value="scss" />
+      <option name="immediateSync" value="false" />
+      <option name="name" value="J5 Template KrTheme Global SCSS to CSS" />
+      <option name="output" value="$ProjectFileDir$/templates/krtheme/css/global/$FileNameWithoutExtension$/templates/krtheme/css/global/$ProjectFileDir$css/$FileNameWithoutExtension$.css.map" />
+      <option name="outputFilters">
+        <array />
+      </option>
+      <option name="outputFromStdout" value="false" />
+      <option name="program" value="$PROJECT_DIR$/../../Utilities/dart-sass-1.89.2-windows-x64/dart-sass/sass" />
+      <option name="runOnExternalChanges" value="true" />
+      <option name="scopeName" value="KrTheme Global SCSS to CSS" />
+      <option name="trackOnlyRoot" value="false" />
+      <option name="workingDir" value="$FileDir$" />
+      <envs />
+    </TaskOptions>
+    <TaskOptions isEnabled="true">
+      <option name="arguments" value="-i $FileName$ -o $FileNameWithoutExtension$.min.css" />
+      <option name="checkSyntaxErrors" value="true" />
+      <option name="description" />
+      <option name="exitCodeBehavior" value="ERROR" />
+      <option name="fileExtension" value="css" />
+      <option name="immediateSync" value="true" />
+      <option name="name" value="J5 Template KrTheme CSS to MIN" />
+      <option name="output" value="$FileNameWithoutExtension$.min.css" />
+      <option name="outputFilters">
+        <array />
+      </option>
+      <option name="outputFromStdout" value="false" />
+      <option name="program" value="csso" />
+      <option name="runOnExternalChanges" value="true" />
+      <option name="scopeName" value="Template CSS" />
+      <option name="trackOnlyRoot" value="true" />
+      <option name="workingDir" value="$FileDir$" />
+      <envs />
+    </TaskOptions>
+  </component>
+</project>

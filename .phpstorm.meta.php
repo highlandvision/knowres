@@ -1,0 +1,24 @@
+<?php
+
+namespace PHPSTORM_META {
+    registerArgumentsSet('admin', 'agency', 'agent', 'category', 'cluster', 'contractfee', 'contractguestdata',
+        'contract', 'contractnote', 'contractpayment', 'country', 'coupon', 'currency', 'discount', 'emailaction',
+        'emailtemplate', 'emailtriggger', 'exchangerate', 'extra', 'guest', 'icalblock', 'image', 'manager',
+        'mapcategory', 'mapmarker', 'owner', 'propertyfeature', 'propertyfield', 'propertyical', 'property',
+        'propertyoption', 'propertyroom', 'propertysetting', 'ratemarkup', 'rate', 'region', 'review', 'room', 'season',
+        'servicelog', 'servicemodel', 'servicequeue', 'servicexref', 'tax', 'taxrate', 'town', 'translation', 'type');
+    registerArgumentsSet('adminlist', 'agencies', 'agents', 'categories', 'clusters', 'contractfees', 'contractguestdatas',
+        'contracts', 'contractnotes', 'contractpayments', 'countries', 'coupons', 'currencies', 'discounts',
+        'emailactions', 'emailtemplates', 'emailtrigggers', 'exchangerates', 'extras', 'guests', 'icalblocks', 'images',
+        'managers', 'mapcategories', 'mapmarkers', 'owners', 'propertyfeatures', 'propertyfields', 'propertyicals',
+        'properties', 'propertyoptions', 'propertyrooms', 'propertysettings', 'ratemarkups', 'rates', 'regions',
+        'reviews', 'rooms', 'seasons', 'servicelogs', 'servicemodels', 'servicequeues', 'servicexrefs', 'taxes',
+        'taxrates', 'towns', 'translations', 'types');
+    registerArgumentsSet('site', 'confirm', 'contact', 'contractguestdata', 'enquiry', 'guest', 'properties',
+        'contract', 'review', 'reviews');
+
+    expectedArguments(\HighlandVision\KR\Framework\KrFactory::getAdminModel(), 0, argumentsSet('admin'));
+    expectedArguments(\HighlandVision\KR\Framework\KrFactory::getListModel(), 0, argumentsSet('adminlist'));
+    expectedArguments(\HighlandVision\KR\Framework\KrFactory::getSiteModel(), 0, argumentsSet('site'));
+    expectedArguments(\HighlandVision\KR\Framework\KrFactory::getListSiteModel(), 0, argumentsSet('site'));
+}

@@ -1,1 +1,6 @@
-/media/vendor/
+src/media/vendor/
+package.json
+privatekey.pem
+publickey.cer
+stats.json
+node_modules/

@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="Template SCSS Global" pattern="file[ProjectKR]:templates/krtheme/media/scss/global//*||file[ProjectKR]:templates/krtheme/media/scss/resources/_foundation-settings.scss" />
+</component>

@@ -1,0 +1,26 @@
+<component name="ProjectCodeStyleConfiguration">
+  <code_scheme name="Project" version="173">
+    <PHPCodeStyleSettings>
+      <option name="INDENT_CODE_IN_PHP_TAGS" value="true" />
+      <option name="ALIGN_PHPDOC_PARAM_NAMES" value="true" />
+      <option name="ALIGN_PHPDOC_COMMENTS" value="true" />
+      <option name="ALIGN_ASSIGNMENTS" value="true" />
+      <option name="ALIGN_INLINE_COMMENTS" value="true" />
+      <option name="THROWS_WEIGHT" value="1" />
+      <option name="RETURN_WEIGHT" value="3" />
+      <option name="SINCE_WEIGHT" value="2" />
+      <option name="ALIGN_CLASS_CONSTANTS" value="true" />
+    </PHPCodeStyleSettings>
+    <codeStyleSettings language="PHP">
+      <option name="ELSE_ON_NEW_LINE" value="true" />
+      <option name="CATCH_ON_NEW_LINE" value="true" />
+      <option name="FINALLY_ON_NEW_LINE" value="true" />
+      <option name="ALIGN_MULTILINE_BINARY_OPERATION" value="true" />
+      <indentOptions>
+        <option name="USE_TAB_CHARACTER" value="true" />
+        <option name="SMART_TABS" value="true" />
+        <option name="KEEP_INDENTS_ON_EMPTY_LINES" value="true" />
+      </indentOptions>
+    </codeStyleSettings>
+  </code_scheme>
+</component>
