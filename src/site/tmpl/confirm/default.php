@@ -30,11 +30,13 @@ $action = KrMethods::route('index.php?option=com_knowres&view=confirm&layout=pay
 	<div class="grid-x grid-margin-x">
 		<div class="small-12 text-center medium-text-left cell">
 			<?php if ($this->property->booking_type == 2) : ?>
-				<h1><?php echo KrMethods::sprintf('COM_KNOWRES_CONFIRM_BOOK_YOUR_RESERVATION',
-						$this->property->property_name); ?></h1>
+				<h1>
+					<?php echo KrMethods::sprintf('COM_KNOWRES_CONFIRM_BOOK_YOUR_RESERVATION', $this->property->property_name); ?>
+				</h1>
 			<?php else: ?>
-				<h1><?php echo KrMethods::sprintf('COM_KNOWRES_CONFIRM_REQUEST_YOUR_RESERVATION',
-						$this->property->property_name); ?></h1>
+				<h1>
+					<?php echo KrMethods::sprintf('COM_KNOWRES_CONFIRM_REQUEST_YOUR_RESERVATION', $this->property->property_name); ?>
+				</h1>
 			<?php endif; ?>
 		</div>
 	</div>
@@ -47,11 +49,9 @@ $action = KrMethods::route('index.php?option=com_knowres&view=confirm&layout=pay
 				<?php echo $this->loadTemplate('guest'); ?>
 			</div>
 			<div class="medium-4 cell show-for-medium">
-				<?php echo HTMLHelper::_('image',
-					$this->pimage,
-					$this->property->property_name,
-					['width' => $this->params->get('max_property_width', 100)]);
-				?>
+				<?php echo HTMLHelper::_('image', $this->pimage, $this->property->property_name,
+					['width' => $this->params->get('max_property_width', 100)]
+				); ?>
 				<br><br>
 				<?php echo KrMethods::loadInternal('{loadposition help}'); ?>
 			</div>
@@ -60,7 +60,6 @@ $action = KrMethods::route('index.php?option=com_knowres&view=confirm&layout=pay
 		<div class="grid-x grid-margin-x align-bottom">
 			<div class="small-12 medium-8 cell">
 				<?php echo $this->loadTemplate('ajaxed'); ?>
-
 				<button class="button expanded large primary align-bottom" type="submit">
 					<?php echo KrMethods::plain('COM_KNOWRES_CONFIRM_REQUEST_PAYMENT'); ?>
 				</button>
