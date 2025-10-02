@@ -44,8 +44,7 @@ class ImagesController extends AdminController
 	 * @since  1.6
 	 * @return bool|BaseDatabaseModel
 	 */
-	public function getModel($name = 'image',
-		$prefix = 'Administrator',
+	public function getModel($name = 'image', $prefix = 'Administrator',
 		$config = ['ignore_request' => true]): BaseDatabaseModel|bool
 	{
 		return parent::getModel($name, $prefix, $config);
