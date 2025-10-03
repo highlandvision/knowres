@@ -29,40 +29,43 @@ class ReviewsModel extends ListModel
 	/**
 	 * Constructor.
 	 *
-	 * @param   array  $config  An optional associative array of configuration settings.
+	 * @param  array  $config  An optional associative array of configuration settings.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
 	public function __construct($config = [])
 	{
-		if (empty($config['filter_fields']))
-		{
-			$config['filter_fields'] = array(
-				'id', 'a.id',
-				'contract_id', 'a.contract_id',
-				'property_id', 'a.property_id',
-				'review_date', 'a.review_date',
-				'rating', 'a.rating',
-				'title', 'a.title',
-				'review', 'a.review',
-				'rating1', 'a.rating1',
-				'rating2', 'a.rating2',
-				'rating3', 'a.rating3',
-				'rating4', 'a.rating4',
-				'rating5', 'a.rating5',
-				'rating6', 'a.rating6',
-				'guest_name', 'a.guest_name',
-				'guest_location', 'a.guest_location',
-				'held', 'a.held',
-				'approved', 'a.approved',
-				'state', 'a.state',
-				'created_by', 'a.created_by',
-				'created_at', 'a.created_at',
-				'updated_by', 'a.updated_by',
-				'updated_at', 'a.updated_at',
-				'property_name', 'guest_surname', 'contract_tag'
-			);
+		if (empty($config['filter_fields'])) {
+			//@formatter:off
+			$config['filter_fields'] = [
+				'id',               'a.id',
+				'contract_id',      'a.contract_id',
+				'property_id',      'a.property_id',
+				'review_date',      'a.review_date',
+				'rating',           'a.rating',
+				'title',            'a.title',
+				'review',           'a.review',
+				'rating1',          'a.rating1',
+				'rating2',          'a.rating2',
+				'rating3',          'a.rating3',
+				'rating4',          'a.rating4',
+				'rating5',          'a.rating5',
+				'rating6',          'a.rating6',
+				'guest_name',       'a.guest_name',
+				'guest_location',   'a.guest_location',
+				'held',             'a.held',
+				'approved',         'a.approved',
+				'state',            'a.state',
+				'created_by',       'a.created_by',
+				'created_at',       'a.created_at',
+				'updated_by',       'a.updated_by',
+				'updated_at',       'a.updated_at',
+				'property_name',
+				'guest_surname',
+				'contract_tag'
+			];
+			//@formatter:off
 		}
 
 		parent::__construct($config);

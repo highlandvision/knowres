@@ -27,28 +27,30 @@ class PropertyroomsModel extends ListModel
 	/**
 	 * Constructor.
 	 *
-	 * @param   array  $config  An optional associative array of configuration settings.
+	 * @param  array  $config  An optional associative array of configuration settings.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
 	public function __construct($config = [])
 	{
-		if (empty($config['filter_fields']))
-		{
-			$config['filter_fields'] = array(
-				'id', 'a.id',
-				'property_id', 'a.property_id',
-				'generic', 'a.generic',
-				'features', 'a.features',
-				'ordering', 'a.ordering',
-				'state', 'a.state',
-				'created_by', 'a.created_by',
-				'created_at', 'a.created_at',
-				'updated_by', 'a.updated_by',
-				'updated_at', 'a.updated_at',
-				'name', 'description'
-			);
+		if (empty($config['filter_fields'])) {
+			//@formatter:off
+			$config['filter_fields'] = [
+				'id',           'a.id',
+				'property_id',  'a.property_id',
+				'generic',      'a.generic',
+				'features',     'a.features',
+				'ordering',     'a.ordering',
+				'state',        'a.state',
+				'created_by',   'a.created_by',
+				'created_at',   'a.created_at',
+				'updated_by',   'a.updated_by',
+				'updated_at',   'a.updated_at',
+				'name',
+				'description'
+			];
+			//@formatter:on
 		}
 
 		parent::__construct($config);
@@ -57,7 +59,7 @@ class PropertyroomsModel extends ListModel
 	/**
 	 * Return rooms for property
 	 *
-	 * @param   int  $property_id  ID of property
+	 * @param  int  $property_id  ID of property
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
@@ -73,21 +75,21 @@ class PropertyroomsModel extends ListModel
 		$item     = 'propertyroom';
 		$subQuery = $db->getQuery(true);
 		$subQuery->select('sub.text')
-		         ->from($db->qn('#__knowres_translation', 'sub'))
-		         ->where($db->qn('sub.item') . '=' . $db->q($item))
-		         ->where($db->qn('sub.item_id') . '=' . $db->qn('a.id'))
-		         ->where($db->qn('sub.field') . '=' . $db->q('name'))
-		         ->order('(CASE WHEN ' . $db->qn('sub.language') . '=' . $db->q($lang) . ' THEN 1 ELSE 2 END )')
-		         ->setLimit(1);
+			->from($db->qn('#__knowres_translation', 'sub'))
+			->where($db->qn('sub.item') . '=' . $db->q($item))
+			->where($db->qn('sub.item_id') . '=' . $db->qn('a.id'))
+			->where($db->qn('sub.field') . '=' . $db->q('name'))
+			->order('(CASE WHEN ' . $db->qn('sub.language') . '=' . $db->q($lang) . ' THEN 1 ELSE 2 END )')
+			->setLimit(1);
 
 		$subQuery1 = $db->getQuery(true);
 		$subQuery1->select('sub.text')
-		          ->from($db->qn('#__knowres_translation', 'sub'))
-		          ->where($db->qn('sub.item') . '=' . $db->q($item))
-		          ->where($db->qn('sub.item_id') . '=' . $db->qn('a.id'))
-		          ->where($db->qn('sub.field') . '=' . $db->q('description'))
-		          ->order('(CASE WHEN ' . $db->qn('sub.language') . '=' . $db->q($lang) . ' THEN 1 ELSE 2 END )')
-		          ->setLimit(1);
+			->from($db->qn('#__knowres_translation', 'sub'))
+			->where($db->qn('sub.item') . '=' . $db->q($item))
+			->where($db->qn('sub.item_id') . '=' . $db->qn('a.id'))
+			->where($db->qn('sub.field') . '=' . $db->q('description'))
+			->order('(CASE WHEN ' . $db->qn('sub.language') . '=' . $db->q($lang) . ' THEN 1 ELSE 2 END )')
+			->setLimit(1);
 
 		$query->select($this->getState('list.select', 'a.*'));
 		$query->select('(' . $subQuery->__toString() . ') ' . $db->q('name'));
@@ -95,11 +97,12 @@ class PropertyroomsModel extends ListModel
 		$query->select($db->qn('property.property_name', $db->qn('property_name')));
 
 		$query->from($db->qn('#__knowres_property_room', 'a'))
-		      ->join('LEFT', $db->qn('#__knowres_property', 'property') . ' ON ' . $db->qn('property.id') . '='
-			      . $db->qn('a.property_id'))
-		      ->where($db->qn('a.state') . '=1')
-		      ->where($db->qn('a.property_id') . '=' . $property_id)
-		      ->order($db->qn('ordering'));
+			->join('LEFT', $db->qn('#__knowres_property', 'property') . ' ON ' . $db->qn('property.id') . '='
+			               . $db->qn('a.property_id')
+			)
+			->where($db->qn('a.state') . '=1')
+			->where($db->qn('a.property_id') . '=' . $property_id)
+			->order($db->qn('ordering'));
 
 		$db->setQuery($query);
 
@@ -123,11 +126,11 @@ class PropertyroomsModel extends ListModel
 
 		$subQuery = $db->getQuery(true);
 		$subQuery->select('sub.text')
-		         ->from($db->qn('#__knowres_translation', 'sub'))
-		         ->where($db->qn('sub.item') . '=' . $db->q($item))
-		         ->where($db->qn('sub.item_id') . '=' . $db->qn('a.id'))
-		         ->order('(CASE WHEN ' . $db->qn('sub.language') . '=' . $db->q($lang) . ' THEN 1 ELSE 2 END )')
-		         ->setLimit(1);
+			->from($db->qn('#__knowres_translation', 'sub'))
+			->where($db->qn('sub.item') . '=' . $db->q($item))
+			->where($db->qn('sub.item_id') . '=' . $db->qn('a.id'))
+			->order('(CASE WHEN ' . $db->qn('sub.language') . '=' . $db->q($lang) . ' THEN 1 ELSE 2 END )')
+			->setLimit(1);
 
 		$query->select($this->getState('list.select', 'a.*'));
 		$query->from($db->qn('#__knowres_property_room', 'a'));
@@ -136,33 +139,26 @@ class PropertyroomsModel extends ListModel
 		$query = self::commonJoins($db, $query);
 		$query->select($db->qn('p.property_name', 'property_name'));
 		$query->join('LEFT',
-			$db->qn('#__knowres_property', 'p') . ' ON ' . $db->qn('p.id') . '=' . $db->qn('a.property_id'));
+			$db->qn('#__knowres_property', 'p') . ' ON ' . $db->qn('p.id') . '=' . $db->qn('a.property_id')
+		);
 
 		$state = $this->getState('filter.state');
-		if (is_numeric($state))
-		{
-			$query->where($db->qn('a.state') . '=' . (int) $state);
-		}
-		elseif ($state === '')
-		{
+		if (is_numeric($state)) {
+			$query->where($db->qn('a.state') . '=' . (int)$state);
+		} elseif ($state === '') {
 			$query->where($db->qn('a.state') . ' IN (0, 1)');
 		}
 
-		$filter_property_id = (int) $this->state->get('filter.property_id');
-		if ($filter_property_id)
-		{
+		$filter_property_id = (int)$this->state->get('filter.property_id');
+		if ($filter_property_id) {
 			$query->where($db->qn('a.property_id') . '=' . $filter_property_id);
 		}
 
 		$search = $this->getState('filter.search');
-		if (!empty($search))
-		{
-			if (stripos($search, 'id:') === 0)
-			{
-				$query->where($db->qn('a.id') . '=' . (int) substr($search, 3));
-			}
-			else
-			{
+		if (!empty($search)) {
+			if (stripos($search, 'id:') === 0) {
+				$query->where($db->qn('a.id') . '=' . (int)substr($search, 3));
+			} else {
 				$search = $db->q('%' . $search . '%');
 				$query->where('(' . $subQuery->__toString() . ') ' . ' LIKE ' . $search);
 			}
@@ -170,8 +166,7 @@ class PropertyroomsModel extends ListModel
 
 		$orderCol  = $this->state->get('list.ordering');
 		$orderDirn = $this->state->get('list.direction');
-		if ($orderCol && $orderDirn)
-		{
+		if ($orderCol && $orderDirn) {
 			$query->order($db->escape($orderCol . ' ' . $orderDirn));
 		}
 
@@ -184,7 +179,7 @@ class PropertyroomsModel extends ListModel
 	 * different modules that might need different sets of data or different
 	 * ordering requirements.
 	 *
-	 * @param   string  $id  A prefix for the store id.
+	 * @param  string  $id  A prefix for the store id.
 	 *
 	 * @since  1.0.0
 	 * @return string        A store id.
@@ -202,19 +197,22 @@ class PropertyroomsModel extends ListModel
 	 * Method to autopopulate the model state.
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @param   null|string  $ordering
-	 * @param   null|string  $direction
+	 * @param  null|string  $ordering
+	 * @param  null|string  $direction
 	 *
 	 * @since 1.0.0
 	 */
 	protected function populateState($ordering = 'a.ordering', $direction = 'asc'): void
 	{
 		$this->setState('filter.search',
-			$this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string'));
+			$this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string')
+		);
 		$this->setState('filter.state',
-			$this->getUserStateFromRequest($this->context . '.filter.state', 'filter_state', '', 'string'));
+			$this->getUserStateFromRequest($this->context . '.filter.state', 'filter_state', '', 'string')
+		);
 		$this->setState('filter.property_id',
-			$this->getUserStateFromRequest($this->context . '.filter.property_id', 'filter_property_id', '', 'string'));
+			$this->getUserStateFromRequest($this->context . '.filter.property_id', 'filter_property_id', '', 'string')
+		);
 
 		parent::populateState($ordering, $direction);
 	}

@@ -1,7 +1,6 @@
 /.idea/
-/node_modules/
 /src/media/vendor/
-package.json
-privatekey.pem
-publickey.cer
-stats.json
+/package.json
+/privatekey.pem
+/publickey.cer
+/stats.json

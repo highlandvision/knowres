@@ -41,28 +41,21 @@ class PropertyfeaturesModel extends ListModel
 	public function __construct($config = [])
 	{
 		if (empty($config['filter_fields'])) {
-			$config['filter_fields'] = ['id',
-			                            'a.id',
-			                            'filter',
-			                            'a.filter',
-			                            'generic',
-			                            'a.generic',
-			                            'room_type',
-			                            'a.room_type',
-			                            'ordering',
-			                            'a.ordering',
-			                            'state',
-			                            'a.state',
-			                            'created_by',
-			                            'a.created_by',
-			                            'created_at',
-			                            'a.created_at',
-			                            'updated_by',
-			                            'a.updated_by',
-			                            'updated_at',
-			                            'a.updated_at',
-			                            'name'
+			//@formatter:off
+			$config['filter_fields'] = [
+				'id',           'a.id',
+                'filter',       'a.filter',
+                'generic',      'a.generic',
+                'room_type',    'a.room_type',
+                'ordering',     'a.ordering',
+                'state',        'a.state',
+                'created_by',   'a.created_by',
+                'created_at',   'a.created_at',
+                'updated_by',   'a.updated_by',
+                'updated_at',   'a.updated_at',
+                'name'
 			];
+			//@formatter:off
 		}
 
 		parent::__construct($config);

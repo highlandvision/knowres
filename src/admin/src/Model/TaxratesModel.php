@@ -39,32 +39,34 @@ class TaxratesModel extends ListModel
 	 */
 	public function __construct($config = [])
 	{
-		if (empty($config['filter_fields']))
-		{
+		if (empty($config['filter_fields'])) {
+			//@formatter:off
 			$config['filter_fields'] = [
-				'id', 'a.id',
-				'tax_id', 'a.tax_id',
-				'tax_type', 'a.tax_type',
-				'code', 'a.code',
-				'a.agent', 'a.agent',
-				'rate', 'a.rate',
-				'fixed', 'a.fixed',
-				'basis', 'a.basis',
-				'max_nights', 'a.max_nights',
-				'reduced_rate', 'a.reduced_rate',
-				'gross', 'a.gross',
-				'pay_arrival', 'a.pay_arrival',
-				'applicable_age', 'a.applicable_age',
-				'per_night', 'a.per_night',
-				'valid_from', 'a.valid_from',
-				'taxrate_id', 'a.taxrate_id',
-				'state', 'a.state',
-				'created_by', 'a.created_by',
-				'created_at', 'a.created_at',
-				'updated_by', 'a.updated_by',
-				'updated_at', 'a.updated_at',
-				'name', 'tax_name'
+				'id',               'a.id',
+				'tax_id',           'a.tax_id',
+				'tax_type',         'a.tax_type',
+				'code',             'a.code',
+				'a.agent',          'a.agent',
+				'rate',             'a.rate',
+				'fixed',            'a.fixed',
+				'basis',            'a.basis',
+				'max_nights',       'a.max_nights',
+				'reduced_rate',     'a.reduced_rate',
+				'gross',            'a.gross',
+				'pay_arrival',      'a.pay_arrival',
+				'applicable_age',   'a.applicable_age',
+				'per_night',        'a.per_night',
+				'valid_from',       'a.valid_from',
+				'taxrate_id',       'a.taxrate_id',
+				'state',            'a.state',
+				'created_by',       'a.created_by',
+				'created_at',       'a.created_at',
+				'updated_by',       'a.updated_by',
+				'updated_at',       'a.updated_at',
+				'name',
+				'tax_name'
 			];
+			//@formatter:on
 		}
 
 		parent::__construct($config);
@@ -90,22 +92,39 @@ class TaxratesModel extends ListModel
 		$query = $db->getQuery(true);
 
 		$query->select($db->qn([
-			'a.id', 'a.tax_id', 'a.tax_type', 'a.code', 'a.agent', 'a.rate', 'a.fixed', 'a.basis',
-			'a.max_nights', 'a.reduced_rate', 'a.gross', 'a.pay_arrival', 'a.applicable_age', 'a.per_night',
-			'a.valid_from', 'a.taxrate_id', 'a.state', 'a.created_by', 'a.created_at', 'a.updated_by', 'a.updated_at'
+			'a.id',
+			'a.tax_id',
+			'a.tax_type',
+			'a.code',
+			'a.agent',
+			'a.rate',
+			'a.fixed',
+			'a.basis',
+			'a.max_nights',
+			'a.reduced_rate',
+			'a.gross',
+			'a.pay_arrival',
+			'a.applicable_age',
+			'a.per_night',
+			'a.valid_from',
+			'a.taxrate_id',
+			'a.state',
+			'a.created_by',
+			'a.created_at',
+			'a.updated_by',
+			'a.updated_at'
 		]));
 
 		$query->from($db->qn('#__knowres_tax_rate', 'a'))
-		      ->where($db->qn('a.state') . '=1')
-		      ->where($db->qn('a.valid_from') . '<=' . $db->q($today));
+			->where($db->qn('a.state') . '=1')
+			->where($db->qn('a.valid_from') . '<=' . $db->q($today));
 
 		$query->select($db->qn('t.country_id', 'country_id'));
 		$query->select($db->qn('t.region_id', 'region_id'));
 		$query->select($db->qn('t.town_id', 'town_id'));
 		$query->join('LEFT', $db->qn('#__knowres_tax', 't') . 'ON' . $db->qn('t.id') . '=' . $db->qn('a.tax_id'));
 
-		if (!empty($order))
-		{
+		if (!empty($order)) {
 			$query->order($db->qn($order));
 		}
 
@@ -134,18 +153,36 @@ class TaxratesModel extends ListModel
 		$query = $db->getQuery(true);
 
 		$query->select($db->qn([
-			'a.id', 'a.tax_id', 'a.tax_type', 'a.code', 'a.agent', 'a.rate', 'a.fixed', 'a.basis',
-			'a.max_nights', 'a.reduced_rate', 'a.gross', 'a.pay_arrival', 'a.applicable_age', 'a.per_night',
-			'a.valid_from', 'a.taxrate_id', 'a.tt_option', 'a.state', 'a.created_by', 'a.created_at', 'a.updated_by',
+			'a.id',
+			'a.tax_id',
+			'a.tax_type',
+			'a.code',
+			'a.agent',
+			'a.rate',
+			'a.fixed',
+			'a.basis',
+			'a.max_nights',
+			'a.reduced_rate',
+			'a.gross',
+			'a.pay_arrival',
+			'a.applicable_age',
+			'a.per_night',
+			'a.valid_from',
+			'a.taxrate_id',
+			'a.tt_option',
+			'a.state',
+			'a.created_by',
+			'a.created_at',
+			'a.updated_by',
 			'a.updated_at'
 		]));
 
 		$query->from($db->qn('#__knowres_tax_rate', 'a'))
-		      ->where($db->qn('a.code') . '=' . $db->q($code))
-		      ->where($db->qn('a.valid_from') . '<=' . $db->q($date))
-		      ->where($db->qn('a.state') . '=1')
-		      ->setLimit(1)
-		      ->order($db->qn('valid_from') . 'DESC');
+			->where($db->qn('a.code') . '=' . $db->q($code))
+			->where($db->qn('a.valid_from') . '<=' . $db->q($date))
+			->where($db->qn('a.state') . '=1')
+			->setLimit(1)
+			->order($db->qn('valid_from') . 'DESC');
 
 		$db->setQuery($query);
 
@@ -175,20 +212,20 @@ class TaxratesModel extends ListModel
 		$item     = 'taxrate';
 		$subQuery = $db->getQuery(true);
 		$subQuery->select('sub.text')
-		         ->from($db->qn('#__knowres_translation', 'sub'))
-		         ->where($db->qn('sub.item') . '=' . $db->q($item))
-		         ->where($db->qn('sub.item_id') . '=' . $db->qn('a.id'))
-		         ->order('(CASE WHEN ' . $db->qn('sub.language') . ' = ' . $db->q($lang) . ' THEN 1 ELSE 2 END )')
-		         ->setLimit(1);
+			->from($db->qn('#__knowres_translation', 'sub'))
+			->where($db->qn('sub.item') . '=' . $db->q($item))
+			->where($db->qn('sub.item_id') . '=' . $db->qn('a.id'))
+			->order('(CASE WHEN ' . $db->qn('sub.language') . ' = ' . $db->q($lang) . ' THEN 1 ELSE 2 END )')
+			->setLimit(1);
 
 		$item        = 'tax';
 		$subQueryTax = $db->getQuery(true);
 		$subQueryTax->select('sub.text')
-		            ->from($db->qn('#__knowres_translation', 'sub'))
-		            ->where($db->qn('sub.item') . '=' . $db->q($item))
-		            ->where($db->qn('sub.item_id') . '=' . $db->qn('a.tax_id'))
-		            ->order('(CASE WHEN ' . $db->qn('sub.language') . '=' . $db->q($lang) . ' THEN 1 ELSE 2 END )')
-		            ->setLimit(1);
+			->from($db->qn('#__knowres_translation', 'sub'))
+			->where($db->qn('sub.item') . '=' . $db->q($item))
+			->where($db->qn('sub.item_id') . '=' . $db->qn('a.tax_id'))
+			->order('(CASE WHEN ' . $db->qn('sub.language') . '=' . $db->q($lang) . ' THEN 1 ELSE 2 END )')
+			->setLimit(1);
 
 		$query->select($this->getState('list.select', 'a.*'));
 		$query->from($db->qn('#__knowres_tax_rate', 'a'));
@@ -199,37 +236,31 @@ class TaxratesModel extends ListModel
 		$query->join('LEFT', $db->qn('#__users', 'uc') . ' ON ' . $db->qn('uc.id') . '=' . $db->qn('a.checked_out'));
 		$query->select($db->qn('created_by.name', 'created_by'));
 		$query->join('LEFT',
-			$db->qn('#__users', 'created_by') . ' ON ' . $db->qn('created_by.id') . '=' . $db->qn('a.created_by'));
+			$db->qn('#__users', 'created_by') . ' ON ' . $db->qn('created_by.id') . '=' . $db->qn('a.created_by')
+		);
 		$query->select($db->qn('updated_by.name', 'updated_by'));
 		$query->join('LEFT',
-			$db->qn('#__users', 'updated_by') . ' ON ' . $db->qn('updated_by.id') . '=' . $db->qn('a.updated_by'));
+			$db->qn('#__users', 'updated_by') . ' ON ' . $db->qn('updated_by.id') . '=' . $db->qn('a.updated_by')
+		);
 
 		$state = $this->getState('filter.state');
-		if (is_numeric($state))
-		{
-			$query->where($db->qn('a.state') . '=' . (int) $state);
-		}
-		elseif ($state === '')
-		{
+		if (is_numeric($state)) {
+			$query->where($db->qn('a.state') . '=' . (int)$state);
+		} elseif ($state === '') {
 			$query->where($db->qn('a.state') . ' IN (0, 1)');
 		}
 
 		$valid_from = $this->getState('filter.valid_from');
-		if ($valid_from)
-		{
+		if ($valid_from) {
 			$today = TickTock::getDate();
 			$query->where($db->qn('a.valid_from') . '<=' . $db->q($today));
 		}
 
 		$search = $this->getState('filter.search');
-		if (!empty($search))
-		{
-			if (stripos($search, 'id:') === 0)
-			{
-				$query->where($db->qn('a.id') . '=' . (int) substr($search, 3));
-			}
-			else
-			{
+		if (!empty($search)) {
+			if (stripos($search, 'id:') === 0) {
+				$query->where($db->qn('a.id') . '=' . (int)substr($search, 3));
+			} else {
 				$search = $db->q('%' . $db->escape($search) . '%');
 				$query->where('(' . $subQuery->__toString() . ') ' . ' LIKE ' . $search);
 			}
@@ -237,8 +268,7 @@ class TaxratesModel extends ListModel
 
 		$orderCol  = $this->state->get('list.ordering');
 		$orderDirn = $this->state->get('list.direction');
-		if ($orderCol && $orderDirn)
-		{
+		if ($orderCol && $orderDirn) {
 			$query->order($db->qn($orderCol) . ' ' . $orderDirn);
 		}
 
@@ -278,11 +308,14 @@ class TaxratesModel extends ListModel
 	protected function populateState($ordering = 'tax_name', $direction = 'asc'): void
 	{
 		$this->setState('filter.search',
-			$this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string'));
+			$this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string')
+		);
 		$this->setState('filter.state',
-			$this->getUserStateFromRequest($this->context . '.filter.state', 'filter_state', '', 'string'));
+			$this->getUserStateFromRequest($this->context . '.filter.state', 'filter_state', '', 'string')
+		);
 		$this->setState('filter.valid_from',
-			$this->getUserStateFromRequest($this->context . '.filter.valid_from', 'filter_valid_from', '', 'string'));
+			$this->getUserStateFromRequest($this->context . '.filter.valid_from', 'filter_valid_from', '', 'string')
+		);
 
 		$this->setState('params', KrMethods::getParams());
 

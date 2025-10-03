@@ -38,19 +38,22 @@ class RatesModel extends ListModel
 	public function __construct($config = [])
 	{
 		if (empty($config['filter_fields'])) {
-			$config['filter_fields'] = array(
-				'id', 'a.id',
-				'valid_from', 'a.valid_from',
-				'valid_to', 'a.valid_to',
-				'rate', 'a.rate',
-				'min_nights', 'a.min_nights',
-				'max_nights', 'a.max_nights',
-				'min_guests', 'a.min_guests',
-				'max_guests', 'a.max_guests',
-				'start_day', 'a.start_day',
+			//@formatter:off
+			$config['filter_fields'] = [
+				'id',           'a.id',
+				'valid_from',   'a.valid_from',
+				'valid_to',     'a.valid_to',
+				'rate',         'a.rate',
+				'min_nights',   'a.min_nights',
+				'max_nights',   'a.max_nights',
+				'min_guests',   'a.min_guests',
+				'max_guests',   'a.max_guests',
+				'start_day',    'a.start_day',
 				'more_guests', 'a.more_guests',
-				'state', 'a.state',
-			);
+				'state',
+				'a.state',
+			];
+			//@formatter:on
 		}
 
 		parent::__construct($config);
@@ -71,19 +74,19 @@ class RatesModel extends ListModel
 
 		foreach ($updates as $row) {
 			$sql[] = '( 
-							' . (int) $row->id . ',
-				            ' . (int) $row->property_id . ',
+							' . (int)$row->id . ',
+				            ' . (int)$row->property_id . ',
 				            ' . $db->q($row->valid_from) . ',
 				            ' . $db->q($row->valid_to) . ',
-							' . (float) $row->rate . ',
-				            ' . (int) $row->min_nights . ',
-				            ' . (int) $row->max_nights . ',
-				            ' . (int) $row->min_guests . ',
-				            ' . (int) $row->max_guests . ',
-				            ' . (int) $row->ignore_pppn . ',
-				            ' . (int) $row->start_day . ',
+							' . (float)$row->rate . ',
+				            ' . (int)$row->min_nights . ',
+				            ' . (int)$row->max_nights . ',
+				            ' . (int)$row->min_guests . ',
+				            ' . (int)$row->max_guests . ',
+				            ' . (int)$row->ignore_pppn . ',
+				            ' . (int)$row->start_day . ',
 				            ' . $db->q($row->more_guests) . ',
-				            ' . (int) $row->state . ',
+				            ' . (int)$row->state . ',
 				            ' . $db->q($row->created_at) . '
 				           )';
 		}
@@ -220,7 +223,7 @@ class RatesModel extends ListModel
 		$query->select('MIN(a.rate) as minrate');
 		$query->from($db->qn('#__knowres_rate', 'a'));
 		if (is_numeric($properties)) {
-			$query->where($db->qn('a.property_id') . '=' . (int) $properties);
+			$query->where($db->qn('a.property_id') . '=' . (int)$properties);
 		} elseif (is_string($properties) && strlen($properties) > 0) {
 			$ids = explode(',', $properties);
 			$query->where($db->qn('a.property_id') . ' IN (' . implode(',', array_map('intval', $ids)) . ')');
@@ -269,12 +272,29 @@ class RatesModel extends ListModel
 		$query = $db->getQuery(true);
 
 		$query->select($this->getState('list.select',
-			[$db->qn('a.id'), $db->qn('a.property_id'), $db->qn('a.valid_from'), $db->qn('a.valid_to'), $db->qn('a.rate'),
-			 $db->qn('a.min_nights'), $db->qn('a.max_nights'), $db->qn('a.min_guests'), $db->qn('a.max_guests'),
-			 $db->qn('a.ignore_pppn'), $db->qn('a.start_day'), $db->qn('a.more_guests'), $db->qn('a.state'),
-			 $db->qn('a.checked_out'), $db->qn('a.checked_out_time'), $db->qn('a.created_by'), $db->qn('a.created_at'),
-			 $db->qn('a.updated_by'), $db->qn('a.updated_at')
-			]));
+			[
+				$db->qn('a.id'),
+				$db->qn('a.property_id'),
+				$db->qn('a.valid_from'),
+				$db->qn('a.valid_to'),
+				$db->qn('a.rate'),
+				$db->qn('a.min_nights'),
+				$db->qn('a.max_nights'),
+				$db->qn('a.min_guests'),
+				$db->qn('a.max_guests'),
+				$db->qn('a.ignore_pppn'),
+				$db->qn('a.start_day'),
+				$db->qn('a.more_guests'),
+				$db->qn('a.state'),
+				$db->qn('a.checked_out'),
+				$db->qn('a.checked_out_time'),
+				$db->qn('a.created_by'),
+				$db->qn('a.created_at'),
+				$db->qn('a.updated_by'),
+				$db->qn('a.updated_at')
+			]
+		)
+		);
 
 		$query->from($db->qn('#__knowres_rate', 'a'))
 			->where($db->qn('a.state') . '=1')
@@ -282,7 +302,7 @@ class RatesModel extends ListModel
 			->where($db->qn('a.valid_from') . '<=' . $db->q($to));
 
 		if (is_numeric($properties)) {
-			$query->where($db->qn('a.property_id') . '=' . (int) $properties);
+			$query->where($db->qn('a.property_id') . '=' . (int)$properties);
 		} elseif (is_array($properties)) {
 			$query->where('a.property_id IN (' . implode(',', array_map('intval', $properties)) . ')');
 		} elseif (is_string($properties) && strlen($properties) > 0) {
@@ -352,26 +372,29 @@ class RatesModel extends ListModel
 			->setLimit(1);
 
 		$query->select($this->getState('list.select',
-			[$db->qn('a.id'),
-			 $db->qn('a.property_id'),
-			 $db->qn('a.valid_from'),
-			 $db->qn('a.valid_to'),
-			 $db->qn('a.rate'),
-			 $db->qn('a.min_nights'),
-			 $db->qn('a.max_nights'),
-			 $db->qn('a.min_guests'),
-			 $db->qn('a.max_guests'),
-			 $db->qn('a.ignore_pppn'),
-			 $db->qn('a.start_day'),
-			 $db->qn('a.more_guests'),
-			 $db->qn('a.state'),
-			 $db->qn('a.checked_out'),
-			 $db->qn('a.checked_out_time'),
-			 $db->qn('a.created_by'),
-			 $db->qn('a.created_at'),
-			 $db->qn('a.updated_by'),
-			 $db->qn('a.updated_at')
-			]));
+			[
+				$db->qn('a.id'),
+				$db->qn('a.property_id'),
+				$db->qn('a.valid_from'),
+				$db->qn('a.valid_to'),
+				$db->qn('a.rate'),
+				$db->qn('a.min_nights'),
+				$db->qn('a.max_nights'),
+				$db->qn('a.min_guests'),
+				$db->qn('a.max_guests'),
+				$db->qn('a.ignore_pppn'),
+				$db->qn('a.start_day'),
+				$db->qn('a.more_guests'),
+				$db->qn('a.state'),
+				$db->qn('a.checked_out'),
+				$db->qn('a.checked_out_time'),
+				$db->qn('a.created_by'),
+				$db->qn('a.created_at'),
+				$db->qn('a.updated_by'),
+				$db->qn('a.updated_at')
+			]
+		)
+		);
 
 		$query->from($db->qn('#__knowres_rate', 'a'));
 		$query->select('(' . $subQuery->__toString() . ') ' . $db->q('name'));
@@ -380,7 +403,8 @@ class RatesModel extends ListModel
 		$query->join("LEFT", "#__users AS uc ON uc.id=a.checked_out");
 		$query->select($db->qn('p.property_name', 'property_name'));
 		$query->join('LEFT',
-			$db->qn('#__knowres_property', 'p') . ' ON ' . $db->qn('p.id') . ' =  ' . $db->qn('a.property_id'));
+			$db->qn('#__knowres_property', 'p') . ' ON ' . $db->qn('p.id') . ' =  ' . $db->qn('a.property_id')
+		);
 
 		$query->select('created_by.name AS created_by');
 		$query->join('LEFT', '#__users AS created_by ON created_by.id = a.created_by');
@@ -389,14 +413,14 @@ class RatesModel extends ListModel
 
 		$state = $this->getState('filter.state');
 		if (is_numeric($state)) {
-			$query->where($db->qn('a.state') . ' = ' . (int) $state);
+			$query->where($db->qn('a.state') . ' = ' . (int)$state);
 		} elseif ($state === '') {
 			$query->where($db->qn('a.state') . ' IN (0, 1)');
 		}
 
 		$filter_property_id = $this->state->get("filter.property_id");
 		if (is_numeric($filter_property_id)) {
-			$query->where($db->qn('a.property_id') . ' = ' . (int) $filter_property_id);
+			$query->where($db->qn('a.property_id') . ' = ' . (int)$filter_property_id);
 		} elseif (is_string($filter_property_id) && strlen($filter_property_id) > 0) {
 			$ids = explode(",", $filter_property_id);
 			$query->where($db->qn('a.property_id') . ' IN (' . implode(',', array_map('intval', $ids)) . ')');
@@ -415,7 +439,7 @@ class RatesModel extends ListModel
 		$search = $this->getState('filter.search');
 		if (!empty($search)) {
 			if (stripos($search, 'id:') === 0) {
-				$query->where($db->qn('a.id') . ' = ' . (int) substr($search, 3));
+				$query->where($db->qn('a.id') . ' = ' . (int)substr($search, 3));
 			} else {
 				$search = $db->q('%' . $db->escape($search) . '%');
 				$query->where('(' . $subQuery->__toString() . ') ' . ' LIKE ' . $search);
@@ -467,17 +491,23 @@ class RatesModel extends ListModel
 	protected function populateState($ordering = 'a.valid_from', $direction = 'asc'): void
 	{
 		$this->setState('filter.search',
-			$this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string'));
+			$this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string')
+		);
 		$this->setState('filter.state',
-			$this->getUserStateFromRequest($this->context . '.filter.state', 'filter_state', '', 'string'));
+			$this->getUserStateFromRequest($this->context . '.filter.state', 'filter_state', '', 'string')
+		);
 		$this->setState('filter.property_id',
-			$this->getUserStateFromRequest($this->context . '.filter.property_id', 'filter_property_id', '', 'string'));
+			$this->getUserStateFromRequest($this->context . '.filter.property_id', 'filter_property_id', '', 'string')
+		);
 		$this->setState('filter.valid_from',
-			$this->getUserStateFromRequest($this->context . '.filter.valid_from', 'filter_valid_from', '', 'string'));
+			$this->getUserStateFromRequest($this->context . '.filter.valid_from', 'filter_valid_from', '', 'string')
+		);
 		$this->setState('filter.valid_to',
-			$this->getUserStateFromRequest($this->context . '.filter.valid_to', 'filter_valid_to', '', 'string'));
+			$this->getUserStateFromRequest($this->context . '.filter.valid_to', 'filter_valid_to', '', 'string')
+		);
 		$this->setState('filter.min_guests',
-			$this->getUserStateFromRequest($this->context . '.filter.min_guests', 'filter_min_guests', 0, 'integer'));
+			$this->getUserStateFromRequest($this->context . '.filter.min_guests', 'filter_min_guests', 0, 'integer')
+		);
 
 		$this->setState('params', KrMethods::getParams());
 

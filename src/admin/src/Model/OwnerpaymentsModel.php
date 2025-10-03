@@ -27,26 +27,31 @@ class OwnerpaymentsModel extends ListModel
 	/**
 	 * Constructor.
 	 *
-	 * @param   array  $config  An optional associative array of configuration settings.
+	 * @param  array  $config  An optional associative array of configuration settings.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
 	public function __construct($config = [])
 	{
-		if (empty($config['filter_fields']))
-		{
-			$config['filter_fields'] = array(
-				'id', 'a.id',
-				'owner_id', 'a.owner_id',
+		if (empty($config['filter_fields'])) {
+			//@formatter:off
+			$config['filter_fields'] = [
+				'id',           'a.id',
+				'owner_id',     'a.owner_id',
 				'payment_date', 'a.payment_date',
-				'confirmed', 'a.confirmed',
-				'type', 'a.type',
-				'amount', 'a.amount',
-				'calculated', 'a.calculated',
-				'state', 'a.state',
-				'contract_tag', 'contract_currency', 'owner_name', 'property_id', 'property_name',
-			);
+				'confirmed',    'a.confirmed',
+				'type',         'a.type',
+				'amount',       'a.amount',
+				'calculated',   'a.calculated',
+				'state',        'a.state',
+				'contract_tag',
+				'contract_currency',
+				'owner_name',
+				'property_id',
+				'property_name',
+			];
+			//@formatter:off
 		}
 
 		parent::__construct($config);

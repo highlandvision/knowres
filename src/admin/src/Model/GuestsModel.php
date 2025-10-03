@@ -31,24 +31,25 @@ class GuestsModel extends ListModel
 	/**
 	 * Constructor.
 	 *
-	 * @param   array  $config  An optional associative array of configuration settings.
+	 * @param  array  $config  An optional associative array of configuration settings.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
 	public function __construct($config = [])
 	{
-		if (empty($config['filter_fields']))
-		{
-			$config['filter_fields'] = array(
-				'id', 'a.id',
-				'email', 'a.email',
-				'firstname', 'a.firstname',
-				'surname', 'a.surname',
-				'country_id', 'a.country_id',
-				'state', 'a.state',
+		if (empty($config['filter_fields'])) {
+			//@formatter:off
+			$config['filter_fields'] = [
+				'id',           'a.id',
+				'email',        'a.email',
+				'firstname',    'a.firstname',
+				'surname',      'a.surname',
+				'country_id',   'a.country_id',
+				'state',        'a.state',
 				'country_name'
-			);
+			];
+			//@formatter:off
 		}
 
 		parent::__construct($config);

@@ -27,7 +27,8 @@ use function is_null;
  *
  * @since 2.0.0
  */
-class ServicexrefsModel extends ListModel {
+class ServicexrefsModel extends ListModel
+{
 	/**
 	 * Constructor.
 	 *
@@ -39,48 +40,33 @@ class ServicexrefsModel extends ListModel {
 	public function __construct($config = [])
 	{
 		if (empty($config['filter_fields'])) {
-			$config['filter_fields'] = array(
-				'id',
-				'a.id',
-				'service_id',
-				'a.service_id',
-				'property_id',
-				'a.property_id',
-				'contract_id',
-				'a.contract_id',
-				'payment_id',
-				'a.payment_id',
-				'guest_id',
-				'a.guest_id',
-				'owner_id',
-				'a.owner_id',
-				'invoice_number',
-				'a.invoice_number',
-				'foreign_key',
-				'a.foreign_key',
-				'cancelled',
-				'a.cancelled',
-				'new',
-				'a.new',
-				'sell',
-				'a.sell',
-				'state',
-				'a.state',
-				'created_by',
-				'a.created_by',
-				'created_at',
-				'a.created_at',
-				'updated_by',
-				'a.updated_by',
-				'updated_at',
-				'a.updated_at',
+			//@formatter:off
+			$config['filter_fields'] = [
+				'id',   			'a.id',
+				'service_id',		'a.service_id',
+				'property_id',		'a.property_id',
+				'contract_id',		'a.contract_id',
+				'payment_id',		'a.payment_id',
+				'guest_id', 		'a.guest_id',
+				'owner_id', 		'a.owner_id',
+				'invoice_number',	'a.invoice_number',
+				'foreign_key',		'a.foreign_key',
+				'cancelled',		'a.cancelled',
+				'new',  			'a.new',
+				'sell',				'a.sell',
+				'state',			'a.state',
+				'created_by',		'a.created_by',
+				'created_at',		'a.created_at',
+				'updated_by',		'a.updated_by',
+				'updated_at',		'a.updated_at',
 				'service_name',
 				'property_name',
 				'contract_tag',
 				'guest_name',
 				'owner_name',
 				'type'
-			);
+			];
+			//@formatter:on
 		}
 
 		parent::__construct($config);
@@ -112,7 +98,8 @@ class ServicexrefsModel extends ListModel {
 		)));
 		$query->from($db->qn('#__knowres_service_xref', 's'))
 			->join('LEFT',
-				$db->qn('#__knowres_service', 'i') . ' ON ' . $db->qn('i.id') . '=' . $db->qn('s.service_id'))
+				$db->qn('#__knowres_service', 'i') . ' ON ' . $db->qn('i.id') . '=' . $db->qn('s.service_id')
+			)
 			->where($db->qn('s.state') . '=1')
 			->where($db->qn('s.property_id') . '=' . $property_id)
 			->where($db->qn('s.foreign_key') . '>' . $db->q(''))
@@ -170,19 +157,21 @@ class ServicexrefsModel extends ListModel {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
-		$query->select($db->qn(['x.id',
-		                        'x.contract_id',
-		                        'x.foreign_key',
-		                        'x.state',
-		                        'x.created_at',
-		                        'x.updated_at',
-		                        'c.cancelled',
-		                        'c.tag'
+		$query->select($db->qn([
+			'x.id',
+			'x.contract_id',
+			'x.foreign_key',
+			'x.state',
+			'x.created_at',
+			'x.updated_at',
+			'c.cancelled',
+			'c.tag'
 		]));
 
 		$query->from($db->qn('#__knowres_service_xref', 'x'))
 			->join('LEFT',
-				$db->qn('#__knowres_contract', 'c') . ' ON ' . $db->qn('c.id') . '=' . $db->qn('x.contract_id'))
+				$db->qn('#__knowres_contract', 'c') . ' ON ' . $db->qn('c.id') . '=' . $db->qn('x.contract_id')
+			)
 			->join('LEFT', $db->qn('#__knowres_guest', 'g') . ' ON ' . $db->qn('c.guest_id') . '=' . $db->qn('g.id'))
 			->where($db->qn('x.contract_id') . '>0')
 			->where($db->qn('x.property_id') . '=0')
@@ -331,7 +320,8 @@ class ServicexrefsModel extends ListModel {
 				. ' ON ' . $db->qn('i.id') . '=' . $db->qn('x.service_id')
 				. ' AND ' . $db->qn('i.agency_id') . '>0'
 				. ' AND ' . $db->qn('i.type') . '=' . $db->q('c')
-				. ' AND ' . $db->qn('i.state') . '=1')
+				. ' AND ' . $db->qn('i.state') . '=1'
+			)
 			->where($db->qn('x.state') . '=1')
 			->where($db->qn('x.new') . '<>1')
 			->where(' NOT EXISTS (' . $subQuery->__toString() . ') ');
@@ -370,14 +360,16 @@ class ServicexrefsModel extends ListModel {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
-		$query->select($db->qn(['id',
-		                        'property_id',
-		                        'foreign_key',
-		                        'new',
-		                        'sell',
-		                        'state',
-		                        'created_at',
-		                        'updated_at']));
+		$query->select($db->qn([
+			'id',
+			'property_id',
+			'foreign_key',
+			'new',
+			'sell',
+			'state',
+			'created_at',
+			'updated_at'
+		]));
 		$query->from($db->qn('#__knowres_service_xref'))
 			->where($db->qn('state') . '=1')
 			->where($db->qn('property_id') . '>0')
@@ -545,21 +537,21 @@ class ServicexrefsModel extends ListModel {
 		$query->select('updated_by.name AS updated_by');
 		$query->join('LEFT', '#__users AS updated_by ON updated_by.id = a.updated_by');
 
-		$filter_service_id = (int) $this->state->get('filter.service_id');
+		$filter_service_id = (int)$this->state->get('filter.service_id');
 		if ($filter_service_id > 0) {
 			$query->where($db->qn('a.service_id') . '=' . $filter_service_id);
 		}
 
 		$state = $this->getState('filter.state');
 		if (is_numeric($state)) {
-			$query->where($db->qn('a.state') . '=' . (int) $state);
+			$query->where($db->qn('a.state') . '=' . (int)$state);
 		} elseif ($state === '') {
 			$query->where($db->qn('a.state') . '=1');
 		}
 
 		$sell = $this->getState('filter.sell');
 		if (is_numeric($sell)) {
-			$query->where($db->qn('a.sell') . '=' . (int) $sell);
+			$query->where($db->qn('a.sell') . '=' . (int)$sell);
 			$query->where($db->qn('a.property_id') . '>0');
 			$query->where($db->qn('a.contract_id') . '=0');
 		} elseif ($sell === '') {
@@ -618,7 +610,7 @@ class ServicexrefsModel extends ListModel {
 		$search = $this->getState('filter.search');
 		if (!empty($search)) {
 			if (stripos($search, 'id:') === 0) {
-				$query->where($db->qn('a.id') . '=' . (int) substr($search, 3));
+				$query->where($db->qn('a.id') . '=' . (int)substr($search, 3));
 			} else {
 				$search = $db->q('%' . $db->escape($search) . '%');
 				$query->where('( a.foreign_key LIKE ' . $search . ' )');
@@ -673,25 +665,35 @@ class ServicexrefsModel extends ListModel {
 	protected function populateState($ordering = 'a.service_id', $direction = 'asc'): void
 	{
 		$this->setState('filter.search',
-			$this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string'));
+			$this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string')
+		);
 		$this->setState('filter.state',
-			$this->getUserStateFromRequest($this->context . '.filter.state', 'filter_state', '', 'string'));
+			$this->getUserStateFromRequest($this->context . '.filter.state', 'filter_state', '', 'string')
+		);
 		$this->setState('filter.service_id',
-			$this->getUserStateFromRequest($this->context . '.filter.service_id', 'filter_service_id', '', 'string'));
+			$this->getUserStateFromRequest($this->context . '.filter.service_id', 'filter_service_id', '', 'string')
+		);
 		$this->setState('filter.type',
-			$this->getUserStateFromRequest($this->context . '.filter.type', 'filter_type', '', 'string'));
+			$this->getUserStateFromRequest($this->context . '.filter.type', 'filter_type', '', 'string')
+		);
 		$this->setState('filter.property_id',
-			$this->getUserStateFromRequest($this->context . '.filter.property_id', 'filter_property_id', '', 'string'));
+			$this->getUserStateFromRequest($this->context . '.filter.property_id', 'filter_property_id', '', 'string')
+		);
 		$this->setState('filter.sell',
-			$this->getUserStateFromRequest($this->context . '.filter.sell', 'filter_sell', '', 'string'));
+			$this->getUserStateFromRequest($this->context . '.filter.sell', 'filter_sell', '', 'string')
+		);
 		$this->setState('filter.contract_id',
-			$this->getUserStateFromRequest($this->context . '.filter.contract_id', 'filter_contract_id', '', 'string'));
+			$this->getUserStateFromRequest($this->context . '.filter.contract_id', 'filter_contract_id', '', 'string')
+		);
 		$this->setState('filter.guest_id',
-			$this->getUserStateFromRequest($this->context . '.filter.guest_id', 'filter_guest_id', '', 'string'));
+			$this->getUserStateFromRequest($this->context . '.filter.guest_id', 'filter_guest_id', '', 'string')
+		);
 		$this->setState('filter.owner_id',
-			$this->getUserStateFromRequest($this->context . '.filter.owner_id', 'filter_owner_id', '', 'string'));
+			$this->getUserStateFromRequest($this->context . '.filter.owner_id', 'filter_owner_id', '', 'string')
+		);
 		$this->setState('filter.payment_id',
-			$this->getUserStateFromRequest($this->context . '.filter.payment_id', 'filter_payment_id', '', 'string'));
+			$this->getUserStateFromRequest($this->context . '.filter.payment_id', 'filter_payment_id', '', 'string')
+		);
 
 		$this->setState('params', KrMethods::getParams());
 

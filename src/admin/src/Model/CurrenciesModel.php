@@ -30,29 +30,30 @@ class CurrenciesModel extends ListModel
 	/**
 	 * Constructor.
 	 *
-	 * @param   array  $config  An optional associative array of configuration settings.
+	 * @param  array  $config  An optional associative array of configuration settings.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
 	public function __construct($config = [])
 	{
-		if (empty($config['filter_fields']))
-		{
-			$config['filter_fields'] = array(
-				'id', 'a.id',
-				'iso', 'a.iso',
-				'decimals', 'a.decimals',
-				'allow_property', 'a.allow_property',
-				'allow_payment', 'a.allow_payment',
-				'ordering', 'a.ordering',
-				'state', 'a.state',
-				'created_by', 'a.created_by',
-				'created_at', 'a.created_at',
-				'updated_by', 'a.updated_by',
-				'updated_at', 'a.updated_at',
+		if (empty($config['filter_fields'])) {
+			//@formatter:off
+			$config['filter_fields'] = [
+				'id',               'a.id',
+				'iso',              'a.iso',
+				'decimals',         'a.decimals',
+				'allow_property',   'a.allow_property',
+				'allow_payment',    'a.allow_payment',
+				'ordering',         'a.ordering',
+				'state',            'a.state',
+				'created_by',       'a.created_by',
+				'created_at',       'a.created_at',
+				'updated_by',       'a.updated_by',
+				'updated_at',       'a.updated_at',
 				'name',
-			);
+			];
+			//@formatter:on
 		}
 
 		parent::__construct($config);
@@ -83,10 +84,10 @@ class CurrenciesModel extends ListModel
 			'updated_by',
 			'updated_at'
 		)))
-		      ->from($db->qn('#__knowres_currency'))
-		      ->where($db->qn('state') . ' = 1')
-		      ->where($db->qn('allow_property') . ' = 1')
-		      ->order($db->qn('iso') . ' asc');
+			->from($db->qn('#__knowres_currency'))
+			->where($db->qn('state') . ' = 1')
+			->where($db->qn('allow_property') . ' = 1')
+			->order($db->qn('iso') . ' asc');
 		$db->setQuery($query);
 
 		$items        = $db->loadObjectList();
@@ -98,7 +99,7 @@ class CurrenciesModel extends ListModel
 	/**
 	 * Get payment currencies for property currency
 	 *
-	 * @param   string  $iso  Iso currency code
+	 * @param  string  $iso  Iso currency code
 	 *
 	 * @throws RuntimeException
 	 * @throws RuntimeException
@@ -111,9 +112,9 @@ class CurrenciesModel extends ListModel
 		$query = $db->getQuery(true);
 
 		$query->select($db->qn('decimals'))
-		      ->from($db->qn('#__knowres_currency'))
-		      ->where($db->qn('iso') . '=' . $db->q($iso))
-		      ->setLimit(1);
+			->from($db->qn('#__knowres_currency'))
+			->where($db->qn('iso') . '=' . $db->q($iso))
+			->setLimit(1);
 		$db->setQuery($query);
 
 		$decimals = $db->loadResult();
@@ -130,8 +131,7 @@ class CurrenciesModel extends ListModel
 	public function getItems($pk = null): array
 	{
 		$items = parent::getItems();
-		foreach ($items as $item)
-		{
+		foreach ($items as $item) {
 			$item->allow_payment = Utility::decodeJson($item->allow_payment, true);
 		}
 
@@ -141,7 +141,7 @@ class CurrenciesModel extends ListModel
 	/**
 	 * Get payment currencies for property currency
 	 *
-	 * @param   string  $iso  ISO currency code
+	 * @param  string  $iso  ISO currency code
 	 *
 	 * @throws RuntimeException
 	 * @throws RuntimeException
@@ -154,10 +154,10 @@ class CurrenciesModel extends ListModel
 		$query = $db->getQuery(true);
 
 		$query->select('allow_payment')
-		      ->from($db->qn('#__knowres_currency'))
-		      ->where($db->qn('allow_payment') . '>' . $db->q(''))
-		      ->where($db->qn('iso') . '=' . $db->q($iso))
-		      ->order($db->qn('ordering'));
+			->from($db->qn('#__knowres_currency'))
+			->where($db->qn('allow_payment') . '>' . $db->q(''))
+			->where($db->qn('iso') . '=' . $db->q($iso))
+			->order($db->qn('ordering'));
 		$db->setQuery($query);
 
 		return $db->loadResult();
@@ -180,11 +180,11 @@ class CurrenciesModel extends ListModel
 
 		$subQuery = $db->getQuery(true);
 		$subQuery->select('sub.text')
-		         ->from($db->qn('#__knowres_translation', 'sub'))
-		         ->where($db->qn('sub.item') . ' = ' . $db->q($item))
-		         ->where($db->qn('sub.item_id') . ' = ' . $db->qn('a.id'))
-		         ->order('(CASE WHEN ' . $db->qn('sub.language') . ' = ' . $db->q($lang) . ' THEN 1 ELSE 2 END )')
-		         ->setLimit(1);
+			->from($db->qn('#__knowres_translation', 'sub'))
+			->where($db->qn('sub.item') . ' = ' . $db->q($item))
+			->where($db->qn('sub.item_id') . ' = ' . $db->qn('a.id'))
+			->order('(CASE WHEN ' . $db->qn('sub.language') . ' = ' . $db->q($lang) . ' THEN 1 ELSE 2 END )')
+			->setLimit(1);
 
 		$query->select($this->getState('list.select', 'a.*'));
 		$query->from('`#__knowres_currency` AS a');
@@ -192,30 +192,22 @@ class CurrenciesModel extends ListModel
 		$query = self::commonJoins($db, $query);
 
 		$filter_allow_property = $this->state->get("filter.allow_property");
-		if ($filter_allow_property)
-		{
-			$query->where($db->qn('a.allow_property') . '=' . (int) $filter_allow_property);
+		if ($filter_allow_property) {
+			$query->where($db->qn('a.allow_property') . '=' . (int)$filter_allow_property);
 		}
 
 		$state = $this->getState('filter.state');
-		if (is_numeric($state))
-		{
-			$query->where($db->qn('a.state') . '=' . (int) $state);
-		}
-		elseif ($state === '')
-		{
+		if (is_numeric($state)) {
+			$query->where($db->qn('a.state') . '=' . (int)$state);
+		} elseif ($state === '') {
 			$query->where($db->qn('a.state') . ' IN (0, 1)');
 		}
 
 		$search = $this->getState('filter.search');
-		if (!empty($search))
-		{
-			if (stripos($search, 'id:') === 0)
-			{
-				$query->where('a.id = ' . (int) substr($search, 3));
-			}
-			else
-			{
+		if (!empty($search)) {
+			if (stripos($search, 'id:') === 0) {
+				$query->where('a.id = ' . (int)substr($search, 3));
+			} else {
 				$search = $db->q('%' . $db->escape($search) . '%');
 				$query->where('(' . $subQuery->__toString() . ') ' . ' LIKE ' . $search);
 			}
@@ -223,8 +215,7 @@ class CurrenciesModel extends ListModel
 
 		$orderCol  = $this->state->get('list.ordering');
 		$orderDirn = $this->state->get('list.direction');
-		if ($orderCol && $orderDirn)
-		{
+		if ($orderCol && $orderDirn) {
 			$query->order($db->escape($orderCol . ' ' . $orderDirn));
 		}
 
@@ -237,7 +228,7 @@ class CurrenciesModel extends ListModel
 	 * different modules that might need different sets of data or different
 	 * ordering requirements.
 	 *
-	 * @param   string  $id  A prefix for the store id.
+	 * @param  string  $id  A prefix for the store id.
 	 *
 	 * @since  1.0.0
 	 * @return string A store id.
@@ -255,20 +246,24 @@ class CurrenciesModel extends ListModel
 	 * Method to autopopulate the model state.
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @param   null|string  $ordering
-	 * @param   null|string  $direction
+	 * @param  null|string  $ordering
+	 * @param  null|string  $direction
 	 *
 	 * @since 1.0.0
 	 */
 	protected function populateState($ordering = 'a.ordering', $direction = 'asc'): void
 	{
 		$this->setState('filter.search',
-			$this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string'));
+			$this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string')
+		);
 		$this->setState('filter.state',
-			$this->getUserStateFromRequest($this->context . '.filter.state', 'filter_state', '', 'string'));
+			$this->getUserStateFromRequest($this->context . '.filter.state', 'filter_state', '', 'string')
+		);
 		$this->setState('filter.allow_property',
 			$this->getUserStateFromRequest($this->context . '.filter.allow_property', 'filter_allow_property', '',
-				'string'));
+				'string'
+			)
+		);
 
 		$this->setState('params', KrMethods::getParams());
 

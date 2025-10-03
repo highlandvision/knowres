@@ -27,36 +27,37 @@ class AgentsModel extends ListModel
 	/**
 	 * Constructor.
 	 *
-	 * @param  array  $config An optional associative array of configuration settings.
+	 * @param  array  $config  An optional associative array of configuration settings.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
 	public function __construct($config = [])
 	{
-		if (empty($config['filter_fields']))
-		{
-			$config['filter_fields'] = array(
-				'id', 'a.id',
-				'name', 'a.name',
-				'service_id', 'a.service_id',
-				'foreign_key', 'a.foreign_key',
-				'mandatory_extras_charge', 'a.mandatory_extras_charge',
-				'mandatory_extras_excluded', 'a.mandatory_extras_excluded',
-				'deposit', 'a.deposit',
-				'deposit_paid', 'a.deposit_paid',
-				'commission', 'a.commission',
-				'provisional_email_text', 'a.provisional_email_text',
-				'confirmed_email_text', 'a.confirmed_email_text',
-				'invoice_text', 'a.invoice_text',
-				'foreign_key_reqd', 'a.foreign_key_reqd',
-				'state', 'a.state',
-				'created_by', 'a.created_by',
-				'created_at', 'a.created_at',
-				'updated_by', 'a.updated_by',
-				'updated_at', 'a.updated_at',
+		if (empty($config['filter_fields'])) {
+			//@formatter:off
+			$config['filter_fields'] = [
+				'id',                           'a.id',
+				'name',                         'a.name',
+				'service_id',                   'a.service_id',
+				'foreign_key',                  'a.foreign_key',
+				'mandatory_extras_charge',      'a.mandatory_extras_charge',
+				'mandatory_extras_excluded',    'a.mandatory_extras_excluded',
+				'deposit',                      'a.deposit',
+				'deposit_paid',                 'a.deposit_paid',
+				'commission',                   'a.commission',
+				'provisional_email_text',       'a.provisional_email_text',
+				'confirmed_email_text',         'a.confirmed_email_text',
+				'invoice_text',                 'a.invoice_text',
+				'foreign_key_reqd',             'a.foreign_key_reqd',
+				'state',                        'a.state',
+				'created_by',                   'a.created_by',
+				'created_at',                   'a.created_at',
+				'updated_by',                   'a.updated_by',
+				'updated_at',                   'a.updated_at',
 				'service_name'
-			);
+			];
+			//@formatter:on
 		}
 
 		parent::__construct($config);
@@ -78,10 +79,10 @@ class AgentsModel extends ListModel
 		$query = $db->getQuery(true);
 
 		$query->select($this->getState('list.select', 'a.*'))
-		      ->from($db->qn('#__knowres_agent', 'a'))
-		      ->where($db->qn('a.state') . '=1')
-		      ->where($db->qn('a.service_id') . '=' . $service_id)
-		      ->where($db->qn('a.foreign_key') . '=' . $db->q($foreign_key));
+			->from($db->qn('#__knowres_agent', 'a'))
+			->where($db->qn('a.state') . '=1')
+			->where($db->qn('a.service_id') . '=' . $service_id)
+			->where($db->qn('a.foreign_key') . '=' . $db->q($foreign_key));
 		$db->setQuery($query);
 
 		return $db->loadObjectList();
@@ -101,9 +102,9 @@ class AgentsModel extends ListModel
 		$query = $db->getQuery(true);
 
 		$query->select($db->qn(array('id', 'name')))
-		      ->from($db->qn('#__knowres_agent'))
-		      ->where($db->qn('state') . '=1')
-		      ->order($db->qn('name'));
+			->from($db->qn('#__knowres_agent'))
+			->where($db->qn('state') . '=1')
+			->order($db->qn('name'));
 
 		$db->setQuery($query);
 
@@ -134,30 +135,22 @@ class AgentsModel extends ListModel
 		$query->join('LEFT', '#__users AS updated_by ON updated_by.id = a.updated_by');
 
 		$state = $this->getState('filter.state');
-		if (is_numeric($state))
-		{
-			$query->where($db->qn('a.state') . ' = ' . (int) $state);
-		}
-		elseif ($state === '')
-		{
+		if (is_numeric($state)) {
+			$query->where($db->qn('a.state') . ' = ' . (int)$state);
+		} elseif ($state === '') {
 			$query->where($db->qn('a.state') . ' IN (0, 1)');
 		}
 
 		$filter_service_id = $this->state->get("filter.service_id");
-		if ($filter_service_id)
-		{
-			$query->where($db->qn('a.service_id') . ' = ' . (int) $filter_service_id);
+		if ($filter_service_id) {
+			$query->where($db->qn('a.service_id') . ' = ' . (int)$filter_service_id);
 		}
 
 		$search = $this->getState('filter.search');
-		if (!empty($search))
-		{
-			if (stripos($search, 'id:') === 0)
-			{
-				$query->where($db->qn('a.id') . '=' . (int) substr($search, 3));
-			}
-			else
-			{
+		if (!empty($search)) {
+			if (stripos($search, 'id:') === 0) {
+				$query->where($db->qn('a.id') . '=' . (int)substr($search, 3));
+			} else {
 				$search = $db->q('%' . $search . '%');
 				$query->where($db->qn('a.name') . ' LIKE ' . $search);
 			}
@@ -165,8 +158,7 @@ class AgentsModel extends ListModel
 
 		$orderCol  = $this->state->get('list.ordering');
 		$orderDirn = $this->state->get('list.direction');
-		if ($orderCol && $orderDirn)
-		{
+		if ($orderCol && $orderDirn) {
 			$query->order($db->escape($orderCol . ' ' . $orderDirn));
 		}
 
@@ -205,11 +197,14 @@ class AgentsModel extends ListModel
 	protected function populateState($ordering = 'a.name', $direction = 'desc'): void
 	{
 		$this->setState('filter.search',
-			$this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string'));
+			$this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string')
+		);
 		$this->setState('filter.state',
-			$this->getUserStateFromRequest($this->context . '.filter.state', 'filter_state', '', 'string'));
+			$this->getUserStateFromRequest($this->context . '.filter.state', 'filter_state', '', 'string')
+		);
 		$this->setState('filter.service_id',
-			$this->getUserStateFromRequest($this->context . '.filter.service_id', 'filter_service_id', '', 'string'));
+			$this->getUserStateFromRequest($this->context . '.filter.service_id', 'filter_service_id', '', 'string')
+		);
 
 		$this->setState('params', KrMethods::getParams());
 

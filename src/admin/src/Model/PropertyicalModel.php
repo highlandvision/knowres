@@ -7,8 +7,6 @@
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
 
-/** @noinspection MissingSinceTagDocInspection */
-
 namespace HighlandVision\Component\Knowres\Administrator\Model;
 
 defined('_JEXEC') or die;

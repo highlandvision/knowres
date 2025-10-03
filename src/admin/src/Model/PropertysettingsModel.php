@@ -42,16 +42,18 @@ class PropertysettingsModel extends ListModel
 	public function __construct($config = [])
 	{
 		if (empty($config['filter_fields'])) {
-			$config['filter_fields'] = array(
-				'id', 'a.id',
-				'property_id', 'a.property_id',
-				'akey', 'a.akey',
-				'value', 'a.value',
-				'created_by', 'a.created_by',
-				'created_at', 'a.created_at',
-				'updated_by', 'a.updated_by',
-				'updated_at', 'a.updated_at',
-			);
+			//@formatter:off
+			$config['filter_fields'] = [
+				'id',           'a.id',
+				'property_id',  'a.property_id',
+				'akey',         'a.akey',
+				'value',        'a.value',
+				'created_by',   'a.created_by',
+				'created_at',   'a.created_at',
+				'updated_by',   'a.updated_by',
+				'updated_at',   'a.updated_at',
+			];
+			//@formatter:off
 		}
 
 		parent::__construct($config);

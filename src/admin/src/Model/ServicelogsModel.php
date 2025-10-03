@@ -29,46 +29,34 @@ class ServicelogsModel extends ListModel
 	/**
 	 * Constructor.
 	 *
-	 * @param   array  $config  An optional associative array of configuration settings.
+	 * @param  array  $config  An optional associative array of configuration settings.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
 	public function __construct($config = [])
 	{
-		if (empty($config['filter_fields']))
-		{
-			$config['filter_fields'] = array(
-				'id',
-				'a.id',
-				'service_id',
-				'a.service_id',
-				'success',
-				'a.success',
-				'queue_id',
-				'a.queue_id',
-				'contract_id',
-				'a.contract_id',
-				'property_id',
-				'a.property_id',
-				'foreign_key',
-				'a.foreign_key',
-				'method',
-				'a.method',
-				'request',
-				'a.request',
-				'response',
-				'a.response',
-				'subject',
-				'a.subject',
-				'reply_to',
-				'a.reply_to',
-				'created_at',
-				'a.created_at',
+		if (empty($config['filter_fields'])) {
+			//@formatter:off
+			$config['filter_fields'] = [
+				'id',				'a.id',
+				'service_id',		'a.service_id',
+				'success',			'a.success',
+				'queue_id',			'a.queue_id',
+				'contract_id',		'a.contract_id',
+				'property_id',		'a.property_id',
+				'foreign_key',		'a.foreign_key',
+				'method',			'a.method',
+				'request',			'a.request',
+				'response',			'a.response',
+				'subject',			'a.subject',
+				'reply_to',			'a.reply_to',
+				'created_at',		'a.created_at',
 				'service_name',
 				'contract_tag',
 				'property_name'
-			);
+			];
+			//@formatter:on
 		}
 
 		parent::__construct($config);
@@ -92,51 +80,44 @@ class ServicelogsModel extends ListModel
 
 		$query->select('#__knowres_service_1166231.name AS service_name');
 		$query->join('LEFT',
-			'#__knowres_service AS #__knowres_service_1166231 ON #__knowres_service_1166231.id = a.service_id');
+			'#__knowres_service AS #__knowres_service_1166231 ON #__knowres_service_1166231.id = a.service_id'
+		);
 		$query->select('#__knowres_contract_1166238.tag AS contract_tag');
 		$query->join('LEFT',
-			'#__knowres_contract AS #__knowres_contract_1166238 ON #__knowres_contract_1166238.id = a.contract_id');
+			'#__knowres_contract AS #__knowres_contract_1166238 ON #__knowres_contract_1166238.id = a.contract_id'
+		);
 		$query->select('#__knowres_property_1166247.property_name AS property_name');
 		$query->join('LEFT',
-			'#__knowres_property AS #__knowres_property_1166247 ON #__knowres_property_1166247.id = a.property_id');
+			'#__knowres_property AS #__knowres_property_1166247 ON #__knowres_property_1166247.id = a.property_id'
+		);
 
 		$filter_service_id = $this->state->get("filter.service_id");
-		if ($filter_service_id)
-		{
+		if ($filter_service_id) {
 			$query->where("a.service_id = '" . $db->escape($filter_service_id) . "'");
 		}
 
 		$filter_property_id = $this->state->get("filter.property_id");
-		if ($filter_property_id)
-		{
+		if ($filter_property_id) {
 			$query->where("a.property_id = '" . $db->escape($filter_property_id) . "'");
 		}
 
 		$filter_method = $this->state->get("filter.method");
-		if ($filter_method)
-		{
+		if ($filter_method) {
 			$query->where("a.method" . ' = ' . $db->q($filter_method));
 		}
 
 		$success = $this->getState('filter.success');
-		if (is_numeric($success))
-		{
-			$query->where($db->qn('a.success') . ' = ' . (int) $success);
-		}
-		elseif ($success === '')
-		{
+		if (is_numeric($success)) {
+			$query->where($db->qn('a.success') . ' = ' . (int)$success);
+		} elseif ($success === '') {
 			$query->where('(a.success IN (0, 1))');
 		}
 
 		$search = $this->getState('filter.search');
-		if (!empty($search))
-		{
-			if (stripos($search, 'id:') === 0)
-			{
-				$query->where('a.id = ' . (int) substr($search, 3));
-			}
-			else
-			{
+		if (!empty($search)) {
+			if (stripos($search, 'id:') === 0) {
+				$query->where('a.id = ' . (int)substr($search, 3));
+			} else {
 				$search = $db->q('%' . $db->escape($search) . '%');
 				$query->where('( a.request LIKE ' . $search . ' )');
 			}
@@ -144,8 +125,7 @@ class ServicelogsModel extends ListModel
 
 		$orderCol  = $this->state->get('list.ordering');
 		$orderDirn = $this->state->get('list.direction');
-		if ($orderCol && $orderDirn)
-		{
+		if ($orderCol && $orderDirn) {
 			$query->order($db->escape($orderCol . ' ' . $orderDirn));
 		}
 
@@ -158,7 +138,7 @@ class ServicelogsModel extends ListModel
 	 * different modules that might need different sets of data or different
 	 * ordering requirements.
 	 *
-	 * @param   string  $id  A prefix for the store id.
+	 * @param  string  $id  A prefix for the store id.
 	 *
 	 * @since  1.0.0
 	 * @return string  A store id.
@@ -178,8 +158,8 @@ class ServicelogsModel extends ListModel
 	 * Method to autopopulate the model state.
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @param   null|string  $ordering
-	 * @param   null|string  $direction
+	 * @param  null|string  $ordering
+	 * @param  null|string  $direction
 	 *
 	 * @since 1.0.0
 	 */
@@ -188,13 +168,17 @@ class ServicelogsModel extends ListModel
 		$search = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
 		$this->setState('filter.search', trim($search));
 		$this->setState('filter.service_id',
-			$this->getUserStateFromRequest($this->context . '.filter.service_id', 'filter_service_id', '', 'string'));
+			$this->getUserStateFromRequest($this->context . '.filter.service_id', 'filter_service_id', '', 'string')
+		);
 		$this->setState('filter.property_id',
-			$this->getUserStateFromRequest($this->context . '.filter.property_id', 'filter_property_id', '', 'string'));
+			$this->getUserStateFromRequest($this->context . '.filter.property_id', 'filter_property_id', '', 'string')
+		);
 		$this->setState('filter.success',
-			$this->getUserStateFromRequest($this->context . '.filter.success', 'filter_success', '', 'string'));
+			$this->getUserStateFromRequest($this->context . '.filter.success', 'filter_success', '', 'string')
+		);
 		$this->setState('filter.method',
-			$this->getUserStateFromRequest($this->context . '.filter.method', 'filter_method', '', 'string'));
+			$this->getUserStateFromRequest($this->context . '.filter.method', 'filter_method', '', 'string')
+		);
 
 		$this->setState('params', KrMethods::getParams());
 

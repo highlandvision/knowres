@@ -29,27 +29,31 @@ class TaxesModel extends ListModel
 	/**
 	 * Constructor.
 	 *
-	 * @param   array  $config  An optional associative array of configuration settings.
+	 * @param  array  $config  An optional associative array of configuration settings.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
 	public function __construct($config = [])
 	{
-		if (empty($config['filter_fields']))
-		{
-			$config['filter_fields'] = array(
-				'id', 'a.id',
-				'country_id', 'a.country_id',
-				'region_id', 'a.region_id',
-				'town_id', 'a.town_id',
-				'state', 'a.state',
-				'created_by', 'a.created_by',
-				'created_at', 'a.created_at',
-				'updated_by', 'a.updated_by',
-				'updated_at', 'a.updated_at',
-				'name', 'country_name', 'region_name', 'town_name'
-			);
+		if (empty($config['filter_fields'])) {
+			//@formatter:off
+			$config['filter_fields'] = [
+				'id',           'a.id',
+				'country_id',   'a.country_id',
+				'region_id',    'a.region_id',
+				'town_id',      'a.town_id',
+				'state',        'a.state',
+				'created_by',   'a.created_by',
+				'created_at',   'a.created_at',
+				'updated_by',   'a.updated_by',
+				'updated_at',   'a.updated_at',
+				'name',
+				'country_name',
+				'region_name',
+				'town_name'
+			];
+			//@formatter:off
 		}
 
 		parent::__construct($config);

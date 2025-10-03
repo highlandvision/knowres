@@ -35,25 +35,30 @@ class ServicequeuesModel extends ListModel
 	public function __construct($config = [])
 	{
 		if (empty($config['filter_fields'])) {
-			$config['filter_fields'] = array(
-				'id', 'a.id',
-				'service_id', 'a.service_id',
-				'agent_id', 'a.agent_id',
-				'contract_id', 'a.contract_id',
-				'property_id', 'a.property_id',
-				'arrival', 'a.arrival',
-				'departure', 'a.departure',
+			//@formatter:off
+			$config['filter_fields'] = [
+				'id',           'a.id',
+				'service_id',   'a.service_id',
+				'agent_id',     'a.agent_id',
+				'contract_id',  'a.contract_id',
+				'property_id',  'a.property_id',
+				'arrival',      'a.arrival',
+				'departure',    'a.departure',
 				'availability', 'a.availability',
-				'foreign_key', 'a.foreign_key',
-				'actioned', 'a.actioned',
-				'method', 'a.method',
-				'state', 'a.state',
-				'created_by', 'a.created_by',
-				'created_at', 'a.created_at',
-				'updated_by', 'a.updated_by',
-				'updated_at', 'a.updated_at',
-				'contract_tag', 'property_name', 'service_name', 'agent_name'
-			);
+				'foreign_key',  'a.foreign_key',
+				'actioned',     'a.actioned',
+				'method',       'a.method',
+				'state',        'a.state',
+				'created_by',   'a.created_by',
+				'created_at',   'a.created_at',
+				'updated_by',   'a.updated_by',
+				'updated_at',   'a.updated_at',
+				'contract_tag',
+				'property_name',
+				'service_name',
+				'agent_name'
+			];
+			//@formatter:off
 		}
 
 		parent::__construct($config);

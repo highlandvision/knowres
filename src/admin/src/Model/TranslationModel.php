@@ -7,8 +7,6 @@
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
 
-/** @noinspection MissingSinceTagDocInspection */
-
 namespace HighlandVision\Component\Knowres\Administrator\Model;
 
 defined('_JEXEC') or die;
@@ -49,8 +47,7 @@ class TranslationModel extends AdminModel
 	{
 		/** @var TranslationModel $item */
 		$item = parent::getItem($pk);
-		if ($item)
-		{
+		if ($item) {
 			$Translations = new Translations();
 			$item->name   = $Translations->getText('translation', $item->id);
 		}
@@ -68,8 +65,7 @@ class TranslationModel extends AdminModel
 	protected function loadFormData(): mixed
 	{
 		$data = KrMethods::getUserState('com_knowres.edit.translation.data', []);
-		if (empty($data))
-		{
+		if (empty($data)) {
 			$data = $this->getItem();
 		}
 

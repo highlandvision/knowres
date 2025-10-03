@@ -36,21 +36,23 @@ class PropertyfieldsModel extends ListModel
 	 */
 	public function __construct($config = [])
 	{
-		if (empty($config['filter_fields']))
-		{
-			$config['filter_fields'] = array(
-				'id', 'a.id',
-				'required', 'a.required',
-				'format', 'a.format',
-				'special', 'a.special',
-				'ordering', 'a.ordering',
-				'state', 'a.state',
-				'created_by', 'a.created_by',
-				'created_at', 'a.created_at',
-				'updated_by', 'a.updated_by',
-				'updated_at', 'a.updated_at',
-				'label', 'description'
-			);
+		if (empty($config['filter_fields'])) {
+			//@formatter:off
+			$config['filter_fields'] = [
+				'id',           'a.id',
+				'required',     'a.required',
+				'format',       'a.format',
+				'special',      'a.special',
+				'ordering',     'a.ordering',
+				'state',        'a.state',
+				'created_by',   'a.created_by',
+				'created_at',   'a.created_at',
+				'updated_by',   'a.updated_by',
+				'updated_at',   'a.updated_at',
+				'label',
+				'description'
+			];
+			//@formatter:on
 		}
 
 		parent::__construct($config);
@@ -73,16 +75,14 @@ class PropertyfieldsModel extends ListModel
 		$query = $db->getQuery(true);
 
 		$query->select($db->qn(['id', 'required', 'format', 'special']))
-		      ->from($db->qn('#__knowres_property_field'))
-		      ->where($db->qn('state') . '=1');
+			->from($db->qn('#__knowres_property_field'))
+			->where($db->qn('state') . '=1');
 
-		if ($required)
-		{
-			$query->where($db->qn('required') . '=' . (int) $required);
+		if ($required) {
+			$query->where($db->qn('required') . '=' . (int)$required);
 		}
 
-		if ($format)
-		{
+		if ($format) {
 			$query->where($db->qn('format') . '>' . $db->q(''));
 		}
 
@@ -110,12 +110,12 @@ class PropertyfieldsModel extends ListModel
 		$item     = 'propertyfield';
 		$subQuery = $db->getQuery(true);
 		$subQuery->select('sub.text')
-		         ->from($db->qn('#__knowres_translation', 'sub'))
-		         ->where($db->qn('sub.item') . '=' . $db->q($item))
-		         ->where($db->qn('sub.item_id') . '=' . $db->qn('a.id'))
-		         ->where($db->qn('sub.field') . '=' . $db->q('label'))
-		         ->order('(CASE WHEN ' . $db->qn('sub.language') . ' = ' . $db->q($lang) . ' THEN 1 ELSE 2 END )')
-		         ->setLimit(1);
+			->from($db->qn('#__knowres_translation', 'sub'))
+			->where($db->qn('sub.item') . '=' . $db->q($item))
+			->where($db->qn('sub.item_id') . '=' . $db->qn('a.id'))
+			->where($db->qn('sub.field') . '=' . $db->q('label'))
+			->order('(CASE WHEN ' . $db->qn('sub.language') . ' = ' . $db->q($lang) . ' THEN 1 ELSE 2 END )')
+			->setLimit(1);
 
 		$query->select($this->getState('list.select', 'a.*'));
 		$query->from('`#__knowres_property_field` AS a');
@@ -129,36 +129,27 @@ class PropertyfieldsModel extends ListModel
 		$query->join('LEFT', '#__users AS updated_by ON updated_by.id = a.updated_by');
 
 		$state = $this->getState('filter.state');
-		if (is_numeric($state))
-		{
-			$query->where($db->qn('a.state') . '=' . (int) $state);
-		}
-		elseif ($state === '')
-		{
+		if (is_numeric($state)) {
+			$query->where($db->qn('a.state') . '=' . (int)$state);
+		} elseif ($state === '') {
 			$query->where($db->qn('a.state') . ' IN (0, 1)');
 		}
 
-		$filter_required = (int) $this->state->get('filter.required');
-		if ($filter_required)
-		{
+		$filter_required = (int)$this->state->get('filter.required');
+		if ($filter_required) {
 			$query->where($db->qn('a.required') . '=' . $filter_required);
 		}
 
 		$filter_format = $this->state->get('filter.format');
-		if ($filter_format)
-		{
+		if ($filter_format) {
 			$query->where($db->qn('format') . '>' . $db->q(''));
 		}
 
 		$search = $this->getState('filter.search');
-		if (!empty($search))
-		{
-			if (stripos($search, 'id:') === 0)
-			{
-				$query->where($db->qn('a.id') . '=' . (int) substr($search, 3));
-			}
-			else
-			{
+		if (!empty($search)) {
+			if (stripos($search, 'id:') === 0) {
+				$query->where($db->qn('a.id') . '=' . (int)substr($search, 3));
+			} else {
 				$search = $db->q('%' . $db->escape($search) . '%');
 				$query->where('(' . $subQuery->__toString() . ') ' . ' LIKE ' . $search);
 			}
@@ -166,8 +157,7 @@ class PropertyfieldsModel extends ListModel
 
 		$orderCol  = $this->state->get('list.ordering');
 		$orderDirn = $this->state->get('list.direction');
-		if ($orderCol && $orderDirn)
-		{
+		if ($orderCol && $orderDirn) {
 			$query->order($db->escape($orderCol . ' ' . $orderDirn));
 		}
 
@@ -207,13 +197,17 @@ class PropertyfieldsModel extends ListModel
 	protected function populateState($ordering = 'a.ordering', $direction = 'asc'): void
 	{
 		$this->setState('filter.search',
-			$this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string'));
+			$this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string')
+		);
 		$this->setState('filter.state',
-			$this->getUserStateFromRequest($this->context . '.filter.state', 'filter_state', '', 'string'));
+			$this->getUserStateFromRequest($this->context . '.filter.state', 'filter_state', '', 'string')
+		);
 		$this->setState('filter.required',
-			$this->getUserStateFromRequest($this->context . '.filter.required', 'filter_required', '', 'string'));
+			$this->getUserStateFromRequest($this->context . '.filter.required', 'filter_required', '', 'string')
+		);
 		$this->setState('filter.format',
-			$this->getUserStateFromRequest($this->context . '.filter.format', 'filter_format', '', 'string'));
+			$this->getUserStateFromRequest($this->context . '.filter.format', 'filter_format', '', 'string')
+		);
 
 		$this->setState('params', KrMethods::getParams());
 

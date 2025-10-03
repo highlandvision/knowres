@@ -27,32 +27,34 @@ class ExtrasModel extends ListModel
 	/**
 	 * Constructor.
 	 *
-	 * @param   array  $config  An optional associative array of configuration settings.
+	 * @param  array  $config  An optional associative array of configuration settings.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
 	public function __construct($config = [])
 	{
-		if (empty($config['filter_fields']))
-		{
-			$config['filter_fields'] = array(
-				'id', 'a.id',
-				'price', 'a.price',
-				'percentage', 'a.percentage',
-				'tax_id', 'a.tax_id',
+		if (empty($config['filter_fields'])) {
+			//@formatter:off
+			$config['filter_fields'] = [
+				'id',           'a.id',
+				'price',        'a.price',
+				'percentage',   'a.percentage',
+				'tax_id',       'a.tax_id',
 				'max_quantity', 'a.max_quantity',
-				'property_id', 'a.property_id',
-				'model', 'a.model',
-				'mandatory', 'a.mandatory',
-				'ordering', 'a.ordering',
-				'state', 'a.state',
-				'created_by', 'a.created_by',
-				'created_at', 'a.created_at',
-				'updated_by', 'a.updated_by',
-				'updated_at', 'a.updated_at',
-				'name', 'description'
-			);
+				'property_id',  'a.property_id',
+				'model',        'a.model',
+				'mandatory',    'a.mandatory',
+				'ordering',     'a.ordering',
+				'state',        'a.state',
+				'created_by',   'a.created_by',
+				'created_at',   'a.created_at',
+				'updated_by',   'a.updated_by',
+				'updated_at',   'a.updated_at',
+				'name',
+				'description'
+			];
+			//@formatter:off
 		}
 
 		parent::__construct($config);

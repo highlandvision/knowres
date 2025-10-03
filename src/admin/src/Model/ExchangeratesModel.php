@@ -38,20 +38,16 @@ class ExchangeratesModel extends ListModel
 	public function __construct($config = [])
 	{
 		if (empty($config['filter_fields'])) {
-			$config['filter_fields'] = array(
-				'id',
-				'a.id',
-				'currency_from',
-				'a.currency_from',
-				'currency_to',
-				'a.currency_to',
-				'factor',
-				'a.factor',
-				'rate',
-				'a.rate',
-				'state',
-				'a.state',
-			);
+			//@formatter:off
+			$config['filter_fields'] = [
+				'id',               'a.id',
+				'currency_from',    'a.currency_from',
+				'currency_to',		'a.currency_to',
+				'factor',			'a.factor',
+				'rate', 			'a.rate',
+				'state',			'a.state',
+			];
+			//@formatter:on
 		}
 
 		parent::__construct($config);
@@ -111,7 +107,7 @@ class ExchangeratesModel extends ListModel
 
 		$state = $this->getState('filter.state');
 		if (is_numeric($state)) {
-			$query->where('a.state = ' . (int) $state);
+			$query->where('a.state = ' . (int)$state);
 		} else {
 			$query->where('a.state = 1');
 		}
@@ -132,7 +128,8 @@ class ExchangeratesModel extends ListModel
 		return self::order($db,
 			$query,
 			$this->state->get('list.ordering'),
-			$this->state->get('list.direction'));
+			$this->state->get('list.direction')
+		);
 	}
 
 	/**
@@ -168,21 +165,27 @@ class ExchangeratesModel extends ListModel
 	protected function populateState($ordering = 'a.id', $direction = 'desc'): void
 	{
 		$this->setState('filter.search',
-			$this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string'));
+			$this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string')
+		);
 		$this->setState('filter.state',
-			$this->getUserStateFromRequest($this->context . '.filter.state', 'filter_state', '', 'string'));
+			$this->getUserStateFromRequest($this->context . '.filter.state', 'filter_state', '', 'string')
+		);
 		$this->setState('filter.currency_from',
 			$this->getUserStateFromRequest($this->context . '.filter.currency_from',
 				'filter_currency_from',
 				'',
-				'string'));
+				'string'
+			)
+		);
 		$this->setState('filter.currency_to',
-			$this->getUserStateFromRequest($this->context . '.filter.currency_to', 'filter_currency_to', '', 'string'));
+			$this->getUserStateFromRequest($this->context . '.filter.currency_to', 'filter_currency_to', '', 'string')
+		);
 
 		$this->setState('params', KrMethods::getParams());
 		$this->setState('list.select',
 			'a.id, a.currency_from, a.currency_to, a.rate, a.factor, a.state, a.checked_out, a.checked_out_time, a.created_by, 
-			a.created_at, a.updated_by, a.updated_at');
+			a.created_at, a.updated_by, a.updated_at'
+		);
 
 		parent::populateState($ordering, $direction);
 	}

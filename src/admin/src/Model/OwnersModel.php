@@ -37,33 +37,34 @@ class OwnersModel extends ListModel
 	 */
 	public function __construct($config = [])
 	{
-		if (empty($config['filter_fields']))
-		{
+		if (empty($config['filter_fields'])) {
+			//@formatter:off
 			$config['filter_fields'] = [
-				'id', 'a.id',
-				'name', 'a.name',
-				'address1', 'a.address1',
-				'address2', 'a.address2',
-				'town', 'a.town',
-				'postcode', 'a.postcode',
-				'region_id', 'a.region_id',
-				'country_id', 'a.country_id',
-				'email', 'a.email',
-				'mobile', 'a.mobile',
-				'mobile_country_id', 'a.mobile_country_id',
-				'document_id', 'a.document_id',
-				'commission', 'a.commission',
-				'payment_schedule', 'a.payment_schedule',
-				'prorate', 'a.prorate',
-				'days', 'a.days',
-				'invoice', 'a.invoice',
-				'foreign_key', 'a.foreign_key',
-				'state', 'a.state',
-				'created_by', 'a.created_by',
-				'created_at', 'a.created_at',
-				'updated_by', 'a.updated_by',
-				'updated_at', 'a.updated_at',
+				'id',                   'a.id',
+				'name',                 'a.name',
+				'address1',             'a.address1',
+				'address2',             'a.address2',
+				'town',                 'a.town',
+				'postcode',             'a.postcode',
+				'region_id',            'a.region_id',
+				'country_id',           'a.country_id',
+				'email',                'a.email',
+				'mobile',               'a.mobile',
+				'mobile_country_id',    'a.mobile_country_id',
+				'document_id',          'a.document_id',
+				'commission',           'a.commission',
+				'payment_schedule',     'a.payment_schedule',
+				'prorate',              'a.prorate',
+				'days',                 'a.days',
+				'invoice',              'a.invoice',
+				'foreign_key',          'a.foreign_key',
+				'state',                'a.state',
+				'created_by',           'a.created_by',
+				'created_at',           'a.created_at',
+				'updated_by',           'a.updated_by',
+				'updated_at',           'a.updated_at',
 			];
+			//@formatter:off
 		}
 
 		parent::__construct($config);

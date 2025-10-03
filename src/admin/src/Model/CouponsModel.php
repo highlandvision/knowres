@@ -32,28 +32,29 @@ class CouponsModel extends ListModel
 	/**
 	 * Constructor.
 	 *
-	 * @param   array  $config  An optional associative array of configuration settings.
+	 * @param  array  $config  An optional associative array of configuration settings.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
 	public function __construct($config = [])
 	{
-		if (empty($config['filter_fields']))
-		{
+		if (empty($config['filter_fields'])) {
+			//@formatter:off
 			$config['filter_fields'] = [
-				'id', 'a.id',
-				'coupon_code', 'a.coupon_code',
-				'valid_from', 'a.valid_from',
-				'valid_to', 'a.valid_to',
-				'amount', 'a.amount',
-				'is_percentage', 'a.is_percentage',
-				'state', 'a.state',
-				'created_by', 'a.created_by',
-				'created_at', 'a.created_at',
-				'updated_by', 'a.updated_by',
-				'updated_at', 'a.updated_at'
+				'id',               'a.id',
+				'coupon_code',      'a.coupon_code',
+				'valid_from',       'a.valid_from',
+				'valid_to',         'a.valid_to',
+				'amount',           'a.amount',
+				'is_percentage',    'a.is_percentage',
+				'state',            'a.state',
+				'created_by',       'a.created_by',
+				'created_at',       'a.created_at',
+				'updated_by',       'a.updated_by',
+				'updated_at',       'a.updated_at'
 			];
+			//@formatter:on
 		}
 
 		parent::__construct($config);
@@ -62,8 +63,8 @@ class CouponsModel extends ListModel
 	/**
 	 * Checks if current valid coupons for a property
 	 *
-	 * @param   int     $property_id  ID of property
-	 * @param   string  $coupon_code  Coupon code
+	 * @param  int     $property_id  ID of property
+	 * @param  string  $coupon_code  Coupon code
 	 *
 	 * @throws RuntimeException
 	 * @throws RuntimeException
@@ -80,12 +81,12 @@ class CouponsModel extends ListModel
 
 		$query->select($this->getState('list.select', 'a.*'));
 		$query->from($db->qn('#__knowres_coupon', 'a'))
-		      ->where($db->qn('property_id') . '=' . $property_id)
-		      ->where($db->qn('state') . '=1')
-		      ->where($db->qn('valid_from') . '<=' . $db->q($today))
-		      ->where($db->qn('valid_to') . '>=' . $db->q($today))
-		      ->where($db->qn('coupon_code') . 'LIKE' . $db->q($coupon_code))
-		      ->setLimit(1);
+			->where($db->qn('property_id') . '=' . $property_id)
+			->where($db->qn('state') . '=1')
+			->where($db->qn('valid_from') . '<=' . $db->q($today))
+			->where($db->qn('valid_to') . '>=' . $db->q($today))
+			->where($db->qn('coupon_code') . 'LIKE' . $db->q($coupon_code))
+			->setLimit(1);
 		$db->setQuery($query);
 
 		return $db->loadObject();
@@ -94,7 +95,7 @@ class CouponsModel extends ListModel
 	/**
 	 * Checks if current valid coupons for a property
 	 *
-	 * @param   int  $property_id  ID of property
+	 * @param  int  $property_id  ID of property
 	 *
 	 * @throws RuntimeException
 	 * @throws Exception
@@ -108,12 +109,12 @@ class CouponsModel extends ListModel
 
 		$today = TickTock::getDate();
 		$query->select($db->qn('id'))
-		      ->from($db->qn('#__knowres_coupon'))
-		      ->where($db->qn('property_id') . '=' . $property_id)
-		      ->where($db->qn('state') . '=1')
-		      ->where($db->qn('valid_from') . '<=' . $db->q($today))
-		      ->where($db->qn('valid_to') . '>=' . $db->q($today))
-		      ->setLimit(1);
+			->from($db->qn('#__knowres_coupon'))
+			->where($db->qn('property_id') . '=' . $property_id)
+			->where($db->qn('state') . '=1')
+			->where($db->qn('valid_from') . '<=' . $db->q($today))
+			->where($db->qn('valid_to') . '>=' . $db->q($today))
+			->setLimit(1);
 		$db->setQuery($query);
 
 		return $db->loadResult();
@@ -135,47 +136,43 @@ class CouponsModel extends ListModel
 		$query->from($db->qn('#__knowres_coupon', 'a'));
 
 		$query->select($db->qn('pp.state', 'property_state'))
-		      ->join('INNER',
-			      $db->qn('#__knowres_property', 'pp') . 'ON' . $db->qn('pp.id') . '=' . $db->qn('a.property_id')
-			      . 'AND'
-			      . $db->qn('pp.state') . '=1');
+			->join('INNER',
+				$db->qn('#__knowres_property', 'pp') . 'ON' . $db->qn('pp.id') . '=' . $db->qn('a.property_id')
+				. 'AND'
+				. $db->qn('pp.state') . '=1'
+			);
 		$query->select($db->qn('uc.name', 'editor'))
-		      ->join('LEFT', $db->qn('#__users', 'uc') . 'ON' . $db->qn('uc.id') . '=' . $db->qn('a.checked_out'));
+			->join('LEFT', $db->qn('#__users', 'uc') . 'ON' . $db->qn('uc.id') . '=' . $db->qn('a.checked_out'));
 		$query->select($db->qn('p.property_name', 'property_name'))
-		      ->join('LEFT',
-			      $db->qn('#__knowres_property', 'p') . 'ON' . $db->qn('p.id') . '=' . $db->qn('a.property_id'));
+			->join('LEFT',
+				$db->qn('#__knowres_property', 'p') . 'ON' . $db->qn('p.id') . '=' . $db->qn('a.property_id')
+			);
 		$query->select($db->qn('created_by.name', 'created_by'))
-		      ->join('LEFT',
-			      $db->qn('#__users', 'created_by') . 'ON' . $db->qn('created_by.id') . '=' . $db->qn('a.created_by'));
+			->join('LEFT',
+				$db->qn('#__users', 'created_by') . 'ON' . $db->qn('created_by.id') . '=' . $db->qn('a.created_by')
+			);
 		$query->select($db->qn('updated_by.name', 'updated_by'))
-		      ->join('LEFT',
-			      $db->qn('#__users', 'updated_by') . 'ON' . $db->qn('updated_by.id') . '=' . $db->qn('a.updated_by'));
+			->join('LEFT',
+				$db->qn('#__users', 'updated_by') . 'ON' . $db->qn('updated_by.id') . '=' . $db->qn('a.updated_by')
+			);
 
 		$state = $this->getState('filter.state');
-		if (is_numeric($state))
-		{
-			$query->where($db->qn('a.state') . '=' . (int) $state);
-		}
-		elseif ($state === '')
-		{
+		if (is_numeric($state)) {
+			$query->where($db->qn('a.state') . '=' . (int)$state);
+		} elseif ($state === '') {
 			$query->where($db->qn('a.state') . ' IN (0, 1)');
 		}
 
 		$filter_property_id = $this->state->get('filter.property_id');
-		if ($filter_property_id)
-		{
-			$query->where($db->qn('a.property_id') . '=' . (int) $filter_property_id);
+		if ($filter_property_id) {
+			$query->where($db->qn('a.property_id') . '=' . (int)$filter_property_id);
 		}
 
 		$search = $this->getState('filter.search');
-		if (!empty($search))
-		{
-			if (stripos($search, 'id:') === 0)
-			{
-				$query->where($db->qn('a.id') . '=' . (int) substr($search, 3));
-			}
-			else
-			{
+		if (!empty($search)) {
+			if (stripos($search, 'id:') === 0) {
+				$query->where($db->qn('a.id') . '=' . (int)substr($search, 3));
+			} else {
 				$search = $db->q('%' . $search . '%');
 				$query->where($db->qn('a.coupon_code') . ' LIKE ' . $search);
 			}
@@ -183,8 +180,7 @@ class CouponsModel extends ListModel
 
 		$orderCol  = $this->state->get('list.ordering');
 		$orderDirn = $this->state->get('list.direction');
-		if ($orderCol && $orderDirn)
-		{
+		if ($orderCol && $orderDirn) {
 			$query->order($db->escape($orderCol . ' ' . $orderDirn));
 		}
 
@@ -197,7 +193,7 @@ class CouponsModel extends ListModel
 	 * different modules that might need different sets of data or different
 	 * ordering requirements.
 	 *
-	 * @param   string  $id  A prefix for the store id.
+	 * @param  string  $id  A prefix for the store id.
 	 *
 	 * @since  1.0.0
 	 * @return string        A store id.
@@ -215,19 +211,22 @@ class CouponsModel extends ListModel
 	 * Method to autopopulate the model state.
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @param   null|string  $ordering   Ordering field
-	 * @param   null|string  $direction  Ordering direction
+	 * @param  null|string  $ordering   Ordering field
+	 * @param  null|string  $direction  Ordering direction
 	 *
 	 * @since 1.0.0
 	 */
 	protected function populateState($ordering = 'a.valid_to', $direction = 'desc'): void
 	{
 		$this->setState('filter.search',
-			$this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string'));
+			$this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string')
+		);
 		$this->setState('filter.state',
-			$this->getUserStateFromRequest($this->context . '.filter.state', 'filter_state', '', 'string'));
+			$this->getUserStateFromRequest($this->context . '.filter.state', 'filter_state', '', 'string')
+		);
 		$this->setState('filter.property_id',
-			$this->getUserStateFromRequest($this->context . '.filter.property_id', 'filter_property_id', '', 'string'));
+			$this->getUserStateFromRequest($this->context . '.filter.property_id', 'filter_property_id', '', 'string')
+		);
 
 		$this->setState('params', KrMethods::getParams());
 

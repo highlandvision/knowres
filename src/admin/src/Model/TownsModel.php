@@ -24,7 +24,8 @@ use function is_numeric;
  *
  * @since 1.0.0
  */
-class TownsModel extends ListModel {
+class TownsModel extends ListModel
+{
 	/**
 	 * Constructor.
 	 *
@@ -36,35 +37,25 @@ class TownsModel extends ListModel {
 	public function __construct($config = [])
 	{
 		if (empty($config['filter_fields'])) {
-			$config['filter_fields'] = array(
-				'id',
-				'a.id',
-				'country_id',
-				'a.country_id',
-				'region_id',
-				'a.region_id',
-				'allow_property',
-				'a.allow_property',
-				'property_licence',
-				'a.property_licence',
-				'timezone',
-				'a.timezone',
-				'currency',
-				'a.currency',
-				'state',
-				'a.state',
-				'created_by',
-				'a.created_by',
-				'created_at',
-				'a.created_at',
-				'updated_by',
-				'a.updated_by',
-				'updated_at',
-				'a.updated_at',
+			//@formatter:off
+			$config['filter_fields'] = [
+				'id',                   'a.id',
+				'country_id',			'a.country_id',
+				'region_id',			'a.region_id',
+				'allow_property',		'a.allow_property',
+				'property_licence',		'a.property_licence',
+				'timezone', 			'a.timezone',
+				'currency',				'a.currency',
+				'state',				'a.state',
+				'created_by',			'a.created_by',
+				'created_at',			'a.created_at',
+				'updated_by',			'a.updated_by',
+				'updated_at',			'a.updated_at',
 				'name',
 				'country_name',
 				'region_name',
-			);
+			];
+			//@formatter:on
 		}
 
 		parent::__construct($config);
@@ -112,7 +103,7 @@ class TownsModel extends ListModel {
 			->select('(' . $subQuery->__toString() . ') ' . $db->q('name'))
 			->from($db->qn('#__knowres_town', 'a'))
 			->where($db->qn('region_id') . '=' . $region_id)
-			->where($db->qn('allow_property') . '=' . (int) $allow_property)
+			->where($db->qn('allow_property') . '=' . (int)$allow_property)
 			->where($db->qn('state') . '=1')
 			->order($db->qn('name') . ' ASC');
 		$db->setQuery($query);
@@ -159,12 +150,15 @@ class TownsModel extends ListModel {
 			->where($db->qn('sub.item') . ' = ' . $db->q($item))
 			->where($db->qn('sub.item_id') . ' = ' . $db->qn('a.country_id'))
 			->order('(CASE WHEN ' . $db->qn('sub.language') . ' = ' . $db->q($lang)
-			        . ' THEN 1 ELSE 2 END )')
+			        . ' THEN 1 ELSE 2 END )'
+			)
 			->setLimit(1);
 
 		$query->select($this->getState('list.select',
 			'a.id, a.country_id, a.region_id, a.lat, a.lng, a.allow_property, a.timezone, a.currency, a.state, 
-			a.checked_out, a.checked_out_time, a.created_by, a.created_at, a.updated_by, a.updated_at, a.version'));
+			a.checked_out, a.checked_out_time, a.created_by, a.created_at, a.updated_by, a.updated_at, a.version'
+		)
+		);
 		$query->from($db->qn('#__knowres_town', 'a'));
 		$query->select('(' . $subQuery->__toString() . ') ' . $db->q('name'));
 		$query->select('(' . $subQueryRegion->__toString() . ') ' . $db->q('region_name'));
@@ -179,19 +173,19 @@ class TownsModel extends ListModel {
 
 		$state = $this->getState('filter.state');
 		if (is_numeric($state)) {
-			$query->where($db->qn('a.state') . ' = ' . (int) $state);
+			$query->where($db->qn('a.state') . ' = ' . (int)$state);
 		} elseif ($state === '') {
 			$query->where($db->qn('a.state') . ' IN (0, 1)');
 		}
 
 		$filter_allow_property = $this->state->get("filter.allow_property");
 		if ($filter_allow_property) {
-			$query->where("a.allow_property = " . (int) $filter_allow_property);
+			$query->where("a.allow_property = " . (int)$filter_allow_property);
 		}
 
 		$filter_property_licence = $this->getState("filter.property_licence");
 		if (is_numeric($filter_property_licence)) {
-			$query->where($db->qn('a.property_licence') . ' = ' . (int) $filter_property_licence);
+			$query->where($db->qn('a.property_licence') . ' = ' . (int)$filter_property_licence);
 		}
 
 		$filter_country_id = $this->state->get("filter.country_id");
@@ -201,13 +195,13 @@ class TownsModel extends ListModel {
 
 		$filter_region_id = $this->state->get("filter.region_id");
 		if ($filter_region_id) {
-			$query->where("a.region_id = " . (int) $filter_region_id);
+			$query->where("a.region_id = " . (int)$filter_region_id);
 		}
 
 		$search = $this->getState('filter.search');
 		if (!empty($search)) {
 			if (stripos($search, 'id:') === 0) {
-				$query->where('a.id = ' . (int) substr($search, 3));
+				$query->where('a.id = ' . (int)substr($search, 3));
 			} else {
 				$search = $db->q('%' . $db->escape($search) . '%');
 				$query->where('(' . $subQuery->__toString() . ') ' . ' LIKE ' . $search);
@@ -258,19 +252,27 @@ class TownsModel extends ListModel {
 	protected function populateState($ordering = 'name', $direction = 'asc'): void
 	{
 		$this->setState('filter.search',
-			$this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string'));
+			$this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string')
+		);
 		$this->setState('filter.state',
-			$this->getUserStateFromRequest($this->context . '.filter.state', 'filter_state', '', 'string'));
+			$this->getUserStateFromRequest($this->context . '.filter.state', 'filter_state', '', 'string')
+		);
 		$this->setState('filter.country_id',
-			$this->getUserStateFromRequest($this->context . '.filter.country_id', 'filter_country_id', '', 'string'));
+			$this->getUserStateFromRequest($this->context . '.filter.country_id', 'filter_country_id', '', 'string')
+		);
 		$this->setState('filter.region_id',
-			$this->getUserStateFromRequest($this->context . '.filter.region_id', 'filter_region_id', '', 'string'));
+			$this->getUserStateFromRequest($this->context . '.filter.region_id', 'filter_region_id', '', 'string')
+		);
 		$this->setState('filter.allow_property',
 			$this->getUserStateFromRequest($this->context . '.filter.allow_property', 'filter_allow_property', '',
-				'string'));
+				'string'
+			)
+		);
 		$this->setState('filter.property_licence',
 			$this->getUserStateFromRequest($this->context . '.filter.property_licence', 'filter_property_licence', '',
-				'string'));
+				'string'
+			)
+		);
 
 		$this->setState('params', KrMethods::getParams());
 

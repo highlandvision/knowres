@@ -31,29 +31,30 @@ class PropertyicalsModel extends ListModel
 	/**
 	 * Constructor.
 	 *
-	 * @param   array  $config  An optional associative array of configuration settings.
+	 * @param  array  $config  An optional associative array of configuration settings.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
 	public function __construct($config = [])
 	{
-		if (empty($config['filter_fields']))
-		{
-			$config['filter_fields'] = array(
-				'id', 'a.id',
-				'property_id', 'a.property_id',
-				'service_id', 'a.service_id',
-				'name', 'a.name',
-				'link', 'a.link',
-				'last_update', 'a.last_update',
-				'state', 'a.state',
-				'created_by', 'a.created_by',
-				'created_at', 'a.created_at',
-				'updated_by', 'a.updated_by',
-				'updated_at', 'a.updated_at',
+		if (empty($config['filter_fields'])) {
+			//@formatter:off
+			$config['filter_fields'] = [
+				'id',           'a.id',
+				'property_id',  'a.property_id',
+				'service_id',   'a.service_id',
+				'name',         'a.name',
+				'link',         'a.link',
+				'last_update',  'a.last_update',
+				'state',        'a.state',
+				'created_by',   'a.created_by',
+				'created_at',   'a.created_at',
+				'updated_by',   'a.updated_by',
+				'updated_at',   'a.updated_at',
 				'service_name'
-			);
+			];
+			//@formatter:off
 		}
 
 		parent::__construct($config);

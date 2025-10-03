@@ -163,15 +163,18 @@ class ContractModel extends AdminModel
 		$query = $db->getQuery(true);
 
 		$query->select($db->qn('c.contract_total') . ' +  IFNULL(SUM(' . $db->qn('cf.value') . ') ,0) - IFNULL(SUM('
-		               . $db->qn('cp.base_amount') . '),0) AS balance')
+		               . $db->qn('cp.base_amount') . '),0) AS balance'
+		)
 			->from($db->qn('#__knowres_contract', 'c'))
 			->join('LEFT',
 				$db->qn('#__knowres_contract_fee', 'cf') . ' ON '
-				. $db->qn('cf.contract_id') . '=' . $contract_id)
+				. $db->qn('cf.contract_id') . '=' . $contract_id
+			)
 			->join('LEFT',
 				$db->qn('#__knowres_contract_payment', 'cp') . ' ON '
 				. $db->qn('cp.contract_id') . '=' . $contract_id . ' AND '
-				. $db->qn('cp.state') . '=1')
+				. $db->qn('cp.state') . '=1'
+			)
 			->where($db->qn('c.id') . '=' . $contract_id);
 
 		$db->setQuery($query);
@@ -194,7 +197,7 @@ class ContractModel extends AdminModel
 	 */
 	public static function netRateMarkup(string $net, string $markup, int $round = 1, int $unit = 5): float
 	{
-		$rate = (float) $net + ($net * (float) $markup / 100);
+		$rate = (float)$net + ($net * (float)$markup / 100);
 
 		return Utility::roundMe($rate, $round, $unit);
 	}
@@ -271,9 +274,10 @@ class ContractModel extends AdminModel
 			$item->rooms       = Utility::decodeJson($item->rooms, true);
 			$item->taxes       = Utility::decodeJson($item->taxes, true);
 
+			/** Code below works but can't get phpstorm to understand that ContractModel is not being used for getItem() */
 			$item->property_name = '';
 			if (isset($item->property_id) && $item->property_id != 0) {
-				$property            = KrFactory::getAdminModel('property')->getItem((int) $item->property_id);
+				$property            = KrFactory::getAdminModel('property')->getItem((int)$item->property_id);
 				$item->property_name = $property->property_name;
 				$item->property_area = $property->property_area;
 				$item->region_name   = $property->region_name;
@@ -284,7 +288,7 @@ class ContractModel extends AdminModel
 
 			$item->agent_name = '';
 			if ($item->agent_id > 0) {
-				$agent            = KrFactory::getAdminModel('agent')->getItem((int) $item->agent_id);
+				$agent            = KrFactory::getAdminModel('agent')->getItem((int)$item->agent_id);
 				$item->agent_name = $agent->name ?? $item->agent_id;
 			}
 
@@ -292,7 +296,7 @@ class ContractModel extends AdminModel
 			$item->agency_telephone = '';
 			$item->agency_email     = '';
 			if ($item->manager_id > 0) {
-				$result                 = KrFactory::getAdminModel('manager')->getItem((int) $item->manager_id);
+				$result                 = KrFactory::getAdminModel('manager')->getItem((int)$item->manager_id);
 				$item->agency_name      = $result->agency_name ?? $item->agency_id;
 				$item->agency_telephone = $result->agency_telephone ?? '';
 				$item->agency_email     = $result->agency_email ?? '';
@@ -300,7 +304,7 @@ class ContractModel extends AdminModel
 
 			$item->service_name = '';
 			if (!empty($item->service_id)) {
-				$service = KrFactory::getAdminModel('service')->getItem((int) $item->service_id);
+				$service = KrFactory::getAdminModel('service')->getItem((int)$item->service_id);
 				if (!empty($service->name)) {
 					$item->service_name = $service->name;
 				}
@@ -309,7 +313,7 @@ class ContractModel extends AdminModel
 			$item->guest_name = '';
 			$item->user_id    = 0;
 			if (isset($item->guest_id) && $item->guest_id != 0) {
-				$guest                         = KrFactory::getAdminModel('guest')->getItem((int) $item->guest_id);
+				$guest                         = KrFactory::getAdminModel('guest')->getItem((int)$item->guest_id);
 				$item->guest_name              = $guest->name ?? '';
 				$item->guest_firstname         = $guest->firstname ?? '';
 				$item->guest_surname           = $guest->surname ?? '';

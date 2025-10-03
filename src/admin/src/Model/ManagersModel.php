@@ -30,25 +30,28 @@ class ManagersModel extends ListModel
 	/**
 	 * Constructor.
 	 *
-	 * @param   array  $config  An optional associative array of configuration settings.
+	 * @param  array  $config  An optional associative array of configuration settings.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
 	public function __construct($config = [])
 	{
-		if (empty($config['filter_fields']))
-		{
+		if (empty($config['filter_fields'])) {
+			//@formatter:off
 			$config['filter_fields'] = [
-				'id', 'a.id',
-				'user_id', 'a.user_id',
-				'properties', 'a.properties',
+				'id',           'a.id',
+				'user_id',      'a.user_id',
+				'properties',   'a.properties',
 				'access_level', 'a.access_level',
-				'apikey', 'a.apikey',
-				'agency_id', 'a.agency_id',
-				'state', 'a.state',
-				'user_name', 'user_username', 'agency_name'
+				'apikey',       'a.apikey',
+				'agency_id',    'a.agency_id',
+				'state',        'a.state',
+				'user_name',
+				'user_username',
+				'agency_name'
 			];
+			//@formatter:on
 		}
 
 		parent::__construct($config);
@@ -57,7 +60,7 @@ class ManagersModel extends ListModel
 	/**
 	 * Get the agency ID from the manager
 	 *
-	 * @param   int  $id  ID of manager
+	 * @param  int  $id  ID of manager
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
@@ -70,8 +73,8 @@ class ManagersModel extends ListModel
 
 		$query->select($db->qn('agency_id'));
 		$query->from($db->qn('#__knowres_manager'))
-		      ->where($db->qn('id') . '=' . $id)
-		      ->setLimit(1);
+			->where($db->qn('id') . '=' . $id)
+			->setLimit(1);
 
 		$db->setQuery($query);
 
@@ -120,31 +123,25 @@ class ManagersModel extends ListModel
 	public function getItems(): array
 	{
 		$items = parent::getItems();
-		foreach ($items as $item)
-		{
-			if (isset($item->properties))
-			{
+		foreach ($items as $item) {
+			if (isset($item->properties)) {
 				$values = explode(',', $item->properties);
 
 				$text = [];
-				foreach ($values as $value)
-				{
+				foreach ($values as $value) {
 					$db    = KrFactory::getDatabase();
 					$query = $db->getQuery(true);
 
 					$query->select($db->qn('p.property_name'))
-					      ->from($db->qn('#__knowres_property', 'p'))
-					      ->where($db->qn('id') . ' = ' . $db->q($db->escape($value)));
+						->from($db->qn('#__knowres_property', 'p'))
+						->where($db->qn('id') . ' = ' . $db->q($db->escape($value)));
 
 					$db->setQuery($query);
 					$results = $db->loadObject();
 
-					if ($results)
-					{
+					if ($results) {
 						$text[] = $results->property_name;
-					}
-					else
-					{
+					} else {
 						$text[] = $value;
 					}
 				}
@@ -168,19 +165,25 @@ class ManagersModel extends ListModel
 		$query = $db->getQuery(true);
 
 		$query->select($db->qn([
-			'a.id', 'a.user_id', 'a.properties', 'a.access_level',
-			'a.apikey', 'a.agency_id',
+			'a.id',
+			'a.user_id',
+			'a.properties',
+			'a.access_level',
+			'a.apikey',
+			'a.agency_id',
 			'a.state',
-			'a.created_by', 'a.created_at',
-			'a.updated_by', 'a.updated_at'
+			'a.created_by',
+			'a.created_at',
+			'a.updated_by',
+			'a.updated_at'
 		]));
 
 		$query->from($db->qn('#__knowres_manager', 'a'))
-		      ->where($db->qn('a.state') . '=1')
-		      ->select($db->qn('users.name', 'user_name'))
-		      ->join('LEFT', $db->qn('#__users', 'users') . 'ON' . $db->qn('users.id') . '=' . $db->qn('a.user_id'))
-		      ->where($db->qn('a.access_level') . '>=20')
-		      ->order($db->qn('user_name'));
+			->where($db->qn('a.state') . '=1')
+			->select($db->qn('users.name', 'user_name'))
+			->join('LEFT', $db->qn('#__users', 'users') . 'ON' . $db->qn('users.id') . '=' . $db->qn('a.user_id'))
+			->where($db->qn('a.access_level') . '>=20')
+			->order($db->qn('user_name'));
 
 		$db->setQuery($query);
 
@@ -208,51 +211,40 @@ class ManagersModel extends ListModel
 		$query->join('LEFT', '#__users AS user_id ON user_id.id = a.user_id');
 		$query->select($db->qn('agency.name', 'agency_name'));
 		$query->join('LEFT',
-			$db->qn('#__knowres_agency', 'agency') . ' ON ' . $db->qn('agency.id') . ' = ' . $db->qn('a.agency_id'));
+			$db->qn('#__knowres_agency', 'agency') . ' ON ' . $db->qn('agency.id') . ' = ' . $db->qn('a.agency_id')
+		);
 		$query->select('created_by.name AS created_by');
 		$query->join('LEFT', '#__users AS created_by ON created_by.id = a.created_by');
 		$query->select('updated_by.name AS updated_by');
 		$query->join('LEFT', '#__users AS updated_by ON updated_by.id = a.updated_by');
 
 		$state = $this->getState('filter.state');
-		if (is_numeric($state))
-		{
-			$query->where('a.state = ' . (int) $state);
-		}
-		elseif ($state === '')
-		{
+		if (is_numeric($state)) {
+			$query->where('a.state = ' . (int)$state);
+		} elseif ($state === '') {
 			$query->where('(a.state IN (0, 1))');
 		}
 
 		$filter_agency_id = $this->state->get("filter.agency_id");
-		if ($filter_agency_id)
-		{
+		if ($filter_agency_id) {
 			$query->where("a.agency_id = '" . $db->escape($filter_agency_id) . "'");
 		}
 
 		$filter_access_level = $this->state->get("filter.access_level");
-		if ($filter_access_level)
-		{
-			if (is_numeric($filter_access_level))
-			{
-				$query->where('a.access_level = ' . (int) $filter_access_level);
-			}
-			elseif (is_string($filter_access_level) && strlen($filter_access_level) > 0)
-			{
+		if ($filter_access_level) {
+			if (is_numeric($filter_access_level)) {
+				$query->where('a.access_level = ' . (int)$filter_access_level);
+			} elseif (is_string($filter_access_level) && strlen($filter_access_level) > 0) {
 				$ids = explode(",", $filter_access_level);
 				$query->where('a.access_level IN (' . implode(',', array_map('intval', $ids)) . ')');
 			}
 		}
 
 		$search = $this->getState('filter.search');
-		if (!empty($search))
-		{
-			if (stripos($search, 'id:') === 0)
-			{
-				$query->where('a.id = ' . (int) substr($search, 3));
-			}
-			else
-			{
+		if (!empty($search)) {
+			if (stripos($search, 'id:') === 0) {
+				$query->where('a.id = ' . (int)substr($search, 3));
+			} else {
 				$search = $db->q('%' . $db->escape($search) . '%');
 				$query->where('( user_id.name LIKE ' . $search . ' )');
 			}
@@ -260,8 +252,7 @@ class ManagersModel extends ListModel
 
 		$orderCol  = $this->state->get('list.ordering');
 		$orderDirn = $this->state->get('list.direction');
-		if ($orderCol && $orderDirn)
-		{
+		if ($orderCol && $orderDirn) {
 			$query->order($db->escape($orderCol . ' ' . $orderDirn));
 		}
 
@@ -274,7 +265,7 @@ class ManagersModel extends ListModel
 	 * different modules that might need different sets of data or different
 	 * ordering requirements.
 	 *
-	 * @param   string  $id  A prefix for the store id.
+	 * @param  string  $id  A prefix for the store id.
 	 *
 	 * @since  1.0.0
 	 * @return    string        A store id.
@@ -293,22 +284,27 @@ class ManagersModel extends ListModel
 	 * Method to autopopulate the model state.
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @param   null|string  $ordering
-	 * @param   null|string  $direction
+	 * @param  null|string  $ordering
+	 * @param  null|string  $direction
 	 *
 	 * @since 1.0.0
 	 */
 	protected function populateState($ordering = 'a.id', $direction = 'asc'): void
 	{
 		$this->setState('filter.search',
-			$this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string'));
+			$this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string')
+		);
 		$this->setState('filter.state',
-			$this->getUserStateFromRequest($this->context . '.filter.state', 'filter_state', '', 'string'));
+			$this->getUserStateFromRequest($this->context . '.filter.state', 'filter_state', '', 'string')
+		);
 		$this->setState('filter.agency_id',
-			$this->getUserStateFromRequest($this->context . '.filter.agency_id', 'filter_agency_id', '', 'string'));
+			$this->getUserStateFromRequest($this->context . '.filter.agency_id', 'filter_agency_id', '', 'string')
+		);
 		$this->setState('filter.access_level',
 			$this->getUserStateFromRequest($this->context . '.filter.access_level', 'filter_access_level', '',
-				'string'));
+				'string'
+			)
+		);
 
 		$this->setState('params', KrMethods::getParams());
 

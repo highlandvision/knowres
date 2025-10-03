@@ -30,29 +30,30 @@ class TranslationsModel extends ListModel
 	/**
 	 * Constructor.
 	 *
-	 * @param   array  $config  An optional associative array of configuration settings.
+	 * @param  array  $config  An optional associative array of configuration settings.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
 	public function __construct($config = [])
 	{
-		if (empty($config['filter_fields']))
-		{
-			$config['filter_fields'] = array(
-				'id', 'a.id',
-				'item', 'a.item',
-				'item_id', 'a.item_id',
-				'field', 'a.field',
-				'text', 'a.text',
-				'language', 'a.language',
-				'state', 'a.state',
-				'created_by', 'a.created_by',
-				'created_at', 'a.created_at',
-				'updated_by', 'a.updated_by',
-				'updated_at', 'a.updated_at',
+		if (empty($config['filter_fields'])) {
+			//@formatter:off
+			$config['filter_fields'] = [
+				'id',           'a.id',
+				'item',         'a.item',
+				'item_id',      'a.item_id',
+				'field',        'a.field',
+				'text', 	    'a.text',
+				'language',     'a.language',
+				'state',        'a.state',
+				'created_by',   'a.created_by',
+				'created_at',	'a.created_at',
+				'updated_by',	'a.updated_by',
+				'updated_at',	'a.updated_at',
 				'name',
-			);
+			];
+			//@formatter:on
 		}
 
 		parent::__construct($config);
@@ -61,16 +62,15 @@ class TranslationsModel extends ListModel
 	/**
 	 * Delete translations for item and array of ids
 	 *
-	 * @param   string  $item  Translations item
-	 * @param   array   $pks   Translations item_ids to delete
+	 * @param  string  $item  Translations item
+	 * @param  array   $pks   Translations item_ids to delete
 	 *
 	 * @throws RuntimeException
 	 * @since  3.0.0
 	 */
 	public function deleteMultipleItemId(string $item, array $pks): void
 	{
-		if (!is_countable($pks) || !count($pks))
-		{
+		if (!is_countable($pks) || !count($pks)) {
 			return;
 		}
 
@@ -92,7 +92,7 @@ class TranslationsModel extends ListModel
 	/**
 	 * Get translations by Item
 	 *
-	 * @param   string  $item  Table of base item
+	 * @param  string  $item  Table of base item
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
@@ -104,10 +104,10 @@ class TranslationsModel extends ListModel
 		$query = $db->getQuery(true);
 
 		$query->select($this->getState('list.select', 'a.item_id, a.field, a.text, a.language'))
-		      ->from($db->qn('#__knowres_translation', 'a'))
-		      ->where($db->qn('a.item') . '=' . $db->q($item))
-		      ->where($db->qn('a.state') . '=1')
-		      ->order($db->qn('a.text'));
+			->from($db->qn('#__knowres_translation', 'a'))
+			->where($db->qn('a.item') . '=' . $db->q($item))
+			->where($db->qn('a.state') . '=1')
+			->order($db->qn('a.text'));
 
 		$db->setQuery($query);
 
@@ -134,12 +134,12 @@ class TranslationsModel extends ListModel
 		$query = $db->getQuery(true);
 
 		$query->select($this->getState('list.select', 'a.item_id'))
-		      ->from($db->qn('#__knowres_translation', 'a'))
-		      ->where($db->qn('a.item') . '=' . $db->q($item))
-		      ->where($db->qn('a.text') . '=' . $db->q($text))
-		      ->where($db->qn('a.field') . '=' . $db->q($field))
-		      ->where($db->qn('a.language') . '=' . $db->q($language))
-		      ->setLimit(1);
+			->from($db->qn('#__knowres_translation', 'a'))
+			->where($db->qn('a.item') . '=' . $db->q($item))
+			->where($db->qn('a.text') . '=' . $db->q($text))
+			->where($db->qn('a.field') . '=' . $db->q($field))
+			->where($db->qn('a.language') . '=' . $db->q($language))
+			->setLimit(1);
 		$db->setQuery($query);
 
 		return $db->loadResult();
@@ -148,10 +148,10 @@ class TranslationsModel extends ListModel
 	/**
 	 * Get translation id and text
 	 *
-	 * @param   string  $item      Item name
-	 * @param   int     $item_id   Item ID
-	 * @param   string  $field     Field name
-	 * @param   string  $language  Language string
+	 * @param  string  $item      Item name
+	 * @param  int     $item_id   Item ID
+	 * @param  string  $field     Field name
+	 * @param  string  $language  Language string
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
@@ -163,11 +163,11 @@ class TranslationsModel extends ListModel
 		$query = $db->getQuery(true);
 
 		$query->select($this->getState('list.select', 'a.id, a.text'))
-		      ->from($db->qn('#__knowres_translation', 'a'))
-		      ->where($db->qn('a.item') . '=' . $db->q($item))
-		      ->where($db->qn('a.item_id') . '=' . $item_id)
-		      ->where($db->qn('a.field') . '=' . $db->q($field))
-		      ->where($db->qn('a.language') . '=' . $db->q($language));
+			->from($db->qn('#__knowres_translation', 'a'))
+			->where($db->qn('a.item') . '=' . $db->q($item))
+			->where($db->qn('a.item_id') . '=' . $item_id)
+			->where($db->qn('a.field') . '=' . $db->q($field))
+			->where($db->qn('a.language') . '=' . $db->q($language));
 
 		$db->setQuery($query);
 
@@ -177,10 +177,10 @@ class TranslationsModel extends ListModel
 	/**
 	 * Get translation
 	 *
-	 * @param   string  $item       table of base item
-	 * @param   int     $item_id    id of base item
-	 * @param   string  $field      name of field
-	 * @param   array   $languages  languages to search by
+	 * @param  string  $item       table of base item
+	 * @param  int     $item_id    id of base item
+	 * @param  string  $field      name of field
+	 * @param  array   $languages  languages to search by
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
@@ -194,18 +194,15 @@ class TranslationsModel extends ListModel
 		$query->select($this->getState('list.select', 'a.text, a.language'));
 
 		$query->from($db->qn('#__knowres_translation', 'a'))
-		      ->where($db->qn('a.item') . '=' . $db->q($item))
-		      ->where($db->qn('a.item_id') . '=' . $item_id)
-		      ->where($db->qn('a.field') . '=' . $db->q($field));
+			->where($db->qn('a.item') . '=' . $db->q($item))
+			->where($db->qn('a.item_id') . '=' . $item_id)
+			->where($db->qn('a.field') . '=' . $db->q($field));
 
-		if (count($languages) > 1)
-		{
+		if (count($languages) > 1) {
 			$query->where($db->qn('a.language') . ' IN ' . $db->q(implode(',', $languages)))
-			      ->order($db->qn('a.language') . ' IN ' . $db->q(implode(',', $languages)))
-			      ->setLimit(1);
-		}
-		elseif (count($languages) == 1)
-		{
+				->order($db->qn('a.language') . ' IN ' . $db->q(implode(',', $languages)))
+				->setLimit(1);
+		} elseif (count($languages) == 1) {
 			$query->where($db->qn('a.language') . '=' . $db->q($languages[0]))->setLimit(1);
 		}
 
@@ -217,8 +214,8 @@ class TranslationsModel extends ListModel
 	/**
 	 * Get translation id and text
 	 *
-	 * @param   string  $item     Item name
-	 * @param   int     $item_id  Item ID
+	 * @param  string  $item     Item name
+	 * @param  int     $item_id  Item ID
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
@@ -230,9 +227,9 @@ class TranslationsModel extends ListModel
 		$query = $db->getQuery(true);
 
 		$query->select($db->qn(['id', 'field', 'text', 'language']))
-		      ->from($db->qn('#__knowres_translation'))
-		      ->where($db->qn('item') . '=' . $db->q($item))
-		      ->where($db->qn('item_id') . '=' . $item_id);
+			->from($db->qn('#__knowres_translation'))
+			->where($db->qn('item') . '=' . $db->q($item))
+			->where($db->qn('item_id') . '=' . $item_id);
 
 		$db->setQuery($query);
 
@@ -257,79 +254,62 @@ class TranslationsModel extends ListModel
 		$query = self::commonJoins($db, $query);
 
 		$filter_language = $this->state->get('filter.language');
-		if ($filter_language)
-		{
+		if ($filter_language) {
 			$query->where($db->qn('a.language') . '=' . $db->q($filter_language));
 		}
 
 		$filter_item = $this->state->get('filter.item');
-		if ($filter_item)
-		{
+		if ($filter_item) {
 			$query->where($db->qn('a.item') . '=' . $db->q($filter_item));
 		}
 
 		$filter_item_id = $this->state->get('filter.item_id');
-		if ($filter_item_id)
-		{
-			$query->where($db->qn('a.item_id') . '=' . (int) $filter_item_id);
+		if ($filter_item_id) {
+			$query->where($db->qn('a.item_id') . '=' . (int)$filter_item_id);
 			$query->where($db->qn('a.item') . '=' . $db->q('property'));
 		}
 
 		$filter_field = $this->state->get("filter.field");
-		if ($filter_field)
-		{
+		if ($filter_field) {
 			$query->where($db->qn('a.field') . '=' . $db->q($filter_field));
 		}
 
 		$filter_orphans = $this->state->get('filter.orphans');
-		if ($filter_orphans)
-		{
+		if ($filter_orphans) {
 			$query->group(
 				[
 					$db->qn('a.item'),
 					$db->qn('a.item_id'),
 					$db->qn('a.field'),
-				]);
-			$query->having("COUNT( DISTINCT (" . $db->qn('a.language') . ")) < " . (int) $filter_orphans);
-		}
-		else
-		{
+				]
+			);
+			$query->having("COUNT( DISTINCT (" . $db->qn('a.language') . ")) < " . (int)$filter_orphans);
+		} else {
 			$state = $this->getState('filter.state');
-			if (is_numeric($state))
-			{
-				$query->where($db->qn('a.state') . '=' . (int) $state);
-			}
-			elseif ($state === '')
-			{
+			if (is_numeric($state)) {
+				$query->where($db->qn('a.state') . '=' . (int)$state);
+			} elseif ($state === '') {
 				$query->where($db->qn('a.state') . ' IN (0, 1)');
 			}
 		}
 
 		$search = $this->getState('filter.search');
-		if (!empty($search))
-		{
-			if (stripos($search, 'id:') === 0)
-			{
-				$query->where('a.id = ' . (int) substr($search, 3));
-			}
-			else
-			{
+		if (!empty($search)) {
+			if (stripos($search, 'id:') === 0) {
+				$query->where('a.id = ' . (int)substr($search, 3));
+			} else {
 				$search = $db->q('%' . $db->escape(trim($search)) . '%');
 				$query->where($db->qn('a.text') . ' LIKE ' . $search);
 			}
 		}
 
-		if ($this->state->get('list.ordercustom'))
-		{
+		if ($this->state->get('list.ordercustom')) {
 			$orderCustom = $this->state->get('list.ordercustom');
 			$query->order($db->escape($orderCustom));
-		}
-		else
-		{
+		} else {
 			$orderCol  = $this->state->get('list.ordering');
 			$orderDirn = $this->state->get('list.direction');
-			if ($orderCol && $orderDirn)
-			{
+			if ($orderCol && $orderDirn) {
 				$query->order($db->escape($orderCol . ' ' . $orderDirn));
 			}
 		}
@@ -343,7 +323,7 @@ class TranslationsModel extends ListModel
 	 * different modules that might need different sets of data or different
 	 * ordering requirements.
 	 *
-	 * @param   string  $id  A prefix for the store id.
+	 * @param  string  $id  A prefix for the store id.
 	 *
 	 * @since  1.0.0
 	 * @return string        A store id.
@@ -365,8 +345,8 @@ class TranslationsModel extends ListModel
 	 * Method to autopopulate the model state.
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @param   string  $ordering   Order item
-	 * @param   string  $direction  Order direction
+	 * @param  string  $ordering   Order item
+	 * @param  string  $direction  Order direction
 	 *
 	 * @since 1.0.0
 	 */

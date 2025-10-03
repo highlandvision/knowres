@@ -29,24 +29,25 @@ class EmailactionsModel extends ListModel
 	/**
 	 * Constructor.
 	 *
-	 * @param   array  $config  An optional associative array of configuration settings.
+	 * @param  array  $config  An optional associative array of configuration settings.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
 	public function __construct($config = [])
 	{
-		if (empty($config['filter_fields']))
-		{
-			$config['filter_fields'] = array(
-				'id', 'a.id',
-				'contract_id', 'a.contract_id',
-				'email_trigger', 'a.email_trigger',
-				'created_by', 'a.created_by',
-				'created_at', 'a.created_at',
-				'updated_at', 'a.updated_at',
+		if (empty($config['filter_fields'])) {
+			//@formatter:off
+			$config['filter_fields'] = [
+				'id',               'a.id',
+				'contract_id',      'a.contract_id',
+				'email_trigger',    'a.email_trigger',
+				'created_by',       'a.created_by',
+				'created_at',       'a.created_at',
+				'updated_at',       'a.updated_at',
 				'contract_tag'
-			);
+			];
+			//@formatter:on
 		}
 
 		parent::__construct($config);
@@ -68,27 +69,26 @@ class EmailactionsModel extends ListModel
 		$query->from($db->qn('#__knowres_email_action', 'a'));
 
 		$query->select($db->qn('uc.name', 'editor'))
-		      ->join('LEFT', $db->qn('#__users', 'uc') . ' ON ' . $db->qn('uc.id') . '=' . $db->qn('a.checked_out'));
+			->join('LEFT', $db->qn('#__users', 'uc') . ' ON ' . $db->qn('uc.id') . '=' . $db->qn('a.checked_out'));
 		$query->select($db->qn('created_by.name', 'created_by'))
-		      ->join('LEFT',
-			      $db->qn('#__users', 'created_by') . ' ON ' . $db->qn('created_by.id') . '='
-			      . $db->qn('a.created_by'));
+			->join('LEFT',
+				$db->qn('#__users', 'created_by') . ' ON ' . $db->qn('created_by.id') . '='
+				. $db->qn('a.created_by')
+			);
 		$query->select($db->qn('updated_by.name', 'updated_by'))
-		      ->join('LEFT', $db->qn('#__users', 'updated_by') . ' ON ' . $db->qn('updated_by.id') . '='
-			      . $db->qn('a.updated_by'));
+			->join('LEFT', $db->qn('#__users', 'updated_by') . ' ON ' . $db->qn('updated_by.id') . '='
+			               . $db->qn('a.updated_by')
+			);
 		$query->select($db->qn('contract.tag', 'contract_tag'))
-		      ->join('LEFT', $db->qn('#__knowres_contract', 'contract') . ' ON ' . $db->qn('contract.id') . '='
-			      . $db->qn('a.contract_id'));
+			->join('LEFT', $db->qn('#__knowres_contract', 'contract') . ' ON ' . $db->qn('contract.id') . '='
+			               . $db->qn('a.contract_id')
+			);
 
 		$search = $this->getState('filter.search');
-		if (!empty($search))
-		{
-			if (stripos($search, 'id:') === 0)
-			{
-				$query->where($db->qn('a.id') . '=' . (int) substr($search, 3));
-			}
-			else
-			{
+		if (!empty($search)) {
+			if (stripos($search, 'id:') === 0) {
+				$query->where($db->qn('a.id') . '=' . (int)substr($search, 3));
+			} else {
 				$search = $db->q('%' . $search . '%');
 				$query->where($db->qn('contract.tag') . ' LIKE ' . $search);
 			}
@@ -96,8 +96,7 @@ class EmailactionsModel extends ListModel
 
 		$orderCol  = $this->state->get('list.ordering');
 		$orderDirn = $this->state->get('list.direction');
-		if ($orderCol && $orderDirn)
-		{
+		if ($orderCol && $orderDirn) {
 			$query->order($db->escape($orderCol . ' ' . $orderDirn));
 		}
 
@@ -110,7 +109,7 @@ class EmailactionsModel extends ListModel
 	 * different modules that might need different sets of data or different
 	 * ordering requirements.
 	 *
-	 * @param   string  $id  A prefix for the store id.
+	 * @param  string  $id  A prefix for the store id.
 	 *
 	 * @since  2.0.0
 	 * @return string A store id.
@@ -126,15 +125,16 @@ class EmailactionsModel extends ListModel
 	 * Method to autopopulate the model state.
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @param   null|string  $ordering
-	 * @param   null|string  $direction
+	 * @param  null|string  $ordering
+	 * @param  null|string  $direction
 	 *
 	 * @since 1.0.0
 	 */
 	protected function populateState($ordering = 'a.id', $direction = 'asc'): void
 	{
 		$this->setState('filter.search',
-			$this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string'));
+			$this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string')
+		);
 
 		$this->setState('params', KrMethods::getParams());
 

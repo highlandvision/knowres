@@ -37,26 +37,27 @@ class AgenciesModel extends ListModel
 	 */
 	public function __construct($config = [])
 	{
-		if (empty($config['filter_fields']))
-		{
+		if (empty($config['filter_fields'])) {
+			//@formatter:off
 			$config['filter_fields'] = array(
-				'id', 'a.id',
-				'name', 'a.name',
-				'street', 'a.street',
-				'town', 'a.town',
-				'postcode', 'a.postcode',
-				'region_id', 'a.region_id', 'region_name',
-				'country_id', 'a.country_id', 'country_name',
-				'telephone', 'a.telephone',
-				'tax_code', 'a.tax_code',
-				'company_number', 'a.company_number',
-				'ordering', 'a.ordering',
-				'state', 'a.state',
-				'created_by', 'a.created_by',
-				'created_at', 'a.created_at',
-				'updated_by', 'a.updated_by',
-				'updated_at', 'a.updated_at'
+				'id',               'a.id',
+				'name',             'a.name',
+				'street',           'a.street',
+				'town',             'a.town',
+				'postcode',         'a.postcode',
+				'region_id',        'a.region_id',  'region_name',
+				'country_id',       'a.country_id', 'country_name',
+				'telephone',        'a.telephone',
+				'tax_code',         'a.tax_code',
+				'company_number',   'a.company_number',
+				'ordering',         'a.ordering',
+				'state',            'a.state',
+				'created_by',       'a.created_by',
+				'created_at',       'a.created_at',
+				'updated_by',       'a.updated_by',
+				'updated_at',       'a.updated_at'
 			);
+			//@formatter:on
 		}
 
 		parent::__construct($config);
@@ -77,14 +78,23 @@ class AgenciesModel extends ListModel
 		$query = $db->getQuery(true);
 
 		$query->select($db->qn([
-			'a.id', 'a.name', 'a.street', 'a.town', 'a.postcode', 'a.region_id', 'a.country_id', 'a.telephone',
-			'a.tax_code', 'a.company_number'
+			'a.id',
+			'a.name',
+			'a.street',
+			'a.town',
+			'a.postcode',
+			'a.region_id',
+			'a.country_id',
+			'a.telephone',
+			'a.tax_code',
+			'a.company_number'
 		]));
 		$query->from($db->qn('#__knowres_agency', 'a'))
-		      ->join('LEFT',
-			      $db->qn('#__knowres_manager', 'm') . ' ON ' . $db->qn('m.agency_id') . '=' . $db->qn('a.id'))
-		      ->where($db->qn('m.id') . '=' . $manager_id)
-		      ->setLimit(1);
+			->join('LEFT',
+				$db->qn('#__knowres_manager', 'm') . ' ON ' . $db->qn('m.agency_id') . '=' . $db->qn('a.id')
+			)
+			->where($db->qn('m.id') . '=' . $manager_id)
+			->setLimit(1);
 		$db->setQuery($query);
 
 		return $db->loadObject();
@@ -103,14 +113,27 @@ class AgenciesModel extends ListModel
 		$query = $db->getQuery(true);
 
 		$query->select($db->qn([
-			'a.id', 'a.name', 'a.street', 'a.town', 'a.postcode', 'a.region_id', 'a.country_id', 'a.telephone',
-			'a.tax_code', 'a.company_number', 'a.ordering', 'a.state', 'a.created_by', 'a.created_at', 'a.updated_by',
+			'a.id',
+			'a.name',
+			'a.street',
+			'a.town',
+			'a.postcode',
+			'a.region_id',
+			'a.country_id',
+			'a.telephone',
+			'a.tax_code',
+			'a.company_number',
+			'a.ordering',
+			'a.state',
+			'a.created_by',
+			'a.created_at',
+			'a.updated_by',
 			'a.updated_at'
 		]));
 
 		$query->from($db->qn('#__knowres_agency', 'a'))
-		      ->where($db->qn('a.state') . '=1')
-		      ->order($db->qn('a.name'));
+			->where($db->qn('a.state') . '=1')
+			->order($db->qn('a.name'));
 
 		$db->setQuery($query);
 
@@ -133,21 +156,22 @@ class AgenciesModel extends ListModel
 		$item           = 'region';
 		$subQueryRegion = $db->getQuery(true);
 		$subQueryRegion->select('sub.text')
-		               ->from($db->qn('#__knowres_translation', 'sub'))
-		               ->where($db->qn('sub.item') . '=' . $db->q($item))
-		               ->where($db->qn('sub.item_id') . '=' . $db->qn('a.region_id'))
-		               ->order('(CASE WHEN ' . $db->qn('sub.language') . '=' . $db->q($lang) . ' THEN 1 ELSE 2 END )')
-		               ->setLimit(1);
+			->from($db->qn('#__knowres_translation', 'sub'))
+			->where($db->qn('sub.item') . '=' . $db->q($item))
+			->where($db->qn('sub.item_id') . '=' . $db->qn('a.region_id'))
+			->order('(CASE WHEN ' . $db->qn('sub.language') . '=' . $db->q($lang) . ' THEN 1 ELSE 2 END )')
+			->setLimit(1);
 
 		$item            = 'country';
 		$subQueryCountry = $db->getQuery(true);
 		$subQueryCountry->select('sub.text')
-		                ->from($db->qn('#__knowres_translation', 'sub'))
-		                ->where($db->qn('sub.item') . '=' . $db->q($item))
-		                ->where($db->qn('sub.item_id') . '=' . $db->qn('a.country_id'))
-		                ->order('(CASE WHEN ' . $db->qn('sub.language') . '=' . $db->q($lang)
-			                . ' THEN 1 ELSE 2 END )')
-		                ->setLimit(1);
+			->from($db->qn('#__knowres_translation', 'sub'))
+			->where($db->qn('sub.item') . '=' . $db->q($item))
+			->where($db->qn('sub.item_id') . '=' . $db->qn('a.country_id'))
+			->order('(CASE WHEN ' . $db->qn('sub.language') . '=' . $db->q($lang)
+			        . ' THEN 1 ELSE 2 END )'
+			)
+			->setLimit(1);
 
 		$query->select($this->getState('list.select', 'a.*'));
 		$query->from($db->qn('#__knowres_agency', 'a'));
@@ -165,36 +189,27 @@ class AgenciesModel extends ListModel
 		$query->join('LEFT', '#__users AS updated_by ON updated_by.id = a.updated_by');
 
 		$state = $this->getState('filter.state');
-		if (is_numeric($state))
-		{
-			$query->where($db->qn('a.state') . '=' . (int) $state);
-		}
-		elseif ($state === '')
-		{
+		if (is_numeric($state)) {
+			$query->where($db->qn('a.state') . '=' . (int)$state);
+		} elseif ($state === '') {
 			$query->where($db->qn('a.state') . ' IN (0, 1)');
 		}
 
 		$filter_country_id = $this->state->get('filter.country_id');
-		if (!empty($filter_country_id))
-		{
-			$query->where($db->qn('a.country_id') . '=' . (int) $filter_country_id);
+		if (!empty($filter_country_id)) {
+			$query->where($db->qn('a.country_id') . '=' . (int)$filter_country_id);
 		}
 
 		$filter_region_id = $this->state->get('filter.region_id');
-		if (!empty($filter_region_id))
-		{
-			$query->where($db->qn('a.region_id') . '=' . (int) $filter_region_id);
+		if (!empty($filter_region_id)) {
+			$query->where($db->qn('a.region_id') . '=' . (int)$filter_region_id);
 		}
 
 		$search = $this->getState('filter.search');
-		if (!empty($search))
-		{
-			if (stripos($search, 'id:') === 0)
-			{
-				$query->where('a.id = ' . (int) substr($search, 3));
-			}
-			else
-			{
+		if (!empty($search)) {
+			if (stripos($search, 'id:') === 0) {
+				$query->where('a.id = ' . (int)substr($search, 3));
+			} else {
 				$search = $db->q('%' . $search . '%');
 				$query->where($db->qn('a.name') . ' LIKE ' . $search);
 			}
@@ -202,8 +217,7 @@ class AgenciesModel extends ListModel
 
 		$orderCol  = $this->state->get('list.ordering');
 		$orderDirn = $this->state->get('list.direction');
-		if ($orderCol && $orderDirn)
-		{
+		if ($orderCol && $orderDirn) {
 			$query->order($db->escape($orderCol . ' ' . $orderDirn));
 		}
 
@@ -244,13 +258,17 @@ class AgenciesModel extends ListModel
 	protected function populateState($ordering = 'a.name', $direction = 'asc'): void
 	{
 		$this->setState('filter.search',
-			$this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string'));
+			$this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string')
+		);
 		$this->setState('filter.state',
-			$this->getUserStateFromRequest($this->context . '.filter.state', 'filter_state', '', 'string'));
+			$this->getUserStateFromRequest($this->context . '.filter.state', 'filter_state', '', 'string')
+		);
 		$this->setState('filter.country_id',
-			$this->getUserStateFromRequest($this->context . '.filter.country_id', 'filter_country_id', '', 'string'));
+			$this->getUserStateFromRequest($this->context . '.filter.country_id', 'filter_country_id', '', 'string')
+		);
 		$this->setState('filter.region_id',
-			$this->getUserStateFromRequest($this->context . '.filter.region_id', 'filter_region_id', '', 'string'));
+			$this->getUserStateFromRequest($this->context . '.filter.region_id', 'filter_region_id', '', 'string')
+		);
 
 		$params = KrMethods::getParams();
 		$this->setState('params', $params);

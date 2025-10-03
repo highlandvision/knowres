@@ -88,8 +88,8 @@ class KrFactory
 	 * @since  3.3.0
 	 * @return Form
 	 */
-	public static function getAdhocForm(string  $name, string $source, string $area = 'administrator',
-	                                    ?string $control = 'jform'): Form
+	public static function getAdhocForm(string $name, string $source, string $area = 'administrator',
+		?string $control = 'jform'): Form
 	{
 		if ($area == 'site') {
 			$filepath = JPATH_COMPONENT_SITE . '/forms/' . $source;

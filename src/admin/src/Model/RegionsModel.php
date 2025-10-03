@@ -26,7 +26,8 @@ use function strlen;
  *
  * @since 1.0.0
  */
-class RegionsModel extends ListModel {
+class RegionsModel extends ListModel
+{
 	/**
 	 * Constructor.
 	 *
@@ -38,37 +39,26 @@ class RegionsModel extends ListModel {
 	public function __construct($config = [])
 	{
 		if (empty($config['filter_fields'])) {
-			$config['filter_fields'] = array(
-				'id',
-				'a.id',
-				'region_iso',
-				'a.region_iso',
-				'country_id',
-				'a.country_id',
-				'allow_property',
-				'a.allow_property',
-				'property_licence',
-				'a.property_licence',
-				'map_zoom',
-				'a.map_zoom',
-				'map_zoom_max',
-				'a.map_zoom_max',
-				'code',
-				'a.code',
-				'state',
-				'a.state',
-				'created_by',
-				'a.created_by',
-				'created_at',
-				'a.created_at',
-				'updated_by',
-				'a.updated_by',
-				'updated_at',
-				'a.updated_at',
+			//@formatter:off
+			$config['filter_fields'] = [
+				'id',                   'a.id',
+				'region_iso',   		'a.region_iso',
+				'country_id',			'a.country_id',
+				'allow_property',		'a.allow_property',
+				'property_licence',		'a.property_licence',
+				'map_zoom', 			'a.map_zoom',
+				'map_zoom_max',			'a.map_zoom_max',
+				'code', 				'a.code',
+				'state',				'a.state',
+				'created_by',			'a.created_by',
+				'created_at',			'a.created_at',
+				'updated_by',			'a.updated_by',
+				'updated_at',			'a.updated_at',
 				'name',
 				'country_name',
 				'blurb'
-			);
+			];
+			//@formatter:on
 		}
 
 		parent::__construct($config);
@@ -245,24 +235,26 @@ class RegionsModel extends ListModel {
 			->where($db->qn('sub.item') . ' = ' . $db->q($item))
 			->where($db->qn('sub.item_id') . ' = ' . $db->qn('a.country_id'))
 			->order('(CASE WHEN ' . $db->qn('sub.language') . ' = ' . $db->q($lang)
-			        . ' THEN 1 ELSE 2 END )')
+			        . ' THEN 1 ELSE 2 END )'
+			)
 			->setLimit(1);
 
-		$query->select($db->qn(['a.id',
-		                        'a.region_iso',
-		                        'a.country_id',
-		                        'a.allow_property',
-		                        'a.map_zoom',
-		                        'a.map_zoom_max',
-		                        'a.code',
-		                        'a.property_licence',
-		                        'a.state',
-		                        'a.checked_out',
-		                        'a.checked_out_time',
-		                        'a.created_by',
-		                        'a.created_at',
-		                        'a.updated_by',
-		                        'a.updated_at'
+		$query->select($db->qn([
+			'a.id',
+			'a.region_iso',
+			'a.country_id',
+			'a.allow_property',
+			'a.map_zoom',
+			'a.map_zoom_max',
+			'a.code',
+			'a.property_licence',
+			'a.state',
+			'a.checked_out',
+			'a.checked_out_time',
+			'a.created_by',
+			'a.created_at',
+			'a.updated_by',
+			'a.updated_at'
 		]));
 		$query->from($db->qn('#__knowres_region', 'a'));
 		$query->select('(' . $subQuery->__toString() . ') ' . $db->q('name'));
@@ -280,30 +272,30 @@ class RegionsModel extends ListModel {
 
 		$state = $this->getState('filter.state');
 		if (is_numeric($state)) {
-			$query->where($db->qn('a.state') . ' = ' . (int) $state);
+			$query->where($db->qn('a.state') . ' = ' . (int)$state);
 		} elseif ($state === '') {
 			$query->where($db->qn('a.state') . ' IN (0, 1)');
 		}
 
 		$filter_country_id = $this->getState("filter.country_id");
 		if ($filter_country_id) {
-			$query->where($db->qn('a.country_id') . ' = ' . (int) $filter_country_id);
+			$query->where($db->qn('a.country_id') . ' = ' . (int)$filter_country_id);
 		}
 
 		$filter_allow_property = $this->getState("filter.allow_property");
 		if (is_numeric($filter_allow_property)) {
-			$query->where($db->qn('a.allow_property') . ' = ' . (int) $filter_allow_property);
+			$query->where($db->qn('a.allow_property') . ' = ' . (int)$filter_allow_property);
 		}
 
 		$filter_property_licence = $this->getState("filter.property_licence");
 		if (is_numeric($filter_property_licence)) {
-			$query->where($db->qn('a.property_licence') . ' = ' . (int) $filter_property_licence);
+			$query->where($db->qn('a.property_licence') . ' = ' . (int)$filter_property_licence);
 		}
 
 		$search = $this->getState('filter.search');
 		if (!empty($search)) {
 			if (stripos($search, 'id:') === 0) {
-				$query->where($db->qn('a.id') . ' = ' . (int) substr($search, 3));
+				$query->where($db->qn('a.id') . ' = ' . (int)substr($search, 3));
 			} else {
 				$search = $db->q('%' . $db->escape($search) . '%');
 				$query->where('(' . $subQuery->__toString() . ') ' . ' LIKE ' . $search);
@@ -353,15 +345,22 @@ class RegionsModel extends ListModel {
 	protected function populateState($ordering = 'name', $direction = 'asc'): void
 	{
 		$this->setState('filter.search',
-			$this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string'));
+			$this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string')
+		);
 		$this->setState('filter.state',
-			$this->getUserStateFromRequest($this->context . '.filter.state', 'filter_state', '', 'string'));
+			$this->getUserStateFromRequest($this->context . '.filter.state', 'filter_state', '', 'string')
+		);
 		$this->setState('filter.country_id',
-			$this->getUserStateFromRequest($this->context . '.filter.country_id', 'filter_country_id', '', 'string'));
+			$this->getUserStateFromRequest($this->context . '.filter.country_id', 'filter_country_id', '', 'string')
+		);
 		$this->setState('filter.allow_property', $this->getUserStateFromRequest($this->context . '.filter.allow_property',
-			'filter_allow_property', '', 'string'));
+			'filter_allow_property', '', 'string'
+		)
+		);
 		$this->setState('filter.property_licence', $this->getUserStateFromRequest($this->context . '.filter.property_licence',
-			'filter_property_licence', '', 'string'));
+			'filter_property_licence', '', 'string'
+		)
+		);
 
 		$params = KrMethods::getParams();
 		$this->setState('params', $params);

@@ -25,7 +25,8 @@ use function is_numeric;
  *
  * @since 1.0.0
  */
-class CountriesModel extends ListModel {
+class CountriesModel extends ListModel
+{
 	/**
 	 * Constructor.
 	 *
@@ -37,29 +38,21 @@ class CountriesModel extends ListModel {
 	public function __construct($config = [])
 	{
 		if (empty($config['filter_fields'])) {
-			$config['filter_fields'] = array(
-				'id',
-				'a.id',
-				'country_iso',
-				'a.country_iso',
-				'dial_code',
-				'a.dial_code',
-				'allow_property',
-				'a.allow_property',
-				'property_licence',
-				'a.property_licence',
-				'state',
-				'a.state',
-				'created_by',
-				'a.created_by',
-				'created_at',
-				'a.created_at',
-				'updated_by',
-				'a.updated_by',
-				'updated_at',
-				'a.updated_at',
+			//@formatter:off
+			$config['filter_fields'] = [
+				'id',                   'a.id',
+				'country_iso',  		'a.country_iso',
+				'dial_code',    		'a.dial_code',
+				'allow_property',		'a.allow_property',
+				'property_licence',		'a.property_licence',
+				'state',    			'a.state',
+				'created_by',			'a.created_by',
+				'created_at',			'a.created_at',
+				'updated_by',			'a.updated_by',
+				'updated_at',			'a.updated_at',
 				'name',
-			);
+			];
+			//@formatter:off
 		}
 
 		parent::__construct($config);
