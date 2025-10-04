@@ -1,6 +1,9 @@
-/.idea/
-/src/media/vendor/
-/package.json
-/privatekey.pem
-/publickey.cer
-/stats.json
+.idea
+src/media/vendor/
+package.json
+privatekey.pem
+publickey.cer
+stats.json
+*.min.js*
+*.min.css*
+*.css.map
