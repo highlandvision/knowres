@@ -22,8 +22,10 @@ module.exports = {
 	resolve:      {
 		symlinks: false,
 		alias:    {
-			npm:     path.resolve(__dirname, './node_modules'),
-			mediajs: path.resolve(__dirname, 'src/media/com_knowres/js/src'),
+            // npm: [path.resolve(__dirname, 'node_modules'), 'node_modules'],
+            // npm:     path.resolve(__dirname, '"Z:\\krdev\\node_modules"'),
+            npm:     path.resolve(__dirname, './node_modules'),
+			mediajs: path.resolve(__dirname, 'pkg/kr/src/media/com_knowres/js/src'),
 		}
 	},
 	plugins:      [
@@ -80,4 +82,4 @@ module.exports = {
 			},
 		},
 	},
-}
+};
