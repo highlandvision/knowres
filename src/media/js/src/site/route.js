@@ -66,42 +66,6 @@
 			}));
 		}
 
-		//
-		// addPropertyMarker(point, html, image, boxinfo) {
-		// 	let marker = new google.maps.Marker({
-		// 		position: point,
-		// 		html:     html,
-		// 		map:      routeMap,
-		// 		icon:     image,
-		// 		zIndex:   1
-		// 	});
-		//
-		// 	let infowindow = new google.maps.InfoWindow({
-		// 		content: boxinfo
-		// 	});
-		//
-		// 	google.maps.event.addListener(marker, 'click', function () {
-		// 		// Check to see if there is an info window stored in routeCurrInfoWindow,
-		// 		// if there is, we use .close() to hide the window
-		// 		if (routeCurrInfoWindow) {
-		// 			routeCurrInfoWindow.close();
-		// 		}
-		// 		// Put our new info window in to the routeCurrInfoWindow variable
-		// 		routeCurrInfoWindow = infowindow;
-		// 		// Open the window
-		// 		infowindow.open(routeMap, marker);
-		// 	});
-		//
-		// 	//gmarkers.push( marker );
-		// 	routeMarkers.push(marker);
-		// }
-
-		// static updateMode() {
-		// 	if (directionsVisible) {
-		// 		this.calcRoute();
-		// 	}
-		// }
-
 		calcRoute() {
 			let from_address = document.getElementById("from_address").value;
 			let origin = "";

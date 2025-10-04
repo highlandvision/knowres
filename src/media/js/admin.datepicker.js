@@ -10,18 +10,18 @@ if (typeof jQuery === 'undefined') jQuery.noConflict();
 (function ($) {
 	let elem, id, split, new_date, valid_from, valid_to, $to;
 	const ui_options = {
-		altFormat:         'yy-mm-dd',
-		buttonText:        '<i role="button" class="fa-solid fa-calendar-day fa-lg"></i>',
-		changeMonth:       true,
-		changeYear:        true,
-		dateFormat:        'd M yy',
-		firstDay:          1,
-		numberOfMonths:    1,
+		altFormat: 'yy-mm-dd',
+		buttonText: '<i role="button" class="fa-solid fa-calendar-day fa-lg"></i>',
+		changeMonth: true,
+		changeYear: true,
+		dateFormat: 'd M yy',
+		firstDay: 1,
+		numberOfMonths: 1,
 		selectOtherMonths: true,
-		showButtonPanel:   true,
-		showOn:            'both',
-		showOtherMonths:   true,
-		onSelect:          function () {
+		showButtonPanel: true,
+		showOn: 'both',
+		showOtherMonths: true,
+		onSelect: function () {
 			id = $(this).attr('id');
 			elem = document.getElementById(id);
 			if (id === 'jform_valid_from_dsp') {
@@ -34,8 +34,10 @@ if (typeof jQuery === 'undefined') jQuery.noConflict();
 				if (valid_from > valid_to) {
 					$to.val($.datepicker.formatDate('yy-mm-dd', new Date(new_date)));
 				}
-			} else if (elem.classList.contains('kr-search-date-filter')) {
-				document.adminForm.submit();
+			} else {
+				if (elem.classList.contains('kr-search-date-filter')) {
+					document.adminForm.submit();
+				}
 			}
 		},
 	};

@@ -5,29 +5,31 @@
 // author     Hazel Wilson <hazel@highlandvision.com>
 "use strict";
 
-if (typeof jQuery !== 'undefined') jQuery.noConflict();
+if (typeof jQuery !== 'undefined') {
+	jQuery.noConflict();
+}
 
 (function ($) {
 	const options = {
-		buttonText:        '<i class="fa-solid fa-calendar-alt"></i>',
-		changeMonth:       true,
-		changeYear:        true,
-		dateFormat:        'd M yy',
-		firstDay:          1,
-		numberOfMonths:    1,
+		buttonText: '<i class="fa-solid fa-calendar-alt"></i>',
+		changeMonth: true,
+		changeYear: true,
+		dateFormat: 'd M yy',
+		firstDay: 1,
+		numberOfMonths: 1,
 		selectOtherMonths: false,
-		showButtonPanel:   true,
-		showOn:            'both',
-		showOtherMonths:   false,
+		showButtonPanel: true,
+		showOn: 'both',
+		showOtherMonths: false,
 	};
 	$(function () {
 		$(document).on('click', '.ownerpaymentconfirm', function (e) {
 			e.preventDefault();
 			const payment_id = $(this).data('id');
 			$.ajax({
-				url:      'index.php?option=com_knowres&task=ownerpayment.modal&id=' + payment_id,
+				url: 'index.php?option=com_knowres&task=ownerpayment.modal&id=' + payment_id,
 				dataType: 'html',
-				success:  function (data) {
+				success: function (data) {
 					$('#kr-ownerpayment-modal .modal-content').empty().append(data);
 					$('#kr-ownerpayment-modal').modal('show');
 					$('[data-datepicker]').each(function () {

@@ -12,8 +12,9 @@
 
 "use strict";
 
-if (typeof jQuery !== 'undefined')
+if (typeof jQuery !== 'undefined') {
 	jQuery.noConflict();
+}
 
 (function ($) {
 	let days_in_month = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
@@ -48,8 +49,8 @@ if (typeof jQuery !== 'undefined')
 	}
 
 	DateTextEntry.prototype = {
-		constructor:              DateTextEntry
-		, build_ui:               function () {
+		constructor: DateTextEntry
+		, build_ui: function () {
 			let dte = this;
 			this.wrapper = $(this.$element.wrap('<span class="jq-dte" />').parent()[0]);
 			this.inner = $('<span class="jq-dte-inner" />');
@@ -66,7 +67,7 @@ if (typeof jQuery !== 'undefined')
 			this.set_field_widths();
 			this.$element.hide();
 		}
-		, add_entry_fields:       function () {
+		, add_entry_fields: function () {
 			let dte = this;
 			dte.fields = [];
 			$.each(this.options.field_order.split(''), function (i, field) {
@@ -85,15 +86,15 @@ if (typeof jQuery !== 'undefined')
 				}
 			});
 		}
-		, build_field:            function (name, index) {
+		, build_field: function (name, index) {
 			let dte = this;
 			let opt = this.options;
 			let input = new DateTextInput({
-				name:      name,
-				dte:       dte,
-				index:     index,
+				name: name,
+				dte: dte,
+				index: index,
 				hint_text: opt.show_hints ? opt['field_hint_text_' + name] : null,
-				tip_text:  opt['field_tip_text_' + name]
+				tip_text: opt['field_tip_text_' + name]
 			});
 			this.inner.append(input.$input);
 			this['input_' + name] = input;
@@ -105,7 +106,7 @@ if (typeof jQuery !== 'undefined')
 			this.fields[index] = input;
 			this[name] = input;
 		}
-		, set_field_widths:       function () {
+		, set_field_widths: function () {
 			let opt = this.options;
 			let available = this.$element.width() - 2;
 			let total = opt.field_width_year + opt.field_width_sep + opt.field_width_month +
@@ -114,7 +115,7 @@ if (typeof jQuery !== 'undefined')
 			this.input_month.set_width(Math.floor(opt.field_width_month * available / total));
 			this.input_year.set_width(Math.floor(opt.field_width_year * available / total));
 		}
-		, set_date:               function (new_date) {
+		, set_date: function (new_date) {
 			let dte = this;
 			new_date = this.parse_date(new_date);
 			delete this.day_value;
@@ -131,7 +132,7 @@ if (typeof jQuery !== 'undefined')
 				});
 			}
 		}
-		, proxy_label_clicks:     function () {
+		, proxy_label_clicks: function () {
 			let dte = this;
 			let id = this.$element.attr('id');
 			if (!id) {
@@ -141,11 +142,11 @@ if (typeof jQuery !== 'undefined')
 				dte.focus();
 			});
 		}
-		, clear:                  function () {
+		, clear: function () {
 			this.clear_error('');
 			this.set_date('');
 		}
-		, destroy:                function () {
+		, destroy: function () {
 			this.$element.show();
 			this.$element.css('display', '');
 			this.wrapper.find('span').remove();
@@ -155,48 +156,48 @@ if (typeof jQuery !== 'undefined')
 			delete this.wrapper;
 			delete this.$element;
 		}
-		, after_paste:            function (target) {
+		, after_paste: function (target) {
 			if (this.parse_date($(target).val())) {
 				this.set_date($(target).val());
 			}
 		}
-		, parse_date:             function (text) {
+		, parse_date: function (text) {
 			return this.parse_iso_date(text);
 		}
-		, parse_iso_date:         function (text) {
+		, parse_iso_date: function (text) {
 			return text && text.match(/^(\d\d\d\d)-(\d\d)-(\d\d)/)
-			       ? {day: RegExp.$3, month: RegExp.$2, year: RegExp.$1}
-			       : null;
+				? {day: RegExp.$3, month: RegExp.$2, year: RegExp.$1}
+				: null;
 		}
-		, get_date:               function () {
+		, get_date: function () {
 			return (this.day_value && this.month_value && this.year_value)
-			       ? {day: this.day_value, month: this.month_value, year: this.year_value}
-			       : null;
+				? {day: this.day_value, month: this.month_value, year: this.year_value}
+				: null;
 		}
-		, get_today:              function () {
+		, get_today: function () {
 			let today = new Date();
 			return {
-				day:   pad2(today.getDate()),
+				day: pad2(today.getDate()),
 				month: pad2(today.getMonth() + 1),
-				year:  pad4(today.getFullYear())
+				year: pad4(today.getFullYear())
 			};
 		}
-		, format_date:            function (date) {
+		, format_date: function (date) {
 			return this.iso_format_date(date);
 		}
-		, iso_format_date:        function (date) {
+		, iso_format_date: function (date) {
 			return [pad4(date.year), pad2(date.month), pad2(date.day)].join('-');
 		}
-		, human_format_date:      function (date) {
+		, human_format_date: function (date) {
 			return [pad2(date.day), pad2(date.month), pad4(date.year)].join('/');
 		}
-		, add_century:            function (year) {
+		, add_century: function (year) {
 			return 2000 + year;
 		}
-		, focus_in:               function () {
+		, focus_in: function () {
 			this.wrapper.addClass('focus');
 		}
-		, focus_out:              function () {
+		, focus_out: function () {
 			if (this.on_blur) {
 				let self = this;
 				setTimeout(function () {
@@ -205,12 +206,12 @@ if (typeof jQuery !== 'undefined')
 			}
 			this.wrapper.removeClass('focus');
 		}
-		, widget_focus_lost:      function () {
+		, widget_focus_lost: function () {
 			if (this.on_blur && !this.wrapper.is('.focus')) {
 				this.on_blur();
 			}
 		}
-		, show_input_tip:         function (input) {
+		, show_input_tip: function (input) {
 			let opt = this.options;
 			if (!opt.show_tooltips) {
 				return;
@@ -219,18 +220,18 @@ if (typeof jQuery !== 'undefined')
 			let y_offset = (this.wrapper.height() + opt.tooltip_y) + 'px';
 			this.tooltip.css({position: 'absolute', top: y_offset, left: x_offset}).text(input.tip_text).show();
 		}
-		, hide_input_tip:         function () {
+		, hide_input_tip: function () {
 			this.tooltip.hide();
 		}
-		, set_error:              function (error_text) {
+		, set_error: function (error_text) {
 			this.error_text = error_text;
 			this.show_error();
 		}
-		, clear_error:            function () {
+		, clear_error: function () {
 			delete this.error_text;
 			this.show_error();
 		}
-		, set_readonly:           function (mode) {
+		, set_readonly: function (mode) {
 			if (mode === undefined) {
 				mode = true;
 			}
@@ -243,7 +244,7 @@ if (typeof jQuery !== 'undefined')
 				this.wrapper.removeClass('readonly');
 			}
 		}
-		, show_error:             function () {
+		, show_error: function () {
 			let opt = this.options;
 			let error_text = this.widget_error_text();
 			if (this.on_error) {
@@ -263,7 +264,7 @@ if (typeof jQuery !== 'undefined')
 				this.errorbox.show();
 			}
 		}
-		, widget_error_text:      function () {
+		, widget_error_text: function () {
 			let error_text = '';
 			$.each(this.fields, function (i, input) {
 				if (input.error_text) {
@@ -277,10 +278,10 @@ if (typeof jQuery !== 'undefined')
 			}
 			return error_text;
 		}
-		, focus:                  function () {
+		, focus: function () {
 			this.fields[0].set_focus(true);
 		}
-		, focus_field_before:     function (input) {
+		, focus_field_before: function (input) {
 			const index = input.index;
 			if (index < 1) {
 				return
@@ -290,7 +291,7 @@ if (typeof jQuery !== 'undefined')
 			let val = next.get();
 			next.set_focus(false);
 		}
-		, focus_field_after:      function (input) {
+		, focus_field_after: function (input) {
 			const index = input.index;
 			if (index > 1) {
 				return;
@@ -298,7 +299,7 @@ if (typeof jQuery !== 'undefined')
 			this.fields[index].yield_focus();
 			this.fields[index + 1].set_focus(true);
 		}
-		, validate:               function (current_input) {
+		, validate: function (current_input) {
 			this.$element.val('');
 			if (current_input) {
 				try {
@@ -331,7 +332,7 @@ if (typeof jQuery !== 'undefined')
 			}
 			return true;
 		}
-		, validate_day:           function () {
+		, validate_day: function () {
 			let opt = this.options;
 			let input = this.input_day;
 			this.day_value = undefined;
@@ -340,14 +341,14 @@ if (typeof jQuery !== 'undefined')
 				return;
 			}
 			if (text.match(/\D/)) {
-				throw(opt.E_DAY_NAN);
+				throw (opt.E_DAY_NAN);
 			}
 			let num = parseInt(text, 10);
 			if (num < 1) {
-				throw(opt.E_DAY_TOO_SMALL);
+				throw (opt.E_DAY_TOO_SMALL);
 			}
 			if (num > 31) {
-				throw(opt.E_DAY_TOO_BIG);
+				throw (opt.E_DAY_TOO_BIG);
 			}
 			text = num < 10 ? '0' + num : '' + num;
 			if (!input.has_focus) {
@@ -355,7 +356,7 @@ if (typeof jQuery !== 'undefined')
 			}
 			this.day_value = text;
 		}
-		, validate_month:         function () {
+		, validate_month: function () {
 			let opt = this.options;
 			let input = this.input_month;
 			this.month_value = undefined;
@@ -364,14 +365,14 @@ if (typeof jQuery !== 'undefined')
 				return;
 			}
 			if (text.match(/\D/)) {
-				throw(opt.E_MONTH_NAN);
+				throw (opt.E_MONTH_NAN);
 			}
 			let num = parseInt(text, 10);
 			if (num < 1) {
-				throw(opt.E_MONTH_TOO_SMALL);
+				throw (opt.E_MONTH_TOO_SMALL);
 			}
 			if (num > 12) {
-				throw(opt.E_MONTH_TOO_BIG);
+				throw (opt.E_MONTH_TOO_BIG);
 			}
 			text = num < 10 ? '0' + num : '' + num;
 			if (!input.has_focus) {
@@ -379,7 +380,7 @@ if (typeof jQuery !== 'undefined')
 			}
 			this.month_value = text;
 		}
-		, validate_year:          function () {
+		, validate_year: function () {
 			const opt = this.options;
 			const input = this.input_year;
 			this.year_value = undefined;
@@ -388,11 +389,11 @@ if (typeof jQuery !== 'undefined')
 				return;
 			}
 			if (text.match(/\D/)) {
-				throw(opt.E_YEAR_NAN);
+				throw (opt.E_YEAR_NAN);
 			}
 			if (input.has_focus) {
 				if (text.length > 4) {
-					throw(opt.E_YEAR_LENGTH);
+					throw (opt.E_YEAR_LENGTH);
 				}
 			} else {
 				if (text.length === 2) {
@@ -400,16 +401,16 @@ if (typeof jQuery !== 'undefined')
 					this.input_year.set(text);
 				}
 				if (text.length !== 4) {
-					throw(opt.E_YEAR_LENGTH);
+					throw (opt.E_YEAR_LENGTH);
 				}
 			}
 			if (text.length === 4) {
 				const num = parseInt(text, 10);
 				if (opt.min_year && num < opt.min_year) {
-					throw(opt.E_YEAR_TOO_SMALL.replace(/%y/, opt.min_year));
+					throw (opt.E_YEAR_TOO_SMALL.replace(/%y/, opt.min_year));
 				}
 				if (opt.max_year && num > opt.max_year) {
-					throw(opt.E_YEAR_TOO_BIG.replace(/%y/, opt.max_year));
+					throw (opt.E_YEAR_TOO_BIG.replace(/%y/, opt.max_year));
 				}
 			}
 			this.year_value = text;
@@ -431,7 +432,7 @@ if (typeof jQuery !== 'undefined')
 				msg = msg.replace(/ *%y/, '');
 			}
 			if (day > max) {
-				throw(msg.replace(/%d/, max).replace(/%m/, opt.month_name[month - 1]));
+				throw (msg.replace(/%d/, max).replace(/%m/, opt.month_name[month - 1]));
 			}
 		}
 		, validate_complete_date: function () {
@@ -450,7 +451,7 @@ if (typeof jQuery !== 'undefined')
 				if (date_iso > this.iso_format_date(max_date)) {
 					let msg = opt.max_date_message ? opt.max_date_message : opt.E_MAX_DATE;
 					if (msg) {
-						throw(msg.replace(/%DATE/, this.human_format_date(max_date)));
+						throw (msg.replace(/%DATE/, this.human_format_date(max_date)));
 					}
 				}
 			}
@@ -466,7 +467,7 @@ if (typeof jQuery !== 'undefined')
 				if (date_iso < this.iso_format_date(min_date)) {
 					let msg = opt.min_date_message ? opt.min_date_message : opt.E_MIN_DATE;
 					if (msg) {
-						throw(msg.replace(/%DATE/, this.human_format_date(min_date)));
+						throw (msg.replace(/%DATE/, this.human_format_date(min_date)));
 					}
 				}
 			}
@@ -656,39 +657,39 @@ if (typeof jQuery !== 'undefined')
 	};
 
 	$.fn.datetextentry.defaults = {
-		field_order:           'DMY',
-		separator:             '/',
-		show_tooltips:         true,
-		show_hints:            true,
-		show_errors:           true,
-		field_width_day:       40,
-		field_width_month:     40,
-		field_width_year:      60,
-		field_width_sep:       4,
-		errorbox_x:            8,
-		errorbox_y:            3,
-		tooltip_x:             0,
-		tooltip_y:             6,
-		field_tip_text_day:    'Day',
-		field_tip_text_month:  'Month',
-		field_tip_text_year:   'Year',
-		field_hint_text_day:   'DD',
+		field_order: 'DMY',
+		separator: '/',
+		show_tooltips: true,
+		show_hints: true,
+		show_errors: true,
+		field_width_day: 40,
+		field_width_month: 40,
+		field_width_year: 60,
+		field_width_sep: 4,
+		errorbox_x: 8,
+		errorbox_y: 3,
+		tooltip_x: 0,
+		tooltip_y: 6,
+		field_tip_text_day: 'Day',
+		field_tip_text_month: 'Month',
+		field_tip_text_year: 'Year',
+		field_hint_text_day: 'DD',
 		field_hint_text_month: 'MM',
-		field_hint_text_year:  'YYYY',
-		E_DAY_NAN:             'Day must be a number',
-		E_DAY_TOO_BIG:         'Day must be 1-31',
-		E_DAY_TOO_SMALL:       'Day must be 1-31',
-		E_BAD_DAY_FOR_MONTH:   'Only %d days in %m %y',
-		E_MONTH_NAN:           'Month must be a number',
-		E_MONTH_TOO_BIG:       'Month must be 1-12',
-		E_MONTH_TOO_SMALL:     'Month must be 1-12',
-		E_YEAR_NAN:            'Year must be a number',
-		E_YEAR_LENGTH:         'Year must be 4 digits',
-		E_YEAR_TOO_SMALL:      'Year must not be before %y',
-		E_YEAR_TOO_BIG:        'Year must not be after %y',
-		E_MIN_DATE:            'Date must not be earlier than %DATE',
-		E_MAX_DATE:            'Date must not be later than %DATE',
-		month_name:            [
+		field_hint_text_year: 'YYYY',
+		E_DAY_NAN: 'Day must be a number',
+		E_DAY_TOO_BIG: 'Day must be 1-31',
+		E_DAY_TOO_SMALL: 'Day must be 1-31',
+		E_BAD_DAY_FOR_MONTH: 'Only %d days in %m %y',
+		E_MONTH_NAN: 'Month must be a number',
+		E_MONTH_TOO_BIG: 'Month must be 1-12',
+		E_MONTH_TOO_SMALL: 'Month must be 1-12',
+		E_YEAR_NAN: 'Year must be a number',
+		E_YEAR_LENGTH: 'Year must be 4 digits',
+		E_YEAR_TOO_SMALL: 'Year must not be before %y',
+		E_YEAR_TOO_BIG: 'Year must not be after %y',
+		E_MIN_DATE: 'Date must not be earlier than %DATE',
+		E_MAX_DATE: 'Date must not be later than %DATE',
+		month_name: [
 			'January', 'February', 'March', 'April',
 			'May', 'June', 'July', 'August', 'September',
 			'October', 'November', 'December'

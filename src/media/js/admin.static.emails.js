@@ -16,12 +16,13 @@ function toggleCron() {
 		document.getElementById("krcron_section1").style.display = "none";
 	}
 }
+
 // eslint-disable-next-line no-unused-vars
 function switchList() {
 	let emailtype = document.getElementById('jform_switch').value;
 	let myClasses = document.querySelectorAll('.tags'),
-	    i         = 0,
-	    l         = myClasses.length;
+		i = 0,
+		l = myClasses.length;
 
 	for (i; i < l; i++) {
 		if (myClasses[i].id === emailtype) {
@@ -31,4 +32,5 @@ function switchList() {
 		}
 	}
 }
+
 //# sourceMappingURL=admin.static.emails.js.map

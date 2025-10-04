@@ -9,8 +9,9 @@
 "use strict";
 
 (function ($) {
-	if (!window.location.origin)
+	if (!window.location.origin) {
 		window.location.origin = window.location.protocol + "//" + window.location.host;
+	}
 
 	let myConfirm, $myTask;
 
@@ -28,11 +29,11 @@
 			$myTask = $('#mytask');
 			$myTask.val('confirm.compute');
 			jQuery.ajax({
-				type:     'POST',
-				url:      'index.php?option=com_knowres&task=confirm.compute',
-				data:     $form.serializeArray(),
+				type: 'POST',
+				url: 'index.php?option=com_knowres&task=confirm.compute',
+				data: $form.serializeArray(),
 				dataType: 'json',
-				success:  function (result) {
+				success: function (result) {
 					$myTask.val('confirm.payment');
 					if (result.success) {
 						const data = result.data;

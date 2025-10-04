@@ -5,7 +5,9 @@
 // author     Hazel Wilson <hazel@highlandvision.com>
 "use strict";
 
-if (typeof jQuery === 'undefined') jQuery.noConflict();
+if (typeof jQuery === 'undefined') {
+	jQuery.noConflict();
+}
 
 (function ($) {
 	let ui_aDate;
@@ -36,11 +38,11 @@ if (typeof jQuery === 'undefined') jQuery.noConflict();
 			e.preventDefault();
 			const id = $(this).data('id');
 			$.ajax({
-				type:     'POST',
+				type: 'POST',
 				dataType: 'json',
-				url:      'index.php?option=com_knowres&task=' + $(this).data('task'),
-				data:     {id: id},
-				success:  function (result) {
+				url: 'index.php?option=com_knowres&task=' + $(this).data('task'),
+				data: {id: id},
+				success: function (result) {
 					if (result.success) {
 						window.location.reload();
 					} else {
@@ -58,14 +60,14 @@ if (typeof jQuery === 'undefined') jQuery.noConflict();
 		formData.append('source', 'calendar');
 
 		$.ajax({
-			url:         'index.php?option=com_knowres&task=contract.modalbook',
-			dataType:    'json',
-			method:      'POST',
-			cache:       false,
+			url: 'index.php?option=com_knowres&task=contract.modalbook',
+			dataType: 'json',
+			method: 'POST',
+			cache: false,
 			contentType: false,
 			processData: false,
-			data:        formData,
-			success:     function (result) {
+			data: formData,
+			success: function (result) {
 				if (result.success) {
 					/** @namespace result.data.ui_aDate */
 					/** @namespace result.data.ui_booked */
@@ -88,19 +90,19 @@ if (typeof jQuery === 'undefined') jQuery.noConflict();
 					$('#kr-contract-modal-book').modal('show');
 
 					const dateFormat = 'mm/dd/yy', $from = $('#jform_arrivaldsp').datepicker({
-						altField:          '#arrival',
-						altFormat:         'yy-mm-dd',
-						buttonText:        '<i class="fa-solid fa-calendar-alt"></i>',
-						changeMonth:       true,
-						changeYear:        true,
-						dateFormat:        'd M yy',
-						defaultDate:       arrival,
-						minDate:           ui_minDays,
-						numberOfMonths:    1,
+						altField: '#arrival',
+						altFormat: 'yy-mm-dd',
+						buttonText: '<i class="fa-solid fa-calendar-alt"></i>',
+						changeMonth: true,
+						changeYear: true,
+						dateFormat: 'd M yy',
+						defaultDate: arrival,
+						minDate: ui_minDays,
+						numberOfMonths: 1,
 						selectOtherMonths: true,
-						showOn:            'both',
-						showOtherMonths:   true,
-						beforeShowDay:     beforeShowDay
+						showOn: 'both',
+						showOtherMonths: true,
+						beforeShowDay: beforeShowDay
 					}).on('change', function () {
 						ui_aDate = $.datepicker.formatDate('yy-mm-dd', new Date($(this).val()));
 						$to.datepicker('option', 'minDate', getDpDate(this, dateFormat));
@@ -109,19 +111,19 @@ if (typeof jQuery === 'undefined') jQuery.noConflict();
 						$('#jform_departuredsp').datepicker('setDate', new2);
 						ui_dDate = $.datepicker.formatDate('yy-mm-dd', new Date(new2));
 						$('#kr-contract-modal-book #arrival').val(ui_aDate);
-					}), $to          = $('#jform_departuredsp').datepicker({
-						altField:          '#departure',
-						altFormat:         'yy-mm-dd',
-						buttonText:        '<i class="fa-solid fa-calendar-alt"></i>',
-						changeMonth:       true,
-						changeYear:        true,
-						defaultDate:       '+1d',
-						dateFormat:        'd M yy',
-						numberOfMonths:    1,
-						showOn:            'both',
+					}), $to = $('#jform_departuredsp').datepicker({
+						altField: '#departure',
+						altFormat: 'yy-mm-dd',
+						buttonText: '<i class="fa-solid fa-calendar-alt"></i>',
+						changeMonth: true,
+						changeYear: true,
+						defaultDate: '+1d',
+						dateFormat: 'd M yy',
+						numberOfMonths: 1,
+						showOn: 'both',
 						selectOtherMonths: true,
-						showOtherMonths:   true,
-						beforeShowDay:     beforeShowDayDepart
+						showOtherMonths: true,
+						beforeShowDay: beforeShowDayDepart
 					}).on('change', function () {
 						ui_dDate = $.datepicker.formatDate('yy-mm-dd', new Date($(this).val()));
 						$from.datepicker('option', 'maxDate', getDpDate(this, dateFormat));
@@ -129,7 +131,7 @@ if (typeof jQuery === 'undefined') jQuery.noConflict();
 					});
 				}
 			},
-			error:       function () {
+			error: function () {
 				alert('Sorry we cannot process your request at the moment. Please try again later!');
 			},
 		});
@@ -141,14 +143,14 @@ if (typeof jQuery === 'undefined') jQuery.noConflict();
 		formData.append('block', block);
 		formData.append('gobackto', 'task=property.calendar&id=' + property_id);
 		$.ajax({
-			url:         'index.php?option=com_knowres&task=contract.modalshow',
-			type:        'POST',
-			data:        formData,
-			dataType:    'json',
-			cache:       false,
+			url: 'index.php?option=com_knowres&task=contract.modalshow',
+			type: 'POST',
+			data: formData,
+			dataType: 'json',
+			cache: false,
 			contentType: false,
 			processData: false,
-			success:     function (result) {
+			success: function (result) {
 				if (!result.success) {
 					if (result.message) {
 						alert(result.message);
@@ -163,7 +165,7 @@ if (typeof jQuery === 'undefined') jQuery.noConflict();
 					$('#kr-gantt-tab').tab();
 				}
 			},
-			error:       function (result) {
+			error: function (result) {
 				alert('Sorry we cannot process your request at the moment. Please try again later!');
 			},
 		});
@@ -185,7 +187,9 @@ if (typeof jQuery === 'undefined') jQuery.noConflict();
 
 	function checkAvailable(thisDate, aDate, dDate) {
 		if (aDate && dDate) {
-			if (thisDate >= aDate && thisDate <= dDate) return [true, 'datepick-selected'];
+			if (thisDate >= aDate && thisDate <= dDate) {
+				return [true, 'datepick-selected'];
+			}
 		}
 
 		let value;
@@ -197,19 +201,25 @@ if (typeof jQuery === 'undefined') jQuery.noConflict();
 
 		if (value === 0 || value === 3) {
 			return [false, 'datepick-booked'];
-		} else if (value === 1) {
-			return [false, 'datepick-booked datepick-half'];
 		} else {
-			return [true, 'datepick-booked datepick-half135'];
+			if (value === 1) {
+				return [false, 'datepick-booked datepick-half'];
+			} else {
+				return [true, 'datepick-booked datepick-half135'];
+			}
 		}
 	}
 
 	function checkAvailableDepart(thisDate, aDate, dDate) {
 		if (aDate && dDate) {
-			if (thisDate >= aDate && thisDate <= dDate) return [true, 'datepick-selected'];
+			if (thisDate >= aDate && thisDate <= dDate) {
+				return [true, 'datepick-selected'];
+			}
 		}
 
-		if (thisDate >= ui_eDate) return [false, 'datepick-disabled'];
+		if (thisDate >= ui_eDate) {
+			return [false, 'datepick-disabled'];
+		}
 
 		let value;
 		if (typeof ui_booked[thisDate] !== 'undefined') {
@@ -220,10 +230,12 @@ if (typeof jQuery === 'undefined') jQuery.noConflict();
 
 		if (value === 0 || value === 3) {
 			return [false, 'datepick-booked'];
-		} else if (value === 1) {
-			return [true, 'datepick-booked datepick-half'];
 		} else {
-			return [false, 'datepick-booked datepick-half135'];
+			if (value === 1) {
+				return [true, 'datepick-booked datepick-half'];
+			} else {
+				return [false, 'datepick-booked datepick-half135'];
+			}
 		}
 	}
 
@@ -241,16 +253,16 @@ if (typeof jQuery === 'undefined') jQuery.noConflict();
 
 (function ($) {
 	const ui_options = {
-		buttonText:        '<i class="fa-solid fa-calendar-alt"></i>',
-		changeMonth:       true,
-		changeYear:        true,
-		dateFormat:        'd M yy',
-		firstDay:          1,
-		numberOfMonths:    1,
+		buttonText: '<i class="fa-solid fa-calendar-alt"></i>',
+		changeMonth: true,
+		changeYear: true,
+		dateFormat: 'd M yy',
+		firstDay: 1,
+		numberOfMonths: 1,
 		selectOtherMonths: true,
-		showButtonPanel:   true,
-		showOn:            'both',
-		showOtherMonths:   true,
+		showButtonPanel: true,
+		showOn: 'both',
+		showOtherMonths: true,
 	};
 
 	$(function () {

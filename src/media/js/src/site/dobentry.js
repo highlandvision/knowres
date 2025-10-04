@@ -18,46 +18,46 @@ if (!window.location.origin) {
 	let key = {BACKSPACE: 8};
 
 	let settings = {
-		custom_validation:     false,
-		days_in_month:         [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
-		document_date:         false,
-		errorbox_x:            1,
-		errorbox_y:            5,
-		field_hint_text_day:   'DD',
+		custom_validation: false,
+		days_in_month: [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
+		document_date: false,
+		errorbox_x: 1,
+		errorbox_y: 5,
+		field_hint_text_day: 'DD',
 		field_hint_text_month: 'MM',
-		field_hint_text_year:  'YYYY',
-		field_order:           'DMY',
-		field_width_day:       6,
-		field_width_month:     6,
-		field_width_year:      7,
-		field_width_sep:       2,
-		minmax:                '',
-		min_date:              false,
-		max_date:              false,
-		min_year:              1910,
-		month_name:            [
+		field_hint_text_year: 'YYYY',
+		field_order: 'DMY',
+		field_width_day: 6,
+		field_width_month: 6,
+		field_width_year: 7,
+		field_width_sep: 2,
+		minmax: '',
+		min_date: false,
+		max_date: false,
+		min_year: 1910,
+		month_name: [
 			'January', 'February', 'March', 'April',
 			'May', 'June', 'July', 'August', 'September',
 			'October', 'November', 'December'],
-		on_blur:               false,
-		on_error:              false,
-		on_change:             false,
-		parse_date:            true,
-		separator:             '/',
-		show_errors:           true,
-		show_hints:            true,
-		E_DAY_NAN:             'Day must be a number',
-		E_DAY_TOO_BIG:         'Day must be 1-31',
-		E_DAY_TOO_SMALL:       'Day must be 1-31',
-		E_BAD_DAY_FOR_MONTH:   'Only %d days in %m %y',
-		E_MONTH_NAN:           'Month must be a number',
-		E_MONTH_TOO_BIG:       'Month must be 1-12',
-		E_MONTH_TOO_SMALL:     'Month cannot be 0',
-		E_YEAR_NAN:            'Year must be a number',
-		E_YEAR_LENGTH:         'Year must be 4 digits',
-		E_YEAR_TOO_SMALL:      'Year must not be before %y',
-		E_MIN_DATE:            'Date must not be in the past',
-		E_MAX_DATE:            'Date must not be in the future'
+		on_blur: false,
+		on_error: false,
+		on_change: false,
+		parse_date: true,
+		separator: '/',
+		show_errors: true,
+		show_hints: true,
+		E_DAY_NAN: 'Day must be a number',
+		E_DAY_TOO_BIG: 'Day must be 1-31',
+		E_DAY_TOO_SMALL: 'Day must be 1-31',
+		E_BAD_DAY_FOR_MONTH: 'Only %d days in %m %y',
+		E_MONTH_NAN: 'Month must be a number',
+		E_MONTH_TOO_BIG: 'Month must be 1-12',
+		E_MONTH_TOO_SMALL: 'Month cannot be 0',
+		E_YEAR_NAN: 'Year must be a number',
+		E_YEAR_LENGTH: 'Year must be 4 digits',
+		E_YEAR_TOO_SMALL: 'Year must not be before %y',
+		E_MIN_DATE: 'Date must not be in the past',
+		E_MAX_DATE: 'Date must not be in the future'
 	};
 
 	class KrDobEntry {
@@ -115,10 +115,10 @@ if (!window.location.origin) {
 		buildField(name, index) {
 			let krdobentry = this;
 			let input = new KrDobInput({
-				name:       name,
+				name: name,
 				krdobentry: krdobentry,
-				index:      index,
-				hint_text:  settings.show_hints ? settings['field_hint_text_' + name] : null,
+				index: index,
+				hint_text: settings.show_hints ? settings['field_hint_text_' + name] : null,
 			});
 
 			this.inner.append(input.$input);
@@ -221,13 +221,14 @@ if (!window.location.origin) {
 
 		getDate() {
 			return (this.day_value && this.month_value && this.year_value)
-			       ? {day: this.day_value, month: this.month_value, year: this.year_value}
-			       : null;
+				? {day: this.day_value, month: this.month_value, year: this.year_value}
+				: null;
 		}
 
 		init() {
-			if (!settings.min_year)
+			if (!settings.min_year) {
 				settings.min_year = '1910';
+			}
 
 			this.buildUi();
 			this.setDate(this.$element.attr('value'));
@@ -240,9 +241,9 @@ if (!window.location.origin) {
 
 		parseIsoDate(text) {
 			return text && text.match(/^(\d\d\d\d)-(\d\d)-(\d\d)/) ? {
-				day:   RegExp.$3,
+				day: RegExp.$3,
 				month: RegExp.$2,
-				year:  RegExp.$1
+				year: RegExp.$1
 			} : null;
 		}
 
@@ -330,10 +331,14 @@ if (!window.location.origin) {
 				try {
 					if (type === 'day') {
 						this.validateDay();
-					} else if (type === 'month') {
-						this.validateMonth();
-					} else if (type === 'year') {
-						this.validateYear();
+					} else {
+						if (type === 'month') {
+							this.validateMonth();
+						} else {
+							if (type === 'year') {
+								this.validateYear();
+							}
+						}
 					}
 					current_input.clearError();
 				} catch (e) {
@@ -371,12 +376,12 @@ if (!window.location.origin) {
 
 			if (settings.minmax === 'max') {
 				if (date_iso > today) {
-					throw(settings.E_MAX_DATE);
+					throw (settings.E_MAX_DATE);
 				}
 			}
 			if (settings.minmax === 'min') {
 				if (date_iso < today) {
-					throw(settings.E_MIN_DATE);
+					throw (settings.E_MIN_DATE);
 				}
 			}
 
@@ -412,14 +417,14 @@ if (!window.location.origin) {
 				return;
 			}
 			if (text.match(/\D/)) {
-				throw(opt.E_DAY_NAN);
+				throw (opt.E_DAY_NAN);
 			}
 			let num = parseInt(text, 10);
 			if (num < 1) {
-				throw(opt.E_DAY_TOO_SMALL);
+				throw (opt.E_DAY_TOO_SMALL);
 			}
 			if (num > 31) {
-				throw(opt.E_DAY_TOO_BIG);
+				throw (opt.E_DAY_TOO_BIG);
 			}
 			text = num < 10 ? '0' + num : '' + num;
 			if (!input.has_focus) {
@@ -444,7 +449,7 @@ if (!window.location.origin) {
 				msg = msg.replace(/ *%y/, '');
 			}
 			if (day > max) {
-				throw(msg.replace(/%d/, max.toString()).replace(/%m/, settings.month_name[month - 1]));
+				throw (msg.replace(/%d/, max.toString()).replace(/%m/, settings.month_name[month - 1]));
 			}
 		}
 
@@ -456,14 +461,14 @@ if (!window.location.origin) {
 				return;
 			}
 			if (text.match(/\D/)) {
-				throw(settings.E_MONTH_NAN);
+				throw (settings.E_MONTH_NAN);
 			}
 			let num = parseInt(text, 10);
 			if (num < 1) {
-				throw(settings.E_MONTH_TOO_SMALL);
+				throw (settings.E_MONTH_TOO_SMALL);
 			}
 			if (num > 12) {
-				throw(settings.E_MONTH_TOO_BIG);
+				throw (settings.E_MONTH_TOO_BIG);
 			}
 			text = num < 10 ? '0' + num : '' + num;
 			if (!input.has_focus) {
@@ -480,21 +485,21 @@ if (!window.location.origin) {
 				return;
 			}
 			if (text.match(/\D/)) {
-				throw(settings.E_YEAR_NAN);
+				throw (settings.E_YEAR_NAN);
 			}
 			if (input.has_focus) {
 				if (text.length > 4) {
-					throw(settings.E_YEAR_LENGTH);
+					throw (settings.E_YEAR_LENGTH);
 				}
 			} else {
 				if (text.length !== 4) {
-					throw(settings.E_YEAR_LENGTH);
+					throw (settings.E_YEAR_LENGTH);
 				}
 			}
 			if (text.length === 4) {
 				const num = parseInt(text, 10);
 				if (settings.min_year && num < settings.min_year) {
-					throw(settings.E_YEAR_TOO_SMALL.replace(/%y/, settings.min_year));
+					throw (settings.E_YEAR_TOO_SMALL.replace(/%y/, settings.min_year));
 				}
 			}
 			this.year_value = text;

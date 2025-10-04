@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-unused-vars
 function toggleCron() {
 	const items = ["GUESTARRIVALREMIND", "REVIEWREQUEST", "REVIEWREMINDER"];
 	const items1 = ["CUSTOMBYDATE"];
@@ -15,7 +14,7 @@ function toggleCron() {
 		document.getElementById("krcron_section1").style.display = "none";
 	}
 }
-// eslint-disable-next-line no-unused-vars
+
 function switchList() {
 	let emailtype = document.getElementById('jform_switch').value;
 	let myClasses = document.querySelectorAll('.tags'), i = 0, l = myClasses.length;

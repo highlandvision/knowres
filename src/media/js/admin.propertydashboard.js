@@ -5,7 +5,9 @@
 // author     Hazel Wilson <hazel@highlandvision.com>
 'use strict';
 
-if (typeof jQuery !== 'undefined') jQuery.noConflict();
+if (typeof jQuery !== 'undefined') {
+	jQuery.noConflict();
+}
 
 (function ($) {
 	let self;
@@ -42,9 +44,9 @@ if (typeof jQuery !== 'undefined') jQuery.noConflict();
 			self = this;
 			if (this.settings.current < tasks.length) {
 				$.ajax({
-					type:    "POST",
-					url:     tasks[this.settings.current],
-					data:    this.settings.formData,
+					type: "POST",
+					url: tasks[this.settings.current],
+					data: this.settings.formData,
 					success: function success(message) {
 						self.settings.current += 1;
 						$progressBar.val(10 * self.settings.current);
@@ -87,11 +89,11 @@ if (typeof jQuery !== 'undefined') jQuery.noConflict();
 			const $form = $(this);
 
 			$.ajax({
-				type:     "POST",
-				url:      "index.php?option=com_knowres&task=property.cloner",
-				data:     $form.serialize(),
+				type: "POST",
+				url: "index.php?option=com_knowres&task=property.cloner",
+				data: $form.serialize(),
 				dataType: 'html',
-				success:  function success(newId) {
+				success: function success(newId) {
 					if (newId) {
 						let options = {
 							newId: newId, formData: $form.serialize()

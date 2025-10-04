@@ -5,13 +5,6 @@
  * @license    See the file "LICENSE.txt" for the full license governing this code.
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
-/**
- * @package    Know Reservations
- * @subpackage Admin JS
- * @copyright  2021 Highland Vision. All rights reserved.
- * @license    See the file "LICENSE.txt" for the full license governing this code.
- * @author     Hazel Wilson <hazel@highlandvision.com>
- */
 "use strict";
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -40,7 +33,7 @@ async function setModalContent(task, id) {
 	data.append(token, "1");
 	const options = {
 		method: 'post',
-		body:   data
+		body: data
 	}
 	let response = await fetch(url, options);
 	if (!response.ok) {

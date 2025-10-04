@@ -35,14 +35,14 @@ async function updateField(column, table, text) {
 	data.append(`text`, text);
 	const options = {
 		method: 'POST',
-		body:   data
+		body: data
 	}
 
 	const response = await fetch('index.php?option=com_knowres&task=ajax.editinplace', options);
 	let result = await response.json();
-	if (result.success) {
-		return result.data.html;
-	} else {
+	if (!result.success) {
 		alert(result.message);
 	}
+
+	return result.data.html;
 }

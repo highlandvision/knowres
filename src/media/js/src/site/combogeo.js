@@ -15,12 +15,12 @@ async function comboGeo(parentvalue, task, target, childvalue = '0') {
 
 	let response = await fetch('index.php?option=com_knowres&task=' + task, {
 		method: 'post',
-		body:   formData
+		body: formData
 	});
 
 	let result = await response.json();
 	if (result.success) {
-		let current = document.querySelector('.' +target+'chain');
+		let current = document.querySelector('.' + target + 'chain');
 		current.outerHTML = result.data.html;
 	} else {
 		alert(result.message);

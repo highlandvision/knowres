@@ -12,7 +12,9 @@
  * Released under the MIT and GPL Licenses.
  */
 
-if (typeof jQuery === 'undefined') jQuery.noConflict();
+if (typeof jQuery === 'undefined') {
+	jQuery.noConflict();
+}
 
 (function ($) {
 	let myGantt;
@@ -27,17 +29,17 @@ if (typeof jQuery === 'undefined') jQuery.noConflict();
 	class KrGantt {
 		constructor($element, options) {
 			this.settings = {
-				source:     [],
-				months:     ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-				dow:        ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
-				dowClass:   ['sn', 'wd', 'wd', 'wd', 'wd', 'wd', 'sa'],
-				waitText:   'Please wait...',
-				noResults:  'Sorry no results found ....',
-				width:      600,
+				source: [],
+				months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+				dow: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+				dowClass: ['sn', 'wd', 'wd', 'wd', 'wd', 'wd', 'sa'],
+				waitText: 'Please wait...',
+				noResults: 'Sorry no results found ....',
+				width: 600,
 				cellHeight: 50,
-				cellWidth:  30,
-				popOver:    true,
-				from:       KrGantt.getToday(),
+				cellWidth: 30,
+				popOver: true,
+				from: KrGantt.getToday(),
 				properties: []
 			};
 
@@ -132,22 +134,23 @@ if (typeof jQuery === 'undefined') jQuery.noConflict();
 			bar.click(function (e) {
 				e.preventDefault();
 				let block = 'c';
-				if (barclass === 'ganttGrey')
+				if (barclass === 'ganttGrey') {
 					block = 'i';
+				}
 
 				$.ajax({
-					type:     'POST',
-					url:      'index.php?option=com_knowres&task=contract.modalshow',
-					data:     {id: bID, block: block},
+					type: 'POST',
+					url: 'index.php?option=com_knowres&task=contract.modalshow',
+					data: {id: bID, block: block},
 					dataType: 'json',
-					success:  function (result) {
+					success: function (result) {
 						$('#kr-gantt-modal-show .modal-content').empty().append(result.data.html).draggable({
 							handle: '.modal-header'
 						});
 						$('#kr-gantt-modal-show').modal('show');
 						$('#kr-gantt-tab').tab();
 					},
-					error:    function () {
+					error: function () {
 						KrGantt.waitToggle(false);
 						document.getElementById("ganttselections").innerHTML = 'Sorry we are unable to process your request at the moment. Please try again later!';
 					},
@@ -159,11 +162,11 @@ if (typeof jQuery === 'undefined') jQuery.noConflict();
 					e.preventDefault();
 					if (!bar.attr('data-bs-original-title')) {
 						$.ajax({
-							type:     'POST',
-							url:      'index.php?option=com_knowres&task=gantt.tooltip',
-							data:     {id: bID},
+							type: 'POST',
+							url: 'index.php?option=com_knowres&task=gantt.tooltip',
+							data: {id: bID},
 							dataType: 'html',
-							success:  function (data) {
+							success: function (data) {
 								bar.attr('data-bs-container', 'body');
 								bar.attr('data-bs-content', data);
 								bar.attr('data-bs-html', true);
@@ -279,13 +282,17 @@ if (typeof jQuery === 'undefined') jQuery.noConflict();
 							carrive = showFrom;
 							arrivebefore = 'arrivebefore';
 							leaveafter = 'leaveafter';
-						} else if (carrive < showFrom) {
-							dl = KrGantt.diffDays(showFrom, cdepart) + 1;
-							carrive = showFrom;
-							arrivebefore = 'arrivebefore';
-						} else if (cdepart > showTo) {
-							dl = KrGantt.diffDays(carrive, showTo) + 1;
-							leaveafter = 'leaveafter';
+						} else {
+							if (carrive < showFrom) {
+								dl = KrGantt.diffDays(showFrom, cdepart) + 1;
+								carrive = showFrom;
+								arrivebefore = 'arrivebefore';
+							} else {
+								if (cdepart > showTo) {
+									dl = KrGantt.diffDays(carrive, showTo) + 1;
+									leaveafter = 'leaveafter';
+								}
+							}
 						}
 
 						bar = self.createProgressBar(dl, day.id ? day.id : '', day.customClass, day.label, arrivebefore, leaveafter);
@@ -406,7 +413,7 @@ if (typeof jQuery === 'undefined') jQuery.noConflict();
 			const ganttsearch = new Bloodhound({
 				datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
 				queryTokenizer: Bloodhound.tokenizers.whitespace,
-				local:          this.ganttdata.options
+				local: this.ganttdata.options
 			});
 
 			ganttsearch.initialize();
@@ -424,12 +431,16 @@ if (typeof jQuery === 'undefined') jQuery.noConflict();
 						/** @namespace ganttsearch.property_name */
 						if (ganttsearch.type === 'property') {
 							return '<div><a href="javascript:void(0)"><i class="' + ganttsearch.icon + '">&nbsp;</i>' + ganttsearch.name + '<br><span>' + ganttsearch.region + '</span></a></div>';
-						} else if (ganttsearch.type === 'guest') {
-							return '<div><a href="javascript:void(0)"><i class="' + ganttsearch.icon + '">&nbsp;</i>' + ganttsearch.name + '<br><span>' + ganttsearch.property_name + ' ' + ganttsearch.arrival + '</span></a></div>';
-						} else if (ganttsearch.type === 'region') {
-							return '<div><a href="javascript:void(0)"><i class="' + ganttsearch.icon + '">&nbsp;</i>' + ganttsearch.name + '<br><span>All Properties</span></a></div>';
+						} else {
+							if (ganttsearch.type === 'guest') {
+								return '<div><a href="javascript:void(0)"><i class="' + ganttsearch.icon + '">&nbsp;</i>' + ganttsearch.name + '<br><span>' + ganttsearch.property_name + ' ' + ganttsearch.arrival + '</span></a></div>';
+							} else {
+								if (ganttsearch.type === 'region') {
+									return '<div><a href="javascript:void(0)"><i class="' + ganttsearch.icon + '">&nbsp;</i>' + ganttsearch.name + '<br><span>All Properties</span></a></div>';
+								}
+							}
 						}
-					}, empty:   function () {
+					}, empty: function () {
 						return '<div>' + self.settings.noResults + '</div>';
 					}
 				}
@@ -443,21 +454,25 @@ if (typeof jQuery === 'undefined') jQuery.noConflict();
 					}
 					$tracker.append(self.createSearchSelection(datum));
 					self.renderChart();
-				} else if (datum.type === 'guest') {
-					$('.uicalendar').datepicker('setDate', datum.arrival);
-					/** @namespace datum.arrival_ymd */
-					/** @namespace datum.id */
-					self.renderChart(datum.arrival_ymd);
-					self.modalShow(datum.id);
-				} else if (datum.type === 'region') {
-					if (self.settings.properties.length) {
-						self.settings.properties = self.settings.properties.concat(datum.id);
+				} else {
+					if (datum.type === 'guest') {
+						$('.uicalendar').datepicker('setDate', datum.arrival);
+						/** @namespace datum.arrival_ymd */
+						/** @namespace datum.id */
+						self.renderChart(datum.arrival_ymd);
+						self.modalShow(datum.id);
 					} else {
-						self.settings.properties = datum.id;
-					}
+						if (datum.type === 'region') {
+							if (self.settings.properties.length) {
+								self.settings.properties = self.settings.properties.concat(datum.id);
+							} else {
+								self.settings.properties = datum.id;
+							}
 
-					$tracker.append(self.createSearchSelection(datum));
-					self.renderChart();
+							$tracker.append(self.createSearchSelection(datum));
+							self.renderChart();
+						}
+					}
 				}
 
 				$(this).typeahead('val', '');
@@ -470,11 +485,11 @@ if (typeof jQuery === 'undefined') jQuery.noConflict();
 			let self = this;
 			let token = $('#token').attr('name');
 			$.ajax({
-				url:      this.settings.source,
-				type:     'POST',
+				url: this.settings.source,
+				type: 'POST',
 				dataType: 'json',
-				data:     {[token]: '1'},
-				success:  function (result) {
+				data: {[token]: '1'},
+				success: function (result) {
 					if (result.success) {
 						self.ganttdata.booked = result.data.booked;
 						self.ganttdata.options = result.data.options;
@@ -484,7 +499,7 @@ if (typeof jQuery === 'undefined') jQuery.noConflict();
 						document.getElementById("ganttselections").innerHTML = result.message;
 					}
 				},
-				error:    function () {
+				error: function () {
 					KrGantt.waitToggle(false);
 					document.getElementById("ganttselections").innerHTML = 'Sorry we are unable to process your request at the moment. Please try again later!';
 				},
@@ -493,18 +508,18 @@ if (typeof jQuery === 'undefined') jQuery.noConflict();
 
 		modalShow(bID, block = 'c') {
 			$.ajax({
-				type:     'POST',
-				url:      'index.php?option=com_knowres&task=contract.modalshow',
-				data:     {id: bID, block: block},
+				type: 'POST',
+				url: 'index.php?option=com_knowres&task=contract.modalshow',
+				data: {id: bID, block: block},
 				dataType: 'json',
-				success:  function (result) {
+				success: function (result) {
 					if (result.success) {
 						$('#kr-gantt-modal-show .modal-content').empty().append(result);
 						$('#kr-gantt-modal-show').modal('show');
 						$('#kr-gantt-tab').tab();
 					}
 				},
-				error:    function () {
+				error: function () {
 					KrGantt.waitToggle(false);
 					document.getElementById("ganttselections").innerHTML = 'Sorry we are unable to process your request at the moment. Please try again later!';
 				},
@@ -526,21 +541,21 @@ if (typeof jQuery === 'undefined') jQuery.noConflict();
 		const $cal = $('#ganttpicker');
 		if ($cal.length) {
 			$cal.datepicker({
-				altField:          '#ganttpicker1',
-				altFormat:         'yy-mm-dd',
-				buttonText:        '<i class="fa-solid fa-calendar-alt"></i>',
-				changeMonth:       true,
-				changeYear:        true,
-				dateFormat:        'd M yy',
-				firstDay:          1,
-				maxDate:           '+5Y',
-				minDate:           '-6M',
-				numberOfMonths:    1,
+				altField: '#ganttpicker1',
+				altFormat: 'yy-mm-dd',
+				buttonText: '<i class="fa-solid fa-calendar-alt"></i>',
+				changeMonth: true,
+				changeYear: true,
+				dateFormat: 'd M yy',
+				firstDay: 1,
+				maxDate: '+5Y',
+				minDate: '-6M',
+				numberOfMonths: 1,
 				selectOtherMonths: false,
-				showButtonPanel:   true,
-				showOn:            'both',
-				showOtherMonths:   false,
-				onSelect:          function (dateText, inst) {
+				showButtonPanel: true,
+				showOn: 'both',
+				showOtherMonths: false,
+				onSelect: function (dateText, inst) {
 					let month = inst.currentMonth + 1;
 					if (month < 10) {
 						month = '0' + month;
@@ -570,14 +585,14 @@ if (typeof jQuery === 'undefined') jQuery.noConflict();
 			localStorage.setItem('ganttSelections', $('#ganttselections').html());
 
 			$.ajax({
-				url:         'index.php?option=com_knowres&task=contract.modalbook',
-				dataType:    'json',
-				method:      'post',
-				cache:       false,
+				url: 'index.php?option=com_knowres&task=contract.modalbook',
+				dataType: 'json',
+				method: 'post',
+				cache: false,
 				contentType: false,
 				processData: false,
-				data:        formData,
-				success:     function (result) {
+				data: formData,
+				success: function (result) {
 					if (result.success) {
 						/** @namespace result.data.ui_aDate */
 						/** @namespace result.data.ui_booked */
@@ -601,49 +616,49 @@ if (typeof jQuery === 'undefined') jQuery.noConflict();
 						$('#kr-gantt-tab').tab();
 
 						const mdyFormat = 'mm/dd/yy',
-						      $from     = $('#jform_arrivaldsp').datepicker({
-							      altField:          '#arrival',
-							      altFormat:         'yy-mm-dd',
-							      buttonText:        '<i aria-label="Select date" class="fa-solid fa-calendar-alt"></i>',
-							      changeMonth:       true,
-							      changeYear:        true,
-							      dateFormat:        'd M yy',
-							      defaultDate:       arrival,
-							      minDate:           ui_minDays,
-							      numberOfMonths:    1,
-							      selectOtherMonths: true,
-							      showOn:            'both',
-							      showOtherMonths:   true,
-							      beforeShowDay:     beforeShowDay
-						      }).on('change', function () {
-							      ui_aDate = $.datepicker.formatDate('yy-mm-dd', new Date($(this).val()));
-							      $to.datepicker('option', 'minDate', getDpDate(this, mdyFormat));
-							      let new2 = $('#jform_arrivaldsp').datepicker('getDate', '+1d');
-							      new2.setDate(new2.getDate() + 1);
-							      $('#jform_departuredsp').datepicker('setDate', new2);
-							      ui_dDate = $.datepicker.formatDate('yy-mm-dd', new Date(new2));
-							      $('#kr-gantt-book-modal #arrival').val(ui_aDate);
-						      }), $to   = $('#jform_departuredsp').datepicker({
-							      altField:          '#departure',
-							      altFormat:         'yy-mm-dd',
-							      buttonText:        '<i class="fa-solid fa-calendar-alt"></i>',
-							      changeMonth:       true,
-							      changeYear:        true,
-							      defaultDate:       '+1d',
-							      dateFormat:        'd M yy',
-							      numberOfMonths:    1,
-							      showOn:            'both',
-							      selectOtherMonths: true,
-							      showOtherMonths:   true,
-							      beforeShowDay:     beforeShowDayDepart
-						      }).on('change', function () {
-							      ui_dDate = $.datepicker.formatDate('yy-mm-dd', new Date($(this).val()));
-							      $from.datepicker('option', 'maxDate', getDpDate(this, mdyFormat));
-							      $('#kr-gantt-book-modal #departure').val(ui_dDate);
-						      });
+							$from = $('#jform_arrivaldsp').datepicker({
+								altField: '#arrival',
+								altFormat: 'yy-mm-dd',
+								buttonText: '<i aria-label="Select date" class="fa-solid fa-calendar-alt"></i>',
+								changeMonth: true,
+								changeYear: true,
+								dateFormat: 'd M yy',
+								defaultDate: arrival,
+								minDate: ui_minDays,
+								numberOfMonths: 1,
+								selectOtherMonths: true,
+								showOn: 'both',
+								showOtherMonths: true,
+								beforeShowDay: beforeShowDay
+							}).on('change', function () {
+								ui_aDate = $.datepicker.formatDate('yy-mm-dd', new Date($(this).val()));
+								$to.datepicker('option', 'minDate', getDpDate(this, mdyFormat));
+								let new2 = $('#jform_arrivaldsp').datepicker('getDate', '+1d');
+								new2.setDate(new2.getDate() + 1);
+								$('#jform_departuredsp').datepicker('setDate', new2);
+								ui_dDate = $.datepicker.formatDate('yy-mm-dd', new Date(new2));
+								$('#kr-gantt-book-modal #arrival').val(ui_aDate);
+							}), $to = $('#jform_departuredsp').datepicker({
+								altField: '#departure',
+								altFormat: 'yy-mm-dd',
+								buttonText: '<i class="fa-solid fa-calendar-alt"></i>',
+								changeMonth: true,
+								changeYear: true,
+								defaultDate: '+1d',
+								dateFormat: 'd M yy',
+								numberOfMonths: 1,
+								showOn: 'both',
+								selectOtherMonths: true,
+								showOtherMonths: true,
+								beforeShowDay: beforeShowDayDepart
+							}).on('change', function () {
+								ui_dDate = $.datepicker.formatDate('yy-mm-dd', new Date($(this).val()));
+								$from.datepicker('option', 'maxDate', getDpDate(this, mdyFormat));
+								$('#kr-gantt-book-modal #departure').val(ui_dDate);
+							});
 					}
 				},
-				error:       function () {
+				error: function () {
 					KrGantt.waitToggle(false);
 					document.getElementById("ganttselections").innerHTML = 'Sorry we are unable to process your request at the moment. Please try again later!';
 				},
@@ -662,11 +677,11 @@ if (typeof jQuery === 'undefined') jQuery.noConflict();
 			localStorage.setItem('ganttScrollTo', $('.rightPanel').scrollTop());
 			localStorage.setItem('ganttSelections', $('#ganttselections').html());
 			$.ajax({
-				type:     'POST',
+				type: 'POST',
 				dataType: 'json',
-				url:      'index.php?option=com_knowres&task=' + $(this).data('task'),
-				data:     {id: id},
-				success:  function (result) {
+				url: 'index.php?option=com_knowres&task=' + $(this).data('task'),
+				data: {id: id},
+				success: function (result) {
 					if (result.success) {
 						window.location.reload();
 					} else {
@@ -731,7 +746,9 @@ if (typeof jQuery === 'undefined') jQuery.noConflict();
 
 	function checkAvailable(thisDate, aDate, dDate) {
 		if (aDate && dDate) {
-			if (thisDate >= aDate && thisDate <= dDate) return [true, 'datepick-selected'];
+			if (thisDate >= aDate && thisDate <= dDate) {
+				return [true, 'datepick-selected'];
+			}
 		}
 
 		let value;
@@ -743,19 +760,25 @@ if (typeof jQuery === 'undefined') jQuery.noConflict();
 
 		if (value === 0 || value === 3) {
 			return [false, 'datepick-booked'];
-		} else if (value === 1) {
-			return [false, 'datepick-booked datepick-half'];
 		} else {
-			return [true, 'datepick-booked datepick-half135'];
+			if (value === 1) {
+				return [false, 'datepick-booked datepick-half'];
+			} else {
+				return [true, 'datepick-booked datepick-half135'];
+			}
 		}
 	}
 
 	function checkAvailableDepart(thisDate, aDate, dDate) {
 		if (aDate && dDate) {
-			if (thisDate >= aDate && thisDate <= dDate) return [true, 'datepick-selected'];
+			if (thisDate >= aDate && thisDate <= dDate) {
+				return [true, 'datepick-selected'];
+			}
 		}
 
-		if (thisDate >= ui_eDate) return [false, 'datepick-disabled'];
+		if (thisDate >= ui_eDate) {
+			return [false, 'datepick-disabled'];
+		}
 
 		let value;
 		if (typeof ui_booked[thisDate] !== 'undefined') {
@@ -766,10 +789,12 @@ if (typeof jQuery === 'undefined') jQuery.noConflict();
 
 		if (value === 0 || value === 3) {
 			return [false, 'datepick-booked'];
-		} else if (value === 1) {
-			return [true, 'datepick-booked datepick-half'];
 		} else {
-			return [false, 'datepick-booked datepick-half135'];
+			if (value === 1) {
+				return [true, 'datepick-booked datepick-half'];
+			} else {
+				return [false, 'datepick-booked datepick-half135'];
+			}
 		}
 	}
 })(jQuery);

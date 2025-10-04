@@ -7,26 +7,27 @@
  */
 "use strict";
 
-if (typeof jQuery !== 'undefined')
+if (typeof jQuery !== 'undefined') {
 	jQuery.noConflict();
+}
 
 (function ($) {
 	let myBooking = false;
 	let self;
 	let $bookPicker;
 	let settings = {
-		initial:   0,
-		pid:       0,
-		blocked:   [],
-		arrival:   '',
+		initial: 0,
+		pid: 0,
+		blocked: [],
+		arrival: '',
 		departure: '',
-		aDate:     '',
-		dDate:     '',
-		minDate:   '',
-		maxDate:   '',
-		today:     '',
-		editId:    0,
-		hideme:    1,
+		aDate: '',
+		dDate: '',
+		minDate: '',
+		maxDate: '',
+		today: '',
+		editId: 0,
+		hideme: 1,
 	};
 
 	class KRbooking {
@@ -43,8 +44,9 @@ if (typeof jQuery !== 'undefined')
 			const dDate = settings.dDate;
 
 			if (aDate && dDate) {
-				if (thisDate >= aDate && thisDate <= dDate)
+				if (thisDate >= aDate && thisDate <= dDate) {
 					return [true, 'dp-highlight'];
+				}
 			}
 
 			let value;
@@ -54,13 +56,16 @@ if (typeof jQuery !== 'undefined')
 				value = -1;
 			}
 
-			if (value === 0 || value === 3)
+			if (value === 0 || value === 3) {
 				return [false, 'datepick-booked'];
-			else if (value === 1)
-				return [false, 'datepick-booked datepick-candepart'];
-			if (value === 2)
+			} else {
+				if (value === 1) {
+					return [false, 'datepick-booked datepick-candepart'];
+				}
+			}
+			if (value === 2) {
 				return [true, 'datepick-booked datepick-canarrive'];
-			else {
+			} else {
 				return [true, ''];
 			}
 		}
@@ -74,12 +79,17 @@ if (typeof jQuery !== 'undefined')
 			const dDate = settings.dDate;
 			const maxDate = settings.maxDate;
 
-			if (thisDate < aDate)
+			if (thisDate < aDate) {
 				return [false, 'datepick-disabled'];
-			else if (thisDate >= aDate && thisDate <= dDate)
-				return [true, 'datepick-selected'];
-			else if (thisDate > maxDate)
-				return [false, 'datepick-disabled'];
+			} else {
+				if (thisDate >= aDate && thisDate <= dDate) {
+					return [true, 'datepick-selected'];
+				} else {
+					if (thisDate > maxDate) {
+						return [false, 'datepick-disabled'];
+					}
+				}
+			}
 
 			let value;
 			if (typeof settings.blocked[thisDate] !== 'undefined') {
@@ -88,14 +98,18 @@ if (typeof jQuery !== 'undefined')
 				value = -1;
 			}
 
-			if (value === 0 || value === 3)
+			if (value === 0 || value === 3) {
 				return [false, ''];
-			else if (value === 2)
-				return [false, 'datepick-booked datepick-canarrive'];
-			else if (value === 1)
-				return [true, 'datepick-booked datepick-candepart'];
-			else {
-				return [true, ''];
+			} else {
+				if (value === 2) {
+					return [false, 'datepick-booked datepick-canarrive'];
+				} else {
+					if (value === 1) {
+						return [true, 'datepick-booked datepick-candepart'];
+					} else {
+						return [true, ''];
+					}
+				}
 			}
 		}
 
@@ -104,22 +118,23 @@ if (typeof jQuery !== 'undefined')
 			data.append('jform[initial]', this.settings.initial);
 			this.settings.initial = 0;
 			const $manual = $this.data('override');
-			if ($manual === 'manual')
+			if ($manual === 'manual') {
 				data.append('jform[manual]', '1');
-			else
+			} else {
 				data.append('jform[manual]', '0');
+			}
 			self.settings = this.settings;
 
 			$.ajax({
-				type:        'POST',
-				enctype:     'multipart/form-data',
-				url:         'index.php?option=com_knowres&task=' + $('#task').val(),
-				data:        data,
+				type: 'POST',
+				enctype: 'multipart/form-data',
+				url: 'index.php?option=com_knowres&task=' + $('#task').val(),
+				data: data,
 				processData: false,
 				contentType: false,
-				cache:       false,
-				dataType:    'json',
-				success:     function (result) {
+				cache: false,
+				dataType: 'json',
+				success: function (result) {
 					self.settings.hideme = 1;
 					$('.hideinitial').show();
 					if (result.success) {
@@ -143,10 +158,11 @@ if (typeof jQuery !== 'undefined')
 							});
 						}
 						let warning = $('#jform_ajax_warning');
-						if (warning.text().length === 0)
+						if (warning.text().length === 0) {
 							warning.css('display', 'none');
-						else
+						} else {
 							warning.css('display', 'block');
+						}
 					} else {
 						if (result.messages) {
 							Joomla.renderMessages(result.messages);
@@ -156,7 +172,7 @@ if (typeof jQuery !== 'undefined')
 						}
 					}
 				},
-				error:       function () {
+				error: function () {
 					alert("Sorry an error has occurred, please try again");
 				}
 			});
@@ -207,32 +223,34 @@ if (typeof jQuery !== 'undefined')
 					'setDate', $.datepicker.formatDate('d M yy', new Date(settings.maxDate))).datepicker(
 					'refresh'
 				)
-			} else if (dateText < settings.aDate) {
-				$('#jform_departure_bd').val($('jform_arrival_bd').val());
-				$('#jform_arrival_bd').val(dateText);
-				$dp.datepicker();
-				settings.dDate = '';
 			} else {
-				$('#jform_departure_bd').val(dspDate);
-				$dp.datepicker();
-				settings.dDate = dateText;
-				$("#departure").val(dateText).trigger('change');
+				if (dateText < settings.aDate) {
+					$('#jform_departure_bd').val($('jform_arrival_bd').val());
+					$('#jform_arrival_bd').val(dateText);
+					$dp.datepicker();
+					settings.dDate = '';
+				} else {
+					$('#jform_departure_bd').val(dspDate);
+					$dp.datepicker();
+					settings.dDate = dateText;
+					$("#departure").val(dateText).trigger('change');
+				}
 			}
 		}
 
 		init() {
 			self = this;
 			$.ajax({
-				type:     'POST',
-				url:      'index.php?option=com_knowres&task=contract.init',
+				type: 'POST',
+				url: 'index.php?option=com_knowres&task=contract.init',
 				dataType: 'json',
-				data:     {
-					'pid':       self.settings.pid,
-					'edit_id':   self.settings.editId,
-					'arrival':   self.settings.arrival,
+				data: {
+					'pid': self.settings.pid,
+					'edit_id': self.settings.editId,
+					'arrival': self.settings.arrival,
 					'departure': self.settings.departure
 				},
-				success:  function (result) {
+				success: function (result) {
 					if (result.success) {
 						if (self.settings.editId) {
 							self.settings.initial = 1;
@@ -268,18 +286,20 @@ if (typeof jQuery !== 'undefined')
 
 		submitPost(form, url) {
 			$.ajax({
-				type:     'POST',
-				url:      url,
-				data:     form.serialize(),
+				type: 'POST',
+				url: url,
+				data: form.serialize(),
 				dataType: 'json',
-				success:  function (result) {
+				success: function (result) {
 					if (result.success) {
 						window.location.href = result.data.redirect;
-					} else if (result.messages) {
-						Joomla.renderMessages(result.messages);
 					} else {
-						$('#errorModalMessage').empty().append(result.message);
-						$('#errorModal').modal('show');
+						if (result.messages) {
+							Joomla.renderMessages(result.messages);
+						} else {
+							$('#errorModalMessage').empty().append(result.message);
+							$('#errorModal').modal('show');
+						}
 					}
 				}
 			});
@@ -300,36 +320,48 @@ if (typeof jQuery !== 'undefined')
 			const $container = $('#container-datepicker');
 			let width = $container.width();
 			let max = 5;
-			if (width < 400)
+			if (width < 400) {
 				max = 1;
-			if (width > 400 && width < 600)
+			}
+			if (width > 400 && width < 600) {
 				max = 2;
-			else if (width >= 600 && width < 800)
-				max = 3;
-			else if (width >= 800 && width < 1000)
-				max = 4;
+			} else {
+				if (width >= 600 && width < 800) {
+					max = 3;
+				} else {
+					if (width >= 800 && width < 1000) {
+						max = 4;
+					}
+				}
+			}
 			$bookPicker.datepicker({
-				minDate:        min,
-				maxDate:        self.settings.maxDate,
+				minDate: min,
+				maxDate: self.settings.maxDate,
 				numberOfMonths: max,
-				defaultDate:    self.settings.aDate,
-				dateFormat:     'yy-mm-dd',
-				firstDay:       1,
-				beforeShowDay:  function (d) {
+				defaultDate: self.settings.aDate,
+				dateFormat: 'yy-mm-dd',
+				firstDay: 1,
+				beforeShowDay: function (d) {
 					let ymd = $.datepicker.formatDate('yy-mm-dd', new Date(d));
 					if (ymd < settings.minDate) {
 						return [false, "datepick-disabled"];
-					} else if (!settings.aDate || settings.dDate) {
-						return KRbooking.isItAvailable(ymd, settings);
-					} else if (ymd === settings.aDate) {
-						return [false, "dp-highlight"];
-					} else if (ymd < settings.aDate) {
-						return [false, "datepick-disabled"];
 					} else {
-						return KRbooking.isItAvailableDepart(ymd, settings);
+						if (!settings.aDate || settings.dDate) {
+							return KRbooking.isItAvailable(ymd, settings);
+						} else {
+							if (ymd === settings.aDate) {
+								return [false, "dp-highlight"];
+							} else {
+								if (ymd < settings.aDate) {
+									return [false, "datepick-disabled"];
+								} else {
+									return KRbooking.isItAvailableDepart(ymd, settings);
+								}
+							}
+						}
 					}
 				},
-				onSelect:       function (dateText) {
+				onSelect: function (dateText) {
 					self.hasBeenSelected(dateText, $bookPicker, self.settings);
 				}
 			});
@@ -343,13 +375,13 @@ if (typeof jQuery !== 'undefined')
 		const $init = $("#kr-manager-book");
 		if ($init.length) {
 			let options = {
-				pid:       $init.data('pid'),
-				today:     $init.data('today'),
-				arrival:   $init.data('arrival'),
+				pid: $init.data('pid'),
+				today: $init.data('today'),
+				arrival: $init.data('arrival'),
 				departure: $init.data('departure'),
-				editId:    $init.data('editid'),
-				minDate:   $init.data('today'),
-				maxDate:   $init.data('maxdate')
+				editId: $init.data('editid'),
+				minDate: $init.data('today'),
+				maxDate: $init.data('maxdate')
 			};
 			myBooking = new KRbooking($init, options);
 		}
@@ -417,7 +449,7 @@ async function findGuest(email) {
 	formData.append('email', email);
 	const response = await fetch('index.php?option=com_knowres&task=guests.guestdetails', {
 		method: 'post',
-		body:   formData
+		body: formData
 	});
 
 	return await response.json();

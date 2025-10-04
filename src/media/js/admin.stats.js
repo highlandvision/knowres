@@ -3,13 +3,13 @@
 let tabs, period, element, piedata, statsData;
 let loaded = false;
 const gc_options = {
-	is3D:            true,
-	chartArea:       {
+	is3D: true,
+	chartArea: {
 		width: '100%', height: '100%', top: '20', chartArea: {
-			left:         "3%",
-			top:          "3%",
-			height:       "94%",
-			width:        "94%",
+			left: "3%",
+			top: "3%",
+			height: "94%",
+			width: "94%",
 			pieSliceText: 'percentage',
 		}
 	},
@@ -32,15 +32,21 @@ window.addEventListener('DOMContentLoaded', function () {
 			if (period === '#year') {
 				piedata = statsData.dataset.year;
 				element = 'piechart_year';
-			} else if (period === '#month') {
-				piedata = statsData.dataset.month;
-				element = 'piechart_month';
-			} else if (period === '#week') {
-				piedata = statsData.dataset.week;
-				element = 'piechart_week';
-			} else if (period === '#day') {
-				piedata = statsData.dataset.day;
-				element = 'piechart_day';
+			} else {
+				if (period === '#month') {
+					piedata = statsData.dataset.month;
+					element = 'piechart_month';
+				} else {
+					if (period === '#week') {
+						piedata = statsData.dataset.week;
+						element = 'piechart_week';
+					} else {
+						if (period === '#day') {
+							piedata = statsData.dataset.day;
+							element = 'piechart_day';
+						}
+					}
+				}
 			}
 
 			if (!loaded) {

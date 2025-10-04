@@ -16,7 +16,7 @@
 		const $dobissueMin = $('.dobissue.min');
 		if ($dobissueMin.length > 0) {
 			$dobissueMin.datetextentry({
-				min_year:         '1910', max_date: function () {
+				min_year: '1910', max_date: function () {
 					return this.get_today();
 				},
 				min_date_message: 'Date must not be in the future',
@@ -25,7 +25,7 @@
 		const $dobissueMax = $('.dobissue.max');
 		if ($dobissueMax.length > 0) {
 			$dobissueMax.datetextentry({
-				max_year:         '2050', min_date: function () {
+				max_year: '2050', min_date: function () {
 					return this.get_today();
 				},
 				max_date_message: 'Date must not be in the past',

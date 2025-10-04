@@ -8,47 +8,49 @@
 
 "use strict";
 
-if (typeof jQuery === 'undefined') jQuery.noConflict();
+if (typeof jQuery === 'undefined') {
+	jQuery.noConflict();
+}
 
 (function ($) {
-    class Krareasearch {
-        constructor() {
-            this.settings = {
-                noResults: 'Sorry no results found',
-            };
+	class Krareasearch {
+		constructor() {
+			this.settings = {
+				noResults: 'Sorry no results found',
+			};
 
-            this.searchOptions();
-        }
+			this.searchOptions();
+		}
 
-        searchOptions() {
-            const areatypeahead = new Bloodhound({
-                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
-                queryTokenizer: Bloodhound.tokenizers.whitespace,
-                limit: 10,
-                remote: {
-                    url: 'index.php?option=com_knowres&task=properties.area&format=json&query=%QUERY',
-                    wildcard: '%QUERY'
-                }
-            });
+		searchOptions() {
+			const areatypeahead = new Bloodhound({
+				datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+				queryTokenizer: Bloodhound.tokenizers.whitespace,
+				limit: 10,
+				remote: {
+					url: 'index.php?option=com_knowres&task=properties.area&format=json&query=%QUERY',
+					wildcard: '%QUERY'
+				}
+			});
 
-            areatypeahead.initialize();
-            //const self = this;
+			areatypeahead.initialize();
+			//const self = this;
 
-            $('.areatypeahead').typeahead({
-                    items: 6,
-                    minLength: 2
-                },
-                {
-                    name: 'areatypeahead',
-                    source: areatypeahead
-                }
-            )
-        }
-    }
+			$('.areatypeahead').typeahead({
+					items: 6,
+					minLength: 2
+				},
+				{
+					name: 'areatypeahead',
+					source: areatypeahead
+				}
+			)
+		}
+	}
 
-    $(function () {
-        if ($('.areatypeahead').length) {
-            new Krareasearch();
-        }
-    });
+	$(function () {
+		if ($('.areatypeahead').length) {
+			new Krareasearch();
+		}
+	});
 })(jQuery);
