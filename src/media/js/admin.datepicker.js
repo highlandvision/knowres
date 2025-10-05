@@ -5,7 +5,9 @@
 // author     Hazel Wilson <hazel@highlandvision.com>
 "use strict";
 
-if (typeof jQuery === 'undefined') jQuery.noConflict();
+if (typeof jQuery === 'undefined') {
+	jQuery.noConflict();
+}
 
 (function ($) {
 	let elem, id, split, new_date, valid_from, valid_to, $to;

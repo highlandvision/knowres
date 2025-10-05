@@ -42,6 +42,31 @@ class Agent
 	}
 
 	/**
+	 * Add tax to working value if it is included in agent totals
+	 *
+	 * @param  float  $working  Working value
+	 *
+	 * @throws InvalidArgumentException
+	 * @since  3.2.0
+	 * @return float
+	 */
+	private function addIncludedTax(float $working): float
+	{
+		$taxes    = $this->Hub->getValue('taxes');
+		$agent_id = $this->Hub->getValue('agent_id');
+
+		foreach ($taxes as $tax) {
+			if (!empty($tax) && $tax['value'] > 0) {
+				if ($this->isTaxIncluded($tax, $agent_id)) {
+					$working += $tax['value'];
+				}
+			}
+		}
+
+		return $working;
+	}
+
+	/**
 	 * Reverse calculate the contract values based on the agent value
 	 *
 	 * @throws Exception
@@ -49,12 +74,11 @@ class Agent
 	 */
 	private function calculateAgent(): void
 	{
-		$agent_value = (float) $this->Hub->getValue('agent_value');
-		$extra_total = (float) $this->Hub->getValue('extra_total');
+		$agent_value = (float)$this->Hub->getValue('agent_value');
+		$extra_total = (float)$this->Hub->getValue('extra_total');
 		$working     = $agent_value;
 
-		if (!$this->Hub->agent->mandatory_extras_excluded)
-		{
+		if (!$this->Hub->agent->mandatory_extras_excluded) {
 			$working = $agent_value - $extra_total;
 		}
 
@@ -63,21 +87,18 @@ class Agent
 		$room_total     = $this->Hub->round($working);
 		$contract_total = $room_total;
 
-		if (!$this->Hub->agent->mandatory_extras_excluded)
-		{
+		if (!$this->Hub->agent->mandatory_extras_excluded) {
 			$contract_total += $extra_total;
 		}
 
 		$contract_total = $this->addIncludedTax($contract_total);
-		if ($contract_total != $agent_value)
-		{
+		if ($contract_total != $agent_value) {
 			$room_total = $room_total + ($agent_value - $contract_total);
 		}
 
 		$contract_total = $room_total + $this->Hub->getValue('tax_total') + $extra_total;
 
-		if ($this->Hub->agent->commission && !$this->Hub->getValue('agent_commission'))
-		{
+		if ($this->Hub->agent->commission && !$this->Hub->getValue('agent_commission')) {
 			$agent_commission = $agent_value * $this->Hub->agent->commission / 100;
 			$this->Hub->setValue('agent_commission', $this->Hub->round($agent_commission));
 		}
@@ -107,34 +128,6 @@ class Agent
 	}
 
 	/**
-	 * Add tax to working value if it is included in agent totals
-	 *
-	 * @param  float  $working  Working value
-	 *
-	 * @throws InvalidArgumentException
-	 * @since  3.2.0
-	 * @return float
-	 */
-	private function addIncludedTax(float $working): float
-	{
-		$taxes    = $this->Hub->getValue('taxes');
-		$agent_id = $this->Hub->getValue('agent_id');
-
-		foreach ($taxes as $tax)
-		{
-			if (!empty($tax) && $tax['value'] > 0)
-			{
-				if ($this->isTaxIncluded($tax, $agent_id))
-				{
-					$working += $tax['value'];
-				}
-			}
-		}
-
-		return $working;
-	}
-
-	/**
 	 * Check if a tax is included for the agent
 	 *
 	 * @param  array  $tax       Tax values from tax calculation
@@ -145,8 +138,7 @@ class Agent
 	 */
 	private function isTaxIncluded(array $tax, int $agent_id): bool
 	{
-		if (!empty($tax['agent']) && in_array($agent_id, Utility::decodeJson($tax['agent'])))
-		{
+		if (!empty($tax['agent']) && in_array($agent_id, Utility::decodeJson($tax['agent']))) {
 			return true;
 		}
 

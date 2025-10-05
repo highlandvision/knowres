@@ -59,7 +59,7 @@ extract($displayData);
 </div>
 <div class="modal-footer">
 	<?php if ($allow_block): ?>
-		<button class="btn btn-primary" onclick="Knowres.submitform('contract.save')" type="button">
+		<button class="btn btn-primary" onclick="Knowres.submitform('contract.save', undefined, false)" type="button">
 			<?php echo KrMethods::plain('COM_KNOWRES_PROPERTY_CALENDAR_MODAL_ADD_BLOCK') ?>
 		</button>
 	<?php endif; ?>

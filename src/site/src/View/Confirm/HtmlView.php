@@ -32,20 +32,20 @@ use stdClass;
  */
 class HtmlView extends KrHtmlView\Site
 {
-	/** @var Form Guest Form */
-	public Form $guestForm;
+	/** @var Translations Translations object */
+	public Translations $Translations;
 	/** @var stdClass Contract session data */
 	public stdClass $contractData;
 	/** @var KrSession\Contract Contract session */
 	public KrSession\Contract $contractSession;
+	/** @var Form Guest Form */
+	public Form $guestForm;
 	/** @var string Path to property image */
 	public string $pimage;
 	/** @var object|bool Property item */
 	public object|bool $property;
 	/** @var array Property settings */
 	public array $settings;
-	/** @var Translations Translations object */
-	public Translations $Translations;
 
 	/**
 	 * Display the form
@@ -73,12 +73,10 @@ class HtmlView extends KrHtmlView\Site
 		$this->params       = KrMethods::getParams();
 		$this->Translations = new Translations();
 
-		if (is_null(KrMethods::getUserState('com_knowres.edit.confirm.data')))
-		{
+		if (is_null(KrMethods::getUserState('com_knowres.edit.confirm.data'))) {
 			KrMethods::setUserState('com_knowres.edit.confirm.data', $this->contractData);
 		}
-		if (is_null(KrMethods::getUserState('com_knowres.edit.guest.data')))
-		{
+		if (is_null(KrMethods::getUserState('com_knowres.edit.guest.data'))) {
 			KrMethods::setUserState('com_knowres.edit.guest.data', $guestData);
 		}
 
@@ -88,9 +86,10 @@ class HtmlView extends KrHtmlView\Site
 		$this->guestForm->bind($guestData);
 		$this->property         = KrFactory::getAdminModel('property')->getItem($this->contractData->property_id);
 		$this->settings         = KrFactory::getListModel('propertysettings')
-		                                   ->getPropertysettings($this->contractData->property_id);
+			->getPropertysettings($this->contractData->property_id);
 		$this->pimage           = Images::getImagePath($this->property->id, 'solo',
-			Images::getPropertyImageName($this->property->id));
+			Images::getPropertyImageName($this->property->id)
+		);
 		$this->meta_title       = KrMethods::plain('COM_KNOWRES_MAKE_A_RESERVATION');
 		$this->meta_description = KrMethods::plain('COM_KNOWRES_PAGE_TITLE');
 		$this->prepareDocument();
@@ -106,26 +105,24 @@ class HtmlView extends KrHtmlView\Site
 	 */
 	protected function checkSession(): void
 	{
-		if (!$this->contractData->contract_total)
-		{
+		if (!$this->contractData->contract_total) {
 			$this->contractSession->resetData();
 			SiteHelper::expiredSession();
 		}
 
 		if (!KrFactory::getListModel('contracts')
-		              ->isPropertyAvailable($this->contractData->property_id, $this->contractData->arrival,
-			              $this->contractData->departure))
-		{
+			->isPropertyAvailable($this->contractData->property_id, $this->contractData->arrival,
+				$this->contractData->departure
+			)) {
 			$this->contractSession->resetData();
 			SiteHelper::expiredSession($jform['property_id']);
 		}
 
 		if (!$this->contractData->property_id
-			|| !$this->contractData->arrival
-			|| !$this->contractData->departure
-			|| !$this->contractData->guests
-			|| !(float) $this->contractData->room_total)
-		{
+		    || !$this->contractData->arrival
+		    || !$this->contractData->departure
+		    || !$this->contractData->guests
+		    || !(float)$this->contractData->room_total) {
 			$this->contractSession->resetData();
 			SiteHelper::expiredSession($this->contractData->property_id);
 		}
@@ -151,8 +148,8 @@ class HtmlView extends KrHtmlView\Site
 	 */
 	protected function setPathway(): void
 	{
-		$searchSession      = new KrSession\Search();
-		$searchData   = $searchSession->getData();
+		$searchSession = new KrSession\Search();
+		$searchData    = $searchSession->getData();
 
 		$pathway = self::setPathwayBase();
 		$pathway = self::propertiesPathway($pathway, $searchData);
