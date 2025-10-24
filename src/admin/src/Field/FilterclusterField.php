@@ -26,7 +26,7 @@ use function array_merge;
 class FilterclusterField extends KrListField
 {
 	/** @var string The form field type. */
-	public $type = 'Filtercluster';
+	protected $type = 'Filtercluster';
 
 	/**
 	 * Method to populate the cluster filter list
@@ -43,8 +43,7 @@ class FilterclusterField extends KrListField
 
 		$Translations = new Translations();
 		$tmp          = $Translations->getArray($results, 'cluster', 'name');
-		foreach ($tmp as $k => $v)
-		{
+		foreach ($tmp as $k => $v) {
 			$options[] = HTMLHelper::_('select.option', $k, $v);
 		}
 

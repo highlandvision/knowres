@@ -24,7 +24,7 @@ use function array_merge;
 class FilteragentField extends KrListField
 {
 	/** @var string The form field type. */
-	public $type = 'Filteragent';
+	protected $type = 'Filteragent';
 
 	/**
 	 * Populate the agencies filter list
