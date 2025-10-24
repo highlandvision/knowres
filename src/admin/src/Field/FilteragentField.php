@@ -23,7 +23,7 @@ use function array_merge;
  */
 class FilteragentField extends KrListField
 {
-	/** @var string The form field type. */
+	/** @var string The form field type do not add $type as per phpstorm. */
 	protected $type = 'Filteragent';
 
 	/**
