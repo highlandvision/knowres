@@ -44,13 +44,11 @@ class CombotownField extends ListField
 		$region_id = $this->fieldname == 'town_id' ? $this->form->getValue('region_id')
 			: $this->form->getValue('b_region_id');
 
-		if ($region_id)
-		{
+		if ($region_id) {
 			$items = KrFactory::getListModel('towns')
-			                  ->getByRegion($region_id, $this->getAttribute('allowproperty', false));
+				->getByRegion($region_id, $this->getAttribute('allowproperty', false));
 
-			foreach ($items as $i)
-			{
+			foreach ($items as $i) {
 				$options[] = HTMLHelper::_('select.option', $i->id, $i->name);
 			}
 		}

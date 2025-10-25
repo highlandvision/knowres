@@ -36,10 +36,8 @@ class ListtimeField extends ListField
 	{
 		$options = [];
 
-		for ($i = 0; $i < 24; $i++)
-		{
-			if ($i < 10)
-			{
+		for ($i = 0; $i < 24; $i++) {
+			if ($i < 10) {
 				$i = '0' . $i;
 			}
 

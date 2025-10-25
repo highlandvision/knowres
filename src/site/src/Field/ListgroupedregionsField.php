@@ -66,10 +66,11 @@ class ListgroupedregionsField extends GroupedlistField
 		$groups = [];
 		if ($this->show_regions > 0) {
 			$groups[][] = HTMLHelper::_('select.option',
-			                            0,
-			                            KrMethods::plain('MOD_KNOWRES_SEARCH_LOCATION'),
-			                            'value',
-			                            'text');
+				0,
+				KrMethods::plain('MOD_KNOWRES_SEARCH_LOCATION'),
+				'value',
+				'text'
+			);
 		}
 
 		return array_merge(parent::getGroups(), $groups);

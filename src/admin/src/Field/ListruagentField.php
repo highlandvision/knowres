@@ -56,14 +56,16 @@ class ListruagentField extends ListField
 			$service = KrFactory::getAdminModel('service')->getItem($service_id);
 		} catch (Exception) {
 			$options[] = HTMLHelper::_('select.option', 0,
-			                           KrMethods::plain('COM_KNOWRES_AGENT_FOREIGN_KEY_NOT_REQUIRED'));
+				KrMethods::plain('COM_KNOWRES_AGENT_FOREIGN_KEY_NOT_REQUIRED')
+			);
 
 			return array_merge(parent::getOptions(), $options);
 		}
 
 		if ($service->plugin != 'ru') {
 			$options[] = HTMLHelper::_('select.option', 0,
-			                           KrMethods::plain('COM_KNOWRES_AGENT_FOREIGN_KEY_NOT_REQUIRED'));
+				KrMethods::plain('COM_KNOWRES_AGENT_FOREIGN_KEY_NOT_REQUIRED')
+			);
 
 			return array_merge(parent::getOptions(), $options);
 		}

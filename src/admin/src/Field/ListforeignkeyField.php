@@ -26,7 +26,7 @@ use function array_merge;
 class ListforeignkeyField extends ListField
 {
 	/** @var string The form field type. */
-	public $type = 'Listforeignkey';
+	protected $type = 'Listforeignkey';
 
 	/**
 	 * Returns an array of stdClass options in value / text format.
@@ -39,7 +39,7 @@ class ListforeignkeyField extends ListField
 	{
 		$key_field   = $this->getAttribute('key_field');
 		$value_field = $this->getAttribute('value_field');
-		$prepend      = $this->getAttribute('prepend');
+		$prepend     = $this->getAttribute('prepend');
 
 		$db    = KrFactory::getDatabase();
 		$query = $db->getQuery(true);
@@ -53,24 +53,21 @@ class ListforeignkeyField extends ListField
 			);
 		} else {
 			$query->select($db->qn($key_field, 'value'));
-	       	$query->select('CONCAT('. $db->qn($prepend) .', " ", UCASE('. $db->qn($value_field).')) AS text');
+			$query->select('CONCAT(' . $db->qn($prepend) . ', " ", UCASE(' . $db->qn($value_field) . ')) AS text');
 		}
 
 		$query->from($this->getAttribute('table'))
-		      ->order($value_field);
+			->order($value_field);
 
-		if ($this->getAttribute('where'))
-		{
+		if ($this->getAttribute('where')) {
 			$query->where($this->getAttribute('where'));
 		}
 
-		if ($this->getAttribute('today'))
-		{
+		if ($this->getAttribute('today')) {
 			$query->where($this->getAttribute('today') . '>=' . $db->q(TickTock::getDate()));
 		}
 
-		if ($this->getAttribute('b4today'))
-		{
+		if ($this->getAttribute('b4today')) {
 			$query->where($this->getAttribute('b4today') . '<' . $db->q(TickTock::getDate()));
 		}
 

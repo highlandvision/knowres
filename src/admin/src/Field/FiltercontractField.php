@@ -25,7 +25,7 @@ use function array_merge;
 class FiltercontractField extends KrListField
 {
 	/** @var string The form field type. */
-	public $type = 'Filtercontract';
+	protected $type = 'Filtercontract';
 
 	/**
 	 * Method to get the contracts to populate filter list
@@ -39,13 +39,11 @@ class FiltercontractField extends KrListField
 		$table = $this->getAttribute('table');
 		$state = self::getState($this->form);
 
-		if ($table != 'own')
-		{
+		if ($table != 'own') {
 			$options = self::filteringForeign('#__knowres_contract', $table, 'contract_id', 'id',
-				'tag', $state);
-		}
-		else
-		{
+				'tag', $state
+			);
+		} else {
 			$options = self::filtering('#__knowres_contract', 'id', 'tag', $state);
 		}
 

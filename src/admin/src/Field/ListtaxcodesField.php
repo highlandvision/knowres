@@ -38,8 +38,7 @@ class ListtaxcodesField extends ListField
 	 */
 	public function __construct()
 	{
-		if (KrMethods::getParams()->get('ignore_taxes', 0))
-		{
+		if (KrMethods::getParams()->get('ignore_taxes', 0)) {
 			return;
 		}
 
@@ -58,10 +57,8 @@ class ListtaxcodesField extends ListField
 	{
 		$taxrates    = KrFactory::getListModel('taxrates')->getAll();
 		$property_id = $this->getProperty();
-		if ($property_id)
-		{
-			if (is_countable($taxrates) && count($taxrates))
-			{
+		if ($property_id) {
+			if (is_countable($taxrates) && count($taxrates)) {
 				$taxrates = $this->matchTax($property_id, $taxrates);
 			}
 		}
@@ -69,8 +66,7 @@ class ListtaxcodesField extends ListField
 		$taxrates = $this->getCurrent($taxrates);
 
 		$options = [];
-		foreach ($taxrates as $k => $v)
-		{
+		foreach ($taxrates as $k => $v) {
 			$options[] = HTMLHelper::_('select.option', $k, $k);
 		}
 
@@ -80,7 +76,7 @@ class ListtaxcodesField extends ListField
 	/**
 	 * Filter tax rates to get current rates only
 	 *
-	 * @param   array  $taxrates  Array of all tax rates
+	 * @param  array  $taxrates  Array of all tax rates
 	 *
 	 * @throws Exception
 	 * @since  4.0.0
@@ -91,10 +87,8 @@ class ListtaxcodesField extends ListField
 		$tmp   = [];
 		$first = true;
 
-		foreach ($taxrates as $t)
-		{
-			if (!$first && array_key_exists($t->code, $tmp) && $t->valid_from > $tmp[$t->code])
-			{
+		foreach ($taxrates as $t) {
+			if (!$first && array_key_exists($t->code, $tmp) && $t->valid_from > $tmp[$t->code]) {
 				$tmp[$t->code] = $t->valid_from;
 			}
 
@@ -116,14 +110,14 @@ class ListtaxcodesField extends ListField
 		$userSession = new KrSession\User();
 		$userData    = $userSession->getData();
 
-		return (int) $userData->cr_property_id;
+		return (int)$userData->cr_property_id;
 	}
 
 	/**
 	 * Filter tax rates by property location
 	 *
-	 * @param   int    $property_id  ID of property
-	 * @param   array  $taxrates     Array of all tax rates
+	 * @param  int    $property_id  ID of property
+	 * @param  array  $taxrates     Array of all tax rates
 	 *
 	 * @throws Exception
 	 * @since  4.0.0
@@ -135,20 +129,16 @@ class ListtaxcodesField extends ListField
 		$rates    = $taxrates;
 		$taxrates = [];
 
-		foreach ($rates as $t)
-		{
-			if ($t->town_id == $property->town_id)
-			{
+		foreach ($rates as $t) {
+			if ($t->town_id == $property->town_id) {
 				$taxrates[] = $t;
 				continue;
 			}
-			if ($t->region_id == $property->region_id)
-			{
+			if ($t->region_id == $property->region_id) {
 				$taxrates[] = $t;
 				continue;
 			}
-			if ($t->country_id == $property->country_id)
-			{
+			if ($t->country_id == $property->country_id) {
 				$taxrates[] = $t;
 			}
 		}

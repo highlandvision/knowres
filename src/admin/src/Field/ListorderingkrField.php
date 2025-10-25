@@ -37,37 +37,32 @@ class ListorderingkrField extends ListField
 		$fieldname = preg_replace('/[^a-zA-Z\d_\-]/', '_', $this->fieldname);
 		$options   = [];
 
-		foreach ($this->element->xpath('option') as $option)
-		{
-			$requires = explode(',', (string) $option['requires']);
-			if ($requires)
-			{
-				if (in_array('multilanguage', $requires) && !Multilanguage::isEnabled())
-				{
+		foreach ($this->element->xpath('option') as $option) {
+			$requires = explode(',', (string)$option['requires']);
+			if ($requires) {
+				if (in_array('multilanguage', $requires) && !Multilanguage::isEnabled()) {
 					continue;
 				}
-				if (in_array('associations', $requires) && !Associations::isEnabled())
-				{
+				if (in_array('associations', $requires) && !Associations::isEnabled()) {
 					continue;
 				}
 			}
 
-			$value    = (string) $option['value'];
-			$text     = trim((string) $option) ?: $value;
-			$disabled = (string) $option['disabled'];
+			$value    = (string)$option['value'];
+			$text     = trim((string)$option) ?: $value;
+			$disabled = (string)$option['disabled'];
 			$disabled = ($disabled == 'true' || $disabled == 'disabled' || $disabled == '1');
 			$disabled = $disabled || ($this->readonly && $value != $this->value);
 
-			$checked = (string) $option['checked'];
+			$checked = (string)$option['checked'];
 			$checked = ($checked == 'true' || $checked == 'checked' || $checked == '1');
 
-			$selected = (string) $option['selected'];
+			$selected = (string)$option['selected'];
 			$selected = ($selected == 'true' || $selected == 'selected' || $selected == '1');
 
 			$multiple = explode(" ", $text);
 			$multi    = [];
-			foreach ($multiple as $m)
-			{
+			foreach ($multiple as $m) {
 				$multi[] = Text::alt($m, $fieldname);
 			}
 
@@ -76,15 +71,15 @@ class ListorderingkrField extends ListField
 				//					'text'     => Text::alt($text, $fieldname),
 				'text'     => ucfirst(strtolower(implode(" ", $multi))),
 				'disable'  => $disabled,
-				'class'    => (string) $option['class'],
+				'class'    => (string)$option['class'],
 				'selected' => ($checked || $selected),
 				'checked'  => ($checked || $selected)
 			);
 
-			$tmp['onclick']  = (string) $option['onclick'];
-			$tmp['onchange'] = (string) $option['onchange'];
+			$tmp['onclick']  = (string)$option['onclick'];
+			$tmp['onchange'] = (string)$option['onchange'];
 
-			$options[] = (object) $tmp;
+			$options[] = (object)$tmp;
 		}
 
 		return $options;

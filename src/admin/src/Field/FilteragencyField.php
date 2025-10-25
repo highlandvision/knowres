@@ -23,7 +23,7 @@ use function array_merge;
  */
 class FilteragencyField extends KrListField
 {
-	/** @var string The form field type do not add $type as per phpstorm. */
+	/** @var string The form field type do not add $type as per phpstorm requires Joomla changes. */
 	protected $type = 'Filteragency';
 
 	/**

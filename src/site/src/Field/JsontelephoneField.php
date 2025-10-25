@@ -21,6 +21,9 @@ use Joomla\CMS\Form\FormField;
  */
 class JsontelephoneField extends FormField
 {
+	/** @var string The form field type. */
+	protected $type = 'Jsontelephone';
+
 	/**
 	 * Get the field input.
 	 *
@@ -29,19 +32,16 @@ class JsontelephoneField extends FormField
 	 */
 	public function getInput(): string
 	{
-		$this->type = 'Jsontelephone';
-		$group      = 'telephone';
-		$occurs     = 2;
-		$values     = [];
+		$group  = 'telephone';
+		$occurs = 2;
+		$values = [];
 
-		foreach ($this->value as $v)
-		{
+		foreach ($this->value as $v) {
 			$tmp      = [$v->country, $v->number, $v->type];
 			$values[] = $tmp;
 		}
 
-		while (count($values) < $occurs)
-		{
+		while (count($values) < $occurs) {
 			$tmp      = [0, '', 0];
 			$values[] = $tmp;
 		}

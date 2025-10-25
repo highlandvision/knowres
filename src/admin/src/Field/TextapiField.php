@@ -43,66 +43,49 @@ class TextapiField extends FormField
 	 */
 	public function getInput(): string
 	{
-		if (!trim($this->value))
-		{
+		if (!trim($this->value)) {
 			return '';
 		}
 
-		try
-		{
+		try {
 			libxml_use_internal_errors(true);
 			$xml                     = new SimpleXMLElement(trim($this->value, LIBXML_NOERROR));
 			$dom                     = new DOMDocument();
 			$dom->preserveWhiteSpace = true;
 			$dom->loadXML($xml->asXml());
-			$dom->formatOutput       = true;
-			$output = str_replace('<?xml version="1.0"?>', '', $dom->saveXML());
+			$dom->formatOutput = true;
+			$output            = str_replace('<?xml version="1.0"?>', '', $dom->saveXML());
 
 			return '<pre>' . htmlentities($output) . '</pre>';
-		}
-		catch (Exception)
-		{
+		} catch (Exception) {
 			$test = @json_decode($this->value);
-			if ($test)
-			{
+			if ($test) {
 				$json = Utility::decodeJson($this->value, true);
 				$d    = '<pre>';
-				foreach ($json as $key => $text)
-				{
-					if (is_object($text) || is_array($text))
-					{
-						$properties = (array) $text;
-						foreach ($properties as $k => $v)
-						{
+				foreach ($json as $key => $text) {
+					if (is_object($text) || is_array($text)) {
+						$properties = (array)$text;
+						foreach ($properties as $k => $v) {
 							$d .= $k . ' = ' . $v . '<br>';
 						}
-					}
-					else
-					{
+					} else {
 						$d .= $key . ' = ' . $text . '<br>';
 					}
 				}
 				$d .= '</pre>';
 
 				return $d;
-			}
-			elseif (is_string($this->value))
-			{
+			} else if (is_string($this->value)) {
 				return '<pre>' . $this->value . '</pre>';
-			}
-			elseif (is_countable($this->value) && count($this->value))
-			{
+			} else if (is_countable($this->value) && count($this->value)) {
 				$d = '<pre>';
-				foreach ($this->value as $key => $value)
-				{
+				foreach ($this->value as $key => $value) {
 					$d .= $key . ' = ' . $value . '<br>';
 				}
 				$d .= '</pre>';
 
 				return $d;
-			}
-			else
-			{
+			} else {
 				return "<pre>Sorry the data could not be displayed</pre>";
 			}
 		}

@@ -26,7 +26,7 @@ use function array_merge;
 class FilterpropertyField extends KrListField
 {
 	/** @var string The form field type. */
-	public $type = 'Filterproperty';
+	protected $type = 'Filterproperty';
 
 	/**
 	 * Get value for state
@@ -71,7 +71,7 @@ class FilterpropertyField extends KrListField
 		if ($properties) {
 			$properties = explode(',', $properties);
 			foreach ($options as $k => $o) {
-				if (!in_array((int) $o->value, $properties)) {
+				if (!in_array((int)$o->value, $properties)) {
 					unset($options[$k]);
 				}
 			}

@@ -42,15 +42,14 @@ class ComboregionField extends ListField
 
 		$country_id = $this->fieldname == 'region_id' ? $this->form->getValue('country_id')
 			: $this->form->getValue('b_country_id');
-		if (!$country_id)
-		{
+		if (!$country_id) {
 			$country_id = KrMethods::getParams()->get('default_country');
 		}
 
 		$items = KrFactory::getListModel('regions')->getAllRegions($this->getAttribute('allowproperty', false),
-			null, $country_id);
-		foreach ($items as $i)
-		{
+			null, $country_id
+		);
+		foreach ($items as $i) {
 			$options[] = HTMLHelper::_('select.option', $i->id, $i->name);
 		}
 

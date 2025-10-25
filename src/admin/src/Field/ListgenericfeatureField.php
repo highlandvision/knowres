@@ -265,8 +265,7 @@ class ListgenericfeatureField extends ListField
 		sort($values);
 
 		$options = [];
-		foreach ($values as $v)
-		{
+		foreach ($values as $v) {
 			$options[] = HTMLHelper::_('select.option', $v, $v);
 		}
 

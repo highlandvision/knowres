@@ -23,6 +23,9 @@ use function sprintf;
  */
 class SwitchField extends FormField
 {
+	/** @var string The form field type. */
+	protected $type = 'switch';
+
 	/**
 	 * Method to get the radio button field input markup.
 	 *
@@ -32,10 +35,7 @@ class SwitchField extends FormField
 	 */
 	protected function getInput(): string
 	{
-		$this->type = 'switch';
-
-		if (empty($this->layout))
-		{
+		if (empty($this->layout)) {
 			throw new UnexpectedValueException(sprintf('%s has no layout assigned.', $this->name));
 		}
 

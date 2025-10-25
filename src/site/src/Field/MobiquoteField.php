@@ -21,6 +21,9 @@ use Joomla\CMS\Form\FormField;
  */
 class MobiquoteField extends FormField
 {
+	/** @var string The form field type. */
+	protected $type = 'mobiquote';
+
 	/**
 	 * Method to get the field input markup.
 	 *
@@ -30,8 +33,6 @@ class MobiquoteField extends FormField
 	 */
 	protected function getInput(): string
 	{
-		$this->type = 'mobiquote';
-
 		$html = '<div class="datepicker-wrapper">';
 		$html .= '<input type="text" name="' . $this->name . '" id="' . $this->id . '" class="' . $this->class . '">';
 		$html .= '<label for="' . $this->id . '">';

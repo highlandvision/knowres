@@ -27,7 +27,7 @@ use function array_merge;
 class FilterguestField extends KrListField
 {
 	/** @var string The form field type */
-	public $type = 'Filterguest';
+	protected $type = 'Filterguest';
 
 	/**
 	 * Method to get the guests to populate filter list
@@ -46,24 +46,23 @@ class FilterguestField extends KrListField
 
 		$db    = KrFactory::getDatabase();
 		$query = $db->getQuery(true)
-		            ->select($db->qn('g.id', 'value'))
-		            ->select('CONCAT(g.surname, " ", g.firstname) AS text')
-		            ->from($db->qn('#__knowres_guest', 'g'));
+			->select($db->qn('g.id', 'value'))
+			->select('CONCAT(g.surname, " ", g.firstname) AS text')
+			->from($db->qn('#__knowres_guest', 'g'));
 
-		if ($table != 'own')
-		{
+		if ($table != 'own') {
 			$query->join('INNER',
-				$db->qn($table, 't') . ' ON ' . $db->qn('g.id') . ' = ' . $db->qn('t.guest_id'));
+				$db->qn($table, 't') . ' ON ' . $db->qn('g.id') . ' = ' . $db->qn('t.guest_id')
+			);
 		}
 
-		if ($state != '*')
-		{
+		if ($state != '*') {
 			$query->where($db->qn('g.state') . '=' . $db->q($state));
 		}
 
 		$query->group($db->qn('value'))
-		      ->group($db->qn('surname'))
-		      ->order($db->qn('surname'));
+			->group($db->qn('surname'))
+			->order($db->qn('surname'));
 
 		$db->setQuery($query);
 		$options = $db->loadObjectList();

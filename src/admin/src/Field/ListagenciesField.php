@@ -15,7 +15,6 @@ use HighlandVision\KR\Framework\KrFactory;
 use InvalidArgumentException;
 use Joomla\CMS\Form\Field\ListField;
 use Joomla\CMS\HTML\HTMLHelper;
-
 use RuntimeException;
 
 use function array_merge;
@@ -28,7 +27,7 @@ use function array_merge;
 class ListagenciesField extends ListField
 {
 	/** @var string The form field type. */
-	public $type = 'Listagencies';
+	protected $type = 'Listagencies';
 
 	/**
 	 * Get the field options.
@@ -41,8 +40,7 @@ class ListagenciesField extends ListField
 	{
 		$options = [];
 		$items   = KrFactory::getListModel('agencies')->getAll();
-		foreach ($items as $i)
-		{
+		foreach ($items as $i) {
 			$options[] = HTMLHelper::_('select.option', $i->id, $i->name);
 		}
 

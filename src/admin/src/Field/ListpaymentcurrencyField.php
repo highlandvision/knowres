@@ -43,20 +43,17 @@ class ListpaymentcurrencyField extends ListField
 		$currencies = [];
 
 		$items = KrFactory::getListModel('currencies')->getAllPropertyCurrencies();
-		foreach ($items as $i)
-		{
+		foreach ($items as $i) {
 			$currencies[]  = $i->iso;
 			$allow_payment = Utility::decodeJson($i->allow_payment, true);
-			foreach ($allow_payment as $c)
-			{
+			foreach ($allow_payment as $c) {
 				$currencies[] = $c;
 			}
 		}
 
 		$items = array_unique($currencies);
 
-		foreach ($items as $c)
-		{
+		foreach ($items as $c) {
 			$options[] = HTMLHelper::_('select.option', $c, $c);
 		}
 

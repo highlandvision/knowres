@@ -24,7 +24,7 @@ use function array_merge;
 class FilterserviceField extends KrListField
 {
 	/** @var string The form field type. */
-	public $type = 'Filterservice';
+	protected $type = 'Filterservice';
 
 	/**
 	 * Method to get the services to populate filter list
@@ -36,7 +36,8 @@ class FilterserviceField extends KrListField
 	protected function getOptions(): array
 	{
 		$options = self::filteringForeign('#__knowres_service', $this->getAttribute('table'), 'service_id', 'id',
-			'name', null);
+			'name', null
+		);
 
 		return array_merge(parent::getOptions(), $options);
 	}

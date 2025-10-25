@@ -46,7 +46,7 @@ class KnowresFeaturedHelper
 	 * Get display data for a property
 	 *
 	 * @param  int           $id            Property ID
-	 * @param  mixed         $item          Property item
+	 * @param  array|mixed   $item          Property item
 	 * @param  mixed         $currencies    Currencies
 	 * @param  mixed         $net_rates     Net rates
 	 * @param  mixed         $net_markup    Net rates markup
@@ -56,8 +56,8 @@ class KnowresFeaturedHelper
 	 * @since  5.0.0
 	 * @return array
 	 */
-	public static function getPropertyData(int   $id, mixed $item, mixed $currencies, mixed $net_rates,
-	                                       mixed $net_markup, Translations $Translations): array
+	public static function getPropertyData(int $id, mixed $item, mixed $currencies, mixed $net_rates,
+		mixed $net_markup, Translations $Translations): array
 	{
 		$pdata                  = [];
 		$pdata['id']            = $item->id;

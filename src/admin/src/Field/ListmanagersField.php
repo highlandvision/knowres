@@ -15,7 +15,6 @@ use HighlandVision\KR\Framework\KrFactory;
 use InvalidArgumentException;
 use Joomla\CMS\Form\Field\ListField;
 use Joomla\CMS\HTML\HTMLHelper;
-
 use RuntimeException;
 
 use function array_merge;
@@ -42,10 +41,8 @@ class ListmanagersField extends ListField
 		$options = [];
 
 		$items = KrFactory::getListModel('managers')->getPropertyManagers();
-		foreach ($items as $i)
-		{
-			if ($i->agency_id)
-			{
+		foreach ($items as $i) {
+			if ($i->agency_id) {
 				$options[] = HTMLHelper::_('select.option', $i->id, $i->user_name);
 			}
 		}

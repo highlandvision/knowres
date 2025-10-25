@@ -40,8 +40,7 @@ class ListpropertyfieldsField extends ListField
 		$options = [];
 
 		$values = KrFactory::getAdminModel('propertyfield')->getOptions();
-		foreach ($values as $k => $v)
-		{
+		foreach ($values as $k => $v) {
 			$options[] = HTMLHelper::_('select.option', $k, $v);
 		}
 

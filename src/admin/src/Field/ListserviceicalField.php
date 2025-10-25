@@ -15,7 +15,6 @@ use HighlandVision\KR\Framework\KrFactory;
 use InvalidArgumentException;
 use Joomla\CMS\Form\Field\ListField;
 use Joomla\CMS\HTML\HTMLHelper;
-
 use RuntimeException;
 
 use function array_merge;
@@ -42,8 +41,7 @@ class ListserviceicalField extends ListField
 		$options = [];
 
 		$items = KrFactory::getListModel('services')->getServicesByPlugin('ical');
-		foreach ($items as $i)
-		{
+		foreach ($items as $i) {
 			$options[] = HTMLHelper::_('select.option', $i->id, $i->name);
 		}
 

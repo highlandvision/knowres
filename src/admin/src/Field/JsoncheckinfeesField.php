@@ -14,7 +14,6 @@ defined('JPATH_BASE') or die;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Session as KrSession;
 use Joomla\CMS\Form\FormField;
-
 use RuntimeException;
 
 use function count;
@@ -26,6 +25,11 @@ use function count;
  */
 class JsoncheckinfeesField extends FormField
 {
+	/** @var string The form field layout. */
+	protected $layout = 'form.field.json.generic';
+	/** @var string The form field type. */
+	protected $type = 'Jsoncheckinfees';
+
 	/**
 	 * Get the field input.
 	 *
@@ -35,27 +39,23 @@ class JsoncheckinfeesField extends FormField
 	 */
 	public function getInput(): string
 	{
-		$this->layout = 'form.field.json.generic';
-		$this->type   = 'Jsoncheckinfees';
-		$group        = 'checkin_fees';
-		$occurs       = 3;
-		$values       = [];
+		$group  = 'checkin_fees';
+		$occurs = 3;
+		$values = [];
 
 		$userSession = new KrSession\User();
 		$userData    = $userSession->getData();
-		$property_id = (int) $userData->cr_property_id;
+		$property_id = (int)$userData->cr_property_id;
 
 		$settings = KrFactory::getListModel('propertysettings')->getOneSetting('currency');
 		$currency = !isset($settings[$property_id]) ? $settings[0] : $settings[$property_id];
 
-		foreach ($this->value as $v)
-		{
+		foreach ($this->value as $v) {
 			$tmp      = [$v->checkin_fees_from, $v->checkin_fees_to, $v->checkin_fees_amount];
 			$values[] = $tmp;
 		}
 
-		while (count($values) < $occurs)
-		{
+		while (count($values) < $occurs) {
 			$tmp      = [0, 0, 0];
 			$values[] = $tmp;
 		}

@@ -15,7 +15,6 @@ use HighlandVision\KR\Framework\KrFactory;
 use InvalidArgumentException;
 use Joomla\CMS\Form\Field\ListField;
 use Joomla\CMS\HTML\HTMLHelper;
-
 use RuntimeException;
 
 use function array_merge;
@@ -42,8 +41,7 @@ class ListpropertiesField extends ListField
 		$options = [];
 
 		$names = KrFactory::getListSiteModel('properties')->getNames();
-		foreach ($names as $n)
-		{
+		foreach ($names as $n) {
 			$options[] = HTMLHelper::_('select.option', $n->id, $n->property_name);
 		}
 

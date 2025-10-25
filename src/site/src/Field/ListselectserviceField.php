@@ -39,16 +39,15 @@ class ListselectserviceField extends ListField
 	public function getOptions()
 	{
 		$services = KrFactory::getListModel('services')->getServicesByPlugin('mailchimp');
-		if (!is_countable($services) || !count($services))
-		{
+		if (!is_countable($services) || !count($services)) {
 			KrMethods::message(KrMethods::plain('Please set up mailchimp service before adding a subscription form'),
-				'error');
+				'error'
+			);
 
 			return;
 		}
 
-		foreach ($services as $mc)
-		{
+		foreach ($services as $mc) {
 			$options[] = HTMLHelper::_('select.option', $mc->id, $mc->name);
 		}
 

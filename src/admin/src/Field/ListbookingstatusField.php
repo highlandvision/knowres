@@ -24,7 +24,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 class ListbookingstatusField extends ListField
 {
 	/** @var string The form field type. */
-	public $type = 'Listbookingstatus';
+	protected $type = 'Listbookingstatus';
 
 	/**
 	 * Display the list of booking status
@@ -38,8 +38,7 @@ class ListbookingstatusField extends ListField
 		$options = [];
 
 		$items = KrFactory::getAdminModel('contract')->getBookingStatusOptions();
-		foreach ($items as $k => $v)
-		{
+		foreach ($items as $k => $v) {
 			$options[] = HTMLHelper::_('select.option', $k, $v);
 		}
 

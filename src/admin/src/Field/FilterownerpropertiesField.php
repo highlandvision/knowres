@@ -28,7 +28,7 @@ use function defined;
 class FilterownerpropertiesField extends KrListField
 {
 	/** @var string The form field type. */
-	public $type = 'Filterownerproperties';
+	protected $type = 'Filterownerproperties';
 
 	/**
 	 * Method to get the owners to populate filter list
@@ -52,9 +52,9 @@ class FilterownerpropertiesField extends KrListField
 		$query = $db->getQuery(true);
 
 		$query->select($db->qn('o.id', 'value'))
-		      ->select($db->qn('o.name', 'text'))
-		      ->from($db->qn('#__knowres_owner', 'o'))
-		      ->where($db->qn('o.state') . '=1');
+			->select($db->qn('o.name', 'text'))
+			->from($db->qn('#__knowres_owner', 'o'))
+			->where($db->qn('o.state') . '=1');
 
 		$userProperties = $userSession->getUserProperties();
 		if (!empty($userProperties)) {
@@ -63,8 +63,8 @@ class FilterownerpropertiesField extends KrListField
 		}
 
 		$query->group($db->qn('value'))
-		      ->group($db->qn('text'))
-		      ->order($db->qn('text'));
+			->group($db->qn('text'))
+			->order($db->qn('text'));
 
 		$db->setQuery($query);
 		$options = $db->loadObjectList();

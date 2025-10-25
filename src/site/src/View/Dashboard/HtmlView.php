@@ -6,6 +6,7 @@
  * @license    See the file "LICENSE.txt" for the full license governing this code.
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
+
 /** @noinspection PhpPossiblePolymorphicInvocationInspection */
 
 namespace HighlandVision\Component\Knowres\Site\View\Dashboard;
@@ -27,10 +28,15 @@ use Joomla\CMS\Factory;
  */
 class HtmlView extends KrHtmlView\Site
 {
+	/** @var string GDPR text */
+	public string $firstname = '';
+	/** @var object Guest row. */
+	public object $guest;
+
 	/**
 	 * Display the view
 	 *
-	 * @param   null  $tpl  Default template.
+	 * @param  null  $tpl  Default template.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -43,14 +49,12 @@ class HtmlView extends KrHtmlView\Site
 		$userSession = new KrSession\User();
 		$userData    = $userSession->getData();
 
-		if (!$userData->db_guest_id)
-		{
+		if (!$userData->db_guest_id) {
 			SiteHelper::badUser();
 		}
 
 		$this->guest = KrFactory::getAdminModel('guest')->getItem($userData->db_guest_id);
-		if (!$this->guest->id)
-		{
+		if (!$this->guest->id) {
 			SiteHelper::badUser();
 		}
 

@@ -28,13 +28,13 @@ use function array_merge;
 class FilterfieldField extends ListField
 {
 	/** @var string The form field type */
-	public $type = 'Filterfield';
+	protected $type = 'Filterfield';
 
 	/**
 	 * Sort options array
 	 *
-	 * @param   object  $a  Occurrence
-	 * @param   object  $b  Occurrence
+	 * @param  object  $a  Occurrence
+	 * @param  object  $b  Occurrence
 	 *
 	 * @since  3.2.0
 	 * @return int
@@ -60,24 +60,20 @@ class FilterfieldField extends ListField
 
 		$db    = KrFactory::getDatabase();
 		$query = $db->getQuery(true)
-		            ->select($db->qn('field', 'value'))
-		            ->select($db->qn('field', 'text'))
-		            ->from($db->qn('#__knowres_translation'))
-		            ->group($db->qn('field'))
-		            ->order($db->qn('value'));
+			->select($db->qn('field', 'value'))
+			->select($db->qn('field', 'text'))
+			->from($db->qn('#__knowres_translation'))
+			->group($db->qn('field'))
+			->order($db->qn('value'));
 
 		$db->setQuery($query);
 		$options = $db->loadObjectList();
 
-		foreach ($options as $o)
-		{
+		foreach ($options as $o) {
 			$id = substr($o->value, 1);
-			if (is_numeric($id))
-			{
-				$o->text = $Translations->getText('propertyfield', (int) $id, 'label');
-			}
-			else
-			{
+			if (is_numeric($id)) {
+				$o->text = $Translations->getText('propertyfield', (int)$id, 'label');
+			} else {
 				$o->text = $o->value;
 			}
 		}

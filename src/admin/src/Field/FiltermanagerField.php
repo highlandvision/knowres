@@ -24,7 +24,7 @@ use function array_merge;
 class FiltermanagerField extends KrListField
 {
 	/** @var string The form field type. */
-	public $type = 'Filtermanager';
+	protected $type = 'Filtermanager';
 
 	/**
 	 * Populate manager filter

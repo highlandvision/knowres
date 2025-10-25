@@ -26,6 +26,11 @@ use Joomla\CMS\Form\FormField;
  */
 class JsonextrasField extends FormField
 {
+	/** @var string The form field layout. */
+	protected $layout = 'form.field.json.extras';
+	/** @var string The form field type. */
+	protected $type = 'Jsonextras';
+
 	/**
 	 * Get the field options.
 	 *
@@ -35,8 +40,6 @@ class JsonextrasField extends FormField
 	 */
 	public function getInput(): string
 	{
-		$this->layout = 'form.field.json.extras';
-		$this->type   = 'Jsonextras';
 		$group        = 'extra';
 		$values       = [];
 		$attributes   = [];
@@ -44,23 +47,18 @@ class JsonextrasField extends FormField
 
 		$userSession = new KrSession\User();
 		$userData    = $userSession->getData();
-		$property_id = (int) $userData->cr_property_id;
-		if (empty($property_id))
-		{
+		$property_id = (int)$userData->cr_property_id;
+		if (empty($property_id)) {
 			Utility::goto('properties');
 		}
 
 		$extras   = KrFactory::getListModel('extras')->getByProperty($property_id);
 		$settings = KrFactory::getListModel('propertysettings')->getPropertysettings($property_id, 'currency');
-		foreach ($extras as $e)
-		{
-			if ($e->price > 0)
-			{
+		foreach ($extras as $e) {
+			if ($e->price > 0) {
 				$price = $e->model < 11 ? Utility::displayValue($e->price, $settings['currency'])
 					: $e->percentage . '%';
-			}
-			else
-			{
+			} else {
 				$price = $e->model < 11 ? KrMethods::plain('COM_KNOWRES_FREE') : $e->percentage . '%';
 			}
 			$label       = $Translations->getText('extra', $e->id) . ' ' . $price . ' ' . $this->getText($e->model);
@@ -68,17 +66,19 @@ class JsonextrasField extends FormField
 
 			$first    = $e->mandatory ? 1 : 0;
 			$quantity = $first;
-			foreach ($this->value as $k => $v)
-			{
-				if ($k == $e->id)
-				{
+			foreach ($this->value as $k => $v) {
+				if ($k == $e->id) {
 					$quantity = $v['quantity'];
 				}
 			}
 
 			$values[$e->id]     = $quantity;
-			$attributes[$e->id] = ['label' => $label, 'description' => $description, 'first' => $first,
-			                       'last'  => $e->max_quantity];
+			$attributes[$e->id] = [
+				'label'       => $label,
+				'description' => $description,
+				'first'       => $first,
+				'last'        => $e->max_quantity
+			];
 		}
 
 		$data               = [];
@@ -95,20 +95,19 @@ class JsonextrasField extends FormField
 	/**
 	 * Set the model text for the extra
 	 *
-	 * @param   int  $model  Extra model
+	 * @param  int  $model  Extra model
 	 *
 	 * @since  4.0.0
 	 * @return string
 	 */
 	protected function getText(int $model): string
 	{
-		return match ($model)
-		{
-			1 => KrMethods::plain('COM_KNOWRES_EXTRA_MODEL_PERWEEK'),
-			2 => KrMethods::plain('COM_KNOWRES_EXTRA_MODEL_PERDAY'),
-			3 => KrMethods::plain('COM_KNOWRES_EXTRA_MODEL_PERBOOKING'),
-			4 => KrMethods::plain('COM_KNOWRES_EXTRA_MODEL_PERPERSONPERBOOKING'),
-			5 => KrMethods::plain('COM_KNOWRES_EXTRA_MODEL_PERPERSONPERDAY'),
+		return match ($model) {
+			1  => KrMethods::plain('COM_KNOWRES_EXTRA_MODEL_PERWEEK'),
+			2  => KrMethods::plain('COM_KNOWRES_EXTRA_MODEL_PERDAY'),
+			3  => KrMethods::plain('COM_KNOWRES_EXTRA_MODEL_PERBOOKING'),
+			4  => KrMethods::plain('COM_KNOWRES_EXTRA_MODEL_PERPERSONPERBOOKING'),
+			5  => KrMethods::plain('COM_KNOWRES_EXTRA_MODEL_PERPERSONPERDAY'),
 			11 => KrMethods::plain('COM_KNOWRES_EXTRA_MODEL_PERBOOKINGPC'),
 			12 => KrMethods::plain('COM_KNOWRES_EXTRA_MODEL_PERDAYPC'),
 		};

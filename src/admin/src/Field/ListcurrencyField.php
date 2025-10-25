@@ -24,7 +24,7 @@ use function array_merge;
 class ListcurrencyField extends ListField
 {
 	/** @var string The form field type. */
-	public $type = 'Listcurrency';
+	protected $type = 'Listcurrency';
 
 	/**
 	 * Get the field options.

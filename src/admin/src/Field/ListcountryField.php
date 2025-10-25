@@ -27,7 +27,7 @@ use function array_merge;
 class ListcountryField extends ListField
 {
 	/** @var string The form field type. */
-	public $type = 'Listcountry';
+	protected $type = 'Listcountry';
 
 	/**
 	 * Get the field options.
@@ -41,8 +41,7 @@ class ListcountryField extends ListField
 		$options = [];
 
 		$items = KrFactory::getListModel('countries')->getAll();
-		foreach ($items as $i)
-		{
+		foreach ($items as $i) {
 			$options[] = HTMLHelper::_('select.option', $i->id, $i->name);
 		}
 

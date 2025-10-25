@@ -24,7 +24,7 @@ use Joomla\CMS\Form\FormField;
 class JsonguesttypesField extends FormField
 {
 	/** @var string The form field type. */
-	protected string $type = 'Jsonguesttypes';
+	protected $type = 'Jsonguesttypes';
 
 	/**
 	 * Return the form input field.
@@ -36,14 +36,15 @@ class JsonguesttypesField extends FormField
 	public function getInput(): string
 	{
 		$guest_types = KrMethods::getUserState('com_knowres.enquiry.jsonguesttypes', []);
-		if (!is_array($guest_types))
-		{
+		if (!is_array($guest_types)) {
 			$guest_types = Utility::decodeJson($guest_types, true);
 		}
 
 		return KrMethods::render('property.enquiry.guesttypes',
-			['value' => is_null($this->value) ? array() : json_decode($this->value),
-			 'data'  => $guest_types
-			]);
+			[
+				'value' => is_null($this->value) ? array() : json_decode($this->value),
+				'data'  => $guest_types
+			]
+		);
 	}
 }

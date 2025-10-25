@@ -37,8 +37,7 @@ class ListtaxratesforvatField extends ListField
 	 */
 	public function __construct()
 	{
-		if (KrMethods::getParams()->get('ignore_taxes', 0))
-		{
+		if (KrMethods::getParams()->get('ignore_taxes', 0)) {
 			return;
 		}
 
@@ -56,14 +55,12 @@ class ListtaxratesforvatField extends ListField
 	public function getOptions(): array
 	{
 		$taxrates = KrFactory::getListModel('taxrates')->getAll();
-		if (is_countable($taxrates) && count($taxrates))
-		{
+		if (is_countable($taxrates) && count($taxrates)) {
 			$taxrates = $this->matchTax($taxrates);
 		}
 
 		$options = [];
-		foreach ($taxrates as $i)
-		{
+		foreach ($taxrates as $i) {
 			$options[] = HTMLHelper::_('select.option', $i->id, $i->name);
 		}
 
@@ -73,7 +70,7 @@ class ListtaxratesforvatField extends ListField
 	/**
 	 * Filter tax rates by basis
 	 *
-	 * @param   array  $taxrates  Array of all tax rates
+	 * @param  array  $taxrates  Array of all tax rates
 	 *
 	 * @throws Exception
 	 * @since  4.0.0
@@ -84,10 +81,8 @@ class ListtaxratesforvatField extends ListField
 		$rates    = $taxrates;
 		$taxrates = [];
 
-		foreach ($rates as $t)
-		{
-			if ($t->basis < 1)
-			{
+		foreach ($rates as $t) {
+			if ($t->basis < 1) {
 				$taxrates[] = $t;
 			}
 		}

@@ -96,20 +96,24 @@ class ListpartysizeField extends ListField
 
 			for ($i = 1; $i <= $this->max_guests; $i++) {
 				$options[] = HTMLHelper::_('select.option',
-				                           $i,
-				                           KrMethods::sprintf('MOD_KNOWRES_SEARCH_GUESTS_LBL', $i, 0));
+					$i,
+					KrMethods::sprintf('MOD_KNOWRES_SEARCH_GUESTS_LBL', $i, 0)
+				);
 			}
 
 			$key           = $this->adults + $this->children - 1;
 			$options[$key] = HTMLHelper::_('select.option',
-			                               $key + 1,
-			                               $this->children == 1 ?
-				                               KrMethods::sprintf('MOD_KNOWRES_SEARCH_GUESTS_LBL_1',
-				                                                  $this->adults,
-				                                                  $this->children) :
-				                               KrMethods::sprintf('MOD_KNOWRES_SEARCH_GUESTS_LBL',
-				                                                  $this->adults,
-				                                                  $this->children));
+				$key + 1,
+				$this->children == 1 ?
+					KrMethods::sprintf('MOD_KNOWRES_SEARCH_GUESTS_LBL_1',
+						$this->adults,
+						$this->children
+					) :
+					KrMethods::sprintf('MOD_KNOWRES_SEARCH_GUESTS_LBL',
+						$this->adults,
+						$this->children
+					)
+			);
 		} else {
 			$options[] = HTMLHelper::_('select.option', 1, KrMethods::plain('MOD_KNOWRES_SEARCH_ANY'));
 			for ($i = 2; $i < $this->max_guests; $i++) {
@@ -117,7 +121,8 @@ class ListpartysizeField extends ListField
 			}
 
 			$options[] = HTMLHelper::_('select.option', $this->max_guests,
-				Text::plural('MOD_KNOWRES_SEARCH_GUEST', $this->max_guests . '+'));
+				Text::plural('MOD_KNOWRES_SEARCH_GUEST', $this->max_guests . '+')
+			);
 		}
 
 		return array_merge(parent::getOptions(), $options);

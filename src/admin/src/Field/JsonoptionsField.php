@@ -29,6 +29,8 @@ use function is_countable;
 class JsonoptionsField extends FormField
 {
 	/** @var string The form field type. */
+	protected $layout = "form.field.options";
+	/** @var string The form field type. */
 	protected $type = 'Jsonoptions';
 
 	/**
@@ -40,15 +42,11 @@ class JsonoptionsField extends FormField
 	 */
 	public function getInput(): string
 	{
-		$this->layout = "form.field.options";
-		$this->type   = "JsonOptions";
-
 		$contract_id      = $this->form->getValue('contract_id');
 		$contract         = KrFactory::getAdminModel('contract')->getItem($contract_id);
 		$property_options = KrFactory::getListModel('propertyoptions')
-		                             ->getPropertyOptionsForProperty($contract->property_id);
-		if (empty($property_options))
-		{
+			->getPropertyOptionsForProperty($contract->property_id);
+		if (empty($property_options)) {
 			return '';
 		}
 
@@ -57,17 +55,13 @@ class JsonoptionsField extends FormField
 		$yesno[] = HTMLHelper::_('select.option', 1, KrMethods::plain('JYES'));
 
 		$goptions = [];
-		if (is_countable($this->value))
-		{
-			foreach ($this->value as $v)
-			{
+		if (is_countable($this->value)) {
+			foreach ($this->value as $v) {
 				$goptions[$v->id] = $v->answer;
 			}
 		}
-		foreach ($property_options as $po)
-		{
-			if (!isset($goptions[$po->id]))
-			{
+		foreach ($property_options as $po) {
+			if (!isset($goptions[$po->id])) {
 				$goptions[$po->id] = '';
 			}
 		}

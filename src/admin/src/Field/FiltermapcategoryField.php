@@ -26,7 +26,7 @@ use function array_merge;
 class FiltermapcategoryField extends KrListField
 {
 	/** @var string The form field type. */
-	public $type = 'Filtermapcategory';
+	protected $type = 'Filtermapcategory';
 
 	/**
 	 * Populate the map categories filter list
@@ -44,8 +44,7 @@ class FiltermapcategoryField extends KrListField
 		$Translations = new Translations();
 		$tmp          = $Translations->getArray($results, 'mapcategory', 'name');
 
-		foreach ($tmp as $k => $v)
-		{
+		foreach ($tmp as $k => $v) {
 			$option        = new stdClass();
 			$option->value = $k;
 			$option->text  = $v;

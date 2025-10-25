@@ -24,7 +24,8 @@ use function array_merge;
  *
  * @since 1.0.0
  */
-class ListregionsField extends ListField {
+class ListregionsField extends ListField
+{
 	/** @var string The form field type. */
 	protected $type = 'Listregions';
 

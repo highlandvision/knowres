@@ -26,7 +26,7 @@ use function trim;
 class GrecaptchaField extends FormField
 {
 	/** @var string The form field type. */
-	protected string $type = 'Grecaptcha';
+	protected $type = 'Grecaptcha';
 
 	/**
 	 * Method to get the field input markup.
@@ -38,15 +38,13 @@ class GrecaptchaField extends FormField
 	protected function getInput(): string
 	{
 		$html = [];
-
 		$file = 'https://www.google.com/recaptcha/api.js?hl=' . KrMethods::getLanguageTag();
 		HTMLHelper::_('script', trim($file), ['async' => 'async', 'defer' => 'defer']);
 
 		$params      = KrMethods::getParams();
 		$grsitekey   = $params->get('grsitekey', '');
 		$grsecretkey = $params->get('grsecretkey', '');
-		if (!$grsitekey || !$grsecretkey)
-		{
+		if (!$grsitekey || !$grsecretkey) {
 			return '';
 		}
 

@@ -24,7 +24,7 @@ use function array_merge;
 class FilteritemidField extends KrListField
 {
 	/** @var string The form field type */
-	public $type = 'Filteritemid';
+	protected $type = 'Filteritemid';
 
 	/**
 	 * Method to get the itemids to populate filter list

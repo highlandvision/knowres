@@ -24,7 +24,7 @@ use function array_merge;
 class FiltercurrencyField extends KrListField
 {
 	/** @var string The form field type */
-	public $type = 'Filtercurrency';
+	protected $type = 'Filtercurrency';
 
 	/**
 	 * Method to get the currencies to populate filter list

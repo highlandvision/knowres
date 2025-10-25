@@ -24,6 +24,11 @@ use function count;
  */
 class JsonmoreguestsField extends FormField
 {
+	/** @var string The form field layout. */
+	protected $layout = 'form.field.json.generic';
+	/** @var string The form field type. */
+	protected $type = 'Jsonmoreguests';
+
 	/**
 	 * Get the field options.
 	 *
@@ -32,25 +37,20 @@ class JsonmoreguestsField extends FormField
 	 */
 	public function getInput(): string
 	{
-		$this->layout = 'form.field.json.generic';
-		$this->type   = 'Jsonmoreguests';
-		$group        = 'more_guests';
-		$occurs       = 5;
-		$values       = [];
+		$group  = 'more_guests';
+		$occurs = 5;
+		$values = [];
 
-		if (is_string($this->value))
-		{
+		if (is_string($this->value)) {
 			$this->value = Utility::decodeJson($this->value);
 		}
 
-		foreach ($this->value as $v)
-		{
+		foreach ($this->value as $v) {
 			$tmp      = [$v->more_min, $v->more_max, $v->more_rate, $v->more_pppn];
 			$values[] = $tmp;
 		}
 
-		while (count($values) < $occurs)
-		{
+		while (count($values) < $occurs) {
 			$tmp      = ['', '', '', 0];
 			$values[] = $tmp;
 		}

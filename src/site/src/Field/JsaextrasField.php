@@ -19,6 +19,9 @@ use Joomla\CMS\Form\FormField;
  */
 class JsaextrasField extends FormField
 {
+	/** @var string The form field type. */
+	protected $type = 'Jsaextras';
+
 	/**
 	 * Method to get the field input markup.
 	 *
@@ -28,8 +31,6 @@ class JsaextrasField extends FormField
 	 */
 	public function getInput(): string
 	{
-		$this->type = 'Jsaextras';
-
 		return KrMethods::render('property.enquiry.extraslist', [
 			'value' => !$this->value ? [] : json_decode($this->value, true),
 			'data'  => KrMethods::getUserState('com_knowres.enquiry.extraslist', [])

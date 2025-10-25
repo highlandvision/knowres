@@ -46,8 +46,7 @@ class FilterguestcountryField extends ListField
 		$Translations = new Translations();
 		$data         = $Translations->getArray($items, 'country', 'name');
 
-		foreach ($data as $k => $v)
-		{
+		foreach ($data as $k => $v) {
 			$option        = new stdClass();
 			$option->value = $k;
 			$option->text  = $v;

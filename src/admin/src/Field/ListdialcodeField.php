@@ -26,7 +26,7 @@ use RuntimeException;
 class ListdialcodeField extends ListField
 {
 	/** @var string The form field type. */
-	public $type = 'Listdialcode';
+	protected $type = 'Listdialcode';
 
 	/**
 	 * Get the field options.
@@ -36,8 +36,7 @@ class ListdialcodeField extends ListField
 	 */
 	public function getInput(): string
 	{
-		if (!$this->value)
-		{
+		if (!$this->value) {
 			$this->setValue(KrMethods::getParams()->get('default_country'));
 		}
 
@@ -57,8 +56,7 @@ class ListdialcodeField extends ListField
 		$options = [];
 
 		$items = KrFactory::getListModel('countries')->getAll();
-		foreach ($items as $i)
-		{
+		foreach ($items as $i) {
 			$options[] = HTMLHelper::_('select.option', $i->id, $i->name . ' (+' . $i->dial_code . ')');
 		}
 

@@ -46,25 +46,20 @@ class ListcurrencypaymentField extends ListField
 		$id        = $formData->get('id', 0);
 		$confirmed = $formData->get('confirmed', 0);
 
-		if ($id && !$confirmed)
-		{
+		if ($id && !$confirmed) {
 			$options[] = HTMLHelper::_('select.option', $this->value, $this->value);
-		}
-		else
-		{
+		} else {
 			$contract_id = KrMethods::getUserState('com_knowres.current.contract_id', 0);
 			/** @var ContractModel $contract */
 			$contract = KrFactory::getAdminModel('contract')->getItem($contract_id);
-			if ($contract->id)
-			{
+			if ($contract->id) {
 				$this->value = $contract->currency;
 				$options[]   = HTMLHelper::_('select.option', $this->value, $this->value);
 			}
 
 			$currencies = KrFactory::getListModel('currencies')->getPaymentCurrencies($this->value);
 			$currencies = Utility::decodeJson($currencies, true);
-			foreach ($currencies as $c)
-			{
+			foreach ($currencies as $c) {
 				$options[] = HTMLHelper::_('select.option', $c, $c);
 			}
 		}

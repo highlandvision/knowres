@@ -23,6 +23,9 @@ use Joomla\CMS\Form\FormField;
  */
 class MobisearchField extends FormField
 {
+	/** @var string The form field type. */
+	protected $type = 'mobisearch';
+
 	/**
 	 * Method to get the field input markup.
 	 *
@@ -32,8 +35,6 @@ class MobisearchField extends FormField
 	 */
 	protected function getInput(): string
 	{
-		$this->type = 'mobisearch';
-
 		$html = '<div class="datepicker-wrapper">';
 		if ($this->name == 'arrivaldsp') {
 			$params        = KrMethods::getParams();

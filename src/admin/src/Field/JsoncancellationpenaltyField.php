@@ -23,6 +23,11 @@ use function count;
  */
 class JsoncancellationpenaltyField extends FormField
 {
+	/** @var string The form field layout. */
+	protected $layout = 'form.field.json.generic';
+	/** @var string The form field type. */
+	protected $type = 'Jsoncancellationpenalty';
+
 	/**
 	 * Get the field input.
 	 *
@@ -31,20 +36,16 @@ class JsoncancellationpenaltyField extends FormField
 	 */
 	public function getInput(): string
 	{
-		$this->layout = 'form.field.json.generic';
-		$this->type   = 'Jsoncancellationpenalty';
-		$group        = 'cancellation_penalty';
-		$occurs       = 5;
-		$values       = [];
+		$group  = 'cancellation_penalty';
+		$occurs = 5;
+		$values = [];
 
-		foreach ($this->value as $v)
-		{
+		foreach ($this->value as $v) {
 			$tmp      = [$v->cancellation_penalty_from, $v->cancellation_penalty_to, $v->cancellation_penalty_pc];
 			$values[] = $tmp;
 		}
 
-		while (count($values) < $occurs)
-		{
+		while (count($values) < $occurs) {
 			$tmp      = [0, 0, 0];
 			$values[] = $tmp;
 		}

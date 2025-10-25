@@ -23,6 +23,9 @@ use function count;
  */
 class JsonarrivalairField extends FormField
 {
+	/** @var string The form field type. */
+	protected $type = 'Jsonarrivalair';
+
 	/**
 	 * Get the field options.
 	 *
@@ -31,19 +34,16 @@ class JsonarrivalairField extends FormField
 	 */
 	public function getInput(): string
 	{
-		$this->type = 'Jsonarrivalair';
-		$group      = 'arrival_air';
-		$occurs     = 5;
-		$values     = [];
+		$group  = 'arrival_air';
+		$occurs = 5;
+		$values = [];
 
-		foreach ($this->value as $v)
-		{
+		foreach ($this->value as $v) {
 			$tmp      = [$v->airline, $v->flight, $v->from, $v->to, $v->eta];
 			$values[] = $tmp;
 		}
 
-		while (count($values) < $occurs)
-		{
+		while (count($values) < $occurs) {
 			$tmp      = ['', '', '', '', ''];
 			$values[] = $tmp;
 		}

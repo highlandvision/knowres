@@ -27,7 +27,7 @@ use function ksort;
 class ListtriggeractualField extends ListField
 {
 	/** @var string $type The form field type. */
-	public $type = 'Listtriggeractual';
+	protected $type = 'Listtriggeractual';
 
 	/**
 	 * Values for trigger actual select
@@ -49,16 +49,16 @@ class ListtriggeractualField extends ListField
 		$options['BOOKAUTHENTICATE']         = 'BOOKAUTHENTICATE (SCA Authentication Required for Payment)';
 		$options['BOOKREQUESTCANCEL']        = 'BOOKREQUESTCANCEL (Request Cancelled Owner Declined)';
 		$options['BOOKREQUESTCANCELEXPIRED'] = 'BOOKREQUESTCANCELEXPIRED (Request Cancelled No Owner Response)';
-			$options['GUESTENQUIRY'] = 'GUESTENQUIRY (Guest Enquiry)';
-		$options['MANUALBOOK']         = 'MANUALBOOK (Manual Guest Update)';
-		$options['MANUALBOOKOWNER']    = 'MANUALBOOKOWNER (Manual Owner Update)';
-		$options['CUSTOMBYDATE']       = 'CUSTOMBYDATE (Custom Emails by Date and Status)';
-		$options['PAYINIT']            = 'PAYINIT (Manual Payment Gateway Request)';
-		$options['PAYRECEIPT']         = 'PAYRECEIPT (Payment Receipt Confirmation)';
-		$options['GUESTARRIVALREMIND'] = 'GUESTARRIVALREMIND (Guest Arrival Details Reminder)';
-		$options['GUESTARRIVALOWNER']  = 'GUESTARRIVALOWNER (Guest Arrival Details to Owner)';
-		$options['REVIEWREQUEST']      = 'REVIEWREQUEST (Review Request)';
-		$options['REVIEWREMINDER']     = 'REVIEWREMINDER (Review Reminder)';
+		$options['GUESTENQUIRY']             = 'GUESTENQUIRY (Guest Enquiry)';
+		$options['MANUALBOOK']               = 'MANUALBOOK (Manual Guest Update)';
+		$options['MANUALBOOKOWNER']          = 'MANUALBOOKOWNER (Manual Owner Update)';
+		$options['CUSTOMBYDATE']             = 'CUSTOMBYDATE (Custom Emails by Date and Status)';
+		$options['PAYINIT']                  = 'PAYINIT (Manual Payment Gateway Request)';
+		$options['PAYRECEIPT']               = 'PAYRECEIPT (Payment Receipt Confirmation)';
+		$options['GUESTARRIVALREMIND']       = 'GUESTARRIVALREMIND (Guest Arrival Details Reminder)';
+		$options['GUESTARRIVALOWNER']        = 'GUESTARRIVALOWNER (Guest Arrival Details to Owner)';
+		$options['REVIEWREQUEST']            = 'REVIEWREQUEST (Review Request)';
+		$options['REVIEWREMINDER']           = 'REVIEWREMINDER (Review Reminder)';
 
 		if (KrMethods::getParams()->get('create_user', 0)) {
 			$options['USERREGISTRATION'] = 'USERREGISTRATION (Send User Registration)';
@@ -81,8 +81,7 @@ class ListtriggeractualField extends ListField
 		$options = [];
 
 		$values = self::getValues();
-		foreach ($values as $k => $v)
-		{
+		foreach ($values as $k => $v) {
 			$options[] = HTMLHelper::_('select.option', $k, $v);
 		}
 

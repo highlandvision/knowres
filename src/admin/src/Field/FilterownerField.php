@@ -24,7 +24,7 @@ use function array_merge;
 class FilterownerField extends KrListField
 {
 	/** @var string The form field type. */
-	public $type = 'Filterowner';
+	protected $type = 'Filterowner';
 
 	/**
 	 * Method to get the owners to populate filter list

@@ -17,7 +17,7 @@ use Joomla\CMS\Form\Field\TextField;
 
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useStyle('com_knowres.admin-datepicker')
-   ->useScript('com_knowres.admin-datepicker');
+	->useScript('com_knowres.admin-datepicker');
 
 /**
  * Displays jQuery Ui Datepicker
@@ -26,6 +26,11 @@ $wa->useStyle('com_knowres.admin-datepicker')
  */
 class UicalendarField extends TextField
 {
+	/** @var string Required layout */
+	protected $layout = 'joomla.form.uicalendar';
+	/** @var string The form field type. */
+	protected $type = 'Uicalendar';
+
 	/**
 	 * Get the field options.
 	 *
@@ -36,9 +41,6 @@ class UicalendarField extends TextField
 	protected function getInput(): string
 	{
 		parent::getInput();
-
-		$this->layout = 'form.field.uicalendar';
-		$this->type   = 'Uicalendar';
 
 		return $this->getRenderer($this->layout)->render($this->getLayoutData());
 	}

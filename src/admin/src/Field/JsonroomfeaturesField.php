@@ -23,6 +23,11 @@ use RuntimeException;
  */
 class JsonroomfeaturesField extends FormField
 {
+	/** @var string The form field type. */
+	protected $layout = "form.field.json.featuresbyroom";
+	/** @var string The form field type. */
+	protected $type = 'Jsonroomfeatures';
+
 	/**
 	 * Get the field input data.
 	 *
@@ -32,49 +37,39 @@ class JsonroomfeaturesField extends FormField
 	 */
 	public function getInput(): string
 	{
-		$this->layout = 'form.field.json.featuresbyroom';
-		$this->type   = 'Jsonroomfeatures';
-		$features     = KrFactory::getListModel('propertyfeatures')->getAll();
-		if (!count($features))
-		{
+		$features = KrFactory::getListModel('propertyfeatures')->getAll();
+		if (!count($features)) {
 			return '';
 		}
 
 		$rooms = [];
-		foreach ($features as $f)
-		{
+		foreach ($features as $f) {
 			$tmp = Utility::decodeJson($f->room_type, true);
-			if (count($tmp) == 1 && $tmp[0] == 'property')
-			{
+			if (count($tmp) == 1 && $tmp[0] == 'property') {
 				continue;
 			}
 
-			foreach ($tmp as $t)
-			{
-				if ($t != 'property')
-				{
+			foreach ($tmp as $t) {
+				if ($t != 'property') {
 					$rooms[$t][$f->id] = [
 						'id'   => $f->id,
 						'name' => $f->name
 					];
 				}
 
-				if ($t == 'living' || $t == 'kitchen')
-				{
+				if ($t == 'living' || $t == 'kitchen') {
 					$rooms['lk'][$f->id] = [
 						'id'   => $f->id,
 						'name' => $f->name
 					];
 				}
-				if ($t == 'living' || $t == 'bedroom')
-				{
+				if ($t == 'living' || $t == 'bedroom') {
 					$rooms['lb'][$f->id] = [
 						'id'   => $f->id,
 						'name' => $f->name
 					];
 				}
-				if ($t == 'living' || $t == 'bedroom' || $t == 'kitchen')
-				{
+				if ($t == 'living' || $t == 'bedroom' || $t == 'kitchen') {
 					$rooms['lbk'][$f->id] = [
 						'id'   => $f->id,
 						'name' => $f->name

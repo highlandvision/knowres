@@ -40,8 +40,7 @@ class ListselectmonthField extends ListField
 		$count   = 0;
 		$options = [];
 
-		while ($count < 25)
-		{
+		while ($count < 25) {
 			$mmmyy     = TickTock::modifyMonths('now', $count, '+', 'M-Y');
 			$ym        = TickTock::modifyMonths('now', $count, '+', 'Ym');
 			$options[] = HTMLHelper::_('select.option', $ym, $mmmyy);

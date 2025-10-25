@@ -40,8 +40,7 @@ class FilterpropertyregionField extends ListField
 	{
 		$options = [];
 		$items   = KrFactory::getListModel('regions')->getAllRegions(true);
-		foreach ($items as $i)
-		{
+		foreach ($items as $i) {
 			$option        = new stdClass();
 			$option->value = $i->id;
 			$option->text  = $i->region;

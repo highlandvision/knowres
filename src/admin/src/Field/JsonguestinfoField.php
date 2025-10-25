@@ -24,6 +24,9 @@ use Joomla\CMS\Form\FormField;
  */
 class JsonguestinfoField extends FormField
 {
+	/** @var string The form field type. */
+	protected $type = 'Jsonguestinfo';
+
 	/**
 	 * Get the field input.
 	 *
@@ -33,9 +36,7 @@ class JsonguestinfoField extends FormField
 	 */
 	public function getInput(): string
 	{
-		$this->type = 'Jsonguestinfo';
-		$group      = 'guestinfo';
-
+		$group          = 'guestinfo';
 		$data           = [];
 		$data['form']   = KrFactory::getAdhocForm('json-guestinfo', 'json_guestinfo.xml', 'administrator', null);
 		$data['values'] = $this->setValues();
@@ -64,8 +65,7 @@ class JsonguestinfoField extends FormField
 		$surname1      = '';
 		$document_type = '';
 		$document_id   = '';
-		if (!empty($contract->guest_id))
-		{
+		if (!empty($contract->guest_id)) {
 			$guest         = KrFactory::getAdminModel('guest')->getItem($contract->guest_id);
 			$firstname     = $guest->firstname;
 			$surname1      = $guest->surname;
@@ -76,16 +76,15 @@ class JsonguestinfoField extends FormField
 		$values = [];
 		$count  = 0;
 
-		foreach ($this->value as $d)
-		{
+		foreach ($this->value as $d) {
 			$tmp                    = [];
 			$tmp['name']            = $d->name;
 			$tmp['surname1']        = $d->surname1;
 			$tmp['surname2']        = $d->surname2;
 			$tmp['sex']             = $d->sex;
 			$tmp['dob']             = $d->dob;
-			$tmp['document_nat']    = (int) $d->document_nat;
-			$tmp['document_type']   = (int) $d->document_type;
+			$tmp['document_nat']    = (int)$d->document_nat;
+			$tmp['document_type']   = (int)$d->document_type;
 			$tmp['document_id']     = $d->document_id;
 			$tmp['document_issue']  = $d->document_issue;
 			$tmp['document_expiry'] = $d->document_expiry;
@@ -94,8 +93,7 @@ class JsonguestinfoField extends FormField
 			$count++;
 		}
 
-		while ($count < $maxguests)
-		{
+		while ($count < $maxguests) {
 			$tmp                    = [];
 			$tmp['name']            = !$count ? $firstname : '';
 			$tmp['surname1']        = !$count ? $surname1 : '';

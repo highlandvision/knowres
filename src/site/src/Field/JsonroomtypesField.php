@@ -26,9 +26,9 @@ use function json_decode;
 class JsonroomtypesField extends FormField
 {
 	/** @var string The form field type. */
-	protected string $type = 'Jsonroomtypes';
+	protected $layout = 'property.enquiry.rooms';
 	/** @var string The form field type. */
-	protected string $layout = 'property.enquiry.rooms';
+	protected $type = 'Jsonroomtypes';
 
 	/**
 	 * Method to get the field input markup.
@@ -40,8 +40,7 @@ class JsonroomtypesField extends FormField
 	public function getInput(): string
 	{
 		$rooms = KrMethods::getUserState('com_knowres.enquiry.jsonrooms', []);
-		if (!is_array($rooms))
-		{
+		if (!is_array($rooms)) {
 			$rooms = json_decode($rooms);
 		}
 

@@ -25,7 +25,7 @@ use function array_merge;
 class FiltertownField extends KrListField
 {
 	/** @var string The form field type. */
-	public $type = 'Filtertown';
+	protected $type = 'Filtertown';
 
 	/**
 	 * Get the field options.
@@ -39,13 +39,13 @@ class FiltertownField extends KrListField
 		$options = [];
 
 		$results = self::filteringForeign('#__knowres_town', $this->getAttribute('table'), 'town_id', 'id',
-			null);
+			null
+		);
 
 		$Translations = new Translations();
 		$tmp          = $Translations->getArray($results, 'town', 'name');
 
-		foreach ($tmp as $k => $v)
-		{
+		foreach ($tmp as $k => $v) {
 			$option        = new stdClass();
 			$option->value = $k;
 			$option->text  = $v;

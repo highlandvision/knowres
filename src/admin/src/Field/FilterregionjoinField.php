@@ -25,7 +25,7 @@ use function array_merge;
 class FilterregionjoinField extends KrListField
 {
 	/** @var string The form field type. */
-	public $type = 'Filterregionjoin';
+	protected $type = 'Filterregionjoin';
 
 	/**
 	 * Method to get the regions to populate filter list
@@ -42,8 +42,7 @@ class FilterregionjoinField extends KrListField
 
 		$Translations = new Translations();
 		$tmp          = $Translations->getArray($results, 'region', 'name');
-		foreach ($tmp as $k => $v)
-		{
+		foreach ($tmp as $k => $v) {
 			$options[] = array(
 				'value' => $k,
 				'text'  => $v

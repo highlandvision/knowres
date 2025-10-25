@@ -41,8 +41,7 @@ class ListpropertyswitchField extends ListField
 		$id      = KrMethods::inputInt('id');
 		$items   = KrFactory::getListModel('properties')->getForSwitch($id);
 		$options = [];
-		foreach ($items as $i)
-		{
+		foreach ($items as $i) {
 			$options[] = HTMLHelper::_('select.option', $i->id, $i->property_name);
 		}
 

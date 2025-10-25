@@ -24,13 +24,13 @@ use function array_merge;
 class FilterkeyField extends KrListField
 {
 	/** @var string The form field type. */
-	public $type = 'Filterkey';
+	protected $type = 'Filterkey';
 
 	/**
 	 * Keys to populate filter key list
 	 *
 	 * @throws RuntimeException|Exception
-	  @since  3.4
+	 * @since  3.4
 	 * @return array  The field option objects.
 	 */
 	protected function getOptions(): array
@@ -39,29 +39,25 @@ class FilterkeyField extends KrListField
 		$table   = $this->getAttribute('table');
 		$state   = self::getState($this->form);
 
-		if (isset($this->form->getData()->get('filter', [])->type))
-		{
+		if (isset($this->form->getData()->get('filter', [])->type)) {
 			$type = $this->form->getData()->get('filter', [])->type;
 		}
-		if (empty($type) || $type == 'p')
-		{
+		if (empty($type) || $type == 'p') {
 			$options = self::filteringForeign('#__knowres_property', $table, 'property_id', 'id',
-				'property_name', $state);
-		}
-		elseif ($type == 'c')
-		{
+				'property_name', $state
+			);
+		} else if ($type == 'c') {
 			$options = self::filteringForeign('#__knowres_contract', $table, 'contract_id', 'id',
-				'tag', $state);
-		}
-		elseif ($type == 'g')
-		{
+				'tag', $state
+			);
+		} else if ($type == 'g') {
 			$options = self::filteringForeign('#__knowres_guest', $table, 'guest_id', 'id',
-				'surname', $state);
-		}
-		elseif ($type == 'o')
-		{
+				'surname', $state
+			);
+		} else if ($type == 'o') {
 			$options = self::filteringForeign('#__knowres_owner', $table, 'owner_id', 'id',
-				'name', $state);
+				'name', $state
+			);
 		}
 
 		return array_merge(parent::getOptions(), $options);

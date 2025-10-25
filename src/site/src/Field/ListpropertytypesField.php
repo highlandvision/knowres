@@ -16,7 +16,6 @@ use HighlandVision\KR\Framework\KrMethods;
 use InvalidArgumentException;
 use Joomla\CMS\Form\Field\ListField;
 use Joomla\CMS\HTML\HTMLHelper;
-
 use RuntimeException;
 
 use function array_merge;
@@ -45,10 +44,8 @@ class ListpropertytypesField extends ListField
 		$options[] = HTMLHelper::_('select.option', 0, KrMethods::plain('MOD_KNOWRES_SEARCH_TYPES_LABEL'));
 
 		$types = KrFactory::getListSiteModel('properties')->getDistinctTypes();
-		if (is_countable($types) && count($types))
-		{
-			foreach ($types as $t)
-			{
+		if (is_countable($types) && count($types)) {
+			foreach ($types as $t) {
 				$options[] = HTMLHelper::_('select.option', $t->type_id, $t->name);
 			}
 		}

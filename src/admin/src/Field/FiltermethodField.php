@@ -24,7 +24,7 @@ use function array_merge;
 class FiltermethodField extends KrListField
 {
 	/** @var string The form field type. */
-	public $type = 'FilterMethod';
+	protected $type = 'FilterMethod';
 
 	/**
 	 * Populate the service method filter

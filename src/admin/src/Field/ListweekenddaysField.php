@@ -40,24 +40,23 @@ class ListweekenddaysField extends ListField
 		$items            = [];
 		$items[""]        = KrMethods::plain('COM_KNOWRES_NODAY');
 		$items["4,5"]     = KrMethods::plain('COM_KNOWRES_THURSDAY') . ", "
-			. KrMethods::plain('COM_KNOWRES_FRIDAY');
+							. KrMethods::plain('COM_KNOWRES_FRIDAY');
 		$items["4,5,6"]   = KrMethods::plain('COM_KNOWRES_THURSDAY') . ", " . KrMethods::plain('COM_KNOWRES_FRIDAY')
-			. ", " . KrMethods::plain('COM_KNOWRES_SATURDAY');
+							. ", " . KrMethods::plain('COM_KNOWRES_SATURDAY');
 		$items["4,5,6,0"] = KrMethods::plain('COM_KNOWRES_THURSDAY') . ", " . KrMethods::plain('COM_KNOWRES_FRIDAY')
-			. ", " . KrMethods::plain('COM_KNOWRES_SATURDAY') . ", " . KrMethods::plain('COM_KNOWRES_SUNDAY');
+							. ", " . KrMethods::plain('COM_KNOWRES_SATURDAY') . ", " . KrMethods::plain('COM_KNOWRES_SUNDAY');
 		$items["5"]       = KrMethods::plain('COM_KNOWRES_FRIDAY');
 		$items["5,6"]     = KrMethods::plain('COM_KNOWRES_FRIDAY') . ", "
-			. KrMethods::plain('COM_KNOWRES_SATURDAY');
+							. KrMethods::plain('COM_KNOWRES_SATURDAY');
 		$items["5,6,0"]   = KrMethods::plain('COM_KNOWRES_FRIDAY') . ", " . KrMethods::plain('COM_KNOWRES_SATURDAY')
-			. ", " . KrMethods::plain('COM_KNOWRES_SUNDAY');
+							. ", " . KrMethods::plain('COM_KNOWRES_SUNDAY');
 		$items["6"]       = KrMethods::plain('COM_KNOWRES_SATURDAY');
 		$items["6,0"]     = KrMethods::plain('COM_KNOWRES_SATURDAY') . ", "
-			. KrMethods::plain('COM_KNOWRES_SUNDAY');
+							. KrMethods::plain('COM_KNOWRES_SUNDAY');
 		$items["0"]       = KrMethods::plain('COM_KNOWRES_SUNDAY');
 
 		$options = [];
-		foreach ($items as $k => $v)
-		{
+		foreach ($items as $k => $v) {
 			$options[] = HTMLHelper::_('select.option', $k, $v);
 		}
 

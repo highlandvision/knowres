@@ -21,6 +21,11 @@ use Joomla\CMS\Form\FormField;
  */
 class JsonguesttypesField extends FormField
 {
+	/** @var string The form field layout. */
+	protected $layout = 'form.field.json.generic';
+	/** @var string The form field type. */
+	protected $type = 'Jsonguesttypes';
+
 	/**
 	 * Get the field options.
 	 *
@@ -29,20 +34,16 @@ class JsonguesttypesField extends FormField
 	 */
 	public function getInput(): string
 	{
-		$this->layout = 'form.field.json.generic';
-		$this->type   = 'Jsonguesttypes';
-		$group        = 'guest_types';
-		$occurs       = 6;
-		$values       = [];
+		$group  = 'guest_types';
+		$occurs = 6;
+		$values = [];
 
-		foreach ($this->value as $v)
-		{
+		foreach ($this->value as $v) {
 			$tmp      = [$v->type, $v->max];
 			$values[] = $tmp;
 		}
 
-		while (count($values) < $occurs)
-		{
+		while (count($values) < $occurs) {
 			$tmp      = ['', 0];
 			$values[] = $tmp;
 		}
