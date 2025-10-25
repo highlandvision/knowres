@@ -20,147 +20,78 @@
 	<config>
 		<fields name="params">
 			<fieldset name="Basic" addfieldprefix="HighlandVision\Component\Knowres\Site\Field">
-				<field name="title"
-					type="text"
-					class="input-xxlarge"
-					default=""
-					label="MOD_KNOWRES_FEATURED_TITLE_LBL"
-					description="MOD_KNOWRES_FEATURED_TITLE_DSC"/>
-				<field name="price"
-					type="radio"
-					class="btn-group btn-group-yesno"
-					default="1"
-					label="MOD_KNOWRES_FEATURED_PRICE_LBL"
-					description="MOD_KNOWRES_FEATURED_PRICE_DSC">
+				<field name="title" type="text" class="input-xxlarge" default="" label="MOD_KNOWRES_FEATURED_TITLE_LBL"
+				       description="MOD_KNOWRES_FEATURED_TITLE_DSC"/>
+				<field name="price" type="radio" class="btn-group btn-group-yesno" default="1"
+				       label="MOD_KNOWRES_FEATURED_PRICE_LBL" description="MOD_KNOWRES_FEATURED_PRICE_DSC">
 					<option value="1">JYES</option>
 					<option value="0">JNO</option>
 				</field>
-				<field name="slidestoshow"
-					type="integer"
-					class="input-mini"
-					default="3"
-					first="1"
-					last="6"
-					step="1"
-					filter="integer"
-					label="MOD_KNOWRES_FEATURED_SLIDESTOSHOW_LBL"
-					description="MOD_KNOWRES_FEATURED_SLIDESTOSHOW_DSC"/>
-				<field name="property1"
-				       type="listproperties"
-					default="0"
-					layout="joomla.form.field.list-fancy-select"
-					multiple="false"
-					label="MOD_KNOWRES_FEATURED_SELECT_LBL"
-					description="MOD_KNOWRES_FEATURED_SELECT_DSC">
+				<field name="slidestoshow" type="integer" class="input-mini" default="3" first="1" last="6" step="1"
+				       filter="integer" label="MOD_KNOWRES_FEATURED_SLIDESTOSHOW_LBL"
+				       description="MOD_KNOWRES_FEATURED_SLIDESTOSHOW_DSC"/>
+				<field name="property1" type="listproperties" default="0" layout="joomla.form.field.list-fancy-select"
+				       multiple="false" label="MOD_KNOWRES_FEATURED_SELECT_LBL"
+				       description="MOD_KNOWRES_FEATURED_SELECT_DSC">
 					<option value="0">MOD_KNOWRES_FEATURED_SELECT</option>
 				</field>
-				<field name="property2"
-				       type="listproperties"
-					default="0"
-					layout="joomla.form.field.list-fancy-select"
-					multiple="false"
-					label="MOD_KNOWRES_FEATURED_SELECT_LBL"
-					description="MOD_KNOWRES_FEATURED_SELECT_DSC">
+				<field name="property2" type="listproperties" default="0" layout="joomla.form.field.list-fancy-select"
+				       multiple="false" label="MOD_KNOWRES_FEATURED_SELECT_LBL"
+				       description="MOD_KNOWRES_FEATURED_SELECT_DSC">
 					<option value="0">MOD_KNOWRES_FEATURED_SELECT</option>
 				</field>
-				<field name="property3"
-				       type="listproperties"
-					default="0"
-					layout="joomla.form.field.list-fancy-select"
-					multiple="false"
-					label="MOD_KNOWRES_FEATURED_SELECT_LBL"
-					description="MOD_KNOWRES_FEATURED_SELECT_DSC">
+				<field name="property3" type="listproperties" default="0" layout="joomla.form.field.list-fancy-select"
+				       multiple="false" label="MOD_KNOWRES_FEATURED_SELECT_LBL"
+				       description="MOD_KNOWRES_FEATURED_SELECT_DSC">
 					<option value="0">MOD_KNOWRES_FEATURED_SELECT</option>
 				</field>
-				<field name="property4"
-				       type="listproperties"
-					default="0"
-					layout="joomla.form.field.list-fancy-select"
-					multiple="false"
-					label="MOD_KNOWRES_FEATURED_SELECT_LBL"
-					description="MOD_KNOWRES_FEATURED_SELECT_DSC">
+				<field name="property4" type="listproperties" default="0" layout="joomla.form.field.list-fancy-select"
+				       multiple="false" label="MOD_KNOWRES_FEATURED_SELECT_LBL"
+				       description="MOD_KNOWRES_FEATURED_SELECT_DSC">
 					<option value="0">MOD_KNOWRES_FEATURED_SELECT</option>
 				</field>
-				<field name="property5"
-				       type="listproperties"
-					default="0"
-					layout="joomla.form.field.list-fancy-select"
-					multiple="false"
-					label="MOD_KNOWRES_FEATURED_SELECT_LBL"
-					description="MOD_KNOWRES_FEATURED_SELECT_DSC">
+				<field name="property5" type="listproperties" default="0" layout="joomla.form.field.list-fancy-select"
+				       multiple="false" label="MOD_KNOWRES_FEATURED_SELECT_LBL"
+				       description="MOD_KNOWRES_FEATURED_SELECT_DSC">
 					<option value="0">MOD_KNOWRES_FEATURED_SELECT</option>
 				</field>
-				<field name="property6"
-				       type="listproperties"
-					default="0"
-					layout="joomla.form.field.list-fancy-select"
-					multiple="false"
-					label="MOD_KNOWRES_FEATURED_SELECT_LBL"
-					description="MOD_KNOWRES_FEATURED_SELECT_DSC">
+				<field name="property6" type="listproperties" default="0" layout="joomla.form.field.list-fancy-select"
+				       multiple="false" label="MOD_KNOWRES_FEATURED_SELECT_LBL"
+				       description="MOD_KNOWRES_FEATURED_SELECT_DSC">
 					<option value="0">MOD_KNOWRES_FEATURED_SELECT</option>
 				</field>
-				<field name="property7"
-				       type="listproperties"
-					default="0"
-					layout="joomla.form.field.list-fancy-select"
-					multiple="false"
-					label="MOD_KNOWRES_FEATURED_SELECT_LBL"
-					description="MOD_KNOWRES_FEATURED_SELECT_DSC">
+				<field name="property7" type="listproperties" default="0" layout="joomla.form.field.list-fancy-select"
+				       multiple="false" label="MOD_KNOWRES_FEATURED_SELECT_LBL"
+				       description="MOD_KNOWRES_FEATURED_SELECT_DSC">
 					<option value="0">MOD_KNOWRES_FEATURED_SELECT</option>
 				</field>
-				<field name="property8"
-				       type="listproperties"
-					default="0"
-					layout="joomla.form.field.list-fancy-select"
-					multiple="false"
-					label="MOD_KNOWRES_FEATURED_SELECT_LBL"
-					description="MOD_KNOWRES_FEATURED_SELECT_DSC">
+				<field name="property8" type="listproperties" default="0" layout="joomla.form.field.list-fancy-select"
+				       multiple="false" label="MOD_KNOWRES_FEATURED_SELECT_LBL"
+				       description="MOD_KNOWRES_FEATURED_SELECT_DSC">
 					<option value="0">MOD_KNOWRES_FEATURED_SELECT</option>
 				</field>
-				<field name="property9"
-				       type="listproperties"
-					default="0"
-					layout="joomla.form.field.list-fancy-select"
-					multiple="false"
-					label="MOD_KNOWRES_FEATURED_SELECT_LBL"
-					description="MOD_KNOWRES_FEATURED_SELECT_DSC">
+				<field name="property9" type="listproperties" default="0" layout="joomla.form.field.list-fancy-select"
+				       multiple="false" label="MOD_KNOWRES_FEATURED_SELECT_LBL"
+				       description="MOD_KNOWRES_FEATURED_SELECT_DSC">
 					<option value="0">MOD_KNOWRES_FEATURED_SELECT</option>
 				</field>
-				<field name="property10"
-				       type="listproperties"
-					default="0"
-					layout="joomla.form.field.list-fancy-select"
-					multiple="false"
-					label="MOD_KNOWRES_FEATURED_SELECT_LBL"
-					description="MOD_KNOWRES_FEATURED_SELECT_DSC">
+				<field name="property10" type="listproperties" default="0" layout="joomla.form.field.list-fancy-select"
+				       multiple="false" label="MOD_KNOWRES_FEATURED_SELECT_LBL"
+				       description="MOD_KNOWRES_FEATURED_SELECT_DSC">
 					<option value="0">MOD_KNOWRES_FEATURED_SELECT</option>
 				</field>
 			</fieldset>
 			<fieldset name="advanced">
-				<field name="layout"
-					type="modulelayout"
-					   class="form-select"
-					validate="moduleLayout"
-					label="JFIELD_ALT_LAYOUT_LABEL"/>
-				<field name="moduleclass_sfx"
-					type="textarea"
-					rows="1"
-					validate="CssIdentifier"
-					label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"/>
-				<field name="cache"
-					type="list"
-					default="1"
-					label="COM_MODULES_FIELD_CACHING_LABEL">
+				<field name="layout" type="modulelayout" class="form-select" validate="moduleLayout"
+				       label="JFIELD_ALT_LAYOUT_LABEL"/>
+				<field name="moduleclass_sfx" type="textarea" rows="1" validate="CssIdentifier"
+				       label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"/>
+				<field name="cache" type="list" default="1" label="COM_MODULES_FIELD_CACHING_LABEL">
 					<option value="1">JGLOBAL_USE_GLOBAL</option>
 					<option value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
 				</field>
-				<field name="cache_time"
-					type="text"
-					default="900"
-					label="COM_MODULES_FIELD_CACHE_TIME_LABEL"/>
-				<field name="cachemode"
-					type="hidden"
-					default="static"/>
+				<field name="cache_time" type="text" default="900" label="COM_MODULES_FIELD_CACHE_TIME_LABEL"/>
+				<field name="cachemode" type="hidden" default="static"/>
 			</fieldset>
 		</fields>
 	</config>
