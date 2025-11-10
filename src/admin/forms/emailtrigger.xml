@@ -27,10 +27,9 @@
 		</field>
 	</fieldset>
 	<fieldset name="krcron">
-		<field name="trigger_cron"
+		<field name="trigger_cron" type="list"
 			default=""
 			filter="string"
-			type="list"
 			label="COM_KNOWRES_EMAILTRIGGER_TRIGGER_CRON_LBL"
 			description="COM_KNOWRES_EMAILTRIGGER_TRIGGER_CRON_DSC">
 			<option value="">COM_KNOWRES_SELECT</option>
@@ -39,31 +38,29 @@
 			<option value="arrival">COM_KNOWRES_CONTRACTS_ARRIVAL</option>
 			<option value="departure">COM_KNOWRES_CONTRACTS_DEPARTURE</option>
 		</field>
-		<field name="days"
+		<field name="days" type="text"
 			class="input-mini"
 			default="0"
 			filter="integer"
 			required="true"
-			type="text"
 			label="COM_KNOWRES_EMAILTRIGGER_DAYS_LBL"
 			description="COM_KNOWRES_EMAILTRIGGER_DAYS_DSC"/>
-		<field name="days_before"
+		<field name="days_before" type="radio"
 			class="btn-group btn-group-yesno"
 			default="0"
 			required="true"
-			type="radio"
 			label="COM_KNOWRES_EMAILTRIGGER_DAYS_BEFORE_LBL"
 			description="COM_KNOWRES_EMAILTRIGGER_DAYS_BEFORE_DSC">
 			<option value="1">COM_KNOWRES_BEFORE</option>
 			<option value="0">COM_KNOWRES_AFTER</option>
 		</field>
 	</fieldset>
+
 	<fieldset name="krcron1">
-		<field name="booking_status"
+		<field name="booking_status" type="list"
 			default="0"
 			layout="joomla.form.field.list-fancy-select"
 			multiple="true"
-			type="list"
 			label="COM_KNOWRES_EMAILTRIGGER_BOOKING_STATUS_LBL"
 			description="COM_KNOWRES_EMAILTRIGGER_BOOKING_STATUS_DSC"
 			hint="COM_KNOWRES_SELECT_MULTIPLE">
@@ -79,11 +76,10 @@
 		</field>
 	</fieldset>
 	<fieldset name="krsend">
-		<field name="send_guest"
+		<field name="send_guest" type="radio"
 			class="btn-group btn-group-yesno"
 			default="0"
 			required="true"
-			type="radio"
 			label="COM_KNOWRES_EMAILTRIGGER_SEND_GUEST_LBL"
 			description="COM_KNOWRES_EMAILTRIGGER_SEND_GUEST_DSC">
 			<option value="1">JYES</option>

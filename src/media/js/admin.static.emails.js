@@ -32,5 +32,4 @@ function switchList() {
 		}
 	}
 }
-
 //# sourceMappingURL=admin.static.emails.js.map

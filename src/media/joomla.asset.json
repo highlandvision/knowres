@@ -89,7 +89,7 @@
     {
       "name": "com_knowres.admin-emails",
       "type": "script",
-      "uri": "com_knowres/admin.emails.min.js",
+      "uri": "com_knowres/admin.static.emails.min.js",
       "attributes": {
         "defer": true
       }
