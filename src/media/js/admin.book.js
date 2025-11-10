@@ -58,16 +58,15 @@ if (typeof jQuery !== 'undefined') {
 
 			if (value === 0 || value === 3) {
 				return [false, 'datepick-booked'];
-			} else {
-				if (value === 1) {
-					return [false, 'datepick-booked datepick-candepart'];
-				}
+			}
+			if (value === 1) {
+				return [false, 'datepick-booked datepick-candepart'];
 			}
 			if (value === 2) {
 				return [true, 'datepick-booked datepick-canarrive'];
-			} else {
-				return [true, ''];
 			}
+
+			return [true, ''];
 		}
 
 		// 0 - booked (can allow nothing )
@@ -79,16 +78,11 @@ if (typeof jQuery !== 'undefined') {
 			const dDate = settings.dDate;
 			const maxDate = settings.maxDate;
 
-			if (thisDate < aDate) {
+			if (thisDate < aDate || thisDate > maxDate) {
 				return [false, 'datepick-disabled'];
-			} else {
-				if (thisDate >= aDate && thisDate <= dDate) {
-					return [true, 'datepick-selected'];
-				} else {
-					if (thisDate > maxDate) {
-						return [false, 'datepick-disabled'];
-					}
-				}
+			}
+			if (thisDate >= aDate && thisDate <= dDate) {
+				return [true, 'datepick-selected'];
 			}
 
 			let value;
@@ -100,17 +94,15 @@ if (typeof jQuery !== 'undefined') {
 
 			if (value === 0 || value === 3) {
 				return [false, ''];
-			} else {
-				if (value === 2) {
-					return [false, 'datepick-booked datepick-canarrive'];
-				} else {
-					if (value === 1) {
-						return [true, 'datepick-booked datepick-candepart'];
-					} else {
-						return [true, ''];
-					}
-				}
 			}
+			if (value === 2) {
+				return [false, 'datepick-booked datepick-canarrive'];
+			}
+			if (value === 1) {
+				return [true, 'datepick-booked datepick-candepart'];
+			}
+
+			return [true, ''];
 		}
 
 		getQuote($this) {
@@ -157,6 +149,7 @@ if (typeof jQuery !== 'undefined') {
 								}
 							});
 						}
+
 						let warning = $('#jform_ajax_warning');
 						if (warning.text().length === 0) {
 							warning.css('display', 'none');
@@ -173,7 +166,7 @@ if (typeof jQuery !== 'undefined') {
 					}
 				},
 				error: function () {
-					alert("Sorry an error has occurred, please try again");
+					window.alert("Sorry an error has occurred, please try again");
 				}
 			});
 		}
@@ -207,7 +200,6 @@ if (typeof jQuery !== 'undefined') {
 						settings.maxDate = date;
 						found = true;
 					}
-
 					if (date > settings.maxDate) {
 						if (type !== 1) {
 							settings.maxDate = date;
@@ -218,11 +210,8 @@ if (typeof jQuery !== 'undefined') {
 
 				$("#departure").val(settings.maxDate);
 
-				$depart.datepicker(
-					'option', 'maxDate', settings.maxDate).datepicker(
-					'setDate', $.datepicker.formatDate('d M yy', new Date(settings.maxDate))).datepicker(
-					'refresh'
-				)
+				$depart.datepicker('option', 'maxDate', settings.maxDate).datepicker(
+					'setDate', $.datepicker.formatDate('d M yy', new Date(settings.maxDate))).datepicker('refresh');
 			} else {
 				if (dateText < settings.aDate) {
 					$('#jform_departure_bd').val($('jform_arrival_bd').val());
@@ -256,7 +245,7 @@ if (typeof jQuery !== 'undefined') {
 							self.settings.initial = 1;
 						}
 						try {
-							self.settings.blocked = JSON.parse(result.data.blocked)
+							self.settings.blocked = JSON.parse(result.data.blocked);
 						} catch (e) {
 							self.settings.blocked = [];
 						}
@@ -293,13 +282,11 @@ if (typeof jQuery !== 'undefined') {
 				success: function (result) {
 					if (result.success) {
 						window.location.href = result.data.redirect;
+					} else if (result.messages) {
+						Joomla.renderMessages(result.messages);
 					} else {
-						if (result.messages) {
-							Joomla.renderMessages(result.messages);
-						} else {
-							$('#errorModalMessage').empty().append(result.message);
-							$('#errorModal').modal('show');
-						}
+						$('#errorModalMessage').empty().append(result.message);
+						$('#errorModal').modal('show');
 					}
 				}
 			});
@@ -325,15 +312,12 @@ if (typeof jQuery !== 'undefined') {
 			}
 			if (width > 400 && width < 600) {
 				max = 2;
-			} else {
-				if (width >= 600 && width < 800) {
-					max = 3;
-				} else {
-					if (width >= 800 && width < 1000) {
-						max = 4;
-					}
-				}
+			} else if (width >= 600 && width < 800) {
+				max = 3;
+			} else if (width >= 800 && width < 1000) {
+				max = 4;
 			}
+
 			$bookPicker.datepicker({
 				minDate: min,
 				maxDate: self.settings.maxDate,
@@ -345,20 +329,14 @@ if (typeof jQuery !== 'undefined') {
 					let ymd = $.datepicker.formatDate('yy-mm-dd', new Date(d));
 					if (ymd < settings.minDate) {
 						return [false, "datepick-disabled"];
+					} else if (!settings.aDate || settings.dDate) {
+						return KRbooking.isItAvailable(ymd, settings);
+					} else if (ymd === settings.aDate) {
+						return [false, "dp-highlight"];
+					} else if (ymd < settings.aDate) {
+						return [false, "datepick-disabled"];
 					} else {
-						if (!settings.aDate || settings.dDate) {
-							return KRbooking.isItAvailable(ymd, settings);
-						} else {
-							if (ymd === settings.aDate) {
-								return [false, "dp-highlight"];
-							} else {
-								if (ymd < settings.aDate) {
-									return [false, "datepick-disabled"];
-								} else {
-									return KRbooking.isItAvailableDepart(ymd, settings);
-								}
-							}
-						}
+						return KRbooking.isItAvailableDepart(ymd, settings);
 					}
 				},
 				onSelect: function (dateText) {
@@ -434,14 +412,15 @@ document.addEventListener('DOMContentLoaded', function () {
 						if (formdiv) {
 							formdiv.value = response.data.item[field];
 							if (field === 'country_id') {
-								comboGeo(response.data.item[field], 'guest.combo', 'region', response.data.item['region_id']);
+								comboGeo(response.data.item[field], 'guest.combo', 'region',
+									response.data.item['region_id']);
 							}
 						}
 					});
 				}
 			});
 		}
-	})
+	});
 }, false);
 
 async function findGuest(email) {

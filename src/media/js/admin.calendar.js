@@ -132,7 +132,7 @@ if (typeof jQuery === 'undefined') {
 				}
 			},
 			error: function () {
-				alert('Sorry we cannot process your request at the moment. Please try again later!');
+				window.alert('Sorry we cannot process your request at the moment. Please try again later!');
 			},
 		});
 	}
@@ -153,9 +153,9 @@ if (typeof jQuery === 'undefined') {
 			success: function (result) {
 				if (!result.success) {
 					if (result.message) {
-						alert(result.message);
+						window.alert(result.message);
 					} else {
-						alert('Sorry we cannot process your request at the moment. Please try again later!');
+						window.alert('Sorry we cannot process your request at the moment. Please try again later!');
 					}
 				} else {
 					$('#kr-calendar-modal-show .modal-content').empty().append(result.data.html).draggable({

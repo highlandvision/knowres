@@ -1,6 +1,3 @@
-// noinspection JSIgnoredPromiseFromCall,JSUnresolvedReference
-// noinspection JSIgnoredPromiseFromCall
-
 /**
  * @package    Know Reservations
  * @subpackage Site JS
@@ -21,6 +18,7 @@ document
     .addEventListener("submit", handleSubmit);
 
 // Fetches a payment intent or setup intent and captures the client secret
+/** @return void */
 async function initializeStripe() {
     const fetchurl = 'index.php?option=com_knowres&task=service.stripecreate';
     let {clientSecret, paymentType} = await fetch(fetchurl, {
@@ -72,6 +70,7 @@ async function handleSubmit(e) {
 }
 
 // Fetches the payment intent status after payment submission
+/** @return void */
 async function checkStatus() {
     let clientSecret;
     if (pt === 'OBR') {

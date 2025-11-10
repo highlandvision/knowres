@@ -1,5 +1,3 @@
-// noinspection DuplicatedCode
-
 /**
  * @package    Know Reservations
  * @subpackage Admin JS

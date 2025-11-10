@@ -90,8 +90,8 @@ const lang = "en";
 					if (current.equals(pos)) {
 						dups++;
 						let a = 360.0 / dups;
-						let newLat = pos.lat() + -.00002 * Math.cos((+a * dups) / 180 * Math.PI);  //x
-						let newLng = pos.lng() + -.00000 * Math.sin((+a * dups) / 180 * Math.PI);  //Y
+						let newLat = pos.lat() + -0.00002 * Math.cos((+a * dups) / 180 * Math.PI);  //x
+						let newLng = pos.lng() + -0.00000 * Math.sin((+a * dups) / 180 * Math.PI);  //Y
 						current = new google.maps.LatLng(newLat, newLng);
 					}
 				}

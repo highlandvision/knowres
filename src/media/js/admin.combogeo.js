@@ -25,7 +25,7 @@ async function comboGeo(parentvalue, task, target, childvalue = '0') {
 		let current = document.querySelector('.' + target + 'chain');
 		current.outerHTML = result.data.html;
 	} else {
-		alert(result.message);
+		window.alert(result.message);
 	}
 
 	return false;

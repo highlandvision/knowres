@@ -18,7 +18,6 @@ let scloaded = false;
 
 (function ($) {
 	$(function () {
-		Foundation.addToJquery();
 		$(document).foundation();
 
 		checkScreenWidth();
@@ -101,9 +100,9 @@ let scloaded = false;
 				$.getScript('media/com_knowres/js/stripecheckout.min.js');
 				scloaded = true;
 			} else {
-				initializeStripe();
+				void initializeStripe();
 			}
-		}).on('open.zf.reveal', '#kr-property-slideshow-reveal[data-reveal]', function (e) {
+		}).on('open.zf.reveal', '#kr-property-slideshow-reveal[data-reveal]', function () {
 			const $pslider = $('#kr-property-slideshow');
 			$pslider.slick('setPosition');
 			$pslider.slick('refresh');

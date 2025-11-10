@@ -41,7 +41,7 @@ async function updateField(column, table, text) {
 	const response = await fetch('index.php?option=com_knowres&task=ajax.editinplace', options);
 	let result = await response.json();
 	if (!result.success) {
-		alert(result.message);
+		window.alert(result.message);
 	}
 
 	return result.data.html;

@@ -107,7 +107,7 @@
 			kickSlideshow();
 		}
 		$('.kr-carousel').slick({
-			arrows: false,
+			arrows: true,
 			autoplay: true,
 			fade: true,
 			infinite: true,

@@ -10,9 +10,6 @@
 let Bloodhound = require('bloodhound-js');
 
 (function ($) {
-	Foundation.addToJquery();
-	$(document).foundation();
-
 	class Krautosearch {
 		constructor() {
 			this.settings = {
@@ -39,7 +36,6 @@ let Bloodhound = require('bloodhound-js');
 				}
 			});
 
-			autosearch.initialize();
 			const self = this;
 
 			$('.kr-autosearch').typeahead({
@@ -47,7 +43,7 @@ let Bloodhound = require('bloodhound-js');
 				},
 				{
 					name:       'autosearch',
-					source:     autosearch.ttAdapter(),
+					source: autosearch,
 					displayKey: 'name',
 					limit:      10,
 					templates:  {

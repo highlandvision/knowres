@@ -5,10 +5,10 @@
  * @license    See the file "LICENSE.txt" for the full license governing this code.
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
-// noinspection JSUnusedGlobalSymbols
 
 "use strict";
 
+// function is used ignore phpstorm warning
 export function guestIncrement(updown, target, atext, ctext, ctext1) {
 	let cac = document.getElementById('child-ages-container');
 	let aci = document.getElementById(target);
@@ -26,11 +26,10 @@ export function guestIncrement(updown, target, atext, ctext, ctext1) {
 			document.getElementById(target).value = value;
 			let adults = Number(elAdults.value);
 			let children = Number(document.getElementById('children').value);
-			if (children === 1) {
+			if (children === 1)
 				dropdown.options[guestcount - 1].text = adults + ' ' + atext + ', ' + children + ' ' + ctext1;
-			} else {
+			else
 				dropdown.options[guestcount - 1].text = adults + ' ' + atext + ', ' + children + ' ' + ctext;
-			}
 			dropdown.value = guestcount;
 
 			if (target === 'children') {
@@ -58,6 +57,7 @@ export function guestIncrement(updown, target, atext, ctext, ctext1) {
 	}
 }
 
+// noinspection JSUnusedGlobalSymbols
 export function createAgeField(count) {
 	let newage = document.createElement('input');
 	newage.setAttribute('type', 'number');

@@ -76,13 +76,13 @@
 			let mode;
 			switch (document.getElementById("mode").value) {
 				case "bicycling":
-					mode = google.maps.DirectionsTravelMode.BICYCLING;
+					mode = google.maps.TravelMode.BICYCLING;
 					break;
 				case "driving":
-					mode = google.maps.DirectionsTravelMode.DRIVING;
+					mode = google.maps.TravelMode.DRIVING;
 					break;
 				case "walking":
-					mode = google.maps.DirectionsTravelMode.WALKING;
+					mode = google.maps.TravelMode.WALKING;
 					break;
 			}
 
@@ -157,14 +157,14 @@
 			directionsDisplay.setPanel(null);
 			directionsDisplay = new google.maps.DirectionsRenderer();
 			directionsDisplay.setMap(routeMap);
-			directionsDisplay.setPanel(document.getElementById(this.settings.directionPanel));
+			directionsDisplay.setPanel(document.getElementById(this.settings.directionsPanel));
 
 			this.init();
 		}
 	}
 
 	$(document).ready(function () {
-		$(".kr-directions-modal").on('click', '#kr-map-route', function (e) {
+		$(".kr-directions-modal").on('click', '#kr-map-route', function () {
 			let $element = $(this);
 			const options = {
 				lat:    $element.data('lat'),
@@ -186,15 +186,11 @@
 			e.preventDefault();
 
 			let addressString =
-				    jQuery("#jform_property_street").val()
-				    + ", "
-				    + jQuery('#jform_town_id').find(":selected").text()
-				    + " "
-				    + jQuery("#jform_property_postcode").val()
-				    + ", "
-				    + jQuery('#jform_region_id').find(":selected").text()
-				    + " "
-				    + jQuery('#jform_country_id').find(":selected").text();
+				jQuery("#jform_property_street").val() + ", " +
+				jQuery('#jform_town_id').find(":selected").text() + " " +
+				jQuery("#jform_property_postcode").val() + ", " +
+				jQuery('#jform_region_id').find(":selected").text() + " " +
+				jQuery('#jform_country_id').find(":selected").text();
 
 			let url = 'index.php?option=com_knowres&task=property.geocode';
 			let coord = [];
@@ -209,7 +205,7 @@
 						let div = "#" + key;
 						jQuery(div).val(val);
 						coord[key] = val;
-						myGmap.refreshMap(coord['lat'], coord['lng'], false);
+						routeMap.refreshMap(coord['lat'], coord['lng'], false);
 					});
 				}
 			});

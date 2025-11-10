@@ -99,15 +99,11 @@
 			e.preventDefault();
 
 			let addressString =
-				$("#jform_property_street").val()
-				+ ', '
-				+ $('#jform_town_id').find(':selected').text()
-				+ ' '
-				+ $("#jform_property_postcode").val()
-				+ ', '
-				+ $('#jform_region_id').find(':selected').text()
-				+ ' '
-				+ $('#jform_country_id').find(':selected').text();
+				$("#jform_property_street").val() + ', ' +
+				$('#jform_town_id').find(':selected').text() + ' ' +
+				$("#jform_property_postcode").val() + ', ' +
+				$('#jform_region_id').find(':selected').text() + ' ' +
+				$('#jform_country_id').find(':selected').text();
 
 			let url = 'index.php?option=com_knowres&task=property.geocode';
 			let coord = [];
@@ -122,7 +118,7 @@
 						let div = '#' + key;
 						$(div).val(value);
 						coord[key] = value;
-						myGmap.refreshMap(coord['lat'], coord['lng'], false);
+						myGmap.refreshMap(coord.lat, coord.lng, false);
 					});
 				}
 			});

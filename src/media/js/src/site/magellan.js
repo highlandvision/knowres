@@ -18,7 +18,7 @@ let currentParagraph, hrElement;
 		ovChildren = $('.readmore-overview').children('p, h5, ul');
 		ovPs = ovChildren.length;
 		if (ovPs > 3) {
-			ovChildren.slice(3).hide();
+			ovChildren.slice(3).display = 'none';
 			ovChildren.slice(ovPs - 1, ovPs).after('<div class="text-center"><a class="button hollow' +
 				' readmore overview-toggle">Read more...</a></div>');
 			ovState = 'hidden';
@@ -27,7 +27,7 @@ let currentParagraph, hrElement;
 		ttChildren = $('.readmore-testimonials').children('p');
 		ttPs = ttChildren.length;
 		if (ttPs > 10) {
-			ttChildren.slice(11).hide();
+			ttChildren.slice(11).display = 'none';
 			ttparas = document.querySelectorAll('.readmore-testimonials p[style*="display: none"]');
 			doHRs(ttparas, 'hide');
 			ttChildren.slice(ttPs - 1, ttPs).after('<a class="button hollow' +

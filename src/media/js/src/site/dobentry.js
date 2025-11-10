@@ -253,7 +253,7 @@ if (!window.location.origin) {
 			if (!id) {
 				return;
 			}
-			$('label[for=' + id + ']').click(function () {
+			$('label[for=' + id + ']').onmouseup(function () {
 				dobfield.focus();
 			});
 		}
