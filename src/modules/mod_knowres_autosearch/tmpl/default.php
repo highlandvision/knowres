@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrMethods;
 
-$wa  = $app->getDocument()->getWebAssetManager();
+$wa = $app->getDocument()->getWebAssetManager();
 $wa->getRegistry()->addExtensionRegistryFile('com_knowres');
 $wa->useScript('com_knowres.site-modules');
 
@@ -45,6 +45,6 @@ if ($absolute) {
 			<i class="fa-solid fa-lg fa-magnifying-glass"></i>
 		</label>
 		<input class="kr-autosearch input-group-field" id="kr-autosearch"
-		       placeholder="<?php echo KrMethods::plain('MOD_KNOWRES_AUTOSEARCH_PLACEHOLDER'); ?>" type="text">
+			   placeholder="<?php echo KrMethods::plain('MOD_KNOWRES_AUTOSEARCH_PLACEHOLDER'); ?>" type="text"/>
 	</div>
 </div>

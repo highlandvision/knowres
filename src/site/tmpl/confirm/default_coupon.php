@@ -6,15 +6,13 @@
  * @license     See the file "LICENSE.txt" for the full license governing this code.
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
-/** @noinspection PhpUnhandledExceptionInspection */
 
 defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 
-if (is_null(KrFactory::getListModel('coupons')->getValidCoupons($this->property->id)))
-{
+if (is_null(KrFactory::getListModel('coupons')->getValidCoupons($this->property->id))) {
 	return;
 }
 ?>

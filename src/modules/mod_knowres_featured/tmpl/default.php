@@ -43,7 +43,7 @@ $Currency = new Currency();
 </div>
 
 <div class="grid-x kr-featured kr-slick" data-slidestoshow="<?php echo $slidestoshow; ?>">
-		<?php foreach ($items as $item): ?>
+	<?php foreach ($items as $item): ?>
 		<?php require ModuleHelper::getLayoutPath('mod_knowres_featured', $params->get('layout', 'default') . '_item'); ?>
 	<?php endforeach; ?>
 </div>

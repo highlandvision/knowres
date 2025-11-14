@@ -6,6 +6,7 @@
  * @license    See the file "LICENSE.txt" for the full license governing this code.
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
+
 /** @noinspection PhpUnhandledExceptionInspection */
 
 defined('_JEXEC') or die;
@@ -34,7 +35,8 @@ $currency = $item['currency'];
 			<?php endif; ?>
 
 			<?php echo KrMethods::sprintf('MOD_KNOWRES_FEATURED_FROM_PRICE',
-				$Currency->getSimpleValue($min . ' - ' . $max, $currency)); ?>
+				$Currency->getSimpleValue($min . ' - ' . $max, $currency)
+			); ?>
 		<?php else: ?>
 			<?php if ($netrate && $markup): ?>
 				<?php $min = KrFactory::getAdminModel('ratemarkup')::getGrossRate($minrate, $markup); ?>
@@ -43,10 +45,10 @@ $currency = $item['currency'];
 			<?php endif; ?>
 
 			<?php echo KrMethods::sprintf('MOD_KNOWRES_FEATURED_FROM_PRICE',
-				$Currency->getSimpleValue($min, $currency)); ?>
+				$Currency->getSimpleValue($min, $currency)
+			); ?>
 		<?php endif; ?>
 	<?php elseif ($summary): ?>
-		<?php echo KrMethods::sprintf('MOD_KNOWRES_FEATURED_FROM_PRICE',
-			$Currency->getSimpleValue($summary, $currency)); ?>
+		<?php echo KrMethods::sprintf('MOD_KNOWRES_FEATURED_FROM_PRICE', $Currency->getSimpleValue($summary, $currency)); ?>
 	<?php endif; ?>
 </div>
