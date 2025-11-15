@@ -27,7 +27,7 @@ $wa->useStyle('com_knowres.admin-datepicker')
 class UicalendarField extends TextField
 {
 	/** @var string Required layout */
-	protected $layout = 'joomla.form.uicalendar';
+	protected $layout = 'form.field.uicalendar';
 	/** @var string The form field type. */
 	protected $type = 'Uicalendar';
 
@@ -38,8 +38,7 @@ class UicalendarField extends TextField
 	 * @since  1.6
 	 * @return string The field input markup.
 	 */
-	protected function getInput(): string
-	{
+	protected function getInput(): string {
 		parent::getInput();
 
 		return $this->getRenderer($this->layout)->render($this->getLayoutData());
@@ -51,8 +50,7 @@ class UicalendarField extends TextField
 	 * @since   4.0.0
 	 * @return  array
 	 */
-	protected function getLayoutData(): array
-	{
+	protected function getLayoutData(): array {
 		$data = parent::getLayoutData();
 
 		$this->dataAttributes  = $this->setDataAttributes();
@@ -67,8 +65,7 @@ class UicalendarField extends TextField
 	 * @since  4.0.0
 	 * @return array    The field input markup.
 	 */
-	protected function setDataAttributes(): array
-	{
+	protected function setDataAttributes(): array {
 		$attributes                    = [];
 		$attributes['data-avail']      = $this->getAttribute('avail', '');
 		$attributes['data-datepicker'] = $this->getAttribute('datepicker', '');
