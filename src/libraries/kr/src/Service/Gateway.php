@@ -45,10 +45,10 @@ class Gateway extends Service
 	/**
 	 * Initialize
 	 *
-	 * @param  int       $service_id     ID of service
-	 * @param  stdClass  $paymentData    Session payment data
-	 * @param  int       $manual         1 for manual gateway
-	 * @param  array     $payment_types  Valid payment types
+	 * @param   int       $service_id     ID of service
+	 * @param   stdClass  $paymentData    Session payment data
+	 * @param   int       $manual         1 for manual gateway
+	 * @param   array     $payment_types  Valid payment types
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -56,8 +56,7 @@ class Gateway extends Service
 	public function __construct(int $service_id,
 		stdClass $paymentData,
 		int $manual = 0,
-		array $payment_types = ['OBD', 'PBD', 'PBB'])
-	{
+		array $payment_types = ['OBD', 'PBD', 'PBB']) {
 		parent::__construct($service_id);
 
 		$this->validatePaymentType($paymentData, $payment_types);
@@ -70,18 +69,19 @@ class Gateway extends Service
 	/**
 	 * Set gateway class for payment
 	 *
-	 * @param  string  $gateway_name  Name of selected gateway
+	 * @param   string  $gateway_name  Name of selected gateway
 	 *
 	 * @since  3.3.1
 	 * @return string
 	 */
-	public static function setGatewayClass(string $gateway_name): string
-	{
+	public static function setGatewayClass(string $gateway_name): string {
 		if ($gateway_name == 'bankia') {
 			$class = '\\HighlandVision\\KR\\Service\\Gateway\\Redsys\\' . ucfirst($gateway_name);
-		} else if ($gateway_name == 'wireint') {
+		}
+		elseif ($gateway_name == 'wireint') {
 			$class = '\\HighlandVision\\KR\\Service\\Gateway\\Wire\\' . ucfirst($gateway_name);
-		} else {
+		}
+		else {
 			$class = '\\HighlandVision\\KR\\Service\\Gateway\\' . ucfirst($gateway_name);
 		}
 
@@ -94,8 +94,7 @@ class Gateway extends Service
 	 * @throws RuntimeException
 	 * @since  1.0.0
 	 */
-	protected function readPayment(): void
-	{
+	protected function readPayment(): void {
 		$this->payment = KrFactory::getListModel('contractpayments')->getPending($this->contract_id, $this->service_id);
 		if (!$this->payment->id) {
 			throw new RuntimeException('Payment not found for id ' . $this->contract_id);
@@ -110,8 +109,7 @@ class Gateway extends Service
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected function readTables(): void
-	{
+	protected function readTables(): void {
 		$this->readContract();
 		$this->readGuest();
 		if ($this->paymentData->payment_type == 'RBD') {
@@ -125,21 +123,24 @@ class Gateway extends Service
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected function setNote(): void
-	{
+	protected function setNote(): void {
 		if ($this->paymentData->manual) {
 			$this->paymentData->note =
 				KrMethods::sprintf('COM_KNOWRES_PAYMENT_NOTE',
 					$this->service->name,
 					Utility::displayValue($this->paymentData->amount, $this->paymentData->currency),
-					TickTock::displayDate($this->paymentData->due_date, 'D j M Y'));
-		} else {
+					TickTock::displayDate($this->paymentData->due_date, 'D j M Y')
+				);
+		}
+		else {
 			if ($this->paymentData->payment_type == 'PBB') {
 				$type = KrMethods::plain('COM_KNOWRES_PAYMENT_BALANCE_PAYMENT');
-			} else {
+			}
+			else {
 				if ($this->contract->deposit != $this->contract->contract_total) {
 					$type = KrMethods::plain('COM_KNOWRES_DEPOSIT');
-				} else {
+				}
+				else {
 					$type = KrMethods::plain('COM_KNOWRES_FULL_PAYMENT');
 				}
 			}
@@ -160,8 +161,7 @@ class Gateway extends Service
 	 * @throws RuntimeException|Exception
 	 * @since  1.0.0
 	 */
-	protected function setOutputForPaymentType(): void
-	{
+	protected function setOutputForPaymentType(): void {
 		$this->setPaymentData();
 	}
 
@@ -171,8 +171,7 @@ class Gateway extends Service
 	 * @throws Exception
 	 * @since 1.0.0
 	 */
-	protected function setOutputManualDates(): void
-	{
+	protected function setOutputManualDates(): void {
 		$this->paymentData->expiry_date = $this->contract->expiry_date;
 		if ($this->paymentData->payment_type == 'OBD' || $this->paymentData->payment_type == 'PBD') {
 			$weekenddays = KrFactory::getListModel('propertysettings')->getOneSetting('weekenddays');
@@ -185,7 +184,8 @@ class Gateway extends Service
 				$this->paymentData->expiry_date = TickTock::getDueDate($wedays, $this->parameters->expirydays);
 				$this->paymentData->due_date    = $this->paymentData->expiry_date;
 			}
-		} else {
+		}
+		else {
 			$this->paymentData->due_date = $this->contract->balance_date;
 		}
 	}
@@ -196,8 +196,7 @@ class Gateway extends Service
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected function setPaymentData(): void
-	{
+	protected function setPaymentData(): void {
 		$gateways = $this->paymentData->gateways;
 		$gateway  = $gateways[$this->service_id];
 
@@ -228,8 +227,7 @@ class Gateway extends Service
 	 * @throws RuntimeException
 	 * @since  1.0.0
 	 */
-	protected function setPaymentDataRBD(): void
-	{
+	protected function setPaymentDataRBD(): void {
 		$this->paymentData->amount         = $this->payment->amount;
 		$this->paymentData->base_amount    = $this->payment->base_amount;
 		$this->paymentData->base_surcharge =
@@ -249,14 +247,13 @@ class Gateway extends Service
 	/**
 	 * Validate payment type
 	 *
-	 * @param  stdClass  $paymentData    Payment data
-	 * @param  array     $payment_types  Valid payment types
+	 * @param   stdClass  $paymentData    Payment data
+	 * @param   array     $payment_types  Valid payment types
 	 *
 	 * @throws InvalidArgumentException
 	 * @since  3.3.1
 	 */
-	protected function validatePaymentType(stdClass $paymentData, array $payment_types): void
-	{
+	protected function validatePaymentType(stdClass $paymentData, array $payment_types): void {
 		if (!in_array($paymentData->payment_type, $payment_types)) {
 			throw new InvalidArgumentException("Payment type $paymentData->payment_type is not valid for $this->service->name");
 		}

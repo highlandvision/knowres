@@ -38,23 +38,24 @@ class Translations
 	/**
 	 * Manage translations
 	 *
-	 * @param  string  $language  Language string
+	 * @param   string  $language  Language string
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function __construct(string $language = '')
-	{
+	public function __construct(string $language = '') {
 		if ($language) {
 			$this->setLanguage($language);
-		} else {
+		}
+		else {
 			$this->setLanguage(KrMethods::getLanguageTag());
 		}
 
 		$user = KrMethods::getUser();
 		if ($user->guest) {
 			$this->default_language = KrMethods::getDefaultLanguage('site');
-		} else {
+		}
+		else {
 			$this->default_language = KrMethods::getDefaultLanguage();
 		}
 
@@ -76,8 +77,7 @@ class Translations
 	 * @since  1.0.0
 	 * @return string
 	 */
-	public static function getCountryName(?int $country_id): string
-	{
+	public static function getCountryName(?int $country_id): string {
 		if (!empty($country_id)) {
 			$Translations = new Translations();
 
@@ -96,8 +96,7 @@ class Translations
 	 * @since  1.0.0
 	 * @return string
 	 */
-	public static function getTownName(?int $town_id): string
-	{
+	public static function getTownName(?int $town_id): string {
 		if (!empty($town_id)) {
 			$Translations = new Translations();
 
@@ -110,12 +109,12 @@ class Translations
 	/**
 	 * Get value of translation string for an array of objects
 	 *
-	 * @param  array   $items  Array of objects
-	 * @param  string  $item   Translation table name
-	 * @param  string  $key    Object variable to be used as translation item_id
-	 * @param  string  $field  Object variable to be used as translation field
-	 * @param  string  $new    Name of variable to be added to object
-	 * @param  bool    $sort   Sort $field by alpha
+	 * @param   array   $items  Array of objects
+	 * @param   string  $item   Translation table name
+	 * @param   string  $key    Object variable to be used as translation item_id
+	 * @param   string  $field  Object variable to be used as translation field
+	 * @param   string  $new    Name of variable to be added to object
+	 * @param   bool    $sort   Sort $field by alpha
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
@@ -126,8 +125,7 @@ class Translations
 		string $key = 'id',
 		string $field = 'name',
 		string $new = 'name',
-		bool $sort = true): array
-	{
+		bool $sort = true): array {
 		if (is_countable($this->translations)) {
 			if (!count($this->translations) || !array_key_exists($item, $this->translations)) {
 				$this->checkCache($item);
@@ -150,15 +148,15 @@ class Translations
 	/**
 	 * Clear cache for item
 	 *
-	 * @param  string  $item  Name of item
+	 * @param   string  $item  Name of item
 	 *
 	 * @since  2.4.0
 	 */
-	public function cleanTranslationCache(string $item = ''): void
-	{
+	public function cleanTranslationCache(string $item = ''): void {
 		if ($item) {
 			$this->cache->remove($item);
-		} else {
+		}
+		else {
 			$this->cache->clean();
 		}
 	}
@@ -166,29 +164,27 @@ class Translations
 	/**
 	 * Delete multiple translation strings
 	 *
-	 * @param  string  $item  Table name
-	 * @param  array   $pks   Array of item ids for item
+	 * @param   string  $item  Table name
+	 * @param   array   $pks   Array of item ids for item
 	 *
 	 * @throws RuntimeException
 	 * @since  3.0.0
 	 */
-	public function deleteMultiple(string $item, array $pks): void
-	{
+	public function deleteMultiple(string $item, array $pks): void {
 		KrFactory::getListModel('Translations')->deleteMultipleItemId($item, $pks);
 	}
 
 	/**
 	 * Delete any existing translation string
 	 *
-	 * @param  string  $item     Table name
-	 * @param  int     $item_id  ID of the base item
+	 * @param   string  $item     Table name
+	 * @param   int     $item_id  ID of the base item
 	 *
 	 * @throws UnexpectedValueException
 	 * @throws RuntimeException
 	 * @since  1.0.0
 	 */
-	public function deleteText(string $item, int $item_id): void
-	{
+	public function deleteText(string $item, int $item_id): void {
 		self::deleteMultiple($item, array($item_id));
 	}
 
@@ -196,17 +192,16 @@ class Translations
 	 * Get value of translation strings for an item / language
 	 * Used when translation strings need to be sorted
 	 *
-	 * @param  array   $items  Database items list
-	 * @param  string  $item   Table name
-	 * @param  string  $field  Field name
-	 * @param  bool    $sort   Sort by alpha
+	 * @param   array   $items  Database items list
+	 * @param   string  $item   Table name
+	 * @param   string  $field  Field name
+	 * @param   bool    $sort   Sort by alpha
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return array
 	 */
-	public function getArray(array $items, string $item, string $field, bool $sort = true): array
-	{
+	public function getArray(array $items, string $item, string $field, bool $sort = true): array {
 		$values = [];
 		if (is_countable($this->translations)) {
 			if (!count($this->translations) || !array_key_exists($item, $this->translations)) {
@@ -233,20 +228,20 @@ class Translations
 	/**
 	 * Get property name
 	 *
-	 * @param  int  $property_id  ID of property
+	 * @param   int  $property_id  ID of property
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 * @return string
 	 */
-	public function getProperty(int $property_id): string
-	{
+	public function getProperty(int $property_id): string {
 		$property = KrFactory::getAdminModel('property')->getItem($property_id);
 		if (empty($property->id)) {
 			Logger::logMe('Translations property does not exist for ID ' . $property_id);
 
 			return '';
-		} else {
+		}
+		else {
 			return $property->property_name;
 		}
 	}
@@ -254,16 +249,15 @@ class Translations
 	/**
 	 * Get translation string
 	 *
-	 * @param  string  $item     Table name
-	 * @param  ?int    $item_id  ID of the base item
-	 * @param  string  $field    Name of the field (column)
+	 * @param   string  $item     Table name
+	 * @param  ?int     $item_id  ID of the base item
+	 * @param   string  $field    Name of the field (column)
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return string
 	 */
-	public function getText(string $item, ?int $item_id, string $field = 'name'): string
-	{
+	public function getText(string $item, ?int $item_id, string $field = 'name'): string {
 		if (is_countable($this->translations)) {
 			if (!count($this->translations) || !array_key_exists($item, $this->translations)) {
 				$this->checkCache($item);
@@ -276,12 +270,12 @@ class Translations
 	/**
 	 * Add or update default language string
 	 *
-	 * @param  string  $item          Table name
-	 * @param  int     $item_id       ID of the base item
-	 * @param  string  $field         Name of the field (column)
-	 * @param  string  $text          The text
-	 * @param  bool    $remove_cache  True to remove cache
-	 * @param  string  $language      Language string
+	 * @param   string  $item          Table name
+	 * @param   int     $item_id       ID of the base item
+	 * @param   string  $field         Name of the field (column)
+	 * @param   string  $text          The text
+	 * @param   bool    $remove_cache  True to remove cache
+	 * @param   string  $language      Language string
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -291,8 +285,7 @@ class Translations
 		string $field,
 		string $text,
 		bool $remove_cache = true,
-		string $language = '')
-	{
+		string $language = '') {
 		if (!$language) {
 			$language = $this->language;
 		}
@@ -325,7 +318,8 @@ class Translations
 			$data->language      = $language;
 			$data->version       = 0;
 			KrFactory::insert('translation', $data);
-		} else {
+		}
+		else {
 			$data->id         = $row->id;
 			$data->item       = $item;
 			$data->item_id    = $item_id;
@@ -342,15 +336,17 @@ class Translations
 			// Read image to get property and update servicequeue
 			$image = KrFactory::getAdminModel('image')->getItem($item_id);
 			KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updateProperty',
-			                                                             (int) $image->property_id,
-			                                                             0,
-			                                                             'ru');
+				(int) $image->property_id,
+				0,
+				'ru'
+			);
 		}
 
 		if ($remove_cache) {
 			try {
 				$this->cache->remove($item);
-			} catch (RuntimeException $e) {
+			}
+			catch (RuntimeException $e) {
 				//No cache file to remove just continue
 			}
 		}
@@ -359,18 +355,18 @@ class Translations
 	/**
 	 * Check if cache exists for table
 	 *
-	 * @param  string  $item  Item name to return
+	 * @param   string  $item  Item name to return
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
 	 */
-	protected function checkCache(string $item): void
-	{
+	protected function checkCache(string $item): void {
 		$data = $this->cache->get($item);
 		if ($data === false) {
 			$this->setTranslations($item);
 			$this->cache->store(Utility::encodeJson($this->translations[$item]), $item);
-		} else {
+		}
+		else {
 			if (!is_array($data)) {
 				$data = Utility::decodeJson($data, true);
 			}
@@ -382,15 +378,15 @@ class Translations
 	/**
 	 * Set translation language
 	 *
-	 * @param  string  $language  Language code
+	 * @param   string  $language  Language code
 	 *
 	 * @since  1.0.0
 	 */
-	protected function setLanguage(string $language): void
-	{
+	protected function setLanguage(string $language): void {
 		if (!$language) {
 			$this->language = KrMethods::getLanguageTag();
-		} else {
+		}
+		else {
 			$this->language = $language;
 		}
 	}
@@ -398,15 +394,14 @@ class Translations
 	/**
 	 * Set translation text
 	 *
-	 * @param  string  $item     Table name
-	 * @param  ?int    $item_id  ID of the base item
-	 * @param  string  $field    Name of the field (column)
+	 * @param   string  $item     Table name
+	 * @param  ?int     $item_id  ID of the base item
+	 * @param   string  $field    Name of the field (column)
 	 *
 	 * @since  1.0.0
 	 * @return string
 	 */
-	protected function setText(string $item, ?int $item_id, string $field): string
-	{
+	protected function setText(string $item, ?int $item_id, string $field): string {
 		$string = '';
 		$data   = [];
 
@@ -424,7 +419,8 @@ class Translations
 			if (array_key_exists($key, $data)) {
 				$string = $data[$key];
 			}
-		} else if (!$string) {
+		}
+		elseif (!$string) {
 			$languages = KrMethods::getLanguages();
 			foreach ($languages as $l) {
 				if ($l->published && $l->lang_code != $this->language) {
@@ -444,13 +440,12 @@ class Translations
 	/**
 	 * Create translations array for $item
 	 *
-	 * @param  string  $item  Table name
+	 * @param   string  $item  Table name
 	 *
 	 * @throws RuntimeException
 	 * @since 1.0.0
 	 */
-	protected function setTranslations(string $item): void
-	{
+	protected function setTranslations(string $item): void {
 		$data = [];
 
 		$rows = KrFactory::getListModel('translations')->getByItem($item);

@@ -31,15 +31,14 @@ class ContentHelper extends \Joomla\CMS\Helper\ContentHelper
 	/**
 	 * Gets a list of the actions that can be performed.
 	 *
-	 * @param  string   $component  The component name.
-	 * @param  string   $section    The access section name.
-	 * @param  integer  $id         The item ID.
+	 * @param   string   $component  The component name.
+	 * @param   string   $section    The access section name.
+	 * @param   integer  $id         The item ID.
 	 *
 	 * @since   3.2
 	 * @return  CanDo
 	 */
-	public static function getActions($component = 'com_knowres', $section = '', $id = 0): CanDo
-	{
+	public static function getActions($component = 'com_knowres', $section = '', $id = 0): CanDo {
 		$assetName = $component;
 
 		if ($section && $id) {
@@ -75,52 +74,64 @@ class ContentHelper extends \Joomla\CMS\Helper\ContentHelper
 
 			if (($action->name == 'core.admin' || $action->name == 'core.delete') && $access_level == 40) {
 				$result->set($action->name, $user->authorise($action->name, $assetName));
-			} else if ($action->name != 'core.admin' && $action->name != 'core.delete' && $access_level > 10) {
+			}
+			elseif ($action->name != 'core.admin' && $action->name != 'core.delete' && $access_level > 10) {
 				$result->set($action->name, $user->authorise($action->name, $assetName));
-			} else {
+			}
+			else {
 				// These should be owners that have component specific rights
 				if ($action->name == 'core.admin' || $action->name == 'core.manage') {
 					$result->set($action->name, false);
-				} else if ($action->name == 'core.create') {
+				}
+				elseif ($action->name == 'core.create') {
 					if ($section == 'property' || $section == 'image') {
 						if ($params->get('property_add')) {
 							$result->set($action->name, $user->authorise($action->name, $assetName));
 						}
-					} else if ($section == 'contract') {
+					}
+					elseif ($section == 'contract') {
 						if ($params->get('contract_add')) {
 							$result->set($action->name, $user->authorise($action->name, $assetName));
 						}
-					} else if ($section == 'rate') {
+					}
+					elseif ($section == 'rate') {
 						if ($params->get('rate_manage')) {
 							$result->set($action->name, $user->authorise($action->name, $assetName));
 						}
-					} else if ($section == 'discount') {
+					}
+					elseif ($section == 'discount') {
 						if ($params->get('discount_manage')) {
 							$result->set($action->name, $user->authorise($action->name, $assetName));
 						}
-					} else if ($section == 'extra') {
+					}
+					elseif ($section == 'extra') {
 						if ($params->get('extra_manage')) {
 							$result->set($action->name, $user->authorise($action->name, $assetName));
 						}
 					}
-				} else if ($action->name == 'core.edit' || $action->name == 'core.edit.state') {
+				}
+				elseif ($action->name == 'core.edit' || $action->name == 'core.edit.state') {
 					if ($section == 'property' || $section == 'image') {
 						if ($params->get('property_edit')) {
 							$result->set($action->name, $user->authorise($action->name, $assetName));
 						}
-					} else if ($section == 'contract') {
+					}
+					elseif ($section == 'contract') {
 						if ($params->get('contract_edit')) {
 							$result->set($action->name, $user->authorise($action->name, $assetName));
 						}
-					} else if ($section == 'rate') {
+					}
+					elseif ($section == 'rate') {
 						if ($params->get('rate_manage')) {
 							$result->set($action->name, $user->authorise($action->name, $assetName));
 						}
-					} else if ($section == 'discount') {
+					}
+					elseif ($section == 'discount') {
 						if ($params->get('discount_manage')) {
 							$result->set($action->name, $user->authorise($action->name, $assetName));
 						}
-					} else if ($section == 'extra') {
+					}
+					elseif ($section == 'extra') {
 						if ($params->get('extra_manage')) {
 							$result->set($action->name, $user->authorise($action->name, $assetName));
 						}

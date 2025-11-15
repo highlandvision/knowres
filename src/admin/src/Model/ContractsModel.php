@@ -42,13 +42,12 @@ class ContractsModel extends ListModel
 	/**
 	 * Constructor.
 	 *
-	 * @param  array  $config  An optional associative array of configuration settings.
+	 * @param   array  $config  An optional associative array of configuration settings.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function __construct($config = [])
-	{
+	public function __construct($config = []) {
 		if (empty($config['filter_fields'])) {
 			//@formatter:off
 			$config['filter_fields'] = [
@@ -86,14 +85,13 @@ class ContractsModel extends ListModel
 	/**
 	 * Check if generated contract tag already exists
 	 *
-	 * @param  string  $tag  Tag to check
+	 * @param   string  $tag  Tag to check
 	 *
 	 * @throws RuntimeException|InvalidArgumentException
 	 * @since  1.0.0
 	 * @return mixed False if not in use otherwise true
 	 */
-	public static function checkTag(string $tag): mixed
-	{
+	public static function checkTag(string $tag): mixed {
 		if ($tag) {
 			$db    = KrFactory::getDatabase();
 			$query = $db->getQuery(true);
@@ -114,14 +112,13 @@ class ContractsModel extends ListModel
 	/**
 	 * Get last contract update
 	 *
-	 * @param  int  $service_id  ID of service
+	 * @param   int  $service_id  ID of service
 	 *
 	 * @throws RuntimeException|InvalidArgumentException
 	 * @since  3.3.0
 	 * @return array
 	 */
-	public static function contractDates(int $service_id): array
-	{
+	public static function contractDates(int $service_id): array {
 		$db    = KrFactory::getDatabase();
 		$query = $db->getQuery(true);
 
@@ -142,14 +139,13 @@ class ContractsModel extends ListModel
 	/**
 	 * Get contract export data for csv
 	 *
-	 * @param  array  $data  Filtering data
+	 * @param   array  $data  Filtering data
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return mixed
 	 */
-	public function exportBalances(array $data): mixed
-	{
+	public function exportBalances(array $data): mixed {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -232,12 +228,12 @@ class ContractsModel extends ListModel
 
 		$filter_region_id = $data['region_id'];
 		if (is_numeric($filter_region_id) && $filter_region_id > 0) {
-			$query->where($db->qn('p.region_id') . '=' . (int)$filter_region_id);
+			$query->where($db->qn('p.region_id') . '=' . (int) $filter_region_id);
 		}
 
 		$filter_agent_id = $data['agent_id'];
 		if (is_numeric($filter_agent_id)) {
-			$query->where($db->qn('a.agent_id') . '=' . (int)$filter_agent_id);
+			$query->where($db->qn('a.agent_id') . '=' . (int) $filter_agent_id);
 		}
 
 		$query->where($db->qn('a.black_booking') . '=0');
@@ -266,8 +262,7 @@ class ContractsModel extends ListModel
 	 * @since  1.0.0
 	 * @return mixed
 	 */
-	public function exportContracts($data): mixed
-	{
+	public function exportContracts($data): mixed {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -287,7 +282,7 @@ class ContractsModel extends ListModel
 			$query->select($db->qn('g.document_id', 'guest_document_id'));
 		}
 
-		if ($data['owner'] || (int)$data['owner_id'] > 0) {
+		if ($data['owner'] || (int) $data['owner_id'] > 0) {
 			$query->select($db->qn([
 				'o.name',
 				'o.commission'
@@ -321,7 +316,7 @@ class ContractsModel extends ListModel
 			);
 		}
 
-		if ($data['owner'] || (int)$data['owner_id'] > 0) {
+		if ($data['owner'] || (int) $data['owner_id'] > 0) {
 			$query->join('LEFT',
 				$db->qn('#__knowres_owner', 'o') . ' ON ' . $db->qn('o.id') . '=' . $db->qn('p.owner_id')
 			);
@@ -331,17 +326,17 @@ class ContractsModel extends ListModel
 
 		$filter_region_id = $data['region_id'];
 		if ($filter_region_id && is_numeric($filter_region_id)) {
-			$query->where('p.region_id = ' . (int)$filter_region_id);
+			$query->where('p.region_id = ' . (int) $filter_region_id);
 		}
 
 		$filter_agent_id = $data['agent_id'];
 		if ($filter_agent_id && is_numeric($filter_agent_id)) {
-			$query->where('a.agent_id = ' . (int)$filter_agent_id);
+			$query->where('a.agent_id = ' . (int) $filter_agent_id);
 		}
 
 		$filter_owner_id = $data['owner_id'];
 		if ($filter_owner_id && is_numeric($filter_owner_id)) {
-			$query->where($db->qn('o.id') . '=' . (int)$filter_owner_id);
+			$query->where($db->qn('o.id') . '=' . (int) $filter_owner_id);
 		}
 
 		if (!$data['cancelled']) {
@@ -351,12 +346,14 @@ class ContractsModel extends ListModel
 		if ($data['inresidence']) {
 			$query->where($db->qn('a.arrival') . ' <= ' . $db->q($data['valid_from']));
 			$query->where($db->qn('a.departure') . ' >= ' . $db->q($data['valid_from']));
-		} elseif (!$data['datetype']) {
+		}
+		elseif (!$data['datetype']) {
 			$ts_a = $data['valid_from'] . ' 00:00:00';
 			$ts_d = $data['valid_to'] . ' 23:59:59';
 			$query->where($db->qn('a.created_at') . ' >= ' . $db->q($ts_a));
 			$query->where($db->qn('a.created_at') . ' <= ' . $db->q($ts_d));
-		} else {
+		}
+		else {
 			$query->where($db->qn('a.arrival') . ' >= ' . $db->q($data['valid_from']));
 			$query->where($db->qn('a.arrival') . ' <= ' . $db->q($data['valid_to']));
 		}
@@ -369,14 +366,13 @@ class ContractsModel extends ListModel
 	/**
 	 * Get contract export data for guest registrations
 	 *
-	 * @param  string  $arrival  Date of arrival
+	 * @param   string  $arrival  Date of arrival
 	 *
 	 * @throws RuntimeException
 	 * @since  2.0.0
 	 * @return mixed
 	 */
-	public function exportRegistration(string $arrival): mixed
-	{
+	public function exportRegistration(string $arrival): mixed {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -409,14 +405,13 @@ class ContractsModel extends ListModel
 	/**
 	 * Get the entered arrival info
 	 *
-	 * @param  string  $arrival  Arrival date
+	 * @param   string  $arrival  Arrival date
 	 *
 	 * @throws RuntimeException
 	 * @since 1.0.0
 	 * @return array
 	 */
-	public function getArrivalInfoReminder(string $arrival): array
-	{
+	public function getArrivalInfoReminder(string $arrival): array {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -445,14 +440,13 @@ class ContractsModel extends ListModel
 	/**
 	 * Get the due balance for contract
 	 *
-	 * @param  string  $balance_date  Balance date
+	 * @param   string  $balance_date  Balance date
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return mixed
 	 */
-	public function getBalanceDue(string $balance_date): mixed
-	{
+	public function getBalanceDue(string $balance_date): mixed {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -474,14 +468,14 @@ class ContractsModel extends ListModel
 	/**
 	 * Get all bookings and ical blocks for a property / properties after from date
 	 *
-	 * @param  mixed    $properties       ID, csv list or array of required properties to be returned
+	 * @param   mixed   $properties       ID, csv list or array of required properties to be returned
 	 * @param  ?string  $from             Earliest departure date, defaults to today of not set
-	 * @param  bool     $array            Format of output, set for associative array, default is array of objects
-	 * @param  int      $sort             Required sort
+	 * @param   bool    $array            Format of output, set for associative array, default is array of objects
+	 * @param   int     $sort             Required sort
 	 *                                    0 = property ID, arrival
 	 *                                    1 = property name, arrival
 	 *                                    2 = property ID, black booking, arrival
-	 * @param  bool     $published        TRUE to get bookings for published properties only
+	 * @param   bool    $published        TRUE to get bookings for published properties only
 	 *
 	 * @throws RuntimeException
 	 * @throws Exception
@@ -492,8 +486,7 @@ class ContractsModel extends ListModel
 		?string $from = null,
 		bool $array = false,
 		int $sort = 0,
-		bool $published = true): array
-	{
+		bool $published = true): array {
 		if (is_null($from)) {
 			$from = TickTock::getDate();
 		}
@@ -525,10 +518,12 @@ class ContractsModel extends ListModel
 		}
 
 		if (is_numeric($properties)) {
-			$q->where($db->qn('a.property_id') . '=' . (int)$properties);
-		} elseif (is_array($properties)) {
+			$q->where($db->qn('a.property_id') . '=' . (int) $properties);
+		}
+		elseif (is_array($properties)) {
 			$q->where($db->qn('a.property_id') . ' IN (' . implode(',', array_map('intval', $properties)) . ')');
-		} elseif (is_string($properties) && strlen($properties) > 0) {
+		}
+		elseif (is_string($properties) && strlen($properties) > 0) {
 			$ids = explode(',', $properties);
 			$q->where($db->qn('a.property_id') . ' IN (' . implode(',', array_map('intval', $ids)) . ')');
 		}
@@ -562,9 +557,11 @@ class ContractsModel extends ListModel
 
 		if (!$sort) {
 			$q->order($db->qn('property_id'))->order($db->qn('arrival'));
-		} elseif ($sort == 1) {
+		}
+		elseif ($sort == 1) {
 			$q->order($db->qn('property_name'))->order($db->qn('arrival'));
-		} elseif ($sort == 2) {
+		}
+		elseif ($sort == 2) {
 			$q->order($db->qn('property_id'))->order($db->qn('black_booking') . 'DESC')->order($db->qn('arrival'));
 		}
 
@@ -572,7 +569,8 @@ class ContractsModel extends ListModel
 
 		if ($array) {
 			return $db->loadAssocList();
-		} else {
+		}
+		else {
 			return $db->loadObjectList();
 		}
 	}
@@ -580,15 +578,14 @@ class ContractsModel extends ListModel
 	/**
 	 * Get contracts for property(ies) and optional service
 	 *
-	 * @param  mixed  $properties  One, csv string or array of properties
-	 * @param  int    $service_id  ID of service
+	 * @param   mixed  $properties  One, csv string or array of properties
+	 * @param   int    $service_id  ID of service
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 * @return mixed
 	 */
-	public function getContractsByProperty(mixed $properties, int $service_id = 0): mixed
-	{
+	public function getContractsByProperty(mixed $properties, int $service_id = 0): mixed {
 		$today = TickTock::getDate();
 
 		$db    = $this->getDatabase();
@@ -620,13 +617,15 @@ class ContractsModel extends ListModel
 
 		$filter_property_id = $properties;
 		if (is_numeric($filter_property_id)) {
-			$query->where($db->qn('c.property_id') . '=' . (int)$filter_property_id);
-		} elseif (is_array($filter_property_id)) {
+			$query->where($db->qn('c.property_id') . '=' . (int) $filter_property_id);
+		}
+		elseif (is_array($filter_property_id)) {
 			$query->where($db->qn('c.property_id') . ' IN (' . implode(',',
 					array_map('intval', $filter_property_id)
 				) . ')'
 			);
-		} elseif (is_string($filter_property_id) && strlen($filter_property_id) > 0) {
+		}
+		elseif (is_string($filter_property_id) && strlen($filter_property_id) > 0) {
 			$ids = explode(',', $filter_property_id);
 			$query->where($db->qn('c.property_id') . ' IN (' . implode(',', array_map('intval', $ids)) . ')');
 		}
@@ -639,14 +638,13 @@ class ContractsModel extends ListModel
 	/**
 	 * Get number of contracts for guest
 	 *
-	 * @param  int  $guest_id  ID of guest
+	 * @param   int  $guest_id  ID of guest
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return mixed
 	 */
-	public function getCountForGuest(int $guest_id): mixed
-	{
+	public function getCountForGuest(int $guest_id): mixed {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -661,16 +659,15 @@ class ContractsModel extends ListModel
 	/**
 	 * Get any cron triggers from emails
 	 *
-	 * @param  string  $trigger_date_field  The name of the trigger date field
-	 * @param  string  $date                The trigger date
-	 * @param  mixed   $booking_status      As int, string or array
+	 * @param   string  $trigger_date_field  The name of the trigger date field
+	 * @param   string  $date                The trigger date
+	 * @param   mixed   $booking_status      As int, string or array
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return mixed
 	 */
-	public function getCronTrigger(string $trigger_date_field, string $date, mixed $booking_status): mixed
-	{
+	public function getCronTrigger(string $trigger_date_field, string $date, mixed $booking_status): mixed {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -682,11 +679,13 @@ class ContractsModel extends ListModel
 			->where($db->qn('state') . '=1');
 
 		if (is_numeric($booking_status)) {
-			$query->where($db->qn('booking_status') . '=' . (int)$booking_status);
-		} elseif (is_string($booking_status) && strlen($booking_status)) {
+			$query->where($db->qn('booking_status') . '=' . (int) $booking_status);
+		}
+		elseif (is_string($booking_status) && strlen($booking_status)) {
 			$values = explode(',', $booking_status);
 			$query->where($db->qn('booking_status') . ' IN (' . implode(',', array_map('intval', $values)) . ')');
-		} elseif (is_countable($booking_status) && count($booking_status)) {
+		}
+		elseif (is_countable($booking_status) && count($booking_status)) {
 			$query->where($db->qn('booking_status') . ' IN (' . implode(',',
 					array_map('intval', $booking_status)
 				) . ')'
@@ -702,15 +701,14 @@ class ContractsModel extends ListModel
 	/**
 	 * Get combined dashboard data
 	 *
-	 * @param  int  $guest_id  ID of guest
+	 * @param   int  $guest_id  ID of guest
 	 *
 	 * @throws RuntimeException
 	 * @throws Exception
 	 * @since  2.5.0
 	 * @return mixed
 	 */
-	public function getDashboardContracts(int $guest_id = 0): mixed
-	{
+	public function getDashboardContracts(int $guest_id = 0): mixed {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -786,15 +784,14 @@ class ContractsModel extends ListModel
 	/**
 	 * Get stats
 	 *
-	 * @param  int     $property_id    ID of property
-	 * @param  string  $created_after  Contracts created after date
+	 * @param   int     $property_id    ID of property
+	 * @param   string  $created_after  Contracts created after date
 	 *
 	 * @throws RuntimeException
 	 * @since  3.3.0
 	 * @return mixed
 	 */
-	public function getDataForPropertyStats(int $property_id, string $created_after): mixed
-	{
+	public function getDataForPropertyStats(int $property_id, string $created_after): mixed {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -824,14 +821,13 @@ class ContractsModel extends ListModel
 	/**
 	 * Get contracts due to expire when no deposit received
 	 *
-	 * @param  string  $expiry_date  Expiry date
+	 * @param   string  $expiry_date  Expiry date
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return mixed
 	 */
-	public function getDueExpire(string $expiry_date): mixed
-	{
+	public function getDueExpire(string $expiry_date): mixed {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -853,15 +849,14 @@ class ContractsModel extends ListModel
 	/**
 	 * Get contracts due a review
 	 *
-	 * @param  string  $departure  Departure date
-	 * @param  bool    $reminder   TRUE for reminder
+	 * @param   string  $departure  Departure date
+	 * @param   bool    $reminder   TRUE for reminder
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return mixed
 	 */
-	public function getDueReviews(string $departure, bool $reminder = false): mixed
-	{
+	public function getDueReviews(string $departure, bool $reminder = false): mixed {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -876,7 +871,8 @@ class ContractsModel extends ListModel
 
 		if (!$reminder) {
 			$query->where($db->qn('review_requested') . '=0');
-		} else {
+		}
+		else {
 			$query->where($db->qn('review_requested') . '=1');
 		}
 
@@ -894,8 +890,7 @@ class ContractsModel extends ListModel
 	 * @since  1.0.0
 	 * @return mixed
 	 */
-	public function getExpiredRequests(): mixed
-	{
+	public function getExpiredRequests(): mixed {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -918,17 +913,16 @@ class ContractsModel extends ListModel
 	/**
 	 * Find the latest n contracts for a property.
 	 *
-	 * @param  int     $property_id  ID of property
-	 * @param  string  $created_at   Earliest created at date
-	 * @param  string  $today        Today
-	 * @param  int     $limit        # to return
+	 * @param   int     $property_id  ID of property
+	 * @param   string  $created_at   Earliest created at date
+	 * @param   string  $today        Today
+	 * @param   int     $limit        # to return
 	 *
 	 * @throws RuntimeException
 	 * @since  3.3.0
 	 * @return mixed
 	 */
-	public function getLatestForProperty(int $property_id, string $created_at, string $today, int $limit = 7): mixed
-	{
+	public function getLatestForProperty(int $property_id, string $created_at, string $today, int $limit = 7): mixed {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -965,8 +959,7 @@ class ContractsModel extends ListModel
 	 * @since  3.3.0
 	 * @return array
 	 */
-	public function getLatestUpdatePerProperty(): array
-	{
+	public function getLatestUpdatePerProperty(): array {
 		$db    = KrFactory::getDatabase();
 		$query = $db->getQuery(true);
 
@@ -990,8 +983,7 @@ class ContractsModel extends ListModel
 	 * @since  2.4.0
 	 * @return mixed
 	 */
-	public function getOverview(): mixed
-	{
+	public function getOverview(): mixed {
 		$today     = TickTock::getDate();
 		$yesterday = TickTock::modifyDays($today, 1, '-') . ' 00:00:00';
 
@@ -1062,17 +1054,16 @@ class ContractsModel extends ListModel
 	/**
 	 * Check if property is available (contracts only no ics) between two dates
 	 *
-	 * @param  int     $property_id  ID of property
-	 * @param  string  $arrival      Arrival date
-	 * @param  string  $departure    Departure date
-	 * @param  int     $id           ID of contract
+	 * @param   int     $property_id  ID of property
+	 * @param   string  $arrival      Arrival date
+	 * @param   string  $departure    Departure date
+	 * @param   int     $id           ID of contract
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return mixed
 	 */
-	public function getPropertyAvailableDates(int $property_id, string $arrival, string $departure, int $id = 0): mixed
-	{
+	public function getPropertyAvailableDates(int $property_id, string $arrival, string $departure, int $id = 0): mixed {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -1107,8 +1098,7 @@ class ContractsModel extends ListModel
 	 * @since  1.0.0
 	 * @return mixed
 	 */
-	public function getStrays(): mixed
-	{
+	public function getStrays(): mixed {
 		$ts = TickTock::modifyHours('now', 2, '-');
 
 		$db    = $this->getDatabase();
@@ -1131,14 +1121,13 @@ class ContractsModel extends ListModel
 	/**
 	 * Get the data to be displayed on the tooltip
 	 *
-	 * @param  int  $id  ID of contract
+	 * @param   int  $id  ID of contract
 	 *
 	 * @throws RuntimeException
 	 * @since  3.3.0
 	 * @return object
 	 */
-	public function getTooltipData(int $id): object
-	{
+	public function getTooltipData(int $id): object {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -1167,16 +1156,15 @@ class ContractsModel extends ListModel
 	/**
 	 * Find upcoming contracts for a property
 	 *
-	 * @param  int     $property_id  ID of property
-	 * @param  string  $arrival      Earliest arrival date
-	 * @param  int     $limit        # to return
+	 * @param   int     $property_id  ID of property
+	 * @param   string  $arrival      Earliest arrival date
+	 * @param   int     $limit        # to return
 	 *
 	 * @throws RuntimeException
 	 * @since  3.3.0
 	 * @return array
 	 */
-	public function getUpcomingForProperty(int $property_id, string $arrival, int $limit = 7): array
-	{
+	public function getUpcomingForProperty(int $property_id, string $arrival, int $limit = 7): array {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -1208,17 +1196,16 @@ class ContractsModel extends ListModel
 	/**
 	 * Check if property is available between arrival and departure dates
 	 *
-	 * @param  int     $property_id  ID of property
-	 * @param  string  $arrival      Arrival date
-	 * @param  string  $departure    Departure date
-	 * @param  int     $edit_id      ID of contract being edited
+	 * @param   int     $property_id  ID of property
+	 * @param   string  $arrival      Arrival date
+	 * @param   string  $departure    Departure date
+	 * @param   int     $edit_id      ID of contract being edited
 	 *
 	 * @throws RuntimeException
 	 * @since  3.3.0
 	 * @return bool
 	 */
-	public function isPropertyAvailable(int $property_id, string $arrival, string $departure, int $edit_id = 0): bool
-	{
+	public function isPropertyAvailable(int $property_id, string $arrival, string $departure, int $edit_id = 0): bool {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -1266,8 +1253,7 @@ class ContractsModel extends ListModel
 	 * @since  1.0.0
 	 * @return QueryInterface
 	 */
-	protected function getListQuery(): QueryInterface
-	{
+	protected function getListQuery(): QueryInterface {
 		$db = $this->getDatabase();
 
 		$subQuery = $db->getQuery(true);
@@ -1319,8 +1305,9 @@ class ContractsModel extends ListModel
 		$filter_property_id = $this->state->get('filter.property_id');
 		if ($filter_property_id) {
 			if (is_numeric($filter_property_id)) {
-				$query->where('a.property_id = ' . (int)$filter_property_id);
-			} elseif (is_string($filter_property_id) && strlen($filter_property_id) > 0) {
+				$query->where('a.property_id = ' . (int) $filter_property_id);
+			}
+			elseif (is_string($filter_property_id) && strlen($filter_property_id) > 0) {
 				$ids = explode(',', $filter_property_id);
 				$query->where('a.property_id IN (' . implode(',', array_map('intval', $ids)) . ')');
 			}
@@ -1328,8 +1315,9 @@ class ContractsModel extends ListModel
 
 		$state = $this->getState('filter.state');
 		if (is_numeric($state)) {
-			$query->where($db->qn('a.state') . '=' . (int)$state);
-		} elseif ($state == '') {
+			$query->where($db->qn('a.state') . '=' . (int) $state);
+		}
+		elseif ($state == '') {
 			$query->where($db->qn('a.state') . '= 1');
 		}
 
@@ -1341,63 +1329,68 @@ class ContractsModel extends ListModel
 		$filter_departure = $this->state->get('filter.departure');
 		if ($filter_departure) {
 			$query->where($db->qn('a.departure') . '>=' . $db->q($filter_departure));
-		} else {
+		}
+		else {
 			$query->where($db->qn('a.departure') . '>=' . $db->q(TickTock::getDate()));
 		}
 
 		$filter_black_booking = $this->state->get('filter.black_booking');
 		if (is_numeric($filter_black_booking)) {
-			$query->where($db->qn('a.black_booking') . '=' . (int)$filter_black_booking);
-		} elseif (is_string($filter_black_booking) && strlen($filter_black_booking)) {
+			$query->where($db->qn('a.black_booking') . '=' . (int) $filter_black_booking);
+		}
+		elseif (is_string($filter_black_booking) && strlen($filter_black_booking)) {
 			$values = explode(',', $filter_black_booking);
 			$query->where($db->qn('a.black_booking') . ' IN (' . implode(',', array_map('intval', $values)) . ')');
-		} else {
+		}
+		else {
 			$query->where($db->qn('a.black_booking') . '=0');
 		}
 
 		$cancelled = $this->state->get('filter.cancelled');
 		if (is_numeric($cancelled)) {
-			$query->where($db->qn('a.cancelled') . '=' . (int)$cancelled);
-		} elseif (is_string($cancelled) && strlen($cancelled)) {
+			$query->where($db->qn('a.cancelled') . '=' . (int) $cancelled);
+		}
+		elseif (is_string($cancelled) && strlen($cancelled)) {
 			$values = explode(',', $cancelled);
 			$query->where($db->qn('a.cancelled') . ' IN (' . implode(',', array_map('intval', $values)) . ')');
-		} else {
+		}
+		else {
 			$query->where($db->qn('a.cancelled') . '=0');
 		}
 
 		$filter_booking_status = $this->state->get('filter.booking_status');
 		if (is_numeric($filter_booking_status)) {
-			$query->where($db->qn('a.booking_status') . '=' . (int)$filter_booking_status);
+			$query->where($db->qn('a.booking_status') . '=' . (int) $filter_booking_status);
 		}
 
 		$filter_guest_id = $this->state->get('filter.guest_id');
 		if ($filter_guest_id) {
-			$query->where($db->qn('a.guest_id') . '=' . (int)$filter_guest_id);
+			$query->where($db->qn('a.guest_id') . '=' . (int) $filter_guest_id);
 		}
 
 		$filter_manager_id = $this->state->get('filter.manager_id');
 		if ($filter_manager_id) {
-			$query->where($db->qn('a.manager_id') . '=' . (int)$filter_manager_id);
+			$query->where($db->qn('a.manager_id') . '=' . (int) $filter_manager_id);
 		}
 
 		$filter_agency_id = $this->state->get('filter.agency_id');
 		if ($filter_agency_id) {
-			$query->where($db->qn('a.agency_id') . '=' . (int)$filter_agency_id);
+			$query->where($db->qn('a.agency_id') . '=' . (int) $filter_agency_id);
 		}
 
 		$filter_region_id = $this->state->get('filter.region_id');
 		if ($filter_region_id > 0) {
-			$query->where($db->qn('p.region_id') . '=' . (int)$filter_region_id);
+			$query->where($db->qn('p.region_id') . '=' . (int) $filter_region_id);
 		}
 
 		$filter_owner_id = $this->state->get('filter.owner_id');
-		if ((int)$filter_owner_id > 0) {
-			$query->where($db->qn('p.owner_id') . '=' . (int)$filter_owner_id);
+		if ((int) $filter_owner_id > 0) {
+			$query->where($db->qn('p.owner_id') . '=' . (int) $filter_owner_id);
 		}
 
 		$filter_agent_id = $this->state->get('filter.agent_id');
-		if ((int)$filter_agent_id > 0) {
-			$query->where($db->qn('a.agent_id') . '=' . (int)$filter_agent_id);
+		if ((int) $filter_agent_id > 0) {
+			$query->where($db->qn('a.agent_id') . '=' . (int) $filter_agent_id);
 		}
 
 		$filter_created_at = $this->state->get('filter.created_at');
@@ -1408,8 +1401,9 @@ class ContractsModel extends ListModel
 		$search = $this->getState('filter.search');
 		if (!empty($search)) {
 			if (stripos($search, 'id:') === 0) {
-				$query->where($db->qn('a.id') . '=' . (int)substr($search, 3));
-			} else {
+				$query->where($db->qn('a.id') . '=' . (int) substr($search, 3));
+			}
+			else {
 				$search = $db->q('%' . $db->escape(trim($search), true) . '%');
 				$query->having('( guest_name LIKE ' . $search . ' OR ( a.tag LIKE ' . $search . ' ) )');
 			}
@@ -1430,13 +1424,12 @@ class ContractsModel extends ListModel
 	 * different modules that might need different sets of data or different
 	 * ordering requirements.
 	 *
-	 * @param  string  $id  A prefix for the store id.
+	 * @param   string  $id  A prefix for the store id.
 	 *
 	 * @since  1.0.0
 	 * @return string   A store id.
 	 */
-	protected function getStoreId($id = ''): string
-	{
+	protected function getStoreId($id = ''): string {
 		$id .= ':' . $this->getState('filter.search');
 		$id .= ':' . $this->getState('filter.state');
 		$id .= ':' . $this->getState('filter.cancelled');
@@ -1460,14 +1453,13 @@ class ContractsModel extends ListModel
 	 * Method to autopopulate the model state.
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @param  string  $ordering   Default ordering
-	 * @param  string  $direction  Default ordering direction
+	 * @param   string  $ordering   Default ordering
+	 * @param   string  $direction  Default ordering direction
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected function populateState($ordering = 'a.arrival', $direction = 'asc'): void
-	{
+	protected function populateState($ordering = 'a.arrival', $direction = 'asc'): void {
 		$this->setState('filter.search',
 			$this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string')
 		);
@@ -1530,16 +1522,15 @@ class ContractsModel extends ListModel
 	/**
 	 * Union query for combining blocks
 	 *
-	 * @param  object  $db          KrFactory instance
-	 * @param  mixed   $properties  ID, csv list or array of required properties to be returned
-	 * @param  string  $departure   Earliest departure date, defauls to today if not set
-	 * @param  bool    $published   TRUE to get bookings for published properties only
+	 * @param   object  $db          KrFactory instance
+	 * @param   mixed   $properties  ID, csv list or array of required properties to be returned
+	 * @param   string  $departure   Earliest departure date, defauls to today if not set
+	 * @param   bool    $published   TRUE to get bookings for published properties only
 	 *
 	 * @since  3.3.0
 	 * @return QueryInterface
 	 */
-	protected function unionQueryIcal(object $db, mixed $properties, string $departure, bool $published): QueryInterface
-	{
+	protected function unionQueryIcal(object $db, mixed $properties, string $departure, bool $published): QueryInterface {
 		$q = $db->getQuery(true);
 		$q->select($db->qn('b.id', 'id'))
 			->select($db->q(null, 'tag'))
@@ -1574,10 +1565,12 @@ class ContractsModel extends ListModel
 		}
 
 		if (is_numeric($properties)) {
-			$q->where($db->qn('b.property_id') . '=' . (int)$properties);
-		} elseif (is_array($properties)) {
+			$q->where($db->qn('b.property_id') . '=' . (int) $properties);
+		}
+		elseif (is_array($properties)) {
 			$q->where($db->qn('b.property_id') . ' IN (' . implode(',', array_map('intval', $properties)) . ')');
-		} elseif (is_string($properties) && strlen($properties) > 0) {
+		}
+		elseif (is_string($properties) && strlen($properties) > 0) {
 			$ids = explode(',', $properties);
 			$q->where($db->qn('b.property_id') . ' IN (' . implode(',', array_map('intval', $ids)) . ')');
 		}

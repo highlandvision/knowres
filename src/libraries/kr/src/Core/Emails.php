@@ -28,7 +28,7 @@ class Emails
 	/**
 	 * Action emails
 	 *
-	 * @param  Hub  $hub  Hub data
+	 * @param   Hub  $hub  Hub data
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -63,7 +63,7 @@ class Emails
 		{
 			$trigger = $this->hub->getValue('email_trigger');
 		}
-		else if ($this->hub->getValue('booking_status') == 99)
+		elseif ($this->hub->getValue('booking_status') == 99)
 		{
 			if ($this->hub->getValue('on_request'))
 			{
@@ -74,11 +74,11 @@ class Emails
 				$trigger = 'BOOKCANCEL';
 			}
 		}
-		else if ($this->hub->getValue('on_request'))
+		elseif ($this->hub->getValue('on_request'))
 		{
 			$trigger = 'BOOKREQUEST';
 		}
-		else if ($this->hub->getValue('booking_status') >= 10)
+		elseif ($this->hub->getValue('booking_status') >= 10)
 		{
 			$trigger = 'BOOKCONFIRM';
 		}

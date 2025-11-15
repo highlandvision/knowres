@@ -43,8 +43,8 @@ class Payments extends KrHtmlView
 	/**
 	 * Add the custom toolbar for payments
 	 *
-	 * @param  Toolbar  $Toolbar  Current toolbar
-	 * @param  string   $name     Name of view
+	 * @param   Toolbar  $Toolbar  Current toolbar
+	 * @param   string   $name     Name of view
 	 *
 	 * @throws Exception
 	 * @since  2.0.0
@@ -98,7 +98,7 @@ class Payments extends KrHtmlView
 				$html  = KrMethods::render('toolbar.contract.trigger', ['title' => $title]);
 				$Toolbar->customButton('trigger')->html($html);
 			}
-			else if ($this->item->departure > $this->today)
+			elseif ($this->item->departure > $this->today)
 			{
 				$title = KrMethods::plain('COM_KNOWRES_CONTRACTS_RESURRECT');
 				$html  = KrMethods::render('toolbar.contract.resurrect', ['title' => $title]);

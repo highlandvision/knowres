@@ -33,8 +33,7 @@ class FilterkeyField extends KrListField
 	 * @since  3.4
 	 * @return array  The field option objects.
 	 */
-	protected function getOptions(): array
-	{
+	protected function getOptions(): array {
 		$options = [];
 		$table   = $this->getAttribute('table');
 		$state   = self::getState($this->form);
@@ -46,15 +45,18 @@ class FilterkeyField extends KrListField
 			$options = self::filteringForeign('#__knowres_property', $table, 'property_id', 'id',
 				'property_name', $state
 			);
-		} else if ($type == 'c') {
+		}
+		elseif ($type == 'c') {
 			$options = self::filteringForeign('#__knowres_contract', $table, 'contract_id', 'id',
 				'tag', $state
 			);
-		} else if ($type == 'g') {
+		}
+		elseif ($type == 'g') {
 			$options = self::filteringForeign('#__knowres_guest', $table, 'guest_id', 'id',
 				'surname', $state
 			);
-		} else if ($type == 'o') {
+		}
+		elseif ($type == 'o') {
 			$options = self::filteringForeign('#__knowres_owner', $table, 'owner_id', 'id',
 				'name', $state
 			);

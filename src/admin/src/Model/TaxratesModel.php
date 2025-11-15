@@ -32,13 +32,12 @@ class TaxratesModel extends ListModel
 	/**
 	 * Constructor.
 	 *
-	 * @param  array  $config  An optional associative array of configuration settings.
+	 * @param   array  $config  An optional associative array of configuration settings.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function __construct($config = [])
-	{
+	public function __construct($config = []) {
 		if (empty($config['filter_fields'])) {
 			//@formatter:off
 			$config['filter_fields'] = [
@@ -75,7 +74,7 @@ class TaxratesModel extends ListModel
 	/**
 	 * Get all published rows including jurisdiction locations
 	 *
-	 * @param  string  $order  Sort by field
+	 * @param   string  $order  Sort by field
 	 *
 	 * @throws DatabaseNotFoundException
 	 * @throws InvalidFormatException
@@ -84,8 +83,7 @@ class TaxratesModel extends ListModel
 	 * @since  3.3.0
 	 * @return array
 	 */
-	public function getAll(string $order = ''): array
-	{
+	public function getAll(string $order = ''): array {
 		$today = TickTock::getDate();
 
 		$db    = $this->getDatabase();
@@ -141,14 +139,13 @@ class TaxratesModel extends ListModel
 	/**
 	 * Get tax code row for current date.
 	 *
-	 * @param  string  $code  Tax code
-	 * @param  string  $date  YY-MM-DD Applicable date (normally arrival date
+	 * @param   string  $code  Tax code
+	 * @param   string  $date  YY-MM-DD Applicable date (normally arrival date
 	 *
 	 * @since  3.3.0
 	 * @return array
 	 */
-	public function getByCode(string $code, string $date): array
-	{
+	public function getByCode(string $code, string $date): array {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -202,8 +199,7 @@ class TaxratesModel extends ListModel
 	 * @since  1.0.0
 	 * @return QueryInterface
 	 */
-	protected function getListQuery(): QueryInterface
-	{
+	protected function getListQuery(): QueryInterface {
 		$lang = KrMethods::getLanguageTag();
 
 		$db    = $this->getDatabase();
@@ -245,8 +241,9 @@ class TaxratesModel extends ListModel
 
 		$state = $this->getState('filter.state');
 		if (is_numeric($state)) {
-			$query->where($db->qn('a.state') . '=' . (int)$state);
-		} elseif ($state === '') {
+			$query->where($db->qn('a.state') . '=' . (int) $state);
+		}
+		elseif ($state === '') {
 			$query->where($db->qn('a.state') . ' IN (0, 1)');
 		}
 
@@ -259,8 +256,9 @@ class TaxratesModel extends ListModel
 		$search = $this->getState('filter.search');
 		if (!empty($search)) {
 			if (stripos($search, 'id:') === 0) {
-				$query->where($db->qn('a.id') . '=' . (int)substr($search, 3));
-			} else {
+				$query->where($db->qn('a.id') . '=' . (int) substr($search, 3));
+			}
+			else {
 				$search = $db->q('%' . $db->escape($search) . '%');
 				$query->where('(' . $subQuery->__toString() . ') ' . ' LIKE ' . $search);
 			}
@@ -281,13 +279,12 @@ class TaxratesModel extends ListModel
 	 * different modules that might need different sets of data or different
 	 * ordering requirements.
 	 *
-	 * @param  string  $id  A prefix for the store id.
+	 * @param   string  $id  A prefix for the store id.
 	 *
 	 * @since  1.0.0
 	 * @return string        A store id.
 	 */
-	protected function getStoreId($id = ''): string
-	{
+	protected function getStoreId($id = ''): string {
 		$id .= ':' . $this->getState('filter.search');
 		$id .= ':' . $this->getState('filter.state');
 		$id .= ':' . $this->getState('filter.valid_from');
@@ -299,14 +296,13 @@ class TaxratesModel extends ListModel
 	 * Method to autopopulate the model state.
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @param  string  $ordering   Ordering field
-	 * @param  string  $direction  Ordering direction
+	 * @param   string  $ordering   Ordering field
+	 * @param   string  $direction  Ordering direction
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected function populateState($ordering = 'tax_name', $direction = 'asc'): void
-	{
+	protected function populateState($ordering = 'tax_name', $direction = 'asc'): void {
 		$this->setState('filter.search',
 			$this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string')
 		);

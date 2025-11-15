@@ -28,7 +28,7 @@ class Commission
 	/**
 	 * Calculate commission
 	 *
-	 * @param  Hub  $Hub  Hub base class
+	 * @param   Hub  $Hub  Hub base class
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -71,7 +71,7 @@ class Commission
 				$net_price_system = 0;
 				$commission       = $room_total;
 			}
-			else if ($net_price)
+			elseif ($net_price)
 			{
 				$net_price_system = $this->Hub->round($room_total * ((100 - $owner->commission) / 100));
 				$commission       = $room_total - $net_price;

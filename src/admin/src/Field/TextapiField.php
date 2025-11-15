@@ -41,8 +41,7 @@ class TextapiField extends FormField
 	 * @since  3.2
 	 * @return string
 	 */
-	public function getInput(): string
-	{
+	public function getInput(): string {
 		if (!trim($this->value)) {
 			return '';
 		}
@@ -57,27 +56,31 @@ class TextapiField extends FormField
 			$output            = str_replace('<?xml version="1.0"?>', '', $dom->saveXML());
 
 			return '<pre>' . htmlentities($output) . '</pre>';
-		} catch (Exception) {
+		}
+		catch (Exception) {
 			$test = @json_decode($this->value);
 			if ($test) {
 				$json = Utility::decodeJson($this->value, true);
 				$d    = '<pre>';
 				foreach ($json as $key => $text) {
 					if (is_object($text) || is_array($text)) {
-						$properties = (array)$text;
+						$properties = (array) $text;
 						foreach ($properties as $k => $v) {
 							$d .= $k . ' = ' . $v . '<br>';
 						}
-					} else {
+					}
+					else {
 						$d .= $key . ' = ' . $text . '<br>';
 					}
 				}
 				$d .= '</pre>';
 
 				return $d;
-			} else if (is_string($this->value)) {
+			}
+			elseif (is_string($this->value)) {
 				return '<pre>' . $this->value . '</pre>';
-			} else if (is_countable($this->value) && count($this->value)) {
+			}
+			elseif (is_countable($this->value) && count($this->value)) {
 				$d = '<pre>';
 				foreach ($this->value as $key => $value) {
 					$d .= $key . ' = ' . $value . '<br>';
@@ -85,7 +88,8 @@ class TextapiField extends FormField
 				$d .= '</pre>';
 
 				return $d;
-			} else {
+			}
+			else {
 				return "<pre>Sorry the data could not be displayed</pre>";
 			}
 		}

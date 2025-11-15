@@ -45,13 +45,12 @@ class PropertyIcs
 	/**
 	 * Initialise
 	 *
-	 * @param  int     $property_id    Property ID
-	 * @param  string  $property_name  Name of property
+	 * @param   int     $property_id    Property ID
+	 * @param   string  $property_name  Name of property
 	 *
 	 * @since  3.3.0
 	 */
-	public function __construct(int $property_id, string $property_name, string $custom = '')
-	{
+	public function __construct(int $property_id, string $property_name, string $custom = '') {
 		$this->property_id   = $property_id;
 		$this->property_name = $property_name;
 		$this->custom        = $custom;
@@ -69,8 +68,7 @@ class PropertyIcs
 	 * @since  4.2.0
 	 * @return string
 	 */
-	private static function setCheckTime(?string $time): string
-	{
+	private static function setCheckTime(?string $time): string {
 		$new = '000000';
 		if (!empty($time)) {
 			$new = str_replace(':', '', $time) . '00';
@@ -82,7 +80,7 @@ class PropertyIcs
 	/**
 	 * Create the calendar ics and dispatch
 	 *
-	 * @param  string  $action  Despatch action dl to download or echo
+	 * @param   string  $action  Despatch action dl to download or echo
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -100,7 +98,8 @@ class PropertyIcs
 		if (is_countable($booked) && count($booked)) {
 			if ($this->amalgamate) {
 				$this->addAmalgamated($booked);
-			} else {
+			}
+			else {
 				$this->setTimezone();
 				foreach ($booked as $b) {
 					$this->addBookingEvent($b);
@@ -110,7 +109,8 @@ class PropertyIcs
 
 		if ($action == 'dl') {
 			$this->Calendar->returnCalendar();
-		} else {
+		}
+		else {
 			echo $this->Calendar->createCalendar();
 		}
 	}
@@ -118,13 +118,12 @@ class PropertyIcs
 	/**
 	 * Amalgamate any consercutive bookings and add dates to calendar
 	 *
-	 * @param  array  $booked  Booked dates
+	 * @param   array  $booked  Booked dates
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	private function addAmalgamated(array $booked): void
-	{
+	private function addAmalgamated(array $booked): void {
 		$start = false;
 		$prev  = false;
 
@@ -154,14 +153,13 @@ class PropertyIcs
 	/**
 	 * Add consecutive amalgaamted booked dates event
 	 *
-	 * @param  string  $start  Start date
-	 * @param  string  $prev   Previous date
+	 * @param   string  $start  Start date
+	 * @param   string  $prev   Previous date
 	 *
 	 * @throws Exception
 	 * @since  4.1.0
 	 */
-	private function addAmalgamatedEvent(string $start, string $prev): void
-	{
+	private function addAmalgamatedEvent(string $start, string $prev): void {
 		$vevent = $this->Calendar->newVevent();
 		$vevent->setDtstart(date('Ymd', strtotime($start)), ['VALUE' => 'DATE']);
 		$vevent->setDtend(date('Ymd', strtotime($prev . '+1 Days')), ['VALUE' => 'DATE']);
@@ -172,28 +170,33 @@ class PropertyIcs
 	/**
 	 * Add booking event
 	 *
-	 * @param  object  $b  Booked dates - contract or black booking
+	 * @param   object  $b  Booked dates - contract or black booking
 	 *
 	 * @throws Exception
 	 * @since  4.1.0
 	 */
-	private function addBookingEvent(object $b): void
-	{
+	private function addBookingEvent(object $b): void {
 		$vevent = $this->Calendar->newVevent();
 
 		$ci = $this->setCheckTime($b->checkin_time);
 		$co = $this->setCheckTime($b->checkout_time);
 
 		$vevent->setDtstart(new DateTime($b->arrival . 'T' . $this->setCheckTime($b->checkin_time),
-			new DateTimeZone(KrMethods::getCfg('offset'))));
+				new DateTimeZone(KrMethods::getCfg('offset'))
+			)
+		);
 		$vevent->setDtend(new DateTime($b->departure . 'T' . $this->setCheckTime($b->checkout_time),
-			new DateTimeZone(KrMethods::getCfg('offset'))));
+				new DateTimeZone(KrMethods::getCfg('offset'))
+			)
+		);
 
 		if (!empty($b->tag)) {
 			$vevent->setComment($b->firstname . ' ' . $b->surname . ' ID:' . $b->tag);
-		} else if ($b->black_booking == 1) {
+		}
+		elseif ($b->black_booking == 1) {
 			$vevent->setComment('Block');
-		} else if ($b->black_booking == 2) {
+		}
+		elseif ($b->black_booking == 2) {
 			$vevent->setComment('Ical Block');
 		}
 
@@ -207,8 +210,7 @@ class PropertyIcs
 	 * @since  3.3.0
 	 * @return array
 	 */
-	private function getBookedDates(): array
-	{
+	private function getBookedDates(): array {
 		$bookings = KrFactory::getListModel('contracts')->getBookedDates($this->property_id);
 		$booked   = [];
 
@@ -221,7 +223,8 @@ class PropertyIcs
 			}
 
 			return array_unique($booked);
-		} else {
+		}
+		else {
 			$newtz = $this->Calendar->newVtimezone();
 			$newtz->setTzid(KrMethods::getCfg('offset'));
 
@@ -239,8 +242,7 @@ class PropertyIcs
 	 * @throws Exception
 	 * @since  4.1.0
 	 */
-	private function setTimeZone(): void
-	{
+	private function setTimeZone(): void {
 		$this->Calendar->setXprop($this->Calendar::X_WR_TIMEZONE, KrMethods::getCfg('offset'));
 	}
 }

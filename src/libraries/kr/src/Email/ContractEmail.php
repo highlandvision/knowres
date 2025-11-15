@@ -71,8 +71,8 @@ class ContractEmail extends Email
 	 * /**
 	 * Constructor
 	 *
-	 * @param  string  $trigger     The email trigger
-	 * @param  int     $trigger_id  ID of required trigger
+	 * @param   string  $trigger     The email trigger
+	 * @param   int     $trigger_id  ID of required trigger
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -87,10 +87,10 @@ class ContractEmail extends Email
 	/**
 	 * Send emails as required for contract
 	 *
-	 * @param  int     $contract_id       ID of contract
-	 * @param  float   $payment_amount    Amount of payment
-	 * @param  string  $payment_currency  Currency of payment
-	 * @param  int     $service_id        ID of service
+	 * @param   int     $contract_id       ID of contract
+	 * @param   float   $payment_amount    Amount of payment
+	 * @param   string  $payment_currency  Currency of payment
+	 * @param   int     $service_id        ID of service
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -159,7 +159,7 @@ class ContractEmail extends Email
 	/**
 	 * Check for and add any auto generated email pdf attachments
 	 *
-	 * @param  array  $pdfs  Array of auto attachments
+	 * @param   array  $pdfs  Array of auto attachments
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -173,7 +173,7 @@ class ContractEmail extends Email
 				$voucher             = new Media\Pdf\Contract\Voucher('email', $this->contract_id);
 				$this->attachments[] = $voucher->getPdf();
 			}
-			else if ($t == 'guestdata' && $this->contract->guestdata_id)
+			elseif ($t == 'guestdata' && $this->contract->guestdata_id)
 			{
 				$guestdata           = new Media\Pdf\Contract\Guestdata('email', $this->contract_id);
 				$this->attachments[] = $guestdata->getPdf();
@@ -184,7 +184,7 @@ class ContractEmail extends Email
 	/**
 	 * Check for and add any uploaded email attachments
 	 *
-	 * @param  array  $pdfs  Uploaded attachments
+	 * @param   array  $pdfs  Uploaded attachments
 	 *
 	 * @since 1.0.0
 	 */
@@ -198,19 +198,19 @@ class ContractEmail extends Email
 			{
 				$matches['propertys'] = $this->contract->property_id;
 			}
-			else if ($t == 'regions')
+			elseif ($t == 'regions')
 			{
 				$matches['regions'] = $this->property->region_id;
 			}
-			else if ($t == 'towns')
+			elseif ($t == 'towns')
 			{
 				$matches['towns'] = strtolower(str_replace(' ', '-', $this->property->town_name));
 			}
-			else if ($t == 'types')
+			elseif ($t == 'types')
 			{
 				$matches['types'] = $this->property->type_id;
 			}
-			else if ($t == 'contracts')
+			elseif ($t == 'contracts')
 			{
 				$matches['contracts'] = $this->contract->tag;
 			}
@@ -254,15 +254,15 @@ class ContractEmail extends Email
 				{
 					$actual_date = $this->contract->arrival;
 				}
-				else if ($e->trigger_cron == 'departure')
+				elseif ($e->trigger_cron == 'departure')
 				{
 					$actual_date = $this->contract->departure;
 				}
-				else if ($e->trigger_cron == 'expiry_date')
+				elseif ($e->trigger_cron == 'expiry_date')
 				{
 					$actual_date = $this->contract->expiry_date;
 				}
-				else if ($e->trigger_cron == 'balance_date')
+				elseif ($e->trigger_cron == 'balance_date')
 				{
 					$actual_date = $this->contract->balance_date;
 				}
@@ -286,8 +286,8 @@ class ContractEmail extends Email
 	/**
 	 * Build email body and subject
 	 *
-	 * @param  int   $template_id  ID of template to be used
-	 * @param  bool  $send_guest   Indicates a guest email
+	 * @param   int   $template_id  ID of template to be used
+	 * @param   bool  $send_guest   Indicates a guest email
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -370,7 +370,7 @@ class ContractEmail extends Email
 	/**
 	 * Send guest email
 	 *
-	 * @param  int  $template_id  ID of email template
+	 * @param   int  $template_id  ID of email template
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -416,8 +416,8 @@ class ContractEmail extends Email
 	/**
 	 * Send owner email
 	 *
-	 * @param  int    $template_id  ID of template
-	 * @param  array  $emails       Owner emails
+	 * @param   int    $template_id  ID of template
+	 * @param   array  $emails       Owner emails
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -485,7 +485,7 @@ class ContractEmail extends Email
 	/**
 	 * Send email
 	 *
-	 * @param  object  $trigger  Email trigger
+	 * @param   object  $trigger  Email trigger
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -804,7 +804,7 @@ class ContractEmail extends Email
 	/**
 	 * Format notes for audience
 	 *
-	 * @param  int  $audience  '1' Guest, '2' Owner
+	 * @param   int  $audience  '1' Guest, '2' Owner
 	 *
 	 * @since  1.0.0
 	 * @return string
@@ -860,7 +860,7 @@ class ContractEmail extends Email
 	/**
 	 * Set Payments total
 	 *
-	 * @param  bool  $confirmed_only  Set true to only include confirmed payments
+	 * @param   bool  $confirmed_only  Set true to only include confirmed payments
 	 *
 	 * @since 1.0.0
 	 */

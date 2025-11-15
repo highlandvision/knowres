@@ -33,9 +33,8 @@ class KnowresSpotlightHelper
 	 * @since  5.0.0
 	 * @return array
 	 */
-	public static function getImages(Registry $params): array
-	{
-		$count = 0;
+	public static function getImages(Registry $params): array {
+		$count  = 0;
 		$images = [];
 		for ($i = 1; $i <= 3; $i++) {
 			if ($params->get('image' . $i)) {
@@ -48,16 +47,21 @@ class KnowresSpotlightHelper
 				$option        = '';
 				if ($category_id <> -1) {
 					$Itemid = SiteHelper::getItemId('com_knowres', 'properties',
-					                                ['layout' => 'category', 'category_id' => $category_id],
-					                                ['layout' => 'category']);
-					$option   = KrMethods::route('index.php?option=com_knowres&view=properties&layout=category&category_id=' .
-						                 $category_id . '&Itemid=' . $Itemid);
-				} elseif ($layout <> -1) {
+						['layout' => 'category', 'category_id' => $category_id],
+						['layout' => 'category']
+					);
+					$option = KrMethods::route('index.php?option=com_knowres&view=properties&layout=category&category_id=' .
+					                           $category_id . '&Itemid=' . $Itemid
+					);
+				}
+				elseif ($layout <> -1) {
 					$Itemid = SiteHelper::getItemId('com_knowres', 'properties', ['layout' => $layout]);
-					$option   = KrMethods::route('index.php?option=com_knowres&view=properties&layout=' . $layout
-					                           . '&Itemid=' . $Itemid);
-				} elseif ($link <> -1) {
-					$option   = KrMethods::route('index.php?Itemid=' . $link);
+					$option = KrMethods::route('index.php?option=com_knowres&view=properties&layout=' . $layout
+					                           . '&Itemid=' . $Itemid
+					);
+				}
+				elseif ($link <> -1) {
+					$option = KrMethods::route('index.php?Itemid=' . $link);
 				}
 
 				if (empty($option)) {

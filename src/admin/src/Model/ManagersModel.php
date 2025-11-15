@@ -30,13 +30,12 @@ class ManagersModel extends ListModel
 	/**
 	 * Constructor.
 	 *
-	 * @param  array  $config  An optional associative array of configuration settings.
+	 * @param   array  $config  An optional associative array of configuration settings.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function __construct($config = [])
-	{
+	public function __construct($config = []) {
 		if (empty($config['filter_fields'])) {
 			//@formatter:off
 			$config['filter_fields'] = [
@@ -60,14 +59,13 @@ class ManagersModel extends ListModel
 	/**
 	 * Get the agency ID from the manager
 	 *
-	 * @param  int  $id  ID of manager
+	 * @param   int  $id  ID of manager
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return mixed
 	 */
-	public function getAgency(int $id): mixed
-	{
+	public function getAgency(int $id): mixed {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -88,8 +86,7 @@ class ManagersModel extends ListModel
 	 * @since  1.0.0
 	 * @return mixed
 	 */
-	public function getAll(): mixed
-	{
+	public function getAll(): mixed {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -120,8 +117,7 @@ class ManagersModel extends ListModel
 	 * @since  1.0.0
 	 * @return array  Object on success, false on failure.
 	 */
-	public function getItems(): array
-	{
+	public function getItems(): array {
 		$items = parent::getItems();
 		foreach ($items as $item) {
 			if (isset($item->properties)) {
@@ -141,7 +137,8 @@ class ManagersModel extends ListModel
 
 					if ($results) {
 						$text[] = $results->property_name;
-					} else {
+					}
+					else {
 						$text[] = $value;
 					}
 				}
@@ -159,8 +156,7 @@ class ManagersModel extends ListModel
 	 * @throws RuntimeException
 	 * @since  1.0.0
 	 */
-	public function getPropertyManagers()
-	{
+	public function getPropertyManagers() {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -197,8 +193,7 @@ class ManagersModel extends ListModel
 	 * @since  1.0.0
 	 * @return QueryInterface
 	 */
-	protected function getListQuery(): QueryInterface
-	{
+	protected function getListQuery(): QueryInterface {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -220,8 +215,9 @@ class ManagersModel extends ListModel
 
 		$state = $this->getState('filter.state');
 		if (is_numeric($state)) {
-			$query->where('a.state = ' . (int)$state);
-		} elseif ($state === '') {
+			$query->where('a.state = ' . (int) $state);
+		}
+		elseif ($state === '') {
 			$query->where('(a.state IN (0, 1))');
 		}
 
@@ -233,8 +229,9 @@ class ManagersModel extends ListModel
 		$filter_access_level = $this->state->get("filter.access_level");
 		if ($filter_access_level) {
 			if (is_numeric($filter_access_level)) {
-				$query->where('a.access_level = ' . (int)$filter_access_level);
-			} elseif (is_string($filter_access_level) && strlen($filter_access_level) > 0) {
+				$query->where('a.access_level = ' . (int) $filter_access_level);
+			}
+			elseif (is_string($filter_access_level) && strlen($filter_access_level) > 0) {
 				$ids = explode(",", $filter_access_level);
 				$query->where('a.access_level IN (' . implode(',', array_map('intval', $ids)) . ')');
 			}
@@ -243,8 +240,9 @@ class ManagersModel extends ListModel
 		$search = $this->getState('filter.search');
 		if (!empty($search)) {
 			if (stripos($search, 'id:') === 0) {
-				$query->where('a.id = ' . (int)substr($search, 3));
-			} else {
+				$query->where('a.id = ' . (int) substr($search, 3));
+			}
+			else {
 				$search = $db->q('%' . $db->escape($search) . '%');
 				$query->where('( user_id.name LIKE ' . $search . ' )');
 			}
@@ -265,13 +263,12 @@ class ManagersModel extends ListModel
 	 * different modules that might need different sets of data or different
 	 * ordering requirements.
 	 *
-	 * @param  string  $id  A prefix for the store id.
+	 * @param   string  $id  A prefix for the store id.
 	 *
 	 * @since  1.0.0
 	 * @return    string        A store id.
 	 */
-	protected function getStoreId($id = ''): string
-	{
+	protected function getStoreId($id = ''): string {
 		$id .= ':' . $this->getState('filter.search');
 		$id .= ':' . $this->getState('filter.state');
 		$id .= ':' . $this->getState('filter.agency_id');
@@ -284,13 +281,12 @@ class ManagersModel extends ListModel
 	 * Method to autopopulate the model state.
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @param  null|string  $ordering
-	 * @param  null|string  $direction
+	 * @param   null|string  $ordering
+	 * @param   null|string  $direction
 	 *
 	 * @since 1.0.0
 	 */
-	protected function populateState($ordering = 'a.id', $direction = 'asc'): void
-	{
+	protected function populateState($ordering = 'a.id', $direction = 'asc'): void {
 		$this->setState('filter.search',
 			$this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string')
 		);

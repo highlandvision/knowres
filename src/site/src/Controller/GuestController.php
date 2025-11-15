@@ -71,9 +71,9 @@ class GuestController extends FormController
 	 * Proxy for getModel
 	 * Includes the admin model to save repetition and not a site model
 	 *
-	 * @param  string  $name        Name of model
-	 * @param  string  $prefix      Prefix Admin or Site
-	 * @param  array   $config      Config options
+	 * @param   string  $name    Name of model
+	 * @param   string  $prefix  Prefix Admin or Site
+	 * @param   array   $config  Config options
 	 *
 	 * @since  2.5.0
 	 * @return BaseDatabaseModel
@@ -87,9 +87,9 @@ class GuestController extends FormController
 	/**
 	 * Method to save a record.
 	 *
-	 * @param  string  $key     The name of the primary key of the URL variable.
-	 * @param  string  $urlVar  The name of the URL variable if different from the primary key. Sometimes required
-	 *                          to avoid router collisions.
+	 * @param   string  $key     The name of the primary key of the URL variable.
+	 * @param   string  $urlVar  The name of the URL variable if different from the primary key. Sometimes required
+	 *                           to avoid router collisions.
 	 *
 	 * @throws Exception
 	 * @since  4.0.0
@@ -124,8 +124,8 @@ class GuestController extends FormController
 	 * Method to check if you can save a new or existing record.
 	 * Override - All edit checks have been done so just return true
 	 *
-	 * @param  array   $data  An array of input data.
-	 * @param  string  $key   The name of the key for the primary key.
+	 * @param   array   $data  An array of input data.
+	 * @param   string  $key   The name of the key for the primary key.
 	 *
 	 * @since  1.0.0
 	 * @return bool

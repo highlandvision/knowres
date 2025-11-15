@@ -72,8 +72,7 @@ class Images extends Media {
 	 * @throws RuntimeException
 	 * @since  1.0.0
 	 */
-	public function __construct()
-	{
+	public function __construct() {
 		$this->checkGDExtension();
 		$this->params     = KrMethods::getParams();
 		$this->max_upload = JUtility::getMaxUploadSize();
@@ -84,15 +83,14 @@ class Images extends Media {
 	/**
 	 * Copy image folder
 	 *
-	 * @param  int  $old  Source property id
-	 * @param  int  $new  Dest property id
+	 * @param   int  $old  Source property id
+	 * @param   int  $new  Dest property id
 	 *
 	 * @throws RuntimeException|Exception
 	 * @since  3.0.0
 	 * @return bool
 	 */
-	public static function copyPropertyImages(int $old, int $new): bool
-	{
+	public static function copyPropertyImages(int $old, int $new): bool {
 		$source = self::getImageAbsPath($old);
 		$dest   = self::getImageAbsPath($new);
 
@@ -106,19 +104,19 @@ class Images extends Media {
 	/**
 	 * Delete recursively
 	 *
-	 * @param  string  $dir  Path to directory to be removed
+	 * @param   string  $dir  Path to directory to be removed
 	 *
 	 * @since 3.0.0
 	 */
-	public static function deleteAll(string $dir): void
-	{
+	public static function deleteAll(string $dir): void {
 		if (is_dir($dir)) {
 			$objects = scandir($dir);
 			foreach ($objects as $object) {
 				if ($object != "." && $object != "..") {
 					if (filetype($dir . "/" . $object) == "dir") {
 						self::deleteAll($dir . "/" . $object);
-					} else {
+					}
+					else {
 						unlink($dir . "/" . $object);
 					}
 				}
@@ -131,13 +129,12 @@ class Images extends Media {
 	/**
 	 * Delete image folder
 	 *
-	 * @param  int  $id  ID of  property
+	 * @param   int  $id  ID of  property
 	 *
 	 * @throws Exception
 	 * @since  3.0.0
 	 */
-	public static function deletePropertyImages(int $id): void
-	{
+	public static function deletePropertyImages(int $id): void {
 		$path = self::getImageAbsPath($id);
 		if (Folder::exists($path)) {
 			self::deleteAll($path);
@@ -147,16 +144,15 @@ class Images extends Media {
 	/**
 	 * Get path to image for display
 	 *
-	 * @param  int     $property_id  ID of property
-	 * @param  string  $type         e.g. "solo" or "slideshow"
-	 * @param  string  $image        Image name
+	 * @param   int     $property_id  ID of property
+	 * @param   string  $type         e.g. "solo" or "slideshow"
+	 * @param   string  $image        Image name
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 * @return string
 	 */
-	public static function getImageAbsPath(int $property_id, string $type = '', string $image = ''): string
-	{
+	public static function getImageAbsPath(int $property_id, string $type = '', string $image = ''): string {
 		$path = self::getPath($property_id, $type, $image);
 
 		return JPATH_ROOT . '/' . implode('/', $path);
@@ -165,16 +161,15 @@ class Images extends Media {
 	/**
 	 * Get path to image for display
 	 *
-	 * @param  int     $property_id  ID of property
-	 * @param  string  $type         e.g. "solo" or "slideshow"
-	 * @param  string  $image        Image name\
+	 * @param   int     $property_id  ID of property
+	 * @param   string  $type         e.g. "solo" or "slideshow"
+	 * @param   string  $image        Image name\
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 * @return string
 	 */
-	public static function getImagePath(int $property_id, string $type = '', string $image = ''): string
-	{
+	public static function getImagePath(int $property_id, string $type = '', string $image = ''): string {
 		$path = self::getPath($property_id, $type, $image);
 
 		return implode('/', $path);
@@ -183,13 +178,12 @@ class Images extends Media {
 	/**
 	 * Get link for map category image
 	 *
-	 * @param  int  $mapcategory_id  ID of map category
+	 * @param   int  $mapcategory_id  ID of map category
 	 *
 	 * @since   3.2.0
 	 * @return  string
 	 */
-	public static function getMarkerImageLink(int $mapcategory_id): string
-	{
+	public static function getMarkerImageLink(int $mapcategory_id): string {
 		$image = '';
 		$link  = '';
 
@@ -220,13 +214,12 @@ class Images extends Media {
 	/**
 	 * Get name of marker image
 	 *
-	 * @param  int  $mapcategory_id  ID of map category
+	 * @param   int  $mapcategory_id  ID of map category
 	 *
 	 * @since  3.2.0
 	 * @return string
 	 */
-	public static function getMarkerImageName(int $mapcategory_id): string
-	{
+	public static function getMarkerImageName(int $mapcategory_id): string {
 		$params    = KrMethods::getParams();
 		$folders   = [];
 		$folders[] = 'images';
@@ -249,16 +242,15 @@ class Images extends Media {
 	/**
 	 * Get path to image folder or image
 	 *
-	 * @param  int     $property_id  ID of property
-	 * @param  string  $type         e.g. "solo" or "slideshow"
-	 * @param  string  $image        Image name
+	 * @param   int     $property_id  ID of property
+	 * @param   string  $type         e.g. "solo" or "slideshow"
+	 * @param   string  $image        Image name
 	 *
 	 * @throws Exception
 	 * @since  2.4.0
 	 * @return array
 	 */
-	public static function getPath(int $property_id, string $type = '', string $image = ''): array
-	{
+	public static function getPath(int $property_id, string $type = '', string $image = ''): array {
 		$params = KrMethods::getParams();
 		$path   = [];
 		$path[] = 'images';
@@ -267,7 +259,8 @@ class Images extends Media {
 		if ($params->get('image_folder')) {
 			$property = KrFactory::getAdminModel('property')->getItem($property_id);
 			$folder   = Utility::makeFolderName($property->property_name);
-		} else {
+		}
+		else {
 			$folder = $property_id;
 		}
 
@@ -287,14 +280,13 @@ class Images extends Media {
 	/**
 	 * Get link for property image
 	 *
-	 * @param  int  $property_id  ID of property
+	 * @param   int  $property_id  ID of property
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 * @return string
 	 */
-	public static function getPropertyImageLink(int $property_id): string
-	{
+	public static function getPropertyImageLink(int $property_id): string {
 		$link  = '';
 		$image = '';
 		$path  = self::getImageAbsPath($property_id, 'solo');
@@ -316,14 +308,13 @@ class Images extends Media {
 	/**
 	 * Get name of property image
 	 *
-	 * @param  int  $property_id  ID of property
+	 * @param   int  $property_id  ID of property
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 * @return string
 	 */
-	public static function getPropertyImageName(int $property_id): string
-	{
+	public static function getPropertyImageName(int $property_id): string {
 		$soloPath = self::getImageAbsPath($property_id, 'solo');
 		$soloPath .= "/*.{jpg,gif,png,JPG,GIF,PNG}";
 		$files    = glob($soloPath, GLOB_BRACE);
@@ -340,13 +331,12 @@ class Images extends Media {
 	/**
 	 * Make property and image folders if they do not exist
 	 *
-	 * @param  string  $folder_path  Path of folder
+	 * @param   string  $folder_path  Path of folder
 	 *
 	 * @throws RuntimeException
 	 * @since 1.0.0
 	 */
-	public static function makeFolder(string $folder_path): void
-	{
+	public static function makeFolder(string $folder_path): void {
 		if (Folder::exists($folder_path)) {
 			return;
 		}
@@ -359,12 +349,12 @@ class Images extends Media {
 	/**
 	 * Resize and crop images as required
 	 *
-	 * @param  string  $source   Source file path
-	 * @param  string  $target   Target file path
-	 * @param  int     $width    Required width
-	 * @param  int     $height   Required height
-	 * @param  int     $quality  Quality
-	 * @param  int     $crop     1 to crop image
+	 * @param   string  $source   Source file path
+	 * @param   string  $target   Target file path
+	 * @param   int     $width    Required width
+	 * @param   int     $height   Required height
+	 * @param   int     $quality  Quality
+	 * @param   int     $crop     1 to crop image
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
@@ -374,11 +364,11 @@ class Images extends Media {
 		int $width,
 		int $height,
 		int $quality = 80,
-		int $crop = 0): void
-	{
+		int $crop = 0): void {
 		if ($crop && $width == 0 && $height == 0) {
 			throw new RuntimeException(KrMethods::plain('Width or height must be provided'));
-		} else if ($width == 0 && $height == 0) {
+		}
+		elseif ($width == 0 && $height == 0) {
 			throw new RuntimeException(KrMethods::plain('Width and height must be provided'));
 		}
 
@@ -393,7 +383,8 @@ class Images extends Media {
 		if ($crop) {
 			$ZebraImage->preserve_aspect_ratio = true;
 			$result                            = $ZebraImage->resize($width, $height);
-		} else {
+		}
+		else {
 			$ZebraImage->preserve_aspect_ratio = false;
 			$result                            = $ZebraImage->resize($width, $height, ZEBRA_IMAGE_BOXED);
 		}
@@ -424,20 +415,18 @@ class Images extends Media {
 	 * @since 1.0.0
 	 * @return bool
 	 */
-	public function getExists(): bool
-	{
+	public function getExists(): bool {
 		return $this->exists;
 	}
 
 	/**
 	 *  Set exists to true if file already in folder
 	 *
-	 * @param  string  $file  Name of file
+	 * @param   string  $file  Name of file
 	 *
 	 * @since 1.0.0
 	 */
-	protected function setExists(string $file): void
-	{
+	protected function setExists(string $file): void {
 		if (File::exists($file)) {
 			$this->exists = true;
 		}
@@ -446,15 +435,14 @@ class Images extends Media {
 	/**
 	 * Validate uploaded file
 	 *
-	 * @param  string  $name      File name
-	 * @param  string  $tmp_name  Temporary path and name
-	 * @param  int     $error     Upload error code
+	 * @param   string  $name      File name
+	 * @param   string  $tmp_name  Temporary path and name
+	 * @param   int     $error     Upload error code
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function validate(string $name, string $tmp_name, int $error): void
-	{
+	public function validate(string $name, string $tmp_name, int $error): void {
 		$this->name     = $this->replaceSpecial($name);
 		$this->tmp_name = $tmp_name;
 
@@ -474,8 +462,7 @@ class Images extends Media {
 	 * @throws InvalidArgumentException
 	 * @since  1.0.0
 	 */
-	protected function checkGDExtension(): void
-	{
+	protected function checkGDExtension(): void {
 		if (!extension_loaded('gd') && !function_exists('gd_info')) {
 			throw new InvalidArgumentException('Please Check the PHP extension "GD Image Library" is installed on this server');
 		}
@@ -487,8 +474,7 @@ class Images extends Media {
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected function checkIsImage(): void
-	{
+	protected function checkIsImage(): void {
 		$info = getimagesize($this->tmp_name);
 		if (!is_int($info[0]) || !is_int($info[1])) {
 			Logger::logMe(KrMethods::plain('No width or height detected in image file'));
@@ -502,8 +488,7 @@ class Images extends Media {
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected function checkMaxFilesize(): void
-	{
+	protected function checkMaxFilesize(): void {
 		$file_size = filesize($this->tmp_name);
 
 		if ($file_size > $this->max_upload) {
@@ -549,13 +534,12 @@ class Images extends Media {
 	/**
 	 * Set exception messages
 	 *
-	 * @param  int  $error  Upload error
+	 * @param   int  $error  Upload error
 	 *
 	 * @throws Exception
 	 * @since 1.0.0
 	 */
-	protected function checkUploadError(int $error): void
-	{
+	protected function checkUploadError(int $error): void {
 		$message = match ($error) {
 			1       => 'The uploaded file exceeds the upload_max_filesize directive in php.ini',
 			2       => 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form',
@@ -623,12 +607,11 @@ class Images extends Media {
 	/**
 	 * Replace non-acceptable characters in file name
 	 *
-	 * @param  string  $name  The raw file name;
+	 * @param   string  $name  The raw file name;
 	 *
 	 * @since  1.0.0
 	 */
-	protected function replaceSpecial(string $name): string
-	{
+	protected function replaceSpecial(string $name): string {
 		$extension = strtolower(File::getExt($name));
 		$name      = preg_replace('/[^A-Za-z\d.]/', '_', File::stripExt($name));
 
@@ -638,14 +621,13 @@ class Images extends Media {
 	/**
 	 * Set ID of item being uploaded
 	 *
-	 * @param  int  $id  ID of image
+	 * @param   int  $id  ID of image
 	 *
 	 * @throws InvalidArgumentException
 	 * @since  1.0.0
 	 * @return void
 	 */
-	protected function setId(int $id): void
-	{
+	protected function setId(int $id): void {
 		if (!$id) {
 			throw new InvalidArgumentException('$id should consist of numbers only and should not be zero');
 		}
@@ -659,13 +641,13 @@ class Images extends Media {
 	 * @throws RuntimeException
 	 * @since  1.0.0
 	 */
-	protected function validateExtension(): void
-	{
+	protected function validateExtension(): void {
 		$extension = File::getExt($this->name);
 		if (!in_array($extension, $this->accepted)) {
 			if (empty($extension)) {
 				$message = $this->name . ' ' . KrMethods::plain('the uploaded file had no extension');
-			} else {
+			}
+			else {
 				$message = $this->name . ' ' . KrMethods::plain('Invalid extension');
 			}
 

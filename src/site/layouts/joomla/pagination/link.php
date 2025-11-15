@@ -57,7 +57,8 @@ if ($displayData['active']) {
 	if ($app->isClient('administrator')) {
 		$link = 'href="#" onclick="document.adminForm.' . $item->prefix . $limit
 		        . '; Joomla.submitform();return false;"';
-	} else if ($app->isClient('site')) {
+	}
+	elseif ($app->isClient('site')) {
 		$region_id = $searchData->region_id;
 		$Itemid    = SiteHelper::getItemId('com_knowres', 'properties');
 		$link      = KrMethods::route('index.php?option=com_knowres&view=properties&Itemid=' . $Itemid .
@@ -67,7 +68,8 @@ if ($displayData['active']) {
 		}
 		$link = KrMethods::route($link);
 	}
-} else {
+}
+else {
 	$class = (property_exists($item, 'active') && $item->active) ? 'active' : 'disabled';
 	$class = $ajax ? ($class . ' getResponseSearch') : $class;
 }

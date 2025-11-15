@@ -67,8 +67,8 @@ class Channel extends Service
 	/**
 	 * Constructor
 	 *
-	 * @param  int  $service_id  ID of service
-	 * @param  int  $test        1 for testing
+	 * @param   int  $service_id  ID of service
+	 * @param   int  $test        1 for testing
 	 *
 	 * @throws Exception
 	 * @since  1.2.2
@@ -81,7 +81,7 @@ class Channel extends Service
 	/**
 	 * Read xref for property
 	 *
-	 * @param  int  $property_id  ID of property
+	 * @param   int  $property_id  ID of property
 	 *
 	 * @throws RuntimeException
 	 * @throws InvalidArgumentException
@@ -98,7 +98,8 @@ class Channel extends Service
 		if (!is_countable($data) || !count($data) || count($data) > 1)
 		{
 			throw new RuntimeException('Zero or multiple service xref records found for service ' . $this->service_id
-				. ' property ID ' . $property_id);
+			                           . ' property ID ' . $property_id
+			);
 		}
 
 		$this->property_xref = $data[0];
@@ -107,7 +108,7 @@ class Channel extends Service
 	/**
 	 * Calculate channel commission (if any)
 	 *
-	 * @param  float  $service_value  Booking value
+	 * @param   float  $service_value  Booking value
 	 *
 	 * @throws InvalidArgumentException
 	 * @since  2.3.0
@@ -135,7 +136,7 @@ class Channel extends Service
 	protected function getContractByForeignKey(): bool|array
 	{
 		$contract_ids = KrFactory::getListModel('servicexrefs')
-		                         ->getContractForForeignKey($this->service_id, $this->foreign_key);
+			->getContractForForeignKey($this->service_id, $this->foreign_key);
 		if (!count($contract_ids))
 		{
 			return false;
@@ -149,7 +150,7 @@ class Channel extends Service
 	/**
 	 * Get property descriptions
 	 *
-	 * @param  string  $name  Name of field holding data to display
+	 * @param   string  $name  Name of field holding data to display
 	 *
 	 * @throws RuntimeException
 	 * @since  1.2.2
@@ -201,7 +202,7 @@ class Channel extends Service
 	/**
 	 * Make safe
 	 *
-	 * @param  string  $string  String to convert
+	 * @param   string  $string  String to convert
 	 *
 	 * @since  3.3.0
 	 * @return string
@@ -253,9 +254,11 @@ class Channel extends Service
 		];
 		$this->Hub->compute($computations);
 
-		$actions = ['channel',
-		            'servicequeue',
-		            'emails'];
+		$actions = [
+			'channel',
+			'servicequeue',
+			'emails'
+		];
 
 		return $this->Hub->action($actions);
 	}
@@ -264,10 +267,10 @@ class Channel extends Service
 	 * Get the booking agent either from the foreign key or the agent ID
 	 * This will depend on the CM/channel being processed
 	 *
-	 * @param  string  $foreign_key  The agent foreign key
-	 * @param  string  $comments     Reservation comments for VRBO Expedia bookings
-	 * @param  int     $agent_id     The ID for the agent
-	 * @param  bool    $offline      Set TRUE to check for an offline agent
+	 * @param   string  $foreign_key  The agent foreign key
+	 * @param   string  $comments     Reservation comments for VRBO Expedia bookings
+	 * @param   int     $agent_id     The ID for the agent
+	 * @param   bool    $offline      Set TRUE to check for an offline agent
 	 *
 	 * @throws Exception
 	 * @since  3.1.0
@@ -292,7 +295,7 @@ class Channel extends Service
 				throw new RuntimeException('Agent not found for ID ' . $agent_id);
 			}
 		}
-		else if ($foreign_key)
+		elseif ($foreign_key)
 		{
 			$agents = KrFactory::getListModel('agents')->getAgentByForeignKey($this->service_id, $foreign_key);
 			if (!is_countable($agents) || empty($agents))
@@ -322,7 +325,7 @@ class Channel extends Service
 						$this->agent = $agent;
 						break;
 					}
-					else if (!$agent->deposit_paid && !$confirmed)
+					elseif (!$agent->deposit_paid && !$confirmed)
 					{
 						$this->agent = $agent;
 						break;
@@ -352,9 +355,9 @@ class Channel extends Service
 	/**
 	 * Set the date range to process
 	 *
-	 * @param  string  $first  First date
-	 * @param  int     $cbl    Max advance bookings for channel
-	 * @param  int     $pbl    Max advance bookings for property
+	 * @param   string  $first  First date
+	 * @param   int     $cbl    Max advance bookings for channel
+	 * @param   int     $pbl    Max advance bookings for property
 	 *
 	 * @throws Exception
 	 * @since  3.3.1
@@ -384,11 +387,11 @@ class Channel extends Service
 			{
 				$generic[$f->id] = $f->generic;
 			}
-			else if ($f->generic && $room_count && !$room && str_contains($f->room_type, 'property'))
+			elseif ($f->generic && $room_count && !$room && str_contains($f->room_type, 'property'))
 			{
 				$generic[$f->id] = $f->generic;
 			}
-			else if ($f->generic && $room_count && $room)
+			elseif ($f->generic && $room_count && $room)
 			{
 				$types = [];
 				if ($room == 'lk')
@@ -396,12 +399,12 @@ class Channel extends Service
 					$types[] = 'living';
 					$types[] = 'kitchen';
 				}
-				else if ($room == 'lb')
+				elseif ($room == 'lb')
 				{
 					$types[] = 'living';
 					$types[] = 'bedroom';
 				}
-				else if ($room == 'lbk')
+				elseif ($room == 'lbk')
 				{
 					$types[] = 'living';
 					$types[] = 'bedroom';

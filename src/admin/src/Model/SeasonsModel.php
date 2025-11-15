@@ -28,13 +28,12 @@ class SeasonsModel extends ListModel
 	/**
 	 * Constructor.
 	 *
-	 * @param  array  $config  An optional associative array of configuration settings.
+	 * @param   array  $config  An optional associative array of configuration settings.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function __construct($config = [])
-	{
+	public function __construct($config = []) {
 		if (empty($config['filter_fields'])) {
 			//@formatter:off
 			$config['filter_fields'] = [
@@ -56,15 +55,14 @@ class SeasonsModel extends ListModel
 	/**
 	 * Get minimum stay nights for a season
 	 *
-	 * @param  int     $cluster_id  ID of cluster
-	 * @param  string  $arrival     Arrival date
+	 * @param   int     $cluster_id  ID of cluster
+	 * @param   string  $arrival     Arrival date
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return ?int
 	 */
-	public function getMinimumNights(int $cluster_id, string $arrival): ?int
-	{
+	public function getMinimumNights(int $cluster_id, string $arrival): ?int {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -84,14 +82,13 @@ class SeasonsModel extends ListModel
 	/**
 	 * Get all seasons or for a specified cluster
 	 *
-	 * @param  int  $cluster_id  ID of cluster
+	 * @param   int  $cluster_id  ID of cluster
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 * @return mixed
 	 */
-	public function getSeasons(int $cluster_id = 0): mixed
-	{
+	public function getSeasons(int $cluster_id = 0): mixed {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -121,16 +118,15 @@ class SeasonsModel extends ListModel
 	/**
 	 * Get seasons for a cluster and date range
 	 *
-	 * @param  int     $cluster_id  ID of cluster
-	 * @param  string  $from        Date from
-	 * @param  string  $to          Date to
+	 * @param   int     $cluster_id  ID of cluster
+	 * @param   string  $from        Date from
+	 * @param   string  $to          Date to
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return array
 	 */
-	public function getSeasonsByClusterDateRange(int $cluster_id, string $from, string $to): array
-	{
+	public function getSeasonsByClusterDateRange(int $cluster_id, string $from, string $to): array {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -172,9 +168,7 @@ class SeasonsModel extends ListModel
 	 * @since  1.0.0
 	 * @return QueryInterface
 	 */
-	protected function getListQuery(): QueryInterface
-
-	{
+	protected function getListQuery(): QueryInterface {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -212,8 +206,9 @@ class SeasonsModel extends ListModel
 
 		$state = $this->getState('filter.state');
 		if (is_numeric($state)) {
-			$query->where($db->qn('a.state') . '=' . (int)$state);
-		} elseif ($state === '') {
+			$query->where($db->qn('a.state') . '=' . (int) $state);
+		}
+		elseif ($state === '') {
 			$query->where($db->qn('a.state') . ' IN (0, 1)');
 		}
 
@@ -235,8 +230,9 @@ class SeasonsModel extends ListModel
 		$search = $this->getState('filter.search');
 		if (!empty($search)) {
 			if (stripos($search, 'id:') === 0) {
-				$query->where('a.id = ' . (int)substr($search, 3));
-			} else {
+				$query->where('a.id = ' . (int) substr($search, 3));
+			}
+			else {
 				$search = $db->q('%' . $db->escape($search) . '%');
 				$query->where('(' . $subQuery->__toString() . ') ' . ' LIKE ' . $search);
 			}
@@ -257,13 +253,12 @@ class SeasonsModel extends ListModel
 	 * different modules that might need different sets of data or different
 	 * ordering requirements.
 	 *
-	 * @param  string  $id  A prefix for the store id.
+	 * @param   string  $id  A prefix for the store id.
 	 *
 	 * @since  1.0.0
 	 * @return string
 	 */
-	protected function getStoreId($id = ''): string
-	{
+	protected function getStoreId($id = ''): string {
 		$id .= ':' . $this->getState('filter.search');
 		$id .= ':' . $this->getState('filter.state');
 		$id .= ':' . $this->getState('filter.cluster_id');
@@ -277,13 +272,12 @@ class SeasonsModel extends ListModel
 	 * Method to autopopulate the model state.
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @param  null|string  $ordering
-	 * @param  null|string  $direction
+	 * @param   null|string  $ordering
+	 * @param   null|string  $direction
 	 *
 	 * @since 1.0.0
 	 */
-	protected function populateState($ordering = 'a.valid_from', $direction = 'asc'): void
-	{
+	protected function populateState($ordering = 'a.valid_from', $direction = 'asc'): void {
 		$this->setState('filter.search',
 			$this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string')
 		);

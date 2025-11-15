@@ -37,13 +37,12 @@ class PropertiesModel extends ListModel
 	/**
 	 * Constructor.
 	 *
-	 * @param  array  $config  An optional associative array of configuration settings.
+	 * @param   array  $config  An optional associative array of configuration settings.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function __construct(array $config = [])
-	{
+	public function __construct(array $config = []) {
 		if (empty($config['filter_fields'])) {
 			$config['filter_fields'] = KrListField::setPropertyFilterFields();
 		}
@@ -63,13 +62,13 @@ class PropertiesModel extends ListModel
 	 * @since  3.3.0
 	 * @return array
 	 */
-	public static function propertyDates(): array
-	{
+	public static function propertyDates(): array {
 		$db    = KrFactory::getDatabase();
 		$query = $db->getQuery(true);
 
 		$query->select('GREATEST(MAX(' . $db->qn('p.created_at') . '), MAX(' . $db->qn('p.updated_at') . '))  as '
-		               . $db->qn('maxdate'))
+		               . $db->qn('maxdate')
+		)
 			->select($db->qn('p.id', 'pid'))
 			->from($db->qn('#__knowres_property', 'p'))
 			->where($db->qn('p.state') . ' = 1')
@@ -83,7 +82,7 @@ class PropertiesModel extends ListModel
 	/**
 	 * Get last property update on sub tables
 	 *
-	 * @param  string  $table  Name of table
+	 * @param   string  $table  Name of table
 	 *
 	 * @throws RuntimeException
 	 * @throws KeyNotFoundException
@@ -91,13 +90,13 @@ class PropertiesModel extends ListModel
 	 * @since  3.3.0
 	 * @return array
 	 */
-	public static function propertySubDates(string $table): array
-	{
+	public static function propertySubDates(string $table): array {
 		$db    = KrFactory::getDatabase();
 		$query = $db->getQuery(true);
 
 		$query->select('GREATEST(MAX(' . $db->qn('s.created_at') . '), MAX(' . $db->qn('s.updated_at') . '))  as '
-		               . $db->qn('maxdate'))
+		               . $db->qn('maxdate')
+		)
 			->select($db->qn('s.property_id'))
 			->from($db->qn($table, 's'))
 			->where($db->qn('s.state') . ' IN(0,1)')
@@ -110,15 +109,14 @@ class PropertiesModel extends ListModel
 	/**
 	 * Get property areas for typeahead
 	 *
-	 * @param  int      $region_id  ID of region
+	 * @param   int     $region_id  ID of region
 	 * @param  ?string  $search     Search value
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return array
 	 */
-	public function getArea(int $region_id = 0, ?string $search = null): array
-	{
+	public function getArea(int $region_id = 0, ?string $search = null): array {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -134,7 +132,8 @@ class PropertiesModel extends ListModel
 		if (!is_null($search)) {
 			if (stripos($search, 'id:') === 0) {
 				$query->where($db->qn('a.id') . ' = ' . (int) substr($search, 3));
-			} else {
+			}
+			else {
 				$search = $db->q('%' . $db->escape($search) . '%');
 				$query->where($db->qn('a.property_area') . ' LIKE ' . $search);
 			}
@@ -151,14 +150,13 @@ class PropertiesModel extends ListModel
 	/**
 	 * Get property autosearch data
 	 *
-	 * @param  string  $name  Property name string
+	 * @param   string  $name  Property name string
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return array
 	 */
-	public function getAutosearch(string $name): array
-	{
+	public function getAutosearch(string $name): array {
 		$db   = $this->getDatabase();
 		$lang = KrMethods::getLanguageTag();
 
@@ -199,7 +197,7 @@ class PropertiesModel extends ListModel
 	/**
 	 * Method to get all the data for the property dashboard.
 	 *
-	 * @param  int  $id  The id of the primary key.
+	 * @param   int  $id  The id of the primary key.
 	 *
 	 * @throws RuntimeException
 	 * @throws Exception
@@ -207,8 +205,7 @@ class PropertiesModel extends ListModel
 	 * @since  1.0.0
 	 * @return mixed  The return value or null if the query failed.
 	 */
-	public function getForDashboard(int $id): mixed
-	{
+	public function getForDashboard(int $id): mixed {
 		$today = TickTock::getDate();
 
 		$db    = $this->getDatabase();
@@ -284,14 +281,13 @@ class PropertiesModel extends ListModel
 	/**
 	 * Get properties for change list
 	 *
-	 * @param  int  $id  ID of property
+	 * @param   int  $id  ID of property
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return mixed
 	 */
-	public function getForSwitch(int $id): mixed
-	{
+	public function getForSwitch(int $id): mixed {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -301,8 +297,7 @@ class PropertiesModel extends ListModel
 		      ->where($db->qn('state') . '=1')
 		      ->where($db->qn('approved') . '=1');
 
-		if (!empty($this->user_properties))
-		{
+		if (!empty($this->user_properties)) {
 			$query->where('id IN (' . $this->user_properties . ')');
 		}
 
@@ -320,8 +315,7 @@ class PropertiesModel extends ListModel
 	 * @since  3.3.0
 	 * @return array
 	 */
-	public function getForGantt(): array
-	{
+	public function getForGantt(): array {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -350,8 +344,7 @@ class PropertiesModel extends ListModel
 	 * @since  1.0.0
 	 * @return array
 	 */
-	public function getForApproval(): array
-	{
+	public function getForApproval(): array {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -389,14 +382,13 @@ class PropertiesModel extends ListModel
 	/**
 	 * Get property IDs for a specific state
 	 *
-	 * @param  int  $state  Required state or 0 for all
+	 * @param   int  $state  Required state or 0 for all
 	 *
 	 * @throws RuntimeException
 	 * @since  3.0.0
 	 * @return mixed
 	 */
-	public function getIds(int $state = 1): mixed
-	{
+	public function getIds(int $state = 1): mixed {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -417,14 +409,13 @@ class PropertiesModel extends ListModel
 	/**
 	 * Get rates for annual update of property
 	 *
-	 * @param  int     $id    ID of property
-	 * @param  string  $date  From date
+	 * @param   int     $id    ID of property
+	 * @param   string  $date  From date
 	 *
 	 * @since   3.3.0
 	 * @return mixed
 	 */
-	public function getRatesToCopy(int $id, string $date): mixed
-	{
+	public function getRatesToCopy(int $id, string $date): mixed {
 		$db = $this->getDatabase();
 
 		$item = 'rate';
@@ -473,8 +464,7 @@ class PropertiesModel extends ListModel
 	 * @since  1.0.0
 	 * @return QueryInterface
 	 */
-	protected function getListQuery(): QueryInterface
-	{
+	protected function getListQuery(): QueryInterface {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -519,9 +509,11 @@ class PropertiesModel extends ListModel
 		if ($filter_id) {
 			if (is_numeric($filter_id)) {
 				$query->where($db->qn('a.id') . ' = ' . (int) $filter_id);
-			} elseif (is_array($filter_id)) {
+			}
+			elseif (is_array($filter_id)) {
 				$query->where($db->qn('a.id') . ' IN (' . implode(',', array_map('intval', $filter_id)) . ')');
-			} elseif (is_string($filter_id) && strlen($filter_id)) {
+			}
+			elseif (is_string($filter_id) && strlen($filter_id)) {
 				$ids = explode(",", $filter_id);
 				$query->where($db->qn('a.id') . ' IN (' . implode(',', array_map('intval', $ids)) . ')');
 			}
@@ -530,14 +522,16 @@ class PropertiesModel extends ListModel
 		$state = $this->getState('filter.state');
 		if (is_numeric($state)) {
 			$query->where($db->qn('a.state') . ' = ' . (int) $state);
-		} elseif ($state === '') {
+		}
+		elseif ($state === '') {
 			$query->where($db->qn('a.state') . ' = 1');
 		}
 
 		$book = $this->getState('filter.booking_type');
 		if (is_numeric($book)) {
 			$query->where('a.booking_type = ' . (int) $book);
-		} elseif (is_array($book)) {
+		}
+		elseif (is_array($book)) {
 			$data = [];
 			foreach ($book as $f) {
 				$data[] = 'a.booking_type = ' . (int) $f;
@@ -549,7 +543,8 @@ class PropertiesModel extends ListModel
 		if ($filter_owner_id) {
 			if (is_numeric($filter_owner_id)) {
 				$query->where('a.owner_id = ' . (int) $filter_owner_id);
-			} elseif (is_array($filter_owner_id)) {
+			}
+			elseif (is_array($filter_owner_id)) {
 				$data = [];
 				foreach ($filter_owner_id as $f) {
 					$data[] = 'a.owner_id = ' . (int) $f;
@@ -562,7 +557,8 @@ class PropertiesModel extends ListModel
 		if ($filter_type_id) {
 			if (is_numeric($filter_type_id)) {
 				$query->where('a.type_id = ' . (int) $filter_type_id);
-			} elseif (is_array($filter_type_id)) {
+			}
+			elseif (is_array($filter_type_id)) {
 				$data = [];
 				foreach ($filter_type_id as $f) {
 					$data[] = 'a.type_id = ' . (int) $f;
@@ -575,7 +571,8 @@ class PropertiesModel extends ListModel
 		if ($filter_region_id) {
 			if (is_numeric($filter_region_id)) {
 				$query->where('a.region_id = ' . (int) $filter_region_id);
-			} elseif (is_array($filter_region_id)) {
+			}
+			elseif (is_array($filter_region_id)) {
 				$query->where('a.region_id IN (' . implode(',', array_map('intval', $filter_region_id)) . ')');
 			}
 		}
@@ -584,7 +581,8 @@ class PropertiesModel extends ListModel
 		if (!empty($search)) {
 			if (stripos($search, 'id:') === 0) {
 				$query->where($db->qn('a.id') . ' = ' . (int) substr($search, 3));
-			} else {
+			}
+			else {
 				$search = $db->q('%' . $db->escape($search) . '%');
 				$query->where($db->qn('a.property_name') . ' LIKE ' . $search);
 			}
@@ -595,7 +593,8 @@ class PropertiesModel extends ListModel
 		if ($this->state->get('list.ordercustom')) {
 			$orderCustom = $this->state->get('list.ordercustom');
 			$query->order($db->escape($orderCustom));
-		} else {
+		}
+		else {
 			$orderCol  = $this->state->get('list.ordering');
 			$orderDirn = $this->state->get('list.direction');
 			if ($orderCol && $orderDirn) {
@@ -612,13 +611,12 @@ class PropertiesModel extends ListModel
 	 * different modules that might need different sets of data or different
 	 * ordering requirements.
 	 *
-	 * @param  string  $id  A prefix for the store id.
+	 * @param   string  $id  A prefix for the store id.
 	 *
 	 * @since  1.0.0
 	 * @return string
 	 */
-	protected function getStoreId($id = ''): string
-	{
+	protected function getStoreId($id = ''): string {
 		$id .= ':' . $this->getState('filter.search');
 		$id .= ':' . $this->getState('filter.state');
 		$id .= ':' . $this->getState('filter.booking_type');
@@ -633,14 +631,13 @@ class PropertiesModel extends ListModel
 	 * Method to autopopulate the model state.
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @param  string  $ordering
-	 * @param  string  $direction
+	 * @param   string  $ordering
+	 * @param   string  $direction
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected function populateState($ordering = 'a.ordering', $direction = 'asc'): void
-	{
+	protected function populateState($ordering = 'a.ordering', $direction = 'asc'): void {
 		$this->setState('filter.search',
 			$this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string'));
 		$this->setState('filter.state',

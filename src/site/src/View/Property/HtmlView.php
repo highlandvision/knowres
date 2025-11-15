@@ -97,14 +97,13 @@ class HtmlView extends KrHtmlView\Site {
 	/**
 	 * Display the view
 	 *
-	 * @param  null  $tpl  Default template.
+	 * @param   null  $tpl  Default template.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 * @return void
 	 */
-	public function display($tpl = null): void
-	{
+	public function display($tpl = null): void {
 		$id = KrMethods::inputInt('id');
 		if (!$id) {
 			Utility::goto('properties');
@@ -136,10 +135,10 @@ class HtmlView extends KrHtmlView\Site {
 
 		if (is_countable($this->searchData->baseIds) && count($this->searchData->baseIds)
 		    && $this->searchData->region_id == $this->item->region_id) {
-
 			$Itemid         = SiteHelper::getItemId('com_knowres', 'properties');
 			$this->backlink = KrMethods::route('index.php?option=com_knowres&view=properties&Itemid=' . $Itemid
-			                                   . '&region_id=' . $this->item->region_id);
+			                                   . '&region_id=' . $this->item->region_id
+			);
 			$this->backlink .= '?retain=1';
 		}
 
@@ -183,8 +182,7 @@ class HtmlView extends KrHtmlView\Site {
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected function prepareDocument(): void
-	{
+	protected function prepareDocument(): void {
 		$this->prepareDefaultDocument($this->meta_title, $this->meta_description);
 		$this->setPathway();
 	}
@@ -195,8 +193,7 @@ class HtmlView extends KrHtmlView\Site {
 	 * @throws Exception
 	 * @since 1.0.0
 	 */
-	protected function quoteData(): void
-	{
+	protected function quoteData(): void {
 		$this->form = KrFactory::getAdhocForm('quote', 'quote.xml', 'site', null);
 
 		$contractSession = new KrSession\Contract();
@@ -218,14 +215,16 @@ class HtmlView extends KrHtmlView\Site {
 			$contractData->adults      = $this->adults;
 			$contractData->children    = $this->children;
 			$contractData->child_agess = $this->child_ages;
-		} elseif ($contractData->arrival) {
+		}
+		elseif ($contractData->arrival) {
 			$this->arrival     = $contractData->arrival;
 			$this->departure   = $contractData->departure;
 			$this->guests      = $contractData->guests;
 			$this->adults      = $contractData->adults;
 			$this->children    = $contractData->children;
 			$this->child_agess = $contractData->child_ages;
-		} elseif ($this->searchData->arrival) {
+		}
+		elseif ($this->searchData->arrival) {
 			$this->arrival     = $this->searchData->arrival;
 			$this->departure   = $this->searchData->departure;
 			$this->guests      = $this->searchData->guests;
@@ -258,8 +257,7 @@ class HtmlView extends KrHtmlView\Site {
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	protected function redirectToSearch(): void
-	{
+	protected function redirectToSearch(): void {
 		$Itemid = SiteHelper::getItemId('com_knowres', 'properties');
 		$link   = '/index.php?Itemid=' . $Itemid . '&retain=1';
 
@@ -276,8 +274,7 @@ class HtmlView extends KrHtmlView\Site {
 	 * @throws Exception
 	 * @since  4.0.0
 	 */
-	protected function setDisplayData(): void
-	{
+	protected function setDisplayData(): void {
 		$this->fields = KrFactory::getListModel('propertyfields')->getAllPropertyFields();
 
 		if (is_countable($this->item->property_alternatives) && count($this->item->property_alternatives)) {
@@ -323,8 +320,7 @@ class HtmlView extends KrHtmlView\Site {
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected function setPathway(): void
-	{
+	protected function setPathway(): void {
 		$pathway = self::setPathwayBase();
 		$pathway = self::propertiesPathway($pathway, $this->searchData);
 		$pathway->addItem($this->item->property_name);
@@ -336,8 +332,7 @@ class HtmlView extends KrHtmlView\Site {
 	 * @throws Exception
 	 * @since  4.0.0
 	 */
-	protected function setReviewData(): void
-	{
+	protected function setReviewData(): void {
 		$this->list_limit = $this->params->get('list_limit', 6);
 		if ($this->list_limit > 6) {
 			$this->list_limit = 6;

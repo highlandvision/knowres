@@ -49,14 +49,13 @@ class PropertiesModel extends ListModel
 	/**
 	 * Constructor.
 	 *
-	 * @param  array  $config  An optional associative array of configuration settings.
+	 * @param   array  $config  An optional associative array of configuration settings.
 	 *
 	 * @throws Exception
 	 * @since  1.6
 	 * @see    BaseController
 	 */
-	public function __construct($config = [])
-	{
+	public function __construct($config = []) {
 		if (empty($config['filter_fields'])) {
 			$config['filter_fields'] = KrListField::setPropertyFilterFields();
 		}
@@ -73,8 +72,7 @@ class PropertiesModel extends ListModel
 	 * @return array
 	 * @noinspection PhpUnused
 	 */
-	public function currentlyDisplayed(): array
-	{
+	public function currentlyDisplayed(): array {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -92,14 +90,13 @@ class PropertiesModel extends ListModel
 	/**
 	 * Get base items for search
 	 *
-	 * @param  object  $data  Search parameters
+	 * @param   object  $data  Search parameters
 	 *
 	 * @throws RuntimeException|Exception
 	 * @since  1.0.0
 	 * @return array
 	 */
-	#[NoReturn] public function getBaseItems(object $data): array
-	{
+	#[NoReturn] public function getBaseItems(object $data): array {
 		$today = TickTock::getDate();
 
 		$db    = $this->getDatabase();
@@ -136,7 +133,7 @@ class PropertiesModel extends ListModel
 		$query->select('(' . self::transSQ($db, 'country', 'a.country_id') . ') AS ' . $db->q('country_name'));
 
 		if ((!$data->layout) && $data->region_id) {
-			$query->where($db->qn('a.region_id') . '=' . (int)$data->region_id);
+			$query->where($db->qn('a.region_id') . '=' . (int) $data->region_id);
 		}
 
 		if ($data->layout == 'category' && $data->category_id) {
@@ -205,14 +202,13 @@ class PropertiesModel extends ListModel
 	/**
 	 * Get properties for a category
 	 *
-	 * @param  int  $category_id  ID of category
+	 * @param   int  $category_id  ID of category
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return mixed
 	 */
-	public function getByCategory(int $category_id): mixed
-	{
+	public function getByCategory(int $category_id): mixed {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -241,8 +237,7 @@ class PropertiesModel extends ListModel
 	 * @since  1.0.0
 	 * @return array
 	 */
-	public function getCountItems(): array
-	{
+	public function getCountItems(): array {
 		$area     = $this->getCountAreaQuery();
 		$bedrooms = $this->getCountQuery('a.bedrooms');
 		$book     = $this->getCountQuery('a.booking_type');
@@ -258,7 +253,7 @@ class PropertiesModel extends ListModel
 	/**
 	 * Get discounted properties for search
 	 *
-	 * @param  int  $property_id  ID of property
+	 * @param   int  $property_id  ID of property
 	 *
 	 * @throws DatabaseNotFoundException
 	 * @throws RuntimeException
@@ -267,8 +262,7 @@ class PropertiesModel extends ListModel
 	 * @since  1.0.0
 	 * @return mixed
 	 */
-	public function getDiscount(int $property_id = 0): mixed
-	{
+	public function getDiscount(int $property_id = 0): mixed {
 		$today = TickTock::getDate();
 
 		$db    = $this->getDatabase();
@@ -329,8 +323,7 @@ class PropertiesModel extends ListModel
 	 * @since  3.2
 	 * @return mixed
 	 */
-	public function getDistinctTypes(): mixed
-	{
+	public function getDistinctTypes(): mixed {
 		$db    = KrFactory::getDatabase();
 		$query = $db->getQuery(true);
 
@@ -361,15 +354,14 @@ class PropertiesModel extends ListModel
 	/**
 	 * Get the minimum and maximum rate for one or more properties
 	 *
-	 * @param  mixed  $properties  Single, string or array of property IDs
+	 * @param   mixed  $properties  Single, string or array of property IDs
 	 *
 	 * @throws InvalidArgumentException
 	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return mixed
 	 */
-	public function getMinMaxRates(mixed $properties): mixed
-	{
+	public function getMinMaxRates(mixed $properties): mixed {
 		$db    = KrFactory::getDatabase();
 		$query = $db->getQuery(true);
 
@@ -413,15 +405,14 @@ class PropertiesModel extends ListModel
 	/**
 	 * Query to get published and approved properties
 	 *
-	 * @param  mixed  $properties  IDs to get names for
+	 * @param   mixed  $properties  IDs to get names for
 	 *
 	 * @throws InvalidArgumentException
 	 * @throws RuntimeException
 	 * @since  3.2.0
 	 * @return array
 	 */
-	public function getNames(mixed $properties = null): array
-	{
+	public function getNames(mixed $properties = null): array {
 		$db    = KrFactory::getDatabase();
 		$query = $db->getQuery(true);
 
@@ -457,8 +448,7 @@ class PropertiesModel extends ListModel
 	 * @since  1.0.0
 	 * @return mixed
 	 */
-	public function getNew(): mixed
-	{
+	public function getNew(): mixed {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -491,8 +481,7 @@ class PropertiesModel extends ListModel
 	 * @since  1.0.0
 	 * @return Pagination  A Pagination object for the data set.
 	 */
-	public function getPagination(): Pagination
-	{
+	public function getPagination(): Pagination {
 		$store = $this->getStoreId('getPagination');
 		if (isset($this->cache[$store])) {
 			return $this->cache[$store];
@@ -510,14 +499,13 @@ class PropertiesModel extends ListModel
 	 * Get the data required for the map markers
 	 * for the current search
 	 *
-	 * @param  array  $ids  Property Ids
+	 * @param   array  $ids  Property Ids
 	 *
 	 * @throws RuntimeException
 	 * @since  3.3.0
 	 * @return array
 	 */
-	public function mapMarkers(array $ids): array
-	{
+	public function mapMarkers(array $ids): array {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -542,14 +530,13 @@ class PropertiesModel extends ListModel
 	/**
 	 * Perform the filtering for selected filters
 	 *
-	 * @param  DatabaseInterface  $db     Database instance
-	 * @param  QueryInterface     $query  Current query
+	 * @param   DatabaseInterface  $db     Database instance
+	 * @param   QueryInterface     $query  Current query
 	 *
 	 * @since  3.3.0
 	 * @return QueryInterface
 	 */
-	protected function doFiltering(DatabaseInterface $db, QueryInterface $query): QueryInterface
-	{
+	protected function doFiltering(DatabaseInterface $db, QueryInterface $query): QueryInterface {
 		$query = self::intArrayString($db, $query, 'a.id', $this->state->get('filter.id'));
 		$query = self::intFilter($db, $query, 'a.bedrooms', $this->state->get('filter.bedrooms'));
 		$query = self::intFilter($db, $query, 'a.booking_type', $this->state->get('filter.booking_type'));
@@ -566,17 +553,16 @@ class PropertiesModel extends ListModel
 	/**
 	 * Additional processing for flexible date search
 	 *
-	 * @param  DatabaseInterface  $db       Database instance
-	 * @param  object             $data     Search data
-	 * @param  array              $results  Results from base search
+	 * @param   DatabaseInterface  $db       Database instance
+	 * @param   object             $data     Search data
+	 * @param   array              $results  Results from base search
 	 *
 	 * @throws Exception
 	 * @throws RuntimeException
 	 * @since  3.3.0
 	 * @return array
 	 */
-	protected function doFlexible(DatabaseInterface $db, object $data, array $results): array
-	{
+	protected function doFlexible(DatabaseInterface $db, object $data, array $results): array {
 		$properties = [];
 		foreach ($results as $r) {
 			$properties[(int) $r->id] = (int) $r->id;
@@ -651,8 +637,7 @@ class PropertiesModel extends ListModel
 	 * @since  3.2.0
 	 * @return array
 	 */
-	protected function getCountAreaQuery(): array
-	{
+	protected function getCountAreaQuery(): array {
 		$totals = [];
 
 		$db    = $this->getDatabase();
@@ -685,8 +670,7 @@ class PropertiesModel extends ListModel
 	 * @since  3.2.0
 	 * @return array
 	 */
-	protected function getCountCategoryQuery(): array
-	{
+	protected function getCountCategoryQuery(): array {
 		$totals = [];
 
 		$db    = $this->getDatabase();
@@ -725,8 +709,7 @@ class PropertiesModel extends ListModel
 	 * @since  3.2.0
 	 * @return array
 	 */
-	protected function getCountFeatureQuery(): array
-	{
+	protected function getCountFeatureQuery(): array {
 		$totals = [];
 
 		$db    = $this->getDatabase();
@@ -760,14 +743,13 @@ class PropertiesModel extends ListModel
 	/**
 	 * Get the filter totals
 	 *
-	 * @param  string  $name  The field being totalled
+	 * @param   string  $name  The field being totalled
 	 *
 	 * @throws RuntimeException
 	 * @since  3.2.0
 	 * @return array
 	 */
-	protected function getCountQuery(string $name = ''): array
-	{
+	protected function getCountQuery(string $name = ''): array {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -816,8 +798,7 @@ class PropertiesModel extends ListModel
 	 * @since  1.0.0
 	 * @return QueryInterface
 	 */
-	protected function getListQuery(): QueryInterface
-	{
+	protected function getListQuery(): QueryInterface {
 		$today = TickTock::getDate();
 
 		$db    = $this->getDatabase();
@@ -881,13 +862,12 @@ class PropertiesModel extends ListModel
 	 * different modules that might need different sets of data or different
 	 * ordering requirements.
 	 *
-	 * @param  string  $id  A prefix for the store id.
+	 * @param   string  $id  A prefix for the store id.
 	 *
 	 * @since  1.0.0
 	 * @return string
 	 */
-	protected function getStoreId($id = ''): string
-	{
+	protected function getStoreId($id = ''): string {
 		$id .= ':' . $this->getState('filter.search');
 		$id .= ':' . $this->getState('filter.state');
 		$id .= ':' . json_encode($this->getState('filter.property_area'));
@@ -908,14 +888,13 @@ class PropertiesModel extends ListModel
 	 * Method to autopopulate the model state.
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @param  string  $ordering
-	 * @param  string  $direction
+	 * @param   string  $ordering
+	 * @param   string  $direction
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected function populateState($ordering = 'a.ordering', $direction = 'asc'): void
-	{
+	protected function populateState($ordering = 'a.ordering', $direction = 'asc'): void {
 		$this->setState('filter.state',
 		                $this->getUserStateFromRequest($this->context . '.filter.state', 'filter_state'));
 		$this->setState('filter.id',

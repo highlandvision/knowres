@@ -39,15 +39,14 @@ class Mailchimp extends Service
 	/**
 	 * Initialize
 	 *
-	 * @param  int     $service_id  ID of service
-	 * @param  string  $email       Email
-	 * @param  string  $name        Subscriber name
+	 * @param   int     $service_id  ID of service
+	 * @param   string  $email       Email
+	 * @param   string  $name        Subscriber name
 	 *
 	 * @throws Exception
 	 * @since 1.0.0
 	 */
-	public function __construct(int $service_id, string $email, string $name)
-	{
+	public function __construct(int $service_id, string $email, string $name) {
 		parent::__construct($service_id);
 
 		$this->setEmail($email);
@@ -61,8 +60,7 @@ class Mailchimp extends Service
 	 * @since 1.0.0
 	 * @return bool|string
 	 */
-	public function subscribe(): bool|string
-	{
+	public function subscribe(): bool|string {
 		$VendorMailchimp = new VendorMailchimp($this->parameters->apikey);
 		$VendorMailchimp->post('lists/' . $this->parameters->list . '/members', [
 			'email_address' => $this->email, 'status' => 'subscribed', 'merge_fields' => $this->mergeFields()
@@ -70,7 +68,8 @@ class Mailchimp extends Service
 
 		if ($VendorMailchimp->success()) {
 			return true;
-		} else {
+		}
+		else {
 			$error  = $VendorMailchimp->getLastError();
 			$needle = 'is already a list member';
 			if (str_contains($error, $needle)) {
@@ -88,8 +87,7 @@ class Mailchimp extends Service
 	 * @since  3.3.0
 	 * @return array
 	 */
-	protected function mergeFields(): array
-	{
+	protected function mergeFields(): array {
 		$merge_fields = [];
 		if ($this->parameters->language) {
 			$merge_fields[$this->parameters->language] = KrMethods::getLanguage()->getTag();
@@ -110,13 +108,12 @@ class Mailchimp extends Service
 	/**
 	 * Validate and set email
 	 *
-	 * @param  string  $email  Subscriber email
+	 * @param   string  $email  Subscriber email
 	 *
 	 * @throws InvalidArgumentException
 	 * @since 1.0.0
 	 */
-	protected function setEmail(string $email): void
-	{
+	protected function setEmail(string $email): void {
 		if (!$email) {
 			throw new InvalidArgumentException(KrMethods::plain('COM_KNOWRES_EMAIL_MISSING'));
 		}
@@ -131,13 +128,12 @@ class Mailchimp extends Service
 	/**
 	 * Set name field and split for first and last
 	 *
-	 * @param  string  $name  Subscriber name
+	 * @param   string  $name  Subscriber name
 	 *
 	 * @throws InvalidArgumentException
 	 * @since 1.0.0
 	 */
-	protected function setName(string $name): void
-	{
+	protected function setName(string $name): void {
 		if (empty($name)) {
 			throw new InvalidArgumentException(KrMethods::plain('COM_KNOWRES_NAME_MISSING'));
 		}
@@ -146,9 +142,11 @@ class Mailchimp extends Service
 		foreach ($split as $n) {
 			if (!$this->firstname) {
 				$this->firstname = $n;
-			} else if (!$this->surname) {
+			}
+			elseif (!$this->surname) {
 				$this->surname = $n;
-			} else {
+			}
+			else {
 				$this->surname .= ' ' . $n;
 			}
 		}

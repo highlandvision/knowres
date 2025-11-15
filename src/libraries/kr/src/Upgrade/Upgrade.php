@@ -50,8 +50,7 @@ class Upgrade
 	 * @throws InvalidArgumentException
 	 * @throws RuntimeException
 	 */
-	public static function deleteOldData(): void
-	{
+	public static function deleteOldData(): void {
 		$db    = KrFactory::getDatabase();
 		$query = $db->getQuery(true);
 
@@ -87,8 +86,7 @@ class Upgrade
 	 * @throws Exception
 	 * @since  2.4.0
 	 */
-	public static function historyTables(): void
-	{
+	public static function historyTables(): void {
 		Table::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_knowres/tables');
 
 		$tables = [
@@ -149,8 +147,7 @@ class Upgrade
 	 * @throws Exception
 	 * @since  2.4.0
 	 */
-	public static function importFeatures(): void
-	{
+	public static function importFeatures(): void {
 		$db    = KrFactory::getDatabase();
 		$query = $db->getQuery(true);
 		$query->select($db->qn(['id', 'generic']))
@@ -1205,7 +1202,8 @@ class Upgrade
 
 			if ($r['id'] < 1057) {
 				$Translations->updateDefault('propertyfeature', $r['id'], 'name', $r['name'], false);
-			} else {
+			}
+			else {
 				$Translations->updateDefault('propertyfeature', $r['id'], 'name', $r['name']);
 			}
 		}
@@ -1218,8 +1216,7 @@ class Upgrade
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public static function insertDefaults(): void
-	{
+	public static function insertDefaults(): void {
 		$db    = KrFactory::getDatabase();
 		$query = $db->getQuery(true);
 		$query->select($db->qn(['id', 'name']))
@@ -1280,8 +1277,7 @@ class Upgrade
 	 * @throws Exception
 	 * @since  2.4.0
 	 */
-	public static function insertSettings(): void
-	{
+	public static function insertSettings(): void {
 		$db    = KrFactory::getDatabase();
 		$query = $db->getQuery(true);
 		$query->select($db->qn(array('id', 'akey')))
@@ -1406,8 +1402,7 @@ class Upgrade
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	public static function paramsToAgency(): void
-	{
+	public static function paramsToAgency(): void {
 		$params                 = KrMethods::getParams();
 		$dashboard_confirm      = $params->get('dashboard_confirm', '');
 		$dashboard_cancellation = $params->get('dashboard_cancellation', '');
@@ -1437,8 +1432,7 @@ class Upgrade
 	 * @throws Exception
 	 * @since  3.4.0
 	 */
-	public static function removeSettings(): void
-	{
+	public static function removeSettings(): void {
 		$akey = ['net_rounding', 'net_rounding_unit'];
 
 		$db = KrFactory::getDatabase();
@@ -1459,10 +1453,10 @@ class Upgrade
 	 * Check if a history content type exists for a table and
 	 * create / edit as required
 	 *
-	 * @param  object  $table  The table object
-	 * @param  string  $name   The table name
-	 * @param  string  $title  The table title
-	 * @param  string  $alias  The table alias
+	 * @param   object  $table  The table object
+	 * @param   string  $name   The table name
+	 * @param   string  $title  The table title
+	 * @param   string  $alias  The table alias
 	 *
 	 * @throws InvalidArgumentException
 	 * @throws RuntimeException
@@ -1470,8 +1464,7 @@ class Upgrade
 	 * @since  2.4.0
 	 * @return void
 	 */
-	protected static function historyUpdate(object $table, string $name, string $title, string $alias): void
-	{
+	protected static function historyUpdate(object $table, string $name, string $title, string $alias): void {
 		if (!isset($alias)) {
 			return;
 		}
@@ -1939,8 +1932,7 @@ class Upgrade
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected static function updateFeatures(): void
-	{
+	protected static function updateFeatures(): void {
 		$db = KrFactory::getDatabase();
 
 		$query = 'UPDATE ' . $db->qn('#__knowres_property_feature') . ' SET ' . $db->qn('id') . ' = (' . $db->qn('id')
@@ -1962,7 +1954,8 @@ class Upgrade
 			$features = [];
 			if (is_string($r->property_features)) {
 				$features = explode(',', $r->property_features);
-			} else if (is_object($r->property_features)) {
+			}
+			elseif (is_object($r->property_features)) {
 				$value = get_object_vars($r->property_features);
 				foreach ($value as $p) {
 					if (!is_array($p)) {

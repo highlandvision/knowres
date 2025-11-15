@@ -58,11 +58,11 @@ $balance_amount = Utility::roundValue($contract->contract_total - $contract->dep
 	{
 		$due = KrMethods::plain('COM_KNOWRES_PAYABLE_ON_ARRIVAL');
 	}
-	else if ($contract->balance_date > TickTock::getDate() && $contract->booking_status <= 10)
+	elseif ($contract->balance_date > TickTock::getDate() && $contract->booking_status <= 10)
 	{
 		$due = KrMethods::sprintf('COM_KNOWRES_DUE_BY', TickTock::displayDate($contract->balance_date));
 	}
-	else if ($contract->balance_date <= date('Y-m-d'))
+	elseif ($contract->balance_date <= date('Y-m-d'))
 	{
 		$due = KrMethods::plain('COM_KNOWRES_DUE_NOW');
 	}

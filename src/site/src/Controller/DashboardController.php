@@ -37,8 +37,7 @@ class DashboardController extends BaseController
 	 * @throws Exception
 	 * @since 2.5.0
 	 */
-	public function cancel(): void
-	{
+	public function cancel(): void {
 		$userSession  = new KrSession\User();
 		$userData     = $userSession->getData();
 		$guest_id     = $userData->db_guest_id;
@@ -68,8 +67,7 @@ class DashboardController extends BaseController
 	 * @throws Exception
 	 * @since  2.5.0
 	 */
-	public function download(): void
-	{
+	public function download(): void {
 		$contract_id  = KrMethods::inputInt('key');
 		$userSession  = new KrSession\User();
 		$userData     = $userSession->getData();
@@ -90,8 +88,7 @@ class DashboardController extends BaseController
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	#[NoReturn] public function guestdata(): void
-	{
+	#[NoReturn] public function guestdata(): void {
 		$userSession  = new KrSession\User();
 		$userData     = $userSession->getData();
 		$db_contracts = $userData->db_contracts;
@@ -125,8 +122,7 @@ class DashboardController extends BaseController
 	 * @throws Exception
 	 * @since  2.5.0
 	 */
-	#[NoReturn] public function invoice(): void
-	{
+	#[NoReturn] public function invoice(): void {
 		$userSession  = new KrSession\User();
 		$userData     = $userSession->getData();
 		$db_contracts = $userData->db_contracts;
@@ -160,8 +156,7 @@ class DashboardController extends BaseController
 	 * @throws Exception
 	 * @since 2.5.0
 	 */
-	public function login(): void
-	{
+	public function login(): void {
 		SiteHelper::loginUser();
 		SiteHelper::redirectDashboard();
 	}
@@ -173,8 +168,7 @@ class DashboardController extends BaseController
 	 * @throws Exception
 	 * @since 2.5.0
 	 */
-	public function request(): void
-	{
+	public function request(): void {
 		$userSession = new KrSession\User();
 		$userData    = $userSession->getData();
 		$contract_id = 0;
@@ -190,7 +184,8 @@ class DashboardController extends BaseController
 			if (!$guest_id || !$qkey) {
 				throw new Exception('Dashboard key was invalid');
 			}
-		} catch (Exception $e) {
+		}
+		catch (Exception $e) {
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_DASHBOARD_ACCESS'));
 			SiteHelper::badUser();
 		}
@@ -209,7 +204,8 @@ class DashboardController extends BaseController
 			$userSession->setData($userData);
 
 			SiteHelper::redirectView($view);
-		} elseif ($view !== 'dashboard') {
+		}
+		elseif ($view !== 'dashboard') {
 			$contract = KrFactory::getAdminModel('contract')->getItem($contract_id);
 			if (!$contract->id || $contract->qkey != $qkey || $contract->guest_id != $guest_id) {
 				SiteHelper::redirectHome();
@@ -223,13 +219,15 @@ class DashboardController extends BaseController
 			if ($view == 'guestupdate') {
 				$userData->db_guest_update = true;
 				$view                      = 'guestform';
-			} elseif ($view == 'contractguestdataform') {
+			}
+			elseif ($view == 'contractguestdataform') {
 				$userData->db_guest_update = false;
 			}
 
 			$userSession->setData($userData);
 			SiteHelper::redirectView($view);
-		} else {
+		}
+		else {
 			$userData->db_guest_id    = $guest_id;
 			$userData->db_contracts   = [];
 			$userData->db_contract_id = 0;
@@ -245,8 +243,7 @@ class DashboardController extends BaseController
 	 * @throws Exception
 	 * @since        5.1.0
 	 */
-	public function statement(): void
-	{
+	public function statement(): void {
 		KrMethods::loadLanguage();
 
 		/** @var StatementView $view */
@@ -271,8 +268,7 @@ class DashboardController extends BaseController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function success(): void
-	{
+	public function success(): void {
 		SiteHelper::redirectDashboard();
 	}
 
@@ -282,8 +278,7 @@ class DashboardController extends BaseController
 	 * @throws Exception
 	 * @since  2.5.0
 	 */
-	#[NoReturn] public function voucher(): void
-	{
+	#[NoReturn] public function voucher(): void {
 		$userSession  = new KrSession\User();
 		$userData     = $userSession->getData();
 		$db_contracts = $userData->db_contracts;

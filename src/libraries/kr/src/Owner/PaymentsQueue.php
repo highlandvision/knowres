@@ -76,17 +76,17 @@ class PaymentsQueue
 		{
 			if (TickTock::getEom() == $this->today)
 			{
-				$payments = new Payments\EndOfMonth($this->payment);
+				$payments = new \HighlandVision\KR\Owner\Payments\EndOfMonth($this->payment);
 			}
 		}
-		else if ($this->payment->schedule === 'rgp')
+		elseif ($this->payment->schedule === 'rgp')
 		{
 			if ($this->payment->booking_status == 40)
 			{
-				$payments = new Payments\Balance($this->payment, 'rgp');
+				$payments = new \HighlandVision\KR\Owner\Payments\Balance($this->payment, 'rgp');
 			}
 		}
-		else if ($this->payment->schedule === 'dba')
+		elseif ($this->payment->schedule === 'dba')
 		{
 			if ($this->payment->booking_status == 40
 				&& TickTock::modifyDays($this->payment->arrival, $this->payment->days, '-') <= $this->today)
@@ -94,7 +94,7 @@ class PaymentsQueue
 				$payments = new Payments\Balance($this->payment, 'dba');
 			}
 		}
-		else if ($this->payment->schedule === 'dad')
+		elseif ($this->payment->schedule === 'dad')
 		{
 			if ($this->payment->booking_status == 40
 				&& TickTock::modifyDays($this->payment->departure, $this->payment->days) <= $this->today)
@@ -108,13 +108,13 @@ class PaymentsQueue
 			$payments->process();
 			KrFactory::getListModel('contractpayments')->updateActionedPayments([$this->payment->id]);
 		}
-		else if ($this->payment->pay_deposit > 0 && $this->payment->booking_status == 10 && $this->payment->deposit > 0)
+		elseif ($this->payment->pay_deposit > 0 && $this->payment->booking_status == 10 && $this->payment->deposit > 0)
 		{
 			if ($this->payment->pay_deposit == 1)
 			{
 				$payments = new Payments\Deposit($this->payment);
 			}
-			else if ($this->payment->pay_deposit == 2)
+			elseif ($this->payment->pay_deposit == 2)
 			{
 				if (TickTock::modifyDays($this->payment->payment_date, $this->payment->deposit_days) >= $this->today)
 				{

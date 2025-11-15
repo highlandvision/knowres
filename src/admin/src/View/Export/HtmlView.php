@@ -95,7 +95,8 @@ class HtmlView extends KrHtmlView
 		elseif ($layout == 'ownerpayments')
 		{
 			ToolbarHelper::custom('export.doownerpayments', 'download.png', 'download_f2.png', 'COM_KNOWRES_DOWNLOAD',
-				false);
+				false
+			);
 		}
 		elseif ($layout == 'payments')
 		{

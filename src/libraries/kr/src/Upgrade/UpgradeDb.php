@@ -42,8 +42,7 @@ class UpgradeDb
 	 * @since   4.0.0
 	 * @return  void
 	 */
-	public static function forV320(): void
-	{
+	public static function forV320(): void {
 		$db = KrFactory::getDatabase();
 
 		//ALTER TABLE `#__knowres_agency` ADD COLUMN `tax_code` VARCHAR(30) DEFAULT NULL AFTER `telephone`;
@@ -84,8 +83,7 @@ class UpgradeDb
 	 * @since  4.0.0
 	 * @return void
 	 */
-	public static function forV321(): void
-	{
+	public static function forV321(): void {
 		$db = KrFactory::getDatabase();
 
 		// ALTER TABLE `#__knowres_contract` ADD COLUMN `on_request` TINYINT(1) NOT NULL DEFAULT 0 AFTER `booking_status`;
@@ -109,8 +107,7 @@ class UpgradeDb
 	 * @since  4.0.0
 	 * @return void
 	 */
-	public static function forV330(): void
-	{
+	public static function forV330(): void {
 		$db      = KrFactory::getDatabase();
 		$results = $db->setQuery('SHOW TABLES')->loadColumn();
 		$prefix  = $db->getPrefix();
@@ -132,12 +129,12 @@ class UpgradeDb
 			$db->execute();
 			// RENAME TABLE `#__knowres_interface_queue` TO `#__knowres_service_queue`;
 			$query = 'RENAME TABLE ' . $db->qn('#__knowres_interface_queue') . ' TO '
-				. $db->qn('#__knowres_service_queue');
+			         . $db->qn('#__knowres_service_queue');
 			$db->setQuery($query);
 			$db->execute();
 			// RENAME TABLE `#__knowres_interface_xref` TO `#__knowres_service_xref`;
 			$query = 'RENAME TABLE ' . $db->qn('#__knowres_interface_xref') . ' TO '
-				. $db->qn('#__knowres_service_xref');
+			         . $db->qn('#__knowres_service_xref');
 			$db->setQuery($query);
 			$db->execute();
 		}
@@ -147,9 +144,10 @@ class UpgradeDb
 		//ALTER TABLE `#__knowres_agent` CHANGE `interface_id` `service_id` INT(11) NOT NULL DEFAULT 0;
 		self::change($db, '#__knowres_agent', 'interface_id', 'service_id', 'INT(11) NOT NULL DEFAULT 0');
 		//ALTER TABLE `#__knowres_contract` CHANGE `interface_commission` `channel_commission`
-			       // DECIMAL(11,2) NOT NULL DEFAULT 0.00;
+		// DECIMAL(11,2) NOT NULL DEFAULT 0.00;
 		self::change($db, '#__knowres_contract', 'interface_commission', 'channel_commission',
-		             'DECIMAL(11,2) NOT NULL DEFAULT 0.00');
+			'DECIMAL(11,2) NOT NULL DEFAULT 0.00'
+		);
 		//ALTER TABLE `#__knowres_contract` CHANGE `interface_id` `service_id` INT(11) NOT NULL DEFAULT 0;
 		self::change($db, '#__knowres_contract', 'interface_id', 'service_id', 'INT(11) NOT NULL DEFAULT 0');
 		//ALTER TABLE `#__knowres_contract` CHANGE `tax` `tax_total` DECIMAL(11,2) NOT NULL DEFAULT 0.00;
@@ -195,7 +193,8 @@ class UpgradeDb
 		self::dropIndex($db, '#__knowres_service_xref', 'byInterface');
 		//ALTER TABLE `#__knowres_service_log` ADD INDEX `byServicePropertyMethod`(`service_id`, `property_id`, `method`);
 		self::addIndex($db, '#__knowres_service_log', 'byServicePropertyMethod',
-		               '`service_id`, `property_id`, `method`');
+			'`service_id`, `property_id`, `method`'
+		);
 		//ALTER TABLE `#__knowres_service_xref` ADD INDEX `byService`(`service_id`);
 		self::addIndex($db, '#__knowres_service_xref', 'byService', '`service_id`');
 		//INSERT INTO `#__knowres_property_setting 'service_changes', 'vrbo';
@@ -212,8 +211,7 @@ class UpgradeDb
 	 * @since   4.0.0
 	 * @return  void
 	 */
-	public static function forV331(): void
-	{
+	public static function forV331(): void {
 		$db = KrFactory::getDatabase();
 
 		// ALTER TABLE `#__knowres_service_xref` DROP COLUMN `foreign_roomtype`;
@@ -248,13 +246,13 @@ class UpgradeDb
 	 * @since  4.0.0
 	 * @return void
 	 */
-	public static function forV333(): void
-	{
+	public static function forV333(): void {
 		$db = KrFactory::getDatabase();
 
 		//ALTER TABLE `#__knowres_service_log` ADD INDEX `byPropertyServiceMethod`(`property_id`, `service_id`, `method`);
 		self::addIndex($db, '#__knowres_service_log', 'byPropertyServiceMethod',
-		               '`property_id`, `service_id`, `method`');
+			'`property_id`, `service_id`, `method`'
+		);
 		//ALTER TABLE `#__knowres_contract` ADD INDEX `byAvailability` (`property_id`, `departure`, `cancelled`);
 		self::addIndex($db, '#__knowres_contract', 'byAvailability', '`property_id`, `departure`, `cancelled`');
 		//ALTER TABLE `#__knowres_ical_block` ADD INDEX `byAvailability` (`property_id`, `departure`);
@@ -262,7 +260,8 @@ class UpgradeDb
 		//ALTER TABLE `#__knowres_agent` ADD COLUMN `owner_deposit_payment` TINYINT(1) NOT NULL DEFAULT 0 AFTER
 		// `foreign_key_reqd`;
 		self::add($db, '#__knowres_agent', 'owner_deposit_payment', 'foreign_key_reqd',
-		          'TINYINT(1) NOT NULL DEFAULT 0');
+			'TINYINT(1) NOT NULL DEFAULT 0'
+		);
 		//ALTER TABLE `#__knowres_property` ADD COLUMN `service_id` INT(11) NOT NULL DEFAULT 0 AFTER `approved`;
 		self::add($db, '#__knowres_property', 'service_id', 'approved', 'INT(11) NOT NULL DEFAULT 0');
 		//ALTER TABLE `#__knowres_property` ADD COLUMN `resell` TINYINT(1) NOT NULL DEFAULT 1 AFTER `service_id`;
@@ -280,8 +279,7 @@ class UpgradeDb
 	 * @since  4.0.0
 	 * @return void
 	 */
-	public static function forV400(): void
-	{
+	public static function forV400(): void {
 		$db = KrFactory::getDatabase();
 
 		//ALTER TABLE `#__knowres_owner` CHANGE `iban` `iban` VARCHAR(50) DEFAULT NULL;
@@ -342,7 +340,7 @@ class UpgradeDb
 		$db->execute();
 		// UPDATE `#__knowres_service` SET `plugin` = 'vrbo' WHERE `plugin` = 'ha';
 		$query = 'UPDATE ' . $db->qn('#__knowres_service') . ' SET ' . $db->qn('plugin') . '=' . $db->q('vrbo')
-			. ' WHERE ' . $db->qn('plugin') . '=' . $db->q('ha');
+		         . ' WHERE ' . $db->qn('plugin') . '=' . $db->q('ha');
 		$db->setQuery($query);
 		$db->execute();
 	}
@@ -355,8 +353,7 @@ class UpgradeDb
 	 * @since  4.0.0
 	 * @return void
 	 */
-	public static function forV410(): void
-	{
+	public static function forV410(): void {
 		$db = KrFactory::getDatabase();
 
 		//ALTER TABLE `#__knowres_contract_guestdata` DROP COLUMN `vmobile`;
@@ -376,8 +373,7 @@ class UpgradeDb
 	 * @since  4.0.0
 	 * @return void
 	 */
-	public static function forV510(): void
-	{
+	public static function forV510(): void {
 		$db = KrFactory::getDatabase();
 
 		//ALTER TABLE `#__knowres_region` ADD COLUMN `property_licence` TINYINT(1) DEFAULT 0 AFTER `allow_property`;
@@ -403,14 +399,13 @@ class UpgradeDb
 	 *
 	 * @since  4.1.0
 	 */
-	public static function updateTaxSettings(): void
-	{
+	public static function updateTaxSettings(): void {
 		$db    = KrFactory::getDatabase();
 		$query = $db->getQuery(true);
 
 		$query->select($db->qn(['id', 'akey', 'value']))
-		      ->from($db->qn('#__knowres_property_setting'))
-		      ->where($db->qn('akey') . ' IN  ("tax_code_1", "tax_code_2", "tax_code_3")');
+			->from($db->qn('#__knowres_property_setting'))
+			->where($db->qn('akey') . ' IN  ("tax_code_1", "tax_code_2", "tax_code_3")');
 		$db->setQuery($query);
 		$rows = $db->loadObjectList();
 
@@ -420,12 +415,13 @@ class UpgradeDb
 				$update->id    = $r->id;
 				$update->value = '';
 				KrFactory::update('property_setting', $update);
-			} else if ($r->value > 0 && is_numeric($r->value)) {
+			}
+			elseif ($r->value > 0 && is_numeric($r->value)) {
 				$query = $db->getQuery(true);
 				$query->select($db->qn('code'))
-				      ->from($db->qn('#__knowres_tax_rate'))
-				      ->where($db->qn('id') . '=' . (int) $r->value)
-				      ->setLimit(1);
+					->from($db->qn('#__knowres_tax_rate'))
+					->where($db->qn('id') . '=' . (int) $r->value)
+					->setLimit(1);
 				$db->setQuery($query);
 				$code = $db->loadResult();
 
@@ -440,23 +436,22 @@ class UpgradeDb
 	/**
 	 * Add database column.
 	 *
-	 * @param  DatabaseDriver  $db       Database instance
-	 * @param  string          $table    Table name
-	 * @param  string          $field    Column name
-	 * @param  string          $after    Column name after
-	 * @param  mixed           $default  Default value
+	 * @param   DatabaseDriver  $db       Database instance
+	 * @param   string          $table    Table name
+	 * @param   string          $field    Column name
+	 * @param   string          $after    Column name after
+	 * @param   mixed           $default  Default value
 	 *
 	 * @throws RuntimeException
 	 * @throws InvalidArgumentException
 	 * @since  4.0.0
 	 * @return void
 	 */
-	protected static function add(DatabaseDriver $db, string $table, string $field, string $after, mixed $default): void
-	{
+	protected static function add(DatabaseDriver $db, string $table, string $field, string $after, mixed $default): void {
 		$columns = $db->getTableColumns($table);
 		if (!array_key_exists($field, $columns)) {
 			$query = 'ALTER TABLE ' . $db->qn($table) . ' ADD COLUMN ' . $db->qn($field) . ' ' . $default . ' AFTER '
-				. $db->qn($after);
+			         . $db->qn($after);
 			$db->setQuery($query);
 			$db->execute();
 		}
@@ -465,21 +460,21 @@ class UpgradeDb
 	/**
 	 * Add table index.
 	 *
-	 * @param  DatabaseDriver  $db     Database instance
-	 * @param  string          $table  Table name
-	 * @param  string          $index  Index name
-	 * @param  string          $keys   Index keys
+	 * @param   DatabaseDriver  $db     Database instance
+	 * @param   string          $table  Table name
+	 * @param   string          $index  Index name
+	 * @param   string          $keys   Index keys
 	 *
 	 * @since  4.0.0
 	 * @return void
 	 */
-	protected static function addIndex(DatabaseDriver $db, string $table, string $index, string $keys): void
-	{
+	protected static function addIndex(DatabaseDriver $db, string $table, string $index, string $keys): void {
 		try {
 			$query = 'ALTER TABLE ' . $db->qn($table) . ' ADD INDEX ' . $db->qn($index) . '(' . $keys . ')';
 			$db->setQuery($query);
 			$db->execute();
-		} catch (Exception) {
+		}
+		catch (Exception) {
 			// Do nothing index exists
 		}
 	}
@@ -487,21 +482,20 @@ class UpgradeDb
 	/**
 	 * Add property setting.
 	 *
-	 * @param  DatabaseDriver  $db       Database instance
-	 * @param  string          $akey     Name
-	 * @param  string          $default  Default value
+	 * @param   DatabaseDriver  $db       Database instance
+	 * @param   string          $akey     Name
+	 * @param   string          $default  Default value
 	 *
 	 * @throws Exception
 	 * @since  4.0.0
 	 * @return void
 	 */
-	protected static function addPS(DatabaseDriver $db, string $akey, mixed $default): void
-	{
+	protected static function addPS(DatabaseDriver $db, string $akey, mixed $default): void {
 		$query = $db->getQuery(true);
 		$query->select($db->qn('a.id'))
-		      ->from($db->qn('#__knowres_property_setting', 'a'))
-		      ->where($db->qn('a.akey') . '=' . $db->q($akey))
-		      ->where($db->qn('a.property_id') . '=0');
+			->from($db->qn('#__knowres_property_setting', 'a'))
+			->where($db->qn('a.akey') . '=' . $db->q($akey))
+			->where($db->qn('a.property_id') . '=0');
 
 		$db->setQuery($query);
 		$id = $db->loadObjectList();
@@ -521,23 +515,22 @@ class UpgradeDb
 	/**
 	 * Change the database
 	 *
-	 * @param  DatabaseDriver  $db       Database instance
-	 * @param  string          $table    Table name
-	 * @param  string          $field    Row name
-	 * @param  string          $new      New name
-	 * @param  mixed           $default  Default value
+	 * @param   DatabaseDriver  $db       Database instance
+	 * @param   string          $table    Table name
+	 * @param   string          $field    Row name
+	 * @param   string          $new      New name
+	 * @param   mixed           $default  Default value
 	 *
 	 * @throws RuntimeException
 	 * @throws InvalidArgumentException
 	 * @since  4.0.0
 	 */
 	protected static function change(DatabaseDriver $db, string $table, string $field, string $new,
-	                                 mixed          $default): void
-	{
+		mixed $default): void {
 		$columns = $db->getTableColumns($table);
 		if (array_key_exists($field, $columns)) {
 			$query = 'ALTER TABLE ' . $db->qn($table) . ' CHANGE ' . $db->qn($field) . ' ' . $db->qn($new) . ' '
-				. $default;
+			         . $default;
 			$db->setQuery($query);
 			$db->execute();
 		}
@@ -546,17 +539,16 @@ class UpgradeDb
 	/**
 	 * Drop the database
 	 *
-	 * @param  DatabaseDriver  $db     Database instance
-	 * @param  string          $table  Table name
-	 * @param  string          $field  Row name
+	 * @param   DatabaseDriver  $db     Database instance
+	 * @param   string          $table  Table name
+	 * @param   string          $field  Row name
 	 *
 	 * @throws RuntimeException
 	 * @throws InvalidArgumentException
 	 * @since  4.0.0
 	 * @return void
 	 */
-	protected static function drop(DatabaseDriver $db, string $table, string $field): void
-	{
+	protected static function drop(DatabaseDriver $db, string $table, string $field): void {
 		$columns = $db->getTableColumns($table);
 		if (array_key_exists($field, $columns)) {
 			$query = 'ALTER TABLE ' . $db->qn($table) . ' DROP COLUMN ' . $db->qn($field);
@@ -568,20 +560,20 @@ class UpgradeDb
 	/**
 	 * Drop index
 	 *
-	 * @param  DatabaseDriver  $db     Database instance
-	 * @param  string          $table  Table name
-	 * @param  string          $index  Index name
+	 * @param   DatabaseDriver  $db     Database instance
+	 * @param   string          $table  Table name
+	 * @param   string          $index  Index name
 	 *
 	 * @since  4.0.0
 	 * @return void
 	 */
-	protected static function dropIndex(DatabaseDriver $db, string $table, string $index): void
-	{
+	protected static function dropIndex(DatabaseDriver $db, string $table, string $index): void {
 		try {
 			$query = 'ALTER TABLE ' . $db->qn($table) . ' DROP INDEX ' . $db->qn($index);
 			$db->setQuery($query);
 			$db->execute();
-		} catch (Exception) {
+		}
+		catch (Exception) {
 			// Do nothing index does not exist
 		}
 	}
@@ -589,19 +581,19 @@ class UpgradeDb
 	/**
 	 * Drop table
 	 *
-	 * @param  DatabaseDriver  $db     Database instance
-	 * @param  string          $table  Table name
+	 * @param   DatabaseDriver  $db     Database instance
+	 * @param   string          $table  Table name
 	 *
 	 * @since  4.0.0
 	 * @return void
 	 */
-	protected static function dropTable(DatabaseDriver $db, string $table): void
-	{
+	protected static function dropTable(DatabaseDriver $db, string $table): void {
 		try {
 			$query = 'DROP TABLE ' . $db->qn($table);
 			$db->setQuery($query);
 			$db->execute();
-		} catch (Exception) {
+		}
+		catch (Exception) {
 			// Do nothing TABLE does not exist
 		}
 	}

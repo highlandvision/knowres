@@ -30,7 +30,7 @@ class EndOfMonth extends Payments
 	/**
 	 * Initialize
 	 *
-	 * @param  object  $payment  Contract payment data
+	 * @param   object  $payment  Contract payment data
 	 *
 	 * @throws Exception
 	 * @since  3.3.1
@@ -102,7 +102,7 @@ class EndOfMonth extends Payments
 				{
 					$total = $total + $this->contract->agent_commission;
 				}
-				else if ($this->payment->whopays == 2)
+				elseif ($this->payment->whopays == 2)
 				{
 					$total = $total + $this->contract->agent_commission * $this->owner_pc;
 				}
@@ -114,7 +114,7 @@ class EndOfMonth extends Payments
 				{
 					$total = $total + $this->contract->channel_commission;
 				}
-				else if ($this->payment->whopays == 2)
+				elseif ($this->payment->whopays == 2)
 				{
 					$total = $total + $this->contract->channel_commission * $this->owner_pc;
 				}
@@ -144,7 +144,7 @@ class EndOfMonth extends Payments
 				{
 					$total = $total + $v['value'];
 				}
-				else if ($extra->payto == 2)
+				elseif ($extra->payto == 2)
 				{
 					$total = $total + $v['value'] * $this->owner_pc;
 				}

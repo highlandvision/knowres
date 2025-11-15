@@ -30,13 +30,12 @@ class ContractfeesModel extends ListModel
 	/**
 	 * Constructor.
 	 *
-	 * @param  array  $config  An optional associative array of configuration settings.
+	 * @param   array  $config  An optional associative array of configuration settings.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function __construct($config = [])
-	{
+	public function __construct($config = []) {
 		if (empty($config['filter_fields'])) {
 			//@formatter:off
 			$config['filter_fields'] = [
@@ -58,14 +57,13 @@ class ContractfeesModel extends ListModel
 	/**
 	 * Get all contract fees
 	 *
-	 * @param  int  $contract_id  ID of contract
+	 * @param   int  $contract_id  ID of contract
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return mixed An array of data items on success, false on failure.
 	 */
-	public function getForContract(int $contract_id): mixed
-	{
+	public function getForContract(int $contract_id): mixed {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -83,14 +81,13 @@ class ContractfeesModel extends ListModel
 	/**
 	 * Get the total fees for a contract
 	 *
-	 * @param  int  $contract_id  ID of contract
+	 * @param   int  $contract_id  ID of contract
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return float
 	 */
-	public function getTotalForContract(int $contract_id): float
-	{
+	public function getTotalForContract(int $contract_id): float {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -104,20 +101,19 @@ class ContractfeesModel extends ListModel
 			$value = 0;
 		}
 
-		return (float)$value;
+		return (float) $value;
 	}
 
 	/**
 	 * Get unactioned fees
 	 *
-	 * @param  int  $contract_id  ID of contract
+	 * @param   int  $contract_id  ID of contract
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return mixed An array of data items on success, false on failure.
 	 */
-	public function getUnactioned(int $contract_id): mixed
-	{
+	public function getUnactioned(int $contract_id): mixed {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -140,8 +136,7 @@ class ContractfeesModel extends ListModel
 	 * @throws RuntimeException
 	 * @since  1.0.0
 	 */
-	public function updateActioned(array $pks, int $value): void
-	{
+	public function updateActioned(array $pks, int $value): void {
 		if (!is_countable($pks) || !count($pks)) {
 			return;
 		}
@@ -159,16 +154,15 @@ class ContractfeesModel extends ListModel
 	/**
 	 * Update paid fees with payment ID
 	 *
-	 * @param  int  $contract_id  ID of contract
-	 * @param  int  $payment_id   ID of payment
+	 * @param   int  $contract_id  ID of contract
+	 * @param   int  $payment_id   ID of payment
 	 *
 	 * @throws RuntimeException
 	 * @throws DatabaseNotFoundException
 	 * @throws QueryTypeAlreadyDefinedException
 	 * @since  1.0.0
 	 */
-	public function updatePaidFees(int $contract_id, int $payment_id): void
-	{
+	public function updatePaidFees(int $contract_id, int $payment_id): void {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -194,8 +188,7 @@ class ContractfeesModel extends ListModel
 	 * @since  1.0.0
 	 * @return QueryInterface
 	 */
-	protected function getListQuery(): QueryInterface
-	{
+	protected function getListQuery(): QueryInterface {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -207,21 +200,23 @@ class ContractfeesModel extends ListModel
 
 		$contract_id = $this->state->get("filter.contract_id");
 		if ($contract_id) {
-			$query->where($db->qn('a.contract_id') . ' = ' . (int)$contract_id);
+			$query->where($db->qn('a.contract_id') . ' = ' . (int) $contract_id);
 		}
 
 		$actioned = $this->state->get("filter.actioned");
 		if (is_numeric($actioned)) {
-			$query->where($db->qn('a.actioned') . ' = ' . (int)$actioned);
-		} elseif ($actioned === '') {
+			$query->where($db->qn('a.actioned') . ' = ' . (int) $actioned);
+		}
+		elseif ($actioned === '') {
 			$query->where($db->qn('a.actioned') . ' IN (0, 1)');
 		}
 
 		$search = $this->getState('filter.search');
 		if (!empty($search)) {
 			if (stripos($search, 'id:') === 0) {
-				$query->where('a.id = ' . (int)substr($search, 3));
-			} else {
+				$query->where('a.id = ' . (int) substr($search, 3));
+			}
+			else {
 				$search = $db->q('%' . $db->escape($search) . '%');
 				$query->where('( a.description LIKE ' . $search . '  OR  a.contract_id LIKE ' . $search . ' )');
 			}
@@ -242,13 +237,12 @@ class ContractfeesModel extends ListModel
 	 * different modules that might need different sets of data or different
 	 * ordering requirements.
 	 *
-	 * @param  string  $id  A prefix for the store id.
+	 * @param   string  $id  A prefix for the store id.
 	 *
 	 * @since  1.0.0
 	 * @return string        A store id.
 	 */
-	protected function getStoreId($id = ''): string
-	{
+	protected function getStoreId($id = ''): string {
 		$id .= ':' . $this->getState('filter.search');
 		$id .= ':' . $this->getState('filter.state');
 
@@ -259,13 +253,12 @@ class ContractfeesModel extends ListModel
 	 * Method to autopopulate the model state.
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @param  string  $ordering   Field
-	 * @param  string  $direction  Direction
+	 * @param   string  $ordering   Field
+	 * @param   string  $direction  Direction
 	 *
 	 * @since 1.0.0
 	 */
-	protected function populateState($ordering = 'a.created_at', $direction = 'asc'): void
-	{
+	protected function populateState($ordering = 'a.created_at', $direction = 'asc'): void {
 		$search = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
 		$this->setState('filter.search', trim($search));
 

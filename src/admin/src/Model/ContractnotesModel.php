@@ -27,13 +27,12 @@ class ContractnotesModel extends ListModel
 	/**
 	 * Constructor.
 	 *
-	 * @param  array  $config  An optional associative array of configuration settings.
+	 * @param   array  $config  An optional associative array of configuration settings.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function __construct($config = [])
-	{
+	public function __construct($config = []) {
 		if (empty($config['filter_fields'])) {
 			//@formatter:off
 			$config['filter_fields'] = [
@@ -55,15 +54,14 @@ class ContractnotesModel extends ListModel
 	/**
 	 * Get notes for contract
 	 *
-	 * @param  int  $contract_id  ID of contract
-	 * @param  int  $note_type    Type of note
+	 * @param   int  $contract_id  ID of contract
+	 * @param   int  $note_type    Type of note
 	 *
 	 * @throws RuntimeException
 	 * @since  3.3.0
 	 * @return mixed
 	 */
-	public function getForContract(int $contract_id, int $note_type = 0): mixed
-	{
+	public function getForContract(int $contract_id, int $note_type = 0): mixed {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -103,8 +101,7 @@ class ContractnotesModel extends ListModel
 	 * @since  1.0.0
 	 * @return QueryInterface
 	 */
-	protected function getListQuery(): QueryInterface
-	{
+	protected function getListQuery(): QueryInterface {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -124,21 +121,23 @@ class ContractnotesModel extends ListModel
 
 		$filter_contract_id = $this->state->get("filter.contract_id");
 		if ($filter_contract_id) {
-			$query->where("a.contract_id = " . (int)$filter_contract_id);
+			$query->where("a.contract_id = " . (int) $filter_contract_id);
 		}
 
 		$filter_note_type = $this->state->get("filter.note_type");
 		if (is_numeric($filter_note_type)) {
 			$query->where($db->qn('note_type') . ' LIKE ' . $db->q("%" . $filter_note_type . "%"));
-		} elseif (is_array($filter_note_type)) {
+		}
+		elseif (is_array($filter_note_type)) {
 			$query->where('a.note_type IN (' . implode(',', array_map('intval', $filter_note_type)) . ')');
 		}
 
 		$search = $this->getState('filter.search');
 		if (!empty($search)) {
 			if (stripos($search, 'id:') === 0) {
-				$query->where('a.id = ' . (int)substr($search, 3));
-			} else {
+				$query->where('a.id = ' . (int) substr($search, 3));
+			}
+			else {
 				$search = $db->q('%' . $db->escape($search) . '%');
 				$query->where('( a.note LIKE ' . $search . ' )');
 			}
@@ -159,13 +158,12 @@ class ContractnotesModel extends ListModel
 	 * different modules that might need different sets of data or different
 	 * ordering requirements.
 	 *
-	 * @param  string  $id  A prefix for the store id.
+	 * @param   string  $id  A prefix for the store id.
 	 *
 	 * @since  1.0.0
 	 * @return    string        A store id.
 	 */
-	protected function getStoreId($id = ''): string
-	{
+	protected function getStoreId($id = ''): string {
 		$id .= ':' . $this->getState('filter.search');
 		$id .= ':' . $this->getState('filter.contract_id');
 		$id .= ':' . $this->getState('filter.note_type');
@@ -177,14 +175,13 @@ class ContractnotesModel extends ListModel
 	 * Method to autopopulate the model state.
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @param  string  $ordering   Default ordering
-	 * @param  string  $direction  Default ordering direction
+	 * @param   string  $ordering   Default ordering
+	 * @param   string  $direction  Default ordering direction
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected function populateState($ordering = 'a.id', $direction = 'desc'): void
-	{
+	protected function populateState($ordering = 'a.id', $direction = 'desc'): void {
 		$this->setState('filter.search',
 			$this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string')
 		);

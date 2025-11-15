@@ -28,13 +28,12 @@ class EmailtriggersModel extends ListModel
 	/**
 	 * Constructor.
 	 *
-	 * @param  array  $config  An optional associative array of configuration settings.
+	 * @param   array  $config  An optional associative array of configuration settings.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function __construct($config = [])
-	{
+	public function __construct($config = []) {
 		if (empty($config['filter_fields'])) {
 			//@formatter:off
 			$config['filter_fields'] = [
@@ -67,15 +66,14 @@ class EmailtriggersModel extends ListModel
 	/**
 	 * Get list items
 	 *
-	 * @param  string  $trigger_actual  Email trigger
-	 * @param  int     $trigger_id      ID of required trigger
+	 * @param   string  $trigger_actual  Email trigger
+	 * @param   int     $trigger_id      ID of required trigger
 	 *
 	 * @throws RuntimeException
 	 * @since 1.0.0
 	 * @return mixed
 	 */
-	public function getTriggers(string $trigger_actual, int $trigger_id = 0): mixed
-	{
+	public function getTriggers(string $trigger_actual, int $trigger_id = 0): mixed {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -120,8 +118,7 @@ class EmailtriggersModel extends ListModel
 	 * @since  1.0.0
 	 * @return QueryInterface
 	 */
-	protected function getListQuery(): QueryInterface
-	{
+	protected function getListQuery(): QueryInterface {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -135,14 +132,15 @@ class EmailtriggersModel extends ListModel
 
 		$state = $this->getState('filter.state');
 		if (is_numeric($state)) {
-			$query->where($db->qn('a.state') . '=' . (int)$state);
-		} elseif ($state === '') {
+			$query->where($db->qn('a.state') . '=' . (int) $state);
+		}
+		elseif ($state === '') {
 			$query->where($db->qn('a.state') . '=1');
 		}
 
 		$filter_email_template_id = $this->state->get("filter.email_template_id");
 		if ($filter_email_template_id) {
-			$query->where($db->qn('a.email_template_id') . '=' . (int)$filter_email_template_id);
+			$query->where($db->qn('a.email_template_id') . '=' . (int) $filter_email_template_id);
 		}
 
 		$filter_trigger_actual = $this->state->get('filter.trigger_actual');
@@ -157,16 +155,18 @@ class EmailtriggersModel extends ListModel
 
 		$filter_booking_status = $this->state->get('filter.booking_status');
 		if (is_numeric($filter_booking_status)) {
-			$query->where('FIND_IN_SET( ' . (int)$filter_booking_status . ', booking_status) > 0');
-		} elseif (is_array($filter_booking_status)) {
+			$query->where('FIND_IN_SET( ' . (int) $filter_booking_status . ', booking_status) > 0');
+		}
+		elseif (is_array($filter_booking_status)) {
 			$query->where('a.booking_status IN (' . implode(',', array_map('intval', $filter_booking_status)) . ')');
 		}
 
 		$search = $this->getState('filter.search');
 		if (!empty($search)) {
 			if (stripos($search, 'id:') === 0) {
-				$query->where('a.id = ' . (int)substr($search, 3));
-			} else {
+				$query->where('a.id = ' . (int) substr($search, 3));
+			}
+			else {
 				$search = $db->q('%' . $search . '%');
 				$query->where('( a.name LIKE ' . $search . ' )');
 			}
@@ -187,13 +187,12 @@ class EmailtriggersModel extends ListModel
 	 * different modules that might need different sets of data or different
 	 * ordering requirements.
 	 *
-	 * @param  string  $id  A prefix for the store id.
+	 * @param   string  $id  A prefix for the store id.
 	 *
 	 * @since  1.0.0
 	 * @return    string        A store id.
 	 */
-	protected function getStoreId($id = ''): string
-	{
+	protected function getStoreId($id = ''): string {
 		$id .= ':' . $this->getState('filter.search');
 		$id .= ':' . $this->getState('filter.state');
 		$id .= ':' . $this->getState('filter.email_template_id');
@@ -208,13 +207,12 @@ class EmailtriggersModel extends ListModel
 	 * Method to autopopulate the model state.
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @param  null|string  $ordering
-	 * @param  null|string  $direction
+	 * @param   null|string  $ordering
+	 * @param   null|string  $direction
 	 *
 	 * @since 1.0.0
 	 */
-	protected function populateState($ordering = 'a.name', $direction = 'asc'): void
-	{
+	protected function populateState($ordering = 'a.name', $direction = 'asc'): void {
 		$this->setState('filter.search',
 			$this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string')
 		);

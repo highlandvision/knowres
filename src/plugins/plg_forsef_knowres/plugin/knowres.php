@@ -33,26 +33,24 @@ class Knowres extends Base {
 	/**
 	 * Stores factory instance.
 	 *
-	 * @param  string  $option   Extension this applies to, in com_xxx format.
-	 * @param  array   $options  Can inject custom factory and platform.
+	 * @param   string  $option   Extension this applies to, in com_xxx format.
+	 * @param   array   $options  Can inject custom factory and platform.
 	 */
-	public function __construct($option, $options = [])
-	{
+	public function __construct($option, $options = []) {
 		parent::__construct($option, $options);
 	}
 
 	/**
 	 * Builds the SEF URL for a non-sef.
 	 *
-	 * @param  Uri\Uri  $uriToBuild
-	 * @param  Uri\Uri  $platformUri
-	 * @param  Uri\Uri  $originalUri
+	 * @param   Uri\Uri  $uriToBuild
+	 * @param   Uri\Uri  $platformUri
+	 * @param   Uri\Uri  $originalUri
 	 *
 	 * @throws Exception
 	 * @return ?array
 	 */
-	public function build($uriToBuild, $platformUri, $originalUri): ?array
-	{
+	public function build($uriToBuild, $platformUri, $originalUri): ?array {
 		$sefSegments = parent::build($uriToBuild, $platformUri, $originalUri);
 		if ($uriToBuild->getVar('format') == 'raw') {
 			return [];
@@ -143,12 +141,15 @@ class Knowres extends Base {
 					if ($params->get('seo_search_country', 0)) {
 						$item          = KrFactory::getAdminModel('region')->getItem($region_id);
 						$sefSegments[] = $Translations->getText('region', $region_id) . '-' . $item->country_name;
-					} else {
+					}
+					else {
 						$sefSegments[] = $Translations->getText('region', $region_id);
 					}
-				} elseif ($category_id) {
+				}
+				elseif ($category_id) {
 					$sefSegments[] = $Translations->getText('category', $category_id);
-				} elseif ($layout) {
+				}
+				elseif ($layout) {
 					$sefSegments[] = $alias;
 				}
 
@@ -171,7 +172,8 @@ class Knowres extends Base {
 			default:
 				if (!$view || !$alias) {
 					$dosef = false;
-				} else {
+				}
+				else {
 					$sefSegments[] = $alias;
 					$platformUri->delvar('view');
 				}
@@ -220,12 +222,11 @@ class Knowres extends Base {
 	 * vars processing should happen here. For instance, stripping pagination variables if the plugin
 	 * handles pagination dynamically.
 	 *
-	 * @param  array  $vars
+	 * @param   array  $vars
 	 *
 	 * @return array
 	 */
-	public function buildNormalizedNonSef($vars): array
-	{
+	public function buildNormalizedNonSef($vars): array {
 		return $this->nonSefHelper->stripFeedVars(
 			parent::buildNormalizedNonSef($vars)
 		);
@@ -234,13 +235,12 @@ class Knowres extends Base {
 	/**
 	 * Check if URI should to be left non-sef.
 	 *
-	 * @param  Uri\Uri  $uri
+	 * @param   Uri\Uri  $uri
 	 *
 	 * @throws Exception
 	 * @return bool
 	 */
-	public function shouldLeaveNonSef($uri): bool
-	{
+	public function shouldLeaveNonSef($uri): bool {
 		if ($uri->getVar('format') == "raw") {
 			return true;
 		}
@@ -259,13 +259,12 @@ class Knowres extends Base {
 	/**
 	 * Get property fields for property, contact or reviews
 	 *
-	 * @param  int  $key  Property ID
+	 * @param   int  $key  Property ID
 	 *
 	 * @throws Exception
 	 * @return object
 	 */
-	protected function getPropertyData(int $key): object
-	{
+	protected function getPropertyData(int $key): object {
 		$property = KrFactory::getAdminModel('property')->getItem($key);
 		if (!$property) {
 			throw new RuntimeException('Property ID not found for ID ' . $key);
@@ -288,8 +287,7 @@ class Knowres extends Base {
 	 * @throws Exception
 	 * @return string
 	 */
-	protected function setAlias(?int $Itemid): string
-	{
+	protected function setAlias(?int $Itemid): string {
 		$alias = '';
 		if ($Itemid) {
 			$alias = $this->menuHelper->getMenuTitle('com_knowres', $Itemid);

@@ -32,13 +32,12 @@ class ServicexrefsModel extends ListModel
 	/**
 	 * Constructor.
 	 *
-	 * @param  array  $config  An optional associative array of configuration settings.
+	 * @param   array  $config  An optional associative array of configuration settings.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function __construct($config = [])
-	{
+	public function __construct($config = []) {
 		if (empty($config['filter_fields'])) {
 			//@formatter:off
 			$config['filter_fields'] = [
@@ -75,8 +74,8 @@ class ServicexrefsModel extends ListModel
 	/**
 	 * Find channels for a property
 	 *
-	 * @param  int   $property_id  ID of property
-	 * @param  bool  $new          True for new properties
+	 * @param   int   $property_id  ID of property
+	 * @param   bool  $new          True for new properties
 	 *
 	 * @throws RuntimeException
 	 * @throws DatabaseNotFoundException
@@ -84,8 +83,7 @@ class ServicexrefsModel extends ListModel
 	 * @since  2.0.0
 	 * @return mixed
 	 */
-	public function getChannels(int $property_id, bool $new = false): mixed
-	{
+	public function getChannels(int $property_id, bool $new = false): mixed {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -117,15 +115,14 @@ class ServicexrefsModel extends ListModel
 	}
 
 	/**
-	 * @param  int     $service_id   ID of service
-	 * @param  string  $foreign_key  Foreign copntract key
+	 * @param   int     $service_id   ID of service
+	 * @param   string  $foreign_key  Foreign copntract key
 	 *
 	 * @throws RuntimeException
 	 * @since  2.0.0
 	 * @return array
 	 */
-	public function getContractForForeignKey(int $service_id, string $foreign_key): array
-	{
+	public function getContractForForeignKey(int $service_id, string $foreign_key): array {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -143,15 +140,14 @@ class ServicexrefsModel extends ListModel
 	/**
 	 * Get contracts for service
 	 *
-	 * @param  int  $service_id  ID of service
+	 * @param   int  $service_id  ID of service
 	 *
 	 * @throws RuntimeException
 	 * @throws Exception
 	 * @since  3.3.0
 	 * @return mixed
 	 */
-	public function getContractsForService(int $service_id): mixed
-	{
+	public function getContractsForService(int $service_id): mixed {
 		$departure = TickTock::modifyDays('now', 45, '-');
 
 		$db    = $this->getDatabase();
@@ -187,9 +183,9 @@ class ServicexrefsModel extends ListModel
 	/**
 	 * Get foreign key by table_name and table_id
 	 *
-	 * @param  int     $service_id  ID of service
-	 * @param  string  $table_name  Table name
-	 * @param  int     $table_id    Table ID
+	 * @param   int     $service_id  ID of service
+	 * @param   string  $table_name  Table name
+	 * @param   int     $table_id    Table ID
 	 *
 	 * @throws DatabaseNotFoundException
 	 * @throws RuntimeException
@@ -197,8 +193,7 @@ class ServicexrefsModel extends ListModel
 	 * @since  2.0.0
 	 * @return ?string
 	 */
-	public function getForeignKey(int $service_id, string $table_name, int $table_id): ?string
-	{
+	public function getForeignKey(int $service_id, string $table_name, int $table_id): ?string {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -217,16 +212,15 @@ class ServicexrefsModel extends ListModel
 	/**
 	 * Get the foreign key for a contract
 	 *
-	 * @param  int  $service_id   ID of service
-	 * @param  int  $contract_id  ID of contract
-	 * @param  int  $cancelled    Cancelled indicator
+	 * @param   int  $service_id   ID of service
+	 * @param   int  $contract_id  ID of contract
+	 * @param   int  $cancelled    Cancelled indicator
 	 *
 	 * @throws RuntimeException
 	 * @since  2.0.0
 	 * @return mixed
 	 */
-	public function getForeignKeyForContract(int $service_id, int $contract_id, int $cancelled = 0): mixed
-	{
+	public function getForeignKeyForContract(int $service_id, int $contract_id, int $cancelled = 0): mixed {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -245,16 +239,15 @@ class ServicexrefsModel extends ListModel
 	/**
 	 * Return local ID for foreign key and type
 	 *
-	 * @param  int     $service_id   ID of service
-	 * @param  string  $table_name   Local table
-	 * @param  string  $foreign_key  Foreign key
+	 * @param   int     $service_id   ID of service
+	 * @param   string  $table_name   Local table
+	 * @param   string  $foreign_key  Foreign key
 	 *
 	 * @throws RuntimeException
 	 * @since  2.0.0
 	 * @return mixed
 	 */
-	public function getIdForForeign(int $service_id, string $table_name, string $foreign_key): mixed
-	{
+	public function getIdForForeign(int $service_id, string $table_name, string $foreign_key): mixed {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -274,7 +267,7 @@ class ServicexrefsModel extends ListModel
 	/**
 	 * Get properties or an individual property for all active channel managers
 	 *
-	 * @param  int      $property_id  ID of property
+	 * @param   int     $property_id  ID of property
 	 * @param  ?string  $method       API method for checking queue
 	 * @param  ?string  $plugin       Specific plugin
 	 * @param  ?string  $arrival      Arrival date
@@ -285,8 +278,7 @@ class ServicexrefsModel extends ListModel
 	 * @return mixed
 	 */
 	public function getPropertiesForAllServices(int $property_id = 0, ?string $method = null, ?string $plugin = null,
-		?string $arrival = null, ?string $departure = null): mixed
-	{
+		?string $arrival = null, ?string $departure = null): mixed {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -328,7 +320,8 @@ class ServicexrefsModel extends ListModel
 
 		if ($property_id) {
 			$query->where($db->qn('x.property_id') . '=' . $property_id);
-		} else {
+		}
+		else {
 			$query->where($db->qn('x.property_id') . '>0');
 		}
 
@@ -337,16 +330,17 @@ class ServicexrefsModel extends ListModel
 		}
 
 		$db->setQuery($query);
+
 		return $db->loadObjectList();
 	}
 
 	/**
 	 * Get properties for service
 	 *
-	 * @param  int   $service_id  ID of service
-	 * @param  bool  $new         Set to true to only retrieve new records
-	 * @param  bool  $all         All properties for serviceSet to true to only retrieve new records
-	 * @param  bool  $sellonly    Sell only filter (HA only)
+	 * @param   int   $service_id  ID of service
+	 * @param   bool  $new         Set to true to only retrieve new records
+	 * @param   bool  $all         All properties for serviceSet to true to only retrieve new records
+	 * @param   bool  $sellonly    Sell only filter (HA only)
 	 *
 	 * @throws RuntimeException
 	 * @since  3.3.0
@@ -355,8 +349,7 @@ class ServicexrefsModel extends ListModel
 	public function getPropertiesForService(int $service_id,
 		bool $new = false,
 		bool $all = false,
-		bool $sellonly = false): mixed
-	{
+		bool $sellonly = false): mixed {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -379,7 +372,8 @@ class ServicexrefsModel extends ListModel
 		if (!$all) {
 			if ($new) {
 				$query->where($db->qn('new') . '=1');
-			} else {
+			}
+			else {
 				$query->where($db->qn('foreign_key') . '<>' . $db->q('0'));
 			}
 		}
@@ -396,15 +390,14 @@ class ServicexrefsModel extends ListModel
 	/**
 	 * Return property id for service and foreign key
 	 *
-	 * @param  int     $service_id   ID of service
-	 * @param  string  $foreign_key  Channel key
+	 * @param   int     $service_id   ID of service
+	 * @param   string  $foreign_key  Channel key
 	 *
 	 * @throws RuntimeException
 	 * @since  2.0.0
 	 * @return mixed
 	 */
-	public function getPropertyForService(int $service_id, string $foreign_key): mixed
-	{
+	public function getPropertyForService(int $service_id, string $foreign_key): mixed {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -424,15 +417,14 @@ class ServicexrefsModel extends ListModel
 	/**
 	 * Get service xref for the service and property
 	 *
-	 * @param  int   $service_id   ID of service
+	 * @param   int  $service_id   ID of service
 	 * @param  ?int  $property_id  ID of property
 	 *
 	 * @throws RuntimeException
 	 * @since  2.5.0
 	 * @return mixed
 	 */
-	public function getServiceProperty(int $service_id, ?int $property_id = 0): mixed
-	{
+	public function getServiceProperty(int $service_id, ?int $property_id = 0): mixed {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -461,15 +453,14 @@ class ServicexrefsModel extends ListModel
 	/**
 	 * Set the xref contract record to cancelled
 	 *
-	 * @param  int  $service_id   ID of service
-	 * @param  int  $contract_id  ID of contract
+	 * @param   int  $service_id   ID of service
+	 * @param   int  $contract_id  ID of contract
 	 *
 	 * @throws RuntimeException
 	 * @since  2.0.0
 	 * @return bool
 	 */
-	public function updateCancelledForContract(int $service_id, int $contract_id): bool
-	{
+	public function updateCancelledForContract(int $service_id, int $contract_id): bool {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -499,8 +490,7 @@ class ServicexrefsModel extends ListModel
 	 * @since  2.0.0
 	 * @return QueryInterface
 	 */
-	protected function getListQuery(): QueryInterface
-	{
+	protected function getListQuery(): QueryInterface {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -537,24 +527,26 @@ class ServicexrefsModel extends ListModel
 		$query->select('updated_by.name AS updated_by');
 		$query->join('LEFT', '#__users AS updated_by ON updated_by.id = a.updated_by');
 
-		$filter_service_id = (int)$this->state->get('filter.service_id');
+		$filter_service_id = (int) $this->state->get('filter.service_id');
 		if ($filter_service_id > 0) {
 			$query->where($db->qn('a.service_id') . '=' . $filter_service_id);
 		}
 
 		$state = $this->getState('filter.state');
 		if (is_numeric($state)) {
-			$query->where($db->qn('a.state') . '=' . (int)$state);
-		} elseif ($state === '') {
+			$query->where($db->qn('a.state') . '=' . (int) $state);
+		}
+		elseif ($state === '') {
 			$query->where($db->qn('a.state') . '=1');
 		}
 
 		$sell = $this->getState('filter.sell');
 		if (is_numeric($sell)) {
-			$query->where($db->qn('a.sell') . '=' . (int)$sell);
+			$query->where($db->qn('a.sell') . '=' . (int) $sell);
 			$query->where($db->qn('a.property_id') . '>0');
 			$query->where($db->qn('a.contract_id') . '=0');
-		} elseif ($sell === '') {
+		}
+		elseif ($sell === '') {
 			$query->where($db->qn('a.sell') . ' IN (0, 1)');
 		}
 
@@ -569,7 +561,8 @@ class ServicexrefsModel extends ListModel
 			$query->where($db->qn('a.guest_id') . '=0');
 			$query->where($db->qn('a.owner_id') . '=0');
 			$query->where($db->qn('a.payment_id') . '=0');
-		} elseif ($type == 'c') {
+		}
+		elseif ($type == 'c') {
 			if ($key > 0) {
 				$query->where($db->qn('a.contract_id') . '=' . $key);
 			}
@@ -578,7 +571,8 @@ class ServicexrefsModel extends ListModel
 			$query->where($db->qn('a.guest_id') . '=0');
 			$query->where($db->qn('a.owner_id') . '=0');
 			$query->where($db->qn('a.payment_id') . '=0');
-		} elseif ($type == 'g') {
+		}
+		elseif ($type == 'g') {
 			if ($key > 0) {
 				$query->where($db->qn('a.guest_id') . '=' . $key);
 			}
@@ -587,7 +581,8 @@ class ServicexrefsModel extends ListModel
 			$query->where($db->qn('a.contract_id') . '=0');
 			$query->where($db->qn('a.owner_id') . '=0');
 			$query->where($db->qn('a.payment_id') . '=0');
-		} elseif ($type == 'o') {
+		}
+		elseif ($type == 'o') {
 			if ($key > 0) {
 				$query->where($db->qn('a.owner_id') . '=' . $key);
 			}
@@ -596,7 +591,8 @@ class ServicexrefsModel extends ListModel
 			$query->where($db->qn('a.contract_id') . '=0');
 			$query->where($db->qn('a.guest_id') . '=0');
 			$query->where($db->qn('a.payment_id') . '=0');
-		} elseif ($type == 'x') {
+		}
+		elseif ($type == 'x') {
 			if ($key > 0) {
 				$query->where($db->qn('a.payment_id') . '=' . $key);
 			}
@@ -610,8 +606,9 @@ class ServicexrefsModel extends ListModel
 		$search = $this->getState('filter.search');
 		if (!empty($search)) {
 			if (stripos($search, 'id:') === 0) {
-				$query->where($db->qn('a.id') . '=' . (int)substr($search, 3));
-			} else {
+				$query->where($db->qn('a.id') . '=' . (int) substr($search, 3));
+			}
+			else {
 				$search = $db->q('%' . $db->escape($search) . '%');
 				$query->where('( a.foreign_key LIKE ' . $search . ' )');
 			}
@@ -634,13 +631,12 @@ class ServicexrefsModel extends ListModel
 	 * different modules that might need different sets of data or different
 	 * ordering requirements.
 	 *
-	 * @param  string  $id  A prefix for the store id.
+	 * @param   string  $id  A prefix for the store id.
 	 *
 	 * @since  2.0.0
 	 * @return string   A store id.
 	 */
-	protected function getStoreId($id = ''): string
-	{
+	protected function getStoreId($id = ''): string {
 		$id .= ':' . $this->getState('filter.search');
 		$id .= ':' . $this->getState('filter.state');
 		$id .= ':' . $this->getState('filter.service_id');
@@ -657,13 +653,12 @@ class ServicexrefsModel extends ListModel
 	 * Method to autopopulate the model state.
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @param  null|string  $ordering
-	 * @param  null|string  $direction
+	 * @param   null|string  $ordering
+	 * @param   null|string  $direction
 	 *
 	 * @since 2.0.0
 	 */
-	protected function populateState($ordering = 'a.service_id', $direction = 'asc'): void
-	{
+	protected function populateState($ordering = 'a.service_id', $direction = 'asc'): void {
 		$this->setState('filter.search',
 			$this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string')
 		);

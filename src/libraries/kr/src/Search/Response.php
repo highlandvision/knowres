@@ -40,13 +40,12 @@ class Response
 	/**
 	 * Initialize
 	 *
-	 * @param  stdClass  $data  Search session data.
+	 * @param   stdClass  $data  Search session data.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function __construct(stdClass $data)
-	{
+	public function __construct(stdClass $data) {
 		$this->searchData   = $data;
 		$this->params       = KrMethods::getParams();
 		$this->Translations = new Translations();
@@ -55,14 +54,14 @@ class Response
 	/**
 	 * Set count for the displayed filters
 	 *
-	 * @param  array  $totalAreas     Areas
-	 * @param  array  $totalBedrooms  Bedrooms
-	 * @param  array  $totalBook      Booking type
-	 * @param  array  $totalCategory  Categories
-	 * @param  array  $totalFeature   Features
-	 * @param  array  $totalPets      Pets
-	 * @param  array  $totalPrice     Prices
-	 * @param  array  $totalTypes     Property types
+	 * @param   array  $totalAreas     Areas
+	 * @param   array  $totalBedrooms  Bedrooms
+	 * @param   array  $totalBook      Booking type
+	 * @param   array  $totalCategory  Categories
+	 * @param   array  $totalFeature   Features
+	 * @param   array  $totalPets      Pets
+	 * @param   array  $totalPrice     Prices
+	 * @param   array  $totalTypes     Property types
 	 *
 	 * @since 1.0.0
 	 */
@@ -73,8 +72,7 @@ class Response
 		array $totalFeature = [],
 		array $totalPets = [],
 		array $totalPrice = [],
-		array $totalTypes = []): void
-	{
+		array $totalTypes = []): void {
 		if ($this->params->get('filter_area')) {
 			$this->presetFilterCountArea($this->searchData->filterArea, $totalAreas);
 		}
@@ -130,15 +128,14 @@ class Response
 	/**
 	 * Set search data options for action fields
 	 *
-	 * @param  string  $bar           Menu bar selection
-	 * @param  string  $action        Action filters or sort
-	 * @param  string  $action_value  Action value
+	 * @param   string  $bar           Menu bar selection
+	 * @param   string  $action        Action filters or sort
+	 * @param   string  $action_value  Action value
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function setSearchData(string $bar, string $action = '', string $action_value = ''): void
-	{
+	public function setSearchData(string $bar, string $action = '', string $action_value = ''): void {
 		$this->searchData->bar = $bar;
 		if ($bar && $this->searchData->limitstart > 0) {
 			$this->searchData->start      = $this->searchData->limitstart;
@@ -146,9 +143,10 @@ class Response
 		}
 		if ($action == 'page') {
 			$this->searchData->start = $action_value;
-		} else if ($action == 'order') {
+		}
+		elseif ($action == 'order') {
 			$this->setOrder($action_value);
-//		} else if ($action === 'currency') {
+//		} elseif ($action === 'currency') {
 //			 TODO-v6.0 Pricing by currency
 //			 Set currency, get updated dropdown and refresh current page
 //			$currency                                                  = $value;
@@ -170,7 +168,8 @@ class Response
 //
 //			$uids           = $filter_results;
 //			$num_properties = count( $uids );
-		} else if ($action === 'clear' || $action === 'toggle') {
+		}
+		elseif ($action === 'clear' || $action === 'toggle') {
 			$this->clearFilter($this->searchData->filterArea);
 			$this->clearFilter($this->searchData->filterBedrooms);
 			$this->clearFilter($this->searchData->filterBook);
@@ -179,7 +178,8 @@ class Response
 			$this->clearFilter($this->searchData->filterPets);
 			$this->clearFilter($this->searchData->filterPrice);
 			$this->clearFilter($this->searchData->filterType);
-		} else if ($action) {
+		}
+		elseif ($action) {
 			match ($action) {
 				'property_area' => $this->checkSelection($this->searchData->filterArea, $action_value, false),
 				'bedrooms'      => $this->checkSelection($this->searchData->filterBedrooms, $action_value, false),
@@ -190,7 +190,8 @@ class Response
 				'price'         => $this->checkSelection($this->searchData->filterPrice, $action_value, false),
 				'type'          => $this->checkSelection($this->searchData->filterType, $action_value, false)
 			};
-		} else {
+		}
+		else {
 			$this->searchData->action = $action;
 		}
 	}
@@ -198,14 +199,13 @@ class Response
 	/**
 	 * Check if filter value is selected
 	 *
-	 * @param  array  $selected  Current counts and selections (pass by reference)
-	 * @param  mixed  $value     Value to increment
-	 * @param  bool   $reset     FALSE will not reset any selected items with zero count
+	 * @param   array  $selected  Current counts and selections (pass by reference)
+	 * @param   mixed  $value     Value to increment
+	 * @param   bool   $reset     FALSE will not reset any selected items with zero count
 	 *
 	 * @since  1.0.0
 	 */
-	private function checkSelection(array &$selected, mixed $value, bool $reset = true): void
-	{
+	private function checkSelection(array &$selected, mixed $value, bool $reset = true): void {
 		$checked = 0;
 		if (isset($selected[$value][2])) {
 			$checked = $selected[$value][2];
@@ -224,12 +224,11 @@ class Response
 	/**
 	 * Clear the filter count and selected filters
 	 *
-	 * @param  array  $selected  Selected filters (pass by reference)
+	 * @param   array  $selected  Selected filters (pass by reference)
 	 *
 	 * @since  1.0.0
 	 */
-	private function clearFilter(array &$selected): void
-	{
+	private function clearFilter(array &$selected): void {
 		foreach ($selected as $k => $v) {
 			$selected[$k][1] = 0;
 			$selected[$k][2] = 0;
@@ -239,13 +238,12 @@ class Response
 	/**
 	 * Clear and reset the filter data
 	 *
-	 * @param  array  $saved  Saved filter (by reference)
-	 * @param  array  $new    New filters
+	 * @param   array  $saved  Saved filter (by reference)
+	 * @param   array  $new    New filters
 	 *
 	 * @since  3.3.0
 	 */
-	private function presetFilterCount(array &$saved, array $new): void
-	{
+	private function presetFilterCount(array &$saved, array $new): void {
 		$this->zeroFilterCount($saved);
 		foreach ($new as $t) {
 			$this->setFilterCount($saved, $t->id, $t->total);
@@ -255,13 +253,12 @@ class Response
 	/**
 	 * Clear and reset the filter data for area allowing check for selected region
 	 *
-	 * @param  array  $saved  Saved filter (by reference)
-	 * @param  array  $new    New filters
+	 * @param   array  $saved  Saved filter (by reference)
+	 * @param   array  $new    New filters
 	 *
 	 * @since  3.3.0
 	 */
-	private function presetFilterCountArea(array &$saved, array $new): void
-	{
+	private function presetFilterCountArea(array &$saved, array $new): void {
 		// Reset selected
 		foreach ($saved as $k => $v) {
 			$saved[$k][1] = 0;
@@ -275,14 +272,13 @@ class Response
 	/**
 	 * Increase the filter count if a matching record is found
 	 *
-	 * @param  array  $selected  Current counts and selections (by reference)
-	 * @param  mixed  $id        Current item
-	 * @param  int    $value     Value to increment
+	 * @param   array  $selected  Current counts and selections (by reference)
+	 * @param   mixed  $id        Current item
+	 * @param   int    $value     Value to increment
 	 *
 	 * @since  1.0.0
 	 */
-	private function setFilterCount(array &$selected, mixed $id, int $value): void
-	{
+	private function setFilterCount(array &$selected, mixed $id, int $value): void {
 		foreach ($selected as $k => $v) {
 			if ($k == $id) {
 				$selected[$k][1] += $value;
@@ -293,13 +289,12 @@ class Response
 	/**
 	 * Increase the filter count for prices if a record is found
 	 *
-	 * @param  array  $selected  Current counts and selections (by reference)
-	 * @param  int    $price     Price of current item
+	 * @param   array  $selected  Current counts and selections (by reference)
+	 * @param   int    $price     Price of current item
 	 *
 	 * @since  1.2.2
 	 */
-	private function setFilterPriceCount(array &$selected, int $price): void
-	{
+	private function setFilterPriceCount(array &$selected, int $price): void {
 		foreach ($selected as $k => $v) {
 			if ($price >= (int) $k && $price <= (int) $v[0]) {
 				$selected[$k][1]++;
@@ -311,12 +306,11 @@ class Response
 	/**
 	 * Set property ordering
 	 *
-	 * @param  int  $order  Property order
+	 * @param   int  $order  Property order
 	 *
 	 * @since  5.0.0
 	 */
-	private function setOrder(int $order): void
-	{
+	private function setOrder(int $order): void {
 		$this->searchData->start       = 0;
 		$this->searchData->ordercustom = '';
 		$this->searchData->ordering    = '';
@@ -383,12 +377,11 @@ class Response
 	/**
 	 * Zeroise the filter count
 	 *
-	 * @param  array  $selected  Selected items (by reference)
+	 * @param   array  $selected  Selected items (by reference)
 	 *
 	 * @since  1.0.0
 	 */
-	private function zeroFilterCount(array &$selected): void
-	{
+	private function zeroFilterCount(array &$selected): void {
 		foreach ($selected as $k => $v) {
 			$selected[$k][1] = 0;
 		}

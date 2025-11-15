@@ -35,13 +35,12 @@ class ContractpaymentsModel extends ListModel
 	/**
 	 * Constructor.
 	 *
-	 * @param  array  $config  An optional associative array of configuration settings.
+	 * @param   array  $config  An optional associative array of configuration settings.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function __construct($config = [])
-	{
+	public function __construct($config = []) {
 		if (empty($config['filter_fields'])) {
 			//@formatter:off
 			$config['filter_fields'] = [
@@ -74,15 +73,14 @@ class ContractpaymentsModel extends ListModel
 	/**
 	 * Check for any pending payments from PayPal
 	 *
-	 * @param  int     $contract_id  ID of contract
-	 * @param  string  $payment_ref  Payment reference
+	 * @param   int     $contract_id  ID of contract
+	 * @param   string  $payment_ref  Payment reference
 	 *
 	 * @throws RuntimeException
 	 * @since  3.3.0
 	 * @return mixed
 	 */
-	public function checkForPending(int $contract_id, string $payment_ref): mixed
-	{
+	public function checkForPending(int $contract_id, string $payment_ref): mixed {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -103,14 +101,13 @@ class ContractpaymentsModel extends ListModel
 	/**
 	 * Get payment export data for csv
 	 *
-	 * @param  array  $data  Filter values
+	 * @param   array  $data  Filter values
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return mixed
 	 */
-	public function exportPayments(array $data): mixed
-	{
+	public function exportPayments(array $data): mixed {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -156,21 +153,21 @@ class ContractpaymentsModel extends ListModel
 		$filter_region_id = $data['region_id'];
 		if ($filter_region_id) {
 			if (is_numeric($filter_region_id)) {
-				$query->where('p.region_id = ' . (int)$filter_region_id);
+				$query->where('p.region_id = ' . (int) $filter_region_id);
 			}
 		}
 
 		$filter_service_id = $data['service_id'];
 		if ($filter_service_id) {
 			if (is_numeric($filter_service_id)) {
-				$query->where('a.service_id = ' . (int)$filter_service_id);
+				$query->where('a.service_id = ' . (int) $filter_service_id);
 			}
 		}
 
 		$filter_agency_id = $data['agency_id'];
 		if ($filter_agency_id) {
 			if (is_numeric($filter_agency_id)) {
-				$query->where($db->qn('c.agency_id') . '=' . (int)$filter_agency_id);
+				$query->where($db->qn('c.agency_id') . '=' . (int) $filter_agency_id);
 			}
 		}
 
@@ -183,7 +180,8 @@ class ContractpaymentsModel extends ListModel
 			$ts_d = $data['valid_to'] . ' 23:59:59';
 			$query->where($db->qn('a.created_at') . ' >= ' . $db->q($ts_a));
 			$query->where($db->qn('a.created_at') . ' <= ' . $db->q($ts_d));
-		} else {
+		}
+		else {
 			$query->where($db->qn('a.payment_date') . ' >= ' . $db->q($data['valid_from']));
 			$query->where($db->qn('a.payment_date') . ' <= ' . $db->q($data['valid_to']));
 		}
@@ -200,15 +198,14 @@ class ContractpaymentsModel extends ListModel
 	/**
 	 * Get payments for contract
 	 *
-	 * @param  int  $contract_id  ID of contract
+	 * @param   int  $contract_id  ID of contract
 	 *
 	 * @throws RuntimeException
 	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return mixed
 	 */
-	public function getForContract(int $contract_id): mixed
-	{
+	public function getForContract(int $contract_id): mixed {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -238,8 +235,7 @@ class ContractpaymentsModel extends ListModel
 	 * @since  1.0.0
 	 * @return mixed
 	 */
-	public function getOverview(): mixed
-	{
+	public function getOverview(): mixed {
 		$yesterdayTS = TickTock::modifyDays('now', 1, '-');
 
 		$db    = $this->getDatabase();
@@ -290,14 +286,13 @@ class ContractpaymentsModel extends ListModel
 	/**
 	 * Get unprocessed payment rows
 	 *
-	 * @param  int  $agency_id  ID of agency
+	 * @param   int  $agency_id  ID of agency
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return mixed
 	 */
-	public function getPaymentQueue(int $agency_id = 0): mixed
-	{
+	public function getPaymentQueue(int $agency_id = 0): mixed {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -348,14 +343,13 @@ class ContractpaymentsModel extends ListModel
 	/**
 	 * Get total of all payments for contract
 	 *
-	 * @param  int  $contract_id  ID of contract
+	 * @param   int  $contract_id  ID of contract
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return ?float
 	 */
-	public function getPaymentTotal(int $contract_id): ?float
-	{
+	public function getPaymentTotal(int $contract_id): ?float {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -371,21 +365,20 @@ class ContractpaymentsModel extends ListModel
 			$value = 0;
 		}
 
-		return (float)$value;
+		return (float) $value;
 	}
 
 	/**
 	 * Get any pending payments
 	 *
-	 * @param  int  $contract_id  ID of contract
-	 * @param  int  $service_id   ID of service
+	 * @param   int  $contract_id  ID of contract
+	 * @param   int  $service_id   ID of service
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return mixed
 	 */
-	public function getPending(int $contract_id, int $service_id): mixed
-	{
+	public function getPending(int $contract_id, int $service_id): mixed {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -406,14 +399,13 @@ class ContractpaymentsModel extends ListModel
 	/**
 	 * Get payment totals
 	 *
-	 * @param  int  $contract_id  ID of contract
+	 * @param   int  $contract_id  ID of contract
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return ?object
 	 */
-	public function getTotals(int $contract_id): ?object
-	{
+	public function getTotals(int $contract_id): ?object {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -431,13 +423,12 @@ class ContractpaymentsModel extends ListModel
 	/**
 	 * Unset agent payments that have been amended
 	 *
-	 * @param  int  $contract_id  ID of contract
+	 * @param   int  $contract_id  ID of contract
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
 	 */
-	public function unsetPseudoPayments(int $contract_id): void
-	{
+	public function unsetPseudoPayments(int $contract_id): void {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -461,7 +452,8 @@ class ContractpaymentsModel extends ListModel
 			$db->execute();
 
 			$db->transactionCommit();
-		} catch (ExecutionFailureException $e) {
+		}
+		catch (ExecutionFailureException $e) {
 			$db->transactionRollback();
 			throw $e;
 		}
@@ -470,14 +462,13 @@ class ContractpaymentsModel extends ListModel
 	/**
 	 * Update actioned payments
 	 *
-	 * @param  array  $ids  Array of IDs to be updated
+	 * @param   array  $ids  Array of IDs to be updated
 	 *
 	 * @throws RuntimeException
 	 * @throws Exception
 	 * @since  3.2.0
 	 */
-	public function updateActionedPayments(array $ids): void
-	{
+	public function updateActionedPayments(array $ids): void {
 		if (!is_countable($ids) || !count($ids)) {
 			return;
 		}
@@ -496,7 +487,8 @@ class ContractpaymentsModel extends ListModel
 			$db->execute();
 
 			$db->transactionCommit();
-		} catch (ExecutionFailureException $e) {
+		}
+		catch (ExecutionFailureException $e) {
 			$db->transactionRollback();
 			throw $e;
 		}
@@ -505,14 +497,13 @@ class ContractpaymentsModel extends ListModel
 	/**
 	 * Update existing payment and fee records to actioned for Xero service
 	 *
-	 * @param  int  $agency_id  ID of agency
+	 * @param   int  $agency_id  ID of agency
 	 *
 	 * @throws Exception
 	 * @throws RuntimeException
 	 * @since  3.1.0
 	 */
-	public function updateForXero(int $agency_id): void
-	{
+	public function updateForXero(int $agency_id): void {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -548,7 +539,8 @@ class ContractpaymentsModel extends ListModel
 
 				$db->setQuery($query);
 				$db->execute();
-			} catch (ExecutionFailureException $e) {
+			}
+			catch (ExecutionFailureException $e) {
 				KrMethods::message(KrMethods::plain(
 					'Payment and Fee records could not be set to actioned for Xero initialise. Please contact support'
 				),
@@ -561,15 +553,14 @@ class ContractpaymentsModel extends ListModel
 	/**
 	 * Reset actioned flag on payments and fess for selected contracts
 	 *
-	 * @param  array  $ids  Contract ids for update
+	 * @param   array  $ids  Contract ids for update
 	 *
 	 * @throws RuntimeException
 	 * @throws Exception
 	 * @since  3.1.0
 	 * @return bool
 	 */
-	public function updateXeroBatch(array $ids): bool
-	{
+	public function updateXeroBatch(array $ids): bool {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -621,7 +612,8 @@ class ContractpaymentsModel extends ListModel
 			$db->execute();
 
 			$db->transactionCommit();
-		} catch (ExecutionFailureException $e) {
+		}
+		catch (ExecutionFailureException $e) {
 			KrMethods::message(KrMethods::plain($e->getMessage()), 'error');
 			KrMethods::message(KrMethods::plain('KrFactory error, please try again or contact support'), 'error');
 
@@ -640,8 +632,7 @@ class ContractpaymentsModel extends ListModel
 	 * @since  1.0.0
 	 * @return QueryInterface
 	 */
-	protected function getListQuery(): QueryInterface
-	{
+	protected function getListQuery(): QueryInterface {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -661,19 +652,20 @@ class ContractpaymentsModel extends ListModel
 
 		$state = $this->getState('filter.state');
 		if (is_numeric($state)) {
-			$query->where('a.state = ' . (int)$state);
-		} elseif ($state === '') {
+			$query->where('a.state = ' . (int) $state);
+		}
+		elseif ($state === '') {
 			$query->where($db->qn('a.state') . '= 1');
 		}
 
 		$filter_contract_id = $this->state->get('filter.contract_id');
 		if ($filter_contract_id) {
-			$query->where($db->qn('a.contract_id') . '= ' . (int)$filter_contract_id);
+			$query->where($db->qn('a.contract_id') . '= ' . (int) $filter_contract_id);
 		}
 
 		$filter_service_id = $this->state->get("filter.service_id");
 		if ($filter_service_id) {
-			$query->where($db->qn('a.service_id') . '= ' . (int)$filter_service_id);
+			$query->where($db->qn('a.service_id') . '= ' . (int) $filter_service_id);
 		}
 
 		$filter_payment_ref = $this->state->get("filter.payment_ref");
@@ -693,19 +685,20 @@ class ContractpaymentsModel extends ListModel
 
 		$confirmed = $this->getState('filter.confirmed');
 		if (is_numeric($confirmed)) {
-			$query->where($db->qn('a.confirmed') . '=' . (int)$confirmed);
+			$query->where($db->qn('a.confirmed') . '=' . (int) $confirmed);
 		}
 
 		$actioned = $this->getState('filter.actioned');
 		if (is_numeric($actioned)) {
-			$query->where($db->qn('a.actioned') . '=' . (int)$actioned);
+			$query->where($db->qn('a.actioned') . '=' . (int) $actioned);
 		}
 
 		$search = $this->getState('filter.search');
 		if (!empty($search)) {
 			if (stripos($search, 'id:') === 0) {
-				$query->where('a.id = ' . (int)substr($search, 3));
-			} else {
+				$query->where('a.id = ' . (int) substr($search, 3));
+			}
+			else {
 				$search = $db->q('%' . $db->escape(trim($search), true) . '%');
 				$query->having('( a.payment_ref LIKE ' . $search . ' OR ( contract_tag LIKE ' . $search . ' ) )');
 			}
@@ -726,13 +719,12 @@ class ContractpaymentsModel extends ListModel
 	 * different modules that might need different sets of data or different
 	 * ordering requirements.
 	 *
-	 * @param  string  $id  A prefix for the store id.
+	 * @param   string  $id  A prefix for the store id.
 	 *
 	 * @since  1.0.0
 	 * @return string   A store id.
 	 */
-	protected function getStoreId($id = ''): string
-	{
+	protected function getStoreId($id = ''): string {
 		$id .= ':' . $this->getState('filter.search');
 		$id .= ':' . $this->getState('filter.state');
 		$id .= ':' . $this->getState('filter.contract_id');
@@ -750,14 +742,13 @@ class ContractpaymentsModel extends ListModel
 	 * Method to autopopulate the model state.
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @param  string  $ordering   Field to order by
-	 * @param  string  $direction  Direction to order
+	 * @param   string  $ordering   Field to order by
+	 * @param   string  $direction  Direction to order
 	 *
 	 * @throws Exception
 	 * @since 1.0.0
 	 */
-	protected function populateState($ordering = 'a.payment_date', $direction = 'asc'): void
-	{
+	protected function populateState($ordering = 'a.payment_date', $direction = 'asc'): void {
 		$this->setState('filter.search',
 			$this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string')
 		);

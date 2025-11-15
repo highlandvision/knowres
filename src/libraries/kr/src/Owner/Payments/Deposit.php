@@ -24,7 +24,7 @@ class Deposit extends Payments
 	/**
 	 * Initialize
 	 *
-	 * @param  object  $payment  Contract payment data
+	 * @param   object  $payment  Contract payment data
 	 *
 	 * @throws Exception
 	 * @since  3.3.1
@@ -46,7 +46,7 @@ class Deposit extends Payments
 		{
 			$value = 0;
 		}
-		else if ($this->net)
+		elseif ($this->net)
 		{
 			$value = $this->setNet();
 		}
@@ -78,7 +78,8 @@ class Deposit extends Payments
 		if ($this->owner->deposit_pc > 0)
 		{
 			return Utility::roundValue($this->contract->room_total * $this->owner_deposit_pc,
-				$this->contract->currency);
+				$this->contract->currency
+			);
 		}
 		else
 		{
@@ -107,7 +108,8 @@ class Deposit extends Payments
 		else
 		{
 			return Utility::roundValue($this->contract->deposit / $this->contract->contract_total
-				* $this->contract->net_price, $this->contract->currency);
+			                           * $this->contract->net_price, $this->contract->currency
+			);
 		}
 	}
 }

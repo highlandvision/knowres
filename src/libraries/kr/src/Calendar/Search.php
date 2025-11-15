@@ -28,10 +28,10 @@ class Search extends Calendar
 	/**
 	 * Initialise
 	 *
-	 * @param  int     $property_id  ID of property
-	 * @param  string  $arrive       Arrival date Y-m-d
-	 * @param  string  $depart       Departure date Y-m-d
-	 * @param  array   $rates        Property rates
+	 * @param   int     $property_id  ID of property
+	 * @param   string  $arrive       Arrival date Y-m-d
+	 * @param   string  $depart       Departure date Y-m-d
+	 * @param   array   $rates        Property rates
 	 *
 	 * @throws Exception
 	 * @since  3.4.0
@@ -84,12 +84,12 @@ class Search extends Calendar
 			{
 				return false;
 			}
-			else if ($this->changeovers[$date] == 'X' && isset($this->weekly[$date])
-				&& $this->availability[$date] == 'N')
+			elseif ($this->changeovers[$date] == 'X' && isset($this->weekly[$date])
+			        && $this->availability[$date] == 'N')
 			{
 				return false;
 			}
-			else if ($this->changeovers[$date] == 'X' && !isset($this->weekly[$date]))
+			elseif ($this->changeovers[$date] == 'X' && !isset($this->weekly[$date]))
 			{
 				return false;
 			}

@@ -30,13 +30,12 @@ class RatesModel extends ListModel
 	/**
 	 * Constructor.
 	 *
-	 * @param  array  $config  An optional associative array of configuration settings.
+	 * @param   array  $config  An optional associative array of configuration settings.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function __construct($config = [])
-	{
+	public function __construct($config = []) {
 		if (empty($config['filter_fields'])) {
 			//@formatter:off
 			$config['filter_fields'] = [
@@ -62,31 +61,30 @@ class RatesModel extends ListModel
 	/**
 	 * Insert / update multiple rate changes into database
 	 *
-	 * @param  array  $updates  Rate updates to be changed / inserted
+	 * @param   array  $updates  Rate updates to be changed / inserted
 	 *
 	 * @throws Exception
 	 * @since  2.4.0
 	 */
-	public static function insertUpdateRates(array $updates): void
-	{
+	public static function insertUpdateRates(array $updates): void {
 		$db  = KrFactory::getDatabase();
 		$sql = [];
 
 		foreach ($updates as $row) {
 			$sql[] = '( 
-							' . (int)$row->id . ',
-				            ' . (int)$row->property_id . ',
+							' . (int) $row->id . ',
+				            ' . (int) $row->property_id . ',
 				            ' . $db->q($row->valid_from) . ',
 				            ' . $db->q($row->valid_to) . ',
-							' . (float)$row->rate . ',
-				            ' . (int)$row->min_nights . ',
-				            ' . (int)$row->max_nights . ',
-				            ' . (int)$row->min_guests . ',
-				            ' . (int)$row->max_guests . ',
-				            ' . (int)$row->ignore_pppn . ',
-				            ' . (int)$row->start_day . ',
+							' . (float) $row->rate . ',
+				            ' . (int) $row->min_nights . ',
+				            ' . (int) $row->max_nights . ',
+				            ' . (int) $row->min_guests . ',
+				            ' . (int) $row->max_guests . ',
+				            ' . (int) $row->ignore_pppn . ',
+				            ' . (int) $row->start_day . ',
 				            ' . $db->q($row->more_guests) . ',
-				            ' . (int)$row->state . ',
+				            ' . (int) $row->state . ',
 				            ' . $db->q($row->created_at) . '
 				           )';
 		}
@@ -110,7 +108,8 @@ class RatesModel extends ListModel
 			$db->setQuery($query);
 			$db->execute();
 			$db->transactionCommit();
-		} catch (Exception $e) {
+		}
+		catch (Exception $e) {
 			$db->transactionRollback();
 
 			throw new Exception($e);
@@ -120,15 +119,14 @@ class RatesModel extends ListModel
 	/**
 	 * Check for current rates for a property
 	 *
-	 * @param  int  $property_id  ID of property
+	 * @param   int  $property_id  ID of property
 	 *
 	 * @throws RuntimeException
 	 * @throws InvalidFormatException
 	 * @since  1.0.0
 	 * @return ?int
 	 */
-	public function getCurrent(int $property_id): ?int
-	{
+	public function getCurrent(int $property_id): ?int {
 		$date = TickTock::getDate();
 
 		$db    = $this->getDatabase();
@@ -149,14 +147,13 @@ class RatesModel extends ListModel
 	/**
 	 * Check for current rates for a property
 	 *
-	 * @param  int  $property_id  ID of property
+	 * @param   int  $property_id  ID of property
 	 *
 	 * @throws RuntimeException
 	 * @since  3.0.0
 	 * @return ?string
 	 */
-	public function getLastRateDate(int $property_id): ?string
-	{
+	public function getLastRateDate(int $property_id): ?string {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -175,15 +172,14 @@ class RatesModel extends ListModel
 	/**
 	 * Get maximum standard guests
 	 *
-	 * @param  int  $property_id  ID of property
+	 * @param   int  $property_id  ID of property
 	 *
 	 * @throws RuntimeException
 	 * @throws Exception
 	 * @since  1.0.0
 	 * @return ?int
 	 */
-	public function getMaxGuests(int $property_id): ?int
-	{
+	public function getMaxGuests(int $property_id): ?int {
 		$date = TickTock::getDate();
 
 		$db    = $this->getDatabase();
@@ -206,16 +202,15 @@ class RatesModel extends ListModel
 	/**
 	 * Get minimum rates value
 	 *
-	 * @param  mixed   $properties  Properties to search
-	 * @param  string  $date        require date
-	 * @param  int     $guests      #Guests
+	 * @param   mixed   $properties  Properties to search
+	 * @param   string  $date        require date
+	 * @param   int     $guests      #Guests
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return mixed
 	 */
-	public function getMinRates(mixed $properties, string $date, int $guests): mixed
-	{
+	public function getMinRates(mixed $properties, string $date, int $guests): mixed {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -223,11 +218,13 @@ class RatesModel extends ListModel
 		$query->select('MIN(a.rate) as minrate');
 		$query->from($db->qn('#__knowres_rate', 'a'));
 		if (is_numeric($properties)) {
-			$query->where($db->qn('a.property_id') . '=' . (int)$properties);
-		} elseif (is_string($properties) && strlen($properties) > 0) {
+			$query->where($db->qn('a.property_id') . '=' . (int) $properties);
+		}
+		elseif (is_string($properties) && strlen($properties) > 0) {
 			$ids = explode(',', $properties);
 			$query->where($db->qn('a.property_id') . ' IN (' . implode(',', array_map('intval', $ids)) . ')');
-		} elseif (is_array($properties)) {
+		}
+		elseif (is_array($properties)) {
 			$query->where($db->qn('a.property_id') . ' IN (' . implode(',', array_map('intval', $properties)) . ')');
 		}
 
@@ -250,7 +247,7 @@ class RatesModel extends ListModel
 	/**
 	 * Get rates with no paraphenalia
 	 *
-	 * @param  mixed    $properties  Either a single property, csv of properties or array of properties
+	 * @param   mixed   $properties  Either a single property, csv of properties or array of properties
 	 * @param  ?string  $from        From date
 	 * @param  ?string  $to          To date
 	 *
@@ -259,8 +256,7 @@ class RatesModel extends ListModel
 	 * @since  1.0.0
 	 * @return mixed
 	 */
-	public function getRatesForProperty(mixed $properties, ?string $from = null, ?string $to = null): mixed
-	{
+	public function getRatesForProperty(mixed $properties, ?string $from = null, ?string $to = null): mixed {
 		if (is_null($from)) {
 			$from = TickTock::getDate();
 		}
@@ -302,10 +298,12 @@ class RatesModel extends ListModel
 			->where($db->qn('a.valid_from') . '<=' . $db->q($to));
 
 		if (is_numeric($properties)) {
-			$query->where($db->qn('a.property_id') . '=' . (int)$properties);
-		} elseif (is_array($properties)) {
+			$query->where($db->qn('a.property_id') . '=' . (int) $properties);
+		}
+		elseif (is_array($properties)) {
 			$query->where('a.property_id IN (' . implode(',', array_map('intval', $properties)) . ')');
-		} elseif (is_string($properties) && strlen($properties) > 0) {
+		}
+		elseif (is_string($properties) && strlen($properties) > 0) {
 			$ids = explode(',', $properties);
 			$query->where($db->qn('a.property_id') . ' IN (' . implode(',', array_map('intval', $ids)) . ')');
 		}
@@ -321,17 +319,16 @@ class RatesModel extends ListModel
 	/**
 	 * Validate dates entered for a rate do not overlap with an existing rate
 	 *
-	 * @param  int     $id           ID of rate being edited
-	 * @param  int     $property_id  ID of property
-	 * @param  string  $valid_from   Entered valid from date
-	 * @param  string  $valid_to     Entered valid to date
+	 * @param   int     $id           ID of rate being edited
+	 * @param   int     $property_id  ID of property
+	 * @param   string  $valid_from   Entered valid from date
+	 * @param   string  $valid_to     Entered valid to date
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return array
 	 */
-	public function ruleDateRangeRates(int $id, int $property_id, string $valid_from, string $valid_to): array
-	{
+	public function ruleDateRangeRates(int $id, int $property_id, string $valid_from, string $valid_to): array {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -355,8 +352,7 @@ class RatesModel extends ListModel
 	 * @since  1.0.0
 	 * @return QueryInterface
 	 */
-	protected function getListQuery(): QueryInterface
-	{
+	protected function getListQuery(): QueryInterface {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -413,15 +409,17 @@ class RatesModel extends ListModel
 
 		$state = $this->getState('filter.state');
 		if (is_numeric($state)) {
-			$query->where($db->qn('a.state') . ' = ' . (int)$state);
-		} elseif ($state === '') {
+			$query->where($db->qn('a.state') . ' = ' . (int) $state);
+		}
+		elseif ($state === '') {
 			$query->where($db->qn('a.state') . ' IN (0, 1)');
 		}
 
 		$filter_property_id = $this->state->get("filter.property_id");
 		if (is_numeric($filter_property_id)) {
-			$query->where($db->qn('a.property_id') . ' = ' . (int)$filter_property_id);
-		} elseif (is_string($filter_property_id) && strlen($filter_property_id) > 0) {
+			$query->where($db->qn('a.property_id') . ' = ' . (int) $filter_property_id);
+		}
+		elseif (is_string($filter_property_id) && strlen($filter_property_id) > 0) {
 			$ids = explode(",", $filter_property_id);
 			$query->where($db->qn('a.property_id') . ' IN (' . implode(',', array_map('intval', $ids)) . ')');
 		}
@@ -439,8 +437,9 @@ class RatesModel extends ListModel
 		$search = $this->getState('filter.search');
 		if (!empty($search)) {
 			if (stripos($search, 'id:') === 0) {
-				$query->where($db->qn('a.id') . ' = ' . (int)substr($search, 3));
-			} else {
+				$query->where($db->qn('a.id') . ' = ' . (int) substr($search, 3));
+			}
+			else {
 				$search = $db->q('%' . $db->escape($search) . '%');
 				$query->where('(' . $subQuery->__toString() . ') ' . ' LIKE ' . $search);
 			}
@@ -461,13 +460,12 @@ class RatesModel extends ListModel
 	 * different modules that might need different sets of data or different
 	 * ordering requirements.
 	 *
-	 * @param  string  $id  A prefix for the store id.
+	 * @param   string  $id  A prefix for the store id.
 	 *
 	 * @since  1.0.0
 	 * @return string
 	 */
-	protected function getStoreId($id = ''): string
-	{
+	protected function getStoreId($id = ''): string {
 		$id .= ':' . $this->getState('filter.search');
 		$id .= ':' . $this->getState('filter.state');
 		$id .= ':' . $this->getState('filter.property_id');
@@ -482,14 +480,13 @@ class RatesModel extends ListModel
 	 * Method to autopopulate the model state.
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @param  string  $ordering   Field
-	 * @param  string  $direction  Direction
+	 * @param   string  $ordering   Field
+	 * @param   string  $direction  Direction
 	 *
 	 * @throws Exception
 	 * @since 1.0.0
 	 */
-	protected function populateState($ordering = 'a.valid_from', $direction = 'asc'): void
-	{
+	protected function populateState($ordering = 'a.valid_from', $direction = 'asc'): void {
 		$this->setState('filter.search',
 			$this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string')
 		);

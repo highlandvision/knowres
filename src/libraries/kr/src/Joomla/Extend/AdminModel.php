@@ -35,27 +35,25 @@ class AdminModel extends \Joomla\CMS\MVC\Model\AdminModel
 	/**
 	 * Constructor.
 	 *
-	 * @param  array  $config  An optional associative array of configuration settings.
+	 * @param   array  $config  An optional associative array of configuration settings.
 	 *
 	 * @throws Exception
 	 * @since  3.0.0
 	 */
-	public function __construct($config = [])
-	{
+	public function __construct($config = []) {
 		parent::__construct($config);
 	}
 
 	/**
 	 * Set updated_at timestamp for publish/unpublish listing option
 	 *
-	 * @param  int     $id     ID of item
-	 * @param  string  $table  Table to update (table name only)
+	 * @param   int     $id     ID of item
+	 * @param   string  $table  Table to update (table name only)
 	 *
 	 * @throws Exception
 	 * @since   3.3.0
 	 */
-	public static function setUpdatedAt(int $id, string $table): void
-	{
+	public static function setUpdatedAt(int $id, string $table): void {
 		if ($id && $table) {
 			$update             = new stdClass();
 			$update->id         = $id;
@@ -81,16 +79,15 @@ class AdminModel extends \Joomla\CMS\MVC\Model\AdminModel
 	/**
 	 * Method to get the record form.
 	 *
-	 * @param  array    $data      An optional array of data for the form to interogate.
-	 * @param  bool     $loadData  True if the form is to load its own data (default case), false if not.
+	 * @param   array   $data      An optional array of data for the form to interogate.
+	 * @param   bool    $loadData  True if the form is to load its own data (default case), false if not.
 	 * @param  ?string  $source    The form name if required.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 * @return Form|false
 	 */
-	public function getForm($data = [], $loadData = true, ?string $source = null): Form|false
-	{
+	public function getForm($data = [], $loadData = true, ?string $source = null): Form|false {
 		try {
 			if (empty($source)) {
 				$source = str_replace('com_knowres.', '', $this->typeAlias);
@@ -99,9 +96,11 @@ class AdminModel extends \Joomla\CMS\MVC\Model\AdminModel
 			return $this->loadForm($this->typeAlias, $source, ['control'   => 'jform',
 			                                                   'load_data' => $loadData
 			]);
-		} catch (Exception $e) {
+		}
+		catch (Exception $e) {
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_FATAL'));
 			Logger::logMe($e->getMessage());
+
 			return false;
 		}
 	}
@@ -109,14 +108,13 @@ class AdminModel extends \Joomla\CMS\MVC\Model\AdminModel
 	/**
 	 * Method to save the form data.
 	 *
-	 * @param  array  $data  The form data.
+	 * @param   array  $data  The form data.
 	 *
 	 * @throws Exception
 	 * @since  3.2
 	 * @return bool  True on success.
 	 */
-	public function save($data): bool
-	{
+	public function save($data): bool {
 		if (KrMethods::inputString('task', '') === 'save2copy') {
 			if (isset($data['name'])) {
 				$data['name'] = Utility::generateNewName($data['name']);
@@ -170,14 +168,13 @@ class AdminModel extends \Joomla\CMS\MVC\Model\AdminModel
 	/**
 	 * Prepare and sanitize the table prior to saving.
 	 *
-	 * @param  Table  $table  Table data
+	 * @param   Table  $table  Table data
 	 *
 	 * @throws RuntimeException
 	 * @throws Exception
 	 * @since  3.2.0
 	 */
-	protected function prepareTable($table): void
-	{
+	protected function prepareTable($table): void {
 		if (empty($table->id)) {
 			$table->created_at = TickTock::getTS();
 			$table->created_by = KrMethods::getUser()->id;
@@ -204,5 +201,37 @@ class AdminModel extends \Joomla\CMS\MVC\Model\AdminModel
 		if (isset($table->version)) {
 			$table->version++;
 		}
+	}
+
+	/**
+	 * Set form attributes
+	 *
+	 * @param   int     $setting  Setting for field
+	 *                            0 = Optional, 1 = Required, 2 = Hidden
+	 * @param   string  $name     Field name
+	 *                            0 = Optional, 1 = Required, 2 = Hidden
+	 * @param   Form    $form     Form object
+	 *
+	 * @throws UnexpectedValueException
+	 * @since  4.0.0
+	 * @return Form $form
+	 */
+	protected function setAttribute(int $setting, string $name, Form $form): Form {
+		if ($setting == 2) {
+			$form->setFieldAttribute($name, 'type', 'hidden');
+		}
+
+		if ($setting == 0 || $setting == 2) {
+			$attr  = 'required';
+			$value = 'false';
+		}
+		elseif ($setting == 1) {
+			$attr  = 'required';
+			$value = 'true';
+		}
+
+		$form->setFieldAttribute($name, $attr, $value);
+
+		return $form;
 	}
 }

@@ -29,13 +29,12 @@ class PropertyfieldsModel extends ListModel
 	/**
 	 * Constructor.
 	 *
-	 * @param  array  $config  An optional associative array of configuration settings.
+	 * @param   array  $config  An optional associative array of configuration settings.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function __construct($config = [])
-	{
+	public function __construct($config = []) {
 		if (empty($config['filter_fields'])) {
 			//@formatter:off
 			$config['filter_fields'] = [
@@ -61,16 +60,15 @@ class PropertyfieldsModel extends ListModel
 	/**
 	 * Read property text fields
 	 *
-	 * @param  bool  $required  Required fields only
-	 * @param  bool  $format    Special format only
+	 * @param   bool  $required  Required fields only
+	 * @param   bool  $format    Special format only
 	 *
 	 * @throws DatabaseNotFoundException
 	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return mixed
 	 */
-	public function getAllPropertyFields(bool $required = false, bool $format = false): mixed
-	{
+	public function getAllPropertyFields(bool $required = false, bool $format = false): mixed {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -79,7 +77,7 @@ class PropertyfieldsModel extends ListModel
 			->where($db->qn('state') . '=1');
 
 		if ($required) {
-			$query->where($db->qn('required') . '=' . (int)$required);
+			$query->where($db->qn('required') . '=' . (int) $required);
 		}
 
 		if ($format) {
@@ -100,8 +98,7 @@ class PropertyfieldsModel extends ListModel
 	 * @since  1.0.0
 	 * @return QueryInterface
 	 */
-	protected function getListQuery(): QueryInterface
-	{
+	protected function getListQuery(): QueryInterface {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -130,12 +127,13 @@ class PropertyfieldsModel extends ListModel
 
 		$state = $this->getState('filter.state');
 		if (is_numeric($state)) {
-			$query->where($db->qn('a.state') . '=' . (int)$state);
-		} elseif ($state === '') {
+			$query->where($db->qn('a.state') . '=' . (int) $state);
+		}
+		elseif ($state === '') {
 			$query->where($db->qn('a.state') . ' IN (0, 1)');
 		}
 
-		$filter_required = (int)$this->state->get('filter.required');
+		$filter_required = (int) $this->state->get('filter.required');
 		if ($filter_required) {
 			$query->where($db->qn('a.required') . '=' . $filter_required);
 		}
@@ -148,8 +146,9 @@ class PropertyfieldsModel extends ListModel
 		$search = $this->getState('filter.search');
 		if (!empty($search)) {
 			if (stripos($search, 'id:') === 0) {
-				$query->where($db->qn('a.id') . '=' . (int)substr($search, 3));
-			} else {
+				$query->where($db->qn('a.id') . '=' . (int) substr($search, 3));
+			}
+			else {
 				$search = $db->q('%' . $db->escape($search) . '%');
 				$query->where('(' . $subQuery->__toString() . ') ' . ' LIKE ' . $search);
 			}
@@ -170,13 +169,12 @@ class PropertyfieldsModel extends ListModel
 	 * different modules that might need different sets of data or different
 	 * ordering requirements.
 	 *
-	 * @param  string  $id  A prefix for the store id.
+	 * @param   string  $id  A prefix for the store id.
 	 *
 	 * @since  1.0.0
 	 * @return string A store id.
 	 */
-	protected function getStoreId($id = ''): string
-	{
+	protected function getStoreId($id = ''): string {
 		$id .= ':' . $this->getState('filter.search');
 		$id .= ':' . $this->getState('filter.state');
 		$id .= ':' . $this->getState('filter.required');
@@ -189,13 +187,12 @@ class PropertyfieldsModel extends ListModel
 	 * Method to autopopulate the model state.
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @param  null|string  $ordering
-	 * @param  null|string  $direction
+	 * @param   null|string  $ordering
+	 * @param   null|string  $direction
 	 *
 	 * @since  1.0.0
 	 */
-	protected function populateState($ordering = 'a.ordering', $direction = 'asc'): void
-	{
+	protected function populateState($ordering = 'a.ordering', $direction = 'asc'): void {
 		$this->setState('filter.search',
 			$this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string')
 		);

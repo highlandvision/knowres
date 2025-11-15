@@ -31,13 +31,12 @@ class RatemarkupsModel extends ListModel
 	/**
 	 * Constructor.
 	 *
-	 * @param  array  $config  An optional associative array of configuration settings.
+	 * @param   array  $config  An optional associative array of configuration settings.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function __construct($config = [])
-	{
+	public function __construct($config = []) {
 		if (empty($config['filter_fields'])) {
 			//@formatter:off
 			$config['filter_fields'] = [
@@ -61,7 +60,7 @@ class RatemarkupsModel extends ListModel
 	/**
 	 * Get all markups after today for property
 	 *
-	 * @param  mixed    $properties  one ID or csv string or array of property IDs
+	 * @param   mixed   $properties  one ID or csv string or array of property IDs
 	 * @param  ?string  $final       Restrict date range
 	 *
 	 * @throws RuntimeException
@@ -69,8 +68,7 @@ class RatemarkupsModel extends ListModel
 	 * @since  1.0.0
 	 * @return mixed
 	 */
-	public function getMarkups(mixed $properties, ?string $final = null): mixed
-	{
+	public function getMarkups(mixed $properties, ?string $final = null): mixed {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -91,12 +89,14 @@ class RatemarkupsModel extends ListModel
 
 		$filter_property_id = $properties;
 		if (is_numeric($filter_property_id)) {
-			$query->where($db->qn('property_id') . '=' . (int)$filter_property_id);
-		} elseif (is_array($filter_property_id)) {
+			$query->where($db->qn('property_id') . '=' . (int) $filter_property_id);
+		}
+		elseif (is_array($filter_property_id)) {
 			$query->where($db->qn('property_id') . ' IN (' . implode(',', array_map('intval', $filter_property_id))
 			              . ')'
 			);
-		} elseif (is_string($filter_property_id) && strlen($filter_property_id) > 0) {
+		}
+		elseif (is_string($filter_property_id) && strlen($filter_property_id) > 0) {
 			$ids = explode(',', $filter_property_id);
 			$query->where($db->qn('property_id') . ' IN (' . implode(',', array_map('intval', $ids)) . ')');
 		}
@@ -116,9 +116,7 @@ class RatemarkupsModel extends ListModel
 	 * @since  1.0.0
 	 * @return QueryInterface
 	 */
-	protected function getListQuery(): QueryInterface
-
-	{
+	protected function getListQuery(): QueryInterface {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -138,18 +136,21 @@ class RatemarkupsModel extends ListModel
 
 		$state = $this->getState('filter.state');
 		if (is_numeric($state)) {
-			$query->where('a.state = ' . (int)$state);
-		} elseif ($state === '') {
+			$query->where('a.state = ' . (int) $state);
+		}
+		elseif ($state === '') {
 			$query->where('(a.state IN (0, 1))');
 		}
 
 		$filter_property_id = $this->state->get("filter.property_id");
 		if ($filter_property_id) {
 			if (is_numeric($filter_property_id)) {
-				$query->where('a.property_id = ' . (int)$filter_property_id);
-			} elseif (is_array($filter_property_id)) {
+				$query->where('a.property_id = ' . (int) $filter_property_id);
+			}
+			elseif (is_array($filter_property_id)) {
 				$query->where('a.property_id IN (' . implode(',', array_map('intval', $filter_property_id)) . ')');
-			} elseif (is_string($filter_property_id) && strlen($filter_property_id) > 0) {
+			}
+			elseif (is_string($filter_property_id) && strlen($filter_property_id) > 0) {
 				$ids = explode(",", $filter_property_id);
 				$query->where('a.property_id IN (' . implode(',', array_map('intval', $ids)) . ')');
 			}
@@ -168,8 +169,9 @@ class RatemarkupsModel extends ListModel
 		$search = $this->getState('filter.search');
 		if (!empty($search)) {
 			if (stripos($search, 'id:') === 0) {
-				$query->where('a.id = ' . (int)substr($search, 3));
-			} else {
+				$query->where('a.id = ' . (int) substr($search, 3));
+			}
+			else {
 				$search = $db->q('%' . $db->escape($search) . '%');
 				$query->where($db->qn('a.net_markup') . ' LIKE ' . $search);
 			}
@@ -190,13 +192,12 @@ class RatemarkupsModel extends ListModel
 	 * different modules that might need different sets of data or different
 	 * ordering requirements.
 	 *
-	 * @param  string  $id  A prefix for the store id.
+	 * @param   string  $id  A prefix for the store id.
 	 *
 	 * @since  1.0.0
 	 * @return    string        A store id.
 	 */
-	protected function getStoreId($id = ''): string
-	{
+	protected function getStoreId($id = ''): string {
 		$id .= ':' . $this->getState('filter.search');
 		$id .= ':' . $this->getState('filter.state');
 		$id .= ':' . $this->getState('filter.property_id');
@@ -210,14 +211,13 @@ class RatemarkupsModel extends ListModel
 	 * Method to autopopulate the model state.
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @param  null  $ordering
-	 * @param  null  $direction
+	 * @param   null  $ordering
+	 * @param   null  $direction
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected function populateState($ordering = null, $direction = null): void
-	{
+	protected function populateState($ordering = null, $direction = null): void {
 		$this->setState('filter.search',
 			$this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string')
 		);

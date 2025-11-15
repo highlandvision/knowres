@@ -29,13 +29,12 @@ class ServicelogsModel extends ListModel
 	/**
 	 * Constructor.
 	 *
-	 * @param  array  $config  An optional associative array of configuration settings.
+	 * @param   array  $config  An optional associative array of configuration settings.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function __construct($config = [])
-	{
+	public function __construct($config = []) {
 		if (empty($config['filter_fields'])) {
 			//@formatter:off
 			$config['filter_fields'] = [
@@ -69,9 +68,7 @@ class ServicelogsModel extends ListModel
 	 * @since  1.0.0
 	 * @return QueryInterface
 	 */
-	protected function getListQuery(): QueryInterface
-
-	{
+	protected function getListQuery(): QueryInterface {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -108,16 +105,18 @@ class ServicelogsModel extends ListModel
 
 		$success = $this->getState('filter.success');
 		if (is_numeric($success)) {
-			$query->where($db->qn('a.success') . ' = ' . (int)$success);
-		} elseif ($success === '') {
+			$query->where($db->qn('a.success') . ' = ' . (int) $success);
+		}
+		elseif ($success === '') {
 			$query->where('(a.success IN (0, 1))');
 		}
 
 		$search = $this->getState('filter.search');
 		if (!empty($search)) {
 			if (stripos($search, 'id:') === 0) {
-				$query->where('a.id = ' . (int)substr($search, 3));
-			} else {
+				$query->where('a.id = ' . (int) substr($search, 3));
+			}
+			else {
 				$search = $db->q('%' . $db->escape($search) . '%');
 				$query->where('( a.request LIKE ' . $search . ' )');
 			}
@@ -138,13 +137,12 @@ class ServicelogsModel extends ListModel
 	 * different modules that might need different sets of data or different
 	 * ordering requirements.
 	 *
-	 * @param  string  $id  A prefix for the store id.
+	 * @param   string  $id  A prefix for the store id.
 	 *
 	 * @since  1.0.0
 	 * @return string  A store id.
 	 */
-	protected function getStoreId($id = ''): string
-	{
+	protected function getStoreId($id = ''): string {
 		$id .= ':' . $this->getState('filter.search');
 		$id .= ':' . $this->getState('filter.service_id');
 		$id .= ':' . $this->getState('filter.property_id');
@@ -158,13 +156,12 @@ class ServicelogsModel extends ListModel
 	 * Method to autopopulate the model state.
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @param  null|string  $ordering
-	 * @param  null|string  $direction
+	 * @param   null|string  $ordering
+	 * @param   null|string  $direction
 	 *
 	 * @since 1.0.0
 	 */
-	protected function populateState($ordering = 'a.id', $direction = 'desc'): void
-	{
+	protected function populateState($ordering = 'a.id', $direction = 'desc'): void {
 		$search = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
 		$this->setState('filter.search', trim($search));
 		$this->setState('filter.service_id',

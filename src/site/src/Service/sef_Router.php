@@ -33,14 +33,13 @@ class sefRouter extends RouterBase
 	/**
 	 * Build the route for the com_knowres component
 	 *
-	 * @param  array  $query  An array of URL arguments
+	 * @param   array  $query  An array of URL arguments
 	 *
 	 * @throws Exception
 	 * @since  4.0.0
 	 * @return array  The URL arguments to use to assemble the subsequent URL.
 	 */
-	public function build(&$query): array
-	{
+	public function build(&$query): array {
 		$segments = [];
 
 		if (isset($query['view'])) {
@@ -87,13 +86,12 @@ class sefRouter extends RouterBase
 	/**
 	 * Parse the segments of a URL for com_knowres.
 	 *
-	 * @param  array  &$segments  The segments of the URL to parse.
+	 * @param   array  &$segments  The segments of the URL to parse.
 	 *
 	 * @since   4.0.0
 	 * @return  array  The URL attributes to be used by the application.
 	 */
-	public function parse(&$segments): array
-	{
+	public function parse(&$segments): array {
 		$vars = [];
 
 		$count = count($segments);
@@ -119,14 +117,13 @@ class sefRouter extends RouterBase
 	/**
 	 * Check for multiple regions
 	 *
-	 * @param  array  $query
+	 * @param   array  $query
 	 *
 	 * @throws Exception
 	 * @since  5.0.0
 	 * @return int
 	 */
-	protected function checkMultiRegion(array $query): int
-	{
+	protected function checkMultiRegion(array $query): int {
 		$tmp = KrMethods::inputArray('region_id');
 
 		return count($tmp);
@@ -135,14 +132,13 @@ class sefRouter extends RouterBase
 	/**
 	 * Set property segments
 	 *
-	 * @param  array  $query  URL Arguements.
+	 * @param   array  $query  URL Arguements.
 	 *
 	 * @throws Exception
 	 * @since  5.0.0
 	 * @return array
 	 */
-	protected function setProperties(array $query): array
-	{
+	protected function setProperties(array $query): array {
 		$segments     = [];
 		$Translations = new Translations();
 		$params       = KrMethods::getParams();
@@ -183,16 +179,15 @@ class sefRouter extends RouterBase
 	/**
 	 * Set property segments
 	 *
-	 * @param  int  $property_id  ID of property
+	 * @param   int  $property_id  ID of property
 	 *
 	 * @throws Exception
 	 * @since  5.0.0
 	 * @return array
 	 */
-	protected function setProperty(int $property_id): array
-	{
+	protected function setProperty(int $property_id): array {
 		$segments     = [];
-		$seo_property = (int)KrMethods::getParams()->get('seo_property', 1);
+		$seo_property = (int) KrMethods::getParams()->get('seo_property', 1);
 
 		$item   = KrFactory::getAdminModel('property')->getItem($property_id);
 		$name   = $item->property_name;
@@ -236,14 +231,13 @@ class sefRouter extends RouterBase
 	/**
 	 * Set review segments
 	 *
-	 * @param  int  $property_id  ID of property
+	 * @param   int  $property_id  ID of property
 	 *
 	 * @throws Exception
 	 * @since  5.0.0
 	 * @return array
 	 */
-	protected function setReviews(int $property_id): array
-	{
+	protected function setReviews(int $property_id): array {
 		$segments     = [];
 		$seo_property = (int) KrMethods::getParams->get('seo_property', 1);
 

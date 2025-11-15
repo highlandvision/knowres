@@ -28,13 +28,12 @@ class DiscountsModel extends ListModel
 	/**
 	 * Constructor.
 	 *
-	 * @param  array  $config  An optional associative array of configuration settings.
+	 * @param   array  $config  An optional associative array of configuration settings.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function __construct($config = [])
-	{
+	public function __construct($config = []) {
 		if (empty($config['filter_fields'])) {
 			//@formatter:off
 			$config['filter_fields'] = [
@@ -64,15 +63,14 @@ class DiscountsModel extends ListModel
 	/**
 	 * Get discounts
 	 *
-	 * @param  mixed  $properties  ID or csv string of property ids
+	 * @param   mixed  $properties  ID or csv string of property ids
 	 *
 	 * @throws RuntimeException
 	 * @throws Exception
 	 * @since  1.0.0
 	 * @return mixed
 	 */
-	public function getDiscounts(mixed $properties): mixed
-	{
+	public function getDiscounts(mixed $properties): mixed {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -93,8 +91,9 @@ class DiscountsModel extends ListModel
 			->where($db->qn('a.state') . '=1');
 
 		if (is_numeric($properties)) {
-			$query->where($db->qn('a.property_id') . '=' . (int)$properties);
-		} elseif (is_string($properties) && strlen($properties) > 0) {
+			$query->where($db->qn('a.property_id') . '=' . (int) $properties);
+		}
+		elseif (is_string($properties) && strlen($properties) > 0) {
 			$ids = explode(',', $properties);
 			$query->where($db->qn('a.property_id') . ' IN (' . implode(',', array_map('intval', $ids)) . ')');
 		}
@@ -115,8 +114,7 @@ class DiscountsModel extends ListModel
 	 * @since  1.0.0
 	 * @return QueryInterface
 	 */
-	protected function getListQuery(): QueryInterface
-	{
+	protected function getListQuery(): QueryInterface {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -148,15 +146,17 @@ class DiscountsModel extends ListModel
 
 		$state = $this->getState('filter.state');
 		if (is_numeric($state)) {
-			$query->where($db->qn('a.state') . '=' . (int)$state);
-		} elseif ($state === '') {
+			$query->where($db->qn('a.state') . '=' . (int) $state);
+		}
+		elseif ($state === '') {
 			$query->where($db->qn('a.state') . ' IN (0,1)');
 		}
 
 		$filter_property_id = $this->state->get("filter.property_id");
 		if (is_numeric($filter_property_id)) {
-			$query->where($db->qn('a.property_id') . '=' . (int)$filter_property_id);
-		} elseif (is_string($filter_property_id) && strlen($filter_property_id) > 0) {
+			$query->where($db->qn('a.property_id') . '=' . (int) $filter_property_id);
+		}
+		elseif (is_string($filter_property_id) && strlen($filter_property_id) > 0) {
 			$ids = explode(',', $filter_property_id);
 			$query->where($db->qn('a.property_id') . ' IN (' . implode(',', array_map('intval', $ids)) . ')');
 		}
@@ -174,8 +174,9 @@ class DiscountsModel extends ListModel
 		$search = $this->getState('filter.search');
 		if (!empty($search)) {
 			if (stripos($search, 'id:') === 0) {
-				$query->where($db->qn('a.id') . '=' . (int)substr($search, 3));
-			} else {
+				$query->where($db->qn('a.id') . '=' . (int) substr($search, 3));
+			}
+			else {
 				$search = $db->q('%' . $db->escape($search) . '%');
 				$query->where('(' . $subQuery->__toString() . ') ' . ' LIKE ' . $search);
 			}
@@ -196,13 +197,12 @@ class DiscountsModel extends ListModel
 	 * different modules that might need different sets of data or different
 	 * ordering requirements.
 	 *
-	 * @param  string  $id  A prefix for the store id.
+	 * @param   string  $id  A prefix for the store id.
 	 *
 	 * @since  1.0.0
 	 * @return string        A store id.
 	 */
-	protected function getStoreId($id = ''): string
-	{
+	protected function getStoreId($id = ''): string {
 		$id .= ':' . $this->getState('filter.search');
 		$id .= ':' . $this->getState('filter.state');
 		$id .= ':' . $this->getState('filter.property_id');
@@ -216,13 +216,12 @@ class DiscountsModel extends ListModel
 	 * Method to autopopulate the model state.
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @param  null|string  $ordering
-	 * @param  null|string  $direction
+	 * @param   null|string  $ordering
+	 * @param   null|string  $direction
 	 *
 	 * @since  1.0.0
 	 */
-	protected function populateState($ordering = 'a.valid_to', $direction = 'asc'): void
-	{
+	protected function populateState($ordering = 'a.valid_to', $direction = 'asc'): void {
 		$this->setState('filter.search',
 			$this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string')
 		);

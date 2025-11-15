@@ -43,7 +43,7 @@ class ContractguestdataModel extends AdminModel
 	/**
 	 * Get child ages from guestdata
 	 *
-	 * @param  string  $children  Child ages
+	 * @param   string  $children  Child ages
 	 *
 	 * @since  2.2.0
 	 * @return string
@@ -76,7 +76,7 @@ class ContractguestdataModel extends AdminModel
 	/**
 	 * Return the document text for the given document type
 	 *
-	 * @param  string  $type  Type of document
+	 * @param   string  $type  Type of document
 	 *
 	 * @since  2.2.0
 	 * @return string
@@ -91,7 +91,7 @@ class ContractguestdataModel extends AdminModel
 	/**
 	 * Returns the textual gender
 	 *
-	 * @param  string  $sex  M or F
+	 * @param   string  $sex  M or F
 	 *
 	 * @since  2.2.0
 	 * @return string
@@ -115,7 +115,7 @@ class ContractguestdataModel extends AdminModel
 	/**
 	 * Override checkin for guestdata as checked_out set to 0.
 	 *
-	 * @param  array  $pks  The id of the row to check out.
+	 * @param   array  $pks  The id of the row to check out.
 	 *
 	 * @throws Exception
 	 * @since  4.0.0
@@ -139,7 +139,7 @@ class ContractguestdataModel extends AdminModel
 	/**
 	 * Method to get a knowres record.
 	 *
-	 * @param  int  $pk  The id of the primary key.
+	 * @param   int  $pk  The id of the primary key.
 	 *
 	 * @since  1.0.0
 	 * @return object|false  Object on success, false on failure.
@@ -160,9 +160,9 @@ class ContractguestdataModel extends AdminModel
 	/**
 	 * Add additional validation to form data
 	 *
-	 * @param  Form   $form   The form to validate against.
-	 * @param  array  $data   The data to validate.
-	 * @param  null   $group  From group
+	 * @param   Form   $form   The form to validate against.
+	 * @param   array  $data   The data to validate.
+	 * @param   null   $group  From group
 	 *
 	 * @throws Exception
 	 * @since  1.0.0

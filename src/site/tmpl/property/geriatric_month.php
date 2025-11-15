@@ -39,7 +39,8 @@ $month_end   = TickTock::parseString($month_start, 'Y-m-t');
 		<?php for ($i = 0; $i < 7; $i++) : ?>
 			<th><?php echo substr(TickTock::parseString($this->startday_name . ' +' . $i . ' Days', 'D'),
 					0,
-					-1); ?>
+					-1
+				); ?>
 			</th>
 		<?php endfor; ?>
 	</tr>
@@ -50,7 +51,8 @@ $month_end   = TickTock::parseString($month_start, 'Y-m-t');
 				<?php
 				if ($currDate == $this->start) {
 					$bgcolor = 'bgtoday bgtoavail duo';
-				} else {
+				}
+				else {
 					$bgcolor = 'bookme solo';
 				}
 
@@ -62,7 +64,8 @@ $month_end   = TickTock::parseString($month_start, 'Y-m-t');
 						$astate = $this->confirmed[$currDate]['astate'];
 						$dstate = $this->confirmed[$currDate]['dstate'];
 						$bstate = $this->confirmed[$currDate]['bstate'];
-					} else {
+					}
+					else {
 						$astate = true;
 						$dstate = true;
 						$bstate = true;
@@ -71,37 +74,47 @@ $month_end   = TickTock::parseString($month_start, 'Y-m-t');
 					if ($type == 0) {
 						if ($currDate == $this->start) {
 							$bgcolor = $bstate ? 'bgtoday bgtobook duo' : 'bgtoday bgtoprov duo';
-						} else {
+						}
+						else {
 							$bgcolor = $bstate ? 'bgbook solo' : 'bgprov solo';
 						}
-					} else if ($type == 1) {
+					}
+					elseif ($type == 1) {
 						if ($currDate == $this->start) {
 							$bgcolor = $astate ? 'bgtoday bgtobook duo' : 'bgtoday bgtoprov duo';
-						} else {
+						}
+						else {
 							$bgcolor = $astate ? 'bgfromavail bgtobook duo' : 'bgfromavail bgtoprov duo';
 						}
-					} else if ($type == 2) {
+					}
+					elseif ($type == 2) {
 						if ($currDate == $this->start) {
 							$bgcolor = 'bgtoday bgtoavail duo';
-						} else {
+						}
+						else {
 							$bgcolor = $dstate ? 'bgfrombook bgtoavail duo' : 'bgfromprov bgtoavail duo';
 						}
-					} else if ($type == 3) {
+					}
+					elseif ($type == 3) {
 						if ($dstate) {
 							if ($currDate == $this->start) {
 								$bgcolor = 'bgtoday bgtoprov duo';
-							} else {
+							}
+							else {
 								$bgcolor = $astate ? 'bgbook solo' : 'bgfrombook bgtoprov duo';
 							}
-						} else {
+						}
+						else {
 							if ($currDate == $this->start) {
 								$bgcolor = 'bgtoday bgtobook duo';
-							} else {
+							}
+							else {
 								$bgcolor = $astate ? 'bgfromprov bgtobook duo' : 'bgprov solo';
 							}
 						}
 					}
-				} else if (isset($this->weekly[$currDate])) {
+				}
+				elseif (isset($this->weekly[$currDate])) {
 					$bgcolor = 'bookme solo nostart';
 				}
 

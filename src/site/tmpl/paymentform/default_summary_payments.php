@@ -27,7 +27,7 @@ foreach ($this->payments as $p)
 		{
 			$text .= ' by ' . $p->service_name;
 		}
-		else if ($this->contract->agent_id && $this->contract->agent_deposit_paid)
+		elseif ($this->contract->agent_id && $this->contract->agent_deposit_paid)
 		{
 			$text .= KrMethods::sprintf('COM_KNOWRES_PAID_AGENT', $this->agent->name);
 		}

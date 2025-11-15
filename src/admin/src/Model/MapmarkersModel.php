@@ -29,13 +29,12 @@ class MapmarkersModel extends ListModel
 	/**
 	 * Constructor.
 	 *
-	 * @param  array  $config  An optional associative array of configuration settings.
+	 * @param   array  $config  An optional associative array of configuration settings.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function __construct($config = [])
-	{
+	public function __construct($config = []) {
 		if (empty($config['filter_fields'])) {
 			//@formatter:off
 			$config['filter_fields'] = [
@@ -66,14 +65,13 @@ class MapmarkersModel extends ListModel
 	/**
 	 * Get all markers (plus optionally by region)
 	 *
-	 * @param  int  $region_id  Set to value for all in region
+	 * @param   int  $region_id  Set to value for all in region
 	 *
 	 * @throws RuntimeException
 	 * @since  3.3.0
 	 * @return array
 	 */
-	public function getAll(int $region_id = 0): array
-	{
+	public function getAll(int $region_id = 0): array {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true)->select($db->qn(array(
 			'a.id',
@@ -122,9 +120,7 @@ class MapmarkersModel extends ListModel
 	 * @since  1.0.0
 	 * @return    QueryInterface
 	 */
-	protected function getListQuery(): QueryInterface
-
-	{
+	protected function getListQuery(): QueryInterface {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -201,24 +197,25 @@ class MapmarkersModel extends ListModel
 
 		$state = $this->getState('filter.state');
 		if (is_numeric($state)) {
-			$query->where('a.state = ' . (int)$state);
-		} elseif ($state === '') {
+			$query->where('a.state = ' . (int) $state);
+		}
+		elseif ($state === '') {
 			$query->where('(a.state IN (0, 1))');
 		}
 
 		$filter_map_category_id = $this->state->get("filter.map_category_id");
 		if ($filter_map_category_id) {
-			$query->where($db->qn('a.map_category_id') . " = " . (int)$filter_map_category_id);
+			$query->where($db->qn('a.map_category_id') . " = " . (int) $filter_map_category_id);
 		}
 
 		$filter_country_id = $this->state->get("filter.country_id");
 		if ($filter_country_id) {
-			$query->where("a.country_id = " . (int)$filter_country_id);
+			$query->where("a.country_id = " . (int) $filter_country_id);
 		}
 
 		$filter_region_id = $this->state->get("filter.region_id");
 		if ($filter_region_id) {
-			$query->where("a.region_id = " . (int)$filter_region_id);
+			$query->where("a.region_id = " . (int) $filter_region_id);
 		}
 
 		$orderCol  = $this->state->get('list.ordering');
@@ -230,8 +227,9 @@ class MapmarkersModel extends ListModel
 		$search = $this->getState('filter.search');
 		if (!empty($search)) {
 			if (stripos($search, 'id:') === 0) {
-				$query->where('a.id = ' . (int)substr($search, 3));
-			} else {
+				$query->where('a.id = ' . (int) substr($search, 3));
+			}
+			else {
 				$search = $db->q('%' . $db->escape($search) . '%');
 				$query->where('(' . $subQuery->__toString() . ') ' . ' LIKE ' . $search);
 			}
@@ -246,13 +244,12 @@ class MapmarkersModel extends ListModel
 	 * different modules that might need different sets of data or different
 	 * ordering requirements.
 	 *
-	 * @param  string  $id  A prefix for the store id.
+	 * @param   string  $id  A prefix for the store id.
 	 *
 	 * @since  1.0.0
 	 * @return    string        A store id.
 	 */
-	protected function getStoreId($id = ''): string
-	{
+	protected function getStoreId($id = ''): string {
 		$id .= ':' . $this->getState('filter.search');
 		$id .= ':' . $this->getState('filter.state');
 		$id .= ':' . $this->getState('filter.map_category_id');
@@ -266,14 +263,13 @@ class MapmarkersModel extends ListModel
 	 * Method to autopopulate the model state.
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @param  string  $ordering
-	 * @param  string  $direction
+	 * @param   string  $ordering
+	 * @param   string  $direction
 	 *
 	 * @throws Exception
 	 * @since 1.0.0
 	 */
-	protected function populateState($ordering = "a.id", $direction = "asc"): void
-	{
+	protected function populateState($ordering = "a.id", $direction = "asc"): void {
 		$this->setState('filter.search',
 			$this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string')
 		);

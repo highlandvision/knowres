@@ -130,7 +130,7 @@ class ContentHistoryHelper extends \Joomla\Component\Contenthistory\Administrato
 							$object = $tmp;
 						}
 					}
-					else if (isset($expandedObjectArray[$name]))
+					elseif (isset($expandedObjectArray[$name]))
 					{
 						if (is_array($expandedObjectArray[$name]))
 						{
@@ -204,6 +204,7 @@ class ContentHistoryHelper extends \Joomla\Component\Contenthistory\Administrato
 			catch (Exception $e)
 			{
 				Logger::logMe($e->getMessage());
+
 				return false;
 			}
 		}
@@ -345,16 +346,17 @@ class ContentHistoryHelper extends \Joomla\Component\Contenthistory\Administrato
 								'data' => $sourceValue
 							]);
 						}
-						else if ($lookup->targetColumn == 'krtranslate')
+						elseif ($lookup->targetColumn == 'krtranslate')
 						{
 							$Translations = new Translations();
 
 							if (is_numeric($sourceValue) && (int) $sourceValue)
 							{
 								$object->$sourceColumn->value = $Translations->getText($lookup->targetTable,
-									$sourceValue, $lookup->displayColumn);
+									$sourceValue, $lookup->displayColumn
+								);
 							}
-							else if (is_array($sourceValue))
+							elseif (is_array($sourceValue))
 							{
 								$values = [];
 								foreach ($sourceValue as $s)
@@ -372,7 +374,7 @@ class ContentHistoryHelper extends \Joomla\Component\Contenthistory\Administrato
 							{
 								$object->$sourceColumn->value = static::getLookupValue($lookup, $sourceValue);
 							}
-							else if (is_array($sourceValue))
+							elseif (is_array($sourceValue))
 							{
 								$values = [];
 								foreach ($sourceValue as $s)

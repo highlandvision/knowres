@@ -38,8 +38,7 @@ class Dispatcher extends AbstractModuleDispatcher
 	 * @throws Exception
 	 * @since  4.0.0
 	 */
-	public function dispatch(): void
-	{
+	public function dispatch(): void {
 		if (is_dir(JPATH_ROOT . '/media/com_knowres/vendor')) {
 			require_once(JPATH_ROOT . '/media/com_knowres/vendor/autoload.php');
 		}
@@ -57,8 +56,7 @@ class Dispatcher extends AbstractModuleDispatcher
 	 * @since  5.0.0
 	 * @return array
 	 */
-	protected function getLayoutData(): array
-	{
+	protected function getLayoutData(): array {
 		$data = parent::getLayoutData();
 		if (!$data) {
 			return [];
@@ -67,7 +65,8 @@ class Dispatcher extends AbstractModuleDispatcher
 		$params = $data['params'];
 		if ($params->get('show_images')) {
 			$params->set('layout', 'default');
-		} else {
+		}
+		else {
 			$params->set('layout', 'list');
 		}
 
@@ -82,8 +81,10 @@ class Dispatcher extends AbstractModuleDispatcher
 						['layout' => 'category', 'category_id' => $g->category_id],
 						['layout' => 'category']);
 					$link   = KrMethods::route('index.php?option=com_knowres&view=properties&layout=category&category_id=' .
-					                           $g->category_id . '&Itemid=' . $Itemid);
-				} elseif ($g->link <> -1) {
+					                           $g->category_id . '&Itemid=' . $Itemid
+					);
+				}
+				elseif ($g->link <> -1) {
 					$link = KrMethods::route('index.php?Itemid=' . $g->link);
 				}
 			}

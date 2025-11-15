@@ -81,7 +81,7 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 	/**
 	 * Constructor
 	 *
-	 * @param  array  $config   A named configuration array for object construction.
+	 * @param   array  $config  A named configuration array for object construction.
 	 *                          name: the name (optional) of the view (defaults to the view class name suffix).
 	 *                          charset: the character set to use for display
 	 *                          escape: the name (optional) of the function to use for escaping strings
@@ -94,8 +94,7 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 	 * @throws Exception
 	 * @since  4.0.0
 	 */
-	public function __construct($config = [])
-	{
+	public function __construct($config = []) {
 		parent::__construct($config);
 
 		$this->today  = TickTock::getDate();
@@ -107,14 +106,13 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 	/**
 	 * Add the back to link if required
 	 *
-	 * @param  Toolbar  $Toolbar
+	 * @param   Toolbar  $Toolbar
 	 *
 	 * @throws Exception
 	 * @since  4.0.0
 	 * @return Toolbar
 	 */
-	public static function addBackLink(Toolbar $Toolbar): Toolbar
-	{
+	public static function addBackLink(Toolbar $Toolbar): Toolbar {
 		$gobackto = KrMethods::getUserState('com_knowres.gobackto');
 		if (!empty($gobackto)) {
 			KrMethods::setUserState('com_knowres.gobackto', null);
@@ -133,13 +131,12 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 	/**
 	 * Check for access to edit action
 	 *
-	 * @param  string  $action  Action being taken
+	 * @param   string  $action  Action being taken
 	 *
 	 * @since  4.0.0
 	 * @return bool
 	 */
-	public function checkAccess(string $action): bool
-	{
+	public function checkAccess(string $action): bool {
 		if ($this->access_level > 10 || $this->params->get($action)) {
 			return true;
 		}
@@ -153,8 +150,7 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 	 * @throws Exception
 	 * @since  4.0.0
 	 */
-	public function checkErrors(): void
-	{
+	public function checkErrors(): void {
 		$errors = $this->get('Errors');
 		if (is_countable($errors) && count($errors)) {
 			throw new Exception(implode("\n", $errors));
@@ -167,8 +163,7 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 	 * @throws Exception
 	 * @since  4.0.0
 	 */
-	public function checkVersions(): void
-	{
+	public function checkVersions(): void {
 		if (!KrMethods::getParams('com_knowres')->get('save_history', 0)) {
 			$this->form->setFieldAttribute('version', 'type', 'hidden');
 			$this->form->setFieldAttribute('version_note', 'type', 'hidden');
@@ -178,27 +173,25 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 	/**
 	 * Set a list of the actions that can be performed by user access level
 	 *
-	 * @param  string  $view  View to be accessed
-	 * @param  int     $id    ID of view
+	 * @param   string  $view  View to be accessed
+	 * @param   int     $id    ID of view
 	 *
 	 * @since  4.0.0
 	 */
-	public function getActions(string $view = '', int $id = 0): void
-	{
+	public function getActions(string $view = '', int $id = 0): void {
 		$this->canDo = ContentHelper::getActions('com_knowres', $view, $id);
 	}
 
 	/**
 	 * Add actions toolbar for list
 	 *
-	 * @param  Toolbar  $Toolbar  Toolbar instance
-	 * @param  string   $name     List name
+	 * @param   Toolbar  $Toolbar  Toolbar instance
+	 * @param   string   $name     List name
 	 *
 	 * @since  4.0.0
 	 * @return Toolbar
 	 */
-	protected function addChildActionsToolbar(Toolbar $Toolbar, string $name): Toolbar
-	{
+	protected function addChildActionsToolbar(Toolbar $Toolbar, string $name): Toolbar {
 		/** @var DropdownButton $Toolbar */
 		$dropdown =
 			$Toolbar->dropdownButton('status-group')
@@ -233,7 +226,7 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 					}
 				}
 			}
-			else if (isset($this->items[0]) && $this->canDo->get('core.delete')) {
+			elseif (isset($this->items[0]) && $this->canDo->get('core.delete')) {
 				/** @var ConfirmButton $Toolbar */
 				$Toolbar->delete($name . '.delete')
 				        ->listCheck(true)
@@ -268,14 +261,13 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 	/**
 	 * Add the quick links menu
 	 *
-	 * @param  Toolbar  $Toolbar
+	 * @param   Toolbar  $Toolbar
 	 *
 	 * @throws Exception
 	 * @since  4.0.0
 	 * @return Toolbar
 	 */
-	protected function addConfigToolbar(Toolbar $Toolbar): Toolbar
-	{
+	protected function addConfigToolbar(Toolbar $Toolbar): Toolbar {
 		if ($this->access_level == 40) {
 			/** @var DropdownButton $Toolbar */
 			$dropdown     =
@@ -331,27 +323,25 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 	/**
 	 * Add any custom toolbar links
 	 *
-	 * @param  Toolbar  $Toolbar  Current toolbar instance
+	 * @param   Toolbar  $Toolbar  Current toolbar instance
 	 *
 	 * @since  4.0.0
 	 * @return Toolbar
 	 */
-	protected function addCustomToolbar(Toolbar $Toolbar): Toolbar
-	{
+	protected function addCustomToolbar(Toolbar $Toolbar): Toolbar {
 		return $Toolbar;
 	}
 
 	/**
 	 * Add the page title and default toolbar for form view.
 	 *
-	 * @param  string  $name  Name of the form
+	 * @param   string  $name  Name of the form
 	 *
 	 * @throws Exception
 	 * @since  4.0.0
 	 * @return Toolbar
 	 */
-	protected function addFormToolbar(string $name): Toolbar
-	{
+	protected function addFormToolbar(string $name): Toolbar {
 		Factory::getApplication()->input->set('hidemainmenu', true);
 
 		$Toolbar = Toolbar::getInstance();
@@ -387,8 +377,8 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 			ToolbarHelper::saveGroup($toolbarButtons);
 
 			if (ComponentHelper::isEnabled('com_contenthistory')
-				&& $this->state->params->get('save_history', 0)
-				&& $this->canDo->get('core.edit')) {
+			    && $this->state->params->get('save_history', 0)
+			    && $this->canDo->get('core.edit')) {
 				$Toolbar->versions('com_knowres.' . $name, $this->item->id);
 			}
 
@@ -407,8 +397,7 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 	 * @since  4.0.0
 	 * @return Toolbar
 	 */
-	protected function addListToolbar(?string $list_name = null): Toolbar
-	{
+	protected function addListToolbar(?string $list_name = null): Toolbar {
 		$Toolbar = Toolbar::getInstance();
 
 		$list_name = is_null($list_name) ? $this->form_name . 's' : $list_name;
@@ -432,14 +421,13 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 	/**
 	 * Add the quick links menu
 	 *
-	 * @param  Toolbar  $Toolbar
+	 * @param   Toolbar  $Toolbar
 	 *
 	 * @throws Exception
 	 * @since  4.0.0
 	 * @return Toolbar
 	 */
-	protected function addQuickLinksToolbar(Toolbar $Toolbar): Toolbar
-	{
+	protected function addQuickLinksToolbar(Toolbar $Toolbar): Toolbar {
 		/** @var DropdownButton $Toolbar */
 		$dropdown     =
 			$Toolbar->dropdownButton('quick-links-group')
@@ -483,14 +471,13 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 	/**
 	 * Add services dropdown.
 	 *
-	 * @param  Toolbar  $Toolbar  Current toolbar.
+	 * @param   Toolbar  $Toolbar  Current toolbar.
 	 *
 	 * @throws Exception
 	 * @since  4.0.0
 	 * @return Toolbar
 	 */
-	protected function addServicesDropdown(Toolbar $Toolbar): Toolbar
-	{
+	protected function addServicesDropdown(Toolbar $Toolbar): Toolbar {
 		/** @var DropdownButton $Toolbar */
 		$dropdown     =
 			$Toolbar->dropdownButton('services-group')
@@ -526,8 +513,7 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 	 * @since  4.0.0
 	 * @return bool
 	 */
-	protected function checkEmpty(): bool
-	{
+	protected function checkEmpty(): bool {
 		$this->isEmptyState = $this->get('IsEmptyState');
 		if (!is_countable($this->items) || (!count($this->items) && $this->isEmptyState)) {
 			echo KrMethods::render('html.list.emptystate', ['data' => $this]);
@@ -543,8 +529,7 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 	 *
 	 * @since  4.0.0
 	 */
-	protected function getFormAriaLabel(): void
-	{
+	protected function getFormAriaLabel(): void {
 		$text = empty($this->item->id) ? KrMethods::plain('COM_KNOWRES_ADD') : KrMethods::plain('COM_KNOWRES_EDIT');
 
 		$this->form_aria_label = $text . ' ' . $this->form_name;
@@ -553,13 +538,12 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 	/**
 	 * Set the user session data.
 	 *
-	 * @param  bool  $property_required  Set to false if property not required
+	 * @param   bool  $property_required  Set to false if property not required
 	 *
 	 * @throws Exception
 	 * @since  4.0.0
 	 */
-	protected function getUserSessionData(bool $property_required = true): void
-	{
+	protected function getUserSessionData(bool $property_required = true): void {
 		$userSession = new KrSession\User();
 		$userData    = $userSession->getData();
 

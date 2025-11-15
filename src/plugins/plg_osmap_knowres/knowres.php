@@ -35,8 +35,7 @@ class PlgOSMapKnowres extends Base implements ContentInterface {
 	 * @return PlgOSMapKnowres
 	 * @noinspection PhpMissingReturnTypeInspection
 	 */
-	public static function getInstance()
-	{
+	public static function getInstance() {
 		if (empty(static::$instance)) {
 			$dispatcher       = Factory::getDispatcher();
 			static::$instance = new self($dispatcher);
@@ -48,15 +47,14 @@ class PlgOSMapKnowres extends Base implements ContentInterface {
 	/**
 	 * This function is called before the Sitemap menu item is displayed.
 	 *
-	 * @param  Collector  $collector  Sitemap collector
-	 * @param  Item       $parent     Parent menu item
-	 * @param  Registry   $params     Plugin params
+	 * @param   Collector  $collector  Sitemap collector
+	 * @param   Item       $parent     Parent menu item
+	 * @param   Registry   $params     Plugin params
 	 *
 	 * @throws Exception
 	 * @since  4.0.0
 	 */
-	public static function getTree($collector, $parent, $params): void
-	{
+	public static function getTree($collector, $parent, $params): void {
 		$priority   = $params->get('priority', $parent->priority);
 		$changefreq = $params->get('changefreq', $parent->changefreq);
 		if ($priority == '-1') {
@@ -79,7 +77,7 @@ class PlgOSMapKnowres extends Base implements ContentInterface {
 
 //		if (empty($layout)) {
 		self::processTreeProperties($collector, $parent, $params);
-//		} else if ($layout == 'search') {
+//		} elseif ($layout == 'search') {
 //		self::processTreeRegions($collector, $parent, $params);
 //		}
 	}
@@ -87,15 +85,14 @@ class PlgOSMapKnowres extends Base implements ContentInterface {
 	/**
 	 * This function is called before the Sitemap menu item is displayed.
 	 *
-	 * @param  Item      $node    Sitemap collector
-	 * @param  Registry  $params  Plugin params
+	 * @param   Item      $node    Sitemap collector
+	 * @param   Registry  $params  Plugin params
 	 *
 	 * @throws Exception
 	 * @since  4.0.0
 	 * @return bool
 	 */
-	public static function prepareMenuItem($node, $params): bool
-	{
+	public static function prepareMenuItem($node, $params): bool {
 		static::checkMemory();
 
 		$linkQuery = parse_url($node->link);
@@ -126,14 +123,13 @@ class PlgOSMapKnowres extends Base implements ContentInterface {
 	/**
 	 * Knowres properties support
 	 *
-	 * @param  Collector  $collector  Collector object
-	 * @param  Item       $menuItem   Menu Item object
-	 * @param  object     $params     Joomla Registry
+	 * @param   Collector  $collector  Collector object
+	 * @param   Item       $menuItem   Menu Item object
+	 * @param   object     $params     Joomla Registry
 	 *
 	 * @throws Exception
 	 */
-	private static function processTreeProperties(Collector $collector, Item $menuItem, object $params): void
-	{
+	private static function processTreeProperties(Collector $collector, Item $menuItem, object $params): void {
 		static::checkMemory();
 
 		$db = KrFactory::getDatabase();
@@ -169,7 +165,8 @@ class PlgOSMapKnowres extends Base implements ContentInterface {
 
 			if (empty($row->updated_at) || $row->updated_at == '0000-00-00 00:00:00') {
 				$node->modified = $row->created_at;
-			} else {
+			}
+			else {
 				$node->modified = $row->updated_at;
 			}
 			$node->priority   = $params['priority'];
@@ -215,14 +212,13 @@ class PlgOSMapKnowres extends Base implements ContentInterface {
 	/**
 	 * KR regions
 	 *
-	 * @param  Collector  $collector  Collector object
-	 * @param  Item       $menuItem   Menu Item object
-	 * @param  object     $params     Joomla Registry
+	 * @param   Collector  $collector  Collector object
+	 * @param   Item       $menuItem   Menu Item object
+	 * @param   object     $params     Joomla Registry
 	 *
 	 * @throws Exception
 	 */
-	private static function processTreeRegions(Collector $collector, Item $menuItem, object $params): void
-	{
+	private static function processTreeRegions(Collector $collector, Item $menuItem, object $params): void {
 		static::checkMemory();
 
 		$rows = KrFactory::getListModel('regions')->getDistinctRegions();
@@ -240,7 +236,8 @@ class PlgOSMapKnowres extends Base implements ContentInterface {
 
 			if (empty($row->updated_at) || $row->updated_at == '0000-00-00 00:00:00') {
 				$node->modified = $row->created_at;
-			} else {
+			}
+			else {
 				$node->modified = $row->updated_at;
 			}
 			$node->priority   = $params['priority'];
@@ -258,8 +255,7 @@ class PlgOSMapKnowres extends Base implements ContentInterface {
 	/**
 	 * @inheritDoc
 	 */
-	public function getComponentElement(): string
-	{
+	public function getComponentElement(): string {
 		return 'com_knowres';
 	}
 }

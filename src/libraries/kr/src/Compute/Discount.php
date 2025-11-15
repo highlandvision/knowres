@@ -42,7 +42,7 @@ class Discount
 	/**
 	 * Calculate discounts
 	 *
-	 * @param  Hub  $Hub  Hub base class
+	 * @param   Hub  $Hub  Hub base class
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -68,7 +68,7 @@ class Discount
 	/**
 	 * Applies the largest discount and adjusts the gross
 	 *
-	 * @param  float  $room_total  Calculated rate
+	 * @param   float  $room_total  Calculated rate
 	 *
 	 * @throws InvalidArgumentException
 	 * @since  1.0.0
@@ -100,7 +100,7 @@ class Discount
 			{
 				$this->Hub->setAdjustments('Discount', 0, '', $discount * -1);
 			}
-			else if ($this->Hub->getValue('do_discounts'))
+			elseif ($this->Hub->getValue('do_discounts'))
 			{
 				$room_total -= $discount;
 				$this->Hub->setValue('room_total', $room_total);
@@ -111,8 +111,8 @@ class Discount
 	/**
 	 * Calculate arrival range discount
 	 *
-	 * @param  object  $d           Discount row
-	 * @param  float   $room_total  Calculated rate
+	 * @param   object  $d           Discount row
+	 * @param   float   $room_total  Calculated rate
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -143,9 +143,11 @@ class Discount
 			$date_range = $this->Hub->getValue('date_range');
 			array_splice($date_range, $nights_valid);
 			$this->dates[$d->name]        = $date_range;
-			$this->calculations[$d->name] = ['pc'       => $d->is_pc ? $d->discount : 0,
-			                                 'fixed'    => !$d->is_pc ? $d->discount : 0,
-			                                 'discount' => $discount];
+			$this->calculations[$d->name] = [
+				'pc'       => $d->is_pc ? $d->discount : 0,
+				'fixed'    => !$d->is_pc ? $d->discount : 0,
+				'discount' => $discount
+			];
 		}
 
 		return (float) $discount;
@@ -154,9 +156,9 @@ class Discount
 	/**
 	 * Calulate days b4 arrival discount
 	 *
-	 * @param  object  $d           Discount row
-	 * @param  string  $date        Discount date
-	 * @param  float   $room_total  Calculated rate
+	 * @param   object  $d           Discount row
+	 * @param   string  $date        Discount date
+	 * @param   float   $room_total  Calculated rate
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -182,9 +184,11 @@ class Discount
 
 			$date_range                   = $this->Hub->getValue('date_range');
 			$this->dates[$d->name]        = $date_range;
-			$this->calculations[$d->name] = ['pc'       => $d->is_pc ? $d->discount : 0,
-			                                 'fixed'    => !$d->is_pc ? $d->discount : 0,
-			                                 'discount' => $discount];
+			$this->calculations[$d->name] = [
+				'pc'       => $d->is_pc ? $d->discount : 0,
+				'fixed'    => !$d->is_pc ? $d->discount : 0,
+				'discount' => $discount
+			];
 		}
 
 		return (float) $discount;
@@ -209,8 +213,8 @@ class Discount
 	/**
 	 * Calculates the managed Last Minute Discount
 	 *
-	 * @param  float  $room_total  Room total value
-	 * @param  int    $nights      #Nights
+	 * @param   float  $room_total  Room total value
+	 * @param   int    $nights      #Nights
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -225,18 +229,20 @@ class Discount
 		$arrival = $this->Hub->getValue('arrival');
 		$pc      = (int) $this->Hub->params->get('lmd_pc1');
 		if ($pc && $nights >= (int) $this->Hub->params->get('lmd_min_nights')
-			&& $nights <= (int) $this->Hub->params->get('lmd_max_nights'))
+		    && $nights <= (int) $this->Hub->params->get('lmd_max_nights'))
 		{
 			$days_b4_booking = TickTock::differenceDays($this->Hub->today, $arrival);
 			if ($days_b4_booking >= (int) $this->Hub->params->get('lmd_range_from1')
-				&& $days_b4_booking <= (int) $this->Hub->params->get('lmd_range_to1'))
+			    && $days_b4_booking <= (int) $this->Hub->params->get('lmd_range_to1'))
 			{
 				$discount = $this->Hub->round($room_total * $pc / 100);
 				$this->Hub->setDiscounts('lastminute', $discount, $pc . '%', $nights, $room_total);
 
 				$this->dates['lastminute']        = $this->Hub->getValue('date_range');
-				$this->calculations['lastminute'] = ['pc'       => $pc,
-				                                     'discount' => $discount];
+				$this->calculations['lastminute'] = [
+					'pc'       => $pc,
+					'discount' => $discount
+				];
 			}
 		}
 	}
@@ -244,8 +250,8 @@ class Discount
 	/**
 	 * Calculates general discounts
 	 *
-	 * @param  float  $room_total  Gross rate
-	 * @param  int    $nights      #Nights
+	 * @param   float  $room_total  Gross rate
+	 * @param   int    $nights      #Nights
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -321,9 +327,11 @@ class Discount
 		{
 			$date_range                   = $this->Hub->getValue('date_range');
 			$this->dates['manual']        = $date_range;
-			$this->calculations['manual'] = ['pc'       => 0,
-			                                 'fixed'    => $discount,
-			                                 'discount' => $discount];
+			$this->calculations['manual'] = [
+				'pc'       => 0,
+				'fixed'    => $discount,
+				'discount' => $discount
+			];
 
 			$this->adjustNightly('manual', $discount);
 			$this->Hub->setValue('room_total', $this->Hub->getValue('room_total') - $discount);
@@ -335,8 +343,8 @@ class Discount
 	/**
 	 * Adjust nightly rates
 	 *
-	 * @param  string  $type            Discount type
-	 * @param  float   $total_discount  Discount value
+	 * @param   string  $type            Discount type
+	 * @param   float   $total_discount  Discount value
 	 *
 	 * @throws InvalidArgumentException
 	 * @since  3.4.0

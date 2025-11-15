@@ -32,7 +32,7 @@ class GuestController extends FormController
 	/**
 	 * Method to run batch operations.
 	 *
-	 * @param  BaseDatabaseModel  $model  The model of the component being processed.
+	 * @param   BaseDatabaseModel  $model  The model of the component being processed.
 	 *
 	 * @throws Exception*@throws Exception
 	 * @throws Exception
@@ -52,7 +52,7 @@ class GuestController extends FormController
 	/**
 	 * Method to cancel an edit.
 	 *
-	 * @param  null  $key  The name of the primary key of the URL variable.
+	 * @param   null  $key  The name of the primary key of the URL variable.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -136,8 +136,8 @@ class GuestController extends FormController
 	/**
 	 * Function that allows child controller access to model data after the data has been saved.
 	 *
-	 * @param  BaseDatabaseModel  $model      The data model object.
-	 * @param  array              $validData  The validated data.
+	 * @param   BaseDatabaseModel  $model      The data model object.
+	 * @param   array              $validData  The validated data.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0

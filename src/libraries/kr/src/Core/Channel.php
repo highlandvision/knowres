@@ -39,7 +39,7 @@ class Channel
 	/**
 	 * Action channel
 	 *
-	 * @param  Hub  $hub  Hub data
+	 * @param   Hub  $hub  Hub data
 	 *
 	 * @throws Exception
 	 * @since 1.0.0
@@ -153,9 +153,10 @@ class Channel
 			if ($this->hub->agent->deposit_paid)
 			{
 				KrFactory::getAdminModel('contractnote')::createContractNote($this->id,
-					'Channel confirmed reservation (deposit paid by agent)', '3', false);
+					'Channel confirmed reservation (deposit paid by agent)', '3', false
+				);
 			}
-			else if ((int) $this->hub->getValue('on_request') > 0)
+			elseif ((int) $this->hub->getValue('on_request') > 0)
 			{
 				KrFactory::getAdminModel('contractnote')::createContractNote($this->id, 'Channel request reservation',
 					'3', false);

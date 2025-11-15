@@ -43,13 +43,12 @@ class Ical extends Service
 	/**
 	 * Initialize
 	 *
-	 * @param  int  $service_id  ID of service
+	 * @param   int  $service_id  ID of service
 	 *
 	 * @throws Exception
 	 * @since 1.0.0
 	 */
-	public function __construct(int $service_id)
-	{
+	public function __construct(int $service_id) {
 		parent::__construct($service_id);
 
 		$this->directory = Utility::getPath('root') . '/tmp/';
@@ -60,16 +59,15 @@ class Ical extends Service
 	/**
 	 * Import manual request from ical page
 	 *
-	 * @param  int      $ical_id      ID of property ical row
-	 * @param  int      $property_id  ID of property
-	 * @param  string   $link         Link to ical file to import
+	 * @param   int     $ical_id      ID of property ical row
+	 * @param   int     $property_id  ID of property
+	 * @param   string  $link         Link to ical file to import
 	 * @param  ?string  $icsdata      Previous run ical data
 	 *
 	 * @throws Exception
 	 * @since  4.0.0
 	 */
-	public function processManual(int $ical_id, int $property_id, string $link, ?string $icsdata): void
-	{
+	public function processManual(int $ical_id, int $property_id, string $link, ?string $icsdata): void {
 		try {
 			$this->method  = 'processManual';
 			$this->request = $link;
@@ -80,7 +78,8 @@ class Ical extends Service
 			$icsdata   = $IcalBlock->import();
 			KrFactory::getListModel('propertyicals')->updateLastUpdated($ical_id, $icsdata);
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_ACTION_SUCCESS'));
-		} catch (Exception $e) {
+		}
+		catch (Exception $e) {
 			Logger::logMe($e->getMessage());
 			KrMethods::message($e->getMessage());
 		}
@@ -93,13 +92,12 @@ class Ical extends Service
 	/**
 	 * Import icals as per schedule
 	 *
-	 * @param  int  $hours  Import schedule e.g. every 1,2 4 ..... 24 hours
+	 * @param   int  $hours  Import schedule e.g. every 1,2 4 ..... 24 hours
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function processSchedule(int $hours): void
-	{
+	public function processSchedule(int $hours): void {
 		$due = KrFactory::getListModel('propertyicals')->getByTime($this->service->id, $hours);
 		foreach ($due as $d) {
 			$this->method      = 'processSchedule';
@@ -115,7 +113,8 @@ class Ical extends Service
 				$icsdata        = $IcalBlock->import();
 				$this->messages = $IcalBlock->messages;
 				KrFactory::getListModel('propertyicals')->updateLastUpdated($d->id, $icsdata);
-			} catch (Exception $e) {
+			}
+			catch (Exception $e) {
 				$this->exception = $e;
 				$this->addLog(false);
 			}
@@ -133,8 +132,7 @@ class Ical extends Service
 	 * @since  3.2.0
 	 * @return string
 	 */
-	protected function fetchIcal(): string
-	{
+	protected function fetchIcal(): string {
 		$fp = fopen($this->path, 'w');
 
 		usleep(10000);
@@ -159,7 +157,8 @@ class Ical extends Service
 			$error[] = 'CURL Services Failure ' . curl_errno($ch);
 			$error[] = 'Curl error message ' . curl_error($ch);
 			throw new RuntimeException(implode("\r\n", $error));
-		} else if (curl_errno($ch)) {
+		}
+		elseif (curl_errno($ch)) {
 			$error   = [];
 			$error[] = 'Error reading calendar from Host site';
 			$error[] = 'Service: ' . $this->service->name;

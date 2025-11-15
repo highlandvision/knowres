@@ -60,14 +60,13 @@ class HtmlView extends KrHtmlView\Site
 	/**
 	 * Display the view
 	 *
-	 * @param  null  $tpl  Default template.
+	 * @param   null  $tpl  Default template.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 * @return void
 	 */
-	#[NoReturn] public function display($tpl = null): void
-	{
+	#[NoReturn] public function display($tpl = null): void {
 		/** @var PropertiesModel $model */
 		$model                = $this->getModel();
 		$this->state          = $model->getState();
@@ -115,19 +114,22 @@ class HtmlView extends KrHtmlView\Site
 				$this->blurb            = $category->blurb;
 				$this->meta_title       = KrMethods::sprintf('COM_KNOWRES_BROWSE_CATEGORY', $category->name);
 				$this->meta_description = KrMethods::sprintf('COM_KNOWRES_BROWSE_CATEGORY_DSC', $category->name);
-			} elseif ($layout === 'new') {
+			}
+			elseif ($layout === 'new') {
 				$searchData->layout     = $layout;
 				$searchData->bar        = $default_view;
 				$description            = KrMethods::plain('COM_KNOWRES_BROWSE_NEW_VILLAS');
 				$this->meta_title       = KrMethods::plain('COM_KNOWRES_BROWSE_NEW_VILLAS');
 				$this->meta_description = KrMethods::plain('COM_KNOWRES_BROWSE_NEW_VILLAS_DSC');
-			} elseif ($layout === 'discount') {
+			}
+			elseif ($layout === 'discount') {
 				$searchData->layout     = $layout;
 				$searchData->bar        = $default_view;
 				$description            = KrMethods::plain('COM_KNOWRES_BROWSE_DISCOUNTS');
 				$this->meta_title       = KrMethods::plain('COM_KNOWRES_BROWSE_DISCOUNTS');
 				$this->meta_description = KrMethods::plain('COM_KNOWRES_BROWSE_DISCOUNTS_DSC');
-			} else {
+			}
+			else {
 				// From search or search by map module!
 				$searchData = $this->setInput($searchData, $searchSession);
 				if (!empty($searchData->arrival) && !empty($searchData->departure)) {
@@ -179,8 +181,7 @@ class HtmlView extends KrHtmlView\Site
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	#[NoReturn] protected function prepareDocument(): void
-	{
+	#[NoReturn] protected function prepareDocument(): void {
 		$this->prepareDefaultDocument($this->meta_title, $this->meta_description);
 		$this->setCanonical();
 		$this->setPathway();
@@ -192,8 +193,7 @@ class HtmlView extends KrHtmlView\Site
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	#[NoReturn] protected function setCanonical(): void
-	{
+	#[NoReturn] protected function setCanonical(): void {
 		$Itemid        = SiteHelper::getItemId('com_knowres', 'properties');
 		$link          = 'index.php?option=com_knowres&view=properties&region_id=' . $this->default_region .
 		                 '&Itemid=' . $Itemid;
@@ -204,15 +204,14 @@ class HtmlView extends KrHtmlView\Site
 	/**
 	 * Get request search data and store in session
 	 *
-	 * @param  stdClass          $searchData     Session search data
-	 * @param  KrSession\Search  $searchSession  Search session
+	 * @param   stdClass          $searchData     Session search data
+	 * @param   KrSession\Search  $searchSession  Search session
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 * @return stdClass
 	 */
-	protected function setInput(stdClass $searchData, KrSession\Search $searchSession): stdClass
-	{
+	protected function setInput(stdClass $searchData, KrSession\Search $searchSession): stdClass {
 		try {
 			$searchData->area = KrMethods::inputString('area', '');
 			if (!empty($searchData->area)) {
@@ -239,7 +238,8 @@ class HtmlView extends KrHtmlView\Site
 			$searchData->map_modal  = KrMethods::inputint('map_modal');
 
 			return $searchData;
-		} catch (Exception $e) {
+		}
+		catch (Exception $e) {
 			$searchData = $searchSession->resetData();
 			SiteHelper::redirectHome();
 		}
@@ -251,8 +251,7 @@ class HtmlView extends KrHtmlView\Site
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected function setPathway(): void
-	{
+	protected function setPathway(): void {
 		$pathway = self::setPathwayBase();
 		$pathway->addItem(KrMethods::plain('COM_KNOWRES_SEARCH_RESULTS'));
 	}
@@ -260,14 +259,13 @@ class HtmlView extends KrHtmlView\Site
 	/**
 	 * Set the descriptions for the search module search
 	 *
-	 * @param  stdClass  $data  Search session data.
+	 * @param   stdClass  $data  Search session data.
 	 *
 	 * @throws Exception
 	 * @since  5.0.0
 	 * @return string
 	 */
-	protected function setSearchDescription(stdClass $data): string
-	{
+	protected function setSearchDescription(stdClass $data): string {
 		$meta = $data->region_name;
 		if ($data->area) {
 			$description = $data->area . ', ';

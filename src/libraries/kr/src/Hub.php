@@ -65,13 +65,12 @@ class Hub
 	/**
 	 * Constructor initialize
 	 *
-	 * @param  stdClass  $contractData  Contract session data
+	 * @param   stdClass  $contractData  Contract session data
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	public function __construct(stdClass $contractData)
-	{
+	public function __construct(stdClass $contractData) {
 		$this->contractData = clone $contractData;
 
 		$this->validateProperty();
@@ -107,14 +106,13 @@ class Hub
 	/**
 	 * Process the core database updates and changes
 	 *
-	 * @param  array  $actions  Actions for contracts
+	 * @param   array  $actions  Actions for contracts
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
 	 * @return bool
 	 */
-	public function action(array $actions): bool
-	{
+	public function action(array $actions): bool {
 		$this->errors = [];
 
 		foreach ($actions as $a) {
@@ -145,15 +143,14 @@ class Hub
 	/**
 	 * Adjust nightly rates for all dates
 	 *
-	 * @param  float  $value     Discount value
-	 * @param  bool   $increase  False to decrease nightly rate
+	 * @param   float  $value     Discount value
+	 * @param   bool   $increase  False to decrease nightly rate
 	 *
 	 * @throws InvalidArgumentException
 	 * @since  3.4.0
 	 * @return array
 	 */
-	public function adjustNightly(float $value, bool $increase = true): array
-	{
+	public function adjustNightly(float $value, bool $increase = true): array {
 		$nightly   = $this->getValue('nightly');
 		$last      = array_key_last($nightly);
 		$remaining = $value;
@@ -165,7 +162,8 @@ class Hub
 		foreach ($nightly as $date => $rate) {
 			if ($date == $last) {
 				$nightly[$date] = $rate - $remaining;
-			} else {
+			}
+			else {
 				$nightly[$date] = $rate + $per_night;
 			}
 
@@ -182,8 +180,7 @@ class Hub
 	 * @throws RuntimeException
 	 * @since  3.3.0
 	 */
-	public function checkGuestUser(): void
-	{
+	public function checkGuestUser(): void {
 		$email = $this->getValue('email', 'guestData');
 		$item  = KrFactory::getListModel('guests')->checkGuestEmail($email);
 		if (!empty($item->id)) {
@@ -195,7 +192,8 @@ class Hub
 		} else {
 			if (!(int) $this->params->get('create_user', 0)) {
 				$this->setValue('id', 0, 'guestData');
-			} else {
+			}
+			else {
 				$this->createUser();
 			}
 		}
@@ -204,15 +202,14 @@ class Hub
 	/**
 	 * Get the contract values
 	 *
-	 * @param  array  $computations   Computations to perform for contract
-	 * @param  bool   $set_total      True to set the contract total
+	 * @param   array  $computations  Computations to perform for contract
+	 * @param   bool   $set_total     True to set the contract total
 	 *                                normally when deposit is not required
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	public function compute(array $computations, bool $set_total = false): void
-	{
+	public function compute(array $computations, bool $set_total = false): void {
 		foreach ($computations as $t) {
 			$compute = match ($t) {
 				'agent'             => new Compute\Agent(),
@@ -257,14 +254,13 @@ class Hub
 	/**
 	 * Money display
 	 *
-	 * @param  float  $value  Value to be displayed
+	 * @param   float  $value  Value to be displayed
 	 *
 	 * @throws InvalidArgumentException
 	 * @since  3.3.0
 	 * @return string
 	 */
-	public function currencyDisplay(float $value): string
-	{
+	public function currencyDisplay(float $value): string {
 		return Utility::displayValue($value, $this->getValue('currency'), $this->getValue('decimals'));
 	}
 
@@ -275,19 +271,21 @@ class Hub
 	 * @since  3.3.0
 	 * @return int
 	 */
-	public function doBookingStatus(): int
-	{
+	public function doBookingStatus(): int {
 		$booking_status = 1;
 		if ($this->getValue('agent_deposit_paid')) {
 			if ($this->getValue('deposit') != $this->getValue('contract_total')) {
 				if (!$this->getValue('balance_days')) {
 					$booking_status = 39;
-				} else if ($this->getValue('balance_date') >= TickTock::getDate()) {
+				}
+				elseif ($this->getValue('balance_date') >= TickTock::getDate()) {
 					$booking_status = 10;
-				} else {
+				}
+				else {
 					$booking_status = 30;
 				}
-			} else {
+			}
+			else {
 				$booking_status = 40;
 			}
 		}
@@ -298,14 +296,13 @@ class Hub
 	/**
 	 * Return data
 	 *
-	 * @param  string  $session  Session data type to return
+	 * @param   string  $session  Session data type to return
 	 *
 	 * @throws InvalidArgumentException
 	 * @since  3.3.0
 	 * @return stdClass
 	 */
-	public function getData(string $session = 'contractData'): stdClass
-	{
+	public function getData(string $session = 'contractData'): stdClass {
 		$this->validateSession($session);
 
 		return $this->$session;
@@ -317,35 +314,32 @@ class Hub
 	 * @since  3.3.0
 	 * @return stdClass
 	 */
-	public function getOriginalData(): stdClass
-	{
+	public function getOriginalData(): stdClass {
 		return $this->original_data;
 	}
 
 	/**
 	 * Set original contract data for comparison
 	 *
-	 * @param  stdClass  $data  Original data
+	 * @param   stdClass  $data  Original data
 	 *
 	 * @since 3.3.0
 	 */
-	public function setOriginalData(stdClass $data): void
-	{
+	public function setOriginalData(stdClass $data): void {
 		$this->original_data = $data;
 	}
 
 	/**
 	 * Get individual session value
 	 *
-	 * @param  string  $key      Session key
-	 * @param  string  $session  Session type
+	 * @param   string  $key      Session key
+	 * @param   string  $session  Session type
 	 *
 	 * @throws InvalidArgumentException
 	 * @since  3.3.0
 	 * @return mixed
 	 */
-	public function getValue(string $key, string $session = 'contractData'): mixed
-	{
+	public function getValue(string $key, string $session = 'contractData'): mixed {
 		$this->validateSession($session, $key);
 
 		return $this->$session->$key;
@@ -354,14 +348,13 @@ class Hub
 	/**
 	 * Round currency values as per decimal places
 	 *
-	 * @param  float  $value  Value to be rounded
+	 * @param   float  $value  Value to be rounded
 	 *
 	 * @throws InvalidArgumentException
 	 * @since  3.3.0
 	 * @return float
 	 */
-	public function round(float $value): float
-	{
+	public function round(float $value): float {
 		$value = round($value, $this->getValue('decimals'));
 		if (!$value) {
 			$value = abs($value);
@@ -373,16 +366,15 @@ class Hub
 	/**
 	 * Set rate adjustment values
 	 *
-	 * @param  string  $type   Type of adjustment
-	 * @param  string  $value  Adjustment calculation
-	 * @param  string  $pc     Value used for calculation
-	 * @param  string  $calc   Base calculation value
+	 * @param   string  $type   Type of adjustment
+	 * @param   string  $value  Adjustment calculation
+	 * @param   string  $pc     Value used for calculation
+	 * @param   string  $calc   Base calculation value
 	 *
 	 * @throws InvalidArgumentException
 	 * @since  3.3.0
 	 */
-	public function setAdjustments(string $type, string $value, string $pc, string $calc): void
-	{
+	public function setAdjustments(string $type, string $value, string $pc, string $calc): void {
 		$adjustments = $this->getValue('adjustments');
 
 		$adjustments[$type] = ['value' => $value,
@@ -396,13 +388,12 @@ class Hub
 	/**
 	 * Set agent object
 	 *
-	 * @param  object  $agent  Agent row
+	 * @param   object  $agent  Agent row
 	 *
 	 * @throws InvalidArgumentException
 	 * @since  3.3.0
 	 */
-	public function setAgent(object $agent): void
-	{
+	public function setAgent(object $agent): void {
 		if (empty($agent)) {
 			throw new InvalidArgumentException('Agent data is not set');
 		}
@@ -413,14 +404,13 @@ class Hub
 	/**
 	 * Set session data
 	 *
-	 * @param  stdClass  $data     Data
-	 * @param  string    $session  Session type
+	 * @param   stdClass  $data     Data
+	 * @param   string    $session  Session type
 	 *
 	 * @throws InvalidArgumentException
 	 * @since  3.3.0
 	 */
-	public function setData(stdClass $data, string $session = 'contractData'): void
-	{
+	public function setData(stdClass $data, string $session = 'contractData'): void {
 		$this->validateSession($session);
 		$this->$session = $data;
 	}
@@ -428,11 +418,11 @@ class Hub
 	/**
 	 * Set rate discount values
 	 *
-	 * @param  string  $type   Type of adiscount
-	 * @param  float   $value  Discount calculation
-	 * @param  string  $pc     Value used for calculation
-	 * @param  string  $calc   Base calculation value
-	 * @param  float   $base   Base calculation
+	 * @param   string  $type   Type of adiscount
+	 * @param   float   $value  Discount calculation
+	 * @param   string  $pc     Value used for calculation
+	 * @param   string  $calc   Base calculation value
+	 * @param   float   $base   Base calculation
 	 *
 	 * @since  3.3.0
 	 */
@@ -451,8 +441,7 @@ class Hub
 	 * @throws InvalidArgumentException
 	 * @since  3.3.0
 	 */
-	public function setExtras(): void
-	{
+	public function setExtras(): void {
 		$extras     = [];
 		$quantities = $this->getValue('extra_quantities');
 		$ids        = $this->getValue('extra_ids');
@@ -471,15 +460,14 @@ class Hub
 	/**
 	 * Set individual session value
 	 *
-	 * @param  string  $key      Session key
-	 * @param  mixed   $value    Value
-	 * @param  string  $session  Session type
+	 * @param   string  $key      Session key
+	 * @param   mixed   $value    Value
+	 * @param   string  $session  Session type
 	 *
 	 * @throws InvalidArgumentException
 	 * @since  1.0.0
 	 */
-	public function setValue(string $key, mixed $value, string $session = 'contractData'): void
-	{
+	public function setValue(string $key, mixed $value, string $session = 'contractData'): void {
 		$this->validateSession($session, $key);
 
 		$this->$session->$key = $value;
@@ -488,14 +476,13 @@ class Hub
 	/**
 	 * Money display for form field
 	 *
-	 * @param  float|string  $value  Value to be displayed
+	 * @param   float|string  $value  Value to be displayed
 	 *
 	 * @throws InvalidArgumentException
 	 * @since  3.3.0
 	 * @return string
 	 */
-	public function valueDisplay(float|string $value): string
-	{
+	public function valueDisplay(float|string $value): string {
 		return Utility::displayMoney((float) $value, $this->getValue('decimals'));
 	}
 
@@ -506,8 +493,7 @@ class Hub
 	 * @throws InvalidArgumentException
 	 * @since  3.3.0
 	 */
-	protected function createUser(): void
-	{
+	protected function createUser(): void {
 		$email     = $this->getValue('email', 'guestData');
 		$firstname = $this->getValue('firstname', 'guestData');
 		$surname   = $this->getValue('surname', 'guestData');
@@ -529,16 +515,15 @@ class Hub
 	/**
 	 * Generate a username from guest input
 	 *
-	 * @param  string  $firstname  Guest first anme
-	 * @param  string  $surname    Guest surname
+	 * @param   string  $firstname  Guest first anme
+	 * @param   string  $surname    Guest surname
 	 *
 	 * @throws InvalidArgumentException|RuntimeException
 	 * @throws QueryTypeAlreadyDefinedException
 	 * @since  3.3.1
 	 * @return string
 	 */
-	protected function getUsername(string $firstname, string $surname): string
-	{
+	protected function getUsername(string $firstname, string $surname): string {
 		$valid = false;
 		while (!$valid) {
 			$username = $firstname[0] . $surname . rand(0, 1000);
@@ -559,14 +544,14 @@ class Hub
 	 * @throws RuntimeException
 	 * @since  4.1.0
 	 */
-	protected function setManagerAgency(): void
-	{
+	protected function setManagerAgency(): void {
 		if ($this->params->get('manager_scope', 0)) {
 			$userSession = new KrSession\User();
 			$userData    = $userSession->getData();
 			$this->setValue('agency_id', $userData->agency_id);
 			$this->setValue('manager_id', $userData->manager_id);
-		} else {
+		}
+		else {
 			$this->setValue('manager_id', $this->settings['default_manager']);
 			$this->setValue('agency_id',
 				KrFactory::getListModel('managers')->getAgency($this->settings['default_manager']));
@@ -579,8 +564,7 @@ class Hub
 	 * @throws InvalidArgumentException
 	 * @since  3.3.0
 	 */
-	protected function validateArrival(): void
-	{
+	protected function validateArrival(): void {
 		$arrival = $this->getValue('arrival');
 		if (!$arrival) {
 			throw new InvalidArgumentException('Arrival must be supplied');
@@ -599,8 +583,7 @@ class Hub
 	 * @throws InvalidArgumentException
 	 * @since  3.3.0
 	 */
-	protected function validateDeparture(): void
-	{
+	protected function validateDeparture(): void {
 		$departure = $this->getValue('departure');
 		if (!$departure) {
 			throw new InvalidArgumentException('Departure date must be supplied');
@@ -621,8 +604,7 @@ class Hub
 	 * @throws InvalidArgumentException|UnexpectedValueException
 	 * @since  3.3.0
 	 */
-	protected function validateGuests(): void
-	{
+	protected function validateGuests(): void {
 		if ($this->getValue('black_booking')) {
 			return;
 		}
@@ -674,7 +656,8 @@ class Hub
 			if (!count($child_ages)) {
 				throw new UnexpectedValueException('Please enter the ages of the children');
 			}
-		} else if ($children == 0 && is_countable($child_ages) && count($child_ages) > 0) {
+		}
+		elseif ($children == 0 && is_countable($child_ages) && count($child_ages) > 0) {
 			throw new UnexpectedValueException('Number of children must match number of ages');
 		}
 	}
@@ -685,8 +668,7 @@ class Hub
 	 * @throws InvalidArgumentException
 	 * @since  3.3.0
 	 */
-	protected function validateId(): void
-	{
+	protected function validateId(): void {
 		$id = $this->getValue('id');
 		if (!$id) {
 			return;
@@ -704,8 +686,7 @@ class Hub
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	protected function validateProperty(): void
-	{
+	protected function validateProperty(): void {
 		$property_id = $this->getValue('property_id');
 		if (!is_numeric($property_id) || !$property_id) {
 			throw new InvalidArgumentException('Property ID must be non zero');
@@ -720,14 +701,13 @@ class Hub
 	/**
 	 * Validate session
 	 *
-	 * @param  string   $session  Session name
+	 * @param   string  $session  Session name
 	 * @param  ?string  $key      Session key
 	 *
 	 * @throws InvalidArgumentException
 	 * @since  3.3.0
 	 */
-	protected function validateSession(string $session, ?string $key = null): void
-	{
+	protected function validateSession(string $session, ?string $key = null): void {
 		if (!in_array($session, $this->valid_sessions)) {
 			throw new InvalidArgumentException('Invalid session value of ' . $session . ' requested');
 		}
@@ -745,8 +725,7 @@ class Hub
 	 * @throws InvalidArgumentException
 	 * @since  3.4.0
 	 */
-	private function resetShortBook(): void
-	{
+	private function resetShortBook(): void {
 		if ($this->getValue('shortbook')) {
 			if ($this->getValue('adjustmentsRq')) {
 				$adj = $this->getValue('shortbook_nights') . ' nights charged at ' . $this->getValue('nights');

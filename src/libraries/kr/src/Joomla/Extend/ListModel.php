@@ -66,10 +66,10 @@ abstract class ListModel extends \Joomla\CMS\MVC\Model\ListModel
 	/**
 	 * Generate query for multipurpose Int, Array, String
 	 *
-	 * @param  DatabaseInterface  $db      Database instance
-	 * @param  QueryInterface     $query   Existing query
-	 * @param  string             $column  Name of column
-	 * @param  mixed              $value   Value for field
+	 * @param   DatabaseInterface  $db      Database instance
+	 * @param   QueryInterface     $query   Existing query
+	 * @param   string             $column  Name of column
+	 * @param   mixed              $value   Value for field
 	 *
 	 * @since  3.3.0
 	 * @return QueryInterface
@@ -83,11 +83,11 @@ abstract class ListModel extends \Joomla\CMS\MVC\Model\ListModel
 			{
 				$query->where($db->qn($column) . ' = ' . (int) $value);
 			}
-			else if (is_array($value) && count($value))
+			elseif (is_array($value) && count($value))
 			{
 				$query->where($db->qn($column) . ' IN (' . implode(',', array_map('intval', $value)) . ')');
 			}
-			else if (is_string($value) && strlen(trim($value)))
+			elseif (is_string($value) && strlen(trim($value)))
 			{
 				$value = explode(',', $value);
 				$query->where($db->qn($column) . ' IN (' . implode(',', array_map('intval', $value)) . ')');
@@ -100,10 +100,10 @@ abstract class ListModel extends \Joomla\CMS\MVC\Model\ListModel
 	/**
 	 * Generate query for string Filter
 	 *
-	 * @param  DatabaseInterface  $db      Database instance
-	 * @param  QueryInterface     $query   Existing query
-	 * @param  string             $column  Name of column
-	 * @param  mixed              $filter  Filter value
+	 * @param   DatabaseInterface  $db      Database instance
+	 * @param   QueryInterface     $query   Existing query
+	 * @param   string             $column  Name of column
+	 * @param   mixed              $filter  Filter value
 	 *
 	 * @since  3.3.0
 	 * @return QueryInterface
@@ -118,7 +118,7 @@ abstract class ListModel extends \Joomla\CMS\MVC\Model\ListModel
 				$filter = trim($filter);
 				$query->where($db->qn($column) . ' = ' . $db->q(trim($filter)));
 			}
-			else if (is_array($filter))
+			elseif (is_array($filter))
 			{
 				$query->where($db->qn($column) . ' IN (' . implode(',', $db->q(array_map('strval', $filter))) . ')');
 			}
@@ -130,8 +130,8 @@ abstract class ListModel extends \Joomla\CMS\MVC\Model\ListModel
 	/**
 	 * Generate query for common list query joins
 	 *
-	 * @param  DatabaseInterface  $db     Database instance
-	 * @param  QueryInterface     $query  Existing query
+	 * @param   DatabaseInterface  $db     Database instance
+	 * @param   QueryInterface     $query  Existing query
 	 *
 	 * @throws QueryTypeAlreadyDefinedException
 	 * @since  4.0.0
@@ -154,10 +154,10 @@ abstract class ListModel extends \Joomla\CMS\MVC\Model\ListModel
 	/**
 	 * Generate query for integer Filter
 	 *
-	 * @param  DatabaseInterface  $db      Database instance
-	 * @param  QueryInterface     $query   Existing query
-	 * @param  string             $column  Name of column
-	 * @param  mixed              $filter  Filter value
+	 * @param   DatabaseInterface  $db      Database instance
+	 * @param   QueryInterface     $query   Existing query
+	 * @param   string             $column  Name of column
+	 * @param   mixed              $filter  Filter value
 	 *
 	 * @since  3.3.0
 	 * @return QueryInterface
@@ -171,7 +171,7 @@ abstract class ListModel extends \Joomla\CMS\MVC\Model\ListModel
 			{
 				$query->where($db->qn($column) . '=' . (int) $filter);
 			}
-			else if (is_array($filter) && count($filter))
+			elseif (is_array($filter) && count($filter))
 			{
 				$query->where($db->qn($column) . ' IN (' . implode(',', array_map('intval', $filter)) . ')');
 			}
@@ -183,9 +183,9 @@ abstract class ListModel extends \Joomla\CMS\MVC\Model\ListModel
 	/**
 	 * Generate query for integer Filter
 	 *
-	 * @param  DatabaseInterface  $db      Database instance
-	 * @param  QueryInterface     $query   Existing query
-	 * @param  mixed              $filter  Filter value
+	 * @param   DatabaseInterface  $db      Database instance
+	 * @param   QueryInterface     $query   Existing query
+	 * @param   mixed              $filter  Filter value
 	 *
 	 * @since  3.3.0
 	 * @return QueryInterface
@@ -198,12 +198,14 @@ abstract class ListModel extends \Joomla\CMS\MVC\Model\ListModel
 			{
 				$query->where($db->qn('a.property_id') . '=' . (int) $filter);
 			}
-			else if (is_array($filter))
+			elseif (is_array($filter))
 			{
 				$query->where($db->qn('a.property_id') . ' IN (' . implode(',',
-						array_map('intval', $filter)) . ')');
+						array_map('intval', $filter)
+					) . ')'
+				);
 			}
-			else if (is_string($filter) && strlen($filter) > 0)
+			elseif (is_string($filter) && strlen($filter) > 0)
 			{
 				$ids = explode(',', $filter);
 				$query->where($db->qn('a.property_id') . 'IN (' . implode(',', array_map('intval', $ids)) . ')');
@@ -216,10 +218,10 @@ abstract class ListModel extends \Joomla\CMS\MVC\Model\ListModel
 	/**
 	 * Set query for json string find in set
 	 *
-	 * @param  DatabaseInterface  $db      Database instance
-	 * @param  QueryInterface     $query   Existing query
-	 * @param  mixed              $filter  Current filter values
-	 * @param  string             $column  Database column
+	 * @param   DatabaseInterface  $db      Database instance
+	 * @param   QueryInterface     $query   Existing query
+	 * @param   mixed              $filter  Current filter values
+	 * @param   string             $column  Database column
 	 *
 	 * @since  1.0.0
 	 * @return QueryInterface
@@ -230,19 +232,21 @@ abstract class ListModel extends \Joomla\CMS\MVC\Model\ListModel
 		if (is_numeric($filter) && (int) $filter > 0)
 		{
 			$query->where('FIND_IN_SET( ' . (int) $filter . ', REPLACE(REPLACE(REPLACE(' . $db->qn($column) . ','
-				. $db->q('"') . ',' . $db->q('') . ' ), ' . $db->q('[') . ',' . $db->q('') . ' ), ' . $db->q(']') . ','
-				. $db->q('') . ')) > 0');
+			              . $db->q('"') . ',' . $db->q('') . ' ), ' . $db->q('[') . ',' . $db->q('') . ' ), ' . $db->q(']') . ','
+			              . $db->q('') . ')) > 0'
+			);
 		}
-		else if (is_array($filter) && count($filter) > 0)
+		elseif (is_array($filter) && count($filter) > 0)
 		{
 			foreach ($filter as $f)
 			{
 				$query->where('FIND_IN_SET( ' . (int) $f . ', REPLACE(REPLACE(REPLACE(' . $db->qn($column) . ','
-					. $db->q('"') . ',' . $db->q('') . ' ), ' . $db->q('[') . ',' . $db->q('') . ' ), ' . $db->q(']')
-					. ',' . $db->q('') . ')) > 0');
+				              . $db->q('"') . ',' . $db->q('') . ' ), ' . $db->q('[') . ',' . $db->q('') . ' ), ' . $db->q(']')
+				              . ',' . $db->q('') . ')) > 0'
+				);
 			}
 		}
-		else if (is_string($filter) && $filter != '')
+		elseif (is_string($filter) && $filter != '')
 		{
 			$query->where('FIND_IN_SET( ' . $db->q($filter) . ', REPLACE(REPLACE(REPLACE(' . $db->qn($column) . ','
 				. $db->q('"') . ',' . $db->q('') . ' ), ' . $db->q('[') . ',' . $db->q('') . ' ), ' . $db->q(']') . ','
@@ -255,10 +259,10 @@ abstract class ListModel extends \Joomla\CMS\MVC\Model\ListModel
 	/**
 	 * Generic search code for list query
 	 *
-	 * @param  DatabaseInterface  $db         Database instance
-	 * @param  QueryInterface     $query      Existing query
-	 * @param  string             $column     Order column
-	 * @param  string             $direction  Order direction
+	 * @param   DatabaseInterface  $db         Database instance
+	 * @param   QueryInterface     $query      Existing query
+	 * @param   string             $column     Order column
+	 * @param   string             $direction  Order direction
 	 *
 	 * @since   3.3.0
 	 * @return QueryInterface
@@ -277,10 +281,10 @@ abstract class ListModel extends \Joomla\CMS\MVC\Model\ListModel
 	/**
 	 * Generic search code for list query
 	 *
-	 * @param  DatabaseInterface  $db      Database instance
-	 * @param  QueryInterface     $query   Existing query
-	 * @param  string             $search  Search string
-	 * @param  string             $field   Name of fiueld to search
+	 * @param   DatabaseInterface  $db      Database instance
+	 * @param   QueryInterface     $query   Existing query
+	 * @param   string             $search  Search string
+	 * @param   string             $field   Name of fiueld to search
 	 *
 	 * @since   3.3.0
 	 * @return  QueryInterface
@@ -307,10 +311,10 @@ abstract class ListModel extends \Joomla\CMS\MVC\Model\ListModel
 	/**
 	 * Build translation subquery
 	 *
-	 * @param  DatabaseInterface  $db     Database interface
-	 * @param  string             $item   Item being translated
-	 * @param  string             $key    Key for item
-	 * @param  string             $field  Optional field name for multiple translations per table
+	 * @param   DatabaseInterface  $db     Database interface
+	 * @param   string             $item   Item being translated
+	 * @param   string             $key    Key for item
+	 * @param   string             $field  Optional field name for multiple translations per table
 	 *
 	 * @throws RuntimeException
 	 * @since  3.3.0

@@ -50,22 +50,20 @@ class Site extends KrHtmlView {
 	 * @throws Exception
 	 * @since  4.0.0
 	 */
-	public function __construct()
-	{
+	public function __construct() {
 		parent::__construct();
 	}
 
 	/**
 	 * Add confirm pathway link
 	 *
-	 * @param  Pathway  $pathway  Current pathway
+	 * @param   Pathway  $pathway  Current pathway
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
 	 * @return Pathway
 	 */
-	public static function confirmPathway(Pathway $pathway): Pathway
-	{
+	public static function confirmPathway(Pathway $pathway): Pathway {
 		$Itemid = SiteHelper::getItemId('com_knowres', 'confirm');
 		$pathway->addItem(Krmethods::plain('COM_KNOWRES_MAKE_A_RESERVATION'),
 			KrMethods::route('index.php?option=com_knowres&view=confirm&Itemid=' . $Itemid));
@@ -76,14 +74,13 @@ class Site extends KrHtmlView {
 	/**
 	 * Build the breadcrumbs for the dashbaord
 	 *
-	 * @param  Pathway  $pathway  Current pathway
+	 * @param   Pathway  $pathway  Current pathway
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
 	 * @return Pathway
 	 */
-	public static function dashboardPathway(Pathway $pathway): Pathway
-	{
+	public static function dashboardPathway(Pathway $pathway): Pathway {
 		$pathway->addItem(KrMethods::plain('COM_KNOWRES_TITLE_DASHBOARD'),
 			KrMethods::route('index.php?option=com_knowres&task=dashboard.cancel'));
 
@@ -93,20 +90,20 @@ class Site extends KrHtmlView {
 	/**
 	 * Build properties part of pathway
 	 *
-	 * @param  Pathway    $pathway     Current pathway
+	 * @param   Pathway   $pathway     Current pathway
 	 * @param  ?stdClass  $searchData  Session search data
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
 	 * @return Pathway
 	 */
-	public static function propertiesPathway(Pathway $pathway, ?stdClass $searchData = null): Pathway
-	{
+	public static function propertiesPathway(Pathway $pathway, ?stdClass $searchData = null): Pathway {
 		if (!empty($searchData) && count($searchData->baseIds)) {
 			$region_id = $searchData->region_id ?: KrMethods::getParams()->get('default_region');
 			$Itemid    = SiteHelper::getItemId('com_knowres', 'properties');
 			$link      = KrMethods::route('index.php?option=com_knowres&view=properties&Itemid=' . $Itemid
-			                              . '&region_id=' . $region_id);
+			                              . '&region_id=' . $region_id
+			);
 			$link      .= '?retain=1';
 			$pathway->addItem(KrMethods::plain('COM_KNOWRES_SEARCH_RESULTS'), $link);
 		}
@@ -117,16 +114,15 @@ class Site extends KrHtmlView {
 	/**
 	 * Add property pathway
 	 *
-	 * @param  Pathway   $pathway     Existing pathway instance
-	 * @param  stdClass  $searchData  Session search data
-	 * @param  object    $property    Property item data
+	 * @param   Pathway   $pathway     Existing pathway instance
+	 * @param   stdClass  $searchData  Session search data
+	 * @param   object    $property    Property item data
 	 *
 	 * @throws Exception
 	 * @since  5.0.0
 	 * @return Pathway
 	 */
-	public static function propertyPathway(Pathway $pathway, stdClass $searchData, object $property): Pathway
-	{
+	public static function propertyPathway(Pathway $pathway, stdClass $searchData, object $property): Pathway {
 		$pathway->addItem($property->property_name, SiteHelper::buildPropertyLink($property->id));
 
 		return $pathway;
@@ -135,19 +131,19 @@ class Site extends KrHtmlView {
 	/**
 	 * Add property region pathway
 	 *
-	 * @param  Pathway  $pathway      Existing pathway instance
-	 * @param  int      $region_id    Region ID Of property
-	 * @param  string   $region_name  Region name of property
+	 * @param   Pathway  $pathway      Existing pathway instance
+	 * @param   int      $region_id    Region ID Of property
+	 * @param   string   $region_name  Region name of property
 	 *
 	 * @throws Exception
 	 * @since  5.0.0
 	 * @return Pathway
 	 */
-	public static function propertyRegionPathway(Pathway $pathway, int $region_id, string $region_name): Pathway
-	{
+	public static function propertyRegionPathway(Pathway $pathway, int $region_id, string $region_name): Pathway {
 		$Itemid = SiteHelper::getItemId('com_knowres', 'properties');
 		$link   = KrMethods::route('index.php?option=com_knowres&view=properties' . '&region_id=' . $region_id .
-		                           '&Itemid=' . $Itemid);
+		                           '&Itemid=' . $Itemid
+		);
 		$pathway->addItem($region_name, $link);
 
 		return $pathway;
@@ -160,8 +156,7 @@ class Site extends KrHtmlView {
 	 * @since  3.3.0
 	 * @return Pathway
 	 */
-	public static function setPathwayBase(): Pathway
-	{
+	public static function setPathwayBase(): Pathway {
 		$pathway = Factory::getApplication()->getPathway();
 		$pathway->setPathway([]);
 
@@ -196,14 +191,13 @@ class Site extends KrHtmlView {
 	/**
 	 * Prepares the document data
 	 *
-	 * @param  string  $title        Default page title
-	 * @param  string  $description  Default page description
+	 * @param   string  $title        Default page title
+	 * @param   string  $description  Default page description
 	 *
 	 * @throws Exception
 	 * @since 3.3.0
 	 */
-	protected function prepareDefaultDocument(string $title, string $description): void
-	{
+	protected function prepareDefaultDocument(string $title, string $description): void {
 		$app              = Factory::getApplication();
 		$menu_title       = '';
 		$menu_description = '';
@@ -224,15 +218,18 @@ class Site extends KrHtmlView {
 		}
 		if ($app->getCfg('sitename_pagetitles', 0) == 1) {
 			$title = KrMethods::sprintf('JPAGETITLE', $app->getCfg('sitename'), $title);
-		} else if ($app->getCfg('sitename_pagetitles', 0) == 2) {
+		}
+		elseif ($app->getCfg('sitename_pagetitles', 0) == 2) {
 			$title = KrMethods::sprintf('JPAGETITLE', $title, $app->getCfg('sitename'));
 		}
 		$this->document->setTitle($title);
 
 		if (empty($description)) {
 			$this->document->setDescription(!empty($menu_description) ? $menu_description :
-				$app->get('meta_description', $description));
-		} else {
+				$app->get('meta_description', $description)
+			);
+		}
+		else {
 			$this->document->setDescription($description);
 		}
 

@@ -47,10 +47,10 @@ if (!empty($flights)) {
 if ($count == 2) {
 	$width = '50%';
 }
-else if ($count == 3) {
+elseif ($count == 3) {
 	$width = '33.3%';
 }
-else if ($count == 4) {
+elseif ($count == 4) {
 	$width = '25%';
 }
 ?>

@@ -55,15 +55,14 @@ class LosRates
 	/**
 	 * Constructor
 	 *
-	 * @param  int    $property_id   ID of property
-	 * @param  array  $settings      Property settings
-	 * @param  int    $markup        Markup to be applied to rate
-	 * @param  bool   $do_discounts  True to deduct discount from rate
+	 * @param   int    $property_id   ID of property
+	 * @param   array  $settings      Property settings
+	 * @param   int    $markup        Markup to be applied to rate
+	 * @param   bool   $do_discounts  True to deduct discount from rate
 	 *
 	 * @since  3.4.0
 	 */
-	public function __construct(int $property_id, array $settings, int $markup = 0, bool $do_discounts = false)
-	{
+	public function __construct(int $property_id, array $settings, int $markup = 0, bool $do_discounts = false) {
 		$this->property_id  = $property_id;
 		$this->settings     = $settings;
 		$this->markup       = $markup;
@@ -73,9 +72,9 @@ class LosRates
 	/**
 	 * Get LOS rates content
 	 *
-	 * @param  string  $first        First date for rates
-	 * @param  string  $final        Final date for rates
-	 * @param  int     $max_nights   Maximum length of stay to be calculated. Defaults to max_nights in rates
+	 * @param   string  $first       First date for rates
+	 * @param   string  $final       Final date for rates
+	 * @param   int     $max_nights  Maximum length of stay to be calculated. Defaults to max_nights in rates
 	 *                               but can be overridden for channel requirements if necessary
 	 *                               e.g. VRBO only allows 31 nights per date
 	 *
@@ -83,8 +82,7 @@ class LosRates
 	 * @since  3.4.0
 	 * @return array
 	 */
-	public function getPrices(string $first, string $final, int $max_nights = 0): array
-	{
+	public function getPrices(string $first, string $final, int $max_nights = 0): array {
 		$this->rates = KrFactory::getListModel('rates')->getRatesForProperty($this->property_id);
 		if ($this->do_discounts) {
 			$this->discounts = KrFactory::getListModel('discounts')->getDiscounts($this->property_id);
@@ -98,11 +96,11 @@ class LosRates
 	/**
 	 * Generate the base rate for the first date
 	 *
-	 * @param  object  $r            Rate row
-	 * @param  string  $arrival      Arrival date
-	 * @param  array   $more_guests  Additional guests
-	 * @param  int     $min_nights   Minimum stay for date
-	 * @param  int     $max_nights   Maximum stay for date
+	 * @param   object  $r            Rate row
+	 * @param   string  $arrival      Arrival date
+	 * @param   array   $more_guests  Additional guests
+	 * @param   int     $min_nights   Minimum stay for date
+	 * @param   int     $max_nights   Maximum stay for date
 	 *
 	 * @throws Exception
 	 * @since  3.4
@@ -117,7 +115,8 @@ class LosRates
 		for ($nights = 1; $nights <= $max_nights; $nights++) {
 			if ($nights < $min_nights || !$wcod) {
 				$base[$r->max_guests][$nights] = 0;
-			} else {
+			}
+			else {
 				$departure                     = TickTock::modifyDays($arrival, $nights);
 				$date_range                    = TickTock::allDatesBetween($arrival, $departure, true);
 				$base[$r->max_guests][$nights] = $this->computeLosRate($arrival, $departure, $r->max_guests, $nights,
@@ -128,15 +127,19 @@ class LosRates
 				if (!empty($m->more_pppn)) {
 					if ($nights < $min_nights || !$wcod) {
 						$base[(int) $m->more_max][$nights] = 0;
-					} else {
-						$base[(int) $m->more_max][$nights] = $this->computeLosRate($arrival, $departure,
-							(int) $m->more_max, $nights, $date_range);
 					}
-				} elseif (!empty($m->more_min) && !empty($m->more_max)) {
+					else {
+						$base[(int) $m->more_max][$nights] = $this->computeLosRate($arrival, $departure,
+							(int) $m->more_max, $nights, $date_range
+						);
+					}
+				}
+				elseif (!empty($m->more_min) && !empty($m->more_max)) {
 					for ($g = (int) $m->more_min; $g <= (int) $m->more_max; $g++) {
 						if ($nights < $min_nights || !$wcod) {
 							$base[$g][$nights] = 0;
-						} else {
+						}
+						else {
 							$base[$g][$nights] = $this->computeLosRate($arrival, $departure, $g, $nights,
 								$date_range);
 						}
@@ -155,12 +158,12 @@ class LosRates
 	/**
 	 * Get los rates for a date
 	 *
-	 * @param  array   $prices       Existing array of prices
-	 * @param  object  $r            Rate row being prcoessed
-	 * @param  string  $arrival      Arrival date
-	 * @param  array   $more_guests  Additional guests
-	 * @param  array   $qrates       Base rates for today
-	 * @param  int     $max_nights   Maximum nioghts stay
+	 * @param   array   $prices       Existing array of prices
+	 * @param   object  $r            Rate row being prcoessed
+	 * @param   string  $arrival      Arrival date
+	 * @param   array   $more_guests  Additional guests
+	 * @param   array   $qrates       Base rates for today
+	 * @param   int     $max_nights   Maximum nioghts stay
 	 *
 	 * @throws Exception
 	 * @since  3.4.0
@@ -173,9 +176,11 @@ class LosRates
 			$wcod = $this->Los->weeklyChangeOverDay(TickTock::modifyDays($arrival, $nights));
 			if (!$wcod) {
 				$prices[$arrival][$r->max_guests][$nights] = 0;
-			} elseif (count($qrates)) {
+			}
+			elseif (count($qrates)) {
 				$prices[$arrival][$r->max_guests][$nights] = $qrates[$r->max_guests][$nights];
-			} else {
+			}
+			else {
 				$departure  = TickTock::modifyDays($arrival, $nights);
 				$date_range = TickTock::allDatesBetween($arrival, $departure, true);
 
@@ -191,19 +196,24 @@ class LosRates
 				if ((int) $m->more_pppn) {
 					if (!$wcod) {
 						$prices[$arrival][$m->more_max][$nights] = 0;
-					} elseif (count($qrates)) {
+					}
+					elseif (count($qrates)) {
 						$prices[$arrival][$m->more_max][$nights] = $qrates[$m->more_max][$nights];
-					} else {
+					}
+					else {
 						$prices[$arrival][$m->more_max][$nights] = $this->computeLosRate($arrival, $departure,
 							$m->more_max, $nights, $date_range);
 					}
-				} else {
+				}
+				else {
 					for ($g = (int) $m->more_min; $g <= (int) $m->more_max; $g++) {
 						if (!$wcod) {
 							$prices[$arrival][$g][$nights] = 0;
-						} elseif (count($qrates)) {
+						}
+						elseif (count($qrates)) {
 							$prices[$arrival][$g][$nights] = $qrates[$g][$nights];
-						} else {
+						}
+						else {
 							$prices[$arrival][$g][$nights] = $this->computeLosRate($arrival, $departure, $g,
 								$nights, $date_range);
 						}
@@ -223,8 +233,7 @@ class LosRates
 	 * @since  3.4.0
 	 * @return bool
 	 */
-	private function checkForQuickie(): bool
-	{
+	private function checkForQuickie(): bool {
 		if ($this->do_discounts && count($this->discounts)) {
 			return false;
 		}
@@ -267,11 +276,11 @@ class LosRates
 	/**
 	 * Set LOS rate for a single date, nights and guests
 	 *
-	 * @param  string  $arrival     Arrival date yyyy-mm-dd
-	 * @param  string  $departure   Departure date yyyy-mm-dd
-	 * @param  int     $guests      #Guests
-	 * @param  int     $nights      #Nights
-	 * @param  array   $date_range  Date range
+	 * @param   string  $arrival     Arrival date yyyy-mm-dd
+	 * @param   string  $departure   Departure date yyyy-mm-dd
+	 * @param   int     $guests      #Guests
+	 * @param   int     $nights      #Nights
+	 * @param   array   $date_range  Date range
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -282,7 +291,8 @@ class LosRates
 	{
 		if ($this->init_hub) {
 			$this->initHub($arrival, $departure, $guests);
-		} else {
+		}
+		else {
 			$this->Hub->setValue('arrival', $arrival);
 			$this->Hub->setValue('canwebook', $this->settings['canwebook']);
 			$this->Hub->setValue('departure', $departure);
@@ -315,15 +325,14 @@ class LosRates
 	/**
 	 * Initiate Hub for calculations
 	 *
-	 * @param  string  $arrival    Arrival date
-	 * @param  string  $departure  Departure date
-	 * @param  int     $guests     #Guests
+	 * @param   string  $arrival    Arrival date
+	 * @param   string  $departure  Departure date
+	 * @param   int     $guests     #Guests
 	 *
 	 * @throws Exception
 	 * @since  3.4.0
 	 */
-	private function initHub(string $arrival, string $departure, int $guests): void
-	{
+	private function initHub(string $arrival, string $departure, int $guests): void {
 		$contractSession             = new KrSession\Contract();
 		$contractData                = $contractSession->resetData();
 		$contractData->adjustmentsRq = false;
@@ -350,12 +359,11 @@ class LosRates
 	 * Set the required computations. Some of these are tested in compute but
 	 * done here to save some time
 	 *
-	 * @param  int  $nights  #Nights stay
+	 * @param   int  $nights  #Nights stay
 	 *
 	 * @since  3.4.0
 	 */
-	private function setComputations(int $nights): void
-	{
+	private function setComputations(int $nights): void {
 		$this->computations   = [];
 		$this->computations[] = 'base';
 
@@ -392,16 +400,15 @@ class LosRates
 	/**
 	 * Set LOS rates content
 	 *
-	 * @param  string  $first       First date
-	 * @param  string  $final       Final date
-	 * @param  int     $max_nights  Maximum stay to be calculated, defaults to max nights in rates if not set
+	 * @param   string  $first       First date
+	 * @param   string  $final       Final date
+	 * @param   int     $max_nights  Maximum stay to be calculated, defaults to max nights in rates if not set
 	 *
 	 * @throws Exception
 	 * @since  3.4.0
 	 * @return array
 	 */
-	private function setPrices(string $first, string $final, int $max_nights = 0): array
-	{
+	private function setPrices(string $first, string $final, int $max_nights = 0): array {
 		$quickie = $this->checkForQuickie();
 		$prices  = [];
 

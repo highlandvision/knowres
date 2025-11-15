@@ -35,13 +35,12 @@ class ServicesModel extends ListModel
 	/**
 	 * Constructor.
 	 *
-	 * @param  array  $config  An optional associative array of configuration settings.
+	 * @param   array  $config  An optional associative array of configuration settings.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function __construct($config = [])
-	{
+	public function __construct($config = []) {
 		if (empty($config['filter_fields'])) {
 			$config['filter_fields'] = [
 				'agency_id', 'a.agency_id',
@@ -63,17 +62,16 @@ class ServicesModel extends ListModel
 	/**
 	 * Check if service for plugin is enabled
 	 *
-	 * @param  bool    $required   Required - true to throw exception if not found
-	 * @param  string  $plugin     Service plugin
-	 * @param  int     $agency_id  ID of agency
-	 * @param  string  $currency   Currency of service
+	 * @param   bool    $required   Required - true to throw exception if not found
+	 * @param   string  $plugin     Service plugin
+	 * @param   int     $agency_id  ID of agency
+	 * @param   string  $currency   Currency of service
 	 *
 	 * @throws RuntimeException
 	 * @since  3.2.0
 	 * @return int
 	 */
-	public static function checkForSingleService(bool $required, string $plugin, int $agency_id = 0, string $currency = ''): int
-	{
+	public static function checkForSingleService(bool $required, string $plugin, int $agency_id = 0, string $currency = ''): int {
 		$services = KrFactory::getListModel('services')->getServicesByPlugin($plugin, $agency_id, $currency);
 		if (count($services) > 1) {
 			throw new RuntimeException('Multiple services found for service ' . $plugin . ' Please fix!');
@@ -82,7 +80,8 @@ class ServicesModel extends ListModel
 		if (!count($services)) {
 			if ($required) {
 				throw new RuntimeException('No Service details found for service ' . $plugin . ' Please add!');
-			} else {
+			}
+			else {
 				return 0;
 			}
 		}
@@ -96,8 +95,7 @@ class ServicesModel extends ListModel
 	 * @since  5.0.0
 	 * @return mixed
 	 */
-	public function getGatewayCurrencies(): mixed
-	{
+	public function getGatewayCurrencies(): mixed {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -114,16 +112,15 @@ class ServicesModel extends ListModel
 	/**
 	 * Get gateway payment services
 	 *
-	 * @param  mixed  $currency     String or array of currencies
-	 * @param  int    $agency_id    ID of agency
-	 * @param  int    $property_id  ID of property
+	 * @param   mixed  $currency     String or array of currencies
+	 * @param   int    $agency_id    ID of agency
+	 * @param   int    $property_id  ID of property
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return mixed
 	 */
-	public function getGateways(mixed $currency = null, int $agency_id = 0, int $property_id = 0): mixed
-	{
+	public function getGateways(mixed $currency = null, int $agency_id = 0, int $property_id = 0): mixed {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -139,14 +136,16 @@ class ServicesModel extends ListModel
 		if (!is_null($currency)) {
 			if (is_string($currency)) {
 				$query->where($db->qn('a.currency') . '=' . $db->q($currency));
-			} elseif (is_array($currency)) {
+			}
+			elseif (is_array($currency)) {
 				$query->where($db->qn('a.currency') . ' IN (' . implode(',', $db->q(array_map('strval', $currency))) . ')');
 			}
 		}
 
 		if ($agency_id) {
 			$query->where($db->qn('a.agency_id') . '=' . $agency_id);
-		} else {
+		}
+		else {
 			$query->where($db->qn('a.agency_id') . '>0');
 		}
 
@@ -167,8 +166,7 @@ class ServicesModel extends ListModel
 	 * @since  1.0.0
 	 * @return mixed
 	 */
-	public function getNew(): mixed
-	{
+	public function getNew(): mixed {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -186,18 +184,17 @@ class ServicesModel extends ListModel
 	/**
 	 * Get services by plugin name
 	 *
-	 * @param  string   $plugin     Service internal name
-	 * @param  int      $agency_id  ID of agency
+	 * @param   string  $plugin     Service internal name
+	 * @param   int     $agency_id  ID of agency
 	 * @param  ?string  $currency   ISO currency
-	 * @param  bool     $published  Publishd rows only
+	 * @param   bool    $published  Publishd rows only
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return mixed
 	 */
 	public function getServicesByPlugin(string $plugin, int $agency_id = 0, ?string $currency = null,
-		bool $published = true): mixed
-	{
+		bool $published = true): mixed {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -221,7 +218,8 @@ class ServicesModel extends ListModel
 
 		if ($agency_id) {
 			$query->where($db->qn('a.agency_id') . '=' . $agency_id);
-		} else {
+		}
+		else {
 			$query->where($db->qn('a.agency_id') . '<>0');
 		}
 
@@ -234,14 +232,13 @@ class ServicesModel extends ListModel
 	/**
 	 * Get services by type
 	 *
-	 * @param  string  $type  Service type
+	 * @param   string  $type  Service type
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return mixed
 	 */
-	public function getServicesByType(string $type): mixed
-	{
+	public function getServicesByType(string $type): mixed {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -263,8 +260,7 @@ class ServicesModel extends ListModel
 	 * @since  1.0.0
 	 * @return QueryInterface
 	 */
-	protected function getListQuery(): QueryInterface
-	{
+	protected function getListQuery(): QueryInterface {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -275,7 +271,8 @@ class ServicesModel extends ListModel
 
 		$query->select($db->qn('property.property_name', 'property_name'))
 			->join('LEFT', $db->qn('#__knowres_property', 'property') . 'ON' .
-			               $db->qn('property.id') . '=' . $db->qn('a.property_id'));
+			               $db->qn('property.id') . '=' . $db->qn('a.property_id')
+			);
 		$query->select($db->qn('agency.name', 'agency_name'))
 			->join('LEFT', $db->qn('#__knowres_agency', 'agency') . 'ON' . $db->qn('agency.id') . '=' . $db->qn('a.agency_id'));
 
@@ -294,16 +291,19 @@ class ServicesModel extends ListModel
 		$global = $this->getState('filter.global');
 		if (is_numeric($global) && $global == 1) {
 			$query->where($db->qn('a.agency_id') . '=0');
-		} elseif (is_numeric($global) && $global == 2) {
+		}
+		elseif (is_numeric($global) && $global == 2) {
 			$query->where($db->qn('a.agency_id') . '>0');
-		} else {
+		}
+		else {
 			$query->where($db->qn('a.agency_id') . '>=0');
 		}
 
 		$state = $this->getState('filter.state');
 		if (is_numeric($state)) {
 			$query->where($db->qn('a.state') . '=' . (int) $state);
-		} else {
+		}
+		else {
 			$query->where($db->qn('a.state') . ' IN (0, 1)');
 		}
 
@@ -315,7 +315,8 @@ class ServicesModel extends ListModel
 		$filter_agency_id = $this->state->get('filter.agency_id');
 		if (is_numeric($filter_agency_id)) {
 			$query->where($db->qn('a.agency_id') . '=' . (int) $filter_agency_id);
-		} else {
+		}
+		else {
 			$query->where($db->qn('a.agency_id') . '>0');
 		}
 
@@ -341,13 +342,12 @@ class ServicesModel extends ListModel
 	 * different modules that might need different sets of data or different
 	 * ordering requirements.
 	 *
-	 * @param  string  $id  A prefix for the store id.
+	 * @param   string  $id  A prefix for the store id.
 	 *
 	 * @since  1.0.0
 	 * @return string  A store id.
 	 */
-	protected function getStoreId($id = ''): string
-	{
+	protected function getStoreId($id = ''): string {
 		$id .= ':' . $this->getState('filter.search');
 		$id .= ':' . $this->getState('filter.state');
 		$id .= ':' . $this->getState('filter.global');
@@ -364,13 +364,12 @@ class ServicesModel extends ListModel
 	 * Method to autopopulate the model state.
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @param  null|string  $ordering
-	 * @param  null|string  $direction
+	 * @param   null|string  $ordering
+	 * @param   null|string  $direction
 	 *
 	 * @since 1.0.0
 	 */
-	protected function populateState($ordering = 'a.ordering', $direction = 'asc'): void
-	{
+	protected function populateState($ordering = 'a.ordering', $direction = 'asc'): void {
 		$this->setState('filter.search', $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search',
 			'', 'string'));
 		$this->setState('filter.state', $this->getUserStateFromRequest($this->context . '.filter.state', 'filter_state', '',

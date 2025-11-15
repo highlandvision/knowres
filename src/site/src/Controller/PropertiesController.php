@@ -48,8 +48,7 @@ class PropertiesController extends BaseController {
 	 * @since        1.0.0
 	 * @noinspection PhpUnused
 	 */
-	#[NoReturn] public function favourite(): void
-	{
+	#[NoReturn] public function favourite(): void {
 		KrMethods::loadLanguage();
 		$searchSession = new KrSession\Search();
 		$searchData    = $searchSession->getData();
@@ -84,13 +83,13 @@ class PropertiesController extends BaseController {
 	 * @since        3.2.0
 	 * @noinspection PhpUnused
 	 */
-	public function mapdata(): void
-	{
+	public function mapdata(): void {
 		$pid                 = $this->input->getInt('pid', 0);
 		$display_map_markers = false;
 		if ($pid && (int) KrMethods::getParams()->get('property_map_markers', 0)) {
 			$display_map_markers = true;
-		} elseif (!$pid && (int) KrMethods::getParams()->get('search_map_markers', 0)) {
+		}
+		elseif (!$pid && (int) KrMethods::getParams()->get('search_map_markers', 0)) {
 			$display_map_markers = true;
 		}
 
@@ -109,7 +108,8 @@ class PropertiesController extends BaseController {
 				if ((float) $item->lat && (float) $item->lng) {
 					$property_markers[] = $this->setMarker($item, 'solo');
 				}
-			} else {
+			}
+			else {
 				$region_id = $searchData->region_id;
 				$items     = KrFactory::getListSiteModel('properties')->mapMarkers($searchData->baseIds);
 				foreach ($items as $item) {
@@ -134,7 +134,8 @@ class PropertiesController extends BaseController {
 
 			echo new JsonResponse($wrapper);
 			jexit();
-		} catch (Exception $e) {
+		}
+		catch (Exception $e) {
 			Logger::logMe($e->getMessage(), 'error');
 			echo new JsonResponse(null, KrMethods::plain('COM_KNOWRES_TRY_LATER'), true);
 		}
@@ -149,8 +150,7 @@ class PropertiesController extends BaseController {
 	 * @since        2.2.0
 	 * @noinspection PhpUnused
 	 */
-	#[NoReturn] public function mapsession(): void
-	{
+	#[NoReturn] public function mapsession(): void {
 		KrMethods::loadLanguage();
 		$searchSession         = new KrSession\Search();
 		$searchData            = $searchSession->getData();
@@ -167,8 +167,7 @@ class PropertiesController extends BaseController {
 	 * @throws Exception
 	 * @since   1.0.0
 	 */
-	#[NoReturn] public function options(): void
-	{
+	#[NoReturn] public function options(): void {
 		$options = [];
 
 		$type  = KrMethods::inputString('type', 'prefetch');
@@ -188,7 +187,8 @@ class PropertiesController extends BaseController {
 					 'region' => KrMethods::plain('COM_KNOWRES_REGION')
 					];
 			}
-		} else {
+		}
+		else {
 			$properties = KrFactory::getListModel('properties')->getAutosearch($query);
 			foreach ($properties as $p) {
 				$options[] =
@@ -211,8 +211,7 @@ class PropertiesController extends BaseController {
 	 * @throws Exception
 	 * @since  5.1.0
 	 */
-	#[NoReturn] public function raw(): void
-	{
+	#[NoReturn] public function raw(): void {
 		/* @var HighlandVision\Component\Knowres\Site\View\Properties\RawView $view * */
 		$view = $this->getView('properties', 'raw');
 		$view->setModel($this->getModel('properties'), true);
@@ -226,8 +225,7 @@ class PropertiesController extends BaseController {
 	 * @since        3.3.0
 	 * @noinspection PhpUnused
 	 */
-	public function refreshmap(): void
-	{
+	public function refreshmap(): void {
 		try {
 			$searchSession = new KrSession\Search();
 			$searchData    = $searchSession->getData();
@@ -237,7 +235,8 @@ class PropertiesController extends BaseController {
 			$wrapper['filterIds'] = $filter_ids;
 
 			echo new JsonResponse($wrapper);
-		} catch (Exception) {
+		}
+		catch (Exception) {
 			Logger::logMe($e->getMessage(), 'error');
 			echo new JsonResponse(null, KrMethods::plain('COM_KNOWRES_TRY_LATER'), true);
 		}
@@ -251,8 +250,7 @@ class PropertiesController extends BaseController {
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	#[NoReturn] public function search(): void
-	{
+	#[NoReturn] public function search(): void {
 		$input               = [];
 		$input['area']       = KrMethods::inputString('area');
 		$input['arrival']    = KrMethods::inputString('arrival');
@@ -282,15 +280,14 @@ class PropertiesController extends BaseController {
 	/**
 	 * Set model for individual filters
 	 *
-	 * @param  mixed    $model   Property model
+	 * @param   mixed   $model   Property model
 	 * @param  ?array   $filter  Filter options
 	 * @param  ?string  $name    Filter name
 	 *
 	 * @since  3.3.0
 	 * @return mixed
 	 */
-	protected function setAFilter(mixed $model, ?array $filter, ?string $name): mixed
-	{
+	protected function setAFilter(mixed $model, ?array $filter, ?string $name): mixed {
 		$tmp = [];
 		if (is_countable($filter)) {
 			foreach ($filter as $k => $f) {
@@ -310,13 +307,12 @@ class PropertiesController extends BaseController {
 	/**
 	 * Set the property filters for map search
 	 *
-	 * @param  object  $data  KR Search session
+	 * @param   object  $data  KR Search session
 	 *
 	 * @since  3.2.0
 	 * @return mixed
 	 */
-	protected function setFilters(object $data): mixed
-	{
+	protected function setFilters(object $data): mixed {
 		$model = KrFactory::getListSiteModel('properties');
 		$model->setState('filter.id', $data->baseIds);
 
@@ -356,14 +352,13 @@ class PropertiesController extends BaseController {
 	/**
 	 * Find and set the map markers
 	 *
-	 * @param  int  $region_id  ID of region
+	 * @param   int  $region_id  ID of region
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
 	 * @return array
 	 */
-	protected function setMapMarkers(int $region_id): array
-	{
+	protected function setMapMarkers(int $region_id): array {
 		$markers = [];
 
 		// 90 day cache for markers
@@ -378,7 +373,8 @@ class PropertiesController extends BaseController {
 		$cache_markers = $cache->get($region_id);
 		if ($cache_markers) {
 			$markers = array_merge($markers, Utility::decodeJson($cache_markers, true));
-		} else {
+		}
+		else {
 			$markers = array_merge($markers, $this->getMapMarkers($region_id, $cache));
 		}
 
@@ -388,15 +384,14 @@ class PropertiesController extends BaseController {
 	/**
 	 * Set solo map marker
 	 *
-	 * @param  object  $item  DB Property object
-	 * @param  string  $type  Map type 'solo' or 'multi'
+	 * @param   object  $item  DB Property object
+	 * @param   string  $type  Map type 'solo' or 'multi'
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
 	 * @return array
 	 */
-	protected function setMarker(object $item, string $type = 'multi'): array
-	{
+	protected function setMarker(object $item, string $type = 'multi'): array {
 		$tmp            = [];
 		$tmp['lat']     = (float) $item->lat;
 		$tmp['lng']     = (float) $item->lng;
@@ -409,7 +404,8 @@ class PropertiesController extends BaseController {
 			$tmp['title'] = $item->property_name;
 			$tmp['html']  = '<div class="kr-gmarker">' . $item->property_name . '</div>';
 			$tmp['link']  = '';
-		} else {
+		}
+		else {
 			$tmp['html'] = '<div class="kr-gmarker">' . $item->property_name . '</div>';
 		}
 
@@ -419,15 +415,14 @@ class PropertiesController extends BaseController {
 	/**
 	 * Get map markers for region
 	 *
-	 * @param  int    $region_id  ID of region
-	 * @param  Cache  $cache      Cache instance
+	 * @param   int    $region_id  ID of region
+	 * @param   Cache  $cache      Cache instance
 	 *
 	 * @throws Exception
 	 * @since  5.0.0
 	 * @return array
 	 */
-	private function getMapMarkers(int $region_id, Cache $cache): array
-	{
+	private function getMapMarkers(int $region_id, Cache $cache): array {
 		$map_markers = [];
 		$markers     = KrFactory::getListModel('mapmarkers')->getAll($region_id);
 		foreach ($markers as $m) {

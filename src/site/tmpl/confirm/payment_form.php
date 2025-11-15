@@ -23,7 +23,7 @@ foreach ($this->gateways as $gateway)
 	{
 		$multi = $gateway->currency;
 	}
-	else if ($multi != $gateway->currency)
+	elseif ($multi != $gateway->currency)
 	{
 		$multi = true;
 		break;

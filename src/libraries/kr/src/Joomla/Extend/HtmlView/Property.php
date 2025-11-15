@@ -49,22 +49,20 @@ class Property extends KrHtmlView {
 	 * @throws Exception
 	 * @since  4.0.0
 	 */
-	public function __construct()
-	{
+	public function __construct() {
 		parent::__construct();
 	}
 
 	/**
 	 * Add booking actions toolbar button.
 	 *
-	 * @param  Toolbar  $Toolbar  Toolbar instance
+	 * @param   Toolbar  $Toolbar  Toolbar instance
 	 *
 	 * @throws Exception
 	 * @since  4.0.0
 	 * @return Toolbar
 	 */
-	public function addChildBooking(Toolbar $Toolbar): Toolbar
-	{
+	public function addChildBooking(Toolbar $Toolbar): Toolbar {
 		if (!$this->allow_book && !$this->allow_block) {
 			return $Toolbar;
 		}
@@ -103,14 +101,13 @@ class Property extends KrHtmlView {
 	/**
 	 * Add dashboard link.
 	 *
-	 * @param  Toolbar  $Toolbar  Current toolbar.
+	 * @param   Toolbar  $Toolbar  Current toolbar.
 	 *
 	 * @throws Exception
 	 * @since  4.0.0
 	 * @return Toolbar
 	 */
-	public function addDashboardLink(Toolbar $Toolbar): Toolbar
-	{
+	public function addDashboardLink(Toolbar $Toolbar): Toolbar {
 		$link = KrMethods::route('index.php?option=com_knowres&task=property.dashboard&id=' . $this->property_id);
 		$Toolbar->linkButton('dashboard', 'COM_KNOWRES_DASHBOARD')
 			->icon('fa-solid fa-tachometer-alt knowres')
@@ -122,14 +119,13 @@ class Property extends KrHtmlView {
 	/**
 	 * Add properties link.
 	 *
-	 * @param  Toolbar  $Toolbar  Current toolbar.
+	 * @param   Toolbar  $Toolbar  Current toolbar.
 	 *
 	 * @throws Exception
 	 * @since  4.0.0
 	 * @return Toolbar
 	 */
-	public function addPropertiesLink(Toolbar $Toolbar): Toolbar
-	{
+	public function addPropertiesLink(Toolbar $Toolbar): Toolbar {
 		$link = KrMethods::route('index.php?option=com_knowres&view=properties');
 		$Toolbar->linkButton('properties', 'COM_KNOWRES_PROPERTIES_TITLE')
 			->icon('fa-solid fa-home knowres')
@@ -141,15 +137,14 @@ class Property extends KrHtmlView {
 	/**
 	 * Add related property data.
 	 *
-	 * @param  Toolbar  $Toolbar  Current toolbar.
-	 * @param  string   $name     Name of view.
+	 * @param   Toolbar  $Toolbar  Current toolbar.
+	 * @param   string   $name     Name of view.
 	 *
 	 * @throws Exception
 	 * @since  4.0.0
 	 * @return Toolbar
 	 */
-	public function addRelated(Toolbar $Toolbar, string $name): Toolbar
-	{
+	public function addRelated(Toolbar $Toolbar, string $name): Toolbar {
 		$dropdown = $Toolbar->dropdownButton('property-edit-group')
 			->text('COM_KNOWRES_TOOLBAR_PROPERTY_DATA')
 			->toggleSplit(false)
@@ -258,16 +253,16 @@ class Property extends KrHtmlView {
 	/**
 	 * Add the custom toolbar for the property.
 	 *
-	 * @param  Toolbar  $Toolbar  Current toolbar
-	 * @param  string   $name     Name of view
+	 * @param   Toolbar  $Toolbar  Current toolbar
+	 * @param   string   $name     Name of view
 	 *
 	 * @throws Exception
 	 * @since  2.0.0
 	 */
-	public function addToolbar(Toolbar $Toolbar, string $name): Toolbar
-	{
+	public function addToolbar(Toolbar $Toolbar, string $name): Toolbar {
 		if ((!in_array($name,
-					$this->related) || $name == 'media') && $name != 'calendar' && $this->checkAccess('property_edit')) {
+					$this->related
+				) || $name == 'media') && $name != 'calendar' && $this->checkAccess('property_edit')) {
 			$link = KrMethods::route('index.php?option=com_knowres&task=property.edit&id=' . $this->property_id);
 			$Toolbar->linkButton('property', 'JTOOLBAR_EDIT')
 				->icon('fa-solid fa-edit knowres')
@@ -332,14 +327,13 @@ class Property extends KrHtmlView {
 	 * Add the default toolbar for list view.
 	 *
 	 * @param  ?string  $list_name  Name of list model
-	 * @param  bool     $multiple   True for multiple forms
+	 * @param   bool    $multiple   True for multiple forms
 	 *
 	 * @throws Exception
 	 * @since  4.0.0
 	 * @return Toolbar
 	 */
-	protected function addListToolbar(?string $list_name = null, bool $multiple = false): Toolbar
-	{
+	protected function addListToolbar(?string $list_name = null, bool $multiple = false): Toolbar {
 		$Toolbar   = Toolbar::getInstance();
 		$list_name = is_null($list_name) ? $this->form_name . 's' : $list_name;
 
@@ -347,7 +341,8 @@ class Property extends KrHtmlView {
 			$task = $this->form_name . '.add';
 			if (!$multiple) {
 				$Toolbar->addNew($task);
-			} else {
+			}
+			else {
 				$Toolbar->standardButton('new')
 					->icon('fa-solid fa-plus knowres')
 					->onclick((array) "Joomla.submitform('$task', document.getElementById('adminForm'));")
@@ -363,7 +358,8 @@ class Property extends KrHtmlView {
 			$Toolbar = $this->addRelated($Toolbar, $list_name);
 			$Toolbar = $this->addDashboardLink($Toolbar);
 			$Toolbar = $this->addPropertiesLink($Toolbar);
-		} else if ($this->access_level == 40) {
+		}
+		elseif ($this->access_level == 40) {
 			$Toolbar = $this->addPropertiesDropdown($Toolbar);
 		}
 
@@ -381,15 +377,14 @@ class Property extends KrHtmlView {
 	/**
 	 * Add properties dropdown (global property data).
 	 *
-	 * @param  Toolbar  $Toolbar    Current toolbar.
-	 * @param  ?string  $list_name  Current view
+	 * @param   Toolbar  $Toolbar    Current toolbar.
+	 * @param  ?string   $list_name  Current view
 	 *
 	 * @throws Exception
 	 * @since  4.0.0
 	 * @return Toolbar
 	 */
-	protected function addPropertiesDropdown(Toolbar $Toolbar, ?string $list_name = null): Toolbar
-	{
+	protected function addPropertiesDropdown(Toolbar $Toolbar, ?string $list_name = null): Toolbar {
 		$dropdown     = $Toolbar->dropdownButton('settings-property-group')
 			->text('COM_KNOWRES_TOOLBAR_PROPERTIES_DATA')
 			->toggleSplit(false)

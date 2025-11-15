@@ -48,8 +48,8 @@ class Contract extends KrHtmlView
 	/**
 	 * Add related property data.
 	 *
-	 * @param  Toolbar  $Toolbar  Current toolbar.
-	 * @param  string   $name     Name of view
+	 * @param   Toolbar  $Toolbar  Current toolbar.
+	 * @param   string   $name     Name of view
 	 *
 	 * @throws Exception
 	 * @since  4.0.0
@@ -118,8 +118,8 @@ class Contract extends KrHtmlView
 	/**
 	 * Add the custom toolbar for contract show
 	 *
-	 * @param  Toolbar  $Toolbar  Current toolbar
-	 * @param  string   $name     Name of view
+	 * @param   Toolbar  $Toolbar  Current toolbar
+	 * @param   string   $name     Name of view
 	 *
 	 * @throws Exception
 	 * @since  2.0.0
@@ -233,7 +233,7 @@ class Contract extends KrHtmlView
 	/**
 	 * Check if pdf toolbar required and add
 	 *
-	 * @param  Toolbar  $Toolbar  Toolbar instsance
+	 * @param   Toolbar  $Toolbar  Toolbar instsance
 	 *
 	 * @since  4.0.0
 	 * @return Toolbar
@@ -345,7 +345,7 @@ class Contract extends KrHtmlView
 				        ->icon('fa-solid fa-file-csv knowres');
 			}
 		}
-		else if ($list_name == 'contractpayments')
+		elseif ($list_name == 'contractpayments')
 		{
 			$link = KrMethods::route('index.php?option=com_knowres&view=export&layout=payments');
 			$Toolbar->linkButton('export-payments-csv', 'COM_KNOWRES_EXPORT_TITLE_PAYMENTS')
@@ -377,7 +377,7 @@ class Contract extends KrHtmlView
 			{
 				$this->allow_edit = false;
 			}
-			else if (!$this->item->black_booking && !$this->params->get('contract_edit'))
+			elseif (!$this->item->black_booking && !$this->params->get('contract_edit'))
 			{
 				$this->allow_edit = false;
 			}
@@ -386,7 +386,7 @@ class Contract extends KrHtmlView
 			{
 				$this->allow_cancel = false;
 			}
-			else if (!$this->item->black_booking && !$this->params->get('contract_cancel'))
+			elseif (!$this->item->black_booking && !$this->params->get('contract_cancel'))
 			{
 				$this->allow_cancel = false;
 			}

@@ -28,7 +28,7 @@ class Longstay
 	/**
 	 * Calculate any long stay adjustments
 	 *
-	 * @param  Hub  $Hub  Hub details class
+	 * @param   Hub  $Hub  Hub details class
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -55,7 +55,7 @@ class Longstay
 	/**
 	 * Calculates the long stay discount
 	 *
-	 * @param  int  $pc  Percentage decrease for long stay
+	 * @param   int  $pc  Percentage decrease for long stay
 	 *
 	 * @throws InvalidArgumentException
 	 * @since  3.4.0
@@ -90,7 +90,7 @@ class Longstay
 	/**
 	 * Set the percentage decrease for a longstay
 	 *
-	 * @param  int  $nights  #Nights
+	 * @param   int  $nights  #Nights
 	 *
 	 * @since  3.4.0
 	 * @return int
@@ -102,11 +102,11 @@ class Longstay
 		{
 			$pc = (int) $this->Hub->settings['longstay_percentage3'];
 		}
-		else if ($nights > (int) $this->Hub->settings['longstay_days2'] && (int) $this->Hub->settings['longstay_days2'])
+		elseif ($nights > (int) $this->Hub->settings['longstay_days2'] && (int) $this->Hub->settings['longstay_days2'])
 		{
 			$pc = (int) $this->Hub->settings['longstay_percentage2'];
 		}
-		else if ($nights > (int) $this->Hub->settings['longstay_days1'] && (int) $this->Hub->settings['longstay_days1'])
+		elseif ($nights > (int) $this->Hub->settings['longstay_days1'] && (int) $this->Hub->settings['longstay_days1'])
 		{
 			$pc = (int) $this->Hub->settings['longstay_percentage1'];
 		}

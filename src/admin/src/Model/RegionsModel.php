@@ -31,13 +31,12 @@ class RegionsModel extends ListModel
 	/**
 	 * Constructor.
 	 *
-	 * @param  array  $config  An optional associative array of configuration settings.
+	 * @param   array  $config  An optional associative array of configuration settings.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function __construct($config = [])
-	{
+	public function __construct($config = []) {
 		if (empty($config['filter_fields'])) {
 			//@formatter:off
 			$config['filter_fields'] = [
@@ -67,16 +66,15 @@ class RegionsModel extends ListModel
 	/**
 	 * Return regions as per requested params
 	 *
-	 * @param  bool     $allow_property  Set True to return only property regions
+	 * @param   bool    $allow_property  Set True to return only property regions
 	 * @param  ?string  $ordering        Name of ordering field
-	 * @param  int      $country_id      ID of country
+	 * @param   int     $country_id      ID of country
 	 *
 	 * @throws RuntimeException
 	 * @since  1.0.0
 	 * @return array
 	 */
-	public function getAllRegions(bool $allow_property = false, ?string $ordering = null, int $country_id = 0): array
-	{
+	public function getAllRegions(bool $allow_property = false, ?string $ordering = null, int $country_id = 0): array {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -108,8 +106,7 @@ class RegionsModel extends ListModel
 	 * @since  3.2
 	 * @return array
 	 */
-	public function getDistinctRegions(): array
-	{
+	public function getDistinctRegions(): array {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -154,15 +151,14 @@ class RegionsModel extends ListModel
 	/**
 	 * Get region id from region name and country ID
 	 *
-	 * @param  string  $region      Name of region
-	 * @param  int     $country_id  ID of country
+	 * @param   string  $region      Name of region
+	 * @param   int     $country_id  ID of country
 	 *
 	 * @throws RuntimeException
 	 * @since  3.3.0
 	 * @return mixed
 	 */
-	public function getRegionIdByNameCountry(string $region, int $country_id): mixed
-	{
+	public function getRegionIdByNameCountry(string $region, int $country_id): mixed {
 		$db = $this->getDatabase();
 
 		$lang = KrMethods::getLanguageTag();
@@ -186,7 +182,8 @@ class RegionsModel extends ListModel
 
 		if (strlen($region) == 2) {
 			$query->where($db->qn('a.region_iso') . ' = ' . $db->q($region));
-		} else {
+		}
+		else {
 			$query->where('(' . $subQuery->__toString() . ') ' . ' LIKE ' . $db->q('%' . $region . '%'));
 		}
 
@@ -202,8 +199,7 @@ class RegionsModel extends ListModel
 	 * @since  1.0.0
 	 * @return QueryInterface
 	 */
-	protected function getListQuery(): QueryInterface
-	{
+	protected function getListQuery(): QueryInterface {
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
@@ -272,31 +268,33 @@ class RegionsModel extends ListModel
 
 		$state = $this->getState('filter.state');
 		if (is_numeric($state)) {
-			$query->where($db->qn('a.state') . ' = ' . (int)$state);
-		} elseif ($state === '') {
+			$query->where($db->qn('a.state') . ' = ' . (int) $state);
+		}
+		elseif ($state === '') {
 			$query->where($db->qn('a.state') . ' IN (0, 1)');
 		}
 
 		$filter_country_id = $this->getState("filter.country_id");
 		if ($filter_country_id) {
-			$query->where($db->qn('a.country_id') . ' = ' . (int)$filter_country_id);
+			$query->where($db->qn('a.country_id') . ' = ' . (int) $filter_country_id);
 		}
 
 		$filter_allow_property = $this->getState("filter.allow_property");
 		if (is_numeric($filter_allow_property)) {
-			$query->where($db->qn('a.allow_property') . ' = ' . (int)$filter_allow_property);
+			$query->where($db->qn('a.allow_property') . ' = ' . (int) $filter_allow_property);
 		}
 
 		$filter_property_licence = $this->getState("filter.property_licence");
 		if (is_numeric($filter_property_licence)) {
-			$query->where($db->qn('a.property_licence') . ' = ' . (int)$filter_property_licence);
+			$query->where($db->qn('a.property_licence') . ' = ' . (int) $filter_property_licence);
 		}
 
 		$search = $this->getState('filter.search');
 		if (!empty($search)) {
 			if (stripos($search, 'id:') === 0) {
-				$query->where($db->qn('a.id') . ' = ' . (int)substr($search, 3));
-			} else {
+				$query->where($db->qn('a.id') . ' = ' . (int) substr($search, 3));
+			}
+			else {
 				$search = $db->q('%' . $db->escape($search) . '%');
 				$query->where('(' . $subQuery->__toString() . ') ' . ' LIKE ' . $search);
 			}
@@ -317,13 +315,12 @@ class RegionsModel extends ListModel
 	 * different modules that might need different sets of data or different
 	 * ordering requirements.
 	 *
-	 * @param  string  $id  A prefix for the store id.
+	 * @param   string  $id  A prefix for the store id.
 	 *
 	 * @since  1.0.0
 	 * @return  string  A store id.
 	 */
-	protected function getStoreId($id = ''): string
-	{
+	protected function getStoreId($id = ''): string {
 		$id .= ':' . $this->getState('filter.search');
 		$id .= ':' . $this->getState('filter.state');
 		$id .= ':' . $this->getState('filter.country_id');
@@ -342,8 +339,7 @@ class RegionsModel extends ListModel
 	 *
 	 * @since  1.0.0
 	 */
-	protected function populateState($ordering = 'name', $direction = 'asc'): void
-	{
+	protected function populateState($ordering = 'name', $direction = 'asc'): void {
 		$this->setState('filter.search',
 			$this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string')
 		);
