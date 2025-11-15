@@ -45,6 +45,6 @@ class ClusterController extends FormController
 		}
 
 		$Translations = new Translations();
-		$Translations->updateDefault('cluster', $id, 'name', $name);
+		$Translations->updateDefault('cluster', $item->id, 'name', $name);
 	}
 }

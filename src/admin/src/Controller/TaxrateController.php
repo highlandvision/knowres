@@ -47,6 +47,6 @@ class TaxrateController extends FormController
 		}
 
 		$Translations = new Translations();
-		$Translations->updateDefault('taxrate', $id, 'name', $name);
+		$Translations->updateDefault('taxrate', $item->id, 'name', $name);
 	}
 }

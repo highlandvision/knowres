@@ -29,8 +29,8 @@ class ImageController extends FormController
 	/**
 	 * Process additional requirements after save image
 	 *
-	 * @param  BaseDatabaseModel  $model      The data model object.
-	 * @param  array              $validData  The validated data.
+	 * @param   BaseDatabaseModel  $model      The data model object.
+	 * @param   array              $validData  The validated data.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -38,7 +38,7 @@ class ImageController extends FormController
 	protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
 	{
 		/** @var ImageModel $model */
-		$id = $model->getItem()->get('id');
+		$item = $model->getItem();
 
 		$description = (string) $validData['description'];
 		$alt_text    = (string) $validData['alt_text'];
@@ -48,8 +48,8 @@ class ImageController extends FormController
 		}
 
 		$Translations = new Translations();
-		$Translations->updateDefault('image', $id, 'description', $description);
-		$Translations->updateDefault('image', $id, 'alt_text', $alt_text);
+		$Translations->updateDefault('image', $item->id, 'description', $description);
+		$Translations->updateDefault('image', $item->id, 'alt_text', $alt_text);
 
 		KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updateProperty', (int) $validData['property_id'],
 			0, 'ru');

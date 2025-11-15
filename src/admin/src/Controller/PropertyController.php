@@ -52,7 +52,7 @@ class PropertyController extends FormController
 	/**
 	 * Geocode address data
 	 *
-	 * @param  string  $address  Address string
+	 * @param   string  $address  Address string
 	 *
 	 * @since 1.0.0
 	 * @return array|bool
@@ -290,8 +290,8 @@ class PropertyController extends FormController
 	/**
 	 * Method to edit an existing record.
 	 *
-	 * @param  string  $key      The name of the primary key of the URL variable.
-	 * @param  string  $urlVar   The name of the URL variable if different from the primary key
+	 * @param   string  $key     The name of the primary key of the URL variable.
+	 * @param   string  $urlVar  The name of the URL variable if different from the primary key
 	 *                           (sometimes required to avoid router collisions).
 	 *
 	 * @throws Exception
@@ -474,7 +474,7 @@ class PropertyController extends FormController
 	 * Method to check if you can add a new record.
 	 * Extended classes can override this if necessary.
 	 *
-	 * @param  array  $data  An array of input data.
+	 * @param   array  $data  An array of input data.
 	 *
 	 * @since   1.0.0
 	 * @return  bool
@@ -494,8 +494,8 @@ class PropertyController extends FormController
 	/**
 	 * Process additional requirements after save
 	 *
-	 * @param  BaseDatabaseModel  $model      The data model object.
-	 * @param  array              $validData  The validated data.
+	 * @param   BaseDatabaseModel  $model      The data model object.
+	 * @param   array              $validData  The validated data.
 	 *
 	 * @throws Exception
 	 * @since  3.1.0
@@ -503,7 +503,7 @@ class PropertyController extends FormController
 	protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
 	{
 		/** @var PropertyModel $model */
-		$id       = $model->getItem()->get('id');
+		$item     = $model->getItem();
 		$massaged = KrMethods::inputArray('jform');
 
 		$fields = KrFactory::getListModel('propertyfields')->getAllPropertyFields();
@@ -562,7 +562,7 @@ class PropertyController extends FormController
 	/**
 	 * Set user session and access level
 	 *
-	 * @param  ViewInterface  $view
+	 * @param   ViewInterface  $view
 	 *
 	 * @since  4.0.0
 	 * @return ViewInterface

@@ -47,7 +47,7 @@ class SeasonController extends FormController
 		}
 
 		$Translations = new Translations();
-		$Translations->updateDefault('season', $id, 'name', $name);
+		$Translations->updateDefault('season', $item->id, 'name', $name);
 
 		KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updatePropertyRates', 0,
 			(int) $validData['cluster_id'], null, (string)$validData['valid_from'], (string)$validData['valid_to']);

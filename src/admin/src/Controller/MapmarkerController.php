@@ -62,8 +62,8 @@ class MapmarkerController extends FormController
 	/**
 	 * Process additional requirements after save map marker
 	 *
-	 * @param  BaseDatabaseModel  $model      The data model object.
-	 * @param  array              $validData  The validated data.
+	 * @param   BaseDatabaseModel  $model      The data model object.
+	 * @param   array              $validData  The validated data.
 	 *
 	 * @throws Exception
 	 * @since  3.1
@@ -81,8 +81,8 @@ class MapmarkerController extends FormController
 		}
 
 		$Translations = new Translations();
-		$Translations->updateDefault('mapmarker', $id, 'name', $name);
-		$Translations->updateDefault('mapmarker', $id, 'description', $description);
+		$Translations->updateDefault('mapmarker', $item->id, 'name', $name);
+		$Translations->updateDefault('mapmarker', $item->id, 'description', $description);
 
 		KrMethods::cleanCache('com_knowres_map');
 	}

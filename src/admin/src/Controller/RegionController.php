@@ -102,7 +102,7 @@ class RegionController extends FormController
 		/* @var RegionModel $model */
 		$id           = (int) $model->getItem()->get('id');
 		$Translations = new Translations();
-		$Translations->updateDefault('region', $id, 'name', $name);
-		$Translations->updateDefault('region', $id, 'blurb', $blurb);
+		$Translations->updateDefault('region', $item->id, 'name', $name);
+		$Translations->updateDefault('region', $item->id, 'blurb', $blurb);
 	}
 }

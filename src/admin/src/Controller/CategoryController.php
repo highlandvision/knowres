@@ -49,7 +49,7 @@ class CategoryController extends FormController
 		}
 
 		$Translations = new Translations();
-		$Translations->updateDefault('category', $id, 'name', $name);
-		$Translations->updateDefault('category', $id, 'blurb', $blurb);
+		$Translations->updateDefault('category', $item->id, 'name', $name);
+		$Translations->updateDefault('category', $item->id, 'blurb', $blurb);
 	}
 }

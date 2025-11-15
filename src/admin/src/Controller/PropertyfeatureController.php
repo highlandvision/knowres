@@ -45,6 +45,6 @@ class PropertyfeatureController extends FormController
 		}
 
 		$Translations = new Translations();
-		$Translations->updateDefault('propertyfeature', $id, 'name', $name);
+		$Translations->updateDefault('propertyfeature', $item->id, 'name', $name);
 	}
 }

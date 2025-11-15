@@ -31,9 +31,9 @@ class PropertyroomController extends FormController
 	 * Override to update json field so that updated values get stored in input and as such user state for redisplay
 	 * Can't seem to do this anywhere else as the save() reads the data from input again and no way to override
 	 *
-	 * @param  string  $key     The name of the primary key of the URL variable.
-	 * @param  string  $urlVar  The name of the URL variable if different from the primary key
-	 *                          (sometimes required to avoid router collisions).
+	 * @param   string  $key     The name of the primary key of the URL variable.
+	 * @param   string  $urlVar  The name of the URL variable if different from the primary key
+	 *                           (sometimes required to avoid router collisions).
 	 *
 	 * @throws Exception
 	 * @since   2.5.0
@@ -68,8 +68,8 @@ class PropertyroomController extends FormController
 	/**
 	 * Process additional requirements after save payment
 	 *
-	 * @param  BaseDatabaseModel  $model      The data model object.
-	 * @param  array              $validData  The validated data.
+	 * @param   BaseDatabaseModel  $model      The data model object.
+	 * @param   array              $validData  The validated data.
 	 *
 	 * @throws Exception
 	 * @since  3.1
@@ -85,9 +85,9 @@ class PropertyroomController extends FormController
 			$name = StringHelper::increment($name);
 		}
 
-		$translation = new Translations();
-		$translation->updateDefault('propertyroom', $id, 'name', $name);
-		$translation->updateDefault('propertyroom', $id, 'description', $description);
+		$Translations = new Translations();
+		$Translations->updateDefault('propertyroom', $item->id, 'name', $name);
+		$Translations->updateDefault('propertyroom', $item->id, 'description', $description);
 
 		KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updateProperty', (int) $validData['property_id'], 0, 'ru');
 	}

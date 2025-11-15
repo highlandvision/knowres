@@ -36,7 +36,7 @@ class HtmlView extends KrHtmlView
 	 * @since  1.0.0
 	 * @return void
 	 */
-	public function display($tpl = null): void
+	public function display(?string $tpl = null): void
 	{
 		/** @var AgentModel $model */
 		$model       = $this->getModel();

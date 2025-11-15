@@ -13,7 +13,9 @@
     "nesbot/carbon": "^2.53.1",
     "stefangabos/zebra_image": "2.6.*@stable",
     "stripe/stripe-php": "^12.0",
-    "tecnickcom/tcpdf": "^6.5.0"
+    "tecnickcom/tcpdf": "^6.5.0",
+    "ext-libxml": "*",
+    "ext-dom": "*"
   },
   "require-dev": {
     "phing/phing": "3.*"

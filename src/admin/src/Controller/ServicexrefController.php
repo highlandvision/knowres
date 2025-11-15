@@ -28,19 +28,17 @@ class ServicexrefController extends FormController
 	/**
 	 * Method to cancel an edit and return to dashboard.
 	 *
-	 * @param  string  $key  The name of the primary key of the URL variable.
-	 * @param  null    $urlVar
+	 * @param   string  $key  The name of the primary key of the URL variable.
+	 * @param   null    $urlVar
 	 *
 	 * @throws Exception
 	 * @since  3.0.0
 	 */
 	public function save($key = null, $urlVar = null): void
 	{
-		if (parent::save())
-		{
+		if (parent::save()) {
 			$return = KrMethods::getUserState('com_knowres.gobackto');
-			if ($return)
-			{
+			if ($return) {
 				KrMethods::setUserState('com_knowres.gobackto', null);
 				KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&' . $return, false));
 			}
@@ -50,8 +48,8 @@ class ServicexrefController extends FormController
 	/**
 	 * Process additional requirements after save
 	 *
-	 * @param  BaseDatabaseModel  $model      The data model object.
-	 * @param  array              $validData  The validated data.
+	 * @param   BaseDatabaseModel  $model      The data model object.
+	 * @param   array              $validData  The validated data.
 	 *
 	 * @throws Exception
 	 * @since  3.1
@@ -67,12 +65,11 @@ class ServicexrefController extends FormController
 				(int) $validData['property_id'], 0, 'ru');
 		}
 
-		if (isset($validData['sell']))
-		{
-			if (KrMethods::inputInt('old_sell') <> $validData['sell'])
-			{
+		if (isset($validData['sell'])) {
+			if (KrMethods::inputInt('old_sell') <> $validData['sell']) {
 				KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updateProperty',
-					(int) $validData['property_id'], 0, 'ru');
+					(int) $validData['property_id'], 0, 'ru'
+				);
 			}
 		}
 	}

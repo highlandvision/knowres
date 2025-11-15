@@ -36,9 +36,9 @@ class ContractpaymentModel extends AdminModel
 	/**
 	 * Calculate full balance (includes unconfirmed payments) and confirmed balances
 	 *
-	 * @param  object  $contract  Contract row
-	 * @param  array   $payments  Contract payments
-	 * @param  array   $fees      Contract fees
+	 * @param   object  $contract  Contract row
+	 * @param   array   $payments  Contract payments
+	 * @param   array   $fees      Contract fees
 	 *
 	 * @throws RuntimeException
 	 * @since  4.0.0
@@ -68,7 +68,7 @@ class ContractpaymentModel extends AdminModel
 	/**
 	 * Method to get a knowres record.
 	 *
-	 * @param  int  $pk  The id of the primary key.
+	 * @param   int  $pk  The id of the primary key.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -92,10 +92,11 @@ class ContractpaymentModel extends AdminModel
 	/**
 	 * Add additional validation to form data
 	 *
-	 * @param  Form   $form  The form to validate against.
-	 * @param  array  $data  The data to validate.
-	 * @param  null   $group
+	 * @param   Form   $form  The form to validate against.
+	 * @param   array  $data  The data to validate.
+	 * @param   null   $group
 	 *
+	 * @throws Exception
 	 * @since  1.0.0
 	 * @return bool|array
 	 */

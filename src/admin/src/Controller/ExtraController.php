@@ -29,8 +29,8 @@ class ExtraController extends FormController
 	/**
 	 * Process additional requirements after save payment
 	 *
-	 * @param  BaseDatabaseModel  $model      The data model object.
-	 * @param  array              $validData  The validated data.
+	 * @param   BaseDatabaseModel  $model      The data model object.
+	 * @param   array              $validData  The validated data.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -48,8 +48,8 @@ class ExtraController extends FormController
 		}
 
 		$Translations = new Translations();
-		$Translations->updateDefault('extra', $id, 'name', $name);
-		$Translations->updateDefault('extra', $id, 'description', $description);
+		$Translations->updateDefault('extra', $item->id, 'name', $name);
+		$Translations->updateDefault('extra', $item->id, 'description', $description);
 
 		if ($validData['cleaning'])
 		{

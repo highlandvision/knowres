@@ -67,7 +67,7 @@ class CurrencyController extends FormController
 		$id           = $model->getItem()->get('id');
 		$name         = (string) $validData['name'];
 		$Translations = new Translations();
-		$Translations->updateDefault('currency', $id, 'name', $name);
+		$Translations->updateDefault('currency', $item->id, 'name', $name);
 
 		if (isset($validData['allow_payment']) && is_countable($validData['allow_payment']))
 		{
@@ -83,7 +83,8 @@ class CurrencyController extends FormController
 				{
 					KrMethods::message($e->getMessage(), 'error');
 					KrMethods::message(KrMethods::sprintf('COM_KNOWRES_CURRENCY_EXCHANGERATE_FAIL', $from, $to),
-						'error');
+						'error'
+					);
 				}
 			}
 		}

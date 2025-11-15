@@ -60,8 +60,8 @@ class TaxController extends FormController
 	/**
 	 * Function that allows child controller access to model data after the data has been saved.
 	 *
-	 * @param  BaseDatabaseModel  $model      The data model object.
-	 * @param  array              $validData  The validated data.
+	 * @param   BaseDatabaseModel  $model      The data model object.
+	 * @param   array              $validData  The validated data.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -76,6 +76,6 @@ class TaxController extends FormController
 		}
 
 		$Translations = new Translations();
-		$Translations->updateDefault('tax', $id, 'name', $name);
+		$Translations->updateDefault('tax', $item->id, 'name', $name);
 	}
 }

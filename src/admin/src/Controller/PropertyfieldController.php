@@ -47,7 +47,7 @@ class PropertyfieldController extends FormController
 		}
 
 		$Translations = new Translations();
-		$Translations->updateDefault('propertyfield', $id, 'label', $name);
-		$Translations->updateDefault('propertyfield', $id, 'description', $description);
+		$Translations->updateDefault('propertyfield', $item->id, 'label', $name);
+		$Translations->updateDefault('propertyfield', $item->id, 'description', $description);
 	}
 }

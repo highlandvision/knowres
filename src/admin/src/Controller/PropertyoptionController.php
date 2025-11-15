@@ -45,7 +45,7 @@ class PropertyoptionController extends FormController
 			$name = StringHelper::increment($name);
 		}
 
-		$translation = new Translations();
-		$translation->updateDefault('propertyoption', $id, 'name', $name);
+		$Translations = new Translations();
+		$Translations->updateDefault('propertyoption', $item->id, 'name', $name);
 	}
 }

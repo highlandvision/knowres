@@ -110,8 +110,8 @@ class TypeController extends FormController
 			$abbreviation = StringHelper::increment($abbreviation);
 		}
 
-		$translation = new Translations();
-		$translation->updateDefault('type', $id, 'name', $name);
-		$translation->updateDefault('type', $id, 'abbreviation', $abbreviation);
+		$Translations = new Translations();
+		$Translations->updateDefault('type', $item->id, 'name', $name);
+		$Translations->updateDefault('type', $item->id, 'abbreviation', $abbreviation);
 	}
 }

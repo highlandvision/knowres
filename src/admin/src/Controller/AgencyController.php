@@ -64,8 +64,8 @@ class AgencyController extends FormController
 	/**
 	 * Function that allows child controller access to model data after the data has been saved.
 	 *
-	 * @param  BaseDatabaseModel  $model      The data model object.
-	 * @param  array              $validData  The validated data.
+	 * @param   BaseDatabaseModel  $model      The data model object.
+	 * @param   array              $validData  The validated data.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -73,7 +73,7 @@ class AgencyController extends FormController
 	protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
 	{
 		/** @var AgencyModel $model */
-		$id                   = $model->getItem()->get('id');
+		$item                 = $model->getItem();
 		$gdpr_statement       = (string) $validData['gdpr_statement'];
 		$cancellation_terms   = (string) $validData['cancellation_terms'];
 		$insurance_disclaimer = (string) $validData['insurance_disclaimer'];

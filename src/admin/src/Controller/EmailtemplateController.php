@@ -48,8 +48,8 @@ class EmailtemplateController extends FormController
 		}
 
 		$Translations = new Translations();
-		$Translations->updateDefault('emailtemplate', $id, 'name', $name);
-		$Translations->updateDefault('emailtemplate', $id, 'subject', $subject);
-		$Translations->updateDefault('emailtemplate', $id, 'blurb', $blurb);
+		$Translations->updateDefault('emailtemplate', $item->id, 'name', $name);
+		$Translations->updateDefault('emailtemplate', $item->id, 'subject', $subject);
+		$Translations->updateDefault('emailtemplate', $item->id, 'blurb', $blurb);
 	}
 }

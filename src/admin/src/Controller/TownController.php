@@ -71,7 +71,7 @@ class TownController extends FormController
 	protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
 	{
 		/** @var TownModel $model */
-		$id = $model->getItem()->get('id');
+		$item = $model->getItem();
 
 		$name = (string) $validData['name'];
 		if ($this->input->get('task') == 'save2copy')
@@ -80,6 +80,6 @@ class TownController extends FormController
 		}
 
 		$Translations = new Translations();
-		$Translations->updateDefault('town', $id, 'name', $name);
+		$Translations->updateDefault('town', $item->id, 'name', $name);
 	}
 }

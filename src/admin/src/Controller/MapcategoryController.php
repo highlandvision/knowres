@@ -48,7 +48,7 @@ class MapcategoryController extends FormController
 		}
 
 		$Translations = new Translations();
-		$Translations->updateDefault('mapcategory', $id, 'name', $name);
+		$Translations->updateDefault('mapcategory', $item->id, 'name', $name);
 
 		KrMethods::cleanCache('com_knowres_map');
 	}
