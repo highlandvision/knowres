@@ -30,7 +30,8 @@ use function is_countable;
  *
  * @since 1.0.0
  */
-class HtmlView extends KrHtmlView\Site {
+class HtmlView extends KrHtmlView\Site
+{
 	/** @var Translations Translations object. */
 	public Translations $Translations;
 	/** @var int # Adults. */
@@ -155,7 +156,8 @@ class HtmlView extends KrHtmlView\Site {
 			$this->item->tagline ?? '',
 			$this->item->type_name,
 			$this->item->property_area,
-			$this->item->region_name);
+			$this->item->region_name
+		);
 
 		if (!$this->params->get('property_meta', 1)) {
 			if ($this->item->meta_title) {

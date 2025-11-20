@@ -119,10 +119,11 @@ class HtmlView extends KrHtmlView\Site
 		}
 
 		if (!$this->contractData->property_id
-		    || !$this->contractData->arrival
-		    || !$this->contractData->departure
-		    || !$this->contractData->guests
-		    || !(float)$this->contractData->room_total) {
+			|| !$this->contractData->arrival
+			|| !$this->contractData->departure
+			|| !$this->contractData->guests
+			|| !(float) $this->contractData->room_total)
+		{
 			$this->contractSession->resetData();
 			SiteHelper::expiredSession($this->contractData->property_id);
 		}

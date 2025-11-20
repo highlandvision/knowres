@@ -40,7 +40,8 @@ class HtmlView extends KrHtmlView
 	public function display($tpl = null): void
 	{
 		/** @var ServicequeuesModel $model * */
-		$model               = $this->getModel();
+		$model = $this->getModel();
+		$model->setUseExceptions(true);
 		$this->items         = $model->getItems();
 		$this->pagination    = $model->getPagination();
 		$this->state         = $model->getState();
@@ -59,7 +60,7 @@ class HtmlView extends KrHtmlView
 	/**
 	 * Add the toolbar.
 	 *
-	 * @param  Toolbar  $Toolbar  Current toolbar
+	 * @param   Toolbar  $Toolbar  Current toolbar
 	 *
 	 * @throws Exception
 	 * @since  4.0.0

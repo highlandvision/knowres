@@ -49,7 +49,7 @@ class HtmlView extends KrHtmlView\Site
 	 */
 	protected function prepareDocument(): void
 	{
-		$this->document   = Factory::getDocument();
+		$this->document = Factory::getDocument();
 		$this->prepareDefaultDocument($this->meta_title, $this->meta_description);
 	}
 }

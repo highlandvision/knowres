@@ -50,7 +50,8 @@ class HtmlView extends KrHtmlView
 	public function display($tpl = null): void
 	{
 		/** @var TranslationModel $model */
-		$model       = $this->getModel();
+		$model = $this->getModel();
+		$model->setUseExceptions(true);
 		$this->form  = $model->getForm();
 		$this->item  = $model->getItem();
 		$this->state = $model->getState();

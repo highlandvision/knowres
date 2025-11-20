@@ -39,7 +39,8 @@ class HtmlView extends KrHtmlView\Contract
 	public function display($tpl = null): void
 	{
 		/** @var AgenciesModel $model */
-		$model               = $this->getModel();
+		$model = $this->getModel();
+		$model->setUseExceptions(true);
 		$this->state         = $model->getState();
 		$this->items         = $model->getItems();
 		$this->pagination    = $model->getPagination();

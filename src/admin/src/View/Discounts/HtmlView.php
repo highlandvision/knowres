@@ -41,7 +41,8 @@ class HtmlView extends KrHtmlView\Property
 		$this->getUserSessionData();
 
 		/** @var DiscountsModel $model * */
-		$model       = $this->getModel();
+		$model = $this->getModel();
+		$model->setUseExceptions(true);
 		$this->state = $model->getState();
 		$this->state->set('filter.property_id', $this->property_id);
 		$this->items         = $model->getItems();

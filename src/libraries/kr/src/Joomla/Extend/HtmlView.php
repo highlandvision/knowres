@@ -120,9 +120,9 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 
 			/** @var LinkButton $Toolbar */
 			$Toolbar->linkButton('back', 'JTOOLBAR_BACK')
-			        ->buttonClass('btn btn-danger')
-			        ->icon('fa-solid fa-fast-backward knowres')
-			        ->url($link);
+				->buttonClass('btn btn-danger')
+				->icon('fa-solid fa-fast-backward knowres')
+				->url($link);
 		}
 
 		return $Toolbar;
@@ -195,11 +195,11 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 		/** @var DropdownButton $Toolbar */
 		$dropdown =
 			$Toolbar->dropdownButton('status-group')
-			        ->text('JTOOLBAR_CHANGE_STATUS')
-			        ->toggleSplit(false)
-			        ->icon('icon-ellipsis-h')
-			        ->buttonClass('btn btn-action')
-			        ->listCheck(true);
+				->text('JTOOLBAR_CHANGE_STATUS')
+				->toggleSplit(false)
+				->icon('icon-ellipsis-h')
+				->buttonClass('btn btn-action')
+				->listCheck(true);
 
 		$ChildToolbar = $dropdown->getChildToolbar();
 
@@ -229,9 +229,9 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 			elseif (isset($this->items[0]) && $this->canDo->get('core.delete')) {
 				/** @var ConfirmButton $Toolbar */
 				$Toolbar->delete($name . '.delete')
-				        ->listCheck(true)
-				        ->message('JGLOBAL_CONFIRM_DELETE')
-				        ->text('JTOOLBAR_DELETE');
+					->listCheck(true)
+					->message('JGLOBAL_CONFIRM_DELETE')
+					->text('JTOOLBAR_DELETE');
 			}
 		}
 
@@ -239,19 +239,19 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 			if ($name != 'properties') {
 				/** @var ConfirmButton $Toolbar */
 				$Toolbar->delete($name . '.delete')
-				        ->icon('fa-solid fa-trash red')
-				        ->listCheck(true)
-				        ->message('JGLOBAL_CONFIRM_DELETE')
-				        ->text('JTOOLBAR_EMPTY_TRASH');
+					->icon('fa-solid fa-trash red')
+					->listCheck(true)
+					->message('JGLOBAL_CONFIRM_DELETE')
+					->text('JTOOLBAR_EMPTY_TRASH');
 			}
 			else {
 				$text = KrMethods::plain('COM_KNOWRES_PROPERTY_DELETE_MESSAGE');
 				/** @var ConfirmButton $Toolbar */
 				$Toolbar->delete($name . '.markfordeletion')
-				        ->icon('fa-solid fa-trash red')
-				        ->listCheck(true)
-				        ->message($text)
-				        ->text('JTOOLBAR_EMPTY_TRASH');
+					->icon('fa-solid fa-trash red')
+					->listCheck(true)
+					->message($text)
+					->text('JTOOLBAR_EMPTY_TRASH');
 			}
 		}
 
@@ -272,49 +272,49 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 			/** @var DropdownButton $Toolbar */
 			$dropdown     =
 				$Toolbar->dropdownButton('config-links-group')
-				        ->text('COM_KNOWRES_TOOLBAR_CONFIG')
-				        ->toggleSplit(false)
-				        ->icon('fa-solid fa-cog')
-				        ->buttonClass('btn btn-action');
+					->text('COM_KNOWRES_TOOLBAR_CONFIG')
+					->toggleSplit(false)
+					->icon('fa-solid fa-cog')
+					->buttonClass('btn btn-action');
 			$ChildToolbar = $dropdown->getChildToolbar();
 
 			$ChildToolbar->linkButton('config-countries', 'COM_KNOWRES_COUNTRIES_TITLE')
-			             ->icon('fa-solid fa-flag fa-fw knowres')
-			             ->url(KrMethods::route('index.php?option=com_knowres&view=countries'));
+				->icon('fa-solid fa-flag fa-fw knowres')
+				->url(KrMethods::route('index.php?option=com_knowres&view=countries'));
 
 			$ChildToolbar->linkButton('config-regions', 'COM_KNOWRES_REGIONS_TITLE')
-			             ->icon('fa-solid fa-map-pin fa-fw knowres')
-			             ->url(KrMethods::route('index.php?option=com_knowres&view=regions'));
+				->icon('fa-solid fa-map-pin fa-fw knowres')
+				->url(KrMethods::route('index.php?option=com_knowres&view=regions'));
 
 			$ChildToolbar->linkButton('config-towns', 'COM_KNOWRES_TOWNS_TITLE')
-			             ->icon('fa-solid fa-city fa-fw knowres')
-			             ->url(KrMethods::route('index.php?option=com_knowres&view=towns'));
+				->icon('fa-solid fa-city fa-fw knowres')
+				->url(KrMethods::route('index.php?option=com_knowres&view=towns'));
 
 			$ChildToolbar->linkButton('currencies', 'COM_KNOWRES_CURRENCIES_TITLE')
-			             ->icon('fa-solid fa-euro-sign fa-fw knowres')
-			             ->url(KrMethods::route('index.php?option=com_knowres&view=currencies'));
+				->icon('fa-solid fa-euro-sign fa-fw knowres')
+				->url(KrMethods::route('index.php?option=com_knowres&view=currencies'));
 
 			$ChildToolbar->linkButton('config-mapcategories', 'COM_KNOWRES_MAPCATEGORIES_TITLE')
-			             ->icon('fa-solid fa-map-marked fa-fw knowres')
-			             ->url(KrMethods::route('index.php?option=com_knowres&view=mapcategories'));
+				->icon('fa-solid fa-map-marked fa-fw knowres')
+				->url(KrMethods::route('index.php?option=com_knowres&view=mapcategories'));
 
 			$ChildToolbar->linkButton('config-mapmarkers', 'COM_KNOWRES_MAPMARKERS_TITLE')
-			             ->icon('fa-solid fa-map-marker fa-fw knowres')
-			             ->url(KrMethods::route('index.php?option=com_knowres&view=mapmarkers'));
+				->icon('fa-solid fa-map-marker fa-fw knowres')
+				->url(KrMethods::route('index.php?option=com_knowres&view=mapmarkers'));
 
 			if ($this->params->get('ignore_tax', 1)) {
 				$ChildToolbar->linkButton('config-taxes', 'COM_KNOWRES_TAXES_TITLE')
-				             ->icon('fa-solid fa-map-marked fa-fw knowres')
-				             ->url(KrMethods::route('index.php?option=com_knowres&view=taxes'));
+					->icon('fa-solid fa-map-marked fa-fw knowres')
+					->url(KrMethods::route('index.php?option=com_knowres&view=taxes'));
 
 				$ChildToolbar->linkButton('config-taxrates', 'COM_KNOWRES_TAXRATES_TITLE')
-				             ->icon('fa-solid fa-percent fa-fw knowres')
-				             ->url(KrMethods::route('index.php?option=com_knowres&view=taxrates'));
+					->icon('fa-solid fa-percent fa-fw knowres')
+					->url(KrMethods::route('index.php?option=com_knowres&view=taxrates'));
 			}
 
 			$ChildToolbar->linkButton('quick-link-translations', 'COM_KNOWRES_TRANSLATIONS_TITLE')
-			             ->icon('fa-solid fa-globe fa-fw knowres')
-			             ->url(KrMethods::route('index.php?option=com_knowres&view=translations'));
+				->icon('fa-solid fa-globe fa-fw knowres')
+				->url(KrMethods::route('index.php?option=com_knowres&view=translations'));
 		}
 
 		return $Toolbar;
@@ -431,38 +431,38 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 		/** @var DropdownButton $Toolbar */
 		$dropdown     =
 			$Toolbar->dropdownButton('quick-links-group')
-			        ->text('COM_KNOWRES_TOOLBAR_QUICKLINKS')
-			        ->toggleSplit(false)
-			        ->icon('fa-solid fa-link')
-			        ->buttonClass('btn btn-action');
+				->text('COM_KNOWRES_TOOLBAR_QUICKLINKS')
+				->toggleSplit(false)
+				->icon('fa-solid fa-link')
+				->buttonClass('btn btn-action');
 		$ChildToolbar = $dropdown->getChildToolbar();
 
 		$ChildToolbar->linkButton('quick-links-overview', 'COM_KNOWRES_GANTT_TITLE')
-		             ->icon('fa-solid fa-calendar-alt knowres')
-		             ->url(KrMethods::route('index.php?option=com_knowres&task=gantt.display'));
+			->icon('fa-solid fa-calendar-alt knowres')
+			->url(KrMethods::route('index.php?option=com_knowres&task=gantt.display'));
 
 		$ChildToolbar->linkButton('quick-links-admin', 'COM_KNOWRES_CONTRACTS_DAILY_TITLE')
-		             ->icon('fa-solid fa-calendar-day knowres')
-		             ->url(KrMethods::route('index.php?option=com_knowres&task=contracts.daily'));
+			->icon('fa-solid fa-calendar-day knowres')
+			->url(KrMethods::route('index.php?option=com_knowres&task=contracts.daily'));
 
 		if ($this->access_level == 40) {
 			$ChildToolbar->linkButton('quick-links-contractpayments', 'COM_KNOWRES_CONTRACTPAYMENTS_TITLE')
-			             ->icon('fa-solid fa-coins knowres')
-			             ->url(KrMethods::route('index.php?option=com_knowres&view=contractpayments'));
+				->icon('fa-solid fa-coins knowres')
+				->url(KrMethods::route('index.php?option=com_knowres&view=contractpayments'));
 		}
 
 		$ChildToolbar->linkButton('quick-links-properties', 'COM_KNOWRES_PROPERTIES_TITLE')
-		             ->icon('fa-solid fa-home knowres')
-		             ->url(KrMethods::route('index.php?option=com_knowres&view=properties'));
+			->icon('fa-solid fa-home knowres')
+			->url(KrMethods::route('index.php?option=com_knowres&view=properties'));
 
 		$ChildToolbar->linkButton('quick-links-contracts', 'COM_KNOWRES_CONTRACTS_TITLE')
-		             ->icon('fa-solid fa-calendar knowres')
-		             ->url(KrMethods::route('index.php?option=com_knowres&view=contracts'));
+			->icon('fa-solid fa-calendar knowres')
+			->url(KrMethods::route('index.php?option=com_knowres&view=contracts'));
 
 		if ($this->access_level == 40) {
 			$ChildToolbar->linkButton('quick-links-contracts', 'COM_KNOWRES_SERVICES_TITLE')
-			             ->icon('fa-solid fa-exchange-alt knowres')
-			             ->url(KrMethods::route('index.php?option=com_knowres&view=services'));
+				->icon('fa-solid fa-exchange-alt knowres')
+				->url(KrMethods::route('index.php?option=com_knowres&view=services'));
 		}
 
 		return $Toolbar;
@@ -481,27 +481,27 @@ class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 		/** @var DropdownButton $Toolbar */
 		$dropdown     =
 			$Toolbar->dropdownButton('services-group')
-			        ->text('COM_KNOWRES_TOOLBAR_SERVICE_DATA')
-			        ->toggleSplit(false)
-			        ->icon('fa-solid fa-exchange-alt knowres')
-			        ->buttonClass('btn btn-action');
+				->text('COM_KNOWRES_TOOLBAR_SERVICE_DATA')
+				->toggleSplit(false)
+				->icon('fa-solid fa-exchange-alt knowres')
+				->buttonClass('btn btn-action');
 		$ChildToolbar = $dropdown->getChildToolbar();
 
 		$ChildToolbar->linkButton('services', 'COM_KNOWRES_SERVICES_TITLE')
-		             ->icon('fa-solid fa-concierge-bell knowres')
-		             ->url(KrMethods::route('index.php?option=com_knowres&view=services'));
+			->icon('fa-solid fa-concierge-bell knowres')
+			->url(KrMethods::route('index.php?option=com_knowres&view=services'));
 
 		$ChildToolbar->linkButton('servicelogs', 'COM_KNOWRES_SERVICELOGS_TITLE')
-		             ->icon('fa-solid fa-stream knowres')
-		             ->url(KrMethods::route('index.php?option=com_knowres&view=servicelogs'));
+			->icon('fa-solid fa-stream knowres')
+			->url(KrMethods::route('index.php?option=com_knowres&view=servicelogs'));
 
 		$ChildToolbar->linkButton('servicequeues', 'COM_KNOWRES_SERVICEQUEUES_TITLE')
-		             ->icon('fa-solid fa-stopwatch knowres')
-		             ->url(KrMethods::route('index.php?option=com_knowres&view=servicequeues'));
+			->icon('fa-solid fa-stopwatch knowres')
+			->url(KrMethods::route('index.php?option=com_knowres&view=servicequeues'));
 
 		$ChildToolbar->linkButton('servicexrefs', 'COM_KNOWRES_SERVICEXREFS_TITLE')
-		             ->icon('fa-solid fa-crosshairs knowres')
-		             ->url(KrMethods::route('index.php?option=com_knowres&view=servicexrefs'));
+			->icon('fa-solid fa-crosshairs knowres')
+			->url(KrMethods::route('index.php?option=com_knowres&view=servicexrefs'));
 
 		return $Toolbar;
 	}

@@ -31,7 +31,7 @@ class HtmlView extends KrHtmlView
 	/** @var ?float Property latitude. */
 	public ?float $lat = 0;
 	/** @var ?float Property longitude. */
-	public ?float $lng = 0;/**
+	public ?float $lng = 0;
 	/** @var array Property settings. */
 	public array $settings;
 

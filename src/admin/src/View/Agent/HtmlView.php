@@ -30,7 +30,7 @@ class HtmlView extends KrHtmlView
 	/**
 	 * Display the view
 	 *
-	 * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
+	 * @param   string|null  $tpl  The name of the template file to parse; automatically searches through the template paths.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -39,7 +39,8 @@ class HtmlView extends KrHtmlView
 	public function display(?string $tpl = null): void
 	{
 		/** @var AgentModel $model */
-		$model       = $this->getModel();
+		$model = $this->getModel();
+		$model->setUseExceptions(true);
 		$this->form  = $model->getForm();
 		$this->item  = $model->getItem();
 		$this->state = $model->getState();

@@ -41,7 +41,8 @@ class HtmlView extends KrHtmlView
 		$this->getUserSessionData(false);
 
 		/** @var ServicexrefModel $model */
-		$model       = $this->getModel();
+		$model = $this->getModel();
+		$model->setUseExceptions(true);
 		$this->form  = $model->getForm();
 		$this->item  = $model->getItem();
 		$this->state = $model->getState();

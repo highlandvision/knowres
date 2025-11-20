@@ -41,7 +41,8 @@ class HtmlView extends KrHtmlView\Property
 		$this->getUserSessionData();
 
 		/** @var PropertyModel $model */
-		$model      = KrFactory::getAdminModel('property');
+		$model = KrFactory::getAdminModel('property');
+		$model->setUseExceptions(true);
 		$this->form = $model->getForm();
 		$this->item = $model->getItem($this->property_id);
 		$this->form->bind($this->item);

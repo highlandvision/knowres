@@ -42,7 +42,8 @@ class HtmlView extends KrHtmlView\Property
 		$this->getUserSessionData();
 
 		/** @var PropertyicalsModel $model * */
-		$model       = $this->getModel();
+		$model = $this->getModel();
+		$model->setUseExceptions(true);
 		$this->state = $model->getState();
 		$this->state->set('filter.property_id', $this->property_id);
 		$this->items         = $model->getItems();
@@ -64,7 +65,7 @@ class HtmlView extends KrHtmlView\Property
 	/**
 	 * Add custom toolbar
 	 *
-	 * @param  Toolbar  $Toolbar  Joomla toolbar
+	 * @param   Toolbar  $Toolbar  Joomla toolbar
 	 *
 	 * @throws Exception
 	 * @since  1.0.0

@@ -40,8 +40,6 @@ class HtmlView extends KrHtmlView\Contract
 	public bool $agent = false;
 	/** @var string Arrival date. */
 	public string $arrival = '';
-	/** @var stdClass Contract session data */
-	protected stdClass $contractData;
 	/** @var string Coupon code. */
 	public string $coupon_code = '';
 	/** @var string Departure date. */
@@ -62,6 +60,8 @@ class HtmlView extends KrHtmlView\Contract
 	public array $settings = [];
 	/** @var bool Show coupon input. */
 	public bool $show_coupon = false;
+	/** @var stdClass Contract session data */
+	protected stdClass $contractData;
 
 	/**
 	 * Display the view

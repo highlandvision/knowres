@@ -63,7 +63,8 @@ class HtmlView extends KrHtmlView
 			$this->getUserSessionData();
 		}
 
-		$model       = new PropertysettingsModel();
+		$model = new PropertysettingsModel();
+		$model->setUseExceptions(true);
 		$this->state = $model->getState();
 		$this->state->set('filter.property_id', $this->property_id);
 		$this->items  = $model->getItems();
