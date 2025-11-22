@@ -40,10 +40,10 @@ class ExtraModel extends AdminModel
 	/**
 	 * Display textual extra model
 	 *
-	 * @param  int  $extra_model  Extra model
+	 * @param   int  $extra_model  Extra model
 	 *
-	 * @since  1.0.0
 	 * @return string
+	 * @since  1.0.0
 	 */
 	public function displayExtraModel(int $extra_model): string
 	{
@@ -62,11 +62,11 @@ class ExtraModel extends AdminModel
 	/**
 	 * Method to get an extra row.
 	 *
-	 * @param  int  $pk  The id of the primary key.
+	 * @param   int  $pk  The id of the primary key.
 	 *
+	 * @return object|false  Object on success, false on failure.
 	 * @throws RuntimeException
 	 * @since  1.0.0
-	 * @return object|false  Object on success, false on failure.
 	 */
 	public function getItem($pk = null): object|false
 	{
@@ -84,12 +84,12 @@ class ExtraModel extends AdminModel
 	/**
 	 * Override publish function
 	 *
-	 * @param  array  $pks    A list of the primary keys to change.
-	 * @param  int    $value  The value of the published state.
+	 * @param   array  $pks    A list of the primary keys to change.
+	 * @param   int    $value  The value of the published state.
 	 *
+	 * @return bool
 	 * @throws Exception
 	 * @since  3.1.0
-	 * @return bool
 	 */
 	public function publish(&$pks, $value = 1): bool
 	{
@@ -105,9 +105,11 @@ class ExtraModel extends AdminModel
 					if ($item)
 					{
 						KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updatePropertyRates',
-							$item->property_id, 0, 'vrbo');
+							$item->property_id, 0, 'vrbo'
+						);
 						KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updateProperty',
-							$item->property_id, 0, 'ru');
+							$item->property_id, 0, 'ru'
+						);
 					}
 
 					$first = false;
@@ -125,10 +127,10 @@ class ExtraModel extends AdminModel
 	/**
 	 * Method to test whether a record can be deleted.
 	 *
-	 * @param  object  $record  A record object.
+	 * @param   object  $record  A record object.
 	 *
-	 * @since  3.0.0
 	 * @return bool True if allowed to delete the record. Defaults to the permission for the component.
+	 * @since  3.0.0
 	 */
 	protected function canDelete($record): bool
 	{
@@ -140,9 +142,9 @@ class ExtraModel extends AdminModel
 	/**
 	 * Method to get the data that should be injected in the form.
 	 *
+	 * @return mixed The data for the form.
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return mixed The data for the form.
 	 */
 	protected function loadFormData(): mixed
 	{

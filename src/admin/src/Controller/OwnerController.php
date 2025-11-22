@@ -19,7 +19,6 @@ use HighlandVision\KR\Utility;
 use JetBrains\PhpStorm\NoReturn;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Response\JsonResponse;
-
 use function jexit;
 
 /**
@@ -32,11 +31,11 @@ class OwnerController extends FormController
 	/**
 	 * Method to cancel an edit.
 	 *
-	 * @param  null  $key  The name of the primary key of the URL variable.
+	 * @param   null  $key  The name of the primary key of the URL variable.
 	 *
+	 * @return bool
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return bool
 	 */
 	public function cancel($key = null): bool
 	{
@@ -60,9 +59,10 @@ class OwnerController extends FormController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	#[NoReturn] public function combo(): void
+	#[NoReturn]
+	public function combo(): void
 	{
-		$model  = new OwnerModel();
+		$model     = new OwnerModel();
 		$form      = $model->getForm([], false);
 		$parent_id = KrMethods::inputInt('parent');
 		$target    = KrMethods::inputString('target');
@@ -86,8 +86,8 @@ class OwnerController extends FormController
 	/**
 	 * Function that allows child controller access to model data after the data has been saved.
 	 *
-	 * @param  BaseDatabaseModel  $model      The data model object.
-	 * @param  array              $validData  The validated data.
+	 * @param   BaseDatabaseModel  $model      The data model object.
+	 * @param   array              $validData  The validated data.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0

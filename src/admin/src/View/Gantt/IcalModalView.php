@@ -32,11 +32,12 @@ class IcalModalView extends KrHtmlView\Contract
 	 *
 	 * @param   null  $tpl
 	 *
+	 * @return void
 	 * @throws Exception
 	 * @since  3.0.0
-	 * @return void
 	 */
-	#[NoReturn] public function display($tpl = null): void
+	#[NoReturn]
+	public function display($tpl = null): void
 	{
 		$this->item = KrFactory::getAdminModel('icalblock')->getItem($this->id);
 		if (empty($this->item->id))

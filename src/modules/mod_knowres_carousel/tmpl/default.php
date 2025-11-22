@@ -17,24 +17,25 @@ $wa->useScript('com_knowres.site-modules');
 ?>
 
 <?php if (!empty($url)) : ?>
-	<a href="<?php echo KrMethods::route('index.php?Itemid=' . $url); ?>" title="<?php echo ''; ?>">
+    <a href="<?php echo KrMethods::route('index.php?Itemid=' . $url); ?>" title="<?php echo ''; ?>">
 <?php endif; ?>
 
-<div class="kr-carousel kr-slick" data-slick='{"autoplaySpeed": <?php echo $autoPlaySpeed; ?>,"speed": <?php echo $speed; ?>}'>>
-	<?php foreach ($images as $i): ?>
-		<?php
-		$options = [
-			'src'    => $i['image'],
-			'alt'    => $i['alt'],
-			'class'  => 'th responsive',
-			'width'  => '100%',
-			'height' => 'auto'
-		];
-		echo KrMethods::render('joomla.html.image', $options);
-		?>
-	<?php endforeach; ?>
-</div>
+    <div class="kr-carousel kr-slick"
+         data-slick='{"autoplaySpeed": <?php echo $autoPlaySpeed; ?>,"speed": <?php echo $speed; ?>}'>>
+        <?php foreach ($images as $i): ?>
+            <?php
+            $options = [
+                    'src'    => $i['image'],
+                    'alt'    => $i['alt'],
+                    'class'  => 'th responsive',
+                    'width'  => '100%',
+                    'height' => 'auto'
+            ];
+            echo KrMethods::render('joomla.html.image', $options);
+            ?>
+        <?php endforeach; ?>
+    </div>
 
 <?php if (!empty($url)) : ?>
-	</a>
+    </a>
 <?php endif; ?>

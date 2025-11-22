@@ -15,11 +15,9 @@ use Exception;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Logger;
 use HighlandVision\KR\Service\Gateway;
-use HighlandVision\KR\Session as KrSession;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Response\JsonResponse;
 use RuntimeException;
-
 use function jexit;
 
 /**
@@ -40,10 +38,12 @@ class PaymentController extends FormController
 		$this->checkToken();
 		KrMethods::loadLanguage();
 
-		try {
-			$paymentSession = new KrSession\Payment();
+		try
+		{
+			$paymentSession = new \HighlandVision\KR\Session\Payment();
 			$paymentData    = $paymentSession->getData();
-			if (!$paymentData->contract_id) {
+			if (!$paymentData->contract_id)
+			{
 				$paymentSession->resetData();
 				throw new RuntimeException('Session was not active');
 			}
@@ -57,7 +57,8 @@ class PaymentController extends FormController
 			$service_id   = KrMethods::inputInt($service);
 			$contract_id  = KrMethods::inputInt('contract_id');
 
-			if ($contract_id !== (int) $paymentData->contract_id) {
+			if ($contract_id !== (int) $paymentData->contract_id)
+			{
 				$paymentSession->resetData();
 				throw new RuntimeException(
 					"Contract ID = $contract_id and Payment Contract ID = $paymentData->contract_id do not match"
@@ -76,7 +77,9 @@ class PaymentController extends FormController
 			$view->service_id   = $service_id;
 			$view->paymentData  = $paymentData;
 			$view->display();
-		} catch (Exception $e) {
+		}
+		catch (Exception $e)
+		{
 			Logger::logMe($e->getMessage(), 'error');
 			echo new JsonResponse(null, KrMethods::plain('COM_KNOWRES_ERROR_FATAL'), true);
 			jexit();

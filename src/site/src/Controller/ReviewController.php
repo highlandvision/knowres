@@ -30,9 +30,9 @@ class ReviewController extends FormController
 	/**
 	 * Method to save a record.
 	 *
-	 * @param  string  $key     The name of the primary key of the URL variable.
-	 * @param  string  $urlVar  The name of the URL variable if different from the primary key. Sometimes required
-	 *                          to avoid router collisions.
+	 * @param   string  $key     The name of the primary key of the URL variable.
+	 * @param   string  $urlVar  The name of the URL variable if different from the primary key. Sometimes required
+	 *                           to avoid router collisions.
 	 *
 	 * @throws  Exception
 	 * @since   4.0.0
@@ -41,11 +41,14 @@ class ReviewController extends FormController
 	{
 		$this->checkToken();
 
-		if (parent::save($key, $urlVar)) {
+		if (parent::save($key, $urlVar))
+		{
 			KrMethods::message('');
 			$params = KrMethods::getParams();
 			KrMethods::redirect(KrMethods::route('index.php?Itemid=' . (int) $params->get('link_review_thanks'),
-				false));
+				false
+			)
+			);
 
 			return true;
 		}
@@ -57,11 +60,11 @@ class ReviewController extends FormController
 	 * Method to check if you can save a new or existing record.
 	 * Override - All edit checks have been done so just return true
 	 *
-	 * @param  array   $data  An array of input data.
-	 * @param  string  $key   The name of the key for the primary key.
+	 * @param   array   $data  An array of input data.
+	 * @param   string  $key   The name of the key for the primary key.
 	 *
-	 * @since   1.0.0
 	 * @return  bool
+	 * @since   1.0.0
 	 */
 	protected function allowSave($data, $key = 'id'): bool
 	{
@@ -71,17 +74,18 @@ class ReviewController extends FormController
 	/**
 	 * Process additional requirements after save review
 	 *
-	 * @param  BaseDatabaseModel  $model      The data model object.
-	 * @param  array              $validData  The validated data.
+	 * @param   BaseDatabaseModel  $model      The data model object.
+	 * @param   array              $validData  The validated data.
 	 *
-	 * @throws KeyNotFoundException
-	 * @throws RuntimeException
-	 * @since   1.0.0
 	 * @return  void
+	 * @throws RuntimeException
+	 * @throws KeyNotFoundException
+	 * @since   1.0.0
 	 */
 	protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
 	{
-		if (isset($validData['contract_id']) && $validData['contract_id']) {
+		if (isset($validData['contract_id']) && $validData['contract_id'])
+		{
 			$data           = new stdClass();
 			$data->id       = $validData['contract_id'];
 			$data->reviewed = 1;

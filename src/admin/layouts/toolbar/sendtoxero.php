@@ -22,17 +22,17 @@ $confirm = addslashes($confirm);
 ?>
 
 <button onclick='
-	if (document.adminForm.boxchecked.value === "0") {
-	alert("<?php echo $message; ?>");
-	return false;
-	}
-	let result = confirm( "<?php echo $confirm; ?>");
-	if (result)
-	Joomla.submitform("contract.batchxero");
-	else
-	return false;
-	'
+        if (document.adminForm.boxchecked.value === "0") {
+        alert("<?php echo $message; ?>");
+        return false;
+        }
+        let result = confirm( "<?php echo $confirm; ?>");
+        if (result)
+        Joomla.submitform("contract.batchxero");
+        else
+        return false;
+        '
         class="btn btn-small">
-	<i class="icon-flash" title="<?php echo $title; ?>"></i>
-	<?php echo $title; ?>
+    <i class="icon-flash" title="<?php echo $title; ?>"></i>
+    <?php echo $title; ?>
 </button>

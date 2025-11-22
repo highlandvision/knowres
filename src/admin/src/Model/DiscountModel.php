@@ -41,11 +41,11 @@ class DiscountModel extends AdminModel
 	/**
 	 * Method to get a knowres record.
 	 *
-	 * @param  int  $pk  The id of the primary key.
+	 * @param   int  $pk  The id of the primary key.
 	 *
+	 * @return false|object  Object on success, false on failure.
 	 * @throws RuntimeException
 	 * @since  1.0.0
-	 * @return false|object  Object on success, false on failure.
 	 */
 	public function getItem($pk = null): false|object
 	{
@@ -62,12 +62,12 @@ class DiscountModel extends AdminModel
 	/**
 	 * Override publish function
 	 *
-	 * @param  array   &$pks    A list of the primary keys to change.
-	 * @param  int      $value  The value of the published state.
+	 * @param   array   &$pks    A list of the primary keys to change.
+	 * @param   int      $value  The value of the published state.
 	 *
+	 * @return bool
 	 * @throws Exception
 	 * @since  3.1.0
-	 * @return bool
 	 */
 	public function publish(&$pks, $value = 1): bool
 	{
@@ -84,7 +84,8 @@ class DiscountModel extends AdminModel
 					{
 						KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updatePropertyRates',
 							$item->property_id, 0, null, (string) $validData['valid_from'],
-							(string) $validData['valid_to']);
+							(string) $validData['valid_to']
+						);
 					}
 
 					$first = false;
@@ -102,10 +103,10 @@ class DiscountModel extends AdminModel
 	/**
 	 * Method to test whether a record can be deleted.
 	 *
-	 * @param  object  $record  A record object.
+	 * @param   object  $record  A record object.
 	 *
-	 * @since   3.0.0
 	 * @return  bool  True if allowed to delete the record. Defaults to the permission for the component.
+	 * @since   3.0.0
 	 */
 	protected function canDelete($record): bool
 	{
@@ -117,9 +118,9 @@ class DiscountModel extends AdminModel
 	/**
 	 * Method to get the data that should be injected in the form.
 	 *
+	 * @return mixed The data for the form.
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return mixed The data for the form.
 	 */
 	protected function loadFormData(): mixed
 	{
@@ -135,7 +136,7 @@ class DiscountModel extends AdminModel
 	/**
 	 * Prepare and sanitize the table prior to saving.
 	 *
-	 * @param  Table  $table  Table data
+	 * @param   Table  $table  Table data
 	 *
 	 * @throws Exception
 	 * @since  2.4.0

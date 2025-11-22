@@ -28,22 +28,23 @@ extract($displayData);
 ?>
 
 <div class="callout primary small">
-	<!--suppress HtmlFormInputWithoutLabel -->
-	<input type="radio" class="radioover gateway" name="plugincc" id="<?php echo $plugincc; ?>"
-	       value="<?php echo $plugincc; ?>" <?php echo $checked; ?>>
-	<label class="radiolabel" for="<?php echo $plugincc ?>">
-		<?php echo Utility::displayValue($amount, $currency); ?>
-		-
-		<?php echo $label . ' (' . $currency . ')'; ?>
-	</label>
-	<?php if ($surcharge > 0): ?>
-		<div class="gateway-surcharge">
-			<p class="small">
-				<?php echo KrMethods::sprintf('COM_KNOWRES_PAYMENT_SURCHARGE_ADDED',
-					Utility::displayValue($surcharge, $currency)); ?>
-			</p>
-		</div>
-	<?php endif; ?>
+    <!--suppress HtmlFormInputWithoutLabel -->
+    <input type="radio" class="radioover gateway" name="plugincc" id="<?php echo $plugincc; ?>"
+           value="<?php echo $plugincc; ?>" <?php echo $checked; ?>>
+    <label class="radiolabel" for="<?php echo $plugincc ?>">
+        <?php echo Utility::displayValue($amount, $currency); ?>
+        -
+        <?php echo $label . ' (' . $currency . ')'; ?>
+    </label>
+    <?php if ($surcharge > 0): ?>
+        <div class="gateway-surcharge">
+            <p class="small">
+                <?php echo KrMethods::sprintf('COM_KNOWRES_PAYMENT_SURCHARGE_ADDED',
+                        Utility::displayValue($surcharge, $currency)
+                ); ?>
+            </p>
+        </div>
+    <?php endif; ?>
 
-	<input type="hidden" name="<?php echo $service; ?>" value="<?php echo $service_id; ?>">
+    <input type="hidden" name="<?php echo $service; ?>" value="<?php echo $service_id; ?>">
 </div>

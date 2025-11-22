@@ -15,10 +15,10 @@ $termsurl = KrMethods::route('index.php?option=com_knowres&task=property.terms&i
 ?>
 
 <div id="errorModal" class="reveal red" data-reveal>
-	<button class="close-button" data-close aria-label="Close modal" type="button">
-		<span aria-hidden="true">&times;</span>
-	</button>
-	<?php echo KrMethods::plain('COM_KNOWRES_PAYMENT_ERROR'); ?>
+    <button class="close-button" data-close aria-label="Close modal" type="button">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <?php echo KrMethods::plain('COM_KNOWRES_PAYMENT_ERROR'); ?>
 </div>
 
 <div id="kr-terms-modal" class="reveal small kr-ajax-modal" data-reveal data-v-offset="0"

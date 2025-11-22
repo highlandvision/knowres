@@ -36,11 +36,11 @@ class OwnerpaymentModel extends AdminModel
 	/**
 	 * Return the ownerpayment row.
 	 *
-	 * @param  integer  $pk  The id of the primary key.
+	 * @param   integer  $pk  The id of the primary key.
 	 *
+	 * @return object|false  Object on success, false on failure.
 	 * @throws Exception
 	 * @since  3.3.1
-	 * @return object|false  Object on success, false on failure.
 	 */
 	public function getItem($pk = null): object|false
 	{
@@ -58,9 +58,9 @@ class OwnerpaymentModel extends AdminModel
 	/**
 	 * Method to get the data that should be injected in the form.
 	 *
+	 * @return mixed The data for the form.
 	 * @throws Exception
 	 * @since  3.3.1
-	 * @return mixed The data for the form.
 	 */
 	protected function loadFormData(): mixed
 	{
@@ -76,7 +76,7 @@ class OwnerpaymentModel extends AdminModel
 	/**
 	 * Prepare and sanitize the table prior to saving.
 	 *
-	 * @param  Table  $table  Table instance
+	 * @param   Table  $table  Table instance
 	 *
 	 * @throws RuntimeException
 	 * @throws Exception

@@ -17,7 +17,6 @@ use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Hub;
 use HighlandVision\KR\TickTock;
 use RuntimeException;
-
 use function count;
 use function is_countable;
 
@@ -34,11 +33,11 @@ class Cancel
 	/**
 	 * Process cancel
 	 *
-	 * @param  Hub  $hub  Hub data
+	 * @param   Hub  $hub  Hub data
 	 *
+	 * @return bool
 	 * @throws Exception
 	 * @since  3.3.0
-	 * @return bool
 	 */
 	public function action(Hub $hub): bool
 	{
@@ -50,10 +49,10 @@ class Cancel
 	/**
 	 * Cancel contract
 	 *
-	 * @throws RuntimeException
-	 * @throws Exception
-	 * @since  3.3.0
 	 * @return bool
+	 * @throws Exception
+	 * @throws RuntimeException
+	 * @since  3.3.0
 	 */
 	public function saveAll(): bool
 	{

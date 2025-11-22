@@ -17,7 +17,6 @@ use HighlandVision\KR\Joomla\Extend\HtmlView as KrHtmlView;
 use HighlandVision\KR\Service;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
-
 use function defined;
 
 /**
@@ -37,9 +36,9 @@ class NewView extends KrHtmlView
 	 *
 	 * @param  ?string  $tpl  A template file to load. [optional]
 	 *
+	 * @return void
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return void
 	 */
 	public function display($tpl = null): void
 	{
@@ -56,11 +55,11 @@ class NewView extends KrHtmlView
 	/**
 	 * Add the toolbar.
 	 *
-	 * @param  Toolbar  $Toolbar  Current toolbar
+	 * @param   Toolbar  $Toolbar  Current toolbar
 	 *
+	 * @return Toolbar
 	 * @throws Exception
 	 * @since  4.0.0
-	 * @return Toolbar
 	 */
 	protected function addCustomToolbar(Toolbar $Toolbar): Toolbar
 	{

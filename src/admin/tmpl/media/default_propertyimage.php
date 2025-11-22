@@ -18,13 +18,16 @@ $soloPath .= "/*.{jpg,gif,png,JPG,GIF,PNG}";
 $files    = glob($soloPath, GLOB_BRACE);
 $params   = KrMethods::getParams();
 
-if (count($files)) {
-	$path_parts  = pathinfo($files[0]);
-	$this->image = $path_parts['filename'] . "." . $path_parts['extension'];
-	$text        = KrMethods::plain('COM_KNOWRES_PROPERTY_IMAGE_REPLACE_DSC');
-} else {
-	$this->image = "";
-	$text        = KrMethods::plain('COM_KNOWRES_PROPERTY_IMAGE_UPLOAD_DSC');
+if (count($files))
+{
+    $path_parts  = pathinfo($files[0]);
+    $this->image = $path_parts['filename'] . "." . $path_parts['extension'];
+    $text        = KrMethods::plain('COM_KNOWRES_PROPERTY_IMAGE_REPLACE_DSC');
+}
+else
+{
+    $this->image = "";
+    $text        = KrMethods::plain('COM_KNOWRES_PROPERTY_IMAGE_UPLOAD_DSC');
 }
 ?>
 
@@ -32,38 +35,39 @@ if (count($files)) {
       class="form-vertical form-validate" enctype="multipart/form-data" id="propertyimage-form" method="post"
       name="adminForm">
 
-	<fieldset class="adminform">
-		<legend><?php echo KrMethods::plain('COM_KNOWRES_PROPERTY_IMAGE_SEARCH'); ?></legend>
-		<br>
-		<div class="row">
-			<div class="col-lg-3">
-				<div class="control-group">
-					<div class="control-label" style="width:auto;">
-						<?php echo KrMethods::plain('COM_KNOWRES_PROPERTY_IMAGE_UPLOAD_FORM_DSC'); ?>
-					</div>
-					<div class="controls" style="margin-top:10px;margin-bottom:10px;">
-						<input type='file' name="image" value="">
-					</div>
-				</div>
-				<button type="submit" class="btn btn-primary">
-					<?php echo $text; ?>
-				</button>
-			</div>
-			<?php if ($this->image) : ?>
-				<div class="col-lg-9" style="margin-top:10px;">
-					<?php echo HTMLHelper::_('image',
-						Media\Images::getImagePath($this->item->id, 'solo', $this->image),
-						$this->item->property_name,
-						[
-							'width'  => $params->get('max_property_width'),
-							'height' => $params->get('max_property_height')
-						]); ?>
-				</div>
-			<?php endif; ?>
-		</div>
-	</fieldset>
+    <fieldset class="adminform">
+        <legend><?php echo KrMethods::plain('COM_KNOWRES_PROPERTY_IMAGE_SEARCH'); ?></legend>
+        <br>
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="control-group">
+                    <div class="control-label" style="width:auto;">
+                        <?php echo KrMethods::plain('COM_KNOWRES_PROPERTY_IMAGE_UPLOAD_FORM_DSC'); ?>
+                    </div>
+                    <div class="controls" style="margin-top:10px;margin-bottom:10px;">
+                        <input type='file' name="image" value="">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <?php echo $text; ?>
+                </button>
+            </div>
+            <?php if ($this->image) : ?>
+                <div class="col-lg-9" style="margin-top:10px;">
+                    <?php echo HTMLHelper::_('image',
+                            Media\Images::getImagePath($this->item->id, 'solo', $this->image),
+                            $this->item->property_name,
+                            [
+                                    'width'  => $params->get('max_property_width'),
+                                    'height' => $params->get('max_property_height')
+                            ]
+                    ); ?>
+                </div>
+            <?php endif; ?>
+        </div>
+    </fieldset>
 
-	<input type="hidden" name="id" value="<?php echo $this->item->id; ?>">
-	<input type="hidden" name="task" value="property.saveimage">
-	<?php echo HTMLHelper::_('form.token'); ?>
+    <input type="hidden" name="id" value="<?php echo $this->item->id; ?>">
+    <input type="hidden" name="task" value="property.saveimage">
+    <?php echo HTMLHelper::_('form.token'); ?>
 </form>

@@ -16,7 +16,6 @@ use HighlandVision\KR\Framework\KrMethods;
 use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\Utilities\ArrayHelper;
-
 use function is_countable;
 
 /**
@@ -29,15 +28,15 @@ class ServicequeuesController extends AdminController
 	/**
 	 * Proxy for getModel.
 	 *
-	 * @param  string  $name    Model name
-	 * @param  string  $prefix  Model prefix administrator or site (defaults to administrator)
-	 * @param  array   $config  Config options
+	 * @param   string  $name    Model name
+	 * @param   string  $prefix  Model prefix administrator or site (defaults to administrator)
+	 * @param   array   $config  Config options
 	 *
-	 * @since  1.6
 	 * @return bool|BaseDatabaseModel
+	 * @since  1.6
 	 */
 	public function getModel($name = 'servicequeue', $prefix = 'Administrator',
-		$config = ['ignore_request' => true]): BaseDatabaseModel|bool
+	                         $config = ['ignore_request' => true]): BaseDatabaseModel|bool
 	{
 		return parent::getModel($name, $prefix, $config);
 	}

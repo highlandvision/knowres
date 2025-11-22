@@ -32,9 +32,9 @@ class ExportController extends FormController
 	 *
 	 * @param   null  $key  The name of the primary key of the URL variable.
 	 *
+	 * @return bool
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return bool
 	 */
 	public function cancel($key = null): bool
 	{
@@ -53,7 +53,8 @@ class ExportController extends FormController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	#[NoReturn] public function doBalances(): void
+	#[NoReturn]
+	public function doBalances(): void
 	{
 		$this->checkToken();
 
@@ -72,7 +73,8 @@ class ExportController extends FormController
 	 * @throws Exception
 	 * @since 1.0.0
 	 */
-	#[NoReturn] public function doContracts(): void
+	#[NoReturn]
+	public function doContracts(): void
 	{
 		$this->checkToken();
 
@@ -91,7 +93,8 @@ class ExportController extends FormController
 	 * @throws Exception
 	 * @since 1.0.0
 	 */
-	#[NoReturn] public function doOwnerPayments(): void
+	#[NoReturn]
+	public function doOwnerPayments(): void
 	{
 		$this->checkToken();
 
@@ -114,7 +117,8 @@ class ExportController extends FormController
 	 * @throws Exception
 	 * @since 1.0.0
 	 */
-	#[NoReturn] public function doPayments(): void
+	#[NoReturn]
+	public function doPayments(): void
 	{
 		$this->checkToken();
 

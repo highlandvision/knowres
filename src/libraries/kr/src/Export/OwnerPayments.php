@@ -19,7 +19,6 @@ use HighlandVision\KR\Translations;
 use HighlandVision\KR\Utility;
 use JetBrains\PhpStorm\NoReturn;
 use stdClass;
-
 use function defined;
 use function fclose;
 use function fopen;
@@ -44,7 +43,7 @@ class OwnerPayments
 	/**
 	 * Initialize
 	 *
-	 * @param  array  $data   Array containing the export paramters
+	 * @param   array  $data  Array containing the export paramters
 	 *                        $data = [
 	 *                        'valid_from'    =>    (string) Start date.
 	 *                        'valid_to'      =>    (string) End date.
@@ -56,7 +55,8 @@ class OwnerPayments
 	 * @throws Exception
 	 * @since  4.0.0
 	 */
-	#[NoReturn] public function __construct(array $data)
+	#[NoReturn]
+	public function __construct(array $data)
 	{
 		$this->data = $data;
 		$filename   = 'ownerpayments_' . TickTock::getTS() . '.csv';
@@ -92,8 +92,8 @@ class OwnerPayments
 	/**
 	 * Set headings for owner payments
 	 *
-	 * @since  2.0.0
 	 * @return array
+	 * @since  2.0.0
 	 */
 	protected function setHead(): array
 	{
@@ -124,12 +124,12 @@ class OwnerPayments
 	/**
 	 * Set data for owner payments
 	 *
-	 * @param  stdClass  $row      Contract row.
-	 * @param  array     $snet     Property settings net rates.
-	 * @param  array     $smarkup  Property settings net markup.
+	 * @param   stdClass  $row      Contract row.
+	 * @param   array     $snet     Property settings net rates.
+	 * @param   array     $smarkup  Property settings net markup.
 	 *
-	 * @since  2.4.0
 	 * @return array
+	 * @since  2.4.0
 	 */
 	protected function setLine(stdClass $row, array $snet, array $smarkup): array
 	{

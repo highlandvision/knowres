@@ -12,7 +12,6 @@ namespace HighlandVision\KR;
 use Exception;
 use HighlandVision\KR\Framework\KrMethods;
 use RuntimeException;
-
 use function implode;
 
 defined('_JEXEC') or die;
@@ -27,13 +26,13 @@ class Gantt
 	/**
 	 * Prepare data for the gantt calendar from properties and bookings
 	 *
-	 * @param  array  $properties  Property data
-	 * @param  array  $booked      Booked dates
-	 * @param  bool   $allow       User can make a booking
+	 * @param   array  $properties  Property data
+	 * @param   array  $booked      Booked dates
+	 * @param   bool   $allow       User can make a booking
 	 *
+	 * @return array
 	 * @throws Exception
 	 * @since  3.3.0
-	 * @return array
 	 */
 	public function prepareData(array $properties, array $booked, bool $allow): array
 	{
@@ -42,16 +41,20 @@ class Gantt
 		$Translations = new Translations();
 		$options      = $this->propertyOptions($properties, $Translations);
 
-		foreach ($properties as $p) {
+		foreach ($properties as $p)
+		{
 			$found  = true;
 			$values = [];
 
-			while ($found) {
-				if (isset($booked[$index]) && $booked[$index]['property_name'] === $p->property_name) {
+			while ($found)
+			{
+				if (isset($booked[$index]) && $booked[$index]['property_name'] === $p->property_name)
+				{
 					$values[] = $this->setOneBlock($booked[$index]);
 					$index++;
 
-					if (isset($booked[$index]['firstname'])) {
+					if (isset($booked[$index]['firstname']))
+					{
 						$options[] = [
 							'type'          => 'guest',
 							'icon'          => 'fa-solid fa-calendar-alt',
@@ -62,17 +65,20 @@ class Gantt
 							'id'            => $booked[$index]['id']
 						];
 					}
-				} else {
+				}
+				else
+				{
 					$found = false;
 					$link  = $p->property_name . ', ' . $Translations->getText('region', $p->region_id);
 					$route =
 						KrMethods::route('index.php?option=com_knowres&task=property.dashboard&id=' . $p->id, false);
 
-					$p = ['id'            => $p->id,
-					      'property_name' => $p->property_name,
-					      'bookme'        => $allow,
-					      'name'          => '<a href="' . $route . '">' . $link . '</a>',
-					      'values'        => $values
+					$p = [
+						'id'            => $p->id,
+						'property_name' => $p->property_name,
+						'bookme'        => $allow,
+						'name'          => '<a href="' . $route . '">' . $link . '</a>',
+						'values'        => $values
 					];
 
 					$data[] = $p;
@@ -90,18 +96,19 @@ class Gantt
 	/**
 	 * Prepare the properties for gantt data
 	 *
-	 * @param  array         $properties    Properties for display
-	 * @param  Translations  $Translations  Translations object
+	 * @param   array         $properties    Properties for display
+	 * @param   Translations  $Translations  Translations object
 	 *
+	 * @return array Formatted property options
 	 * @throws RuntimeException
 	 * @since  3.3.0
-	 * @return array Formatted property options
 	 */
 	protected function propertyOptions(array $properties, Translations $Translations): array
 	{
 		$rids = [];
 
-		foreach ($properties as $p) {
+		foreach ($properties as $p)
+		{
 			$rids[$p->region_id][] = $p->id;
 			$options[]             = [
 				'type'   => 'property',
@@ -112,7 +119,8 @@ class Gantt
 			];
 		}
 
-		foreach ($rids as $k => $v) {
+		foreach ($rids as $k => $v)
+		{
 			$options[] = array(
 				'type' => 'region',
 				'icon' => 'fa-solid fa-map-marker',
@@ -127,42 +135,59 @@ class Gantt
 	/**
 	 * Set data for one block
 	 *
-	 * @param  array  $r  Contract data
+	 * @param   array  $r  Contract data
 	 *
+	 * @return array
 	 * @throws Exception
 	 * @since 3.3.0
-	 * @return array
 	 */
 	protected function setOneBlock(array $r): array
 	{
 		$customClass = 'ganttBook';
-		if ((int) $r['black_booking'] == 1) {
+		if ((int) $r['black_booking'] == 1)
+		{
 			$customClass = 'ganttBlack';
-		} else {
-			if ((int) $r['black_booking'] == 2) {
+		}
+		else
+		{
+			if ((int) $r['black_booking'] == 2)
+			{
 				$customClass = 'ganttGrey';
-			} else {
-				if ((int) $r['booking_status'] < 10) {
+			}
+			else
+			{
+				if ((int) $r['booking_status'] < 10)
+				{
 					$customClass = 'ganttProv';
 				}
 			}
 		}
 
 		$tmp = [];
-		if ($r['agent_name']) {
+		if ($r['agent_name'])
+		{
 			$tmp[] = $r['agent_name'];
-		} else {
-			if ($r['service_name']) {
+		}
+		else
+		{
+			if ($r['service_name'])
+			{
 				$tmp[] = $r['service_name'];
 			}
 		}
 
-		if ((int) $r['black_booking'] == 2) {
+		if ((int) $r['black_booking'] == 2)
+		{
 			$tmp[] = KrMethods::plain('COM_KNOWRES_GANTT_MANUAL_ICAL');
-		} else {
-			if ((int) $r['black_booking'] == 1) {
+		}
+		else
+		{
+			if ((int) $r['black_booking'] == 1)
+			{
 				$tmp[] = KrMethods::plain('COM_KNOWRES_BLOCKED');
-			} else {
+			}
+			else
+			{
 				$tmp[] = $r['firstname'] . ' ' . $r['surname'];
 			}
 		}

@@ -14,57 +14,57 @@ defined('_JEXEC') or die;
 
 foreach ($this->stats as $p => $d)
 {
-	$table         = [];
-	$table['cols'] = [
-		[
-			'label' => KrMethods::plain('COM_KNOWRES_MENU_PROPERTY_STATISTICS_SOURCE'),
-			'type'  => 'string'
-		],
-		[
-			'label' => KrMethods::plain('COM_KNOWRES_MENU_PROPERTY_STATISTICS_REVENUE'),
-			'type'  => 'number'
-		]
-	];
+    $table         = [];
+    $table['cols'] = [
+            [
+                    'label' => KrMethods::plain('COM_KNOWRES_MENU_PROPERTY_STATISTICS_SOURCE'),
+                    'type'  => 'string'
+            ],
+            [
+                    'label' => KrMethods::plain('COM_KNOWRES_MENU_PROPERTY_STATISTICS_REVENUE'),
+                    'type'  => 'number'
+            ]
+    ];
 
-	$first = true;
-	$rows  = [];
+    $first = true;
+    $rows  = [];
 
-	foreach ($d as $type => $value)
-	{
-		if (!$first)
-		{
-			$temp   = [];
-			$temp[] = array('v' => $type);
-			$temp[] = array('v' => (float) $value[2]);
-			$rows[] = array('c' => $temp);
-		}
-		else
-		{
-			$first = false;
-		}
+    foreach ($d as $type => $value)
+    {
+        if (!$first)
+        {
+            $temp   = [];
+            $temp[] = array('v' => $type);
+            $temp[] = array('v' => (float) $value[2]);
+            $rows[] = array('c' => $temp);
+        }
+        else
+        {
+            $first = false;
+        }
 
-		$table['rows'] = $rows;
+        $table['rows'] = $rows;
 
-		if ($p == 'day')
-		{
-			$day = Utility::encodeJson($table);
-		}
-		elseif ($p == 'week')
-		{
-			$week = Utility::encodeJson($table);
-		}
-		elseif ($p == 'month')
-		{
-			$month = Utility::encodeJson($table);
-		}
-		elseif ($p == 'year')
-		{
-			$year = Utility::encodeJson($table);
-		}
-	}
+        if ($p == 'day')
+        {
+            $day = Utility::encodeJson($table);
+        }
+        elseif ($p == 'week')
+        {
+            $week = Utility::encodeJson($table);
+        }
+        elseif ($p == 'month')
+        {
+            $month = Utility::encodeJson($table);
+        }
+        elseif ($p == 'year')
+        {
+            $year = Utility::encodeJson($table);
+        }
+    }
 }
 ?>
 
-<div id="kr-stats-data" data-day='<?php echo $day; ?>' data-week='<?php echo $week; ?>' data-month='<?php echo $month; ?>'
-     data-year='<?php echo $year; ?>'>
+<div id="kr-stats-data" data-day='<?php echo $day; ?>' data-week='<?php echo $week; ?>'
+     data-month='<?php echo $month; ?>' data-year='<?php echo $year; ?>'>
 </div>

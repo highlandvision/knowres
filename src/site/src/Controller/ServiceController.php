@@ -39,7 +39,6 @@ use RuntimeException;
 use stdClass;
 use Stripe\Exception\ApiErrorException;
 use Stripe\StripeClient as StripeClient;
-
 use function base64_decode;
 use function explode;
 use function file_get_contents;
@@ -74,7 +73,8 @@ class ServiceController extends BaseController
 	 * @throws Exception
 	 * @since  2.2.0
 	 */
-	public function bankia(): void {
+	public function bankia(): void
+	{
 		$this->processRedsys();
 	}
 
@@ -84,7 +84,8 @@ class ServiceController extends BaseController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function check(): void {
+	public function check(): void
+	{
 		$this->checkToken();
 		$this->manual();
 	}
@@ -96,7 +97,9 @@ class ServiceController extends BaseController
 	 * @throws Exception
 	 * @since  3.2.0
 	 */
-	#[NoReturn] public function hsdynamic(): void {
+	#[NoReturn]
+	public function hsdynamic(): void
+	{
 		$hs = new Helpdesk\Dynamic();
 		echo $hs->getDynamicResponse();
 
@@ -110,7 +113,8 @@ class ServiceController extends BaseController
 	 * @since        1.0.0
 	 * @noinspection PhpUnused
 	 */
-	public function mailchimpsubscribe(): void {
+	public function mailchimpsubscribe(): void
+	{
 		$this->doMailchimp();
 	}
 
@@ -120,7 +124,8 @@ class ServiceController extends BaseController
 	 * @throws Exception
 	 * @since  1.2.2
 	 */
-	public function paypal(): void {
+	public function paypal(): void
+	{
 		$this->doPaypal();
 	}
 
@@ -130,7 +135,8 @@ class ServiceController extends BaseController
 	 * @throws Exception
 	 * @since  2.2.0
 	 */
-	public function redsys(): void {
+	public function redsys(): void
+	{
 		$this->doRedsys();
 	}
 
@@ -141,7 +147,8 @@ class ServiceController extends BaseController
 	 * @since        2.2.0
 	 * @noinspection PhpUnused
 	 */
-	public function rulnmhandler(): void {
+	public function rulnmhandler(): void
+	{
 		$this->doRuLnmHandler();
 	}
 
@@ -151,15 +158,18 @@ class ServiceController extends BaseController
 	 * @throws Exception
 	 * @since 3.1.0
 	 */
-	public function sendallproperties(): void {
+	public function sendallproperties(): void
+	{
 		$service_id = KrMethods::inputInt('id');
-		if (!$service_id) {
+		if (!$service_id)
+		{
 			jexit('Please add id of service e.g. id=55 to the URL request');
 		}
 
 		$properties = KrFactory::getListModel('servicexrefs')->getPropertiesForService($service_id);
 		$db         = KrFactory::getDatabase();
-		foreach ($properties as $p) {
+		foreach ($properties as $p)
+		{
 			$queue               = new stdClass();
 			$queue->id           = 0;
 			$queue->service_id   = $service_id;
@@ -191,9 +201,11 @@ class ServiceController extends BaseController
 		$paymentSession = new KrSession\Payment();
 		$paymentData    = $paymentSession->getData();
 
-		if ($paymentData->contract_id) {
+		if ($paymentData->contract_id)
+		{
 			$contract = KrFactory::getAdminModel('contract')->getItem($paymentData->contract_id);
-			if (!$contract->id) {
+			if (!$contract->id)
+			{
 				throw new RuntimeException('Contract not found for id ' . $paymentData->contract_id);
 			}
 		}
@@ -206,10 +218,12 @@ class ServiceController extends BaseController
 		$userData->pr_payment_type = $paymentData->payment_type;
 		$userSession->setData($userData);
 
-		try {
+		try
+		{
 			$this->redirectSuccess($paymentData->payment_type, $paymentData->contract_id);
 		}
-		catch (Exception $e) {
+		catch (Exception $e)
+		{
 			Logger::logMe($e->getMessage(), 'error');
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_PAYMENT_CANCEL'), 'alert');
 			$this->redirectError($paymentData->payment_type);
@@ -222,16 +236,20 @@ class ServiceController extends BaseController
 	 *
 	 * @since  5.1
 	 */
-	public function stripecreate(): void {
+	public function stripecreate(): void
+	{
 		header('Content-Type: application/json');
-		try {
+		try
+		{
 			$paymentSession = new KrSession\Payment();
 			$paymentData    = $paymentSession->getData();
 
-			if ($paymentData->payment_type == 'OBR') {
+			if ($paymentData->payment_type == 'OBR')
+			{
 				$secret = $this->stripeSetupIntents($paymentData);
 			}
-			else {
+			else
+			{
 				$secret = $this->stripePaymentIntents($paymentData);
 			}
 
@@ -243,7 +261,8 @@ class ServiceController extends BaseController
 			echo json_encode($output);
 			jexit();
 		}
-		catch (Error|Exception $e) {
+		catch (Error|Exception $e)
+		{
 			http_response_code(500);
 			echo json_encode(['error' => $e->getMessage()]);
 			jexit();
@@ -256,33 +275,40 @@ class ServiceController extends BaseController
 	 * @throws Exception
 	 * @since  5.1.0
 	 */
-	#[NoReturn] public function stripewebhook(): void {
+	#[NoReturn]
+	public function stripewebhook(): void
+	{
 		$payload   = @file_get_contents('php://input');
 		$signature = $_SERVER['HTTP_STRIPE_SIGNATURE'];
 		$event     = null;
 
 		$services = KrFactory::getListModel('services')->getServicesByPlugin('stripe');
-		foreach ($services as $s) {
+		foreach ($services as $s)
+		{
 			$service = KrFactory::getAdminModel('service')->getItem($s->id);
 			$secret  = $service->parameters->webhook_key;
 			break;
 		}
 
-		try {
+		try
+		{
 			$event = StripeWebhook::constructEvent($payload, $signature, $secret);
-			if (isset($event->data->object->metadata)) {
+			if (isset($event->data->object->metadata))
+			{
 				$metadata = $event->data->object->metadata;
 				// Convert object to stdClass
 				$metadata = json_decode(json_encode($metadata));
 			}
 		}
-		catch (UnexpectedValueException $e) {
+		catch (UnexpectedValueException $e)
+		{
 			// Invalid payload
 			echo json_encode(['Error parsing payload: ' => $e->getMessage()]);
 			http_response_code(401);
 			jexit();
 		}
-		catch (SignatureVerificationException $e) {
+		catch (SignatureVerificationException $e)
+		{
 			// Invalid signature
 			echo json_encode(['Error verifying webhook signature: ' => $e->getMessage()]);
 			http_response_code(402);
@@ -291,28 +317,36 @@ class ServiceController extends BaseController
 
 		http_response_code(200);
 
-		try {
-			if ($event->type == 'setup_intent.succeeded') {
+		try
+		{
+			if ($event->type == 'setup_intent.succeeded')
+			{
 				$metadata->payment_ref = 'OBR';
-				if (isset($event->data->object->payment_method)) {
+				if (isset($event->data->object->payment_method))
+				{
 					$metadata->service_ref = $event->data->object->payment_method;
 				}
 			}
-			elseif ($event->type == 'payment_intent.succeeded') {
-				if (isset($event->data->object->id)) {
+			elseif ($event->type == 'payment_intent.succeeded')
+			{
+				if (isset($event->data->object->id))
+				{
 					$metadata->payment_ref     = $event->data->object->id;
 					$metadata->service_ref     = 'na';
 					$metadata->on_request_paid = 1;
 				}
 			}
 			elseif ($event->type == 'payment_intent.payment_failed' ||
-			        $event->type == 'setup_intent.setup_failed') {
-				if (isset($event->data->object->id)) {
+				$event->type == 'setup_intent.setup_failed')
+			{
+				if (isset($event->data->object->id))
+				{
 					$metadata->on_request_paid = 0;
 				}
 			}
 		}
-		catch (UnexpectedValueException|Exception $e) {
+		catch (UnexpectedValueException|Exception $e)
+		{
 			Logger::logMe($e->getMessage());
 		}
 
@@ -327,13 +361,17 @@ class ServiceController extends BaseController
 	 * @since        3.0
 	 * @noinspection PhpUnused
 	 */
-	#[NoReturn] public function termspdf(): void {
-		try {
+	#[NoReturn]
+	public function termspdf(): void
+	{
+		try
+		{
 			$id    = KrMethods::inputInt('id');
 			$Terms = new Terms('download', $id);
 			$Terms->getPdf();
 		}
-		catch (Exception) {
+		catch (Exception)
+		{
 			throw new RuntimeException(
 				'Error creating PDF, please try again later'
 			);
@@ -349,7 +387,8 @@ class ServiceController extends BaseController
 	 * @since        1.0.0
 	 * @noinspection PhpUnused
 	 */
-	public function wire(): void {
+	public function wire(): void
+	{
 		$this->checkToken();
 		$this->manual();
 	}
@@ -361,7 +400,8 @@ class ServiceController extends BaseController
 	 * @since        2.2.0
 	 * @noinspection PhpUnused
 	 */
-	public function wireint(): void {
+	public function wireint(): void
+	{
 		$this->checkToken();
 		$this->manual();
 	}
@@ -369,14 +409,16 @@ class ServiceController extends BaseController
 	/**
 	 * Get the service id for manual gateways
 	 *
-	 * @throws RuntimeException
-	 * @throws Exception
-	 * @since  3.3.0
 	 * @return int
+	 * @throws Exception
+	 * @throws RuntimeException
+	 * @since  3.3.0
 	 */
-	protected function getServiceId(): int {
+	protected function getServiceId(): int
+	{
 		$service_id = KrMethods::inputInt('service_id');
-		if (!$service_id) {
+		if (!$service_id)
+		{
 			throw new RuntimeException('Service ID was not received');
 		}
 
@@ -389,19 +431,22 @@ class ServiceController extends BaseController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected function manual(): void {
+	protected function manual(): void
+	{
 		$service_id     = $this->getServiceId();
 		$paymentSession = new KrSession\Payment();
 		$paymentData    = $paymentSession->getData();
 		$payment_type   = $paymentData->payment_type;
 		$contract_id    = $paymentData->contract_id;
 
-		try {
+		try
+		{
 			$postPayment = new PostPayment($service_id, $paymentData);
 			$postPayment->processPayment();
 			$this->redirectSuccess($payment_type, $contract_id, true);
 		}
-		catch (Exception $e) {
+		catch (Exception $e)
+		{
 			Logger::logMe($e->getMessage(), 'error');
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_FATAL'));
 			$this->redirectError($payment_type);
@@ -415,18 +460,22 @@ class ServiceController extends BaseController
 	 * @throws RuntimeException
 	 * @since  3.3.0
 	 */
-	protected function processRedsys(): void {
+	protected function processRedsys(): void
+	{
 		$action = KrMethods::inputString('action', '');
-		if (!$action) {
+		if (!$action)
+		{
 			throw new RuntimeException('Action field is empty');
 		}
-		if ($action != 'ipn' && $action != 'success' && $action != 'cancel') {
+		if ($action != 'ipn' && $action != 'success' && $action != 'cancel')
+		{
 			throw new RuntimeException('Action field is invalid ' . $action);
 		}
 
 		$parameters = KrMethods::inputString('Ds_MerchantParameters', '');
 		$signature  = KrMethods::inputString('Ds_Signature', '');
-		if (empty($parameters) || empty($signature)) {
+		if (empty($parameters) || empty($signature))
+		{
 			throw new RuntimeException(
 				'Payment response fields not received from Redsys'
 			);
@@ -443,15 +492,19 @@ class ServiceController extends BaseController
 		$rate           = (float) $split[4];
 		$base_surcharge = (float) $split[5];
 
-		if (!$service_id || !$contract_id || !$payment_type) {
+		if (!$service_id || !$contract_id || !$payment_type)
+		{
 			throw new RuntimeException(
 				'Invalid Custom field returned in Success message' . $custom . ' for action ' . $action
 			);
 		}
 
-		if ($action == 'ipn') {
-			try {
-				if (!$base_amount || !$rate) {
+		if ($action == 'ipn')
+		{
+			try
+			{
+				if (!$base_amount || !$rate)
+				{
 					throw new RuntimeException(
 						"Redsys Base amount $base_amount or rate $rate or both are zero"
 					);
@@ -477,7 +530,8 @@ class ServiceController extends BaseController
 				$postPayment = new PostPayment($service_id, $paymentData);
 				$postPayment->processPayment();
 			}
-			catch (Exception $e) {
+			catch (Exception $e)
+			{
 				Logger::logMe($e->getMessage());
 				KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_FATAL'));
 				$this->redirectError($payment_type);
@@ -485,12 +539,15 @@ class ServiceController extends BaseController
 
 			jexit();
 		}
-		else {
-			if ($action == 'success') {
+		else
+		{
+			if ($action == 'success')
+			{
 				KrMethods::message(KrMethods::plain('COM_KNOWRES_PAYMENT_SUCCESS'));
 				$this->redirectSuccess($payment_type, $contract_id);
 			}
-			else {
+			else
+			{
 				KrMethods::message(KrMethods::plain('COM_KNOWRES_PAYMENT_CANCEL'), 'alert');
 				$this->redirectError($payment_type);
 			}
@@ -505,17 +562,24 @@ class ServiceController extends BaseController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected function redirectError(string $payment_type): void {
-		if ($payment_type === 'PBD' || $payment_type === 'PBB') {
+	protected function redirectError(string $payment_type): void
+	{
+		if ($payment_type === 'PBD' || $payment_type === 'PBB')
+		{
 			SiteHelper::redirectDashboard(true);
 		}
-		elseif ($payment_type) {
+		elseif ($payment_type)
+		{
 			$Itemid = SiteHelper::getItemId('com_knowres', 'confirm');
 			KrMethods::redirect(KrMethods::route(KrMethods::getBase() .
-			                                     'index.php?option=com_knowres&view=confirm&Itemid=' .
-			                                     $Itemid,
-				false));
-		} else {
+				'index.php?option=com_knowres&view=confirm&Itemid=' .
+				$Itemid,
+				false
+			)
+			);
+		}
+		else
+		{
 			KrMethods::redirect(KrMethods::route(KrMethods::getBase(), false));
 		}
 	}
@@ -530,20 +594,26 @@ class ServiceController extends BaseController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected function redirectSuccess(string $payment_type, int $contract_id, bool $manual = false): void {
-		if ($payment_type === 'OBD' || $payment_type === 'OBR') {
+	protected function redirectSuccess(string $payment_type, int $contract_id, bool $manual = false): void
+	{
+		if ($payment_type === 'OBD' || $payment_type === 'OBR')
+		{
 			SiteHelper::redirectSuccess();
 		}
-		elseif ($payment_type === 'PBD' || $payment_type === 'PBB') {
-			if ($manual) {
+		elseif ($payment_type === 'PBD' || $payment_type === 'PBB')
+		{
+			if ($manual)
+			{
 				KrMethods::message(KrMethods::plain('COM_KNOWRES_PAYMENT_MANUAL'), 'alert');
 			}
-			else {
+			else
+			{
 				KrMethods::message(KrMethods::plain('COM_KNOWRES_PAYMENT_SUCCESS_POST'), 'alert');
 			}
 			SiteHelper::redirectDashboard();
 		}
-		else {
+		else
+		{
 			KrMethods::redirect(KrMethods::route(KrMethods::getRoot(), false));
 		}
 	}
@@ -554,11 +624,13 @@ class ServiceController extends BaseController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	private function checkSecret(): void {
+	private function checkSecret(): void
+	{
 		$this->test = $this->input->getInt('test', 0);
 		$secret     = $this->input->getString('secret', '');
 
-		if (!$this->test && $secret != KrMethods::getCfg('secret')) {
+		if (!$this->test && $secret != KrMethods::getCfg('secret'))
+		{
 			jexit();
 		}
 	}
@@ -570,21 +642,25 @@ class ServiceController extends BaseController
 	 * @since        1.0.0
 	 * @noinspection PhpUnused
 	 */
-	private function doMailchimp(): void {
+	private function doMailchimp(): void
+	{
 		$this->checkToken();
 
 		$service_id = KrMethods::inputInt('id');
 		$name       = KrMethods::inputString('name', '');
 		$email      = KrMethods::inputString('email', '');
 
-		try {
+		try
+		{
 			$Mailchimp = new Mailchimp($service_id, $email, $name);
 		}
-		catch (InvalidArgumentException $e) {
+		catch (InvalidArgumentException $e)
+		{
 			echo new JsonResponse(null, $e->getMessage(), true);
 			jexit();
 		}
-		catch (Exception $e) {
+		catch (Exception $e)
+		{
 			Logger::logMe($e->getMessage(), 'error');
 			echo new JsonResponse(
 				null, KrMethods::plain('COM_KNOWRES_MAILCHIMP_FAIL'), true
@@ -592,22 +668,26 @@ class ServiceController extends BaseController
 			jexit();
 		}
 
-		try {
+		try
+		{
 			$result = $Mailchimp->subscribe();
-			if (is_bool($result) && $result) {
+			if (is_bool($result) && $result)
+			{
 				echo new JsonResponse(
 					null, KrMethods::plain('COM_KNOWRES_MAILCHIMP_SUCCESS'),
 					true
 				);
 				jexit();
 			}
-			else {
+			else
+			{
 				throw new RuntimeException(
 					'Mailchimp failed with error ' . $result
 				);
 			}
 		}
-		catch (Exception $e) {
+		catch (Exception $e)
+		{
 			Logger::logMe($e->getMessage());
 			echo new JsonResponse(
 				null, KrMethods::plain('COM_KNOWRES_MAILCHIMP_FAIL'), true
@@ -630,7 +710,8 @@ class ServiceController extends BaseController
 		$paymentData    = $paymentSession->getData();
 		$payment_type   = $paymentData->payment_type;
 
-		try {
+		try
+		{
 			$json        = trim(file_get_contents("php://input"));
 			$data        = Utility::decodeJson($json, true);
 			$paymentData = $paymentSession->updateData($data);
@@ -638,24 +719,28 @@ class ServiceController extends BaseController
 			$postPayment = new PostPayment($paymentData->service_id, $paymentData);
 			$postPayment->processPayment();
 
-			if ($payment_type === 'OBD' || $payment_type === 'OBR') {
+			if ($payment_type === 'OBD' || $payment_type === 'OBR')
+			{
 				$Itemid   = SiteHelper::getItemId('com_knowres', 'success');
 				$redirect =
 					KrMethods::route('index.php?option=com_knowres&task=success.success&Itemid=' . $Itemid, false);
 			}
-			elseif ($payment_type === 'PBD' || $payment_type === 'PBB') {
+			elseif ($payment_type === 'PBD' || $payment_type === 'PBB')
+			{
 				$Itemid   = SiteHelper::getItemId('com_knowres', 'dashboard');
 				$redirect =
 					KrMethods::route('index.php?option=com_knowres&task=dashboard.success&Itemid=' . $Itemid, false);
 			}
-			else {
+			else
+			{
 				KrMethods::redirect(KrMethods::route(KrMethods::getRoot(), false));
 			}
 
 			echo json_encode(['success' => KrMethods::route($redirect, false)]);
 			jexit();
 		}
-		catch (Exception $e) {
+		catch (Exception $e)
+		{
 			Logger::logMe($e->getMessage(), 'error');
 			echo json_encode(['error' => KrMethods::plain('COM_KNOWRES_ERROR_FATAL')]);
 			jexit();
@@ -669,18 +754,22 @@ class ServiceController extends BaseController
 	 * @throws RuntimeException
 	 * @since  3.3.0
 	 */
-	private function doRedsys(): void {
+	private function doRedsys(): void
+	{
 		$action = KrMethods::inputString('action', '');
-		if (!$action) {
+		if (!$action)
+		{
 			throw new RuntimeException('Action field is empty');
 		}
-		if ($action != 'ipn' && $action != 'success' && $action != 'cancel') {
+		if ($action != 'ipn' && $action != 'success' && $action != 'cancel')
+		{
 			throw new RuntimeException('Action field is invalid ' . $action);
 		}
 
 		$parameters = KrMethods::inputString('Ds_MerchantParameters', '');
 		$signature  = KrMethods::inputString('Ds_Signature', '');
-		if (empty($parameters) || empty($signature)) {
+		if (empty($parameters) || empty($signature))
+		{
 			throw new RuntimeException(
 				'Payment response fields not received from Redsys'
 			);
@@ -697,15 +786,19 @@ class ServiceController extends BaseController
 		$rate           = (float) $split[4];
 		$base_surcharge = (float) $split[5];
 
-		if (!$service_id || !$contract_id || !$payment_type) {
+		if (!$service_id || !$contract_id || !$payment_type)
+		{
 			throw new RuntimeException(
 				'Invalid Custom field returned in Success message' . $custom . ' for action ' . $action
 			);
 		}
 
-		if ($action == 'ipn') {
-			try {
-				if (!$base_amount || !$rate) {
+		if ($action == 'ipn')
+		{
+			try
+			{
+				if (!$base_amount || !$rate)
+				{
 					throw new RuntimeException(
 						"Redsys Base amount $base_amount or rate $rate or both are zero"
 					);
@@ -731,18 +824,22 @@ class ServiceController extends BaseController
 				$postPayment = new PostPayment($service_id, $paymentData);
 				$postPayment->processPayment();
 			}
-			catch (Exception $e) {
+			catch (Exception $e)
+			{
 				Logger::logMe($e->getMessage());
 			}
 
 			jexit();
 		}
-		else {
-			if ($action == 'success') {
+		else
+		{
+			if ($action == 'success')
+			{
 				KrMethods::message(KrMethods::plain('COM_KNOWRES_PAYMENT_SUCCESS'));
 				$this->redirectSuccess($payment_type, $contract_id);
 			}
-			else {
+			else
+			{
 				KrMethods::message(KrMethods::plain('COM_KNOWRES_PAYMENT_CANCEL'), 'alert');
 				$this->redirectError($payment_type);
 			}
@@ -755,15 +852,19 @@ class ServiceController extends BaseController
 	 * @throws Exception
 	 * @since  5.1.0
 	 */
-	private function doRuLnmHandler(): void {
+	private function doRuLnmHandler(): void
+	{
 		$this->checkSecret();
 
-		if ($this->test) {
+		if ($this->test)
+		{
 			$xmlstring = trim(file_get_contents(Utility::getPath('root') . '/tmp/lnm.xml'));
 			$xml       = simplexml_load_string($xmlstring);
 		}
-		else {
-			if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+		else
+		{
+			if ($_SERVER['REQUEST_METHOD'] === 'POST')
+			{
 				$this->errors[] = 'Rentals United LNM Handler (rulnmhandler)';
 
 				$xmlstring      = file_get_contents('php://input');
@@ -771,7 +872,8 @@ class ServiceController extends BaseController
 
 				libxml_use_internal_errors(true);
 				$xml = simplexml_load_string($xmlstring);
-				if ($xml === false) {
+				if ($xml === false)
+				{
 					// Retry the xml load on encoded string
 					$xmlstring = mb_convert_encoding(
 						$xmlstring,
@@ -785,7 +887,8 @@ class ServiceController extends BaseController
 
 					$xml = simplexml_load_string($xmlstring);
 
-					if ($xml === false) {
+					if ($xml === false)
+					{
 						// Drastic measures
 						libxml_clear_errors();
 						libxml_use_internal_errors(true);
@@ -796,11 +899,13 @@ class ServiceController extends BaseController
 						$dom->loadXML($xmlstring);
 						$xml = simplexml_import_dom($dom);
 
-						if ($xml === false) {
+						if ($xml === false)
+						{
 							// Just give up and speak to RU
 							$errors[] = 'content encoding trying utf8_encode';
 							$errors[] = 'encoded xml string ' . $xmlstring;
-							foreach (libxml_get_errors() as $error) {
+							foreach (libxml_get_errors() as $error)
+							{
 								$errors[] = $error->message;
 							}
 
@@ -814,8 +919,10 @@ class ServiceController extends BaseController
 				libxml_clear_errors();
 				libxml_use_internal_errors();
 			}
-			else {
-				foreach ($_SERVER as $key_name => $key_value) {
+			else
+			{
+				foreach ($_SERVER as $key_name => $key_value)
+				{
 					$message[] = $key_name . ' = ' . $key_value;
 				}
 
@@ -838,11 +945,12 @@ class ServiceController extends BaseController
 	 *
 	 * @param   stdClass  $paymentData  Session data for payments
 	 *
+	 * @return string
 	 * @throws Exception
 	 * @since  5.1.0
-	 * @return string
 	 */
-	private function stripePaymentIntents(stdClass $paymentData): string {
+	private function stripePaymentIntents(stdClass $paymentData): string
+	{
 		$metadata                = Utility::setStripeMeta($paymentData);
 		$metadata['expiry_date'] = !empty($paymentData->expiry_date) ? $paymentData->expiry_date : null;
 		$metadata['manual']      = 0;
@@ -851,10 +959,11 @@ class ServiceController extends BaseController
 
 		$stripeClient = new StripeClient($paymentData->secret_key);
 		$pi           = $stripeClient->paymentIntents->create(
-			['amount'                    => Utility::setStripeAmount($paymentData->amount, $paymentData->currency),
-			 'currency'                  => strtolower($paymentData->currency),
-			 'automatic_payment_methods' => ['enabled' => true],
-			 'metadata'                  => $metadata,
+			[
+				'amount'                    => Utility::setStripeAmount($paymentData->amount, $paymentData->currency),
+				'currency'                  => strtolower($paymentData->currency),
+				'automatic_payment_methods' => ['enabled' => true],
+				'metadata'                  => $metadata,
 			]
 		);
 
@@ -866,21 +975,24 @@ class ServiceController extends BaseController
 	 *
 	 * @param   stdClass  $paymentData  Session data for payments
 	 *
+	 * @return string
 	 * @throws ApiErrorException
 	 * @since  5.1.0
-	 * @return string
 	 */
-	private function stripeSetupIntents(stdClass $paymentData): string {
+	private function stripeSetupIntents(stdClass $paymentData): string
+	{
 		$stripeClient = new StripeClient($paymentData->secret_key);
 
 		$guestSession = new KrSession\Guest();
 		$guestData    = $guestSession->getData();
 		$customer     = $stripeClient->customers->create(
-			['name'  => $guestData->firstname . ' ' . $guestData->surname,
-			 'email' => $guestData->email,
+			[
+				'name'  => $guestData->firstname . ' ' . $guestData->surname,
+				'email' => $guestData->email,
 			]
 		);
-		if (!$customer->id) {
+		if (!$customer->id)
+		{
 			throw new RuntimeException('Stripe did not return a customer id');
 		}
 
@@ -892,10 +1004,12 @@ class ServiceController extends BaseController
 		$metadata['state']        = 0;
 
 		$si = $stripeClient->setupIntents->create(
-			['customer'                  => $customer->id,
-			 'automatic_payment_methods' => ['enabled' => true],
-			 'metadata'                  => $metadata,
-			]);
+			[
+				'customer'                  => $customer->id,
+				'automatic_payment_methods' => ['enabled' => true],
+				'metadata'                  => $metadata,
+			]
+		);
 
 		return $si->client_secret;
 	}
@@ -916,19 +1030,23 @@ class ServiceController extends BaseController
 		$paymentSession->resetData();
 		$paymentData  = $paymentSession->updateData($metadata);
 		$payment_type = $paymentData->payment_type;
-		if ($paymentData->service_ref == 'na') {
+		if ($paymentData->service_ref == 'na')
+		{
 			// Can't set an empty value in metadata so reset here
 			$paymentData->service_ref = '';
 		}
 
-		switch ($event_type) {
+		switch ($event_type)
+		{
 			case 'payment_intent.succeeded':
 			case 'setup_intent.succeeded':
-				try {
+				try
+				{
 					$postPayment = new PostPayment($paymentData->service_id, $paymentData, true);
 					$postPayment->processPayment();
 				}
-				catch (Exception $e) {
+				catch (Exception $e)
+				{
 					KrMethods::message(KrMethods::plain('COM_KNOWRES_PAYMENT_CANCEL'), 'alert');
 					$this->redirectError($payment_type);
 				}

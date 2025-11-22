@@ -22,7 +22,8 @@ use HighlandVision\KR\Utility;
  *
  * @since 5.1.0
  */
-class PropertyicalController extends FormController {
+class PropertyicalController extends FormController
+{
 	/**
 	 * Import manually uploaded ics.
 	 *
@@ -39,30 +40,38 @@ class PropertyicalController extends FormController {
 		$tmp_name    = $_FILES['jform']['tmp_name']['files']['file'];
 
 		$redirect = KrMethods::route('index.php?option=com_knowres&view=propertyicals&property_id=' . $property_id,
-			false);
+			false
+		);
 
-		if (!$tmp_name || !$property_id || $filetype != 'text/calendar') {
+		if (!$tmp_name || !$property_id || $filetype != 'text/calendar')
+		{
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_PROPERTYICALS_FORM_ERROR_FILE'), 'error');
 			KrMethods::redirect($redirect);
 		}
 
 		$directory = Utility::getPath('root') . '/tmp/';
-		if (!move_uploaded_file($tmp_name, $directory . $filename)) {
+		if (!move_uploaded_file($tmp_name, $directory . $filename))
+		{
 			KrMethods::message($tmp_name . ' to ' . $dest_path . ' '
-			                   . KrMethods::plain('Error Moving File To Directory'),
-				'error');
+				. KrMethods::plain('Error Moving File To Directory'),
+				'error'
+			);
 			KrMethods::redirect($redirect);
 		}
 
-		try {
+		try
+		{
 			$IcalBlock = new IcalBlock($property_id, $directory, $filename);
 			$IcalBlock->import();
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_ACTION_SUCCESS'));
-		} catch (Exception $e) {
+		}
+		catch (Exception $e)
+		{
 			DisplayModel::pageErrors($e);
 		}
 
-		if (file_exists($directory . $filename)) {
+		if (file_exists($directory . $filename))
+		{
 			unlink($directory . $filename);
 		}
 

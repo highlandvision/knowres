@@ -18,7 +18,6 @@ use HighlandVision\KR\Joomla\Extend\AdminModel;
 use InvalidArgumentException;
 use Joomla\DI\Exception\KeyNotFoundException;
 use RuntimeException;
-
 use function count;
 use function implode;
 use function is_countable;
@@ -40,8 +39,8 @@ class ServicelogModel extends AdminModel
 	/**
 	 * Delete old service logs
 	 *
-	 * @param  string  $date     Delete before this date
-	 * @param  int     $success  Success status to delete
+	 * @param   string  $date     Delete before this date
+	 * @param   int     $success  Success status to delete
 	 *
 	 * @throws RuntimeException
 	 * @throws KeyNotFoundException|InvalidArgumentException
@@ -65,27 +64,9 @@ class ServicelogModel extends AdminModel
 	}
 
 	/**
-	 * Method to get the data that should be injected in the form.
-	 *
-	 * @throws Exception
-	 * @since  1.0.0
-	 * @return mixed The data for the form.
-	 */
-	protected function loadFormData(): mixed
-	{
-		$data = KrMethods::getUserState('com_knowres.edit.season.data', []);
-		if (empty($data))
-		{
-			$data = $this->getItem();
-		}
-
-		return $data;
-	}
-
-	/**
 	 * Resend queue records for selected logs
 	 *
-	 * @param  array  $pks  IDs to be resent
+	 * @param   array  $pks  IDs to be resent
 	 *
 	 * @throws RuntimeException
 	 * @since  1.2.0
@@ -100,13 +81,16 @@ class ServicelogModel extends AdminModel
 		$db = KrFactory::getDatabase();
 
 		$fields     = [$db->qn('q.actioned') . '=0'];
-		$conditions = [$db->qn('l.id') . '=' . implode(' OR ' . $db->qn('l.id') . '=', $pks),
-		               $db->qn('q.actioned') . '=1',
-		               $db->qn('l.queue_id') . '>0'];
+		$conditions = [
+			$db->qn('l.id') . '=' . implode(' OR ' . $db->qn('l.id') . '=', $pks),
+			$db->qn('q.actioned') . '=1',
+			$db->qn('l.queue_id') . '>0'
+		];
 
 		$query = $db->getQuery(true);
 		$query->join('INNER',
-			$db->qn('#__knowres_service_log', 'l') . ' ON (' . $db->qn('q.id') . '=' . $db->qn('l.queue_id') . ')');
+			$db->qn('#__knowres_service_log', 'l') . ' ON (' . $db->qn('q.id') . '=' . $db->qn('l.queue_id') . ')'
+		);
 
 		$query->update($db->qn('#__knowres_service_queue', 'q'))
 		      ->set($fields)
@@ -114,5 +98,23 @@ class ServicelogModel extends AdminModel
 
 		$db->setQuery($query);
 		$db->execute();
+	}
+
+	/**
+	 * Method to get the data that should be injected in the form.
+	 *
+	 * @return mixed The data for the form.
+	 * @throws Exception
+	 * @since  1.0.0
+	 */
+	protected function loadFormData(): mixed
+	{
+		$data = KrMethods::getUserState('com_knowres.edit.season.data', []);
+		if (empty($data))
+		{
+			$data = $this->getItem();
+		}
+
+		return $data;
 	}
 }

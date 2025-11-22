@@ -19,7 +19,6 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Uri;
 use RuntimeException;
 use stdClass;
-
 use function count;
 use function defined;
 
@@ -29,14 +28,16 @@ use function defined;
  * - Below are only the most important methods. For more advanced logic,
  * - Be sure to check the built-in plugins in /plugins/system/forsef/platform/extensions
  */
-class Knowres extends Base {
+class Knowres extends Base
+{
 	/**
 	 * Stores factory instance.
 	 *
 	 * @param   string  $option   Extension this applies to, in com_xxx format.
 	 * @param   array   $options  Can inject custom factory and platform.
 	 */
-	public function __construct($option, $options = []) {
+	public function __construct($option, $options = [])
+	{
 		parent::__construct($option, $options);
 	}
 
@@ -47,16 +48,19 @@ class Knowres extends Base {
 	 * @param   Uri\Uri  $platformUri
 	 * @param   Uri\Uri  $originalUri
 	 *
-	 * @throws Exception
 	 * @return ?array
+	 * @throws Exception
 	 */
-	public function build($uriToBuild, $platformUri, $originalUri): ?array {
+	public function build($uriToBuild, $platformUri, $originalUri): ?array
+	{
 		$sefSegments = parent::build($uriToBuild, $platformUri, $originalUri);
-		if ($uriToBuild->getVar('format') == 'raw') {
+		if ($uriToBuild->getVar('format') == 'raw')
+		{
 			return [];
 		}
 
-		if ($uriToBuild->getVar('retain') == 1) {
+		if ($uriToBuild->getVar('retain') == 1)
+		{
 			return [];
 		}
 
@@ -79,14 +83,17 @@ class Knowres extends Base {
 		$type_id      = $uriToBuild->getVar('type_id');
 
 		$delvar = true;
-		switch ($view) {
+		switch ($view)
+		{
 			case 'contact':
 				$sefSegments[] = KrMethods::plain('COM_KNOWRES_SEND_AN_ENQUIRY');
 				break;
 			case 'property':
-				if ($id) {
+				if ($id)
+				{
 					$pdata = $this->getPropertyData($id);
-					switch ($params->get('seo_property', 1)) {
+					switch ($params->get('seo_property', 1))
+					{
 						case 1:
 							$sefSegments[] = $pdata->region . '-' . $pdata->area . '-' . $pdata->type;
 							$sefSegments[] = $pdata->name;
@@ -115,9 +122,11 @@ class Knowres extends Base {
 				}
 				break;
 			case 'reviews':
-				if ($property_id) {
+				if ($property_id)
+				{
 					$pdata = $this->getPropertyData($property_id);
-					switch ($params->get('seo_property', 1)) {
+					switch ($params->get('seo_property', 1))
+					{
 						case 1:
 							$sefSegments[] = $pdata->region . '-' . $pdata->area . '-' . $pdata->type;
 							break;
@@ -137,53 +146,66 @@ class Knowres extends Base {
 				break;
 			case 'properties':
 				$Translations = new Translations;
-				if ($region_id) {
-					if ($params->get('seo_search_country', 0)) {
+				if ($region_id)
+				{
+					if ($params->get('seo_search_country', 0))
+					{
 						$item          = KrFactory::getAdminModel('region')->getItem($region_id);
 						$sefSegments[] = $Translations->getText('region', $region_id) . '-' . $item->country_name;
 					}
-					else {
+					else
+					{
 						$sefSegments[] = $Translations->getText('region', $region_id);
 					}
 				}
-				elseif ($category_id) {
+				elseif ($category_id)
+				{
 					$sefSegments[] = $Translations->getText('category', $category_id);
 				}
-				elseif ($layout) {
+				elseif ($layout)
+				{
 					$sefSegments[] = $alias;
 				}
 
-				if (empty($sefSegments)) {
+				if (empty($sefSegments))
+				{
 					$sefSegments[] = $params->get('seo_search') ? $params->get('seo_search') : $alias;
 				}
 
-				if ($area) {
+				if ($area)
+				{
 					$sefSegments[] = $area;
 				}
-				if ($type_id) {
+				if ($type_id)
+				{
 					$sefSegments[] = $Translations->getText('type', $type_id);
 				}
-				if ($feature_id) {
+				if ($feature_id)
+				{
 					$abbv          = $Translations->getText('propertyfeature', $feature_id, 'abbreviation');
 					$sefSegments[] = $abbv . '-' . $feature_id;
 				}
 
 				break;
 			default:
-				if (!$view || !$alias) {
+				if (!$view || !$alias)
+				{
 					$dosef = false;
 				}
-				else {
+				else
+				{
 					$sefSegments[] = $alias;
 					$platformUri->delvar('view');
 				}
 		}
 
-		if (!count($sefSegments) && !empty($alias)) {
+		if (!count($sefSegments) && !empty($alias))
+		{
 			$sefSegments[] = $alias;
 		}
 
-		if (count($sefSegments)) {
+		if (count($sefSegments))
+		{
 			$platformUri->delvar('arrival');
 			$platformUri->delvar('arrivaldsp');
 			$platformUri->delvar('bedrooms');
@@ -226,7 +248,8 @@ class Knowres extends Base {
 	 *
 	 * @return array
 	 */
-	public function buildNormalizedNonSef($vars): array {
+	public function buildNormalizedNonSef($vars): array
+	{
 		return $this->nonSefHelper->stripFeedVars(
 			parent::buildNormalizedNonSef($vars)
 		);
@@ -237,19 +260,23 @@ class Knowres extends Base {
 	 *
 	 * @param   Uri\Uri  $uri
 	 *
-	 * @throws Exception
 	 * @return bool
+	 * @throws Exception
 	 */
-	public function shouldLeaveNonSef($uri): bool {
-		if ($uri->getVar('format') == "raw") {
+	public function shouldLeaveNonSef($uri): bool
+	{
+		if ($uri->getVar('format') == "raw")
+		{
 			return true;
 		}
 
-		if ($uri->getVar('task')) {
+		if ($uri->getVar('task'))
+		{
 			return true;
 		}
 
-		if (KrMethods::getUser()->id) {
+		if (KrMethods::getUser()->id)
+		{
 			return true;
 		}
 
@@ -261,12 +288,14 @@ class Knowres extends Base {
 	 *
 	 * @param   int  $key  Property ID
 	 *
-	 * @throws Exception
 	 * @return object
+	 * @throws Exception
 	 */
-	protected function getPropertyData(int $key): object {
+	protected function getPropertyData(int $key): object
+	{
 		$property = KrFactory::getAdminModel('property')->getItem($key);
-		if (!$property) {
+		if (!$property)
+		{
 			throw new RuntimeException('Property ID not found for ID ' . $key);
 		}
 
@@ -284,12 +313,14 @@ class Knowres extends Base {
 	 *
 	 * @param  ?int  $Itemid  ID of menu item
 	 *
-	 * @throws Exception
 	 * @return string
+	 * @throws Exception
 	 */
-	protected function setAlias(?int $Itemid): string {
+	protected function setAlias(?int $Itemid): string
+	{
 		$alias = '';
-		if ($Itemid) {
+		if ($Itemid)
+		{
 			$alias = $this->menuHelper->getMenuTitle('com_knowres', $Itemid);
 		}
 

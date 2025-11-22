@@ -32,7 +32,6 @@ use RecursiveIteratorIterator;
 use RuntimeException;
 use stdClass;
 use UnexpectedValueException;
-
 use function count;
 use function explode;
 use function file_exists;
@@ -45,7 +44,6 @@ use function sort;
 use function str_replace;
 use function substr;
 use function unlink;
-
 use const JPATH_ROOT;
 use const SORT_NUMERIC;
 
@@ -67,18 +65,24 @@ class AdhocController extends BaseController
 	public function deleteObsolete(): void
 	{
 		$dir = JPATH_ROOT . '/templates';
-		if (file_exists($dir)) {
-			if (!is_dir($dir)) {
+		if (file_exists($dir))
+		{
+			if (!is_dir($dir))
+			{
 				unlink($dir);
 			}
-			else {
+			else
+			{
 				$it = new RecursiveDirectoryIterator($dir, FilesystemIterator::SKIP_DOTS);
 				$it = new RecursiveIteratorIterator($it, RecursiveIteratorIterator::CHILD_FIRST);
-				foreach ($it as $sub) {
-					if (is_dir($sub)) {
+				foreach ($it as $sub)
+				{
+					if (is_dir($sub))
+					{
 						rmdir($sub->getPathname());
 					}
-					else {
+					else
+					{
 						unlink($sub->getPathname());
 					}
 				}
@@ -113,17 +117,20 @@ class AdhocController extends BaseController
 		$db->setQuery($query);
 
 		$rows = $db->loadObjectList();
-		foreach ($rows as $r) {
+		foreach ($rows as $r)
+		{
 			$adults     = !empty($r->cd_adults) ? $r->cd_adults : $r->c_guests;
 			$children   = 0;
 			$infants    = !empty($r->cd_infants) ? $r->cd_infants : 0;
 			$gi_count   = !is_null($r->cd_guestinfo) ? json_decode($r->cd_guestinfo) : 0;
 			$child_ages = [];
-			if (!empty($r->cd_children)) {
+			if (!empty($r->cd_children))
+			{
 				$children   = str_replace('Under 1', 0, $r->cd_children);
 				$child_ages = explode(',', $children);
 
-				for ($i = 1; $i <= $infants; $i++) {
+				for ($i = 1; $i <= $infants; $i++)
+				{
 					$child_ages[] = '0';
 				}
 
@@ -154,7 +161,8 @@ class AdhocController extends BaseController
 	public function fixupv4db(): bool
 	{
 		$filename = JPATH_ROOT . '/administrator/components/com_knowres/queries/updates/fixupv4.sql';
-		if (!file_exists($filename)) {
+		if (!file_exists($filename))
+		{
 			echo "no fixup file exists";
 			jexit();
 		}
@@ -163,91 +171,23 @@ class AdhocController extends BaseController
 		$buffer = file_get_contents($filename);
 
 		$queries = Installer::splitSql($buffer);
-		foreach ($queries as $query) {
+		foreach ($queries as $query)
+		{
 			$queryString = $query;
 			$queryString = str_replace(["\r", "\n"], ['', ' '], substr($queryString, 0, 80));
 
-			try {
+			try
+			{
 				$db->setQuery($query)->execute();
-			} catch (ExecutionFailureException|PrepareStatementFailureException $e) {
+			}
+			catch (ExecutionFailureException|PrepareStatementFailureException $e)
+			{
 				$errorMessage = Text::sprintf('JLIB_INSTALLER_ERROR_SQL_ERROR', $e->getMessage());
 				Log::add(Text::sprintf('JLIB_INSTALLER_UPDATE_LOG_QUERY', $filename, $queryString), Log::INFO,
-				         'Update');
+					'Update');
 				Log::add($errorMessage, Log::INFO, 'Update');
 				Log::add(Text::_('JLIB_INSTALLER_SQL_END_NOT_COMPLETE'), Log::INFO, 'Update');
 				Log::add($errorMessage, Log::WARNING, 'jerror');
-			}
-		}
-	}
-
-	/**
-	 * Move foreign keys from guest / owner to service
-	 * Only for factura users
-	 *
-	 * @throws Exception
-	 * @since        3.4.0
-	 * @noinspection PhpUnused
-	 */
-	public function fkToService(): void
-	{
-		$factura = KrFactory::getAdminModel('services')->getServicesByPlugin('factura');
-		if (!is_countable($factura) || !count($factura)) {
-			return;
-		}
-
-		foreach ($factura as $f) {
-			$service_id = $f->id;
-		}
-
-		$guests = KrFactory::getListModel('guests')->getForeignKeys();
-		foreach ($guests as $g) {
-			try {
-				$db = KrFactory::getDatabase();
-				$db->transactionStart();
-
-				$xref              = new stdClass();
-				$xref->guest_id    = $g->id;
-				$xref->foreign_key = $g->foreign_key;
-				$xref->state       = $g->state;
-				$xref->service_id  = $service_id;
-				$xref->created_at  = TickTock::getTS();
-				KrFactory::insert('service_xref', $xref);
-
-				$update              = new stdClass();
-				$update->id          = $g->id;
-				$update->foreign_key = '';
-				KrFactory::update('guest', $update);
-
-				$db->transactionCommit();
-			} catch (Exception) {
-				$db->transactionRollback();
-				echo "Failure for guest id $g->id - please update manually";
-			}
-		}
-
-		$owners = KrFactory::getListModel('owners')->getForeignKeys();
-		foreach ($owners as $o) {
-			try {
-				$db = KrFactory::getDatabase();
-				$db->transactionStart();
-
-				$xref              = new stdClass();
-				$xref->owner_id    = $o->id;
-				$xref->foreign_key = $o->foreign_key;
-				$xref->state       = $o->state;
-				$xref->service_id  = $service_id;
-				$xref->created_at  = TickTock::getTS();
-				KrFactory::insert('service_xref', $xref);
-
-				$update              = new stdClass();
-				$update->id          = $g->id;
-				$update->foreign_key = '';
-				KrFactory::update('owner', $update);
-
-				$db->transactionCommit();
-			} catch (Exception) {
-				$db->transactionRollback();
-				echo "Failure for owner id $g->id - please update manually";
 			}
 		}
 	}
@@ -267,15 +207,19 @@ class AdhocController extends BaseController
 		$maxServerHeight = $params->get('max_upload_height', 1400);
 
 		$rows = KrFactory::getListModel('properties')->getIds(0);
-		foreach ($rows as $r) {
+		foreach ($rows as $r)
+		{
 			$path  = Media\Images::getImageAbsPath($r->id, 'original');
 			$path  .= "/*.{jpg,gif,png,JPG,GIF,PNG}";
 			$files = glob($path, GLOB_BRACE);
 
-			if (count($files)) {
-				foreach ($files as $f) {
+			if (count($files))
+			{
+				foreach ($files as $f)
+				{
 					$imageinfo = getimagesize($f);
-					if ($imageinfo[0] < $maxServerWidth || $imageinfo[1] < $maxServerHeight) {
+					if ($imageinfo[0] < $maxServerWidth || $imageinfo[1] < $maxServerHeight)
+					{
 						Media\Images::resizeImage($f, $f, $maxServerWidth, 0, 90);
 					}
 				}
@@ -302,24 +246,30 @@ class AdhocController extends BaseController
 		$test = KrMethods::inputInt('test', 1);
 
 		$ids = KrFactory::getListModel('properties')->getIds();
-		if (!is_countable($ids) || !count($ids)) {
+		if (!is_countable($ids) || !count($ids))
+		{
 			jexit('no properties found');
 		}
 
-		foreach ($ids as $id) {
+		foreach ($ids as $id)
+		{
 			$rates = KrFactory::getListModel('properties')->getRatesToCopy($id, $old);
 
-			if ($test) {
+			if ($test)
+			{
 				var_dump($rates);
 			}
 
-			foreach ($rates as $r) {
-				if ($r->valid_to >= $new) {
+			foreach ($rates as $r)
+			{
+				if ($r->valid_to >= $new)
+				{
 					echo 'Property ' . $id . ' has new rates';
 					break;
 				}
 
-				if ($r->state == 1) {
+				if ($r->state == 1)
+				{
 					$new              = new stdClass();
 					$new->id          = 0;
 					$new->property_id = $r->property_id;
@@ -337,19 +287,23 @@ class AdhocController extends BaseController
 					$new->created_at  = TickTock::getTS();
 					$new->created_by  = 0;
 
-					if ($test) {
+					if ($test)
+					{
 						var_dump($new);
 					}
-					else {
+					else
+					{
 						KrFactory::insert('rate', $new);
-						if (!is_null($r->name)) {
+						if (!is_null($r->name))
+						{
 							$Translations->updateDefault('rate', $new->id, 'name', $r->name);
 						}
 					}
 				}
 			}
 
-			if ($test) {
+			if ($test)
+			{
 				break;
 			}
 		}

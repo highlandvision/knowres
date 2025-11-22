@@ -31,73 +31,73 @@ $this->form->setValue('iban', '', $Iban->HumanFormat());
       aria-label="<?php echo $this->form_aria_label; ?>" class="form-validate" id="owner-form" method="post"
       name="adminForm">
 
-	<div class="main-card">
-		<div class="row">
-			<div class="col-xl-9 col-xxl-8">
-				<fieldset>
-					<legend><?php echo Krmethods::plain('COM_KNOWRES_LEGEND_OWNER_DETAILS'); ?></legend>
-					<?php echo $this->form->renderField('name'); ?>
-					<?php echo $this->form->renderField('business'); ?>
-					<div class="control-group">
-						<div class="control-label">
-							<?php echo KrMethods::plain('COM_KNOWRES_FORM_OWNER_DOCUMENTATION'); ?>
-						</div>
-						<div class="controls">
-							<div class="row">
-								<div class="col-lg-5">
-									<?php echo $this->form->renderField('document_id'); ?>
-								</div>
-								<div class="col-lg-4">
-									<?php echo $this->form->renderField('document_type'); ?>
-								</div>
-							</div>
-						</div>
-					</div>
-					<?php echo $this->form->renderField('commission'); ?>
-				</fieldset>
-				<fieldset>
-					<legend><?php echo Krmethods::plain('COM_KNOWRES_LEGEND_OWNER_CONTACT'); ?></legend>
-					<?php echo $this->form->renderField('email'); ?>
-					<div class="control-group">
-						<div class="control-label">
-							<?php echo KrMethods::plain('COM_KNOWRES_OWNER_MOBILE_LBL'); ?>
-						</div>
-						<div class="controls">
-							<div class="row">
-								<div class="col-lg-5">
-									<?php echo $this->form->renderField('mobile_country_id'); ?>
-								</div>
-								<div class="col-lg-4">
-									<?php echo $this->form->renderField('mobile'); ?>
-								</div>
-							</div>
-						</div>
-					</div>
-				</fieldset>
-				<fieldset>
-					<legend><?php echo Krmethods::plain('COM_KNOWRES_LEGEND_OWNER_ADDRESS'); ?></legend>
-					<?php echo $this->form->renderFieldset('kraddress'); ?>
-				</fieldset>
-				<?php if (!empty($this->factura)): ?>
-					<fieldset name="krfactura">
-						<legend><?php echo KrMethods::plain('COM_KNOWRES_LEGEND_OWNER_FACTURA'); ?></legend>
-						<div><?php echo KrMethods::plain('COM_KNOWRES_LEGEND_OWNER_PAYMENTS'); ?></div>
-						<?php echo $this->form->renderFieldset('krfactura'); ?>
-					</fieldset>
-				<?php else: ?>
-					<fieldset name="krxero">
-						<legend><?php echo KrMethods::plain('COM_KNOWRES_LEGEND_OWNER_INTERNAL'); ?></legend>
-						<?php echo $this->form->renderFieldset('krxero'); ?>
-					</fieldset>
-				<?php endif; ?>
-				<div><?php echo KrMethods::plain('COM_KNOWRES_LEGEND_OWNER_PAYMENTS'); ?></div>
-			</div>
-			<div class="col-xl-3 offset-xxl-1">
-				<?php echo KrMethods::render('joomla.edit.global', $this); ?>
-			</div>
-		</div>
-	</div>
+    <div class="main-card">
+        <div class="row">
+            <div class="col-xl-9 col-xxl-8">
+                <fieldset>
+                    <legend><?php echo Krmethods::plain('COM_KNOWRES_LEGEND_OWNER_DETAILS'); ?></legend>
+                    <?php echo $this->form->renderField('name'); ?>
+                    <?php echo $this->form->renderField('business'); ?>
+                    <div class="control-group">
+                        <div class="control-label">
+                            <?php echo KrMethods::plain('COM_KNOWRES_FORM_OWNER_DOCUMENTATION'); ?>
+                        </div>
+                        <div class="controls">
+                            <div class="row">
+                                <div class="col-lg-5">
+                                    <?php echo $this->form->renderField('document_id'); ?>
+                                </div>
+                                <div class="col-lg-4">
+                                    <?php echo $this->form->renderField('document_type'); ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <?php echo $this->form->renderField('commission'); ?>
+                </fieldset>
+                <fieldset>
+                    <legend><?php echo Krmethods::plain('COM_KNOWRES_LEGEND_OWNER_CONTACT'); ?></legend>
+                    <?php echo $this->form->renderField('email'); ?>
+                    <div class="control-group">
+                        <div class="control-label">
+                            <?php echo KrMethods::plain('COM_KNOWRES_OWNER_MOBILE_LBL'); ?>
+                        </div>
+                        <div class="controls">
+                            <div class="row">
+                                <div class="col-lg-5">
+                                    <?php echo $this->form->renderField('mobile_country_id'); ?>
+                                </div>
+                                <div class="col-lg-4">
+                                    <?php echo $this->form->renderField('mobile'); ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend><?php echo Krmethods::plain('COM_KNOWRES_LEGEND_OWNER_ADDRESS'); ?></legend>
+                    <?php echo $this->form->renderFieldset('kraddress'); ?>
+                </fieldset>
+                <?php if (!empty($this->factura)): ?>
+                    <fieldset name="krfactura">
+                        <legend><?php echo KrMethods::plain('COM_KNOWRES_LEGEND_OWNER_FACTURA'); ?></legend>
+                        <div><?php echo KrMethods::plain('COM_KNOWRES_LEGEND_OWNER_PAYMENTS'); ?></div>
+                        <?php echo $this->form->renderFieldset('krfactura'); ?>
+                    </fieldset>
+                <?php else: ?>
+                    <fieldset name="krxero">
+                        <legend><?php echo KrMethods::plain('COM_KNOWRES_LEGEND_OWNER_INTERNAL'); ?></legend>
+                        <?php echo $this->form->renderFieldset('krxero'); ?>
+                    </fieldset>
+                <?php endif; ?>
+                <div><?php echo KrMethods::plain('COM_KNOWRES_LEGEND_OWNER_PAYMENTS'); ?></div>
+            </div>
+            <div class="col-xl-3 offset-xxl-1">
+                <?php echo KrMethods::render('joomla.edit.global', $this); ?>
+            </div>
+        </div>
+    </div>
 
-	<input type="hidden" name="task" value="">
-	<?php echo HTMLHelper::_('form.token'); ?>
+    <input type="hidden" name="task" value="">
+    <?php echo HTMLHelper::_('form.token'); ?>
 </form>

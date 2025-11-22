@@ -31,21 +31,23 @@ $color = '#818181';
 
 $company = '';
 $contact = '';
-if ($agency_id) {
-	$agency = KrFactory::getAdminModel('agency')->getItem($agency_id);
-	if (!empty($agency->id)) {
-		$company = $agency->name;
-		$address = Utility::formatAddress(
-			$agency->street,
-			'',
-			$agency->postcode,
-			$agency->town,
-			$agency->region_id,
-			$agency->country_id,
-			', '
-		);
-		$contact = $agency->name . ' ' . $address . ' ' . $agency->telephone;
-	}
+if ($agency_id)
+{
+    $agency = KrFactory::getAdminModel('agency')->getItem($agency_id);
+    if (!empty($agency->id))
+    {
+        $company = $agency->name;
+        $address = Utility::formatAddress(
+                $agency->street,
+                '',
+                $agency->postcode,
+                $agency->town,
+                $agency->region_id,
+                $agency->country_id,
+                ', '
+        );
+        $contact = $agency->name . ' ' . $address . ' ' . $agency->telephone;
+    }
 }
 
 $payby = KrMethods::plain('COM_KNOWRES_PAY_BY');
@@ -56,31 +58,31 @@ $amex  = $url . 'media/com_knowres/images/credit_cards/amex_48.png';
 ?>
 
 <table style="border:none;border-collapse:collapse;">
-	<tr>
-		<td class="footer"
-		    style="text-align:center;font-family:<?php echo $font; ?>;color:<?php echo $color; ?>;font-size:11px;padding:5px 20px 10px 20px;">
-			<p style="font-family:<?php echo $font; ?>;color:<?php echo $color; ?>;">
-				<?php echo KrMethods::sprintf('COM_KNOWRES_EMAIL_DISCLAIMER', $company); ?>
-			</p>
-		</td>
-	</tr>
-	<tr>
-		<td class="footer"
-		    style="text-align:center;font-family:<?php echo $font; ?>;color:<?php echo $color; ?>;font-size:11px;margin: 0 auto;padding:5px 20px 20px 20px;">
-			<?php if ($contact) : ?>
-				<?php echo $contact; ?><br>
-			<?php endif; ?>
-			<?php echo '&copy; ' . TickTock::getDate('now', 'Y') . ' All rights reserved'; ?>
-		</td>
-	</tr>
-	<tr>
-		<td class="footer" style="text-align:center;color:<?php echo $color; ?>;padding:5px 20px 5px 20px;">
-			<img src="<?php echo $visa; ?>"
-			     width="32" height="26" alt="<?php echo $payby; ?> Visa">
-			<img src="<?php echo $mc; ?>"
-			     width="32" height="26" alt="<?php echo $payby; ?> Mastercard">
-			<img src="<?php echo $amex; ?>"
-			     width="32" height="26" alt="<?php echo $payby; ?> American Express">
-		</td>
-	</tr>
+    <tr>
+        <td class="footer"
+            style="text-align:center;font-family:<?php echo $font; ?>;color:<?php echo $color; ?>;font-size:11px;padding:5px 20px 10px 20px;">
+            <p style="font-family:<?php echo $font; ?>;color:<?php echo $color; ?>;">
+                <?php echo KrMethods::sprintf('COM_KNOWRES_EMAIL_DISCLAIMER', $company); ?>
+            </p>
+        </td>
+    </tr>
+    <tr>
+        <td class="footer"
+            style="text-align:center;font-family:<?php echo $font; ?>;color:<?php echo $color; ?>;font-size:11px;margin: 0 auto;padding:5px 20px 20px 20px;">
+            <?php if ($contact) : ?>
+                <?php echo $contact; ?><br>
+            <?php endif; ?>
+            <?php echo '&copy; ' . TickTock::getDate('now', 'Y') . ' All rights reserved'; ?>
+        </td>
+    </tr>
+    <tr>
+        <td class="footer" style="text-align:center;color:<?php echo $color; ?>;padding:5px 20px 5px 20px;">
+            <img src="<?php echo $visa; ?>"
+                 width="32" height="26" alt="<?php echo $payby; ?> Visa">
+            <img src="<?php echo $mc; ?>"
+                 width="32" height="26" alt="<?php echo $payby; ?> Mastercard">
+            <img src="<?php echo $amex; ?>"
+                 width="32" height="26" alt="<?php echo $payby; ?> American Express">
+        </td>
+    </tr>
 </table>

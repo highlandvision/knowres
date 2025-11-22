@@ -33,8 +33,8 @@ class Paypal extends Gateway
 	/**
 	 * Initialize
 	 *
-	 * @param  int       $service_id   ID of service
-	 * @param  stdClass  $paymentData  Session payment data
+	 * @param   int       $service_id   ID of service
+	 * @param   stdClass  $paymentData  Session payment data
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -47,9 +47,9 @@ class Paypal extends Gateway
 	/**
 	 * Set output data
 	 *
+	 * @return stdClass
 	 * @throws Exception
 	 * @since  3.3.0
-	 * @return stdClass
 	 */
 	public function setOutputData(): stdClass
 	{
@@ -69,7 +69,8 @@ class Paypal extends Gateway
 		$this->paymentData->postcode    = $this->guest->postcode;
 		$this->paymentData->region_name = $this->guest->region_name;
 		$this->paymentData->mobile      = Utility::formatPhoneNumber($this->guest->mobile,
-		                                                             $this->guest->mobile_country_id, true);
+			$this->guest->mobile_country_id, true
+		);
 
 		return $this->paymentData;
 	}

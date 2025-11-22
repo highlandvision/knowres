@@ -32,7 +32,8 @@ class OwnerpaymentController extends FormController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	#[NoReturn] public function modal(): void
+	#[NoReturn]
+	public function modal(): void
 	{
 		$id = KrMethods::inputInt('id');
 		if (!$id)

@@ -43,9 +43,9 @@ class Voucher extends Contract
 	/**
 	 * Create the pdf file and either download or return path name
 	 *
+	 * @return bool|string
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return bool|string
 	 */
 	public function getPdf(): bool|string
 	{
@@ -61,9 +61,9 @@ class Voucher extends Contract
 	/**
 	 * Get the pdf text
 	 *
+	 * @return string
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return string
 	 */
 	protected function getContent(): string
 	{

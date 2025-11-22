@@ -15,7 +15,6 @@ use Exception;
 use HighlandVision\KR\Calendar\Los;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Session as KrSession;
-
 use function count;
 use function is_countable;
 use function min;
@@ -62,7 +61,8 @@ class LosRates
 	 *
 	 * @since  3.4.0
 	 */
-	public function __construct(int $property_id, array $settings, int $markup = 0, bool $do_discounts = false) {
+	public function __construct(int $property_id, array $settings, int $markup = 0, bool $do_discounts = false)
+	{
 		$this->property_id  = $property_id;
 		$this->settings     = $settings;
 		$this->markup       = $markup;
@@ -78,13 +78,15 @@ class LosRates
 	 *                               but can be overridden for channel requirements if necessary
 	 *                               e.g. VRBO only allows 31 nights per date
 	 *
+	 * @return array
 	 * @throws Exception
 	 * @since  3.4.0
-	 * @return array
 	 */
-	public function getPrices(string $first, string $final, int $max_nights = 0): array {
+	public function getPrices(string $first, string $final, int $max_nights = 0): array
+	{
 		$this->rates = KrFactory::getListModel('rates')->getRatesForProperty($this->property_id);
-		if ($this->do_discounts) {
+		if ($this->do_discounts)
+		{
 			$this->discounts = KrFactory::getListModel('discounts')->getDiscounts($this->property_id);
 		}
 
@@ -102,9 +104,9 @@ class LosRates
 	 * @param   int     $min_nights   Minimum stay for date
 	 * @param   int     $max_nights   Maximum stay for date
 	 *
+	 * @return array
 	 * @throws Exception
 	 * @since  3.4
-	 * @return array
 	 */
 	private function calcLosBaseRate(object $r, string $arrival, array $more_guests, int $min_nights,
 	                                 int    $max_nights): array
@@ -112,41 +114,55 @@ class LosRates
 		$base = [];
 		$wcod = $this->Los->weeklyChangeOverDay($arrival);
 
-		for ($nights = 1; $nights <= $max_nights; $nights++) {
-			if ($nights < $min_nights || !$wcod) {
+		for ($nights = 1; $nights <= $max_nights; $nights++)
+		{
+			if ($nights < $min_nights || !$wcod)
+			{
 				$base[$r->max_guests][$nights] = 0;
 			}
-			else {
+			else
+			{
 				$departure                     = TickTock::modifyDays($arrival, $nights);
 				$date_range                    = TickTock::allDatesBetween($arrival, $departure, true);
 				$base[$r->max_guests][$nights] = $this->computeLosRate($arrival, $departure, $r->max_guests, $nights,
-					$date_range);
+					$date_range
+				);
 			}
 
-			foreach ($more_guests as $m) {
-				if (!empty($m->more_pppn)) {
-					if ($nights < $min_nights || !$wcod) {
+			foreach ($more_guests as $m)
+			{
+				if (!empty($m->more_pppn))
+				{
+					if ($nights < $min_nights || !$wcod)
+					{
 						$base[(int) $m->more_max][$nights] = 0;
 					}
-					else {
+					else
+					{
 						$base[(int) $m->more_max][$nights] = $this->computeLosRate($arrival, $departure,
 							(int) $m->more_max, $nights, $date_range
 						);
 					}
 				}
-				elseif (!empty($m->more_min) && !empty($m->more_max)) {
-					for ($g = (int) $m->more_min; $g <= (int) $m->more_max; $g++) {
-						if ($nights < $min_nights || !$wcod) {
+				elseif (!empty($m->more_min) && !empty($m->more_max))
+				{
+					for ($g = (int) $m->more_min; $g <= (int) $m->more_max; $g++)
+					{
+						if ($nights < $min_nights || !$wcod)
+						{
 							$base[$g][$nights] = 0;
 						}
-						else {
+						else
+						{
 							$base[$g][$nights] = $this->computeLosRate($arrival, $departure, $g, $nights,
-								$date_range);
+								$date_range
+							);
 						}
 					}
 				}
 
-				if (empty($m->more_pppn)) {
+				if (empty($m->more_pppn))
+				{
 					break;
 				}
 			}
@@ -165,57 +181,75 @@ class LosRates
 	 * @param   array   $qrates       Base rates for today
 	 * @param   int     $max_nights   Maximum nioghts stay
 	 *
+	 * @return array
 	 * @throws Exception
 	 * @since  3.4.0
-	 * @return array
 	 */
 	private function calcLosRates(array $prices, object $r, string $arrival, array $more_guests, array $qrates,
 	                              int   $max_nights): array
 	{
-		for ($nights = 1; $nights <= $max_nights; $nights++) {
+		for ($nights = 1; $nights <= $max_nights; $nights++)
+		{
 			$wcod = $this->Los->weeklyChangeOverDay(TickTock::modifyDays($arrival, $nights));
-			if (!$wcod) {
+			if (!$wcod)
+			{
 				$prices[$arrival][$r->max_guests][$nights] = 0;
 			}
-			elseif (count($qrates)) {
+			elseif (count($qrates))
+			{
 				$prices[$arrival][$r->max_guests][$nights] = $qrates[$r->max_guests][$nights];
 			}
-			else {
+			else
+			{
 				$departure  = TickTock::modifyDays($arrival, $nights);
 				$date_range = TickTock::allDatesBetween($arrival, $departure, true);
 
 				$prices[$arrival][$r->max_guests][$nights] = $this->computeLosRate($arrival, $departure,
-					$r->max_guests, $nights, $date_range);
+					$r->max_guests, $nights, $date_range
+				);
 			}
 
-			foreach ($more_guests as $m) {
-				if (!(int) $m->more_min) {
+			foreach ($more_guests as $m)
+			{
+				if (!(int) $m->more_min)
+				{
 					break;
 				}
 
-				if ((int) $m->more_pppn) {
-					if (!$wcod) {
+				if ((int) $m->more_pppn)
+				{
+					if (!$wcod)
+					{
 						$prices[$arrival][$m->more_max][$nights] = 0;
 					}
-					elseif (count($qrates)) {
+					elseif (count($qrates))
+					{
 						$prices[$arrival][$m->more_max][$nights] = $qrates[$m->more_max][$nights];
 					}
-					else {
+					else
+					{
 						$prices[$arrival][$m->more_max][$nights] = $this->computeLosRate($arrival, $departure,
-							$m->more_max, $nights, $date_range);
+							$m->more_max, $nights, $date_range
+						);
 					}
 				}
-				else {
-					for ($g = (int) $m->more_min; $g <= (int) $m->more_max; $g++) {
-						if (!$wcod) {
+				else
+				{
+					for ($g = (int) $m->more_min; $g <= (int) $m->more_max; $g++)
+					{
+						if (!$wcod)
+						{
 							$prices[$arrival][$g][$nights] = 0;
 						}
-						elseif (count($qrates)) {
+						elseif (count($qrates))
+						{
 							$prices[$arrival][$g][$nights] = $qrates[$g][$nights];
 						}
-						else {
+						else
+						{
 							$prices[$arrival][$g][$nights] = $this->computeLosRate($arrival, $departure, $g,
-								$nights, $date_range);
+								$nights, $date_range
+							);
 						}
 					}
 				}
@@ -229,43 +263,53 @@ class LosRates
 	 * Check if quick rate calculation can be used
 	 * This calculates one rate per date range excluding the last "max days" for the rate
 	 *
+	 * @return bool
 	 * @throws Exception
 	 * @since  3.4.0
-	 * @return bool
 	 */
-	private function checkForQuickie(): bool {
-		if ($this->do_discounts && count($this->discounts)) {
+	private function checkForQuickie(): bool
+	{
+		if ($this->do_discounts && count($this->discounts))
+		{
 			return false;
 		}
-		if (!empty($this->settings['canwebook'])) {
+		if (!empty($this->settings['canwebook']))
+		{
 			return false;
 		}
-		if (!empty($this->settings['shortbook'])) {
+		if (!empty($this->settings['shortbook']))
+		{
 			return false;
 		}
 
-		if ($this->settings['net_rates']) {
+		if ($this->settings['net_rates'])
+		{
 			$this->ratemarkups = KrFactory::getListModel('ratemarkups')->getMarkups($this->property_id);
-			if (is_countable($this->ratemarkups) && count($this->ratemarkups)) {
+			if (is_countable($this->ratemarkups) && count($this->ratemarkups))
+			{
 				return false;
 			}
 		}
 
-		if ($this->settings['managed_rates'] && $this->settings['cluster']) {
+		if ($this->settings['managed_rates'] && $this->settings['cluster'])
+		{
 			$this->seasons = KrFactory::getListModel('seasons')->getSeasons($this->settings['cluster']);
-			if (is_countable($this->seasons) && count($this->seasons)) {
+			if (is_countable($this->seasons) && count($this->seasons))
+			{
 				return false;
 			}
 		}
 
-		if ($this->settings['managed_rates']) {
+		if ($this->settings['managed_rates'])
+		{
 			if ($this->settings['sunday_pc'] != 100
-			    || $this->settings['monday_pc'] != 100
-			    || $this->settings['tuesday_pc'] != 100
-			    || $this->settings['wednesday_pc'] != 100
-			    || $this->settings['thursday_pc'] != 100
-			    || $this->settings['friday_pc'] != 100
-			    || $this->settings['saturday_pc'] != 100) {
+				|| $this->settings['monday_pc'] != 100
+				|| $this->settings['tuesday_pc'] != 100
+				|| $this->settings['wednesday_pc'] != 100
+				|| $this->settings['thursday_pc'] != 100
+				|| $this->settings['friday_pc'] != 100
+				|| $this->settings['saturday_pc'] != 100)
+			{
 				return false;
 			}
 		}
@@ -282,17 +326,19 @@ class LosRates
 	 * @param   int     $nights      #Nights
 	 * @param   array   $date_range  Date range
 	 *
+	 * @return float
 	 * @throws Exception
 	 * @since  3.3.0
-	 * @return float
 	 */
 	private function computeLosRate(string $arrival, string $departure, int $guests, int $nights,
 	                                array  $date_range): float
 	{
-		if ($this->init_hub) {
+		if ($this->init_hub)
+		{
 			$this->initHub($arrival, $departure, $guests);
 		}
-		else {
+		else
+		{
 			$this->Hub->setValue('arrival', $arrival);
 			$this->Hub->setValue('canwebook', $this->settings['canwebook']);
 			$this->Hub->setValue('departure', $departure);
@@ -315,7 +361,8 @@ class LosRates
 		$this->Hub->compute($this->computations, true);
 		$rate = $this->Hub->getValue('contract_total');
 
-		if (!empty($this->markup)) {
+		if (!empty($this->markup))
+		{
 			$rate = $this->Hub->round($rate + ($rate * $this->markup / 100));
 		}
 
@@ -332,7 +379,8 @@ class LosRates
 	 * @throws Exception
 	 * @since  3.4.0
 	 */
-	private function initHub(string $arrival, string $departure, int $guests): void {
+	private function initHub(string $arrival, string $departure, int $guests): void
+	{
 		$contractSession             = new KrSession\Contract();
 		$contractData                = $contractSession->resetData();
 		$contractData->adjustmentsRq = false;
@@ -363,35 +411,43 @@ class LosRates
 	 *
 	 * @since  3.4.0
 	 */
-	private function setComputations(int $nights): void {
+	private function setComputations(int $nights): void
+	{
 		$this->computations   = [];
 		$this->computations[] = 'base';
 
-		if ($this->settings['managed_rates']) {
+		if ($this->settings['managed_rates'])
+		{
 			if ($this->settings['sunday_pc'] != 100
-			    || $this->settings['monday_pc'] != 100
-			    || $this->settings['tuesday_pc'] != 100
-			    || $this->settings['wednesday_pc'] != 100
-			    || $this->settings['thursday_pc'] != 100
-			    || $this->settings['friday_pc'] != 100
-			    || $this->settings['saturday_pc'] != 100) {
+				|| $this->settings['monday_pc'] != 100
+				|| $this->settings['tuesday_pc'] != 100
+				|| $this->settings['wednesday_pc'] != 100
+				|| $this->settings['thursday_pc'] != 100
+				|| $this->settings['friday_pc'] != 100
+				|| $this->settings['saturday_pc'] != 100)
+			{
 				$this->computations[] = 'dow';
 			}
-			if (count($this->seasons)) {
+			if (count($this->seasons))
+			{
 				$this->computations[] = 'seasons';
 			}
 		}
 
-		if ($nights > 1 && $nights < 7) {
+		if ($nights > 1 && $nights < 7)
+		{
 			$this->computations[] = 'shortstay';
 		}
-		if ((int) $this->settings['longstay_days1'] > 0 && $nights >= (int) $this->settings['longstay_days1']) {
+		if ((int) $this->settings['longstay_days1'] > 0 && $nights >= (int) $this->settings['longstay_days1'])
+		{
 			$this->computations[] = 'longstay';
 		}
-		if ($this->do_discounts && count($this->discounts)) {
+		if ($this->do_discounts && count($this->discounts))
+		{
 			$this->computations[] = 'discount';
 		}
-		if ($this->settings['net_rates']) {
+		if ($this->settings['net_rates'])
+		{
 			$this->computations[] = 'ratemarkup';
 		}
 		//		$this->computations[] = 'commission';
@@ -404,37 +460,44 @@ class LosRates
 	 * @param   string  $final       Final date
 	 * @param   int     $max_nights  Maximum stay to be calculated, defaults to max nights in rates if not set
 	 *
+	 * @return array
 	 * @throws Exception
 	 * @since  3.4.0
-	 * @return array
 	 */
-	private function setPrices(string $first, string $final, int $max_nights = 0): array {
+	private function setPrices(string $first, string $final, int $max_nights = 0): array
+	{
 		$quickie = $this->checkForQuickie();
 		$prices  = [];
 
-		foreach ($this->rates as $r) {
+		foreach ($this->rates as $r)
+		{
 			$start      = max($r->valid_from, $first);
 			$min_nights = $r->min_nights;
 			$max_nights = $max_nights ?: $r->max_nights;
 			$cutoff     = TickTock::modifyDays($r->valid_to, $max_nights, '-');
 
 			$more_guests = Utility::decodeJson($r->more_guests);
-			if (!is_countable($more_guests)) {
+			if (!is_countable($more_guests))
+			{
 				$more_guests = [];
 			}
 
 			$qrates = [];
-			if ($quickie && $cutoff > $start && $r->start_day == 7) {
+			if ($quickie && $cutoff > $start && $r->start_day == 7)
+			{
 				$qrates = $this->calcLosBaseRate($r, $start, $more_guests, $min_nights, $max_nights);
 			}
 
 			$dates = TickTock::allDatesBetween($start, min($r->valid_to, $final));
-			foreach ($dates as $arrival) {
-				if ($quickie && $arrival > $cutoff && count($qrates)) {
+			foreach ($dates as $arrival)
+			{
+				if ($quickie && $arrival > $cutoff && count($qrates))
+				{
 					$qrates = [];
 				}
 
-				if (!$this->Los->weeklyChangeOverDay($arrival)) {
+				if (!$this->Los->weeklyChangeOverDay($arrival))
+				{
 					continue;
 				}
 

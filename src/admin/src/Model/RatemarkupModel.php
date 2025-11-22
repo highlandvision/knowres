@@ -42,14 +42,14 @@ class RatemarkupModel extends AdminModel
 	 * Get gross rate from net
 	 * Net is net price x markup
 	 *
-	 * @param  float   $net       Net rate
-	 * @param  float   $markup    Gross markup percentage
-	 * @param  string  $currency  Currency for rounding
-	 * @param  int     $decimals  Decimals required in rounding
+	 * @param   float   $net       Net rate
+	 * @param   float   $markup    Gross markup percentage
+	 * @param   string  $currency  Currency for rounding
+	 * @param   int     $decimals  Decimals required in rounding
 	 *
+	 * @return string Marked up rounded rate
 	 * @throws RuntimeException
 	 * @since  1.0.0
-	 * @return string Marked up rounded rate
 	 */
 	public static function getGrossRate(float $net, float $markup, string $currency = '', int $decimals = 0): string
 	{
@@ -61,10 +61,10 @@ class RatemarkupModel extends AdminModel
 	/**
 	 * Method to get a knowres record.
 	 *
-	 * @param  int  $pk  The id of the primary key.
+	 * @param   int  $pk  The id of the primary key.
 	 *
-	 * @since  1.0.0
 	 * @return false|object  Object on success, false on failure.
+	 * @since  1.0.0
 	 */
 	public function getItem($pk = null): false|object
 	{
@@ -81,12 +81,12 @@ class RatemarkupModel extends AdminModel
 	/**
 	 * Override publish function
 	 *
-	 * @param  array   &$pks    A list of the primary keys to change.
-	 * @param  int      $value  The value of the published state.
+	 * @param   array   &$pks    A list of the primary keys to change.
+	 * @param   int      $value  The value of the published state.
 	 *
+	 * @return bool
 	 * @throws Exception
 	 * @since  3.1.0
-	 * @return bool
 	 */
 	public function publish(&$pks, $value = 1): bool
 	{
@@ -101,7 +101,8 @@ class RatemarkupModel extends AdminModel
 					if ($item)
 					{
 						KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updatePropertyRates',
-							(int) $item->property_id);
+							(int) $item->property_id
+						);
 					}
 
 					$first = false;
@@ -119,10 +120,10 @@ class RatemarkupModel extends AdminModel
 	/**
 	 * Method to test whether a record can be deleted.
 	 *
-	 * @param  object  $record  A record object.
+	 * @param   object  $record  A record object.
 	 *
-	 * @since  3.0.0
 	 * @return bool  True if allowed to delete the record. Defaults to the permission for the component.
+	 * @since  3.0.0
 	 */
 	protected function canDelete($record): bool
 	{
@@ -134,9 +135,9 @@ class RatemarkupModel extends AdminModel
 	/**
 	 * Method to get the data that should be injected in the form.
 	 *
+	 * @return mixed The data for the form.
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return mixed The data for the form.
 	 */
 	protected function loadFormData(): mixed
 	{

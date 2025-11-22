@@ -20,7 +20,6 @@ use JetBrains\PhpStorm\NoReturn;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Response\JsonResponse;
 use Joomla\CMS\Session\Session;
-
 use function jexit;
 
 /**
@@ -35,9 +34,9 @@ class ContractguestdataController extends FormController
 	 *
 	 * @param   string  $key  The name of the primary key of the URL variable.
 	 *
+	 * @return bool  True if access level checks pass, false otherwise.
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return bool  True if access level checks pass, false otherwise.
 	 */
 	public function cancel($key = null): bool
 	{
@@ -62,7 +61,8 @@ class ContractguestdataController extends FormController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	#[NoReturn] public function checkin(): void
+	#[NoReturn]
+	public function checkin(): void
 	{
 		Session::checkToken() or jexit(KrMethods::plain('JINVALID_TOKEN'));
 
@@ -116,9 +116,9 @@ class ContractguestdataController extends FormController
 	 * @param   BaseDatabaseModel  $model      The data model object.
 	 * @param   array              $validData  The validated data.
 	 *
+	 * @return void
 	 * @throws Exception
 	 * @since  3.1
-	 * @return void
 	 */
 	protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
 	{

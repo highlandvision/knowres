@@ -19,7 +19,6 @@ use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Translations;
 use HighlandVision\KR\Utility;
 use JetBrains\PhpStorm\NoReturn;
-
 use function count;
 use function implode;
 
@@ -36,13 +35,14 @@ class Registration
 	/**
 	 * Initialize
 	 *
-	 * @param  array  $data   Array containing the export paramters
+	 * @param   array  $data  Array containing the export paramters
 	 *                        $data = ['arrival' => (string) Arrival date].
 	 *
 	 * @throws Exception
 	 * @since  4.0.0
 	 */
-	#[NoReturn] public function __construct(array $data)
+	#[NoReturn]
+	public function __construct(array $data)
 	{
 		$this->data = $data;
 		$arrival    = $this->data['arrival'];
@@ -51,7 +51,8 @@ class Registration
 		if (empty($rows))
 		{
 			KrMethods::message(KrMethods::sprintf('COM_KNOWRES_NO_ARRIVALS', TickTock::displayDate($arrival)),
-				'warning');
+				'warning'
+			);
 			KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&task=contracts.daily', false));
 
 			return;
@@ -90,7 +91,7 @@ class Registration
 	/**
 	 * Return the document type for the file
 	 *
-	 * @param  int  $type   Document type
+	 * @param   int  $type  Document type
 	 *                      1: DNI (Spanish citizens only)
 	 *                      2: Passport
 	 *                      3: Driving Licence (Spanish citizens only)
@@ -98,13 +99,13 @@ class Registration
 	 *                      5: Spanish residence permit
 	 *                      6: Residence permit of another EU member state
 	 *
-	 * @since  2.5.0
 	 * @return string D: ID,
 	 *                Q: passport,
 	 *                C: driving license (only for Spanish citizens),
 	 *                I: identity card or,
 	 *                N: spanish residence permit,
 	 *                X: residence permit from another Member State of the European Union
+	 * @since  2.5.0
 	 */
 	protected function getDocumentType(int $type): string
 	{
@@ -129,12 +130,12 @@ class Registration
 	 * Time of preparation File Format HHMM 4
 	 * Number of records of type 1 releases 5 Each record must correspond to type 1
 	 *
-	 * @param  string  $property_name  Name of property
-	 * @param  int     $count          Line type 2 count
+	 * @param   string  $property_name  Name of property
+	 * @param   int     $count          Line type 2 count
 	 *
+	 * @return string $line Text line to be added to file
 	 * @throws InvalidFormatException
 	 * @since  2.5.0
-	 * @return string $line Text line to be added to file
 	 */
 	protected function setTypeOne(string $property_name, int $count): string
 	{
@@ -168,13 +169,13 @@ class Registration
 	 * 21 Country of nationality
 	 * Check-In 8 YYYYMMDD format
 	 *
-	 * @param  object  $row      Database row
-	 * @param  int     $es_id    Country ID for Spain
-	 * @param  string  $arrival  Arrival date yyyy-mm-dd
+	 * @param   object  $row      Database row
+	 * @param   int     $es_id    Country ID for Spain
+	 * @param   string  $arrival  Arrival date yyyy-mm-dd
 	 *
+	 * @return array $lines Text lines to be added to file
 	 * @throws Exception
 	 * @since  2.5.0
-	 * @return array $lines Text lines to be added to file
 	 */
 	protected function setTypeTwoThree(object $row, int $es_id, string $arrival): array
 	{

@@ -20,7 +20,6 @@ use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Utility;
 use InvalidArgumentException;
 use RuntimeException;
-
 use function count;
 use function is_countable;
 
@@ -39,18 +38,19 @@ class Quick
 	/**
 	 * Process block
 	 *
-	 * @param  Hub  $hub  Hub data
+	 * @param   Hub  $hub  Hub data
 	 *
+	 * @return bool
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return bool
 	 */
 	public function action(Hub $hub): bool
 	{
 		$this->hub   = $hub;
 		$this->odata = $this->hub->getOriginalData();
 
-		if (!$this->validate()) {
+		if (!$this->validate())
+		{
 			return false;
 		}
 
@@ -77,19 +77,21 @@ class Quick
 	/**
 	 * Controls the save and processing for the contract
 	 *
+	 * @return bool
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return bool
 	 */
 	protected function saveAll(): bool
 	{
-		try {
+		try
+		{
 			$db = KrFactory::getDatabase();
 			$db->transactionStart();
 
 			$modelContract = KrFactory::getAdminModel('contract');
 			$data          = $modelContract->validate($modelContract->getForm(), (array) $this->hub->getData());
-			if (!$data) {
+			if (!$data)
+			{
 				$this->hub->errors = $modelContract->getErrors();
 				throw new RuntimeException('Validation errors found in Contract');
 			}
@@ -97,23 +99,27 @@ class Quick
 			$modelContract->save($data);
 
 			$status   = Utility::getBookingStatus($this->odata->booking_status) . ' to '
-			            . Utility::getBookingStatus($this->hub->getValue('booking_status'));
+				. Utility::getBookingStatus($this->hub->getValue('booking_status'));
 			$expiry   = TickTock::displayDate($this->odata->expiry_date) . ' to '
-			            . TickTock::displayDate($this->hub->getValue('expiry_date'));
+				. TickTock::displayDate($this->hub->getValue('expiry_date'));
 			$balance  = TickTock::displayDate($this->odata->balance_date) . ' to '
-			            . TickTock::displayDate($this->hub->getValue('balance_date'));
+				. TickTock::displayDate($this->hub->getValue('balance_date'));
 			$currency = $this->hub->getValue('currency');
 			$net      = Utility::displayValue($this->odata->net_price,
-					$currency) . ' to ' . Utility::displayValue($this->hub->getValue('net_price'), $currency);
+					$currency
+				) . ' to ' . Utility::displayValue($this->hub->getValue('net_price'), $currency);
 
 			$note = KrMethods::sprintf('COM_KNOWRES_CONTRACT_QUICK', $status, $expiry, $balance, $net);
 			KrFactory::getAdminModel('contractnote')::createContractNote($this->hub->getValue('id'), $note);
 
 			$db->transactionCommit();
-		} catch (Exception $e) {
+		}
+		catch (Exception $e)
+		{
 			$db->transactionRollback();
 
-			if (is_countable($this->hub->errors) && count($this->hub->errors)) {
+			if (is_countable($this->hub->errors) && count($this->hub->errors))
+			{
 				return false;
 			}
 
@@ -126,13 +132,14 @@ class Quick
 	/**
 	 * Any additional procesing before save
 	 *
+	 * @return bool
 	 * @throws InvalidArgumentException
 	 * @since  1.0.0
-	 * @return bool
 	 */
 	protected function validate(): bool
 	{
-		if ($this->hub->getValue('net_price') > $this->hub->getValue('room_total')) {
+		if ($this->hub->getValue('net_price') > $this->hub->getValue('room_total'))
+		{
 			$this->hub->errors = [KrMethods::plain('COM_KNOWRES_RULES_NETPRICE')];
 
 			return false;

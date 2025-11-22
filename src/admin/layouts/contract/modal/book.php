@@ -27,49 +27,51 @@ extract($displayData);
 ?>
 
 <div class="modal-header">
-	<h3 class="modal-title" id="kr-contract-modal-book-label">
-		<?php echo KrMethods::plain('COM_KNOWRES_PROPERTY_CALENDAR_MODAL'); ?>
-	</h3>
-	<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <h3 class="modal-title" id="kr-contract-modal-book-label">
+        <?php echo KrMethods::plain('COM_KNOWRES_PROPERTY_CALENDAR_MODAL'); ?>
+    </h3>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
 <div class="modal-body">
-	<div class="row">
-		<div class="col">
-			<?php if (!is_null($form)): ?>
-				<br>
-				<form action="<?php echo KrMethods::route('index.php?option=com_knowres&layout=edit'); ?>"
-				      class="form-validate" id="adminForm" method="post" name="adminForm">
+    <div class="row">
+        <div class="col">
+            <?php if (!is_null($form)): ?>
+                <br>
+                <form action="<?php echo KrMethods::route('index.php?option=com_knowres&layout=edit'); ?>"
+                      class="form-validate" id="adminForm" method="post" name="adminForm">
 
-					<fieldset name="krdata">
-						<?php echo $form->renderFieldset('krdata'); ?>
-					</fieldset>
+                    <fieldset name="krdata">
+                        <?php echo $form->renderFieldset('krdata'); ?>
+                    </fieldset>
 
-					<input type="hidden" name="action" value="block">
-					<input type="hidden" name="jform[arrival]" id="arrival" value="<?php echo $arrival; ?>">
-					<input type="hidden" name="jform[departure]" id="departure" value="<?php echo $departure; ?>">
-					<input type="hidden" name="jform[id]" value="0">
-					<input type="hidden" name="jform[property_id]" value="<?php echo $property_id; ?>">
-					<input type="hidden" name="jform[black_booking]" value="1">
-					<input type="hidden" name="task" id="task" value="">
-					<?php echo HTMLHelper::_('form.token'); ?>
-				</form>
-			<?php endif; ?>
-		</div>
-	</div>
+                    <input type="hidden" name="action" value="block">
+                    <input type="hidden" name="jform[arrival]" id="arrival" value="<?php echo $arrival; ?>">
+                    <input type="hidden" name="jform[departure]" id="departure" value="<?php echo $departure; ?>">
+                    <input type="hidden" name="jform[id]" value="0">
+                    <input type="hidden" name="jform[property_id]" value="<?php echo $property_id; ?>">
+                    <input type="hidden" name="jform[black_booking]" value="1">
+                    <input type="hidden" name="task" id="task" value="">
+                    <?php echo HTMLHelper::_('form.token'); ?>
+                </form>
+            <?php endif; ?>
+        </div>
+    </div>
 </div>
+
 <div class="modal-footer">
-	<?php if ($allow_block): ?>
-		<button class="btn btn-primary" onclick="Knowres.submitform('contract.save', undefined, false)" type="button">
-			<?php echo KrMethods::plain('COM_KNOWRES_PROPERTY_CALENDAR_MODAL_ADD_BLOCK') ?>
-		</button>
-	<?php endif; ?>
-	<?php if ($allow_book): ?>
-		<?php $link = KrMethods::route('index.php?option=com_knowres&view=contract&task=edit&layout=manager'); ?>
-		<a class="btn btn-primary" id="newreservation" data-id="<?php echo $property_id; ?>" href="<?php echo $link; ?>">
-			<?php echo KrMethods::plain('COM_KNOWRES_PROPERTY_CALENDAR_LINK'); ?>
-		</a>
-	<?php endif; ?>
-	<button class="btn btn-danger" type="button" data-bs-dismiss="modal">
-		<?php echo KrMethods::plain('JTOOLBAR_CLOSE'); ?>
-	</button>
+    <?php if ($allow_block): ?>
+        <button class="btn btn-primary" onclick="Knowres.submitform('contract.save', undefined, false)" type="button">
+            <?php echo KrMethods::plain('COM_KNOWRES_PROPERTY_CALENDAR_MODAL_ADD_BLOCK') ?>
+        </button>
+    <?php endif; ?>
+    <?php if ($allow_book): ?>
+        <?php $link = KrMethods::route('index.php?option=com_knowres&view=contract&task=edit&layout=manager'); ?>
+        <a class="btn btn-primary" id="newreservation" data-id="<?php echo $property_id; ?>"
+           href="<?php echo $link; ?>">
+            <?php echo KrMethods::plain('COM_KNOWRES_PROPERTY_CALENDAR_LINK'); ?>
+        </a>
+    <?php endif; ?>
+    <button class="btn btn-danger" type="button" data-bs-dismiss="modal">
+        <?php echo KrMethods::plain('JTOOLBAR_CLOSE'); ?>
+    </button>
 </div>

@@ -33,32 +33,32 @@ $id2 = 'order' . $value2;
 
 if ($sort_type == 'a')
 {
-	$label1 = KrMethods::plain('COM_KNOWRES_SORT_A_Z');
-	$label2 = KrMethods::plain('COM_KNOWRES_SORT_Z_A');
+    $label1 = KrMethods::plain('COM_KNOWRES_SORT_A_Z');
+    $label2 = KrMethods::plain('COM_KNOWRES_SORT_Z_A');
 }
 else
 {
-	$label1 = KrMethods::plain('COM_KNOWRES_SORT_LOW_HIGH');
-	$label2 = KrMethods::plain('COM_KNOWRES_SORT_HIGH_LOW');
+    $label1 = KrMethods::plain('COM_KNOWRES_SORT_LOW_HIGH');
+    $label2 = KrMethods::plain('COM_KNOWRES_SORT_HIGH_LOW');
 }
 ?>
 
 <ul class="filter-sort-list">
-	<li class="head"><?php echo $heading ?></li>
-	<li>
-		<input type="radio" id="<?php echo $id1; ?>" class="radioover open getResponseSearch"
-		       name="ordering" <?php echo $order == $value1 ? 'checked="checked"' : ''; ?>
-		       value="<?php echo $value1; ?>" data-action="order" data-action-value="<?php echo $value1; ?>">
-		<label class="radiolabel open" for="<?php echo $id1; ?>">
-			<?php echo $label1; ?>
-		</label>
-	</li>
-	<li>
-		<input type="radio" id="<?php echo $id2; ?>" class="radioover open getResponseSearch"
-		       name="ordering" <?php echo $order == $value2 ? 'checked="checked"' : ''; ?>
-		       value="<?php echo $value2; ?>" data-action="order" data-action-value="<?php echo $value2; ?>">
-		<label class="radiolabel open" for="<?php echo $id2; ?>">
-			<?php echo $label2; ?>
-		</label>
-	</li>
+    <li class="head"><?php echo $heading ?></li>
+    <li>
+        <input type="radio" id="<?php echo $id1; ?>" class="radioover open getResponseSearch"
+               name="ordering" <?php echo $order == $value1 ? 'checked="checked"' : ''; ?>
+               value="<?php echo $value1; ?>" data-action="order" data-action-value="<?php echo $value1; ?>">
+        <label class="radiolabel open" for="<?php echo $id1; ?>">
+            <?php echo $label1; ?>
+        </label>
+    </li>
+    <li>
+        <input type="radio" id="<?php echo $id2; ?>" class="radioover open getResponseSearch"
+               name="ordering" <?php echo $order == $value2 ? 'checked="checked"' : ''; ?>
+               value="<?php echo $value2; ?>" data-action="order" data-action-value="<?php echo $value2; ?>">
+        <label class="radiolabel open" for="<?php echo $id2; ?>">
+            <?php echo $label2; ?>
+        </label>
+    </li>
 </ul>

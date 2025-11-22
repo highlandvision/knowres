@@ -16,7 +16,6 @@ use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Media\Pdf;
 use RuntimeException;
-
 use function nl2br;
 
 /**
@@ -34,8 +33,8 @@ class Property extends Pdf
 	/**
 	 * Initialize
 	 *
-	 * @param  string  $action       Destination output
-	 * @param  int     $property_id  ID of Property
+	 * @param   string  $action       Destination output
+	 * @param   int     $property_id  ID of Property
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -67,7 +66,8 @@ class Property extends Pdf
 			if (!isset($this->agency->id))
 			{
 				throw new RuntimeException('Agency not found for default manager for property '
-					. $this->property->property_name);
+					. $this->property->property_name
+				);
 			}
 		}
 	}
@@ -78,9 +78,9 @@ class Property extends Pdf
 	 * @param  ?string  $property_name   Property name
 	 * @param  ?string  $property_terms  Property terms
 	 *
+	 * @return string
 	 * @throws Exception
 	 * @since  3.3.0
-	 * @return string
 	 */
 	protected function renderPdf(?string $property_name = null, ?string $property_terms = null): string
 	{

@@ -17,7 +17,6 @@ use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Service;
 use HighlandVision\KR\TickTock;
 use InvalidArgumentException;
-
 use function preg_match;
 
 /**
@@ -46,7 +45,8 @@ class Mailchimp extends Service
 	 * @throws Exception
 	 * @since 1.0.0
 	 */
-	public function __construct(int $service_id, string $email, string $name) {
+	public function __construct(int $service_id, string $email, string $name)
+	{
 		parent::__construct($service_id);
 
 		$this->setEmail($email);
@@ -56,23 +56,29 @@ class Mailchimp extends Service
 	/**
 	 * Send subscription
 	 *
+	 * @return bool|string
 	 * @throws Exception
 	 * @since 1.0.0
-	 * @return bool|string
 	 */
-	public function subscribe(): bool|string {
+	public function subscribe(): bool|string
+	{
 		$VendorMailchimp = new VendorMailchimp($this->parameters->apikey);
 		$VendorMailchimp->post('lists/' . $this->parameters->list . '/members', [
-			'email_address' => $this->email, 'status' => 'subscribed', 'merge_fields' => $this->mergeFields()
+			'email_address' => $this->email,
+			'status'        => 'subscribed',
+			'merge_fields'  => $this->mergeFields()
 		]);
 
-		if ($VendorMailchimp->success()) {
+		if ($VendorMailchimp->success())
+		{
 			return true;
 		}
-		else {
+		else
+		{
 			$error  = $VendorMailchimp->getLastError();
 			$needle = 'is already a list member';
-			if (str_contains($error, $needle)) {
+			if (str_contains($error, $needle))
+			{
 				return true;
 			}
 
@@ -83,22 +89,27 @@ class Mailchimp extends Service
 	/**
 	 * Set merge fields
 	 *
+	 * @return array
 	 * @throws Exception
 	 * @since  3.3.0
-	 * @return array
 	 */
-	protected function mergeFields(): array {
+	protected function mergeFields(): array
+	{
 		$merge_fields = [];
-		if ($this->parameters->language) {
+		if ($this->parameters->language)
+		{
 			$merge_fields[$this->parameters->language] = KrMethods::getLanguage()->getTag();
 		}
-		if ($this->parameters->firstname) {
+		if ($this->parameters->firstname)
+		{
 			$merge_fields[$this->parameters->firstname] = $this->firstname;
 		}
-		if ($this->parameters->surname) {
+		if ($this->parameters->surname)
+		{
 			$merge_fields[$this->parameters->surname] = $this->surname;
 		}
-		if ($this->parameters->subscribeDate) {
+		if ($this->parameters->subscribeDate)
+		{
 			$merge_fields[$this->parameters->subscribeDate] = TickTock::getDate();
 		}
 
@@ -113,12 +124,15 @@ class Mailchimp extends Service
 	 * @throws InvalidArgumentException
 	 * @since 1.0.0
 	 */
-	protected function setEmail(string $email): void {
-		if (!$email) {
+	protected function setEmail(string $email): void
+	{
+		if (!$email)
+		{
 			throw new InvalidArgumentException(KrMethods::plain('COM_KNOWRES_EMAIL_MISSING'));
 		}
 
-		if (!preg_match("/^[_a-z\d-]+(\.[_a-z\d-]+)*@[a-z\d-]+(\.[a-z\d-]+)*$/i", $email)) {
+		if (!preg_match("/^[_a-z\d-]+(\.[_a-z\d-]+)*@[a-z\d-]+(\.[a-z\d-]+)*$/i", $email))
+		{
 			throw new InvalidArgumentException(KrMethods::plain('COM_KNOWRES_EMAIL_INVALID'));
 		}
 
@@ -133,20 +147,26 @@ class Mailchimp extends Service
 	 * @throws InvalidArgumentException
 	 * @since 1.0.0
 	 */
-	protected function setName(string $name): void {
-		if (empty($name)) {
+	protected function setName(string $name): void
+	{
+		if (empty($name))
+		{
 			throw new InvalidArgumentException(KrMethods::plain('COM_KNOWRES_NAME_MISSING'));
 		}
 
 		$split = explode(' ', $name);
-		foreach ($split as $n) {
-			if (!$this->firstname) {
+		foreach ($split as $n)
+		{
+			if (!$this->firstname)
+			{
 				$this->firstname = $n;
 			}
-			elseif (!$this->surname) {
+			elseif (!$this->surname)
+			{
 				$this->surname = $n;
 			}
-			else {
+			else
+			{
 				$this->surname .= ' ' . $n;
 			}
 		}

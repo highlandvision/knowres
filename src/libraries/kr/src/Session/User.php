@@ -18,7 +18,6 @@ use HighlandVision\KR\Session;
 use HighlandVision\KR\Utility;
 use JetBrains\PhpStorm\Pure;
 use stdClass;
-
 use function defined;
 use function is_null;
 use function property_exists;
@@ -44,8 +43,8 @@ class User extends Session
 	/**
 	 * Get user access level
 	 *
-	 * @since   3.3.0
 	 * @return int
+	 * @since   3.3.0
 	 */
 	public function getAccessLevel(): int
 	{
@@ -57,16 +56,18 @@ class User extends Session
 	/**
 	 * Request session data
 	 *
-	 * @since  3.3.0
 	 * @return stdClass
+	 * @since  3.3.0
 	 */
 	public function getData(): stdClass
 	{
 		$data = $this->getSession();
-		if (is_null($data)) {
+		if (is_null($data))
+		{
 			$data = $this->init();
 		}
-		if (is_array($data)) {
+		if (is_array($data))
+		{
 			$data = $this->init();
 		}
 
@@ -76,15 +77,16 @@ class User extends Session
 	/**
 	 * Set user properties
 	 *
-	 * @since  3.3.0
 	 * @return string
+	 * @since  3.3.0
 	 */
 	public function getUserProperties(): string
 	{
 		$data = $this->getData();
 
 		$properties = '';
-		if (isset($data->access_level) && $data->access_level >= 10 && $data->access_level <= 20) {
+		if (isset($data->access_level) && $data->access_level >= 10 && $data->access_level <= 20)
+		{
 			$properties = $data->properties;
 		}
 
@@ -99,9 +101,12 @@ class User extends Session
 	public function resetCurrentProperty(): void
 	{
 		$data = $this->getSession();
-		if (is_null($data)) {
+		if (is_null($data))
+		{
 			$data = $this->init();
-		} else {
+		}
+		else
+		{
 			$data->cr_property_id   = 0;
 			$data->cr_property_name = '';
 			$data->cr_country_id    = 0;
@@ -115,8 +120,8 @@ class User extends Session
 	/**
 	 * Reset data and session
 	 *
-	 * @since  3.3.0
 	 * @return stdClass
+	 * @since  3.3.0
 	 */
 	public function resetData(): stdClass
 	{
@@ -140,29 +145,41 @@ class User extends Session
 		$m3 = 'You are not authorised to access the requested page. Please contact your system administrator';
 
 		$data = $this->getData();
-		if (!isset($data->access_level) || $data->access_level == 0) {
+		if (!isset($data->access_level) || $data->access_level == 0)
+		{
 			$user = KrMethods::getUser();
-			if ($user->id) {
+			if ($user->id)
+			{
 				$item = KrFactory::getAdminModel('manager')->getManagerbyUserId($user->id);
-				if ($item) {
+				if ($item)
+				{
 					$data->access_level = $item->access_level;
 					$data->agency_id    = $item->agency_id;
 					$data->manager_id   = $item->id;
 
-					if ($item->properties) {
+					if ($item->properties)
+					{
 						$tmp              = Utility::decodeJson($item->properties, true);
 						$data->properties = implode(',', $tmp);
-					} else {
+					}
+					else
+					{
 						$data->properties = '';
 					}
 
-					if ($item->access_level == 10 && !count(Utility::decodeJson($item->properties, true))) {
-						if (KrMethods::getParams()->get('property_add', 0)) {
+					if ($item->access_level == 10 && !count(Utility::decodeJson($item->properties, true)))
+					{
+						if (KrMethods::getParams()->get('property_add', 0))
+						{
 							// Allowed to add a property so redirect to property add
 							KrMethods::message(KrMethods::plain($m1));
 							KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&view=property&layout=edit&id=0',
-								false));
-						} else {
+								false
+							)
+							);
+						}
+						else
+						{
 							// Not allowed to add so refer to system admin
 							KrMethods::logoutUser($user->id);
 							KrMethods::message(KrMethods::plain($m2), 'error');
@@ -172,12 +189,16 @@ class User extends Session
 						return;
 					}
 				}
-			} else {
+			}
+			else
+			{
 				KrMethods::logoutUser($user->id);
 				KrMethods::message(KrMethods::plain($m3), 'error');
 				KrMethods::redirect(KrMethods::route('index.php'));
 			}
-		} else {
+		}
+		else
+		{
 			$data->access_level = 1;
 			$data->properties   = '';
 			$data->agency_id    = 0;
@@ -190,16 +211,18 @@ class User extends Session
 	/**
 	 * Update session data from array (db item or jform)
 	 *
-	 * @param  array|object  $item  Update data
+	 * @param   array|object  $item  Update data
 	 *
-	 * @since  3.2.0
 	 * @return stdClass
+	 * @since  3.2.0
 	 */
 	public function updateData(array|object $item): stdClass
 	{
 		$data = $this->getData();
-		foreach ($item as $key => $value) {
-			if (property_exists($data, $key)) {
+		foreach ($item as $key => $value)
+		{
+			if (property_exists($data, $key))
+			{
 				$data->$key = $value;
 			}
 		}
@@ -212,10 +235,11 @@ class User extends Session
 	/**
 	 * Initialise user session
 	 *
-	 * @since  1.0.0
 	 * @return stdClass
+	 * @since  1.0.0
 	 */
-	#[Pure] protected function init(): stdClass
+	#[Pure]
+	protected function init(): stdClass
 	{
 		$data                   = new stdClass();
 		$data->access_level     = 0;

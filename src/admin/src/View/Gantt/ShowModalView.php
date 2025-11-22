@@ -28,10 +28,6 @@ class ShowModalView extends KrHtmlView\Contract
 {
 	/** @var string The viewing level */
 	public string $audience;
-	/** @var float Contract balance */
-	protected float $balance = 0;
-	/** @var float Contract balance less pending payments */
-	protected float $balance_all = 0;
 	/** @var array|bool Contract notes. */
 	public array|bool $contract_notes;
 	/** @var mixed Fees list */
@@ -46,17 +42,22 @@ class ShowModalView extends KrHtmlView\Contract
 	public float $payment = 0;
 	/** @var mixed Payments */
 	public mixed $payments;
+	/** @var float Contract balance */
+	protected float $balance = 0;
+	/** @var float Contract balance less pending payments */
+	protected float $balance_all = 0;
 
 	/**
 	 * Display the view
 	 *
 	 * @param  ?string  $tpl  A template file to load. [optional]
 	 *
+	 * @return void
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return void
 	 */
-	#[NoReturn] public function display($tpl = null): void
+	#[NoReturn]
+	public function display($tpl = null): void
 	{
 		$this->item = KrFactory::getAdminModel('contract')->getItem($this->id);
 		if (empty($this->item->id))
@@ -88,7 +89,8 @@ class ShowModalView extends KrHtmlView\Contract
 			$this->fees     = KrFactory::getListModel('contractfees')->getForContract($this->item->id);
 			[$this->balance, $this->balance_all]
 				= KrFactory::getAdminModel('contractpayment')::setBalances($this->item, $this->payments,
-				$this->fees);
+				$this->fees
+			);
 			$this->payment = KrFactory::getListModel('contractpayments')->getPaymentTotal($this->item->id);
 		}
 

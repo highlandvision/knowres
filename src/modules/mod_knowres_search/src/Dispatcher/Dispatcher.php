@@ -19,10 +19,8 @@ use HighlandVision\KR\SiteHelper;
 use Joomla\CMS\Dispatcher\AbstractModuleDispatcher;
 use Joomla\CMS\Helper\HelperFactoryAwareInterface;
 use Joomla\CMS\Helper\HelperFactoryAwareTrait;
-
 use function defined;
 use function is_dir;
-
 use const JPATH_ROOT;
 
 /**
@@ -30,7 +28,8 @@ use const JPATH_ROOT;
  *
  * @since  4.0.0
  */
-class Dispatcher extends AbstractModuleDispatcher implements HelperFactoryAwareInterface {
+class Dispatcher extends AbstractModuleDispatcher implements HelperFactoryAwareInterface
+{
 	use HelperFactoryAwareTrait;
 
 	/**
@@ -41,7 +40,8 @@ class Dispatcher extends AbstractModuleDispatcher implements HelperFactoryAwareI
 	 */
 	public function dispatch(): void
 	{
-		if (is_dir(JPATH_ROOT . '/media/com_knowres/vendor')) {
+		if (is_dir(JPATH_ROOT . '/media/com_knowres/vendor'))
+		{
 			require_once(JPATH_ROOT . '/media/com_knowres/vendor/autoload.php');
 		}
 
@@ -54,16 +54,17 @@ class Dispatcher extends AbstractModuleDispatcher implements HelperFactoryAwareI
 	/**
 	 * Returns the layout data.
 	 *
+	 * @return array
 	 * @throws Exception
 	 * @since  4.0.0
-	 * @return array
 	 */
 	protected function getLayoutData(): array
 	{
 		$data   = parent::getLayoutData();
 		$params = $data['params'];
 
-		if ($data && !empty($params)) {
+		if ($data && !empty($params))
+		{
 			$Helper                   = $this->getHelperFactory()->getHelper('KnowresSearchHelper');
 			$data['initial']          = $Helper::getSearchDefaults();
 			$data['Itemid']           = SiteHelper::getItemId('com_knowres', 'properties');
@@ -74,7 +75,8 @@ class Dispatcher extends AbstractModuleDispatcher implements HelperFactoryAwareI
 			$data['show_guests']      = $params->get('show_guests', 0);
 			$data['expanded_guests']  = KrMethods::getParams()->get('search_guests_expanded', 0);
 
-			if ((int) $params->get('show_regions', 0)) {
+			if ((int) $params->get('show_regions', 0))
+			{
 				$data['regions'] = $Helper::getRegions();
 				$data['options'] =
 					$Helper::regionOptgroup($data['regions'], $data['params']->get('show_regions_expanded', 0));

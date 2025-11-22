@@ -17,25 +17,23 @@ $wa->useScript('com_knowres.site-modules');
 ?>
 
 <div class="kr-equalize grid-x grid-margin-x">
-	<?php foreach ($regions as $region): ?>
-		<div class="small-12 medium-4 cell">
-			<a href="<?php echo KrMethods::route('index.php?option=com_knowres&view=properties&region_id=' .
-			                                     $region['id']
-			                                     .
-			                                     '&Itemid=' .
-			                                     $region['Itemid']); ?>" title="<?php echo $region['name']; ?>">
+    <?php foreach ($regions as $region): ?>
+        <div class="small-12 medium-4 cell">
+            <a href="<?php echo KrMethods::route('index.php?option=com_knowres&view=properties&region_id=' .
+                    $region['id'] . '&Itemid=' . $region['Itemid']); ?>" title="<?php echo $region['name']; ?>">
 
-				<?php
-				$options = ['src'   => $region['image'],
-				            'alt'   => $region['name'],
-				            'style' => 'min-height:180px',
-				            'class' => 'responsive'
-				];
+                <?php
+                $options = [
+                        'src'   => $region['image'],
+                        'alt'   => $region['name'],
+                        'style' => 'min-height:180px',
+                        'class' => 'responsive'
+                ];
 
-				echo KrMethods::render('joomla.html.image', $options);
-				?>
-			</a>
-			<h5><?php echo $region['name']; ?></h5>
-		</div>
-	<?php endforeach; ?>
+                echo KrMethods::render('joomla.html.image', $options);
+                ?>
+            </a>
+            <h5><?php echo $region['name']; ?></h5>
+        </div>
+    <?php endforeach; ?>
 </div>

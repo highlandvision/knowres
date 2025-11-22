@@ -51,11 +51,12 @@ class GeriatricView extends KrHtmlView\Site
 	 *
 	 * @param   null  $tpl  Default template.
 	 *
+	 * @return void
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return void
 	 */
-	#[NoReturn] public function display($tpl = null): void
+	#[NoReturn]
+	public function display($tpl = null): void
 	{
 		$this->setLayout('geriatric');
 		$this->params = KrMethods::getParams();

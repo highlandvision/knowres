@@ -26,14 +26,14 @@ extract($displayData);
 $params = KrMethods::getParams();
 ?>
 
-	<div class="row">
-		<div class="col-12">
-			<?php if (empty($guestdata->id)): ?>
-				<?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATA_PENDING'); ?>
-				<?php return; ?>
-			<?php endif; ?>
-		</div>
-	</div>
+    <div class="row">
+        <div class="col-12">
+            <?php if (empty($guestdata->id)): ?>
+                <?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATA_PENDING'); ?>
+                <?php return; ?>
+            <?php endif; ?>
+        </div>
+    </div>
 
 <?php echo KrMethods::render('contract.show.guestdata.boa', ['contract' => $contract, 'balance' => $balance]); ?>
 <?php echo KrMethods::render('contract.show.guestdata.guestinfo', ['guestdata' => $guestdata]); ?>
@@ -41,17 +41,18 @@ $params = KrMethods::getParams();
 <?php echo KrMethods::render('contract.show.guestdata.departure', ['guestdata' => $guestdata]); ?>
 
 <?php if ($access_level > 10 || ($access_level == 10 && $params->get('show_emergency'))): ?>
-	<?php echo KrMethods::render('contract.show.guestdata.emergency', ['guestdata' => $guestdata]); ?>
+    <?php echo KrMethods::render('contract.show.guestdata.emergency', ['guestdata' => $guestdata]); ?>
 <?php endif; ?>
 
 <?php $options = KrFactory::getListModel('propertyoptions')->getPropertyOptionsForProperty($contract->property_id); ?>
 <?php if (is_countable($options) && count($options)): ?>
-	<?php echo KrMethods::render('contract.show.guestdata.options',
-		['guestdata' => $guestdata, 'options' => $options]); ?>
-	<br>
+    <?php echo KrMethods::render('contract.show.guestdata.options',
+            ['guestdata' => $guestdata, 'options' => $options]
+    ); ?>
+    <br>
 <?php endif; ?>
 
 <?php if ($guestdata->preferences) : ?>
-	<div class="fw500"><?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATA_PREFERENCES_LBL'); ?></div>
-	<?php echo nl2br($guestdata->preferences); ?>
+    <div class="fw500"><?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATA_PREFERENCES_LBL'); ?></div>
+    <?php echo nl2br($guestdata->preferences); ?>
 <?php endif; ?>

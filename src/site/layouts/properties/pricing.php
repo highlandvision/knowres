@@ -36,59 +36,61 @@ $params       = KrMethods::getParams();
 ?>
 
 <?php if ($item->discount_id > 0 && $params->get('search_discounts', 0)): ?>
-	<?php $discounts = KrFactory::getListSiteModel('properties')->getDiscount($item->id); ?>
-	<?php if (is_countable($discounts) && count($discounts)): ?>
-		<?php echo KrMethods::render('properties.discountsearch', ['property_id' => $item->id,
-		                                                           'discounts'   => $discounts,
-		                                                           'currency'    => $currency
-		]); ?>
-	<?php else: ?>
-		<button aria-label="<?php echo KrMethods::plain('COM_KNOWRES_DISCOUNTS_NONE'); ?>"
-		        class="button accent discounts-none"
-		        style="pointer-events:none" type="button">&nbsp;
-		</button>
-	<?php endif; ?>
+    <?php $discounts = KrFactory::getListSiteModel('properties')->getDiscount($item->id); ?>
+    <?php if (is_countable($discounts) && count($discounts)): ?>
+        <?php echo KrMethods::render('properties.discountsearch', [
+                'property_id' => $item->id,
+                'discounts'   => $discounts,
+                'currency'    => $currency
+        ]); ?>
+    <?php else: ?>
+        <button aria-label="<?php echo KrMethods::plain('COM_KNOWRES_DISCOUNTS_NONE'); ?>"
+                class="button accent discounts-none"
+                style="pointer-events:none" type="button">&nbsp;
+        </button>
+    <?php endif; ?>
 <?php else: ?>
-	<button aria-label="<?php echo KrMethods::plain('COM_KNOWRES_DISCOUNTS_NONE'); ?>"
-	        class="button accent discounts-none" style="pointer-events:none" type="button">&nbsp;
-	</button>
+    <button aria-label="<?php echo KrMethods::plain('COM_KNOWRES_DISCOUNTS_NONE'); ?>"
+            class="button accent discounts-none" style="pointer-events:none" type="button">&nbsp;
+    </button>
 <?php endif; ?>
 
 <a class="button rate" href="<?php echo $plink; ?>">
-	<?php if ($booking_type): ?>
-		<?php if ($byAvailability): ?>
-			<?php echo KrMethods::sprintf('COM_KNOWRES_SEARCH_PRICE',
-			                              Utility::displayValue($net, $currency, false)); ?>
-		<?php elseif ($weekly) : ?>
-			<?php echo KrMethods::plain('COM_KNOWRES_SEARCH_PRICE_FROM'); ?>
-			<?php echo Utility::displayValue($net, $currency, false); ?>
-		<?php else : ?>
-			<?php echo KrMethods::plain('COM_KNOWRES_SEARCH_PRICE_FROM_NIGHT'); ?>
-			<?php echo Utility::displayValue($net, $currency, false); ?>
-		<?php endif; ?>
+    <?php if ($booking_type): ?>
+        <?php if ($byAvailability): ?>
+            <?php echo KrMethods::sprintf('COM_KNOWRES_SEARCH_PRICE',
+                    Utility::displayValue($net, $currency, false)
+            ); ?>
+        <?php elseif ($weekly) : ?>
+            <?php echo KrMethods::plain('COM_KNOWRES_SEARCH_PRICE_FROM'); ?>
+            <?php echo Utility::displayValue($net, $currency, false); ?>
+        <?php else : ?>
+            <?php echo KrMethods::plain('COM_KNOWRES_SEARCH_PRICE_FROM_NIGHT'); ?>
+            <?php echo Utility::displayValue($net, $currency, false); ?>
+        <?php endif; ?>
 
-		<?php if ($full): ?>
-			<span class="center">
+        <?php if ($full): ?>
+            <span class="center">
 	           <del><?php echo Utility::displayValue($full, $currency, false); ?></del>
 	        </span>
-		<?php endif; ?>
-	<?php else: ?>
-		<?php if ($item->price_summary): ?>
-			<?php if ($weekly) : ?>
-				<?php echo KrMethods::plain('COM_KNOWRES_SEARCH_PRICE_FROM'); ?>
-				<?php echo ' '; ?>
-				<?php echo $Currency->getSimpleValue($item->price_summary, $currency); ?>
-			<?php else : ?>
-				<?php echo KrMethods::plain('COM_KNOWRES_SEARCH_PRICE_FROM_NIGHT'); ?>
-				<?php echo ' '; ?>
-				<?php echo $Currency->getSimpleValue($item->price_summary, $currency); ?>
-			<?php endif; ?>
-		<?php else: ?>
-			<?php echo KrMethods::plain('COM_KNOWRES_SEARCH_REQUEST_RATES'); ?>
-		<?php endif; ?>
-	<?php endif; ?>
+        <?php endif; ?>
+    <?php else: ?>
+        <?php if ($item->price_summary): ?>
+            <?php if ($weekly) : ?>
+                <?php echo KrMethods::plain('COM_KNOWRES_SEARCH_PRICE_FROM'); ?>
+                <?php echo ' '; ?>
+                <?php echo $Currency->getSimpleValue($item->price_summary, $currency); ?>
+            <?php else : ?>
+                <?php echo KrMethods::plain('COM_KNOWRES_SEARCH_PRICE_FROM_NIGHT'); ?>
+                <?php echo ' '; ?>
+                <?php echo $Currency->getSimpleValue($item->price_summary, $currency); ?>
+            <?php endif; ?>
+        <?php else: ?>
+            <?php echo KrMethods::plain('COM_KNOWRES_SEARCH_REQUEST_RATES'); ?>
+        <?php endif; ?>
+    <?php endif; ?>
 </a>
 <a class="button viewproperty" href="<?php echo $plink; ?>">
-	<?php echo KrFactory::getAdminModel('property')::bookingTypeText($booking_type, true); ?>
-	<i class='fa-solid fa-circle-chevron-right'></i>
+    <?php echo KrFactory::getAdminModel('property')::bookingTypeText($booking_type, true); ?>
+    <i class='fa-solid fa-circle-chevron-right'></i>
 </a>

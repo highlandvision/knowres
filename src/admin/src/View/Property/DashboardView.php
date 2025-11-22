@@ -21,7 +21,6 @@ use Joomla\CMS\Form\Form;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\Registry\Registry;
-
 use function count;
 use function defined;
 
@@ -40,23 +39,23 @@ class DashboardView extends KrHtmlView\Property
 	public Form $formswitch;
 	/** @var Registry KR params */
 	public Registry $params;
+	/** @var bool Switch allowed */
+	public bool $switch = false;
 	/** @var array Periods for stats. */
 	protected array $periods = ['day', 'week', 'month', 'year'];
 	/** @var array Generated stats. */
 	protected array $stats = [];
 	/** @var array Stats level. */
 	protected array $stats_type = [];
-	/** @var bool Switch allowed */
-	public bool $switch = false;
 
 	/**
 	 * Display the view
 	 *
 	 * @param  ?string  $tpl  A template file to load. [optional]
 	 *
+	 * @return void
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return void
 	 */
 	public function display($tpl = null): void
 	{
@@ -82,7 +81,8 @@ class DashboardView extends KrHtmlView\Property
 		$this->today     = TickTock::getDate();
 		$this->params    = KrMethods::getParams();
 		$this->contracts = KrFactory::getListModel('contracts')->getDataForPropertyStats($this->property_id,
-			TickTock::modifyDays('now', 365, '-'));
+			TickTock::modifyDays('now', 365, '-')
+		);
 
 		$this->initStats();
 		$this->setStats();

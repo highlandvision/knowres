@@ -14,7 +14,6 @@ use Exception;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\SiteHelper;
 use Joomla\CMS\MVC\Controller\BaseController;
-
 use function defined;
 
 /**
@@ -22,29 +21,32 @@ use function defined;
  *
  * @since  4.0.0
  */
-class DisplayController extends BaseController {
+class DisplayController extends BaseController
+{
 	/**
 	 * Method to display a view.
 	 *
-	 * @param  bool        $cachable   If true, the view output will be cached
-	 * @param  array|bool  $urlparams  An array of safe url parameters and their variable types,
-	 *                                 for valid values see {@link JFilterInput::clean()}
+	 * @param   bool        $cachable   If true, the view output will be cached
+	 * @param   array|bool  $urlparams  An array of safe url parameters and their variable types,
+	 *                                  for valid values see {@link JFilterInput::clean()}
 	 *
+	 * @return DisplayController        This object to support chaining.
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return DisplayController        This object to support chaining.
 	 */
 	public function display($cachable = false, $urlparams = false): DisplayController
 	{
 		$view   = KrMethods::inputString('view', 'properties');
 		$Itemid = KrMethods::inputInt('Itemid');
 
-		if (!$view) {
+		if (!$view)
+		{
 			$Itemid = SiteHelper::getItemId('com_knowres', 'properties');
 			KrMethods::redirect(KrMethods::route('index.php?Itemid=' . $Itemid, false));
 		}
 
-		if (!$Itemid) {
+		if (!$Itemid)
+		{
 			$Itemid = SiteHelper::getItemId('com_knowres', $view);
 			KrMethods::redirect(KrMethods::route('index.php?Itemid=' . $Itemid, false));
 		}

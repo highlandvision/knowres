@@ -19,7 +19,6 @@ use HighlandVision\KR\Service\Ical;
 use HighlandVision\KR\Session as KrSession;
 use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
-
 use function count;
 
 /**
@@ -36,11 +35,11 @@ class PropertyicalsController extends AdminController
 	 * @param   string  $prefix  Model prefix administrator or site (defaults to administrator)
 	 * @param   array   $config  Config options
 	 *
-	 * @since  1.6
 	 * @return bool|BaseDatabaseModel
+	 * @since  1.6
 	 */
 	public function getModel($name = 'propertyical', $prefix = 'Administrator',
-		$config = ['ignore_request' => true]): BaseDatabaseModel|bool
+	                         $config = ['ignore_request' => true]): BaseDatabaseModel|bool
 	{
 		return parent::getModel($name, $prefix, $config);
 	}

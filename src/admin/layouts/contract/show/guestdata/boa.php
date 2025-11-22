@@ -22,10 +22,11 @@ extract($displayData);
 ?>
 
 <?php if ($contract->booking_status == 39): ?>
-	<div class="row">
-		<div class="col-12">
-			<?php echo KrMethods::sprintf('COM_KNOWRES_CONTRACTPAYMENTS_PAID_ON_ARRIVAL',
-				Utility::displayValue($balance, $contract->currency)); ?>
-		</div>
-	</div>
+    <div class="row">
+        <div class="col-12">
+            <?php echo KrMethods::sprintf('COM_KNOWRES_CONTRACTPAYMENTS_PAID_ON_ARRIVAL',
+                    Utility::displayValue($balance, $contract->currency));
+            ?>
+        </div>
+    </div>
 <?php endif; ?>

@@ -25,31 +25,31 @@ extract($displayData);
 ?>
 
 <div class="row">
-	<div class="col-lg-2">
-		<?php echo $form->renderField('adults'); ?>
-	</div>
-	<div class="col-lg-2">
-		<?php echo $form->renderField('child'); ?>
-	</div>
-	<div class="col-lg-2">
-		<?php echo $form->renderField('infants'); ?>
-	</div>
+    <div class="col-lg-2">
+        <?php echo $form->renderField('adults'); ?>
+    </div>
+    <div class="col-lg-2">
+        <?php echo $form->renderField('child'); ?>
+    </div>
+    <div class="col-lg-2">
+        <?php echo $form->renderField('infants'); ?>
+    </div>
 </div>
 <div class="row">
-	<div class="col-lg-4 offset-lg-2" style="margin-bottom:16px;">
-		<?php if (!empty($child_ages)): ?>
-			<div id="holder">
-				<div><?php echo KrMethods::plain('COM_KNOWRES_AGES'); ?></div>
-				<?php foreach ($child_ages as $age_drop): ?>
-					<?php echo $age_drop; ?>
-				<?php endforeach; ?>
-			</div>
-		<?php else: ?>
-			<div id="holder" style="display:none;">
-				<div><?php echo KrMethods::plain('COM_KNOWRES_AGES'); ?></div>
-			</div>
-		<?php endif; ?>
-	</div>
+    <div class="col-lg-4 offset-lg-2" style="margin-bottom:16px;">
+        <?php if (!empty($child_ages)): ?>
+            <div id="holder">
+                <div><?php echo KrMethods::plain('COM_KNOWRES_AGES'); ?></div>
+                <?php foreach ($child_ages as $age_drop): ?>
+                    <?php echo $age_drop; ?>
+                <?php endforeach; ?>
+            </div>
+        <?php else: ?>
+            <div id="holder" style="display:none;">
+                <div><?php echo KrMethods::plain('COM_KNOWRES_AGES'); ?></div>
+            </div>
+        <?php endif; ?>
+    </div>
 </div>
 
 <div id="jsdata" data-childminage="<?php echo $child_min_age; ?>" data-childmaxage="<?php echo $child_max_age; ?>"

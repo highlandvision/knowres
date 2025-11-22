@@ -18,7 +18,6 @@ use HighlandVision\KR\Hub;
 use HighlandVision\KR\TickTock;
 use RuntimeException;
 use stdClass;
-
 use function count;
 use function hash;
 
@@ -41,9 +40,9 @@ class Channel
 	 *
 	 * @param   Hub  $hub  Hub data
 	 *
+	 * @return bool
 	 * @throws Exception
 	 * @since 1.0.0
-	 * @return bool
 	 */
 	public function action(Hub $hub): bool
 	{
@@ -56,10 +55,10 @@ class Channel
 	/**
 	 * Controls the save and processing for the channel contract
 	 *
-	 * @throws RuntimeException
-	 * @throws Exception
-	 * @since  3.3.0
 	 * @return bool
+	 * @throws Exception
+	 * @throws RuntimeException
+	 * @since  3.3.0
 	 */
 	public function saveAll(): bool
 	{
@@ -146,7 +145,8 @@ class Channel
 		if ($this->hub->getValue('isEdit'))
 		{
 			KrFactory::getAdminModel('contractnote')::createContractNote($this->id, 'Reservation amended by channel',
-				'3', false);
+				'3', false
+			);
 		}
 		else
 		{
@@ -159,12 +159,14 @@ class Channel
 			elseif ((int) $this->hub->getValue('on_request') > 0)
 			{
 				KrFactory::getAdminModel('contractnote')::createContractNote($this->id, 'Channel request reservation',
-					'3', false);
+					'3', false
+				);
 			}
 			else
 			{
 				KrFactory::getAdminModel('contractnote')::createContractNote($this->id,
-					'Channel provisional reservation', '3', false);
+					'Channel provisional reservation', '3', false
+				);
 			}
 		}
 	}

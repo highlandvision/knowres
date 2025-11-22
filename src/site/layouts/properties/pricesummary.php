@@ -6,6 +6,7 @@
  * @license    See the file "LICENSE.txt" for the full license governing this code.
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
+
 /** @noinspection PhpUnhandledExceptionInspection */
 
 defined('_JEXEC') or die;
@@ -31,28 +32,29 @@ $Currency = new Currency();
 ?>
 
 <div class="price">
-	<?php if ($minrate > 0): ?>
-		<?php if ($maxrate > 0 && $minrate != $maxrate): ?>
-			<?php if ($netrate && $markup): ?>
-				<?php $min = KrFactory::getAdminModel('ratemarkup')::getGrossRate($minrate, $markup); ?>
-				<?php $max = KrFactory::getAdminModel('ratemarkup')::getGrossRate($maxrate, $markup); ?>
-			<?php else: ?>
-				<?php $min = Utility::roundValue($minrate); ?>
-				<?php $max = Utility::roundValue($maxrate); ?>
-			<?php endif; ?>
+    <?php if ($minrate > 0): ?>
+        <?php if ($maxrate > 0 && $minrate != $maxrate): ?>
+            <?php if ($netrate && $markup): ?>
+                <?php $min = KrFactory::getAdminModel('ratemarkup')::getGrossRate($minrate, $markup); ?>
+                <?php $max = KrFactory::getAdminModel('ratemarkup')::getGrossRate($maxrate, $markup); ?>
+            <?php else: ?>
+                <?php $min = Utility::roundValue($minrate); ?>
+                <?php $max = Utility::roundValue($maxrate); ?>
+            <?php endif; ?>
 
-			<?php echo KrMethods::sprintf('COM_KNOWRES_FROM_PRICE',
-				$Currency->getSimpleValue($min . ' - ' . $max, $currency)); ?>
-		<?php else: ?>
-			<?php if ($netrate && $markup): ?>
-				<?php $min = KrFactory::getAdminModel('ratemarkup')::getGrossRate($minrate, $markup); ?>
-			<?php else: ?>
-				<?php $min = $minrate; ?>
-			<?php endif; ?>
+            <?php echo KrMethods::sprintf('COM_KNOWRES_FROM_PRICE',
+                    $Currency->getSimpleValue($min . ' - ' . $max, $currency)
+            ); ?>
+        <?php else: ?>
+            <?php if ($netrate && $markup): ?>
+                <?php $min = KrFactory::getAdminModel('ratemarkup')::getGrossRate($minrate, $markup); ?>
+            <?php else: ?>
+                <?php $min = $minrate; ?>
+            <?php endif; ?>
 
-			<?php echo KrMethods::sprintf('COM_KNOWRES_FROM_PRICE', $Currency->getSimpleValue($min, $currency)); ?>
-		<?php endif; ?>
-	<?php elseif ($summary): ?>
-		<?php echo KrMethods::sprintf('COM_KNOWRES_FROM_PRICE', $Currency->getSimpleValue($summary, $currency)); ?>
-	<?php endif; ?>
+            <?php echo KrMethods::sprintf('COM_KNOWRES_FROM_PRICE', $Currency->getSimpleValue($min, $currency)); ?>
+        <?php endif; ?>
+    <?php elseif ($summary): ?>
+        <?php echo KrMethods::sprintf('COM_KNOWRES_FROM_PRICE', $Currency->getSimpleValue($summary, $currency)); ?>
+    <?php endif; ?>
 </div>

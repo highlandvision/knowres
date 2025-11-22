@@ -19,7 +19,6 @@ use HighlandVision\KR\Translations;
 use HighlandVision\KR\Utility;
 use JetBrains\PhpStorm\NoReturn;
 use stdClass;
-
 use function defined;
 use function fclose;
 use function fopen;
@@ -36,15 +35,15 @@ use function unlink;
  */
 class ContractBalances
 {
-	/** @var array Export criteria. */
-	public array $data = [];
 	/** @var Translations Translations object. */
 	public Translations $Translations;
+	/** @var array Export criteria. */
+	public array $data = [];
 
 	/**
 	 * Initialize
 	 *
-	 * @param  array  $data   Array containing the export paramters
+	 * @param   array  $data  Array containing the export paramters
 	 *                        $data = [
 	 *                        'agent_id'      =>    (int) Optional ID of agent
 	 *                        'property_id'   =>    (mixed) Empty for all, int for one property, array for multiple.
@@ -57,7 +56,8 @@ class ContractBalances
 	 * @throws Exception
 	 * @since  4.0.0
 	 */
-	#[NoReturn] public function __construct(array $data)
+	#[NoReturn]
+	public function __construct(array $data)
 	{
 		$this->data = $data;
 		$filename   = 'balances_' . TickTock::getTS() . '.csv';
@@ -91,8 +91,8 @@ class ContractBalances
 	/**
 	 * Set headings for contract balances export
 	 *
-	 * @since  2.0.0
 	 * @return array
+	 * @since  2.0.0
 	 */
 	protected function setHead(): array
 	{
@@ -147,11 +147,11 @@ class ContractBalances
 	/**
 	 * Set data for contract balances export
 	 *
-	 * @param  stdClass  $row  Contract row
+	 * @param   stdClass  $row  Contract row
 	 *
+	 * @return array
 	 * @throws Exception
 	 * @since  2.4.0
-	 * @return array
 	 */
 	protected function setLine(stdClass $row): array
 	{

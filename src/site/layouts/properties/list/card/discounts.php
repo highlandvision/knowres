@@ -25,28 +25,31 @@ extract($displayData);
 ?>
 
 <?php foreach ($discounts as $d): ?>
-	<div class="grid-x grid-margin-x">
-		<div class="small-12 meium-6 large-4">
-			<div class="list-discount">
-				<?php
-				$value = $d->is_pc ? (float) $d->discount . '%' : Utility::displayValue($d->discount, $currency);
-				?>
-				<?php if ($d->model == 1): ?>
-					<?php $text1 = KrMethods::sprintf('COM_KNOWRES_DISCOUNT_DATE_RANGE_1', $value); ?>
-					<?php $text2 = KrMethods::sprintf('COM_KNOWRES_DISCOUNT_DATE_RANGE_2',
-						$d->param1 ? TickTock::displayDate($d->param1, 'j M Y')
-							: strtolower(KrMethods::plain('COM_KNOWRES_NOW')),
-						TickTock::displayDate($d->param2, 'j M Y')); ?>
-				<?php elseif ((int) $d->param1): ?>
-					<?php $text1 = KrMethods::sprintf('COM_KNOWRES_DISCOUNT_EARLY_BIRD_1', $value); ?>
-					<?php $text2 = KrMethods::sprintf('COM_KNOWRES_DISCOUNT_EARLY_BIRD_2',
-						TickTock::modifyDays('now', $d->param1, '+', 'j M Y')); ?>
-				<?php else: ?>
-					<?php $text1 = KrMethods::sprintf('COM_KNOWRES_DISCOUNT_LAST_MINUTE_1', $value); ?>
-					<?php $text2 = KrMethods::sprintf('COM_KNOWRES_DISCOUNT_LAST_MINUTE_2',
-						TickTock::modifyDays('now', $d->param2, '+', 'j M Y')); ?>
-				<?php endif; ?>
-			</div>
-		</div>
-	</div>
+    <div class="grid-x grid-margin-x">
+        <div class="small-12 meium-6 large-4">
+            <div class="list-discount">
+                <?php
+                $value = $d->is_pc ? (float) $d->discount . '%' : Utility::displayValue($d->discount, $currency);
+                ?>
+                <?php if ($d->model == 1): ?>
+                    <?php $text1 = KrMethods::sprintf('COM_KNOWRES_DISCOUNT_DATE_RANGE_1', $value); ?>
+                    <?php $text2 = KrMethods::sprintf('COM_KNOWRES_DISCOUNT_DATE_RANGE_2',
+                            $d->param1 ? TickTock::displayDate($d->param1, 'j M Y')
+                                    : strtolower(KrMethods::plain('COM_KNOWRES_NOW')),
+                            TickTock::displayDate($d->param2, 'j M Y')
+                    ); ?>
+                <?php elseif ((int) $d->param1): ?>
+                    <?php $text1 = KrMethods::sprintf('COM_KNOWRES_DISCOUNT_EARLY_BIRD_1', $value); ?>
+                    <?php $text2 = KrMethods::sprintf('COM_KNOWRES_DISCOUNT_EARLY_BIRD_2',
+                            TickTock::modifyDays('now', $d->param1, '+', 'j M Y')
+                    ); ?>
+                <?php else: ?>
+                    <?php $text1 = KrMethods::sprintf('COM_KNOWRES_DISCOUNT_LAST_MINUTE_1', $value); ?>
+                    <?php $text2 = KrMethods::sprintf('COM_KNOWRES_DISCOUNT_LAST_MINUTE_2',
+                            TickTock::modifyDays('now', $d->param2, '+', 'j M Y')
+                    ); ?>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
 <?php endforeach; ?>

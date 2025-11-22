@@ -20,7 +20,6 @@ use JetBrains\PhpStorm\NoReturn;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Response\JsonResponse;
 use Joomla\String\StringHelper;
-
 use function jexit;
 
 /**
@@ -36,9 +35,10 @@ class TownController extends FormController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	#[NoReturn] public function combo(): void
+	#[NoReturn]
+	public function combo(): void
 	{
-		$model  = new TownModel();
+		$model     = new TownModel();
 		$form      = $model->getForm([], false);
 		$parent_id = KrMethods::inputInt('parent');
 		$target    = KrMethods::inputString('target');

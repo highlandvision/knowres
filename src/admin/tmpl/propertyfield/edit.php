@@ -23,19 +23,19 @@ $wa->useScript('keepalive')
       aria-label="<?php echo $this->form_aria_label; ?>" class="form-validate" id="propertyfield-form" method="post"
       name="adminForm">
 
-	<div class="main-card">
-		<div class="row">
-			<div class="col-lg-6">
-				<?php echo $this->form->renderFieldset('krdata'); ?>
-			</div>
-			<div class="col-lg-3">
-			</div>
-			<div class="col-lg-3">
-				<?php echo KrMethods::render('joomla.edit.global', $this); ?>
-			</div>
-		</div>
-	</div>
+    <div class="main-card">
+        <div class="row">
+            <div class="col-lg-6">
+                <?php echo $this->form->renderFieldset('krdata'); ?>
+            </div>
+            <div class="col-lg-3">
+            </div>
+            <div class="col-lg-3">
+                <?php echo KrMethods::render('joomla.edit.global', $this); ?>
+            </div>
+        </div>
+    </div>
 
-	<input type="hidden" name="task" value="">
-	<?php echo HTMLHelper::_('form.token'); ?>
+    <input type="hidden" name="task" value="">
+    <?php echo HTMLHelper::_('form.token'); ?>
 </form>

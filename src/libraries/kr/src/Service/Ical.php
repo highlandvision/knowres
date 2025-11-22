@@ -19,7 +19,6 @@ use HighlandVision\KR\Logger;
 use HighlandVision\KR\Service;
 use HighlandVision\KR\Utility;
 use RuntimeException;
-
 use function file_exists;
 use function file_get_contents;
 use function unlink;
@@ -48,7 +47,8 @@ class Ical extends Service
 	 * @throws Exception
 	 * @since 1.0.0
 	 */
-	public function __construct(int $service_id) {
+	public function __construct(int $service_id)
+	{
 		parent::__construct($service_id);
 
 		$this->directory = Utility::getPath('root') . '/tmp/';
@@ -67,8 +67,10 @@ class Ical extends Service
 	 * @throws Exception
 	 * @since  4.0.0
 	 */
-	public function processManual(int $ical_id, int $property_id, string $link, ?string $icsdata): void {
-		try {
+	public function processManual(int $ical_id, int $property_id, string $link, ?string $icsdata): void
+	{
+		try
+		{
 			$this->method  = 'processManual';
 			$this->request = $link;
 			$this->readProperty($property_id);
@@ -79,12 +81,14 @@ class Ical extends Service
 			KrFactory::getListModel('propertyicals')->updateLastUpdated($ical_id, $icsdata);
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_ACTION_SUCCESS'));
 		}
-		catch (Exception $e) {
+		catch (Exception $e)
+		{
 			Logger::logMe($e->getMessage());
 			KrMethods::message($e->getMessage());
 		}
 
-		if (file_exists($this->directory . $this->filename)) {
+		if (file_exists($this->directory . $this->filename))
+		{
 			unlink($this->directory . $this->filename);
 		}
 	}
@@ -97,29 +101,35 @@ class Ical extends Service
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function processSchedule(int $hours): void {
+	public function processSchedule(int $hours): void
+	{
 		$due = KrFactory::getListModel('propertyicals')->getByTime($this->service->id, $hours);
-		foreach ($due as $d) {
+		foreach ($due as $d)
+		{
 			$this->method      = 'processSchedule';
 			$this->request     = $d->link;
 			$this->property_id = $d->property_id;
 
-			try {
+			try
+			{
 				$this->readProperty($this->property_id);
 				$this->response = $this->fetchIcal();
 
 				$IcalBlock      = new IcalBlock($this->property_id, $this->directory, $this->filename,
-					$this->service->id, $d->icsdata);
+					$this->service->id, $d->icsdata
+				);
 				$icsdata        = $IcalBlock->import();
 				$this->messages = $IcalBlock->messages;
 				KrFactory::getListModel('propertyicals')->updateLastUpdated($d->id, $icsdata);
 			}
-			catch (Exception $e) {
+			catch (Exception $e)
+			{
 				$this->exception = $e;
 				$this->addLog(false);
 			}
 
-			if (file_exists($this->directory . $this->filename)) {
+			if (file_exists($this->directory . $this->filename))
+			{
 				unlink($this->directory . $this->filename);
 			}
 		}
@@ -128,11 +138,12 @@ class Ical extends Service
 	/**
 	 * Retrieve ical data from link and save to file
 	 *
+	 * @return string
 	 * @throws RuntimeException
 	 * @since  3.2.0
-	 * @return string
 	 */
-	protected function fetchIcal(): string {
+	protected function fetchIcal(): string
+	{
 		$fp = fopen($this->path, 'w');
 
 		usleep(10000);
@@ -148,7 +159,8 @@ class Ical extends Service
 		curl_exec($ch);
 
 		$http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-		if ($http_status != 200) {
+		if ($http_status != 200)
+		{
 			$error   = [];
 			$error[] = 'Error reading calendar from Host site';
 			$error[] = 'Service: ' . $this->service->name;
@@ -158,7 +170,8 @@ class Ical extends Service
 			$error[] = 'Curl error message ' . curl_error($ch);
 			throw new RuntimeException(implode("\r\n", $error));
 		}
-		elseif (curl_errno($ch)) {
+		elseif (curl_errno($ch))
+		{
 			$error   = [];
 			$error[] = 'Error reading calendar from Host site';
 			$error[] = 'Service: ' . $this->service->name;

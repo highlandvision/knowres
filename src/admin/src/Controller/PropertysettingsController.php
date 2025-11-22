@@ -37,11 +37,16 @@ class PropertysettingsController extends AdminController
 		$property_id = KrMethods::inputInt('property_id');
 		KrFactory::getAdminModel('propertysetting')->saveSettings($property_id);
 
-		if (!$property_id) {
+		if (!$property_id)
+		{
 			$this->setRedirect(KrMethods::route('index.php?option=com_knowres&view=propertysettings', false));
-		} else {
+		}
+		else
+		{
 			$this->setRedirect(KrMethods::route('index.php?option=com_knowres&task=propertysettings.solo&property_id=' .
-			                                    $property_id, false));
+				$property_id, false
+			)
+			);
 		}
 	}
 
@@ -54,10 +59,13 @@ class PropertysettingsController extends AdminController
 	public function cancel(): void
 	{
 		$return = KrMethods::getUserState('com_knowres.gobackto');
-		if ($return) {
+		if ($return)
+		{
 			KrMethods::setUserState('com_knowres.gobackto', null);
 			KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&' . $return, false));
-		} else {
+		}
+		else
+		{
 			KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&view=properties', false));
 		}
 	}
@@ -65,16 +73,16 @@ class PropertysettingsController extends AdminController
 	/**
 	 * Proxy for getModel.
 	 *
-	 * @param  string  $name    Model name
-	 * @param  string  $prefix  Model prefix administrator or site (defaults to administrator)
-	 * @param  array   $config  Config options
+	 * @param   string  $name    Model name
+	 * @param   string  $prefix  Model prefix administrator or site (defaults to administrator)
+	 * @param   array   $config  Config options
 	 *
-	 * @since  1.6
 	 * @return bool|BaseDatabaseModel
+	 * @since  1.6
 	 */
 	public function getModel($name = 'propertysetting',
-		$prefix = 'Administrator',
-		$config = ['ignore_request' => true]): BaseDatabaseModel|bool
+	                         $prefix = 'Administrator',
+	                         $config = ['ignore_request' => true]): BaseDatabaseModel|bool
 	{
 		return parent::getModel($name, $prefix, $config);
 	}
@@ -104,7 +112,8 @@ class PropertysettingsController extends AdminController
 	{
 		/** @var PropertysettingsView $view */
 		$view = $this->getView('propertysettings', 'html');
-		if ($view) {
+		if ($view)
+		{
 			$view->task = 'solo';
 			$view->display();
 		}

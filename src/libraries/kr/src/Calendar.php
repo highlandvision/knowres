@@ -17,7 +17,6 @@ use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use InvalidArgumentException;
 use RuntimeException;
-
 use function array_key_exists;
 use function count;
 use function defined;
@@ -70,13 +69,13 @@ class Calendar
 	/**
 	 * Initialise
 	 *
-	 * @param  int      $property_id  ID of property
+	 * @param   int     $property_id  ID of property
 	 * @param  ?string  $first        From date Y-m-d
 	 * @param  ?string  $final        End date Y-m-d
-	 * @param  int      $nights       # Nights
-	 * @param  int      $edit_id      ID of contract being edited
-	 * @param  array    $rates        Rates for property, Will be read if not supplied
-	 * @param  array    $settings     Override property settings
+	 * @param   int     $nights       # Nights
+	 * @param   int     $edit_id      ID of contract being edited
+	 * @param   array   $rates        Rates for property, Will be read if not supplied
+	 * @param   array   $settings     Override property settings
 	 *
 	 * @throws Exception
 	 * @since  3.4.0
@@ -86,7 +85,8 @@ class Calendar
 	{
 		$this->setProperty($property_id);
 		$this->settings = $settings;
-		if (empty($this->settings)) {
+		if (empty($this->settings))
+		{
 			$this->settings = KrFactory::getListModel('propertysettings')->getPropertysettings($this->property_id);
 		}
 
@@ -100,12 +100,12 @@ class Calendar
 	/**
 	 * Check booked dates to determine if we can reduce the stay nights
 	 *
-	 * @param  string  $date    To be checked
-	 * @param  int     $nights  Stay nights for date
+	 * @param   string  $date    To be checked
+	 * @param   int     $nights  Stay nights for date
 	 *
+	 * @return int Free nights
 	 * @throws Exception
 	 * @since  3.4.0
-	 * @return int Free nights
 	 */
 	public function checkCanWeBook(string $date, int $nights): int
 	{
@@ -115,29 +115,37 @@ class Calendar
 		$this->getBlockedDates();
 		$canwebook = (int) $this->settings['canwebook'];
 
-		if (isset($this->blocked[$date]) && ($this->blocked[$date] == 0 || $this->blocked[$date] == 3)) {
+		if (isset($this->blocked[$date]) && ($this->blocked[$date] == 0 || $this->blocked[$date] == 3))
+		{
 			return 0;
 		}
 
-		for ($i = 0; $i <= $nights; $i++) {
+		for ($i = 0; $i <= $nights; $i++)
+		{
 			$d      = TickTock::modifyDays($date, $i, '-');
 			$before = $i;
-			if (isset($this->blocked[$d]) && $this->blocked[$d] == 2) {
+			if (isset($this->blocked[$d]) && $this->blocked[$d] == 2)
+			{
 				break;
 			}
 		}
 
-		for ($i = 0; $i <= $nights; $i++) {
+		for ($i = 0; $i <= $nights; $i++)
+		{
 			$d     = TickTock::modifyDays($date, $i);
 			$after = $i;
-			if (isset($this->blocked[$d]) && $this->blocked[$d] == 1) {
+			if (isset($this->blocked[$d]) && $this->blocked[$d] == 1)
+			{
 				break;
 			}
 		}
 
-		if ($before + $after >= $nights) {
+		if ($before + $after >= $nights)
+		{
 			return 0;
-		} elseif ($after >= $canwebook) {
+		}
+		elseif ($after >= $canwebook)
+		{
 			return $canwebook;
 		}
 
@@ -147,13 +155,14 @@ class Calendar
 	/**
 	 * Set booked dates from contracts and icals
 	 *
+	 * @return array
 	 * @throws Exception
 	 * @since  3.4.0
-	 * @return array
 	 */
 	public function getAvailability(): array
 	{
-		if (is_countable($this->availability) && count($this->availability)) {
+		if (is_countable($this->availability) && count($this->availability))
+		{
 			return $this->availability;
 		}
 
@@ -165,13 +174,14 @@ class Calendar
 	/**
 	 * Get blocked dates
 	 *
+	 * @return array
 	 * @throws Exception
 	 * @since  3.4.0
-	 * @return array
 	 */
 	public function getBlockedDates(): array
 	{
-		if (!$this->blocked_done) {
+		if (!$this->blocked_done)
+		{
 			$this->setBlockedDates();
 		}
 
@@ -181,15 +191,16 @@ class Calendar
 	/**
 	 * Get changeover values
 	 *
-	 * @param  bool  $check_weekly  Set true to set all weekly none start days to X
+	 * @param   bool  $check_weekly  Set true to set all weekly none start days to X
 	 *
+	 * @return array
 	 * @throws Exception
 	 * @since  3.4.0
-	 * @return array
 	 */
 	public function getChangeOvers(bool $check_weekly = true): array
 	{
-		if (is_countable($this->changeovers) && count($this->changeovers)) {
+		if (is_countable($this->changeovers) && count($this->changeovers))
+		{
 			return $this->changeovers;
 		}
 
@@ -201,9 +212,9 @@ class Calendar
 	/**
 	 * Get the final booking date
 	 *
+	 * @return string
 	 * @throws Exception
 	 * @since  3.4.0
-	 * @return string
 	 */
 	public function getEndDate(): string
 	{
@@ -213,9 +224,9 @@ class Calendar
 	/**
 	 * Find the first available date
 	 *
+	 * @return array
 	 * @throws Exception
 	 * @since  3.4.0
-	 * @return array
 	 */
 	public function getFirstFreeDate(): array
 	{
@@ -224,13 +235,16 @@ class Calendar
 		$this->getWeekly();
 		$this->getMinstay();
 
-		foreach ($this->range as $date) {
-			if ($this->changeovers[$date] == 'O' || $this->changeovers[$date] == 'X') {
+		foreach ($this->range as $date)
+		{
+			if ($this->changeovers[$date] == 'O' || $this->changeovers[$date] == 'X')
+			{
 				continue;
 			}
 
 			$nights = $this->minstay[$date];
-			if ($this->checkFreeDate($date, $nights)) {
+			if ($this->checkFreeDate($date, $nights))
+			{
 				break;
 			}
 		}
@@ -244,13 +258,14 @@ class Calendar
 	/**
 	 * Get changeover values
 	 *
+	 * @return array
 	 * @throws Exception
 	 * @since  3.4.0
-	 * @return array
 	 */
 	public function getMaxstay(): array
 	{
-		if (is_countable($this->maxstay) && count($this->maxstay)) {
+		if (is_countable($this->maxstay) && count($this->maxstay))
+		{
 			return $this->maxstay;
 		}
 
@@ -262,13 +277,14 @@ class Calendar
 	/**
 	 * Get changeover values
 	 *
+	 * @return array
 	 * @throws Exception
 	 * @since  3.4.0
-	 * @return array
 	 */
 	public function getMinstay(): array
 	{
-		if (is_countable($this->minstay) && count($this->minstay)) {
+		if (is_countable($this->minstay) && count($this->minstay))
+		{
 			return $this->minstay;
 		}
 
@@ -280,13 +296,14 @@ class Calendar
 	/**
 	 * Get changeover values
 	 *
+	 * @return array
 	 * @throws Exception
 	 * @since  3.4.0
-	 * @return array
 	 */
 	public function getWeekly(): array
 	{
-		if ($this->weekly_done) {
+		if ($this->weekly_done)
+		{
 			return $this->weekly;
 		}
 
@@ -298,12 +315,12 @@ class Calendar
 	/**
 	 * Check if property is available for the required nights
 	 *
-	 * @param  string  $first   First date
-	 * @param  int     $nights  Stay nights
+	 * @param   string  $first   First date
+	 * @param   int     $nights  Stay nights
 	 *
+	 * @return bool
 	 * @throws Exception
 	 * @since  3.3.4
-	 * @return bool
 	 */
 	protected function checkFreeDate(string $first, int $nights): bool
 	{
@@ -315,16 +332,20 @@ class Calendar
 		$this->getChangeOvers();
 		$this->getWeekly();
 
-		while ($date <= $last) {
-			if ($this->changeovers[$date] == 'I' && $date != $first) {
+		while ($date <= $last)
+		{
+			if ($this->changeovers[$date] == 'I' && $date != $first)
+			{
 				$avail = false;
 				break;
 			}
-			if ($this->changeovers[$date] == 'O' && $date != $last) {
+			if ($this->changeovers[$date] == 'O' && $date != $last)
+			{
 				$avail = false;
 				break;
 			}
-			if ($this->changeovers[$date] == 'X' && !isset($this->weekly)) {
+			if ($this->changeovers[$date] == 'X' && !isset($this->weekly))
+			{
 				$avail = false;
 				break;
 			}
@@ -338,7 +359,7 @@ class Calendar
 	/**
 	 * Read data for processing
 	 *
-	 * @param  array  $rates  Property rates
+	 * @param   array  $rates  Property rates
 	 *
 	 * @throws Exception
 	 * @since  3.4.0
@@ -352,15 +373,16 @@ class Calendar
 	/**
 	 * Increment blocked date value
 	 *
-	 * @param  string  $date       Booked date
-	 * @param  int     $increment  Increment value
+	 * @param   string  $date       Booked date
+	 * @param   int     $increment  Increment value
 	 *
 	 * @since  3.4.0
 	 */
 	protected function incrementBlocked(string $date, int $increment): void
 	{
 		$value = 0;
-		if (isset($this->blocked[$date])) {
+		if (isset($this->blocked[$date]))
+		{
 			$value = (int) $this->blocked[$date];
 		}
 
@@ -375,11 +397,11 @@ class Calendar
 	 * 2 - booked and departure ( can allow arrival )
 	 * 3 - booked and arrival and departure (can allow nothing )
 	 *
-	 * @param  string  $d             Blocked date being processed
-	 * @param  string  $first         Date of first block
-	 * @param  string  $last          Date of last block
-	 * @param  bool    $check_frozen  Set false to ignore frozen
-	 * @param  bool    $paid          Set true for paid reservationsn
+	 * @param   string  $d             Blocked date being processed
+	 * @param   string  $first         Date of first block
+	 * @param   string  $last          Date of last block
+	 * @param   bool    $check_frozen  Set false to ignore frozen
+	 * @param   bool    $paid          Set true for paid reservationsn
 	 *
 	 * @throws InvalidFormatException
 	 * @since  3.4.0
@@ -387,25 +409,33 @@ class Calendar
 	protected function incrementBlockedDate(string $d, string $first, string $last, bool $check_frozen = true,
 	                                        bool   $paid = true): void
 	{
-		if ($check_frozen && isset($this->frozen[$d])) {
+		if ($check_frozen && isset($this->frozen[$d]))
+		{
 			return;
 		}
 
-		if ($d === $this->first && $first === TickTock::getDate()) {
+		if ($d === $this->first && $first === TickTock::getDate())
+		{
 			$this->blocked[$d] = 0;
 			$this->incrementBlocked($d, 2);
-			if ($d === $first) {
+			if ($d === $first)
+			{
 				$this->incrementBlocked($d, 1);
 			}
 
 			return;
 		}
 
-		if ($d === $first) {
+		if ($d === $first)
+		{
 			$this->incrementBlocked($d, 1);
-		} elseif ($d === $last) {
+		}
+		elseif ($d === $last)
+		{
 			$this->incrementBlocked($d, 2);
-		} else {
+		}
+		else
+		{
 			$this->incrementBlocked($d, 0);
 		}
 	}
@@ -420,11 +450,15 @@ class Calendar
 	{
 		$this->getBlockedDates();
 
-		foreach ($this->range as $date) {
+		foreach ($this->range as $date)
+		{
 			$type = array_key_exists($date, $this->blocked) ? $this->blocked[$date] : 1;
-			if ($type == 0 || $type == 3) {
+			if ($type == 0 || $type == 3)
+			{
 				$this->availability[$date] = 'N';
-			} else {
+			}
+			else
+			{
 				$this->availability[$date] = 'Y';
 			}
 		}
@@ -433,11 +467,11 @@ class Calendar
 	/**
 	 * Read the rates to get base minimum nights
 	 *
-	 * @param  string  $date  Date to process
+	 * @param   string  $date  Date to process
 	 *
+	 * @return array
 	 * @throws Exception
 	 * @since  3.4.0
-	 * @return array
 	 */
 	protected function setBaseMinStay(string $date): array
 	{
@@ -446,21 +480,28 @@ class Calendar
 		$min_stay  = 0;
 		$start_day = 7;
 
-		foreach ($this->rates as $r) {
-			if ($r->min_guests > 1 || $date > $r->valid_to) {
+		foreach ($this->rates as $r)
+		{
+			if ($r->min_guests > 1 || $date > $r->valid_to)
+			{
 				continue;
 			}
 
-			if ($first && $date >= $r->valid_from) {
-				if ($this->settings['managed_rates']) {
+			if ($first && $date >= $r->valid_from)
+			{
+				if ($this->settings['managed_rates'])
+				{
 					$min_stay = $this->getSeasonNights($date, $r->min_nights);
-				} else {
+				}
+				else
+				{
 					$min_stay = $r->min_nights;
 				}
 
 				$start_day = $r->start_day;
 				$end       = TickTock::modifyDays($date, $min_stay);
-				if ($end <= $r->valid_to) {
+				if ($end <= $r->valid_to)
+				{
 					break;
 				}
 
@@ -468,16 +509,20 @@ class Calendar
 				continue;
 			}
 
-			if (!$first && $end >= $r->valid_from && $end < $r->valid_to) {
-				if ($r->start_day == 7 || $r->start_day == $start_day) {
+			if (!$first && $end >= $r->valid_from && $end < $r->valid_to)
+			{
+				if ($r->start_day == 7 || $r->start_day == $start_day)
+				{
 					break;
 				}
 
 				$start_day = $r->start_day;
-				for ($nights = 7; $nights < 14; $nights++) {
+				for ($nights = 7; $nights < 14; $nights++)
+				{
 					$tmp = TickTock::modifyDays($date, $nights);
 					$dow = TickTock::getDow($tmp);
-					if ($dow === $r->start_day) {
+					if ($dow === $r->start_day)
+					{
 						$min_stay  = $nights;
 						$start_day = 7;
 						break 2;
@@ -502,17 +547,21 @@ class Calendar
 	 */
 	protected function setBlockedDates(): void
 	{
-		foreach ($this->bookings as $b) {
-			if (!$this->edit_id || $b->black_booking == 2 || ($b->black_booking < 2 && $b->id != $this->edit_id)) {
+		foreach ($this->bookings as $b)
+		{
+			if (!$this->edit_id || $b->black_booking == 2 || ($b->black_booking < 2 && $b->id != $this->edit_id))
+			{
 				$bdates = TickTock::allDatesBetween($b->arrival, $b->departure);
-				foreach ($bdates as $d) {
+				foreach ($bdates as $d)
+				{
 					$this->incrementBlockedDate($d, $b->arrival, $b->departure, false);
 				}
 			}
 		}
 
 		$params = KrMethods::getParams();
-		if ($params->get('calendar_norates', 0)) {
+		if ($params->get('calendar_norates', 0))
+		{
 			$this->setRateBlocks();
 		}
 
@@ -526,7 +575,7 @@ class Calendar
 	 * X - None
 	 * C - Both
 	 *
-	 * @param  bool  $check_weekly  Set true to set all none day of week start days to X
+	 * @param   bool  $check_weekly  Set true to set all none day of week start days to X
 	 *
 	 * @throws Exception
 	 * @since  3.4.0
@@ -537,19 +586,23 @@ class Calendar
 		$this->getWeekly();
 		$first = true;
 
-		foreach ($this->range as $date) {
+		foreach ($this->range as $date)
+		{
 			$code = 99;
-			if (array_key_exists($date, $this->blocked)) {
+			if (array_key_exists($date, $this->blocked))
+			{
 				$code = $this->blocked[$date];
 			}
-			if ($check_weekly && isset($this->weekly[$date])) {
+			if ($check_weekly && isset($this->weekly[$date]))
+			{
 				$code = 3;
 			}
 
-			$this->changeovers[$date] = match ($code) {
-				0, 3    => 'X',
-				1       => $first ? 'X' : 'O',
-				2       => 'I',
+			$this->changeovers[$date] = match ($code)
+			{
+				0, 3 => 'X',
+				1 => $first ? 'X' : 'O',
+				2 => 'I',
 				default => $first ? 'I' : 'C'
 			};
 
@@ -560,28 +613,32 @@ class Calendar
 	/**
 	 * Set and validate dates
 	 *
-	 * @param  string   $first  From date Y-m-d
+	 * @param   string  $first  From date Y-m-d
 	 * @param  ?string  $final  End date Y-m-d
-	 * @param  int      $days   # Days
+	 * @param   int     $days   # Days
 	 *
 	 * @throws Exception
 	 * @since  3.4.0
 	 */
 	protected function setDates(string $first, ?string $final, int $days): void
 	{
-		if (empty($final) && !$days) {
+		if (empty($final) && !$days)
+		{
 			$days = $this->settings['advanceBookingsLimit'];
 		}
 
-		if (empty($final) && $days > 0) {
+		if (empty($final) && $days > 0)
+		{
 			$final = TickTock::modifyDays($first, $days);
 		}
 
-		if (empty($final)) {
+		if (empty($final))
+		{
 			throw new InvalidArgumentException('Please supply Final date or #Days');
 		}
 
-		if ($final < $first) {
+		if ($final < $first)
+		{
 			throw new InvalidArgumentException('Final date is before First date');
 		}
 
@@ -598,22 +655,29 @@ class Calendar
 	 */
 	protected function setMaxStay(): void
 	{
-		foreach ($this->range as $d) {
+		foreach ($this->range as $d)
+		{
 			$this->maxstay[$d] = 0;
 		}
 
-		foreach ($this->rates as $r) {
-			if ($r->min_guests == 1) {
-				if ($r->valid_to < $this->first) {
+		foreach ($this->rates as $r)
+		{
+			if ($r->min_guests == 1)
+			{
+				if ($r->valid_to < $this->first)
+				{
 					continue;
 				}
-				if ($r->valid_from > $this->final) {
+				if ($r->valid_from > $this->final)
+				{
 					break;
 				}
 
 				$dates = TickTock::allDatesBetween($r->valid_from, $r->valid_to);
-				foreach ($dates as $d) {
-					if ($d >= $this->first && $d <= $this->final) {
+				foreach ($dates as $d)
+				{
+					if ($d >= $this->first && $d <= $this->final)
+					{
 						$this->maxstay[$d] = $r->max_nights;
 					}
 				}
@@ -621,9 +685,11 @@ class Calendar
 		}
 
 		$last = count($this->maxstay) ? array_key_last($this->maxstay) : $this->today;
-		if ($last < $this->final) {
+		if ($last < $this->final)
+		{
 			$dates = TickTock::allDatesBetween(TickTock::modifyDays($last), $this->final);
-			foreach ($dates as $d) {
+			foreach ($dates as $d)
+			{
 				$this->maxstay[$d] = 0;
 			}
 		}
@@ -638,25 +704,31 @@ class Calendar
 	protected function setMinStay(): void
 	{
 		$canwebook = (int) $this->settings['canwebook'];
-		if ($canwebook) {
+		if ($canwebook)
+		{
 			$this->getBlockedDates();
 		}
 
-		foreach ($this->range as $d) {
-			list($nights, $start_day) = $this->setBaseMinStay($d);
-			if (!$nights) {
+		foreach ($this->range as $d)
+		{
+			[$nights, $start_day] = $this->setBaseMinStay($d);
+			if (!$nights)
+			{
 				$this->minstay[$d] = 0;
 				continue;
 			}
 
-			if ((int) $this->settings['shortbook'] && $start_day == 7) {
+			if ((int) $this->settings['shortbook'] && $start_day == 7)
+			{
 				$this->minstay[$d] = $this->settings['shortbook'];
 				continue;
 			}
 
-			if ($canwebook && $canwebook < $nights && $start_day == 7) {
+			if ($canwebook && $canwebook < $nights && $start_day == 7)
+			{
 				$cwb = $this->checkCanWeBook($d, $nights);
-				if ($cwb) {
+				if ($cwb)
+				{
 					$this->minstay[$d] = $cwb;
 					continue;
 				}
@@ -669,19 +741,21 @@ class Calendar
 	/**
 	 * Validate property ID
 	 *
-	 * @param  int  $property_id  ID of property
+	 * @param   int  $property_id  ID of property
 	 *
 	 * @throws Exception
 	 * @since  3.4.0
 	 */
 	protected function setProperty(int $property_id): void
 	{
-		if (empty($property_id)) {
+		if (empty($property_id))
+		{
 			throw new RuntimeException('Property ID must be provided');
 		}
 
 		$item = KrFactory::getAdminModel('property')->getItem($property_id);
-		if (!$item) {
+		if (!$item)
+		{
 			throw new RuntimeException('Property ID is not valid');
 		}
 
@@ -701,19 +775,26 @@ class Calendar
 		$next_valid_from = $this->first;
 		$last_valid_to   = false;
 
-		foreach ($this->rates as $r) {
-			if ($r->min_guests > 1) {
+		foreach ($this->rates as $r)
+		{
+			if ($r->min_guests > 1)
+			{
 				continue;
 			}
 
-			if ($r->valid_from > $next_valid_from) {
+			if ($r->valid_from > $next_valid_from)
+			{
 				$interval = TickTock::allDatesBetween($next_valid_from, $r->valid_from, true);
 				$first    = true;
-				foreach ($interval as $d) {
-					if ($first) {
+				foreach ($interval as $d)
+				{
+					if ($first)
+					{
 						$this->incrementBlockedDate($d, $next_valid_from, '');
 						$first = false;
-					} else {
+					}
+					else
+					{
 						$this->incrementBlockedDate($d, '', '');
 					}
 				}
@@ -723,12 +804,14 @@ class Calendar
 			$next_valid_from = TickTock::modifyDays($r->valid_to);
 		}
 
-		if ($last_valid_to <= $this->final) {
+		if ($last_valid_to <= $this->final)
+		{
 			$this->incrementBlockedDate($next_valid_from, $next_valid_from, $this->final);
 
 			$from     = TickTock::modifyDays($next_valid_from);
 			$interval = TickTock::allDatesBetween($from, $this->final, true);
-			foreach ($interval as $d) {
+			foreach ($interval as $d)
+			{
 				$this->incrementBlockedDate($d, $last_valid_to, $this->final);
 			}
 		}
@@ -739,16 +822,19 @@ class Calendar
 	/**
 	 * Set rates for property
 	 *
-	 * @param  array  $rates  Rates array
+	 * @param   array  $rates  Rates array
 	 *
 	 * @throws Exception
 	 * @since  3.4.0
 	 */
 	protected function setRates(array $rates = []): void
 	{
-		if (is_countable($rates) && count($rates)) {
+		if (is_countable($rates) && count($rates))
+		{
 			$this->rates = $rates;
-		} else {
+		}
+		else
+		{
 			$this->rates = KrFactory::getListModel('rates')
 			                        ->getRatesForProperty($this->property_id, $this->first, $this->final);
 		}
@@ -762,12 +848,17 @@ class Calendar
 	 */
 	protected function setWeekly(): void
 	{
-		foreach ($this->rates as $r) {
-			if ($r->min_guests == 1) {
+		foreach ($this->rates as $r)
+		{
+			if ($r->min_guests == 1)
+			{
 				$dates = TickTock::allDatesBetween($r->valid_from, TickTock::modifyDays($r->valid_to));
-				foreach ($dates as $date) {
-					if ($date >= $this->first && $date <= $this->final) {
-						if ($r->start_day < 7 && TickTock::getDow($date) != $r->start_day) {
+				foreach ($dates as $date)
+				{
+					if ($date >= $this->first && $date <= $this->final)
+					{
+						if ($r->start_day < 7 && TickTock::getDow($date) != $r->start_day)
+						{
 							$this->weekly[$date] = $date;
 						}
 					}
@@ -779,19 +870,22 @@ class Calendar
 	/**
 	 * Get minimum nights from season / cluster
 	 *
-	 * @param  string  $date        Required date
-	 * @param  int     $min_nights  Minimum nights
+	 * @param   string  $date        Required date
+	 * @param   int     $min_nights  Minimum nights
 	 *
+	 * @return int
 	 * @throws RuntimeException
 	 * @since  3.3.4
-	 * @return int
 	 */
 	private function getSeasonNights(string $date, int $min_nights): int
 	{
-		if ($this->settings['cluster']) {
+		if ($this->settings['cluster'])
+		{
 			$nights = KrFactory::getListModel('seasons')
 			                   ->getMinimumNights((int) $this->settings['cluster'], $date);
-			if (!empty($nights)) {
+
+			if (!empty($nights))
+			{
 				$min_nights = $nights;
 			}
 		}

@@ -18,7 +18,6 @@ use HighlandVision\KR\Hub;
 use HighlandVision\KR\TickTock;
 use RuntimeException;
 use stdClass;
-
 use function hash;
 
 /**
@@ -36,11 +35,11 @@ class Manager
 	/**
 	 * Action manager
 	 *
-	 * @param  Hub  $hub  Hub data
+	 * @param   Hub  $hub  Hub data
 	 *
+	 * @return bool
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return bool
 	 */
 	public function action(Hub $hub): bool
 	{
@@ -56,38 +55,6 @@ class Manager
 	}
 
 	/**
-	 * Pre save processing
-	 *
-	 * @throws Exception
-	 * @since  3.3.0
-	 */
-	protected function setValues(): void
-	{
-		$this->hub->checkGuestUser();
-		if (!$this->hub->getValue('isEdit'))
-		{
-			if (!$this->hub->getValue('tag'))
-			{
-				$this->hub->setValue('tag', KrFactory::getAdminModel('contract')::generateTag());
-			}
-
-			$this->hub->setValue('booking_status', $this->hub->doBookingStatus());
-		}
-
-		if ((float) $this->hub->getValue('net_price') == 0)
-		{
-			$this->hub->setValue('net_price', $this->hub->getValue('net_price_system'));
-		}
-
-		// If agent booking and linked to a channel then set service_id
-		if ($this->hub->getValue('agent_id') && !$this->hub->getValue('service_id'))
-		{
-			$agent = KrFactory::getAdminModel('agent')->getItem($this->hub->getValue('agent_id'));
-			$this->hub->setValue('service_id', $agent->service_id);
-		}
-	}
-
-	/**
 	 * Post save processing
 	 *
 	 * @throws Exception
@@ -100,12 +67,14 @@ class Manager
 			if (!$this->hub->getValue('fixrate'))
 			{
 				KrFactory::getAdminModel('contractnote')::createContractNote($this->id,
-					KrMethods::plain('COM_KNOWRES_CONTRACTNOTE_TEXT_EDIT'));
+					KrMethods::plain('COM_KNOWRES_CONTRACTNOTE_TEXT_EDIT')
+				);
 			}
 			else
 			{
 				KrFactory::getAdminModel('contractnote')::createContractNote($this->id,
-					KrMethods::plain('COM_KNOWRES_CONTRACTNOTE_TEXT_FIXRATE'));
+					KrMethods::plain('COM_KNOWRES_CONTRACTNOTE_TEXT_FIXRATE')
+				);
 			}
 		}
 	}
@@ -113,10 +82,10 @@ class Manager
 	/**
 	 * Controls the save and processing for the contract
 	 *
-	 * @throws RuntimeException
-	 * @throws Exception
-	 * @since  1.0.0
 	 * @return bool
+	 * @throws Exception
+	 * @throws RuntimeException
+	 * @since  1.0.0
 	 */
 	protected function saveAll(): bool
 	{
@@ -127,7 +96,8 @@ class Manager
 
 			$modelGuest = KrFactory::getAdminModel('guest');
 			$data       = $modelGuest->validate($modelGuest->getForm(), (array) $this->hub->getData('guestData'), null,
-				$this->hub->settings);
+				$this->hub->settings
+			);
 			if (!$data)
 			{
 				$this->hub->errors = $modelGuest->getErrors();
@@ -244,6 +214,38 @@ class Manager
 				$payment->created_by   = KrMethods::getUser()->id;
 				KrFactory::insert('contract_payment', $payment);
 			}
+		}
+	}
+
+	/**
+	 * Pre save processing
+	 *
+	 * @throws Exception
+	 * @since  3.3.0
+	 */
+	protected function setValues(): void
+	{
+		$this->hub->checkGuestUser();
+		if (!$this->hub->getValue('isEdit'))
+		{
+			if (!$this->hub->getValue('tag'))
+			{
+				$this->hub->setValue('tag', KrFactory::getAdminModel('contract')::generateTag());
+			}
+
+			$this->hub->setValue('booking_status', $this->hub->doBookingStatus());
+		}
+
+		if ((float) $this->hub->getValue('net_price') == 0)
+		{
+			$this->hub->setValue('net_price', $this->hub->getValue('net_price_system'));
+		}
+
+		// If agent booking and linked to a channel then set service_id
+		if ($this->hub->getValue('agent_id') && !$this->hub->getValue('service_id'))
+		{
+			$agent = KrFactory::getAdminModel('agent')->getItem($this->hub->getValue('agent_id'));
+			$this->hub->setValue('service_id', $agent->service_id);
 		}
 	}
 }

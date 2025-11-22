@@ -18,7 +18,6 @@ use HighlandVision\KR\Utility;
 use InvalidArgumentException;
 use RuntimeException;
 use stdClass;
-
 use function count;
 
 /**
@@ -34,16 +33,17 @@ class PrePayment
 	/**
 	 * Set payment data for Existing reservations
 	 *
-	 * @param  object  $contract  Database contract row
-	 * @param  float   $balance   Balance due
+	 * @param   object  $contract  Database contract row
+	 * @param   float   $balance   Balance due
 	 *
+	 * @return stdClass
 	 * @throws Exception
 	 * @since  3.3.1
-	 * @return stdClass
 	 */
 	public function constructExisting(object $contract, float $balance = 0): stdClass
 	{
-		if (!$contract->id) {
+		if (!$contract->id)
+		{
 			throw new InvalidArgumentException('Invalid Contract object passed');
 		}
 
@@ -67,15 +67,16 @@ class PrePayment
 	/**
 	 * Set payment data for New reservations
 	 *
-	 * @param  stdClass  $contractData  Contract session data
+	 * @param   stdClass  $contractData  Contract session data
 	 *
+	 * @return stdClass
 	 * @throws Exception
 	 * @since  3.3.1
-	 * @return stdClass
 	 */
 	public function constructNew(stdClass $contractData): stdClass
 	{
-		if (!$contractData->property_id) {
+		if (!$contractData->property_id)
+		{
 			throw new InvalidArgumentException('Invalid Contract object passed without a property');
 		}
 
@@ -99,20 +100,22 @@ class PrePayment
 	/**
 	 * Set the available currencies for a payment
 	 *
-	 * @param  string  $currency  Contract currency
+	 * @param   string  $currency  Contract currency
 	 *
+	 * @return array
 	 * @throws RuntimeException
 	 * @since  3.3.1
-	 * @return array
 	 */
 	protected function getCurrencies(string $currency): array
 	{
 		$currencies[] = $currency;
 
 		$payment_currencies = KrFactory::getListModel('currencies')->getPaymentCurrencies($currency);
-		if (is_string($payment_currencies)) {
+		if (is_string($payment_currencies))
+		{
 			$payment_currencies = Utility::decodeJson($payment_currencies);
-			foreach ($payment_currencies as $c) {
+			foreach ($payment_currencies as $c)
+			{
 				$currencies[] = $c;
 			}
 		}
@@ -123,7 +126,7 @@ class PrePayment
 	/**
 	 * Set the payment data for a gateway
 	 *
-	 * @param  string  $currency  Currency of contract
+	 * @param   string  $currency  Currency of contract
 	 *
 	 * @throws Exception
 	 * @since  3.3.1
@@ -135,23 +138,30 @@ class PrePayment
 		$gateways   = [];
 
 		$gateway = new Gateway($this->paymentData->payment_type, $currency,
-			$this->paymentData->base_amount);
+			$this->paymentData->base_amount
+		);
 
-		foreach ($services as $g) {
+		foreach ($services as $g)
+		{
 			$params = Utility::decodeJson($g->parameters);
 
 			$obd = isset($params->obd) ? (int) $params->obd : false;
-			if (!$obd && $this->paymentData->payment_type === 'OBD') {
+			if (!$obd && $this->paymentData->payment_type === 'OBD')
+			{
 				continue;
 			}
 			$obr = isset($params->obr) ? (int) $params->obr : false;
-			if (!$obr && $this->paymentData->payment_type === 'OBR') {
+			if (!$obr && $this->paymentData->payment_type === 'OBR')
+			{
 				continue;
 			}
 
-			try {
+			try
+			{
 				$gateways[$g->id] = $gateway->setGateway($g, $params);
-			} catch (Exception) {
+			}
+			catch (Exception)
+			{
 				continue;
 			}
 		}
@@ -162,24 +172,29 @@ class PrePayment
 	/**
 	 * Read and check for any property specific gateways
 	 *
-	 * @param  array  $currencies  Payment currencies
+	 * @param   array  $currencies  Payment currencies
 	 *
+	 * @return array
 	 * @throws RuntimeException
 	 * @since  3.3.1
-	 * @return array
 	 */
 	protected function getServiceGateways(array $currencies): array
 	{
 		$services = KrFactory::getListModel('services')->getGateways($currencies, $this->paymentData->agency_id,
-			$this->paymentData->property_id);
+			$this->paymentData->property_id
+		);
 
 		$property = [];
 		$global   = [];
 
-		foreach ($services as $t) {
-			if ($t->property_id) {
+		foreach ($services as $t)
+		{
+			if ($t->property_id)
+			{
 				$property[] = $t;
-			} else {
+			}
+			else
+			{
 				$global[] = $t;
 			}
 		}
@@ -190,23 +205,27 @@ class PrePayment
 	/**
 	 * Set payment amount
 	 *
-	 * @param  object  $contract  Contract row
-	 * @param  float   $balance   Balance due
+	 * @param   object  $contract  Contract row
+	 * @param   float   $balance   Balance due
 	 *
+	 * @return float
 	 * @throws RuntimeException
 	 * @since  3.3.1
-	 * @return float
 	 */
 	protected function setExistingAmount(object $contract, float $balance): float
 	{
 		$hasDeposit = $contract->contract_total - $contract->deposit;
-		if ($hasDeposit && $contract->booking_status < 10) {
+		if ($hasDeposit && $contract->booking_status < 10)
+		{
 			$amount = $contract->deposit;
-		} else {
+		}
+		else
+		{
 			$amount = $balance;
 		}
 
-		if (!$amount) {
+		if (!$amount)
+		{
 			throw new RuntimeException('Your reservation is fully paid');
 		}
 
@@ -216,15 +235,16 @@ class PrePayment
 	/**
 	 * Set payment amount
 	 *
-	 * @param  float  $amount  Payment amount
+	 * @param   float  $amount  Payment amount
 	 *
+	 * @return float
 	 * @throws InvalidArgumentException
 	 * @since  3.3.1
-	 * @return float
 	 */
 	protected function setNewAmount(float $amount): float
 	{
-		if (!$amount) {
+		if (!$amount)
+		{
 			throw new InvalidArgumentException('Payment amount could not be calculated');
 		}
 
@@ -256,16 +276,19 @@ class PrePayment
 	/**
 	 * Set payment type for Existing
 	 *
-	 * @param  int  $booking_status  Booking status
+	 * @param   int  $booking_status  Booking status
 	 *
-	 * @since  3.3.1
 	 * @return string
+	 * @since  3.3.1
 	 */
 	protected function setPaymentTypeExisting(int $booking_status): string
 	{
-		if ($booking_status < 10) {
+		if ($booking_status < 10)
+		{
 			return 'PBD';
-		} else {
+		}
+		else
+		{
 			return 'PBB';
 		}
 	}
@@ -273,16 +296,19 @@ class PrePayment
 	/**
 	 * Set payment type for New
 	 *
-	 * @param  int  $booking_type  Property booking type
+	 * @param   int  $booking_type  Property booking type
 	 *
-	 * @since  3.3.1
 	 * @return string
+	 * @since  3.3.1
 	 */
 	protected function setPaymentTypeNew(int $booking_type): string
 	{
-		if ($booking_type == 2) {
+		if ($booking_type == 2)
+		{
 			return 'OBD';
-		} else {
+		}
+		else
+		{
 			return 'OBR';
 		}
 	}

@@ -39,11 +39,11 @@ class MapmarkerModel extends AdminModel
 	/**
 	 * Method to get a map marker record.
 	 *
-	 * @param  int  $pk  The id of the primary key.
+	 * @param   int  $pk  The id of the primary key.
 	 *
+	 * @return false|object  Object on success, false on failure.
 	 * @throws RuntimeException
 	 * @since  1.0.0
-	 * @return false|object  Object on success, false on failure.
 	 */
 	public function getItem($pk = null): false|object
 	{
@@ -59,11 +59,37 @@ class MapmarkerModel extends AdminModel
 	}
 
 	/**
+	 * Method to save the form data.
+	 *
+	 * @param   array  $data  The form data.
+	 *
+	 * @return bool  True on success.
+	 * @throws Exception
+	 * @since  4.0.0
+	 */
+	public function save($data): bool
+	{
+		if (parent::save($data))
+		{
+			$files = KrMethods::inputFiles('jform');
+			if (!empty($files['marker_image']['name']))
+			{
+				$id = $this->getState('mapmarker.id');
+				$this->saveImage($id, $files['marker_image']);
+			}
+
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
 	 * Method to get the data that should be injected in the form.
 	 *
+	 * @return mixed The data for the form.
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return mixed The data for the form.
 	 */
 	protected function loadFormData(): mixed
 	{
@@ -112,31 +138,5 @@ class MapmarkerModel extends AdminModel
 
 		KrMethods::message(KrMethods::plain('COM_KNOWRES_UPLOAD_SUCCESS'));
 		KrMethods::cleanCache('com_knowres_map');
-	}
-
-	/**
-	 * Method to save the form data.
-	 *
-	 * @param  array  $data  The form data.
-	 *
-	 * @throws Exception
-	 * @since  4.0.0
-	 * @return bool  True on success.
-	 */
-	public function save($data): bool
-	{
-		if (parent::save($data))
-		{
-			$files = KrMethods::inputFiles('jform');
-			if (!empty($files['marker_image']['name']))
-			{
-				$id = $this->getState('mapmarker.id');
-				$this->saveImage($id, $files['marker_image']);
-			}
-
-			return true;
-		}
-
-		return false;
 	}
 }

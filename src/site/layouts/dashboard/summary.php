@@ -30,232 +30,233 @@ extract($displayData);
 ?>
 
 <?php if (!Utility::compareFloat($contract->room_total_gross, $contract->room_total)): ?>
-	<div class="grid-x grid-margin-x summary">
-		<div class="small-9 cell">
-			<?php echo KrMethods::plain('COM_KNOWRES_FULL_PRICE'); ?>
-		</div>
-		<div class="small-3 cell text-right">
-			<?php echo Utility::displayValue($contract->room_total_gross, $contract->currency); ?>
-		</div>
-	</div>
+    <div class="grid-x grid-margin-x summary">
+        <div class="small-9 cell">
+            <?php echo KrMethods::plain('COM_KNOWRES_FULL_PRICE'); ?>
+        </div>
+        <div class="small-3 cell text-right">
+            <?php echo Utility::displayValue($contract->room_total_gross, $contract->currency); ?>
+        </div>
+    </div>
 <?php endif; ?>
 
 <?php if ($contract->discount > 0): ?>
-	<div class="grid-x grid-margin-x">
-		<div class="small-6 cell red">
-			<?php echo KrMethods::plain('COM_KNOWRES_DISCOUNT'); ?>
-		</div>
-		<div class="small-3 cell red text-right">
-			<?php echo Utility::displayValue($contract->discount, $contract->currency); ?>
-		</div>
-		<div class="small-3 cell text-right">
-		</div>
-	</div>
+    <div class="grid-x grid-margin-x">
+        <div class="small-6 cell red">
+            <?php echo KrMethods::plain('COM_KNOWRES_DISCOUNT'); ?>
+        </div>
+        <div class="small-3 cell red text-right">
+            <?php echo Utility::displayValue($contract->discount, $contract->currency); ?>
+        </div>
+        <div class="small-3 cell text-right">
+        </div>
+    </div>
 <?php endif; ?>
 
 <?php if ($contract->coupon_discount > 0): ?>
-	<div class="grid-x grid-margin-x">
-		<div class="small-6 cell indent red">
-			<?php echo KrMethods::plain('COM_KNOWRES_COUPON_DISCOUNT'); ?>
-		</div>
-		<div class="small-3 cell red text-right">
-			<?php echo Utility::displayValue($contract->coupon_discount, $contract->currency); ?>
-		</div>
-		<div class="small-3 cell text-right">
-		</div>
-	</div>
+    <div class="grid-x grid-margin-x">
+        <div class="small-6 cell indent red">
+            <?php echo KrMethods::plain('COM_KNOWRES_COUPON_DISCOUNT'); ?>
+        </div>
+        <div class="small-3 cell red text-right">
+            <?php echo Utility::displayValue($contract->coupon_discount, $contract->currency); ?>
+        </div>
+        <div class="small-3 cell text-right">
+        </div>
+    </div>
 <?php endif; ?>
 
-	<div class="grid-x grid-margin-x">
-		<div class="small-9 cell">
-			<?php echo KrMethods::plain('COM_KNOWRES_RENTAL_PRICE'); ?>
-		</div>
-		<div class="small-3 cell text-right">
-			<?php echo Utility::displayValue($contract->room_total, $contract->currency); ?>
-		</div>
-	</div>
+    <div class="grid-x grid-margin-x">
+        <div class="small-9 cell">
+            <?php echo KrMethods::plain('COM_KNOWRES_RENTAL_PRICE'); ?>
+        </div>
+        <div class="small-3 cell text-right">
+            <?php echo Utility::displayValue($contract->room_total, $contract->currency); ?>
+        </div>
+    </div>
 
 <?php if ($contract->tax_total > 0): ?>
-	<div class="grid-x grid-margin-x">
-		<div class="small-9 cell">
-			<?php echo KrMethods::plain('COM_KNOWRES_TAX'); ?>
-		</div>
-		<div class="small-3 cell text-right">
-			<?php echo Utility::displayValue($contract->tax_total, $contract->currency); ?>
-		</div>
-	</div>
+    <div class="grid-x grid-margin-x">
+        <div class="small-9 cell">
+            <?php echo KrMethods::plain('COM_KNOWRES_TAX'); ?>
+        </div>
+        <div class="small-3 cell text-right">
+            <?php echo Utility::displayValue($contract->tax_total, $contract->currency); ?>
+        </div>
+    </div>
 <?php endif; ?>
 
 <?php if (count($contract->extras)): ?>
-	<div class="grid-x grid-margin-x" style="margin-top:10px;">
-		<div class="small-6 cell">
-			<?php echo KrMethods::plain('COM_KNOWRES_EXTRAS'); ?>
-		</div>
-	</div>
+    <div class="grid-x grid-margin-x" style="margin-top:10px;">
+        <div class="small-6 cell">
+            <?php echo KrMethods::plain('COM_KNOWRES_EXTRAS'); ?>
+        </div>
+    </div>
 
-	<?php $prices_inclusive = 1; ?>
-	<?php foreach ($contract->extras as $e => $d): ?>
-		<?php if (!empty($e) && $e > 0): ?>
-			<?php $extra = KrFactory::getAdminModel('extra')->getItem($e); ?>
-			<?php $name = $extra->name; ?>
-			<?php $value = $d['value']; ?>
-			<?php if ((int) $d['quantity'] > 1): ?>
-				<?php $name = $name . ' x ' . $d['quantity']; ?>
-			<?php endif; ?>
+    <?php $prices_inclusive = 1; ?>
+    <?php foreach ($contract->extras as $e => $d): ?>
+        <?php if (!empty($e) && $e > 0): ?>
+            <?php $extra = KrFactory::getAdminModel('extra')->getItem($e); ?>
+            <?php $name = $extra->name; ?>
+            <?php $value = $d['value']; ?>
+            <?php if ((int) $d['quantity'] > 1): ?>
+                <?php $name = $name . ' x ' . $d['quantity']; ?>
+            <?php endif; ?>
 
-			<div class="grid-x grid-margin-x">
-				<div class="small-6 cell indent">
-					<?php echo $name; ?>
-				</div>
-				<div class="small-3 cell text-right">
-					<?php echo Utility::displayValue($value, $contract->currency); ?>
-				</div>
-			</div>
-		<?php endif; ?>
-	<?php endforeach; ?>
+            <div class="grid-x grid-margin-x">
+                <div class="small-6 cell indent">
+                    <?php echo $name; ?>
+                </div>
+                <div class="small-3 cell text-right">
+                    <?php echo Utility::displayValue($value, $contract->currency); ?>
+                </div>
+            </div>
+        <?php endif; ?>
+    <?php endforeach; ?>
 
-	<div class="grid-x grid-margin-x">
-		<div class="small-9 cell">
-			<?php echo KrMethods::plain('COM_KNOWRES_EXTRAS_TOTAL'); ?>
-		</div>
-		<div class="small-3 cell text-right">
-			<?php echo Utility::displayValue($contract->extra_total, $contract->currency); ?>
-		</div>
-	</div>
+    <div class="grid-x grid-margin-x">
+        <div class="small-9 cell">
+            <?php echo KrMethods::plain('COM_KNOWRES_EXTRAS_TOTAL'); ?>
+        </div>
+        <div class="small-3 cell text-right">
+            <?php echo Utility::displayValue($contract->extra_total, $contract->currency); ?>
+        </div>
+    </div>
 <?php endif; ?>
 
 <?php $fee_total = 0; ?>
 <?php if (isset($fees) && count($fees)): ?>
-	<div class="grid-x grid-margin-x" style="margin-top:5px;">
-		<div class="small-6 cell">
-			<?php echo KrMethods::plain('COM_KNOWRES_ADDITIONAL_CHARGES'); ?>
-		</div>
-	</div>
+    <div class="grid-x grid-margin-x" style="margin-top:5px;">
+        <div class="small-6 cell">
+            <?php echo KrMethods::plain('COM_KNOWRES_ADDITIONAL_CHARGES'); ?>
+        </div>
+    </div>
 
-	<?php foreach ($fees as $fee): ?>
-		<div class="grid-x grid-margin-x">
-			<div class="small-6 cell indent">
-				<?php echo TickTock::displayDate($fee->created_at) . ' - ' . $fee->description; ?>
-			</div>
-			<div class="small-3 cell text-right">
-				<?php echo Utility::displayValue($fee->value, $contract->currency); ?>
-			</div>
-		</div>
+    <?php foreach ($fees as $fee): ?>
+        <div class="grid-x grid-margin-x">
+            <div class="small-6 cell indent">
+                <?php echo TickTock::displayDate($fee->created_at) . ' - ' . $fee->description; ?>
+            </div>
+            <div class="small-3 cell text-right">
+                <?php echo Utility::displayValue($fee->value, $contract->currency); ?>
+            </div>
+        </div>
 
-		<?php $fee_total += $fee->value; ?>
-	<?php endforeach; ?>
+        <?php $fee_total += $fee->value; ?>
+    <?php endforeach; ?>
 <?php endif; ?>
 
 <?php if ($fee_total > 0): ?>
-	<div class="grid-x grid-margin-x">
-		<div class="small-9 cell subtotal">
-			<?php echo KrMethods::plain('COM_KNOWRES_ADDITIONAL_CHARGES_TOTAL'); ?>
-		</div>
-		<div class="small-3 cell text-right">
-			<?php echo Utility::displayValue($fee_total, $contract->currency); ?>
-		</div>
-	</div>
+    <div class="grid-x grid-margin-x">
+        <div class="small-9 cell subtotal">
+            <?php echo KrMethods::plain('COM_KNOWRES_ADDITIONAL_CHARGES_TOTAL'); ?>
+        </div>
+        <div class="small-3 cell text-right">
+            <?php echo Utility::displayValue($fee_total, $contract->currency); ?>
+        </div>
+    </div>
 <?php endif; ?>
 
 <?php if ($contract->room_total != $contract->contract_total + $fee_total): ?>
-	<div class="grid-x grid-margin-x" style="margin-top:10px;">
-		<div class="small-9 cell">
-			<?php echo KrMethods::plain('COM_KNOWRES_RESERVATION_TOTAL'); ?>
-		</div>
-		<div class="small-3 cell heading text-right">
-			<?php echo Utility::displayValue($contract->contract_total + $fee_total, $contract->currency); ?>
-		</div>
-	</div>
+    <div class="grid-x grid-margin-x" style="margin-top:10px;">
+        <div class="small-9 cell">
+            <?php echo KrMethods::plain('COM_KNOWRES_RESERVATION_TOTAL'); ?>
+        </div>
+        <div class="small-3 cell heading text-right">
+            <?php echo Utility::displayValue($contract->contract_total + $fee_total, $contract->currency); ?>
+        </div>
+    </div>
 <?php endif; ?>
 
 <?php $payment_total = 0; ?>
 <?php $pending_total = 0; ?>
 <?php if (isset($payments) && is_countable($payments) && count($payments)): ?>
-	<hr>
-	<div class="grid-x grid-margin-x" style="margin-top:10px;">
-		<div class="small-12 cell heading">
-			<?php echo KrMethods::plain('COM_KNOWRES_PAYMENTS'); ?>
-		</div>
-	</div>
+    <hr>
+    <div class="grid-x grid-margin-x" style="margin-top:10px;">
+        <div class="small-12 cell heading">
+            <?php echo KrMethods::plain('COM_KNOWRES_PAYMENTS'); ?>
+        </div>
+    </div>
 
-	<?php foreach ($payments as $p): ?>
-		<?php $refund = $p->amount < 0; ?>
-		<?php $fex = ''; ?>
-		<?php if ($p->amount != $p->base_amount): ?>
-			<?php $fex = Utility::displayValue($p->amount, $p->currency) . ' @ ' . $p->rate; ?>
-		<?php endif; ?>
-		<?php if ($p->confirmed): ?>
-			<?php $payment_total += $p->base_amount; ?>
-		<?php else: ?>
-			<?php $pending_total += $p->base_amount; ?>
-		<?php endif; ?>
+    <?php foreach ($payments as $p): ?>
+        <?php $refund = $p->amount < 0; ?>
+        <?php $fex = ''; ?>
+        <?php if ($p->amount != $p->base_amount): ?>
+            <?php $fex = Utility::displayValue($p->amount, $p->currency) . ' @ ' . $p->rate; ?>
+        <?php endif; ?>
+        <?php if ($p->confirmed): ?>
+            <?php $payment_total += $p->base_amount; ?>
+        <?php else: ?>
+            <?php $pending_total += $p->base_amount; ?>
+        <?php endif; ?>
 
-		<div class="grid-x grid-margin-x">
-			<div class="small-3 cell">
-				<?php echo TickTock::displayDate($p->payment_date); ?>
-				<?php if (!$p->confirmed): ?>
-					<?php echo '*'; ?>
-				<?php endif; ?>
-			</div>
-			<div class="small-6 cell text-right">
-				<?php if ($p->base_amount > 0): ?>
-					<?php echo $fex . str_repeat('&nbsp;', 4) .
-					           Utility::displayValue($p->base_amount, $contract->currency); ?>
-				<?php else: ?>
-					<?php echo $fex . str_repeat('&nbsp;', 4) .
-					           Utility::displayValue(abs($p->base_amount), $contract->currency); ?>
-				<?php endif; ?>
-			</div>
-			<div class="small-3 cell text-right">
-			</div>
-		</div>
-	<?php endforeach; ?>
+        <div class="grid-x grid-margin-x">
+            <div class="small-3 cell">
+                <?php echo TickTock::displayDate($p->payment_date); ?>
+                <?php if (!$p->confirmed): ?>
+                    <?php echo '*'; ?>
+                <?php endif; ?>
+            </div>
+            <div class="small-6 cell text-right">
+                <?php if ($p->base_amount > 0): ?>
+                    <?php echo $fex . str_repeat('&nbsp;', 4) .
+                            Utility::displayValue($p->base_amount, $contract->currency); ?>
+                <?php else: ?>
+                    <?php echo $fex . str_repeat('&nbsp;', 4) .
+                            Utility::displayValue(abs($p->base_amount), $contract->currency); ?>
+                <?php endif; ?>
+            </div>
+            <div class="small-3 cell text-right">
+            </div>
+        </div>
+    <?php endforeach; ?>
 
-	<div class="grid-x grid-margin-x">
-		<div class="small-9 cell">
-			<?php echo KrMethods::plain('COM_KNOWRES_PAYMENTS_TOTAL'); ?>
-		</div>
-		<?php if ($payment_total > 0): ?>
-			<div class="small-3 cell text-right">
-				<?php echo Utility::displayValue($payment_total, $contract->currency); ?>
-			</div>
-		<?php else: ?>
-			<div class="small-3 cell text-right">
-				<?php echo Utility::displayValue($payment_total, $contract->currency); ?>
-			</div>
-		<?php endif; ?>
-	</div>
+    <div class="grid-x grid-margin-x">
+        <div class="small-9 cell">
+            <?php echo KrMethods::plain('COM_KNOWRES_PAYMENTS_TOTAL'); ?>
+        </div>
+        <?php if ($payment_total > 0): ?>
+            <div class="small-3 cell text-right">
+                <?php echo Utility::displayValue($payment_total, $contract->currency); ?>
+            </div>
+        <?php else: ?>
+            <div class="small-3 cell text-right">
+                <?php echo Utility::displayValue($payment_total, $contract->currency); ?>
+            </div>
+        <?php endif; ?>
+    </div>
 
-	<?php if ($pending_total): ?>
-		<div class="small-12 cell">
-			<small><?php echo KrMethods::plain('COM_KNOWRES_PAYMENT_UNCONFIRMED'); ?></small>
-		</div>
-	<?php endif; ?>
-	<hr>
+    <?php if ($pending_total): ?>
+        <div class="small-12 cell">
+            <small><?php echo KrMethods::plain('COM_KNOWRES_PAYMENT_UNCONFIRMED'); ?></small>
+        </div>
+    <?php endif; ?>
+    <hr>
 
-	<?php $due = ''; ?>
-	<?php if ($balance_all > 0): ?>
-		<?php if (!$contract->balance_days && $payment_total): ?>
-			<?php $due = KrMethods::plain('COM_KNOWRES_PAYABLE_ON_ARRIVAL'); ?>
-		<?php elseif ($contract->balance_date > TickTock::getDate() && $contract->booking_status >= 10): ?>
-			<?php $due = KrMethods::plain('COM_KNOWRES_BALANCE') . ' (' . KrMethods::sprintf('COM_KNOWRES_DUE_BY',
-					TickTock::displayDate($contract->balance_date)) . ')'; ?>
-		<?php elseif ($contract->balance_date <= TickTock::getDate()): ?>
-			<?php $due = KrMethods::plain('COM_KNOWRES_BALANCE') . ' (' . KrMethods::plain('COM_KNOWRES_DUE_NOW')
-			             . ')'; ?>
-		<?php else: ?>
-			<?php $due = KrMethods::plain('COM_KNOWRES_BALANCE'); ?>
-		<?php endif; ?>
-	<?php else: ?>
-		<?php $due = KrMethods::plain('COM_KNOWRES_BALANCE'); ?>
-	<?php endif; ?>
+    <?php $due = ''; ?>
+    <?php if ($balance_all > 0): ?>
+        <?php if (!$contract->balance_days && $payment_total): ?>
+            <?php $due = KrMethods::plain('COM_KNOWRES_PAYABLE_ON_ARRIVAL'); ?>
+        <?php elseif ($contract->balance_date > TickTock::getDate() && $contract->booking_status >= 10): ?>
+            <?php $due = KrMethods::plain('COM_KNOWRES_BALANCE') . ' (' . KrMethods::sprintf('COM_KNOWRES_DUE_BY',
+                            TickTock::displayDate($contract->balance_date)
+                    ) . ')'; ?>
+        <?php elseif ($contract->balance_date <= TickTock::getDate()): ?>
+            <?php $due = KrMethods::plain('COM_KNOWRES_BALANCE') . ' (' . KrMethods::plain('COM_KNOWRES_DUE_NOW')
+                    . ')'; ?>
+        <?php else: ?>
+            <?php $due = KrMethods::plain('COM_KNOWRES_BALANCE'); ?>
+        <?php endif; ?>
+    <?php else: ?>
+        <?php $due = KrMethods::plain('COM_KNOWRES_BALANCE'); ?>
+    <?php endif; ?>
 
-	<div class="grid-x grid-margin-x" style="margin-top:10px;">
-		<div class="small-9 cell heading">
-			<?php echo $due; ?>
-		</div>
-		<div class="small-3 cell heading strong text-right">
-			<?php echo Utility::displayValue($balance, $contract->currency); ?>
-		</div>
-	</div>
+    <div class="grid-x grid-margin-x" style="margin-top:10px;">
+        <div class="small-9 cell heading">
+            <?php echo $due; ?>
+        </div>
+        <div class="small-3 cell heading strong text-right">
+            <?php echo Utility::displayValue($balance, $contract->currency); ?>
+        </div>
+    </div>
 <?php endif; ?>

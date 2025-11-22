@@ -26,51 +26,51 @@ $wa->useScript('keepalive')
       aria-label="<?php echo $this->form_aria_label; ?>" class="form-validate" id="tax-form" method="post"
       name="adminForm">
 
-	<div class="main-card">
-		<div class="row">
-			<div class="col-xl-9 col-xxl-8">
-				<?php echo $this->form->renderField('service_id'); ?>
+    <div class="main-card">
+        <div class="row">
+            <div class="col-xl-9 col-xxl-8">
+                <?php echo $this->form->renderField('service_id'); ?>
 
-				<?php if (!(int) $this->item->contract_id && !(int) $this->item->guest_id
-					&& !(int) $this->item->owner_id) : ?>
-					<?php if (!$this->item->id && $this->property_id): ?>
-						<?php $this->form->setValue('property_id', '', $this->property_id); ?>
-					<?php endif; ?>
-					<?php echo $this->form->renderField('property_id'); ?>
-					<?php if ($service->plugin == 'vrbo' || $service->plugin == 'ru'): ?>
-						<?php $this->form->setFieldAttribute('sell', 'required', true); ?>
-						<?php echo $this->form->renderField('sell'); ?>
-					<?php endif; ?>
-				<?php endif; ?>
-				<?php if ((int) $this->item->contract_id) : ?>
-					<?php $this->form->setFieldAttribute('property_id', 'required', false); ?>
-					<?php $this->form->setFieldAttribute('contract_id', 'required', true); ?>
-					<?php echo $this->form->renderField('contract_id'); ?>
-				<?php endif; ?>
-				<?php if ((int) $this->item->guest_id) : ?>
-					<?php $this->form->setFieldAttribute('property_id', 'required', false); ?>
-					<?php $this->form->setFieldAttribute('guest_id', 'required', true); ?>
-					<?php echo $this->form->renderField('guest_id'); ?>
-				<?php endif; ?>
-				<?php if ((int) $this->item->owner_id) : ?>
-					<?php $this->form->setFieldAttribute('property_id', 'required', false); ?>
-					<?php $this->form->setFieldAttribute('owner_id', 'required', true); ?>
-					<?php echo $this->form->renderField('owner_id'); ?>
-				<?php endif; ?>
-				<!--					--><?php //if ((int) $this->item->payment_id) : ?>
-				<!--						--><?php //echo $this->form->renderField('payment_id'); ?>
-				<!--					--><?php //endif; ?>
+                <?php if (!(int) $this->item->contract_id && !(int) $this->item->guest_id
+                        && !(int) $this->item->owner_id) : ?>
+                    <?php if (!$this->item->id && $this->property_id): ?>
+                        <?php $this->form->setValue('property_id', '', $this->property_id); ?>
+                    <?php endif; ?>
+                    <?php echo $this->form->renderField('property_id'); ?>
+                    <?php if ($service->plugin == 'vrbo' || $service->plugin == 'ru'): ?>
+                        <?php $this->form->setFieldAttribute('sell', 'required', true); ?>
+                        <?php echo $this->form->renderField('sell'); ?>
+                    <?php endif; ?>
+                <?php endif; ?>
+                <?php if ((int) $this->item->contract_id) : ?>
+                    <?php $this->form->setFieldAttribute('property_id', 'required', false); ?>
+                    <?php $this->form->setFieldAttribute('contract_id', 'required', true); ?>
+                    <?php echo $this->form->renderField('contract_id'); ?>
+                <?php endif; ?>
+                <?php if ((int) $this->item->guest_id) : ?>
+                    <?php $this->form->setFieldAttribute('property_id', 'required', false); ?>
+                    <?php $this->form->setFieldAttribute('guest_id', 'required', true); ?>
+                    <?php echo $this->form->renderField('guest_id'); ?>
+                <?php endif; ?>
+                <?php if ((int) $this->item->owner_id) : ?>
+                    <?php $this->form->setFieldAttribute('property_id', 'required', false); ?>
+                    <?php $this->form->setFieldAttribute('owner_id', 'required', true); ?>
+                    <?php echo $this->form->renderField('owner_id'); ?>
+                <?php endif; ?>
+                <!--					--><?php //if ((int) $this->item->payment_id) : ?>
+                <!--						--><?php //echo $this->form->renderField('payment_id'); ?>
+                <!--					--><?php //endif; ?>
 
-				<?php echo $this->form->renderField('foreign_key'); ?>
-				<?php echo $this->form->renderFieldset('krhidden'); ?>
-			</div>
-			<div class="col-xl-3 offset-xxl-1">
-				<?php echo KrMethods::render('joomla.edit.global', $this); ?>
-			</div>
-		</div>
-	</div>
+                <?php echo $this->form->renderField('foreign_key'); ?>
+                <?php echo $this->form->renderFieldset('krhidden'); ?>
+            </div>
+            <div class="col-xl-3 offset-xxl-1">
+                <?php echo KrMethods::render('joomla.edit.global', $this); ?>
+            </div>
+        </div>
+    </div>
 
-	<input type="hidden" name="task" value="">
-	<input type="hidden" name="old_sell" value="<?php echo $this->form->getValue('sell'); ?>">
-	<?php echo HTMLHelper::_('form.token'); ?>
+    <input type="hidden" name="task" value="">
+    <input type="hidden" name="old_sell" value="<?php echo $this->form->getValue('sell'); ?>">
+    <?php echo HTMLHelper::_('form.token'); ?>
 </form>

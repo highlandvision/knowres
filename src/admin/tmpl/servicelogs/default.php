@@ -24,22 +24,24 @@ include(JPATH_ADMINISTRATOR . '/components/com_knowres/layouts/html/list/include
 ?>
 
 <?php include(JPATH_ADMINISTRATOR . '/components/com_knowres/layouts/html/list/includes/list-form-start.php'); ?>
-<table class="table" id="kr-list">
-	<?php echo KrMethods::render('html.list.caption', ['name' => $this->name]); ?>
-	<thead>
-	<?php echo $this->loadTemplate('th'); ?>
-	</thead>
 
-	<tbody <?php if ($this->saveOrder): ?> class="js-draggable" data-url="<?php echo $this->saveOrderingUrl; ?>"
-		data-direction="<?php echo strtolower($this->listDirn); ?>"<?php endif; ?>>
-	<?php echo $this->loadTemplate('td'); ?>
-	</tbody>
+<table class="table" id="kr-list">
+    <?php echo KrMethods::render('html.list.caption', ['name' => $this->name]); ?>
+    <thead>
+    <?php echo $this->loadTemplate('th'); ?>
+    </thead>
+
+    <tbody <?php if ($this->saveOrder): ?> class="js-draggable" data-url="<?php echo $this->saveOrderingUrl; ?>"
+        data-direction="<?php echo strtolower($this->listDirn); ?>"<?php endif; ?>>
+    <?php echo $this->loadTemplate('td'); ?>
+    </tbody>
 </table>
+
 <?php include(JPATH_ADMINISTRATOR . '/components/com_knowres/layouts/html/list/includes/list-form-end.php'); ?>
 
 <div aria-labelledby="kr-ajax-modal-label" class="modal fade" id="kr-ajax-modal" tabindex="-1">
-	<div class="modal-dialog modal-dialog-scrollable modal-xl">
-		<div class="modal-content">
-		</div>
-	</div>
+    <div class="modal-dialog modal-dialog-scrollable modal-xl">
+        <div class="modal-content">
+        </div>
+    </div>
 </div>

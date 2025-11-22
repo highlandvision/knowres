@@ -16,7 +16,6 @@ use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\ListModel;
 use Joomla\Database\QueryInterface;
 use RuntimeException;
-
 use function defined;
 
 /**
@@ -29,14 +28,15 @@ class EmailactionsModel extends ListModel
 	/**
 	 * Constructor.
 	 *
-	 * @param  array  $config  An optional associative array of configuration settings.
+	 * @param   array  $config  An optional associative array of configuration settings.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
 	public function __construct($config = [])
 	{
-		if (empty($config['filter_fields'])) {
+		if (empty($config['filter_fields']))
+		{
 			//@formatter:off
 			$config['filter_fields'] = [
 				'id',               'a.id',
@@ -56,9 +56,9 @@ class EmailactionsModel extends ListModel
 	/**
 	 * Build an SQL query to load the list data.
 	 *
+	 * @return QueryInterface
 	 * @throws RuntimeException
 	 * @since  2.0.0
-	 * @return QueryInterface
 	 */
 	protected function getListQuery(): QueryInterface
 	{
@@ -69,26 +69,30 @@ class EmailactionsModel extends ListModel
 		$query->from($db->qn('#__knowres_email_action', 'a'));
 
 		$query->select($db->qn('uc.name', 'editor'))
-			->join('LEFT', $db->qn('#__users', 'uc') . ' ON ' . $db->qn('uc.id') . '=' . $db->qn('a.checked_out'));
+		      ->join('LEFT', $db->qn('#__users', 'uc') . ' ON ' . $db->qn('uc.id') . '=' . $db->qn('a.checked_out'));
 		$query->select($db->qn('created_by.name', 'created_by'))
-			->join('LEFT',
-				$db->qn('#__users', 'created_by') . ' ON ' . $db->qn('created_by.id') . '='
-				. $db->qn('a.created_by')
-			);
+		      ->join('LEFT',
+			      $db->qn('#__users', 'created_by') . ' ON ' . $db->qn('created_by.id') . '='
+			      . $db->qn('a.created_by')
+		      );
 		$query->select($db->qn('updated_by.name', 'updated_by'))
-			->join('LEFT', $db->qn('#__users', 'updated_by') . ' ON ' . $db->qn('updated_by.id') . '='
-			               . $db->qn('a.updated_by')
-			);
+		      ->join('LEFT', $db->qn('#__users', 'updated_by') . ' ON ' . $db->qn('updated_by.id') . '='
+			      . $db->qn('a.updated_by')
+		      );
 		$query->select($db->qn('contract.tag', 'contract_tag'))
-			->join('LEFT', $db->qn('#__knowres_contract', 'contract') . ' ON ' . $db->qn('contract.id') . '='
-			               . $db->qn('a.contract_id')
-			);
+		      ->join('LEFT', $db->qn('#__knowres_contract', 'contract') . ' ON ' . $db->qn('contract.id') . '='
+			      . $db->qn('a.contract_id')
+		      );
 
 		$search = $this->getState('filter.search');
-		if (!empty($search)) {
-			if (stripos($search, 'id:') === 0) {
-				$query->where($db->qn('a.id') . '=' . (int)substr($search, 3));
-			} else {
+		if (!empty($search))
+		{
+			if (stripos($search, 'id:') === 0)
+			{
+				$query->where($db->qn('a.id') . '=' . (int) substr($search, 3));
+			}
+			else
+			{
 				$search = $db->q('%' . $search . '%');
 				$query->where($db->qn('contract.tag') . ' LIKE ' . $search);
 			}
@@ -96,7 +100,8 @@ class EmailactionsModel extends ListModel
 
 		$orderCol  = $this->state->get('list.ordering');
 		$orderDirn = $this->state->get('list.direction');
-		if ($orderCol && $orderDirn) {
+		if ($orderCol && $orderDirn)
+		{
 			$query->order($db->escape($orderCol . ' ' . $orderDirn));
 		}
 
@@ -109,10 +114,10 @@ class EmailactionsModel extends ListModel
 	 * different modules that might need different sets of data or different
 	 * ordering requirements.
 	 *
-	 * @param  string  $id  A prefix for the store id.
+	 * @param   string  $id  A prefix for the store id.
 	 *
-	 * @since  2.0.0
 	 * @return string A store id.
+	 * @since  2.0.0
 	 */
 	protected function getStoreId($id = ''): string
 	{
@@ -125,8 +130,8 @@ class EmailactionsModel extends ListModel
 	 * Method to autopopulate the model state.
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @param  null|string  $ordering
-	 * @param  null|string  $direction
+	 * @param   null|string  $ordering
+	 * @param   null|string  $direction
 	 *
 	 * @since 1.0.0
 	 */

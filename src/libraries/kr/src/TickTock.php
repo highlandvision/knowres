@@ -17,7 +17,6 @@ use Carbon\CarbonTimeZone;
 use Carbon\Exceptions\InvalidFormatException;
 use Exception as Exception;
 use HighlandVision\KR\Framework\KrMethods;
-
 use function count;
 use function date_default_timezone_set;
 use function gmdate;
@@ -34,28 +33,33 @@ class TickTock
 	/**
 	 * Returns an array with all dates between and including the two entered dates
 	 *
-	 * @param  string  $first       Start date
-	 * @param  string  $last        End date
-	 * @param  bool    $ignoreLast  TRUE ignore the end date
+	 * @param   string  $first       Start date
+	 * @param   string  $last        End date
+	 * @param   bool    $ignoreLast  TRUE ignore the end date
 	 *
-	 * @since   3.3.0
 	 * @return  array
+	 * @since   3.3.0
 	 */
 	public static function allDatesBetween(string $first, string $last, bool $ignoreLast = false): array
 	{
 		$dates = [];
 
-		if (!$first || !$last || $last < $first) {
+		if (!$first || !$last || $last < $first)
+		{
 			return $dates;
 		}
 
-		if (!$ignoreLast) {
+		if (!$ignoreLast)
+		{
 			$period = CarbonPeriod::create($first, $last);
-		} else {
+		}
+		else
+		{
 			$period = CarbonPeriod::create($first, $last, CarbonPeriod::EXCLUDE_END_DATE);
 		}
 
-		foreach ($period as $d) {
+		foreach ($period as $d)
+		{
 			$dates[] = $d->toDateString();
 		}
 
@@ -65,27 +69,32 @@ class TickTock
 	/**
 	 * Returns an array with all dates and day numbers between two entered dates
 	 *
-	 * @param  string  $first       Start date
-	 * @param  string  $last        End date
-	 * @param  bool    $ignoreLast  TRUE Ignore the end date
+	 * @param   string  $first       Start date
+	 * @param   string  $last        End date
+	 * @param   bool    $ignoreLast  TRUE Ignore the end date
 	 *
-	 * @since  3.3.0
 	 * @return array
+	 * @since  3.3.0
 	 */
 	public static function allDowBetween(string $first, string $last, bool $ignoreLast = false): array
 	{
 		$dow = [];
-		if (!$first || !$last || $last < $first) {
+		if (!$first || !$last || $last < $first)
+		{
 			return $dow;
 		}
 
-		if (!$ignoreLast) {
+		if (!$ignoreLast)
+		{
 			$period = CarbonPeriod::create($first, $last);
-		} else {
+		}
+		else
+		{
 			$period = CarbonPeriod::create($first, $last, CarbonPeriod::EXCLUDE_END_DATE);
 		}
 
-		foreach ($period as $d) {
+		foreach ($period as $d)
+		{
 			$dow[$d->format('Y-m-d')] = $d->format('w');
 		}
 
@@ -95,20 +104,23 @@ class TickTock
 	/**
 	 * Returns the difference in days between two dates
 	 *
-	 * @param  string  $date1  First date
-	 * @param  string  $date2  End date
+	 * @param   string  $date1  First date
+	 * @param   string  $date2  End date
 	 *
+	 * @return int
 	 * @throws Exception
 	 * @since  3.3.0
-	 * @return int
 	 */
 	public static function differenceDays(string $date1, string $date2): int
 	{
-		try {
+		try
+		{
 			$start = new Carbon($date1);
 
 			return $start->diffInDays($date2);
-		} catch (Exception $e) {
+		}
+		catch (Exception $e)
+		{
 			Logger::logMe($e->getMessage());
 
 			return 999;
@@ -120,27 +132,34 @@ class TickTock
 	 * Only use for fields with dates already set
 	 *
 	 * @param  ?string  $date    Date for conversion yyyy-mm-dd
-	 * @param  string   $format  Required date format
+	 * @param   string  $format  Required date format
 	 *
+	 * @return string Date object on success empty string on failure
 	 * @throws Exception
 	 * @since  3.3.0
-	 * @return string Date object on success empty string on failure
 	 */
 	public static function displayDate(?string $date, string $format = ''): string
 	{
-		try {
-			if (empty($format)) {
+		try
+		{
+			if (empty($format))
+			{
 				$format = KrMethods::plain('DATE_FORMAT_LC3');
 			}
 
-			if ($date && $date != '0000-00-00') {
+			if ($date && $date != '0000-00-00')
+			{
 				$dt = new Carbon($date);
 
 				return $dt->format($format);
-			} else {
+			}
+			else
+			{
 				return '';
 			}
-		} catch (Exception $e) {
+		}
+		catch (Exception $e)
+		{
 			Logger::logMe($e->getMessage());
 
 			return '';
@@ -151,15 +170,16 @@ class TickTock
 	 * Convert timestamp for output display
 	 *
 	 * @param  ?string  $ts      Timestamp
-	 * @param  string   $format  Format required
+	 * @param   string  $format  Format required
 	 *
+	 * @return string Date object on success, empty string on failure
 	 * @throws Exception
 	 * @since  3.3.0
-	 * @return string Date object on success, empty string on failure
 	 */
 	public static function displayTS(?string $ts, string $format = 'j M Y @ H:i:s'): string
 	{
-		if (empty($ts) || $ts == '0000-00-00 00:00:00') {
+		if (empty($ts) || $ts == '0000-00-00 00:00:00')
+		{
 			return '';
 		}
 
@@ -172,13 +192,13 @@ class TickTock
 	/**
 	 * Get date
 	 *
-	 * @param  string  $string  Date required or empty for current date
-	 * @param  string  $format  Return format Date format required
-	 * @param  string  $tz      Timezone
+	 * @param   string  $string  Date required or empty for current date
+	 * @param   string  $format  Return format Date format required
+	 * @param   string  $tz      Timezone
 	 *
+	 * @return string
 	 * @throws InvalidFormatException
 	 * @since  3.3.0
-	 * @return string
 	 */
 	public static function getDate(string $string = 'now', string $format = 'Y-m-d', string $tz = 'UTC'): string
 	{
@@ -191,19 +211,22 @@ class TickTock
 	/**
 	 * Get date for a different timezone
 	 *
-	 * @param  string  $format  Return format Date format required
-	 * @param  string  $tz      Timezone
+	 * @param   string  $format  Return format Date format required
+	 * @param   string  $tz      Timezone
 	 *
+	 * @return string
 	 * @throws Exception
 	 * @since  3.3.0
-	 * @return string
 	 */
 	public static function getDateForTimezone(string $format = 'Y-m-d', string $tz = 'Europe/Madrid'): string
 	{
 		$timestamp = self::getDate('now', 'Y-m-d H:i:s');
-		try {
+		try
+		{
 			$date = Carbon::createFromFormat('Y-m-d H:i:s', $timestamp, $tz);
-		} catch (Exception) {
+		}
+		catch (Exception)
+		{
 			$date = Carbon::createFromFormat('Y-m-d H:i:s', $timestamp, 'Europe/Madrid');
 		}
 
@@ -213,16 +236,17 @@ class TickTock
 	/**
 	 * Return day name from day of week
 	 *
-	 * @param  int  $dow  Day of week
+	 * @param   int  $dow  Day of week
 	 *
-	 * @since  3.3.0
 	 * @return string
+	 * @since  3.3.0
 	 */
 	public static function getDayName(int $dow): string
 	{
 		$day_name = '';
 
-		switch ($dow) {
+		switch ($dow)
+		{
 			case 0:
 				$day_name = KrMethods::plain('COM_KNOWRES_SUNDAY');
 				break;
@@ -254,11 +278,11 @@ class TickTock
 	/**
 	 * Get the dow for a date
 	 *
-	 * @param  string  $date  Date to manipulate
+	 * @param   string  $date  Date to manipulate
 	 *
+	 * @return string
 	 * @throws Exception
 	 * @since  3.3.0
-	 * @return string
 	 */
 	public static function getDow(string $date): string
 	{
@@ -270,31 +294,37 @@ class TickTock
 	/**
 	 * Calculate new expiry or balance date
 	 *
-	 * @param  string  $weekendDays  Comma separated string of days
-	 * @param  int     $days         Number of days to push the date forward
-	 * @param  string  $date         Start date Y-m-d format, today will be used if not given
+	 * @param   string  $weekendDays  Comma separated string of days
+	 * @param   int     $days         Number of days to push the date forward
+	 * @param   string  $date         Start date Y-m-d format, today will be used if not given
 	 *
+	 * @return string
 	 * @throws Exception
 	 * @since  3.3.0
-	 * @return string
 	 */
 	public static function getDueDate(string $weekendDays, int $days, string $date = ''): string
 	{
-		if (!$date) {
+		if (!$date)
+		{
 			$date = Carbon::today();
-		} else {
+		}
+		else
+		{
 			$date = new Carbon($date);
 		}
 
 		$dow = [];
-		if ($weekendDays) {
+		if ($weekendDays)
+		{
 			$dow = explode(',', $weekendDays);
 		}
 
 		$count = 0;
-		while ($count < $days) {
+		while ($count < $days)
+		{
 			$date = $date->addDay();
-			if (!in_array($date->dayOfWeek, $dow)) {
+			if (!in_array($date->dayOfWeek, $dow))
+			{
 				$count++;
 			}
 		}
@@ -305,8 +335,8 @@ class TickTock
 	/**
 	 * Get next end of monmth
 	 *
-	 * @since  3.3.1
 	 * @return string
+	 * @since  3.3.1
 	 */
 	public static function getEom(): string
 	{
@@ -320,9 +350,9 @@ class TickTock
 	/**
 	 * Get midnight
 	 *
+	 * @return string
 	 * @throws Exception
 	 * @since  3.3.0
-	 * @return string
 	 */
 	public static function getMidnight(): string
 	{
@@ -332,9 +362,9 @@ class TickTock
 	/**
 	 * Return database timestamp
 	 *
+	 * @return string
 	 * @throws Exception
 	 * @since  3.3.0
-	 * @return string
 	 */
 	public static function getTS(): string
 	{
@@ -344,20 +374,22 @@ class TickTock
 	/**
 	 * Validate for a valid yyyy-mm-dd Date
 	 *
-	 * @param  string  $date  Date as yyyy-mm-dd
+	 * @param   string  $date  Date as yyyy-mm-dd
 	 *
-	 * @since  3.3.0
 	 * @return bool
+	 * @since  3.3.0
 	 */
 	public static function isValidDate(string $date): bool
 	{
 		$tmp = explode('-', $date);
 
-		if (!is_countable($tmp) || count($tmp) <> 3) {
+		if (!is_countable($tmp) || count($tmp) <> 3)
+		{
 			return false;
 		}
 
-		if (!is_numeric($tmp[0]) || !is_numeric($tmp[1]) || !is_numeric($tmp[2])) {
+		if (!is_numeric($tmp[0]) || !is_numeric($tmp[1]) || !is_numeric($tmp[2]))
+		{
 			return false;
 		}
 
@@ -367,24 +399,27 @@ class TickTock
 	/**
 	 * Add number of days to date
 	 *
-	 * @param  string  $date    Date to be used as base yyyy-mm-dd
-	 * @param  ?int    $days    Number of days to add or subtract
-	 * @param  string  $sign    + or - to date
-	 * @param  string  $format  Output format
+	 * @param   string  $date    Date to be used as base yyyy-mm-dd
+	 * @param  ?int     $days    Number of days to add or subtract
+	 * @param   string  $sign    + or - to date
+	 * @param   string  $format  Output format
 	 *
+	 * @return string
 	 * @throws InvalidFormatException
 	 * @since  3.3.0
-	 * @return string
 	 */
 	public static function modifyDays(string $date = 'now',
-		?int $days = 1,
-		string $sign = '+',
-		string $format = 'Y-m-d'): string
+	                                  ?int   $days = 1,
+	                                  string $sign = '+',
+	                                  string $format = 'Y-m-d'): string
 	{
 		$date = new Carbon($date);
-		if ($sign == '+') {
+		if ($sign == '+')
+		{
 			$date->addDays($days);
-		} else {
+		}
+		else
+		{
 			$date->subDays($days);
 		}
 
@@ -394,24 +429,27 @@ class TickTock
 	/**
 	 * Add or subtract number of hours to or from timestamp
 	 *
-	 * @param  string  $ts      Timestamp to be used as base Y-m-d H:i:s
-	 * @param  int     $hours   Hours to add or subtract
-	 * @param  string  $sign    + to add or - to subtract from date
-	 * @param  string  $format  Output format
+	 * @param   string  $ts      Timestamp to be used as base Y-m-d H:i:s
+	 * @param   int     $hours   Hours to add or subtract
+	 * @param   string  $sign    + to add or - to subtract from date
+	 * @param   string  $format  Output format
 	 *
+	 * @return string
 	 * @throws InvalidFormatException
 	 * @since  3.3.0
-	 * @return string
 	 */
 	public static function modifyHours(string $ts = 'now',
-		int $hours = 1,
-		string $sign = '+',
-		string $format = 'Y-m-d H:i:s'): string
+	                                   int    $hours = 1,
+	                                   string $sign = '+',
+	                                   string $format = 'Y-m-d H:i:s'): string
 	{
 		$date = new Carbon($ts);
-		if ($sign == '+') {
+		if ($sign == '+')
+		{
 			$date->addHours($hours);
-		} else {
+		}
+		else
+		{
 			$date->subHours($hours);
 		}
 
@@ -421,24 +459,27 @@ class TickTock
 	/**
 	 * Add number of months to date
 	 *
-	 * @param  string  $date    Date to be used as base yyyy-mm-dd
-	 * @param  int     $months  Months to increment or subtract
-	 * @param  string  $sign    + or - to date
-	 * @param  string  $format  Output format
+	 * @param   string  $date    Date to be used as base yyyy-mm-dd
+	 * @param   int     $months  Months to increment or subtract
+	 * @param   string  $sign    + or - to date
+	 * @param   string  $format  Output format
 	 *
+	 * @return string
 	 * @throws InvalidFormatException
 	 * @since  3.3.0
-	 * @return string
 	 */
 	public static function modifyMonths(string $date = 'now',
-		int $months = 1,
-		string $sign = '+',
-		string $format = 'Y-m-d'): string
+	                                    int    $months = 1,
+	                                    string $sign = '+',
+	                                    string $format = 'Y-m-d'): string
 	{
 		$date = new Carbon($date);
-		if ($sign == '+') {
+		if ($sign == '+')
+		{
 			$date->addMonths($months);
-		} else {
+		}
+		else
+		{
 			$date->subMonths($months);
 		}
 
@@ -448,20 +489,23 @@ class TickTock
 	/**
 	 * Add or subtract number of years to or from date
 	 *
-	 * @param  string  $date   Date to be used as base yyyy-mm-dd
-	 * @param  int     $years  Years to add or subtract
-	 * @param  string  $sign   + to add or - to subtract from date
+	 * @param   string  $date   Date to be used as base yyyy-mm-dd
+	 * @param   int     $years  Years to add or subtract
+	 * @param   string  $sign   + to add or - to subtract from date
 	 *
+	 * @return string
 	 * @throws Exception
 	 * @since  3.3.0
-	 * @return string
 	 */
 	public static function modifyYears(string $date = 'now', int $years = 1, string $sign = '+'): string
 	{
 		$date = new Carbon($date);
-		if ($sign == '+') {
+		if ($sign == '+')
+		{
 			$date->addYears($years);
-		} else {
+		}
+		else
+		{
 			$date->subYears($years);
 		}
 
@@ -471,39 +515,41 @@ class TickTock
 	/**
 	 * Change the date format
 	 *
-	 * @param  string  $string  Date string to parse
-	 * @param  string  $format  Return format Date format required
+	 * @param   string  $string  Date string to parse
+	 * @param   string  $format  Return format Date format required
 	 *
+	 * @return string
 	 * @throws InvalidFormatException
 	 * @since  3.3.0
-	 * @return string
 	 */
 	public static function parseString(string $string, string $format = 'Y-m-d'): string
 	{
 		return Carbon::parse($string)
-			->locale(KrMethods::getLanguageTag())
-			->setTimezone('UTC')
-			->translatedFormat($format);
+		             ->locale(KrMethods::getLanguageTag())
+		             ->setTimezone('UTC')
+		             ->translatedFormat($format);
 	}
 
 	/**
 	 * Set user timezone
 	 *
+	 * @return CarbonTimeZone|string
 	 * @throws Exception
 	 * @since  3.2.0
-	 * @return CarbonTimeZone|string
 	 */
 	public static function setTimeZone(): CarbonTimeZone|string
 	{
 		$user = KrMethods::getUser();
 		$tz   = $user->getTimezone();
 		$name = $tz->getName();
-		if ($name) {
+		if ($name)
+		{
 			return $name;
 		}
 
 		$offset = KrMethods::getCfg('offset', 0);
-		if ($offset) {
+		if ($offset)
+		{
 			$now = Carbon::now($offset);
 
 			return $now->timezone;

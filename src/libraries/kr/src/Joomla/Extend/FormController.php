@@ -12,7 +12,6 @@ defined('_JEXEC') or die;
 
 use Exception;
 use HighlandVision\KR\Framework\KrMethods;
-
 use function defined;
 
 /**
@@ -26,9 +25,9 @@ class FormController extends \Joomla\CMS\MVC\Controller\FormController
 	 * Back to the previous page as held in session or url
 	 * If all else fails then back to defined KR home page
 	 *
+	 * @return void
 	 * @throws Exception
 	 * @since  3.3.1
-	 * @return void
 	 */
 	public function back(): void
 	{

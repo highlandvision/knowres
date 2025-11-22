@@ -32,7 +32,8 @@ class ContractsController extends AdminController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	#[NoReturn] public function daily(): void
+	#[NoReturn]
+	public function daily(): void
 	{
 		$view = $this->getView('contracts', 'daily');
 		$view->display();
@@ -73,11 +74,11 @@ class ContractsController extends AdminController
 	 * @param   string  $prefix  Model prefix administrator or site (defaults to administrator)
 	 * @param   array   $config  Configuration options
 	 *
-	 * @since  1.6
 	 * @return bool|BaseDatabaseModel
+	 * @since  1.6
 	 */
 	public function getModel($name = 'contract', $prefix = 'Administrator',
-		$config = ['ignore_request' => true]): BaseDatabaseModel|bool
+	                         $config = ['ignore_request' => true]): BaseDatabaseModel|bool
 	{
 		return parent::getModel($name, $prefix, $config);
 	}

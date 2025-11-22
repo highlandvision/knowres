@@ -18,8 +18,9 @@ if (!count($extras))
 	return;
 }
 
-echo KrMethods::render('confirm.extras', ['extras'      => $extras,
-                                          'data'        => [],
-                                          'property_id' => $this->property->id,
-                                          'currency'    => $this->contractData->currency
+echo KrMethods::render('confirm.extras', [
+	'extras'      => $extras,
+	'data'        => [],
+	'property_id' => $this->property->id,
+	'currency'    => $this->contractData->currency
 ]);

@@ -15,7 +15,8 @@
     "stripe/stripe-php": "^12.0",
     "tecnickcom/tcpdf": "^6.5.0",
     "ext-libxml": "*",
-    "ext-dom": "*"
+    "ext-dom": "*",
+    "ext-curl": "*"
   },
   "require-dev": {
     "phing/phing": "3.*"

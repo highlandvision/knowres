@@ -27,22 +27,6 @@ class ContractnotesController extends AdminController
 	protected $view_list = 'contract.show';
 
 	/**
-	 * Proxy for getModel.
-	 *
-	 * @param   string  $name    Model name
-	 * @param   string  $prefix  Model prefix administrator or site (defaults to administrator)
-	 * @param   array   $config  Configuration options
-	 *
-	 * @since  1.6
-	 * @return bool|BaseDatabaseModel
-	 */
-	public function getModel($name = 'contractnote', $prefix = 'Administrator',
-		$config = ['ignore_request' => true]): BaseDatabaseModel|bool
-	{
-		return parent::getModel($name, $prefix, $config);
-	}
-
-	/**
 	 * Delete notes
 	 *
 	 * @throws Exception
@@ -58,5 +42,21 @@ class ContractnotesController extends AdminController
 			KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&task=contract.show&id=' . $contract_id,
 				false));
 		}
+	}
+
+	/**
+	 * Proxy for getModel.
+	 *
+	 * @param   string  $name    Model name
+	 * @param   string  $prefix  Model prefix administrator or site (defaults to administrator)
+	 * @param   array   $config  Configuration options
+	 *
+	 * @return bool|BaseDatabaseModel
+	 * @since  1.6
+	 */
+	public function getModel($name = 'contractnote', $prefix = 'Administrator',
+	                         $config = ['ignore_request' => true]): BaseDatabaseModel|bool
+	{
+		return parent::getModel($name, $prefix, $config);
 	}
 }

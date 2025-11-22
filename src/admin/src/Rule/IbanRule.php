@@ -18,7 +18,6 @@ use Joomla\CMS\Form\FormRule;
 use Joomla\Registry\Registry;
 use PHP_IBAN\IBAN;
 use SimpleXMLElement;
-
 use function in_array;
 
 /**
@@ -43,14 +42,13 @@ class IbanRule extends FormRule
 	 *                                      the entire form.
 	 * @param  ?Form              $form     The form object for which the field is being tested.
 	 *
+	 * @return bool  True if the value is valid, false otherwise.
 	 * @throws Exception
 	 * @since  3.4.0
-	 * @return bool  True if the value is valid, false otherwise.
 	 */
 	public function test(SimpleXMLElement $element, $value, $group = null, ?Registry $input = null,
-		?Form $form = null): bool
+	                     ?Form            $form = null): bool
 	{
-
 		$payment_schedule = ($input instanceof Registry) ? $input->get('payment_schedule') : '';
 		if (!in_array($payment_schedule, ['eom', 'rgp', 'dba', 'dad']))
 		{
@@ -60,6 +58,7 @@ class IbanRule extends FormRule
 		if (empty($value))
 		{
 			KrMethods::message(KrMethods::plain('IBAN must be entered'), 'error');
+
 			return false;
 		}
 
@@ -90,7 +89,9 @@ class IbanRule extends FormRule
 		if ($result === false)
 		{
 			KrMethods::message(KrMethods::plain('IBAN ' . $value
-				. ' failed the national checksum algorithm for its country'), 'error');
+				. ' failed the national checksum algorithm for its country'
+			), 'error'
+			);
 
 			return false;
 		}

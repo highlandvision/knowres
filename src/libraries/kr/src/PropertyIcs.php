@@ -15,7 +15,6 @@ use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use Kigkonsult\Icalcreator\Vcalendar;
-
 use function array_unique;
 use function count;
 use function date;
@@ -50,31 +49,16 @@ class PropertyIcs
 	 *
 	 * @since  3.3.0
 	 */
-	public function __construct(int $property_id, string $property_name, string $custom = '') {
+	public function __construct(int $property_id, string $property_name, string $custom = '')
+	{
 		$this->property_id   = $property_id;
 		$this->property_name = $property_name;
 		$this->custom        = $custom;
 
-		if ($this->custom == 'split') {
+		if ($this->custom == 'split')
+		{
 			$this->amalgamate = false;
 		}
-	}
-
-	/**
-	 * Format check in / out times
-	 *
-	 * @param ?string  $time  Either check in / out time from property
-	 *
-	 * @since  4.2.0
-	 * @return string
-	 */
-	private static function setCheckTime(?string $time): string {
-		$new = '000000';
-		if (!empty($time)) {
-			$new = str_replace(':', '', $time) . '00';
-		}
-
-		return $new;
 	}
 
 	/**
@@ -87,7 +71,8 @@ class PropertyIcs
 	 */
 	public function createIcs(string $action): void
 	{
-		$vconfig = ['unique_id' => KrMethods::getCfg('sitename')
+		$vconfig = [
+			'unique_id' => KrMethods::getCfg('sitename')
 		];
 
 		$this->Calendar = new Vcalendar($vconfig);
@@ -95,22 +80,28 @@ class PropertyIcs
 		$this->Calendar->setDescription($this->property_name);
 
 		$booked = $this->getBookedDates();
-		if (is_countable($booked) && count($booked)) {
-			if ($this->amalgamate) {
+		if (is_countable($booked) && count($booked))
+		{
+			if ($this->amalgamate)
+			{
 				$this->addAmalgamated($booked);
 			}
-			else {
+			else
+			{
 				$this->setTimezone();
-				foreach ($booked as $b) {
+				foreach ($booked as $b)
+				{
 					$this->addBookingEvent($b);
 				}
 			}
 		}
 
-		if ($action == 'dl') {
+		if ($action == 'dl')
+		{
 			$this->Calendar->returnCalendar();
 		}
-		else {
+		else
+		{
 			echo $this->Calendar->createCalendar();
 		}
 	}
@@ -123,18 +114,22 @@ class PropertyIcs
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	private function addAmalgamated(array $booked): void {
+	private function addAmalgamated(array $booked): void
+	{
 		$start = false;
 		$prev  = false;
 
-		foreach ($booked as $d) {
-			if (!$start) {
+		foreach ($booked as $d)
+		{
+			if (!$start)
+			{
 				$start = $d;
 				$prev  = $d;
 			}
 
 			$days = TickTock::differenceDays($prev, $d);
-			if ($days > 1) {
+			if ($days > 1)
+			{
 				$this->addAmalgamatedEvent($start, $prev);
 				$start = $d;
 			}
@@ -143,7 +138,8 @@ class PropertyIcs
 		}
 
 		$date = TickTock::getDate();
-		if ($start < $date) {
+		if ($start < $date)
+		{
 			$start = $date;
 		}
 
@@ -159,7 +155,8 @@ class PropertyIcs
 	 * @throws Exception
 	 * @since  4.1.0
 	 */
-	private function addAmalgamatedEvent(string $start, string $prev): void {
+	private function addAmalgamatedEvent(string $start, string $prev): void
+	{
 		$vevent = $this->Calendar->newVevent();
 		$vevent->setDtstart(date('Ymd', strtotime($start)), ['VALUE' => 'DATE']);
 		$vevent->setDtend(date('Ymd', strtotime($prev . '+1 Days')), ['VALUE' => 'DATE']);
@@ -175,7 +172,8 @@ class PropertyIcs
 	 * @throws Exception
 	 * @since  4.1.0
 	 */
-	private function addBookingEvent(object $b): void {
+	private function addBookingEvent(object $b): void
+	{
 		$vevent = $this->Calendar->newVevent();
 
 		$ci = $this->setCheckTime($b->checkin_time);
@@ -190,13 +188,16 @@ class PropertyIcs
 			)
 		);
 
-		if (!empty($b->tag)) {
+		if (!empty($b->tag))
+		{
 			$vevent->setComment($b->firstname . ' ' . $b->surname . ' ID:' . $b->tag);
 		}
-		elseif ($b->black_booking == 1) {
+		elseif ($b->black_booking == 1)
+		{
 			$vevent->setComment('Block');
 		}
-		elseif ($b->black_booking == 2) {
+		elseif ($b->black_booking == 2)
+		{
 			$vevent->setComment('Ical Block');
 		}
 
@@ -206,29 +207,35 @@ class PropertyIcs
 	/**
 	 * Get booked dates for property
 	 *
+	 * @return array
 	 * @throws Exception
 	 * @since  3.3.0
-	 * @return array
 	 */
-	private function getBookedDates(): array {
+	private function getBookedDates(): array
+	{
 		$bookings = KrFactory::getListModel('contracts')->getBookedDates($this->property_id);
 		$booked   = [];
 
-		if ($this->amalgamate) {
-			foreach ($bookings as $b) {
+		if ($this->amalgamate)
+		{
+			foreach ($bookings as $b)
+			{
 				$dates = TickTock::allDatesBetween($b->arrival, $b->departure, true);
-				foreach ($dates as $d) {
+				foreach ($dates as $d)
+				{
 					$booked[] = $d;
 				}
 			}
 
 			return array_unique($booked);
 		}
-		else {
+		else
+		{
 			$newtz = $this->Calendar->newVtimezone();
 			$newtz->setTzid(KrMethods::getCfg('offset'));
 
-			foreach ($bookings as $b) {
+			foreach ($bookings as $b)
+			{
 				$booked[] = $b;
 			}
 
@@ -237,12 +244,32 @@ class PropertyIcs
 	}
 
 	/**
+	 * Format check in / out times
+	 *
+	 * @param ?string  $time  Either check in / out time from property
+	 *
+	 * @return string
+	 * @since  4.2.0
+	 */
+	private static function setCheckTime(?string $time): string
+	{
+		$new = '000000';
+		if (!empty($time))
+		{
+			$new = str_replace(':', '', $time) . '00';
+		}
+
+		return $new;
+	}
+
+	/**
 	 * Set the timezone for booking calendars
 	 *
 	 * @throws Exception
 	 * @since  4.1.0
 	 */
-	private function setTimeZone(): void {
+	private function setTimeZone(): void
+	{
 		$this->Calendar->setXprop($this->Calendar::X_WR_TIMEZONE, KrMethods::getCfg('offset'));
 	}
 }

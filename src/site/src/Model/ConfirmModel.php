@@ -24,27 +24,16 @@ use Joomla\CMS\Form\Form;
 class ConfirmModel extends AdminModel
 {
 	/**
-	 * Get the form data from session as no item.
-	 *
-	 * @since  1.0.0
-	 * @return object|false Session data
-	 */
-	public function getItem($pk = null): object|false
-	{
-		return $this->state->get('formdata');
-	}
-
-	/**
 	 * Method to get the profile form.
 	 * The base form is loaded from XML
 	 *
-	 * @param  array    $data      An optional array of data for the form to interogate.
-	 * @param  bool     $loadData  True if the form is to load its own data (default case), false if not.
+	 * @param   array   $data      An optional array of data for the form to interogate.
+	 * @param   bool    $loadData  True if the form is to load its own data (default case), false if not.
 	 * @param  ?string  $source    The form name if required.
 	 *
+	 * @return Form|false    A Form object on success, false on failure
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return Form|false    A Form object on success, false on failure
 	 */
 	public function getForm($data = [], $loadData = true, ?string $source = null): Form|false
 	{
@@ -58,11 +47,22 @@ class ConfirmModel extends AdminModel
 	}
 
 	/**
+	 * Get the form data from session as no item.
+	 *
+	 * @return object|false Session data
+	 * @since  1.0.0
+	 */
+	public function getItem($pk = null): object|false
+	{
+		return $this->state->get('formdata');
+	}
+
+	/**
 	 * Method to get the data that should be injected in the form.
 	 *
+	 * @return mixed    The data for the form.
 	 * @throws Exception
 	 * @since  1.6
-	 * @return mixed    The data for the form.
 	 */
 	protected function loadFormData(): mixed
 	{

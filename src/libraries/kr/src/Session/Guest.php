@@ -15,7 +15,6 @@ use Exception;
 use HighlandVision\KR\Session;
 use JetBrains\PhpStorm\Pure;
 use stdClass;
-
 use function defined;
 use function is_null;
 use function property_exists;
@@ -41,8 +40,8 @@ class Guest extends Session
 	/**
 	 * Request session data
 	 *
-	 * @since  3.3.0
 	 * @return stdClass
+	 * @since  3.3.0
 	 */
 	public function getData(): stdClass
 	{
@@ -58,8 +57,8 @@ class Guest extends Session
 	/**
 	 * Reset data and session
 	 *
-	 * @since  3.3.0
 	 * @return stdClass
+	 * @since  3.3.0
 	 */
 	public function resetData(): stdClass
 	{
@@ -72,10 +71,10 @@ class Guest extends Session
 	/**
 	 * Update session data from array (db item or jform)
 	 *
-	 * @param  array|object  $item  Update data
+	 * @param   array|object  $item  Update data
 	 *
-	 * @since  3.2.0
 	 * @return stdClass
+	 * @since  3.2.0
 	 */
 	public function updateData(array|object $item): stdClass
 	{
@@ -96,10 +95,11 @@ class Guest extends Session
 	/**
 	 * Initialise guest session
 	 *
-	 * @since 3.3.0
 	 * @return stdClass
+	 * @since 3.3.0
 	 */
-	#[Pure] private function init(): stdClass
+	#[Pure]
+	private function init(): stdClass
 	{
 		$data                    = new stdClass();
 		$data->id                = 0;

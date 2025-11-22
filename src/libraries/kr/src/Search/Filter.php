@@ -17,7 +17,6 @@ use HighlandVision\KR\Utility;
 use Joomla\Registry\Registry;
 use RuntimeException;
 use stdClass;
-
 use function array_key_exists;
 use function array_pop;
 use function ceil;
@@ -59,7 +58,8 @@ class Filter
 	 * @throws Exception
 	 * @since  3.3.1
 	 */
-	public function __construct($params, $Translations) {
+	public function __construct($params, $Translations)
+	{
 		$this->params       = $params;
 		$this->Translations = $Translations;
 	}
@@ -70,11 +70,13 @@ class Filter
 	 * @param   array  $a  Value 1
 	 * @param   array  $b  Value 2
 	 *
-	 * @since  1.0.0
 	 * @return int
+	 * @since  1.0.0
 	 */
-	public static function cmp(array $a, array $b): int {
-		if (isset($a[3]) && isset($b[3])) {
+	public static function cmp(array $a, array $b): int
+	{
+		if (isset($a[3]) && isset($b[3]))
+		{
 			return strcmp($a[3], $b[3]);
 		}
 
@@ -87,11 +89,13 @@ class Filter
 	 * @param   array  $a  Value 1
 	 * @param   array  $b  Value 2
 	 *
-	 * @since  1.0.0
 	 * @return int
+	 * @since  1.0.0
 	 */
-	public static function cmpnat(array $a, array $b): int {
-		if (isset($a[3]) && isset($b[3])) {
+	public static function cmpnat(array $a, array $b): int
+	{
+		if (isset($a[3]) && isset($b[3]))
+		{
 			return strnatcmp($a[3], $b[3]);
 		}
 
@@ -107,23 +111,31 @@ class Filter
 	 * @throws RuntimeException
 	 * @since  1.0.0
 	 */
-	public function setFilters(array $items, stdClass $data): stdClass {
+	public function setFilters(array $items, stdClass $data): stdClass
+	{
 		$this->searchData = $data;
-		if ($this->params->get('filter_price')) {
+		if ($this->params->get('filter_price'))
+		{
 			$this->setPriceRanges($this->searchData->rateNet, $this->searchData->currency);
 		}
 
 		$show_country = false;
-		if ($this->params->get('filter_area')) {
+		if ($this->params->get('filter_area'))
+		{
 			$distinct = KrFactory::getListModel('regions')->getDistinctRegions();
-			if (count($distinct) > 1) {
+			if (count($distinct) > 1)
+			{
 				$cname = '';
-				foreach ($distinct as $r) {
-					if (empty($cname)) {
+				foreach ($distinct as $r)
+				{
+					if (empty($cname))
+					{
 						$cname = $r->country_name;
 					}
-					else {
-						if ($cname != $r->country_name) {
+					else
+					{
+						if ($cname != $r->country_name)
+						{
 							$show_country = true;
 							break;
 						}
@@ -141,9 +153,12 @@ class Filter
 		$this->searchData->filterPrice    = [];
 		$this->searchData->filterType     = [];
 
-		if ($this->params->get('filter')) {
-			foreach ($items as $item) {
-				if (!in_array($item->id, $this->searchData->baseIds)) {
+		if ($this->params->get('filter'))
+		{
+			foreach ($items as $item)
+			{
+				if (!in_array($item->id, $this->searchData->baseIds))
+				{
 					continue;
 				}
 
@@ -157,22 +172,28 @@ class Filter
 				$this->setFilterType($item);
 			}
 
-			if ($this->params->get('filter_area') && $this->searchData->property_area) {
+			if ($this->params->get('filter_area') && $this->searchData->property_area)
+			{
 				$this->checkSelection($this->searchData->filterArea, $this->searchData->property_area, false);
 			}
-			if ($this->params->get('filter_bedrooms') && $this->searchData->bedrooms) {
+			if ($this->params->get('filter_bedrooms') && $this->searchData->bedrooms)
+			{
 				$this->checkSelection($this->searchData->filterBedrooms, $this->searchData->bedrooms, false);
 			}
-			if ($this->params->get('filter_category') && $this->searchData->category_id) {
+			if ($this->params->get('filter_category') && $this->searchData->category_id)
+			{
 				$this->checkSelection($this->searchData->filterCategory, $this->searchData->category_id, false);
 			}
-			if ($this->params->get('filter_property_feature') && $this->searchData->feature_id) {
+			if ($this->params->get('filter_property_feature') && $this->searchData->feature_id)
+			{
 				$this->checkSelection($this->searchData->filterFeature, $this->searchData->feature_id, false);
 			}
-			if ($this->params->get('filter_pets') && $this->searchData->pets) {
+			if ($this->params->get('filter_pets') && $this->searchData->pets)
+			{
 				$this->checkSelection($this->searchData->filterPets, $this->searchData->pets, false);
 			}
-			if ($this->params->get('filter_type') && $data->type_id) {
+			if ($this->params->get('filter_type') && $data->type_id)
+			{
 				$this->checkSelection($this->searchData->filterType, $data->type_id, false);
 			}
 
@@ -197,16 +218,21 @@ class Filter
 	 *
 	 * @since  1.0.0
 	 */
-	private function checkSelection(array &$selected, mixed $value, bool $reset = true): void {
+	private function checkSelection(array &$selected, mixed $value, bool $reset = true): void
+	{
 		$checked = 0;
-		if (isset($selected[$value][2])) {
+		if (isset($selected[$value][2]))
+		{
 			$checked = $selected[$value][2];
 		}
 		$selected[$value][2] = $checked ? 1 : 0;
 
-		if ($reset) {
-			foreach ($selected as $k => $v) {
-				if (!isset($v[1]) || !$v[1]) {
+		if ($reset)
+		{
+			foreach ($selected as $k => $v)
+			{
+				if (!isset($v[1]) || !$v[1])
+				{
 					$selected[$k][2] = 0;
 				}
 			}
@@ -216,15 +242,17 @@ class Filter
 	/**
 	 * Get the categories with names
 	 *
+	 * @return array
 	 * @throws RuntimeException
 	 * @since  1.0.0
-	 * @return array
 	 */
-	private function getCategoryNames(): array {
+	private function getCategoryNames(): array
+	{
 		$categories = [];
 
 		$items = KrFactory::getListModel('categories')->getAllCategories();
-		foreach ($items as $i) {
+		foreach ($items as $i)
+		{
 			$categories[$i->id] = $this->Translations->getText('category', $i->id);
 		}
 
@@ -234,15 +262,17 @@ class Filter
 	/**
 	 * Get the feature names
 	 *
+	 * @return array
 	 * @throws RuntimeException
 	 * @since  1.0.0
-	 * @return array
 	 */
-	private function getFeatureNames(): array {
+	private function getFeatureNames(): array
+	{
 		$features = [];
 
 		$results = KrFactory::getListModel('propertyfeatures')->getFeatureNames();
-		foreach ($results as $r) {
+		foreach ($results as $r)
+		{
 			$features[$r->id] = $this->Translations->getText('propertyfeature', $r->id);
 		}
 
@@ -254,13 +284,16 @@ class Filter
 	 *
 	 * @param   int  $price  Property price
 	 *
-	 * @since  1.2.2
 	 * @return string
+	 * @since  1.2.2
 	 */
-	private function getPriceSlot(int $price): string {
+	private function getPriceSlot(int $price): string
+	{
 		$key = '';
-		foreach ($this->ranges as $v) {
-			if ($price >= (int) $v['low'] && $price <= (int) $v['high']) {
+		foreach ($this->ranges as $v)
+		{
+			if ($price >= (int) $v['low'] && $price <= (int) $v['high'])
+			{
 				$key = $v['low'];
 				break;
 			}
@@ -278,16 +311,20 @@ class Filter
 	 * @throws RuntimeException
 	 * @since  5.0.0
 	 */
-	private function setFilterArea(mixed $item, bool $show_country): void {
-		if ($this->params->get('filter_area')) {
+	private function setFilterArea(mixed $item, bool $show_country): void
+	{
+		if ($this->params->get('filter_area'))
+		{
 			$filter_this = $item->region_id . '^' . $item->property_area;
-			if (!array_key_exists($filter_this, $this->searchData->filterArea)) {
+			if (!array_key_exists($filter_this, $this->searchData->filterArea))
+			{
 				$text = '';
-				if ($show_country) {
+				if ($show_country)
+				{
 					$text = $this->Translations->getText('country', $item->country_id) . ', ';
 				}
 
-				$text .= $this->Translations->getText('region', $item->region_id) .
+				$text                                       .= $this->Translations->getText('region', $item->region_id) .
 					': ' . $item->property_area;
 				$this->searchData->filterArea[$filter_this] = [$filter_this, 0, 0, $text];
 			}
@@ -302,14 +339,19 @@ class Filter
 	 *
 	 * @since  5.0.0
 	 */
-	private function setFilterBedrooms(mixed $item, int $max): void {
-		if ($this->params->get('filter_bedrooms')) {
+	private function setFilterBedrooms(mixed $item, int $max): void
+	{
+		if ($this->params->get('filter_bedrooms'))
+		{
 			$filter_this = min($item->bedrooms, $max);
-			if (!array_key_exists($filter_this, $this->searchData->filterBedrooms)) {
-				if ($filter_this == $max) {
+			if (!array_key_exists($filter_this, $this->searchData->filterBedrooms))
+			{
+				if ($filter_this == $max)
+				{
 					$text = KrMethods::plural('COM_KNOWRES_BEDROOMS_COUNT', $max . '+');
 				}
-				else {
+				else
+				{
 					$text = KrMethods::plural('COM_KNOWRES_BEDROOMS_COUNT', $item->bedrooms);
 				}
 				$this->searchData->filterBedrooms[$filter_this] = [$filter_this, 0, 0, $text];
@@ -324,12 +366,16 @@ class Filter
 	 *
 	 * @since  5.0.0
 	 */
-	private function setFilterBook(mixed $item): void {
-		if ($this->params->get('filter_book')) {
+	private function setFilterBook(mixed $item): void
+	{
+		if ($this->params->get('filter_book'))
+		{
 			if ($item->booking_type && isset($this->searchData->rateNet[$item->id]) &&
-			    $this->searchData->rateNet[$item->id] < $this->highval) {
+				$this->searchData->rateNet[$item->id] < $this->highval)
+			{
 				$filter_this = $item->booking_type;
-				if (!array_key_exists($filter_this, $this->searchData->filterBook)) {
+				if (!array_key_exists($filter_this, $this->searchData->filterBook))
+				{
 					$text = $filter_this == 2 ? KrMethods::plain('COM_KNOWRES_FILTER_BOOK') :
 						KrMethods::plain('COM_KNOWRES_ON_REQUEST');
 
@@ -347,16 +393,22 @@ class Filter
 	 * @throws RuntimeException
 	 * @since  5.0.0
 	 */
-	private function setFilterCategory(mixed $item): void {
-		if ($this->params->get('filter_category', 0)) {
-			if (empty($this->categories)) {
+	private function setFilterCategory(mixed $item): void
+	{
+		if ($this->params->get('filter_category', 0))
+		{
+			if (empty($this->categories))
+			{
 				$this->categories = $this->getCategoryNames();
 			}
 
 			$filter_values = Utility::decodeJson(trim($item->categories), true);
-			foreach ($filter_values as $c) {
-				if ($c) {
-					if (!array_key_exists($c, $this->searchData->filterCategory) && isset($this->categories[$c])) {
+			foreach ($filter_values as $c)
+			{
+				if ($c)
+				{
+					if (!array_key_exists($c, $this->searchData->filterCategory) && isset($this->categories[$c]))
+					{
 						$this->searchData->filterCategory[$c] = [$c, 0, 0, $this->categories[$c]];
 					}
 				}
@@ -372,16 +424,22 @@ class Filter
 	 * @throws RuntimeException
 	 * @since  5.0.0
 	 */
-	private function setFilterFeature(mixed $item): void {
-		if ($this->params->get('filter_property_feature', 0)) {
-			if (empty($this->features)) {
+	private function setFilterFeature(mixed $item): void
+	{
+		if ($this->params->get('filter_property_feature', 0))
+		{
+			if (empty($this->features))
+			{
 				$this->features = $this->getFeatureNames();
 			}
 
 			$filter_values = Utility::decodeJson(trim($item->property_features), true);
-			foreach ($filter_values as $c) {
-				if ($c) {
-					if (!array_key_exists($c, $this->searchData->filterFeature) && isset($this->features[$c])) {
+			foreach ($filter_values as $c)
+			{
+				if ($c)
+				{
+					if (!array_key_exists($c, $this->searchData->filterFeature) && isset($this->features[$c]))
+					{
 						$this->searchData->filterFeature[$c] = [$c, 0, 0, $this->features[$c]];
 					}
 				}
@@ -396,14 +454,19 @@ class Filter
 	 *
 	 * @since  5.0.0
 	 */
-	private function setFilterPets(mixed $item): void {
-		if ($this->params->get('filter_pets')) {
+	private function setFilterPets(mixed $item): void
+	{
+		if ($this->params->get('filter_pets'))
+		{
 			$filter_this = $item->pets;
-			if (!array_key_exists($filter_this, $this->searchData->filterPets)) {
-				if ($filter_this == 0) {
+			if (!array_key_exists($filter_this, $this->searchData->filterPets))
+			{
+				if ($filter_this == 0)
+				{
 					$text = KrMethods::plain('COM_KNOWRES_NO_PETS');
 				}
-				else {
+				else
+				{
 					$text = KrMethods::plural('COM_KNOWRES_PETS_COUNT', $item->pets);
 				}
 
@@ -419,11 +482,15 @@ class Filter
 	 *
 	 * @since  5.0.0
 	 */
-	private function setFilterPrice(mixed $item): void {
-		if ($this->params->get('filter_price')) {
-			if (isset($this->searchData->rateNet[$item->id])) {
+	private function setFilterPrice(mixed $item): void
+	{
+		if ($this->params->get('filter_price'))
+		{
+			if (isset($this->searchData->rateNet[$item->id]))
+			{
 				$filter_this = $this->getPriceSlot($this->searchData->rateNet[$item->id]);
-				if (!array_key_exists($filter_this, $this->searchData->filterPrice)) {
+				if (!array_key_exists($filter_this, $this->searchData->filterPrice))
+				{
 					$this->searchData->filterPrice[$filter_this] =
 						[$this->ranges[$filter_this]['high'], 0, 0, $this->ranges[$filter_this]['text']];
 				}
@@ -439,14 +506,18 @@ class Filter
 	 * @throws RuntimeException
 	 * @since  5.0.0
 	 */
-	private function setFilterType(mixed $item): void {
-		if ($this->params->get('filter_type')) {
+	private function setFilterType(mixed $item): void
+	{
+		if ($this->params->get('filter_type'))
+		{
 			$filter_this = $item->type_id;
-			if (!array_key_exists($filter_this, $this->searchData->filterType)) {
-				$this->searchData->filterType[$filter_this] = [$filter_this,
-				                                               0,
-				                                               0,
-				                                               $this->Translations->getText('type', $item->type_id)
+			if (!array_key_exists($filter_this, $this->searchData->filterType))
+			{
+				$this->searchData->filterType[$filter_this] = [
+					$filter_this,
+					0,
+					0,
+					$this->Translations->getText('type', $item->type_id)
 				];
 			}
 		}
@@ -460,15 +531,18 @@ class Filter
 	 *
 	 * @since  1.2.2
 	 */
-	private function setPriceRanges(array $rates, string $currency): void {
+	private function setPriceRanges(array $rates, string $currency): void
+	{
 		$this->ranges = [];
 		$ranges       = [];
 		$highest      = 0;
 		$lowest       = 0;
 
 		sort($rates);
-		foreach ($rates as $r) {
-			if ($r != $this->highval) {
+		foreach ($rates as $r)
+		{
+			if ($r != $this->highval)
+			{
 				$lowest = ceil($r / 10) * 10;
 			}
 
@@ -476,12 +550,15 @@ class Filter
 		}
 
 		$num_properties = 0;
-		foreach ($rates as $p) {
-			if ($p != $this->highval) {
+		foreach ($rates as $p)
+		{
+			if ($p != $this->highval)
+			{
 				$num_properties++;
 				$highest = $p;
 			}
-			else {
+			else
+			{
 				break;
 			}
 		}
@@ -491,13 +568,16 @@ class Filter
 		// Calculate the increment
 		$spread = $highest - $lowest;
 		$levels = 5;
-		if ($spread < 30 || $num_properties < 3) {
+		if ($spread < 30 || $num_properties < 3)
+		{
 			$levels = 2;
 		}
-		elseif ($spread < 40 || $num_properties < 4) {
+		elseif ($spread < 40 || $num_properties < 4)
+		{
 			$levels = 3;
 		}
-		elseif ($spread < 50 || $num_properties < 5) {
+		elseif ($spread < 50 || $num_properties < 5)
+		{
 			$levels = 4;
 		}
 
@@ -507,7 +587,8 @@ class Filter
 		$ranges[$lowest] =
 			KrMethods::sprintf('COM_KNOWRES_SEARCH_UP_TO', Utility::displayValue($lowest, $currency, false));
 
-		for ($i = 1; $i < $levels - 1; $i++) {
+		for ($i = 1; $i < $levels - 1; $i++)
+		{
 			$key          = $lowest + $increment * $i;
 			$ranges[$key] =
 				KrMethods::sprintf('COM_KNOWRES_SEARCH_UP_TO', Utility::displayValue($key, $currency, false));
@@ -517,16 +598,20 @@ class Filter
 			KrMethods::sprintf('COM_KNOWRES_SEARCH_UP_TO', Utility::displayValue($highest, $currency, false));
 
 		$highest = array_pop($rates);
-		if ($highest == $this->highval) {
+		if ($highest == $this->highval)
+		{
 			$ranges[$this->highval] = KrMethods::plain('COM_KNOWRES_ON_REQUEST');
 		}
 
 		$low = 0;
-		foreach ($ranges as $k => $r) {
-			if ($k == $this->highval) {
+		foreach ($ranges as $k => $r)
+		{
+			if ($k == $this->highval)
+			{
 				$text = KrMethods::plain('COM_KNOWRES_ON_REQUEST');
 			}
-			else {
+			else
+			{
 				$text = Utility::displayValue($low, $currency, false);
 				$text .= ' - ';
 				$text .= Utility::displayValue($k, $currency, false);

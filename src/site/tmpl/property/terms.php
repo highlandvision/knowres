@@ -6,6 +6,7 @@
  * @license    See the file "LICENSE.txt" for the full license governing this code.
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
+
 /** @noinspection PhpUnhandledExceptionInspection */
 /** @noinspection PhpPossiblePolymorphicInvocationInspection */
 
@@ -25,9 +26,9 @@ $pdflink = KrMethods::route('index.php?option=com_knowres&task=property.termspdf
 <h1><?php echo $this->item->hterms_conditions; ?></h1>
 <p><?php echo $this->item->terms_conditions; ?></p>
 <?php if ($this->article): ?>
-	<p><?php echo trim($this->article->introtext); ?></p>
+    <p><?php echo trim($this->article->introtext); ?></p>
 <?php endif; ?>
 
 <button class="close-button" aria-label="Close alert" type="button" data-close>
-	<span aria-hidden="true">&times;</span>
+    <span aria-hidden="true">&times;</span>
 </button>

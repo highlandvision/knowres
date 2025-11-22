@@ -24,13 +24,10 @@ use JetBrains\PhpStorm\NoReturn;
 use Joomla\Registry\Registry;
 use RuntimeException;
 use stdClass;
-
 use function array_key_exists;
 use function asort;
 use function count;
 use function in_array;
-use function max;
-use function min;
 
 /**
  * Site search for properties
@@ -57,7 +54,7 @@ class Search
 	/**
 	 * Initialize
 	 *
-	 * @param  stdClass  $data  Search session data.
+	 * @param   stdClass  $data  Search session data.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -76,7 +73,8 @@ class Search
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	#[NoReturn] public function doBaseSearch(): void
+	#[NoReturn]
+	public function doBaseSearch(): void
 	{
 		$this->validateRegion();
 		$this->setInputAvailability();
@@ -84,26 +82,33 @@ class Search
 
 		$this->searchData->baseIds = [];
 		$baseItems                 = KrFactory::getListSiteModel('properties')->getBaseItems($this->searchData);
-		if (is_countable($baseItems) && count($baseItems)) {
+		if (is_countable($baseItems) && count($baseItems))
+		{
 			$this->searchData->baseIds = array_column($baseItems, 'id');
 			$this->setCurrency();
 			$this->checkGuestNumbers($baseItems);
 
-			if (!count($this->searchData->baseIds)) {
+			if (!count($this->searchData->baseIds))
+			{
 				return;
 			}
 
-			if ($this->searchData->byAvailability && !empty($this->searchData->layout)) {
+			if ($this->searchData->byAvailability && !empty($this->searchData->layout))
+			{
 				$this->searchData->byAvailability = 0;
 			}
 
-			if ($this->searchData->byAvailability) {
+			if ($this->searchData->byAvailability)
+			{
 				$this->setActualRates();
-			} else {
+			}
+			else
+			{
 				$this->setMinRates();
 			}
 
-			if (count($this->searchData->baseIds)) {
+			if (count($this->searchData->baseIds))
+			{
 				$this->searchData = $this->Filter->setFilters($baseItems, $this->searchData);
 			}
 
@@ -114,24 +119,30 @@ class Search
 	/**
 	 * Check that all calendar conditions are met
 	 *
-	 * @param  array  $rates  Rates for properties
+	 * @param   array  $rates  Rates for properties
 	 *
 	 * @since  3.3.4
 	 */
 	private function checkCalendarData(array $rates): void
 	{
 		$valid = [];
-		foreach ($this->searchData->baseIds as $id) {
-			try {
+		foreach ($this->searchData->baseIds as $id)
+		{
+			try
+			{
 				$Calendar =
 					new Calendar\Search($id,
 						$this->searchData->arrival,
 						$this->searchData->departure,
-						$rates[$id] ?? []);
-				if ($Calendar->checkSearchDates()) {
+						$rates[$id] ?? []
+					);
+				if ($Calendar->checkSearchDates())
+				{
 					$valid[] = $id;
 				}
-			} catch (Exception) {
+			}
+			catch (Exception)
+			{
 				continue;
 			}
 		}
@@ -142,7 +153,7 @@ class Search
 	/**
 	 * Check that the number of guests does not exceed the max for a property
 	 *
-	 * @param  array  $items  Base properties data for search
+	 * @param   array  $items  Base properties data for search
 	 *
 	 * @since  4.0.0
 	 */
@@ -150,27 +161,34 @@ class Search
 	{
 		$valid = [];
 
-		foreach ($items as $item) {
-			if (!in_array($item->id, $this->searchData->baseIds)) {
+		foreach ($items as $item)
+		{
+			if (!in_array($item->id, $this->searchData->baseIds))
+			{
 				continue;
 			}
 
 			$free = SiteHelper::setFreeGuests($item->sleeps_infant_max,
-					$item->sleeps_infant_age,
-					$this->searchData->child_ages);
+				$item->sleeps_infant_age,
+				$this->searchData->child_ages
+			);
 
 			$guests = !empty($this->searchData->guests) ?
 				$this->searchData->guests : $this->searchData->adults + $this->searchData->children;
 
-			if ($guests > $item->sleeps + $item->sleeps_extra + $free) {
-				if ($this->searchData->guests > $item->sleeps + $item->sleeps_extra) {
+			if ($guests > $item->sleeps + $item->sleeps_extra + $free)
+			{
+				if ($this->searchData->guests > $item->sleeps + $item->sleeps_extra)
+				{
 					continue;
 				}
 			}
 
-			if ($this->searchData->children > 0 && is_countable($this->searchData->child_ages)) {
+			if ($this->searchData->children > 0 && is_countable($this->searchData->child_ages))
+			{
 				if (count($this->searchData->child_ages) > 0 &&
-				    count($this->searchData->child_ages) < $this->searchData->children) {
+					count($this->searchData->child_ages) < $this->searchData->children)
+				{
 					continue;
 				}
 			}
@@ -192,11 +210,14 @@ class Search
 	{
 		$rates =
 			$this->setForProperty(KrFactory::getListModel('rates')
-				->getRatesForProperty($this->searchData->baseIds,
-					$this->searchData->arrival,
-					$this->searchData->departure));
+			                               ->getRatesForProperty($this->searchData->baseIds,
+				                               $this->searchData->arrival,
+				                               $this->searchData->departure
+			                               )
+			);
 		$this->checkCalendarData($rates);
-		if (!count($this->searchData->baseIds)) {
+		if (!count($this->searchData->baseIds))
+		{
 			return;
 		}
 
@@ -204,13 +225,15 @@ class Search
 			$this->setForProperty(KrFactory::getListModel('discounts')->getDiscounts($this->searchData->baseIds));
 		$extras      =
 			$this->setForProperty(KrFactory::getListModel('extras')
-				->getPricingExtras($this->searchData->baseIds, true));
+			                               ->getPricingExtras($this->searchData->baseIds, true)
+			);
 		$ratemarkups =
 			$this->setForProperty(KrFactory::getListModel('ratemarkups')->getMarkups($this->searchData->baseIds));
 		$seasons     = KrFactory::getListModel('seasons')->getSeasons();
 
 		$contractSession = new KrSession\Contract;
-		foreach ($this->searchData->baseIds as $property_id) {
+		foreach ($this->searchData->baseIds as $property_id)
+		{
 			$contractData                = $contractSession->resetData();
 			$contractData->adjustmentsRq = false;
 			$contractData->adults        = $this->searchData->adults;
@@ -227,24 +250,28 @@ class Search
 			$contractData->seasonsDb     = $seasons;
 			$Hub                         = new Hub($contractData);
 
-			$computations = ['base',
-			                 'dow',
-			                 'seasons',
-			                 'shortstay',
-			                 'longstay',
-			                 'ratemarkup',
-			                 'discount',
-			                 'tax',
-			                 'extras',
+			$computations = [
+				'base',
+				'dow',
+				'seasons',
+				'shortstay',
+				'longstay',
+				'ratemarkup',
+				'discount',
+				'tax',
+				'extras',
 			];
 			$Hub->compute($computations, true);
 
 			$contract_total = $Hub->getValue('contract_total');
 			$discount       = $Hub->getValue('discount');
-			if (!$contract_total) {
+			if (!$contract_total)
+			{
 				$this->searchData->rateNet[$property_id]      = $this->highval;
 				$this->searchData->rateDiscount[$property_id] = 0;
-			} else {
+			}
+			else
+			{
 				$this->searchData->rateNet[$property_id]      = $contract_total;
 				$this->searchData->rateDiscount[$property_id] = $discount;
 			}
@@ -263,7 +290,8 @@ class Search
 	 */
 	private function setBar(): void
 	{
-		if (!$this->searchData->bar) {
+		if (!$this->searchData->bar)
+		{
 			$this->searchData->bar = $this->params->get('default_view', 'grid');
 		}
 	}
@@ -285,15 +313,16 @@ class Search
 	/**
 	 * Extract database results per property
 	 *
-	 * @param  array  $db_rows  Database rows
+	 * @param   array  $db_rows  Database rows
 	 *
-	 * @since  3.2.0
 	 * @return array
+	 * @since  3.2.0
 	 */
 	private function setForProperty(array $db_rows): array
 	{
 		$rows = [];
-		foreach ($db_rows as $r) {
+		foreach ($db_rows as $r)
+		{
 			$rows[$r->property_id][] = $r;
 		}
 
@@ -308,11 +337,15 @@ class Search
 	 */
 	private function setInputAvailability(): void
 	{
-		if (!empty($this->searchData->arrival)) {
-			if (!empty($this->searchData->departure)) {
+		if (!empty($this->searchData->arrival))
+		{
+			if (!empty($this->searchData->departure))
+			{
 				$this->searchData->nights =
 					TickTock::differenceDays($this->searchData->arrival, $this->searchData->departure);
-			} else {
+			}
+			else
+			{
 				$this->searchData->departure = TickTock::modifyDays($this->searchData->arrival, 7);
 				$this->searchData->nights    = 7;
 			}
@@ -329,14 +362,16 @@ class Search
 	 */
 	private function setInputOrdering(): void
 	{
-		if (!empty($this->searchData->order)) {
+		if (!empty($this->searchData->order))
+		{
 			return;
 		}
 
 		$default                     = $this->params->get('order_default', '01');
 		$this->searchData->direction = 'asc';
 
-		switch ($default) {
+		switch ($default)
+		{
 			case '01':
 				$this->searchData->ordercustom = '';
 				$this->searchData->ordering    = 'a.ordering';
@@ -374,22 +409,28 @@ class Search
 	private function setMinRates(): void
 	{
 		$prices = [];
-		foreach ($this->searchData->baseIds as $p) {
+		foreach ($this->searchData->baseIds as $p)
+		{
 			$prices[$p] = $this->highval;
 		}
 
 		$rates = KrFactory::getListModel('rates')->getMinRates($this->searchData->baseIds, TickTock::getDate(), 1);
-		if (is_countable($rates) && count($rates)) {
+		if (is_countable($rates) && count($rates))
+		{
 			$net_rates  = KrFactory::getListModel('propertysettings')->getOneSetting('net_rates');
 			$net_markup = KrFactory::getListModel('propertysettings')->getOneSetting('net_markup');
 
-			foreach ($rates as $r) {
+			foreach ($rates as $r)
+			{
 				$net = array_key_exists($r->property_id, $net_rates) ? $net_rates[$r->property_id] : $net_rates[0];
-				if ($net) {
+				if ($net)
+				{
 					$markup                  = $net_markup[$r->property_id] ?? $net_markup[0];
 					$prices[$r->property_id] =
 						KrFactory::getAdminModel('ratemarkup')::getGrossRate((float) $r->minrate, $markup);
-				} else {
+				}
+				else
+				{
 					$prices[$r->property_id] = (int) $r->minrate;
 				}
 			}
@@ -408,7 +449,8 @@ class Search
 	 */
 	private function validateRegion(): void
 	{
-		if (!$this->searchData->region_id && !$this->searchData->layout) {
+		if (!$this->searchData->region_id && !$this->searchData->layout)
+		{
 			$this->searchData->region_id = $this->params->get('default_region');
 		}
 

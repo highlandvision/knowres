@@ -14,20 +14,20 @@ use HighlandVision\KR\Utility;
 
 if (empty($this->lines['cancelled']))
 {
-	return;
+    return;
 }
 ?>
 
 <div class="card kr-daily">
-	<div class="card-header">
-		<a class="showbefore" data-bs-toggle="collapse" href="#panel-cancelled" role="button"
-		   aria-expanded="true" aria-controls="panel-cancelled">
-			<?php echo Utility::getBookingStatus(99); ?>
-		</a>
-	</div>
-	<div class="collapse show" id="panel-cancelled">
-		<div class="card-body">
-			<?php echo KrMethods::render('contract.daily.contract', ['lines' => $this->lines['cancelled']]); ?>
-		</div>
-	</div>
+    <div class="card-header">
+        <a class="showbefore" data-bs-toggle="collapse" href="#panel-cancelled" role="button"
+           aria-expanded="true" aria-controls="panel-cancelled">
+            <?php echo Utility::getBookingStatus(99); ?>
+        </a>
+    </div>
+    <div class="collapse show" id="panel-cancelled">
+        <div class="card-body">
+            <?php echo KrMethods::render('contract.daily.contract', ['lines' => $this->lines['cancelled']]); ?>
+        </div>
+    </div>
 </div>

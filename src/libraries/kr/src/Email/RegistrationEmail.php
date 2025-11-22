@@ -34,8 +34,8 @@ class RegistrationEmail extends Email
 	/**
 	 * Constructor
 	 *
-	 * @param  string  $trigger     The email trigger
-	 * @param  int     $trigger_id  ID of required trigger
+	 * @param   string  $trigger     The email trigger
+	 * @param   int     $trigger_id  ID of required trigger
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -50,10 +50,10 @@ class RegistrationEmail extends Email
 	/**
 	 * Send email for guest registration
 	 *
-	 * @param  string  $username     User name
-	 * @param  string  $password     Password
-	 * @param  string  $guest_name   Guest name
-	 * @param  string  $guest_email  Guest email
+	 * @param   string  $username     User name
+	 * @param   string  $password     Password
+	 * @param   string  $guest_name   Guest name
+	 * @param   string  $guest_email  Guest email
 	 *
 	 * @throws InvalidArgumentException|Exception
 	 * @since  3.3.0
@@ -76,9 +76,9 @@ class RegistrationEmail extends Email
 	/**
 	 * Get the email data
 	 *
+	 * @return void
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return void
 	 */
 	public function setData(): void
 	{
@@ -97,7 +97,7 @@ class RegistrationEmail extends Email
 	/**
 	 * Send email
 	 *
-	 * @param  object  $trigger  Email trigger item
+	 * @param   object  $trigger  Email trigger item
 	 *
 	 * @throws Exception
 	 * @since  1.0.0

@@ -27,50 +27,58 @@ class KnowresSpotlightHelper
 	/**
 	 * Get spotlight images
 	 *
-	 * @param  Registry $params  Module parameters
-     *
+	 * @param   Registry  $params  Module parameters
+	 *
+	 * @return array
 	 * @throws Exception
 	 * @since  5.0.0
-	 * @return array
 	 */
-	public static function getImages(Registry $params): array {
+	public static function getImages(Registry $params): array
+	{
 		$count  = 0;
 		$images = [];
-		for ($i = 1; $i <= 3; $i++) {
-			if ($params->get('image' . $i)) {
+		for ($i = 1; $i <= 3; $i++)
+		{
+			if ($params->get('image' . $i))
+			{
 				$count++;
 
 				$category_id = $params->get('category_id' . $i);
 				$layout      = $params->get('layout' . $i);
 				$link        = $params->get('link' . $i);
 
-				$option        = '';
-				if ($category_id <> -1) {
+				$option = '';
+				if ($category_id <> -1)
+				{
 					$Itemid = SiteHelper::getItemId('com_knowres', 'properties',
 						['layout' => 'category', 'category_id' => $category_id],
 						['layout' => 'category']
 					);
 					$option = KrMethods::route('index.php?option=com_knowres&view=properties&layout=category&category_id=' .
-					                           $category_id . '&Itemid=' . $Itemid
+						$category_id . '&Itemid=' . $Itemid
 					);
 				}
-				elseif ($layout <> -1) {
+				elseif ($layout <> -1)
+				{
 					$Itemid = SiteHelper::getItemId('com_knowres', 'properties', ['layout' => $layout]);
 					$option = KrMethods::route('index.php?option=com_knowres&view=properties&layout=' . $layout
-					                           . '&Itemid=' . $Itemid
+						. '&Itemid=' . $Itemid
 					);
 				}
-				elseif ($link <> -1) {
+				elseif ($link <> -1)
+				{
 					$option = KrMethods::route('index.php?Itemid=' . $link);
 				}
 
-				if (empty($option)) {
+				if (empty($option))
+				{
 					continue;
 				}
 
-				$images[$i] = ['image' => $params->get('image' . $i),
-				             'text'  => $params->get('text' . $i),
-				             'link'  => $option
+				$images[$i] = [
+					'image' => $params->get('image' . $i),
+					'text'  => $params->get('text' . $i),
+					'link'  => $option
 				];
 			}
 		}

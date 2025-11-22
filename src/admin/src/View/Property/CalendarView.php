@@ -32,10 +32,10 @@ class CalendarView extends KrHtmlView\Property
 	/* $var bool True to add booking */
 	public bool $allow_book = false;
 	/* $var array Dates for calendar */
-	protected array $dates = [];
-	/* $var string Current calendar date */
 	protected string $dateYmd = '';
 	/* $var int #months to display */
+	protected array $dates = [];
+	/* $var string Current calendar date */
 	protected int $monthsToShow = 18;
 	/* $var int Ordering? */
 	protected int $order = 0;
@@ -49,9 +49,9 @@ class CalendarView extends KrHtmlView\Property
 	 *
 	 * @param  ?string  $tpl  A template file to load. [optional]
 	 *
+	 * @return void
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return void
 	 */
 	public function display($tpl = null): void
 	{
@@ -89,8 +89,8 @@ class CalendarView extends KrHtmlView\Property
 	 *
 	 * @param   array  $booked  Booked dates
 	 *
-	 * @since 3.3.0
 	 * @return array Formatted array of date blocks
+	 * @since 3.3.0
 	 */
 	protected function prepareData(array $booked): array
 	{

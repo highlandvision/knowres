@@ -48,7 +48,7 @@ class Cloner
 	/**
 	 * Initialise
 	 *
-	 * @param  int  $id  ID of existing property to clone
+	 * @param   int  $id  ID of existing property to clone
 	 *
 	 * @throws InvalidArgumentException
 	 * @since  3.0.0
@@ -63,7 +63,7 @@ class Cloner
 	/**
 	 * Clone property
 	 *
-	 * @param  array  $options   Array of cloning options
+	 * @param   array  $options  Array of cloning options
 	 *                           Default values if not set
 	 *                           $options['property_name']  New property_name;
 	 *                           $options['image']          Clone images Default true
@@ -73,10 +73,10 @@ class Cloner
 	 *                           $options['discount']       Clone discounts and coupons  Default true
 	 *                           $options['extra']          Clone extras Default true
 	 *
-	 * @throws RuntimeException
-	 * @throws Exception
-	 * @since  3.0.0
 	 * @return int
+	 * @throws Exception
+	 * @throws RuntimeException
+	 * @since  3.0.0
 	 */
 	public function cloneProperty(array $options): int
 	{
@@ -99,15 +99,16 @@ class Cloner
 	/**
 	 * Create cloned tables with translations
 	 *
-	 * @param  string  $newid    New property id
-	 * @param  string  $type     Child property type
-	 * @param  array   $options  Clone options
+	 * @param   string  $newid    New property id
+	 * @param   string  $type     Child property type
+	 * @param   array   $options  Clone options
 	 *
 	 * @throws Exception
 	 * @throws RuntimeException
 	 * @since  3.0.0
 	 */
-	#[NoReturn] public function clonePropertyChild(string $newid, string $type, array $options): void
+	#[NoReturn]
+	public function clonePropertyChild(string $newid, string $type, array $options): void
 	{
 		$relations = $this->setRelations();
 		$this->setOptions($options);
@@ -150,10 +151,10 @@ class Cloner
 	 * Create tmp table based on actual table
 	 * loading all rows with matching id
 	 *
-	 * @throws RuntimeException
-	 * @throws Exception
-	 * @since  3.0.0
 	 * @return bool
+	 * @throws Exception
+	 * @throws RuntimeException
+	 * @since  3.0.0
 	 */
 	protected function createProperty(): bool
 	{
@@ -172,12 +173,13 @@ class Cloner
 
 			// Update tmp with new fields
 			$query  = $this->db->getQuery(true);
-			$fields = [$this->db->qn('state') . '=0',
-			           $this->db->qn('property_name') . '=' . $this->db->q($this->options['property_name']),
-			           $this->db->qn('created_at') . '=' . $this->db->q(TickTock::getTS()),
-			           $this->db->qn('created_by') . '=' . KrMethods::getUser()->id,
-			           $this->db->qn('updated_at') . '=' . $this->db->q('00-00-00 00:00:00'),
-			           $this->db->qn('updated_by') . '=0'
+			$fields = [
+				$this->db->qn('state') . '=0',
+				$this->db->qn('property_name') . '=' . $this->db->q($this->options['property_name']),
+				$this->db->qn('created_at') . '=' . $this->db->q(TickTock::getTS()),
+				$this->db->qn('created_by') . '=' . KrMethods::getUser()->id,
+				$this->db->qn('updated_at') . '=' . $this->db->q('00-00-00 00:00:00'),
+				$this->db->qn('updated_by') . '=0'
 			];
 
 			$query->update($this->db->qn($this->tmp))->set($fields);
@@ -205,11 +207,12 @@ class Cloner
 
 			// Update tmp1 with new fields
 			$query  = $this->db->getQuery(true);
-			$fields = [$this->db->qn('item_id') . '=' . $this->new_id,
-			           $this->db->qn('created_at') . '=' . $this->db->q(TickTock::getTS()),
-			           $this->db->qn('created_by') . '=' . KrMethods::getUser()->id,
-			           $this->db->qn('updated_at') . '=' . $this->db->q('00-00-00 00:00:00'),
-			           $this->db->qn('updated_by') . '=0'
+			$fields = [
+				$this->db->qn('item_id') . '=' . $this->new_id,
+				$this->db->qn('created_at') . '=' . $this->db->q(TickTock::getTS()),
+				$this->db->qn('created_by') . '=' . KrMethods::getUser()->id,
+				$this->db->qn('updated_at') . '=' . $this->db->q('00-00-00 00:00:00'),
+				$this->db->qn('updated_by') . '=0'
 			];
 
 			$query->update($this->db->qn($this->tmp1))->set($fields);
@@ -242,13 +245,13 @@ class Cloner
 	/**
 	 * Create cloned tables with translations
 	 *
-	 * @param  string  $table  Table to replicate
-	 * @param  string  $type   TranslationsModel item
+	 * @param   string  $table  Table to replicate
+	 * @param   string  $type   TranslationsModel item
 	 *
-	 * @throws RuntimeException
-	 * @throws Exception
-	 * @since  3.0.0
 	 * @return bool
+	 * @throws Exception
+	 * @throws RuntimeException
+	 * @since  3.0.0
 	 */
 	protected function createPropertyChild(string $table, string $type): bool
 	{
@@ -331,11 +334,12 @@ class Cloner
 				$case .= ' WHEN ' . $this->db->qn('item_id') . '=' . (int) $old . ' THEN ' . (int) $new;
 			}
 
-			$fields = [$this->db->qn('item_id') . ' = CASE ' . $case . ' ELSE 0 END',
-			           $this->db->qn('created_at') . '=' . $this->db->q(TickTock::getTS()),
-			           $this->db->qn('created_by') . '=' . KrMethods::getUser()->id,
-			           $this->db->qn('updated_at') . '=' . $this->db->q('00-00-00 00:00:00'),
-			           $this->db->qn('updated_by') . '=0'
+			$fields = [
+				$this->db->qn('item_id') . ' = CASE ' . $case . ' ELSE 0 END',
+				$this->db->qn('created_at') . '=' . $this->db->q(TickTock::getTS()),
+				$this->db->qn('created_by') . '=' . KrMethods::getUser()->id,
+				$this->db->qn('updated_at') . '=' . $this->db->q('00-00-00 00:00:00'),
+				$this->db->qn('updated_by') . '=0'
 			];
 
 			$query->update($this->db->qn($this->tmp1))->set($fields);
@@ -360,10 +364,10 @@ class Cloner
 	/**
 	 * Clone property setting table
 	 *
-	 * @throws RuntimeException
-	 * @throws Exception
-	 * @since  3.0.0
 	 * @return bool
+	 * @throws Exception
+	 * @throws RuntimeException
+	 * @since  3.0.0
 	 */
 	protected function createPropertysettingsClone(): bool
 	{
@@ -382,11 +386,12 @@ class Cloner
 
 			// Update tmp with cloned property id
 			$query  = $this->db->getQuery(true);
-			$fields = [$this->db->qn('property_id') . '=' . $this->new_id,
-			           $this->db->qn('created_at') . '=' . $this->db->q(TickTock::getTS()),
-			           $this->db->qn('created_by') . '=' . KrMethods::getUser()->id,
-			           $this->db->qn('updated_at') . '=' . $this->db->q('00-00-00 00:00:00'),
-			           $this->db->qn('updated_by') . '=0',
+			$fields = [
+				$this->db->qn('property_id') . '=' . $this->new_id,
+				$this->db->qn('created_at') . '=' . $this->db->q(TickTock::getTS()),
+				$this->db->qn('created_by') . '=' . KrMethods::getUser()->id,
+				$this->db->qn('updated_at') . '=' . $this->db->q('00-00-00 00:00:00'),
+				$this->db->qn('updated_by') . '=0',
 			];
 
 			$query->update($this->db->qn($this->tmp))->set($fields);
@@ -414,14 +419,14 @@ class Cloner
 	/**
 	 * Set clone options from input or default if no input
 	 *
-	 * @param  array  $options  Parameter input options
+	 * @param   array  $options  Parameter input options
 	 *
 	 * @since 3.0.0
 	 */
 	protected function setOptions(array $options): void
 	{
-		$this->options['property_name']  = !empty($options['new_name']) ? $options['new_name']
-			: $this->property_name . ' 2';
+		$this->options['property_name']  =
+			!empty($options['new_name']) ? $options['new_name'] : $this->property_name . ' 2';
 		$this->options['image']          = $options['image'] ?? 1;
 		$this->options['imagecopy']      = $options['image'] ?? 1;
 		$this->options['propertyoption'] = $options['propertyoption'] ?? 1;
@@ -436,8 +441,8 @@ class Cloner
 	/**
 	 * Set relations for child clone
 	 *
-	 * @since  3.0.0
 	 * @return array
+	 * @since  3.0.0
 	 */
 	protected function setRelations(): array
 	{
@@ -456,7 +461,7 @@ class Cloner
 	/**
 	 * Alter tmp remove primary key
 	 *
-	 * @param  int  $scope  Tables to drop 1 = tmp, 2 = 2mp1, 3 = both
+	 * @param   int  $scope  Tables to drop 1 = tmp, 2 = 2mp1, 3 = both
 	 *
 	 * @throws RuntimeException
 	 * @throws InvalidArgumentException
@@ -482,19 +487,19 @@ class Cloner
 	/**
 	 * Copy tmp to require table
 	 *
-	 * @param  string  $table   Table name to insert
-	 * @param  string  $tmp     Temp table to read
-	 * @param  bool    $getNew  True to return new ID
+	 * @param   string  $table   Table name to insert
+	 * @param   string  $tmp     Temp table to read
+	 * @param   bool    $getNew  True to return new ID
 	 *
-	 * @throws InvalidArgumentException
-	 * @throws RuntimeException
-	 * @since  3.0.0
 	 * @return int
+	 * @throws RuntimeException
+	 * @throws InvalidArgumentException
+	 * @since  3.0.0
 	 */
 	protected function tmpCopy(string $table, string $tmp, bool $getNew = false): int
 	{
-		$query = 'INSERT INTO ' . $this->db->qn($table) . ' SELECT 0, ' . $this->db->qn($tmp) . '.* FROM '
-			. $this->db->qn($tmp);
+		$query = 'INSERT INTO ' . $this->db->qn($table) . ' SELECT 0, ' . $this->db->qn($tmp) . '.* FROM ' .
+			$this->db->qn($tmp);
 		$this->db->setQuery($query);
 		$this->db->execute();
 

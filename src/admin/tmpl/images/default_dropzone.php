@@ -22,53 +22,53 @@ $params = KrMethods::getParams();
      data-token="<?php echo Session::getFormToken(); ?>"></div>
 
 <div id="actions" class="row">
-	<div class="col-lg-7">
+    <div class="col-lg-7">
 		<span class="btn btn-success fileinput-button">
             <i class="glyphicon glyphicon-plus"></i>
             <span>Add or Drop files...</span>
           </span>
-		<button type="submit" class="btn btn-primary start">
-			<i class="glyphicon glyphicon-upload"></i>
-			<span>Start Upload</span>
-		</button>
-		<button type="reset" class="btn btn-warning cancel">
-			<i class="glyphicon glyphicon-ban-circle"></i>
-			<span>Delete All</span>
-		</button>
-	</div>
-	<div class="col-lg-5">
-		<div class="fileupload-process" style="display:none;">
-			<div class="progress active" id="total-progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-				<div class="progress-bar progress-bar-striped progress-bar-success" role="progressbar" style="width:0;"
-				     data-dz-uploadprogress></div>
-			</div>
-		</div>
-	</div>
+        <button type="submit" class="btn btn-primary start">
+            <i class="glyphicon glyphicon-upload"></i>
+            <span>Start Upload</span>
+        </button>
+        <button type="reset" class="btn btn-warning cancel">
+            <i class="glyphicon glyphicon-ban-circle"></i>
+            <span>Delete All</span>
+        </button>
+    </div>
+    <div class="col-lg-5">
+        <div class="fileupload-process" style="display:none;">
+            <div class="progress active" id="total-progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                <div class="progress-bar progress-bar-striped progress-bar-success" role="progressbar" style="width:0;"
+                     data-dz-uploadprogress></div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="table table-striped">
-	<div id="template" class="file-row" style="float:left;margin-right:10px;margin-bottom:10px;">
-		<div>
+    <div id="template" class="file-row" style="float:left;margin-right:10px;margin-bottom:10px;">
+        <div>
 			<span class="preview">
 				<!--suppress HtmlRequiredAltAttribute -->
-				<img data-dz-thumbnail />
+				<img data-dz-thumbnail/>
 			</span>
-		</div>
-		<div>
-			<p class="size" data-dz-size></p>
-			<div class="progress active" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-				<div class="progress-bar progress-bar-striped progress-bar-animated progress-bar-success"
-				     style="width:0" role="progressbar" data-dz-uploadprogress>
-				</div>
-			</div>
-		</div>
-		<div>
-			<button type="button" data-dz-remove class="btn btn-danger start end">
-				<i class="glyphicon glyphicon-trash"></i>
-				<span>Delete</span>
-			</button>
-		</div>
-	</div>
+        </div>
+        <div>
+            <p class="size" data-dz-size></p>
+            <div class="progress active" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                <div class="progress-bar progress-bar-striped progress-bar-animated progress-bar-success"
+                     style="width:0" role="progressbar" data-dz-uploadprogress>
+                </div>
+            </div>
+        </div>
+        <div>
+            <button type="button" data-dz-remove class="btn btn-danger start end">
+                <i class="glyphicon glyphicon-trash"></i>
+                <span>Delete</span>
+            </button>
+        </div>
+    </div>
 
-	<div id="previews"></div>
+    <div id="previews"></div>
 </div>

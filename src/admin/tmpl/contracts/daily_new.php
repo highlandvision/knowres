@@ -13,20 +13,20 @@ use HighlandVision\KR\Framework\KrMethods;
 
 if (empty($this->lines['new']))
 {
-	return;
+    return;
 }
 ?>
 
 <div class="card kr-daily">
-	<div class="card-header">
-		<a class="showbefore" data-bs-toggle="collapse" href="#panel-new" role="button"
-		   aria-expanded="true" aria-controls="panel-new">
-			<?php echo KrMethods::plain('COM_KNOWRES_CONTRACTS_DAILY_OVERVIEW_NEW_TITLE'); ?>
-		</a>
-	</div>
-	<div class="collapse show" id="panel-new">
-		<div class="card-body">
-			<?php echo KrMethods::render('contract.daily.contract', ['lines' => $this->lines['new']]); ?>
-		</div>
-	</div>
+    <div class="card-header">
+        <a class="showbefore" data-bs-toggle="collapse" href="#panel-new" role="button"
+           aria-expanded="true" aria-controls="panel-new">
+            <?php echo KrMethods::plain('COM_KNOWRES_CONTRACTS_DAILY_OVERVIEW_NEW_TITLE'); ?>
+        </a>
+    </div>
+    <div class="collapse show" id="panel-new">
+        <div class="card-body">
+            <?php echo KrMethods::render('contract.daily.contract', ['lines' => $this->lines['new']]); ?>
+        </div>
+    </div>
 </div>

@@ -32,9 +32,9 @@ class ContractfeeModel extends AdminModel
 	/**
 	 * Method to get the data that should be injected in the form.
 	 *
+	 * @return false|object  Object on success, false on failure.
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return false|object  Object on success, false on failure.
 	 */
 	public function getItem($pk = null): object|false
 	{
@@ -44,9 +44,9 @@ class ContractfeeModel extends AdminModel
 	/**
 	 * Method to get the data that should be injected in the form.
 	 *
+	 * @return mixed The data for the form.
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return mixed The data for the form.
 	 */
 	protected function loadFormData(): mixed
 	{

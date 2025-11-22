@@ -19,7 +19,6 @@ use HighlandVision\KR\Hub;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Utility;
 use RuntimeException;
-
 use function count;
 use function is_countable;
 
@@ -38,11 +37,11 @@ class Resurrect
 	/**
 	 * Action resurrrect
 	 *
-	 * @param  Hub  $hub  Hub data
+	 * @param   Hub  $hub  Hub data
 	 *
+	 * @return bool
 	 * @throws Exception
 	 * @since 1.0.0
-	 * @return bool
 	 */
 	public function action(Hub $hub): bool
 	{
@@ -68,10 +67,10 @@ class Resurrect
 	/**
 	 * Controls the save and processing for resurrect
 	 *
-	 * @throws RuntimeException
-	 * @throws Exception
-	 * @since  3.3.0
 	 * @return bool
+	 * @throws Exception
+	 * @throws RuntimeException
+	 * @since  3.3.0
 	 */
 	protected function saveAll(): bool
 	{
@@ -98,7 +97,8 @@ class Resurrect
 				. TickTock::displayDate($this->hub->getValue('balance_date'));
 			$currency = $this->hub->getValue('currency');
 			$net      = Utility::displayValue($this->odata->net_price,
-					$currency) . ' to ' . Utility::displayValue($this->hub->getValue('net_price'), $currency);
+					$currency
+				) . ' to ' . Utility::displayValue($this->hub->getValue('net_price'), $currency);
 
 			$note = KrMethods::sprintf('COM_KNOWRES_CONTRACT_RESURRECT', $status, $expiry, $balance, $net);
 			KrFactory::getAdminModel('contractnote')::createContractNote($this->hub->getValue('id'), $note);

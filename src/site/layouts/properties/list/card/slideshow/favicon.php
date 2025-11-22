@@ -15,9 +15,9 @@ extract($displayData);
 /**
  * Layout variables
  *
- * @var false|object $item  Property Item.
- * @var array        $favs  Favourite properties.
- * @var mixed        $bar   Current active search bar.
+ * @var false|object $item Property Item.
+ * @var array        $favs Favourite properties.
+ * @var mixed        $bar  Current active search bar.
  */
 ?>
 
@@ -25,13 +25,13 @@ extract($displayData);
     <span class="fa-stack fa-lg">
         <i class="favicon-base fa-solid fa-circle fa-stack-2x"></i>
 	    <?php if (in_array($item->id, $favs)): ?>
-		    <i class="favicon-top fa-solid fa-heart fa-stack-1x favorite in has-tip" data-tooltip data-position="left"
-		       data-alignment="center" title="<?php echo KrMethods::plain('COM_KNOWRES_FAVORITES_REMOVE'); ?>">
+            <i class="favicon-top fa-solid fa-heart fa-stack-1x favorite in has-tip" data-tooltip data-position="left"
+               data-alignment="center" title="<?php echo KrMethods::plain('COM_KNOWRES_FAVORITES_REMOVE'); ?>">
             </i>
-	    <?php else: ?>
-		    <i class="favicon-top fa-solid fa-heart fa-stack-1x favorite has-tip" data-tooltip data-position="left"
-		       data-alignment="center" title="<?php echo KrMethods::plain('COM_KNOWRES_FAVORITES_ADD'); ?>">
+        <?php else: ?>
+            <i class="favicon-top fa-solid fa-heart fa-stack-1x favorite has-tip" data-tooltip data-position="left"
+               data-alignment="center" title="<?php echo KrMethods::plain('COM_KNOWRES_FAVORITES_ADD'); ?>">
             </i>
-	    <?php endif; ?>
+        <?php endif; ?>
 	</span>
 </span>

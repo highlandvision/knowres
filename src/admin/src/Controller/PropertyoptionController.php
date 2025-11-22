@@ -37,7 +37,7 @@ class PropertyoptionController extends FormController
 	protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
 	{
 		/** @var PropertyoptionModel $model */
-		$id   = $model->getItem()->get('id');
+		$item = $model->getItem();
 		$name = (string) $validData['name'];
 
 		if ($this->input->get('task') == 'save2copy')

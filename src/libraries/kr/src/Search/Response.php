@@ -16,7 +16,6 @@ use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Translations;
 use Joomla\Registry\Registry;
 use stdClass;
-
 use function array_keys;
 use function array_values;
 use function arsort;
@@ -45,7 +44,8 @@ class Response
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function __construct(stdClass $data) {
+	public function __construct(stdClass $data)
+	{
 		$this->searchData   = $data;
 		$this->params       = KrMethods::getParams();
 		$this->Translations = new Translations();
@@ -66,61 +66,78 @@ class Response
 	 * @since 1.0.0
 	 */
 	public function countAjaxFilters(array $totalAreas = [],
-		array $totalBedrooms = [],
-		array $totalBook = [],
-		array $totalCategory = [],
-		array $totalFeature = [],
-		array $totalPets = [],
-		array $totalPrice = [],
-		array $totalTypes = []): void {
-		if ($this->params->get('filter_area')) {
+	                                 array $totalBedrooms = [],
+	                                 array $totalBook = [],
+	                                 array $totalCategory = [],
+	                                 array $totalFeature = [],
+	                                 array $totalPets = [],
+	                                 array $totalPrice = [],
+	                                 array $totalTypes = []): void
+	{
+		if ($this->params->get('filter_area'))
+		{
 			$this->presetFilterCountArea($this->searchData->filterArea, $totalAreas);
 		}
 
-		if ($this->params->get('filter_bedrooms')) {
+		if ($this->params->get('filter_bedrooms'))
+		{
 			$this->zeroFilterCount($this->searchData->filterBedrooms);
 			$max_bedrooms = $this->params->get('search_maxbedrooms', 6);
-			foreach ($totalBedrooms as $t) {
-				if ($t->id >= $max_bedrooms) {
+			foreach ($totalBedrooms as $t)
+			{
+				if ($t->id >= $max_bedrooms)
+				{
 					$this->setFilterCount($this->searchData->filterBedrooms, $max_bedrooms, $t->total);
-				} else {
+				}
+				else
+				{
 					$this->setFilterCount($this->searchData->filterBedrooms, (int) $t->id, $t->total);
 				}
 			}
 		}
 
-		if ($this->params->get('filter_book')) {
+		if ($this->params->get('filter_book'))
+		{
 			$this->presetFilterCount($this->searchData->filterBook, $totalBook);
 		}
 
-		if ($this->params->get('filter_category')) {
+		if ($this->params->get('filter_category'))
+		{
 			$this->zeroFilterCount($this->searchData->filterCategory);
-			foreach ($totalCategory as $t) {
+			foreach ($totalCategory as $t)
+			{
 				$this->setFilterCount($this->searchData->filterCategory, (int) $t[0], $t[1]);
 			}
 		}
 
-		if ($this->params->get('filter_property_feature')) {
+		if ($this->params->get('filter_property_feature'))
+		{
 			$this->zeroFilterCount($this->searchData->filterFeature);
-			foreach ($totalFeature as $t) {
+			foreach ($totalFeature as $t)
+			{
 				$this->setFilterCount($this->searchData->filterFeature, (int) $t[0], $t[1]);
 			}
 		}
 
-		if ($this->params->get('filter_pets')) {
+		if ($this->params->get('filter_pets'))
+		{
 			$this->presetFilterCount($this->searchData->filterPets, $totalPets);
 		}
 
-		if ($this->params->get('filter_price')) {
+		if ($this->params->get('filter_price'))
+		{
 			$this->zeroFilterCount($this->searchData->filterPrice);
-			foreach ($totalPrice as $t) {
-				if (isset($this->searchData->rateNet[$t->id])) {
+			foreach ($totalPrice as $t)
+			{
+				if (isset($this->searchData->rateNet[$t->id]))
+				{
 					$this->setFilterPriceCount($this->searchData->filterPrice, $this->searchData->rateNet[$t->id]);
 				}
 			}
 		}
 
-		if ($this->params->get('filter_type')) {
+		if ($this->params->get('filter_type'))
+		{
 			$this->presetFilterCount($this->searchData->filterType, $totalTypes);
 		}
 	}
@@ -135,16 +152,20 @@ class Response
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function setSearchData(string $bar, string $action = '', string $action_value = ''): void {
+	public function setSearchData(string $bar, string $action = '', string $action_value = ''): void
+	{
 		$this->searchData->bar = $bar;
-		if ($bar && $this->searchData->limitstart > 0) {
+		if ($bar && $this->searchData->limitstart > 0)
+		{
 			$this->searchData->start      = $this->searchData->limitstart;
 			$this->searchData->limitstart = 0;
 		}
-		if ($action == 'page') {
+		if ($action == 'page')
+		{
 			$this->searchData->start = $action_value;
 		}
-		elseif ($action == 'order') {
+		elseif ($action == 'order')
+		{
 			$this->setOrder($action_value);
 //		} elseif ($action === 'currency') {
 //			 TODO-v6.0 Pricing by currency
@@ -169,7 +190,8 @@ class Response
 //			$uids           = $filter_results;
 //			$num_properties = count( $uids );
 		}
-		elseif ($action === 'clear' || $action === 'toggle') {
+		elseif ($action === 'clear' || $action === 'toggle')
+		{
 			$this->clearFilter($this->searchData->filterArea);
 			$this->clearFilter($this->searchData->filterBedrooms);
 			$this->clearFilter($this->searchData->filterBook);
@@ -179,19 +201,22 @@ class Response
 			$this->clearFilter($this->searchData->filterPrice);
 			$this->clearFilter($this->searchData->filterType);
 		}
-		elseif ($action) {
-			match ($action) {
+		elseif ($action)
+		{
+			match ($action)
+			{
 				'property_area' => $this->checkSelection($this->searchData->filterArea, $action_value, false),
-				'bedrooms'      => $this->checkSelection($this->searchData->filterBedrooms, $action_value, false),
-				'book'          => $this->checkSelection($this->searchData->filterBook, $action_value, false),
-				'category'      => $this->checkSelection($this->searchData->filterCategory, $action_value, false),
-				'feature'       => $this->checkSelection($this->searchData->filterFeature, $action_value, false),
-				'pets'          => $this->checkSelection($this->searchData->filterPets, $action_value, false),
-				'price'         => $this->checkSelection($this->searchData->filterPrice, $action_value, false),
-				'type'          => $this->checkSelection($this->searchData->filterType, $action_value, false)
+				'bedrooms' => $this->checkSelection($this->searchData->filterBedrooms, $action_value, false),
+				'book' => $this->checkSelection($this->searchData->filterBook, $action_value, false),
+				'category' => $this->checkSelection($this->searchData->filterCategory, $action_value, false),
+				'feature' => $this->checkSelection($this->searchData->filterFeature, $action_value, false),
+				'pets' => $this->checkSelection($this->searchData->filterPets, $action_value, false),
+				'price' => $this->checkSelection($this->searchData->filterPrice, $action_value, false),
+				'type' => $this->checkSelection($this->searchData->filterType, $action_value, false)
 			};
 		}
-		else {
+		else
+		{
 			$this->searchData->action = $action;
 		}
 	}
@@ -205,16 +230,21 @@ class Response
 	 *
 	 * @since  1.0.0
 	 */
-	private function checkSelection(array &$selected, mixed $value, bool $reset = true): void {
+	private function checkSelection(array &$selected, mixed $value, bool $reset = true): void
+	{
 		$checked = 0;
-		if (isset($selected[$value][2])) {
+		if (isset($selected[$value][2]))
+		{
 			$checked = $selected[$value][2];
 		}
 		$selected[$value][2] = $checked ? 0 : 1;
 
-		if ($reset) {
-			foreach ($selected as $k => $v) {
-				if (!isset($v[1]) || !$v[1]) {
+		if ($reset)
+		{
+			foreach ($selected as $k => $v)
+			{
+				if (!isset($v[1]) || !$v[1])
+				{
 					$selected[$k][2] = 0;
 				}
 			}
@@ -228,8 +258,10 @@ class Response
 	 *
 	 * @since  1.0.0
 	 */
-	private function clearFilter(array &$selected): void {
-		foreach ($selected as $k => $v) {
+	private function clearFilter(array &$selected): void
+	{
+		foreach ($selected as $k => $v)
+		{
 			$selected[$k][1] = 0;
 			$selected[$k][2] = 0;
 		}
@@ -243,9 +275,11 @@ class Response
 	 *
 	 * @since  3.3.0
 	 */
-	private function presetFilterCount(array &$saved, array $new): void {
+	private function presetFilterCount(array &$saved, array $new): void
+	{
 		$this->zeroFilterCount($saved);
-		foreach ($new as $t) {
+		foreach ($new as $t)
+		{
 			$this->setFilterCount($saved, $t->id, $t->total);
 		}
 	}
@@ -258,13 +292,16 @@ class Response
 	 *
 	 * @since  3.3.0
 	 */
-	private function presetFilterCountArea(array &$saved, array $new): void {
+	private function presetFilterCountArea(array &$saved, array $new): void
+	{
 		// Reset selected
-		foreach ($saved as $k => $v) {
+		foreach ($saved as $k => $v)
+		{
 			$saved[$k][1] = 0;
 		}
 		// Add new
-		foreach ($new as $k => $v) {
+		foreach ($new as $k => $v)
+		{
 			$saved[$k][1] = $v[1];
 		}
 	}
@@ -278,9 +315,12 @@ class Response
 	 *
 	 * @since  1.0.0
 	 */
-	private function setFilterCount(array &$selected, mixed $id, int $value): void {
-		foreach ($selected as $k => $v) {
-			if ($k == $id) {
+	private function setFilterCount(array &$selected, mixed $id, int $value): void
+	{
+		foreach ($selected as $k => $v)
+		{
+			if ($k == $id)
+			{
 				$selected[$k][1] += $value;
 			}
 		}
@@ -294,9 +334,12 @@ class Response
 	 *
 	 * @since  1.2.2
 	 */
-	private function setFilterPriceCount(array &$selected, int $price): void {
-		foreach ($selected as $k => $v) {
-			if ($price >= (int) $k && $price <= (int) $v[0]) {
+	private function setFilterPriceCount(array &$selected, int $price): void
+	{
+		foreach ($selected as $k => $v)
+		{
+			if ($price >= (int) $k && $price <= (int) $v[0])
+			{
 				$selected[$k][1]++;
 				break;
 			}
@@ -310,14 +353,16 @@ class Response
 	 *
 	 * @since  5.0.0
 	 */
-	private function setOrder(int $order): void {
+	private function setOrder(int $order): void
+	{
 		$this->searchData->start       = 0;
 		$this->searchData->ordercustom = '';
 		$this->searchData->ordering    = '';
 		$this->searchData->direction   = '';
 		$this->searchData->order       = $order;
 
-		switch ($order) {
+		switch ($order)
+		{
 			case '01':
 				$this->searchData->ordering  = 'ordering';
 				$this->searchData->direction = 'asc';
@@ -381,8 +426,10 @@ class Response
 	 *
 	 * @since  1.0.0
 	 */
-	private function zeroFilterCount(array &$selected): void {
-		foreach ($selected as $k => $v) {
+	private function zeroFilterCount(array &$selected): void
+	{
+		foreach ($selected as $k => $v)
+		{
 			$selected[$k][1] = 0;
 		}
 	}

@@ -38,8 +38,8 @@ class ContentHistoryHelper extends \Joomla\Component\Contenthistory\Administrato
 	 *
 	 * @param   ContentType  $typesTable  Table object with content history options.
 	 *
-	 * @since   3.2
 	 * @return  bool|string  JModel object if successful, false if no model found.
+	 * @since   3.2
 	 */
 	public static function getFormFile(ContentType $typesTable): bool|string
 	{
@@ -73,11 +73,11 @@ class ContentHistoryHelper extends \Joomla\Component\Contenthistory\Administrato
 	 * @param   stdClass     $object      Standard class object in the format name->value.
 	 * @param   ContentType  $typesTable  Table object with content history options.
 	 *
-	 * @since   3.2
 	 * @return  stdClass  Contains two associative arrays.
 	 *                    $formValues->labels in the format name => label (for example, 'id' => 'Article ID').
 	 *                    $formValues->values in the format name => value (for example, 'state' => 'Published').
 	 *                    This translates the text from the selected option in the form.
+	 * @since   3.2
 	 */
 	public static function getFormValues(stdClass $object, ContentType $typesTable): stdClass
 	{
@@ -113,7 +113,8 @@ class ContentHistoryHelper extends \Joomla\Component\Contenthistory\Administrato
 					{
 						$Translations = new Translations();
 						$value        = $Translations->getText((string) $field->attributes()->table, (int) $object->id,
-							(string) $field->attributes()->field);
+							(string) $field->attributes()->field
+						);
 
 						if ($value)
 						{
@@ -179,9 +180,9 @@ class ContentHistoryHelper extends \Joomla\Component\Contenthistory\Administrato
 	 * @param   stdClass  $lookup  The std object with the values needed to do the query.
 	 * @param   mixed     $value   The value used to find the matching title or name. Typically, the id.
 	 *
+	 * @return mixed  Value from database (for example, name or title) on success, false on failure.
 	 * @throws RuntimeException
 	 * @since  3.2
-	 * @return mixed  Value from database (for example, name or title) on success, false on failure.
 	 */
 	public static function getLookupValue(stdClass $lookup, $value): mixed
 	{
@@ -218,8 +219,8 @@ class ContentHistoryHelper extends \Joomla\Component\Contenthistory\Administrato
 	 * @param   stdClass     $object     Object to be passed to view layout file.
 	 * @param   ContentType  $typeTable  Table object with content history options.
 	 *
-	 * @since  3.2
 	 * @return stdClass  Object with hidden fields removed.
+	 * @since  3.2
 	 */
 	public static function hideFields(stdClass $object, ContentType $typeTable): stdClass
 	{
@@ -243,8 +244,8 @@ class ContentHistoryHelper extends \Joomla\Component\Contenthistory\Administrato
 	 *
 	 * @param   string  $typeAlias  The type alias, for example 'com_content.article'.
 	 *
-	 * @since   3.2
 	 * @return  void
+	 * @since   3.2
 	 */
 	public static function loadLanguageFiles(string $typeAlias): void
 	{
@@ -261,7 +262,8 @@ class ContentHistoryHelper extends \Joomla\Component\Contenthistory\Administrato
 			 */
 			$lang->load($component, JPATH_ADMINISTRATOR)
 			|| $lang->load($component,
-				Path::clean(JPATH_ADMINISTRATOR . '/components/' . $component));
+				Path::clean(JPATH_ADMINISTRATOR . '/components/' . $component)
+			);
 
 			// Force loading of backend global language file
 			$lang->load('joomla', Path::clean(JPATH_ADMINISTRATOR));
@@ -276,10 +278,11 @@ class ContentHistoryHelper extends \Joomla\Component\Contenthistory\Administrato
 	 * @param ?stdClass   $object      The std object from the JSON string. Can be nested 1 level deep.
 	 * @param   stdClass  $formValues  Standard class of label and value in an associative array.
 	 *
-	 * @since  3.2
 	 * @return stdClass  Object with translated labels where available
+	 * @since  3.2
 	 */
-	#[Pure] public static function mergeLabels(?stdClass $object, stdClass $formValues): stdClass
+	#[Pure]
+	public static function mergeLabels(?stdClass $object, stdClass $formValues): stdClass
 	{
 		$result = new stdClass();
 
@@ -322,9 +325,9 @@ class ContentHistoryHelper extends \Joomla\Component\Contenthistory\Administrato
 	 * @param   stdClass     $object      The std object from the JSON string. Can be nested 1 level deep.
 	 * @param   ContentType  $typesTable  Table object loaded with data.
 	 *
+	 * @return stdClass  Object with lookup values inserted.
 	 * @throws Exception
 	 * @since  3.2
-	 * @return stdClass  Object with lookup values inserted.
 	 */
 	public static function processLookupFields(stdClass $object, ContentType $typesTable): stdClass
 	{
@@ -362,7 +365,8 @@ class ContentHistoryHelper extends \Joomla\Component\Contenthistory\Administrato
 								foreach ($sourceValue as $s)
 								{
 									$values[] = $Translations->getText($lookup->targetTable, (int) $s,
-										$lookup->displayColumn);
+										$lookup->displayColumn
+									);
 								}
 
 								$object->$sourceColumn->value = implode(", ", $values);

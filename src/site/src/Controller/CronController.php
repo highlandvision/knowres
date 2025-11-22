@@ -55,7 +55,8 @@ class CronController extends BaseController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	#[NoReturn] public function dailyemails(): void
+	#[NoReturn]
+	public function dailyemails(): void
 	{
 		$this->checkSecret();
 		KrMethods::loadLanguage();
@@ -101,7 +102,8 @@ class CronController extends BaseController
 	{
 		$today     = TickTock::getDate();
 		$contracts = KrFactory::getListModel('contracts')->getBalanceDue($today);
-		foreach ($contracts as $c) {
+		foreach ($contracts as $c)
+		{
 			$contract                 = new stdClass();
 			$contract->id             = $c->id;
 			$contract->booking_status = 30;
@@ -113,8 +115,8 @@ class CronController extends BaseController
 	/**
 	 * Cancel a contract
 	 *
-	 * @param  object  $contract  Contract row
-	 * @param  string  $trigger   Email trigger
+	 * @param   object  $contract  Contract row
+	 * @param   string  $trigger   Email trigger
 	 *
 	 * @throws Exception
 	 * @since  3.4.0
@@ -125,15 +127,19 @@ class CronController extends BaseController
 		$contractSession = new KrSession\Contract();
 		$contractData    = $contractSession->updateData($item);
 
-		try {
+		try
+		{
 			$hub = new Hub($contractData);
 			$hub->setValue('email_trigger', $trigger);
-			$actions = ['cancel',
-			            'servicequeue',
-			            'emails'
+			$actions = [
+				'cancel',
+				'servicequeue',
+				'emails'
 			];
 			$hub->action($actions);
-		} catch (Exception $e) {
+		}
+		catch (Exception $e)
+		{
 			Logger::logMe($e->getMessage());
 		}
 	}
@@ -150,10 +156,13 @@ class CronController extends BaseController
 		$this->checkSecret();
 
 		$contracts = KrFactory::getListModel('contracts')->getExpiredRequests();
-		if (is_countable($contracts)) {
-			foreach ($contracts as $c) {
+		if (is_countable($contracts))
+		{
+			foreach ($contracts as $c)
+			{
 				$expiry = TickTock::modifyHours($c->created_at, $c->on_request);
-				if (TickTock::getTS() > $expiry) {
+				if (TickTock::getTS() > $expiry)
+				{
 					self::cancelContract($c, 'BOOKREQUESTCANCELEXPIRED');
 				}
 			}
@@ -172,11 +181,14 @@ class CronController extends BaseController
 		$today    = TickTock::getDate();
 		$trigger  = 'BOOKCANCELNODEP';
 		$triggers = self::getCronTriggers($trigger);
-		if (is_countable($triggers) && count($triggers)) {
+		if (is_countable($triggers) && count($triggers))
+		{
 			$expiry_date = TickTock::modifyDays($today, 1, '-');
 			$contracts   = KrFactory::getListModel('contracts')->getDueExpire($expiry_date);
-			if (is_countable($contracts)) {
-				foreach ($contracts as $c) {
+			if (is_countable($contracts))
+			{
+				foreach ($contracts as $c)
+				{
 					self::cancelContract($c, 'BOOKCANCELNODEP');
 				}
 			}
@@ -195,7 +207,8 @@ class CronController extends BaseController
 		$this->test = $this->input->getInt('test', 0);
 		$secret     = $this->input->getString('secret', '');
 
-		if (!$this->test && $secret != KrMethods::getCfg('secret')) {
+		if (!$this->test && $secret != KrMethods::getCfg('secret'))
+		{
 			throw new RuntimeException('Secret does not match');
 		}
 	}
@@ -211,9 +224,12 @@ class CronController extends BaseController
 	{
 		$sent    = [];
 		$actions = KrFactory::getListModel('emailactions')->getItems();
-		if (is_countable($actions)) {
-			foreach ($actions as $a) {
-				if (!is_null($a->contract_tag) && !in_array($a->contract_id, $sent)) {
+		if (is_countable($actions))
+		{
+			foreach ($actions as $a)
+			{
+				if (!is_null($a->contract_tag) && !in_array($a->contract_id, $sent))
+				{
 					$email = new ContractEmail($a->email_trigger);
 					$email->sendTheEmails($a->contract_id);
 					$sent[] = $a->contract_id;
@@ -247,7 +263,8 @@ class CronController extends BaseController
 	private function deleteProperties(): void
 	{
 		$ids = KrFactory::getListModel('properties')->getIds(-99);
-		if (!is_countable($ids) || !count($ids)) {
+		if (!is_countable($ids) || !count($ids))
+		{
 			return;
 		}
 
@@ -256,7 +273,8 @@ class CronController extends BaseController
 		$userData->access_level = 40;
 		$userSession->setData($userData);
 
-		foreach ($ids as $id) {
+		foreach ($ids as $id)
+		{
 			$Delete = new Delete($id);
 			$Delete->deleteTheProperty();
 		}
@@ -306,14 +324,19 @@ class CronController extends BaseController
 	private function deleteUnpublished(): void
 	{
 		$rows = KrFactory::getListModel('contracts')->getStrays();
-		if (!is_countable($rows) || !count($rows)) {
+		if (!is_countable($rows) || !count($rows))
+		{
 			return;
 		}
 
-		foreach ($rows as $r) {
-			try {
+		foreach ($rows as $r)
+		{
+			try
+			{
 				KrFactory::getAdminModel('contract')::deleteAll($r->id, $r->guest_id);
-			} catch (Exception|RuntimeException $e) {
+			}
+			catch (Exception|RuntimeException $e)
+			{
 				Logger::logMe($e->getMessage());
 			}
 		}
@@ -322,11 +345,11 @@ class CronController extends BaseController
 	/**
 	 * Get trigger if exists
 	 *
-	 * @param  string  $trigger_actual  Email trigger
+	 * @param   string  $trigger_actual  Email trigger
 	 *
+	 * @return mixed
 	 * @throws RuntimeException
 	 * @since  1.0.0
-	 * @return mixed
 	 */
 	private function getCronTriggers(string $trigger_actual): mixed
 	{
@@ -338,20 +361,22 @@ class CronController extends BaseController
 	 * Before = true - due date is x days in future
 	 * Before = false - due date is x days in past
 	 *
-	 * @param  string  $date    Due date
-	 * @param  int     $days    #Days
-	 * @param  bool    $before  Before (true)  or After (false)
+	 * @param   string  $date    Due date
+	 * @param   int     $days    #Days
+	 * @param   bool    $before  Before (true)  or After (false)
 	 *
+	 * @return string
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return string
 	 */
 	private function getDueDate(string $date, int $days, bool $before): string
 	{
-		if ($before) {
+		if ($before)
+		{
 			$due_date = TickTock::modifyDays($date, $days);
 		}
-		else {
+		else
+		{
 			$due_date = TickTock::modifyDays($date, $days, '-');
 		}
 
@@ -367,7 +392,8 @@ class CronController extends BaseController
 	private function ownerPayments(): void
 	{
 		$params = KrMethods::getParams();
-		if ($params->get('owner_payments', false)) {
+		if ($params->get('owner_payments', false))
+		{
 			$paymentsQueue = new PaymentsQueue();
 			$paymentsQueue->process();
 		}
@@ -383,16 +409,20 @@ class CronController extends BaseController
 	{
 		$trigger  = 'CUSTOMBYDATE';
 		$triggers = self::getCronTriggers($trigger);
-		if (is_countable($triggers) && count($triggers)) {
-			foreach ($triggers as $t) {
+		if (is_countable($triggers) && count($triggers))
+		{
+			foreach ($triggers as $t)
+			{
 				$due_date          = self::getDueDate(TickTock::getDate(), $t->days, $t->days_before);
 				$t->booking_status = Utility::decodeJson($t->booking_status, true);
 				$contracts         = KrFactory::getListModel('contracts')
 				                              ->getCronTrigger($t->trigger_cron, $due_date, $t->booking_status);
 
-				if (is_countable($contracts) && count($contracts)) {
+				if (is_countable($contracts) && count($contracts))
+				{
 					$email = new ContractEmail($trigger, $t->id);
-					foreach ($contracts as $c) {
+					foreach ($contracts as $c)
+					{
 						$email->sendTheEmails($c->id);
 					}
 				}
@@ -403,8 +433,8 @@ class CronController extends BaseController
 	/**
 	 * Send emails only
 	 *
-	 * @param  string  $trigger         Email trigger
-	 * @param  string  $model_function  Function to retrieve data
+	 * @param   string  $trigger         Email trigger
+	 * @param   string  $model_function  Function to retrieve data
 	 *
 	 * @throws Exception
 	 * @since        1.0.0
@@ -413,13 +443,17 @@ class CronController extends BaseController
 	private function sendEmailsOnly(string $trigger, string $model_function): void
 	{
 		$triggers = self::getCronTriggers($trigger);
-		if (is_countable($triggers) && count($triggers)) {
-			foreach ($triggers as $t) {
+		if (is_countable($triggers) && count($triggers))
+		{
+			foreach ($triggers as $t)
+			{
 				$due_date  = self::getDueDate(TickTock::getDate(), $t->days, $t->days_before);
 				$contracts = KrFactory::getListModel('contracts')->{$model_function}($due_date);
-				if (is_countable($contracts) && count($contracts)) {
+				if (is_countable($contracts) && count($contracts))
+				{
 					$email = new ContractEmail($trigger);
-					foreach ($contracts as $c) {
+					foreach ($contracts as $c)
+					{
 						$email->sendTheEmails($c->id);
 					}
 				}
@@ -430,8 +464,8 @@ class CronController extends BaseController
 	/**
 	 * Process review request / reminder
 	 *
-	 * @param  string  $trigger   Email trigger
-	 * @param  bool    $reminder  True for review reminder
+	 * @param   string  $trigger   Email trigger
+	 * @param   bool    $reminder  True for review reminder
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -439,15 +473,20 @@ class CronController extends BaseController
 	private function sendReviewRequests(string $trigger, bool $reminder = false): void
 	{
 		$triggers = self::getCronTriggers($trigger);
-		if (is_countable($triggers) && count($triggers)) {
-			foreach ($triggers as $t) {
+		if (is_countable($triggers) && count($triggers))
+		{
+			foreach ($triggers as $t)
+			{
 				$due_date  = self::getDueDate(TickTock::getDate(), $t->days, $t->days_before);
 				$contracts = KrFactory::getListModel('contracts')->getDueReviews($due_date, $reminder);
-				if (is_countable($contracts) && count($contracts)) {
+				if (is_countable($contracts) && count($contracts))
+				{
 					$email = new ContractEmail($trigger);
-					foreach ($contracts as $c) {
+					foreach ($contracts as $c)
+					{
 						$email->sendTheEmails($c->id);
-						if (!$reminder) {
+						if (!$reminder)
+						{
 							$contract                   = new stdClass();
 							$contract->id               = $c->id;
 							$contract->review_requested = 1;

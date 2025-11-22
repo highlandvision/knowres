@@ -6,6 +6,7 @@
  * @license     See the file LICENSE.txt for the full license governing this code.
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
+
 /** @noinspection PhpPossiblePolymorphicInvocationInspection */
 
 namespace HighlandVision\KR\Joomla;
@@ -21,7 +22,6 @@ use Joomla\Database\Exception\QueryTypeAlreadyDefinedException;
 use Joomla\DI\Exception\KeyNotFoundException;
 use RuntimeException;
 use stdClass;
-
 use function ucfirst;
 
 const SUFFIX = 'Model';
@@ -37,13 +37,13 @@ class FDatabase
 	/**
 	 * Validate if user email exists
 	 *
-	 * @param  string  $email  Email string
+	 * @param   string  $email  Email string
 	 *
-	 * @throws InvalidArgumentException
+	 * @return mixed
 	 * @throws QueryTypeAlreadyDefinedException
 	 * @throws RuntimeException
+	 * @throws InvalidArgumentException
 	 * @since  1.0.0
-	 * @return mixed
 	 */
 	public static function checkUser(string $email): mixed
 	{
@@ -68,13 +68,13 @@ class FDatabase
 	/**
 	 * Validate if user name exists
 	 *
-	 * @param  string  $username  Name of user
+	 * @param   string  $username  Name of user
 	 *
-	 * @throws InvalidArgumentException
+	 * @return mixed
 	 * @throws QueryTypeAlreadyDefinedException
 	 * @throws RuntimeException
+	 * @throws InvalidArgumentException
 	 * @since  1.0.0
-	 * @return mixed
 	 */
 	public static function checkUsername(string $username): mixed
 	{
@@ -99,8 +99,8 @@ class FDatabase
 	/**
 	 * Delete data from table
 	 *
-	 * @param  string  $table       Table name
-	 * @param  array   $conditions  Deletion conditions
+	 * @param   string  $table       Table name
+	 * @param   array   $conditions  Deletion conditions
 	 *
 	 * @throws InvalidArgumentException
 	 * @throws QueryTypeAlreadyDefinedException
@@ -120,12 +120,12 @@ class FDatabase
 	/**
 	 * Get a model class
 	 *
-	 * @param  string  $name  Model name.
-	 * @param  string  $area  administrator or site.
+	 * @param   string  $name  Model name.
+	 * @param   string  $area  administrator or site.
 	 *
+	 * @return ModelInterface|null The model object
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return ?ModelInterface  The model object
 	 */
 	public static function getAdminModel(string $name, string $area = 'Administrator'): ?ModelInterface
 	{
@@ -136,9 +136,9 @@ class FDatabase
 	/**
 	 * Get database
 	 *
+	 * @return DatabaseDriver
 	 * @throws KeyNotFoundException
 	 * @since  1.0.0
-	 * @return DatabaseDriver
 	 */
 	public static function getDatabase(): DatabaseDriver
 	{
@@ -148,11 +148,11 @@ class FDatabase
 	/**
 	 * Get list model
 	 *
-	 * @param  string  $name  Model name
-	 * @param  string  $area  Administrator or Site
+	 * @param   string  $name  Model name
+	 * @param   string  $area  Administrator or Site
 	 *
-	 * @since  3.0.0
 	 * @return mixed
+	 * @since  3.0.0
 	 */
 	public static function getListModel(string $name, string $area = "Administrator"): mixed
 	{
@@ -172,11 +172,11 @@ class FDatabase
 	/**
 	 * Get the admin path to the model
 	 *
-	 * @param  string  $name  Model name
-	 * @param  string  $area  Site or Admin
+	 * @param   string  $name  Model name
+	 * @param   string  $area  Site or Admin
 	 *
-	 * @since  3.3.0
 	 * @return string
+	 * @since  3.3.0
 	 */
 	public static function getPath(string $name, string $area = 'admin'): string
 	{
@@ -193,14 +193,14 @@ class FDatabase
 	/**
 	 * Insert object into database
 	 *
-	 * @param  string    $table  Table name
-	 * @param  stdClass  $data   Data to be inserted
-	 * @param  string    $key    Primary key
+	 * @param   string    $table  Table name
+	 * @param   stdClass  $data   Data to be inserted
+	 * @param   string    $key    Primary key
 	 *
-	 * @throws RuntimeException
-	 * @throws KeyNotFoundException
-	 * @since  3.3.0
 	 * @return mixed
+	 * @throws KeyNotFoundException
+	 * @throws RuntimeException
+	 * @since  3.3.0
 	 */
 	public static function insert(string $table, stdClass $data, string $key = 'id'): mixed
 	{
@@ -213,7 +213,7 @@ class FDatabase
 	/**
 	 * Truncate a table
 	 *
-	 * @param  string  $table  Name of table
+	 * @param   string  $table  Name of table
 	 *
 	 * @throws RuntimeException
 	 * @throws KeyNotFoundException
@@ -227,9 +227,9 @@ class FDatabase
 	/**
 	 * Update object into database
 	 *
-	 * @param  string    $table  Table name
-	 * @param  stdClass  $data   Data to be inserted
-	 * @param  string    $key    Name of primary key
+	 * @param   string    $table  Table name
+	 * @param   stdClass  $data   Data to be inserted
+	 * @param   string    $key    Name of primary key
 	 *
 	 * @throws RuntimeException
 	 * @throws KeyNotFoundException

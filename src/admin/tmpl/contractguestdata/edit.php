@@ -19,36 +19,41 @@ $wa->useScript('keepalive')
    ->useScript('form.validate')
    ->useStyle('com_knowres.admin-guestdata');
 
-if (empty($this->contract->adults) || $this->contract->guests != $this->contract->adults + $this->contract->children )
+if (empty($this->contract->adults) || $this->contract->guests != $this->contract->adults + $this->contract->children)
 {
-	KrMethods::message(KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATA_PARTYDETAILS_REQUIRED'), 'error');
-	KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&task=contract.show&id=' . $this->contract->id, false));
-	return;
+    KrMethods::message(KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATA_PARTYDETAILS_REQUIRED'), 'error');
+    KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&task=contract.show&id=' . $this->contract->id, false));
+
+    return;
 }
 ?>
 
 <form action="<?php echo KrMethods::route('index.php?option=com_knowres&layout=edit&id=' . (int) $this->item->id); ?>"
       class="form-validate" id="contractguestdata-form" method="post" name="adminForm">
-	<?php
-	echo HTMLHelper::_('uitab.startTabSet', 'kr-guestdataTabs',
-		['active' => 'kr-partydetails', 'breakpoint' => 768]);
-	echo HTMLHelper::_('uitab.addTab', 'kr-guestdataTabs', 'kr-partydetails',
-		KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATA_TAB_PARTYINFO'));
-	echo $this->loadTemplate('partydetails');
-	echo HTMLHelper::_('uitab.endTab');
-	echo HTMLHelper::_('uitab.addTab', 'kr-guestdataTabs', 'kr-arrivalinfo',
-		KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATA_TAB_ARRIVALINFO'));
-	echo $this->loadTemplate('arrivalinfo');
-	echo HTMLHelper::_('uitab.endTab');
-	echo HTMLHelper::_('uitab.addTab', 'kr-guestdataTabs', 'kr-options',
-		KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATA_TAB_OPTIONS'));
-	echo $this->loadTemplate('options');
-	echo HTMLHelper::_('uitab.endTab');
-	echo HTMLHelper::_('uitab.endTabSet');
-	?>
+    <?php
+    echo HTMLHelper::_('uitab.startTabSet', 'kr-guestdataTabs',
+            ['active' => 'kr-partydetails', 'breakpoint' => 768]
+    );
+    echo HTMLHelper::_('uitab.addTab', 'kr-guestdataTabs', 'kr-partydetails',
+            KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATA_TAB_PARTYINFO')
+    );
+    echo $this->loadTemplate('partydetails');
+    echo HTMLHelper::_('uitab.endTab');
+    echo HTMLHelper::_('uitab.addTab', 'kr-guestdataTabs', 'kr-arrivalinfo',
+            KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATA_TAB_ARRIVALINFO')
+    );
+    echo $this->loadTemplate('arrivalinfo');
+    echo HTMLHelper::_('uitab.endTab');
+    echo HTMLHelper::_('uitab.addTab', 'kr-guestdataTabs', 'kr-options',
+            KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATA_TAB_OPTIONS')
+    );
+    echo $this->loadTemplate('options');
+    echo HTMLHelper::_('uitab.endTab');
+    echo HTMLHelper::_('uitab.endTabSet');
+    ?>
 
-	<input type="hidden" name="jform[contract_id]" value="<?php echo $this->contract->id; ?>">
-	<input type="hidden" name="jform[guest_id]" value="<?php echo $this->contract->guest_id; ?>">
-	<input type="hidden" name="task" value="">
-	<?php echo HTMLHelper::_('form.token'); ?>
+    <input type="hidden" name="jform[contract_id]" value="<?php echo $this->contract->id; ?>">
+    <input type="hidden" name="jform[guest_id]" value="<?php echo $this->contract->guest_id; ?>">
+    <input type="hidden" name="task" value="">
+    <?php echo HTMLHelper::_('form.token'); ?>
 </form>

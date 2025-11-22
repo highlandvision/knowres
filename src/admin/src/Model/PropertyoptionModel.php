@@ -39,11 +39,11 @@ class PropertyoptionModel extends AdminModel
 	/**
 	 * Method to get a knowres record.
 	 *
-	 * @param  int  $pk  The id of the primary key.
+	 * @param   int  $pk  The id of the primary key.
 	 *
+	 * @return false|object  Object on success, false on failure.
 	 * @throws RuntimeException
 	 * @since  1.0.0
-	 * @return false|object  Object on success, false on failure.
 	 */
 	public function getItem($pk = null): false|object
 	{
@@ -60,10 +60,10 @@ class PropertyoptionModel extends AdminModel
 	/**
 	 * Method to test whether a record can be deleted.
 	 *
-	 * @param  object  $record  A record object.
+	 * @param   object  $record  A record object.
 	 *
-	 * @since  3.0.0
 	 * @return bool  True if allowed to delete the record. Defaults to the permission for the component.
+	 * @since  3.0.0
 	 */
 	protected function canDelete($record): bool
 	{
@@ -81,9 +81,9 @@ class PropertyoptionModel extends AdminModel
 	/**
 	 * Method to get the data that should be injected in the form.
 	 *
+	 * @return mixed The data for the form.
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return mixed The data for the form.
 	 */
 	protected function loadFormData(): mixed
 	{

@@ -38,10 +38,10 @@ class EmailtriggerModel extends AdminModel
 	/**
 	 * Method to get a knowres record.
 	 *
-	 * @param  int  $pk  The id of the primary key.
+	 * @param   int  $pk  The id of the primary key.
 	 *
-	 * @since  1.0.0
 	 * @return object|false  Object on success, false on failure.
+	 * @since  1.0.0
 	 */
 	public function getItem($pk = null): object|false
 	{
@@ -57,9 +57,9 @@ class EmailtriggerModel extends AdminModel
 	/**
 	 * Method to get the data that should be injected in the form.
 	 *
+	 * @return mixed The data for the form.
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return mixed The data for the form.
 	 */
 	protected function loadFormData(): mixed
 	{

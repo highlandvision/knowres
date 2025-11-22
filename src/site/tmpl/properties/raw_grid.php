@@ -13,30 +13,32 @@ use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 
 $results = KrFactory::getListModel('propertyfeatures')->getAll(true);
-foreach ($results as $r) {
-	$key_features[$r->id] = $r->name;
+foreach ($results as $r)
+{
+    $key_features[$r->id] = $r->name;
 }
 ?>
 
 <?php if ($this->favs_alert): ?>
-	<div class="callout warning" data-closable>
-		<?php echo KrMethods::plain('COM_KNOWRES_NO_FAVOURITES'); ?>
-		<button class="close-button" aria-label="Dismiss alert" type="button" data-close>
-			<span aria-hidden="true">&times;</span>
-		</button>
-	</div>
+    <div class="callout warning" data-closable>
+        <?php echo KrMethods::plain('COM_KNOWRES_NO_FAVOURITES'); ?>
+        <button class="close-button" aria-label="Dismiss alert" type="button" data-close>
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
 <?php endif; ?>
 
-<?php echo KrMethods::render('properties.grid.list', ['items'          => $this->items,
-                                                      'params'         => $this->params,
-                                                      'currency'       => $this->Response->searchData->currency,
-                                                      'favs'           => $this->Response->searchData->favs,
-                                                      'bar'            => $this->Response->searchData->bar,
-                                                      'byAvailability' => $this->Response->searchData->byAvailability,
-                                                      'net'            => $this->Response->searchData->rateNet,
-                                                      'discount'       => $this->Response->searchData->rateDiscount,
-                                                      'rating'         => $this->Response->searchData->rating,
-                                                      'key_features'   => $key_features,
-                                                      'nights'         => $this->Response->searchData->nights
+<?php echo KrMethods::render('properties.grid.list', [
+        'items'          => $this->items,
+        'params'         => $this->params,
+        'currency'       => $this->Response->searchData->currency,
+        'favs'           => $this->Response->searchData->favs,
+        'bar'            => $this->Response->searchData->bar,
+        'byAvailability' => $this->Response->searchData->byAvailability,
+        'net'            => $this->Response->searchData->rateNet,
+        'discount'       => $this->Response->searchData->rateDiscount,
+        'rating'         => $this->Response->searchData->rating,
+        'key_features'   => $key_features,
+        'nights'         => $this->Response->searchData->nights
 ]);
 ?>

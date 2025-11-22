@@ -26,40 +26,44 @@ extract($displayData);
 ?>
 
 <table style="width:100%;border:none;border-collapse:collapse;">
-	<tr>
-		<td>
-			<?php echo KrMethods::render('pdf.contract.invoice.header',
-				['contract' => $contract, 'guest' => $guest, 'property' => $property, 'agency' => $agency]); ?>
-			<br><br>
+    <tr>
+        <td>
+            <?php echo KrMethods::render('pdf.contract.invoice.header',
+                    ['contract' => $contract, 'guest' => $guest, 'property' => $property, 'agency' => $agency]
+            ); ?>
+            <br><br>
 
-			<?php echo KrMethods::render('pdf.contract.invoice.detail',
-				['contract' => $contract, 'agency' => $agency]); ?>
+            <?php echo KrMethods::render('pdf.contract.invoice.detail',
+                    ['contract' => $contract, 'agency' => $agency]
+            ); ?>
 
-			<br><br>
+            <br><br>
 
-			<table
-				style="padding:5px;width:100%;border:1px solid #666;border-collapse:collapse;background-color:#d3f0f3;">
-				<tr>
-					<td colspan="2">
-						<?php echo KrMethods::plain('COM_KNOWRES_PDF_INVOICE_DSC'); ?>
-					</td>
-					<td style="text-align:right;">
-						<?php echo KrMethods::plain('COM_KNOWRES_PDF_INVOICE_TOTAL'); ?>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="3" style="background-color:#fefefe;">
-						<?php echo KrMethods::render('pdf.contract.invoice.summary',
-							['contract' => $contract, 'fees' => $fees, 'payments' => $payments]); ?>
-					</td>
-				</tr>
-			</table>
+            <table
+                    style="padding:5px;width:100%;border:1px solid #666;border-collapse:collapse;background-color:#d3f0f3;">
+                <tr>
+                    <td colspan="2">
+                        <?php echo KrMethods::plain('COM_KNOWRES_PDF_INVOICE_DSC'); ?>
+                    </td>
+                    <td style="text-align:right;">
+                        <?php echo KrMethods::plain('COM_KNOWRES_PDF_INVOICE_TOTAL'); ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="background-color:#fefefe;">
+                        <?php echo KrMethods::render('pdf.contract.invoice.summary',
+                                ['contract' => $contract, 'fees' => $fees, 'payments' => $payments]
+                        ); ?>
+                    </td>
+                </tr>
+            </table>
 
-			<?php if (!$dashboard): ?>
-				<br><br><br>
-				<?php echo KrMethods::render('pdf.contract.invoice.signatures',
-					['contract' => $contract]); ?>
-			<?php endif; ?>
-		</td>
-	</tr>
+            <?php if (!$dashboard): ?>
+                <br><br><br>
+                <?php echo KrMethods::render('pdf.contract.invoice.signatures',
+                        ['contract' => $contract]
+                ); ?>
+            <?php endif; ?>
+        </td>
+    </tr>
 </table>

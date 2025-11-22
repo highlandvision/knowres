@@ -17,7 +17,6 @@ use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Hub;
 use InvalidArgumentException;
 use RuntimeException;
-
 use function count;
 use function is_countable;
 
@@ -34,11 +33,11 @@ class Confirm
 	/**
 	 * Action manager
 	 *
-	 * @param  Hub  $hub  Hub data
+	 * @param   Hub  $hub  Hub data
 	 *
+	 * @return bool
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return bool
 	 */
 	public function action(Hub $hub): bool
 	{
@@ -59,16 +58,17 @@ class Confirm
 		$this->hub->setValue('id', 0, 'guestData');
 		$this->hub->setValue('user_id', 0, 'guestData');
 		$this->hub->setValue('email', KrMethods::emailToPunycode($this->hub->getValue('email', 'guestData')),
-			'guestData');
+			'guestData'
+		);
 	}
 
 	/**
 	 * Data validation
 	 *
-	 * @throws InvalidArgumentException
-	 * @throws Exception
-	 * @since  1.0.0
 	 * @return bool
+	 * @throws Exception
+	 * @throws InvalidArgumentException
+	 * @since  1.0.0
 	 */
 	protected function validate(): bool
 	{

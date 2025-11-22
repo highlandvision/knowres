@@ -14,53 +14,55 @@ use Joomla\CMS\HTML\HTMLHelper;
 
 $wa = $this->document->getWebAssetManager();
 $wa->useScript('com_knowres.site')
-	->useScript('form.validate')
-	->useScript('keepalive');
+   ->useScript('form.validate')
+   ->useScript('keepalive');
 
 $termsurl = KrMethods::route('index.php?option=com_knowres&task=property.terms&id=' . $this->property->id, false);
 $action   = '/index.php?option=com_knowres&task=payment.router';
 ?>
 
 <div id="kr-payment" class="grid-x grid-margin-x">
-	<div class="small-12 medium-10 large-8 cell">
-		<h1><?php echo KrMethods::plain('COM_KNOWRES_MAKE_A_PAYMENT'); ?></h1>
+    <div class="small-12 medium-10 large-8 cell">
+        <h1><?php echo KrMethods::plain('COM_KNOWRES_MAKE_A_PAYMENT'); ?></h1>
 
-		<form action="<?php echo $action; ?>" class="ajaxform form-validate" id="kr-form-payment" method="post">
-			<?php echo KrMethods::render('dashboard.header',
-				['contract' => $this->contract,
-				 'times'    => false
-				]); ?>
-			<br>
+        <form action="<?php echo $action; ?>" class="ajaxform form-validate" id="kr-form-payment" method="post">
+            <?php echo KrMethods::render('dashboard.header',
+                    [
+                            'contract' => $this->contract,
+                            'times'    => false
+                    ]
+            ); ?>
+            <br>
 
-			<?php if ($this->contract->cancelled): ?>
-				<div class="callout small">
-					<div class="grid-x grid-margin-x">
-						<div class="small-12 cell">
-							<h4>
-								<?php echo KrMethods::plain('COM_KNOWRES_DASHBOARD_CANCELLED_RESERVATION1'); ?>
-								<br><br>
-								<?php echo KrMethods::plain('COM_KNOWRES_DASHBOARD_CANCELLED_RESERVATION2'); ?>
-							</h4>
-						</div>
-					</div>
-				</div>
-			<?php else: ?>
-				<?php echo $this->loadTemplate('payments'); ?>
-			<?php endif; ?>
+            <?php if ($this->contract->cancelled): ?>
+                <div class="callout small">
+                    <div class="grid-x grid-margin-x">
+                        <div class="small-12 cell">
+                            <h4>
+                                <?php echo KrMethods::plain('COM_KNOWRES_DASHBOARD_CANCELLED_RESERVATION1'); ?>
+                                <br><br>
+                                <?php echo KrMethods::plain('COM_KNOWRES_DASHBOARD_CANCELLED_RESERVATION2'); ?>
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+            <?php else: ?>
+                <?php echo $this->loadTemplate('payments'); ?>
+            <?php endif; ?>
 
-			<?php echo HTMLHelper::_('form.token'); ?>
-			<input type="hidden" name="id" value="0">
-			<input type="hidden" name="jform[id]" value="0">
-			<input type="hidden" name="contract_id" value="<?php echo $this->contract->id; ?>">
-		</form>
-	</div>
+            <?php echo HTMLHelper::_('form.token'); ?>
+            <input type="hidden" name="id" value="0">
+            <input type="hidden" name="jform[id]" value="0">
+            <input type="hidden" name="contract_id" value="<?php echo $this->contract->id; ?>">
+        </form>
+    </div>
 </div>
 
 <div id="errorModal" class="reveal red" data-reveal>
-	<button class="close-button" data-close aria-label="Close modal" type="button">
-		<span aria-hidden="true">&times;</span>
-	</button>
-	<?php echo KrMethods::plain('COM_KNOWRES_PAYMENT_ERROR'); ?>
+    <button class="close-button" data-close aria-label="Close modal" type="button">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <?php echo KrMethods::plain('COM_KNOWRES_PAYMENT_ERROR'); ?>
 </div>
 
 <div id="kr-terms-modal" class="reveal small kr-ajax-modal" data-reveal data-v-offset="0"

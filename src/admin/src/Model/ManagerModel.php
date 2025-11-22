@@ -41,11 +41,11 @@ class ManagerModel extends AdminModel
 	/**
 	 * Method to get a manager row.
 	 *
-	 * @param  int  $pk  The id of the primary key.
+	 * @param   int  $pk  The id of the primary key.
 	 *
+	 * @return object|false  Object on success, false on failure.
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return object|false  Object on success, false on failure.
 	 */
 	public function getItem($pk = null): object|false
 	{
@@ -71,12 +71,12 @@ class ManagerModel extends AdminModel
 	/**
 	 * Get KR access level for user
 	 *
-	 * @param  int  $user_id  ID of user
+	 * @param   int  $user_id  ID of user
 	 *
-	 * @throws RuntimeException
-	 * @throws KeyNotFoundException|InvalidArgumentException
-	 * @since  1.0.0
 	 * @return mixed
+	 * @throws KeyNotFoundException|InvalidArgumentException
+	 * @throws RuntimeException
+	 * @since  1.0.0
 	 */
 	public function getManagerbyUserId(int $user_id): mixed
 	{
@@ -102,9 +102,9 @@ class ManagerModel extends AdminModel
 	/**
 	 * Method to get the data that should be injected in the form.
 	 *
+	 * @return mixed The data for the form.
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return mixed The data for the form.
 	 */
 	protected function loadFormData(): mixed
 	{
@@ -120,7 +120,7 @@ class ManagerModel extends AdminModel
 	/**
 	 * Prepare and sanitize the table prior to saving.
 	 *
-	 * @param  Table  $table  Table instance.
+	 * @param   Table  $table  Table instance.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0

@@ -27,25 +27,25 @@ $form = KrFactory::getAdhocForm('mod_knowres_mailchimp', 'mailchimp.xml', 'modul
 
 <form action="<?php echo KrMethods::route('index.php?option=com_knowres&task=service.mailchimpsubscribe'); ?>"
       class="mailchimp ajaxform" id="kr-form-mailchimp" method="post">
-	<div class="grid-x grid-margin-x">
-		<div class="small-12 cell">
-			<?php echo $form->getInput('name'); ?>
-		</div>
-		<div class="small-12 cell">
-			<?php echo $form->getInput('email'); ?>
-		</div>
-		<div class="small-12 cell">
-			<button class="button expanded accent" type="submit">
-				<?php echo KrMethods::plain('MOD_KNOWRES_MAILCHIMP_SIGNUP'); ?>
-			</button>
-		</div>
-	</div>
-	<div class="grid-x grid-margin-x">
-		<div class="red small-12 cell">
-			<span id="response2"></span>
-		</div>
+    <div class="grid-x grid-margin-x">
+        <div class="small-12 cell">
+            <?php echo $form->getInput('name'); ?>
+        </div>
+        <div class="small-12 cell">
+            <?php echo $form->getInput('email'); ?>
+        </div>
+        <div class="small-12 cell">
+            <button class="button expanded accent" type="submit">
+                <?php echo KrMethods::plain('MOD_KNOWRES_MAILCHIMP_SIGNUP'); ?>
+            </button>
+        </div>
+    </div>
+    <div class="grid-x grid-margin-x">
+        <div class="red small-12 cell">
+            <span id="response2"></span>
+        </div>
 
-		<input type="hidden" name="id" value="<?php echo $params->get('id', 0); ?>">
-		<?php echo HTMLHelper::_('form.token'); ?>
-	</div>
+        <input type="hidden" name="id" value="<?php echo $params->get('id', 0); ?>">
+        <?php echo HTMLHelper::_('form.token'); ?>
+    </div>
 </form>

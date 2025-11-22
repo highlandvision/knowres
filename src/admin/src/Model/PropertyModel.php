@@ -25,7 +25,6 @@ use Joomla\CMS\Form\Form;
 use Joomla\CMS\Versioning\VersionableControllerTrait;
 use RuntimeException;
 use SimpleXMLElement;
-
 use function array_map;
 use function count;
 use function implode;
@@ -52,30 +51,39 @@ class PropertyModel extends AdminModel
 	/**
 	 * Get the text relevant to the booking type
 	 *
-	 * @param  int   $booking_type  Property booking type
-	 * @param  bool  $search        True for site search
+	 * @param   int   $booking_type  Property booking type
+	 * @param   bool  $search        True for site search
 	 *
+	 * @return string
 	 * @throws Exception
 	 * @since  1.2.2
-	 * @return string
 	 */
 	public static function bookingTypeText(int $booking_type, bool $search = false): string
 	{
-		if (KrMethods::isAdmin()) {
-			return match ($booking_type) {
+		if (KrMethods::isAdmin())
+		{
+			return match ($booking_type)
+			{
 				0 => KrMethods::plain('COM_KNOWRES_PROPERTIES_BOOKING_TYPE_REQUEST'),
 				1 => KrMethods::plain('COM_KNOWRES_PROPERTIES_BOOKING_TYPE_PROVISIONAL'),
 				2 => KrMethods::plain('COM_KNOWRES_PROPERTIES_BOOKING_TYPE_CONFIRMED')
 			};
-		} else {
-			if (!$search) {
-				return match ($booking_type) {
+		}
+		else
+		{
+			if (!$search)
+			{
+				return match ($booking_type)
+				{
 					0 => KrMethods::plain('COM_KNOWRES_BOOK_ENQUIRY'),
 					1 => KrMethods::plain('COM_KNOWRES_ON_REQUEST'),
 					2 => KrMethods::plain('COM_KNOWRES_BOOK_NOW')
 				};
-			} else {
-				return match ($booking_type) {
+			}
+			else
+			{
+				return match ($booking_type)
+				{
 					0 => KrMethods::plain('COM_KNOWRES_BOOK_ENQUIRY'),
 					1 => KrMethods::plain('COM_KNOWRES_ON_REQUEST'),
 					2 => KrMethods::plain('COM_KNOWRES_BOOK_INSTANT')
@@ -87,16 +95,17 @@ class PropertyModel extends AdminModel
 	/**
 	 * Get the property item.
 	 *
-	 * @param  int  $pk  The id of the primary key.
+	 * @param   int  $pk  The id of the primary key.
 	 *
+	 * @return object|false  Object on success, false on failure.
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return object|false  Object on success, false on failure.
 	 */
 	public function getItem($pk = null): object|false
 	{
 		$item = parent::getItem($pk);
-		if ($item) {
+		if ($item)
+		{
 			$item->cancellation_penalty  = Utility::decodeJson($item->cancellation_penalty);
 			$item->categories            = Utility::decodeJson($item->categories, true);
 			$item->checkin_fees          = Utility::decodeJson($item->checkin_fees);
@@ -114,9 +123,11 @@ class PropertyModel extends AdminModel
 			$item->type_name         = $Translations->getText('type', $item->type_id);
 			$item->type_abbreviation = $Translations->getText('type', $item->type_id, 'abbreviation');
 			$item->timezone          = 'UTC';
-			if ($item->town_id > 0) {
+			if ($item->town_id > 0)
+			{
 				$town = KrFactory::getAdminModel('town')->getItem($item->town_id);
-				if (!empty($town->timezone)) {
+				if (!empty($town->timezone))
+				{
 					$item->timezone = $town->timezone;
 				}
 			}
@@ -130,11 +141,11 @@ class PropertyModel extends AdminModel
 	/**
 	 * Mark properties for trash
 	 *
-	 * @param  array  $cid  IDs of property to be actioned
+	 * @param   array  $cid  IDs of property to be actioned
 	 *
+	 * @return bool
 	 * @throws RuntimeException
 	 * @since  3.0.0
-	 * @return bool
 	 */
 	public function markAsTrash(array $cid): bool
 	{
@@ -142,7 +153,8 @@ class PropertyModel extends AdminModel
 
 		$query = 'UPDATE ' . $db->qn('#__knowres_property', 'p');
 		$query .= ' LEFT JOIN ' . $db->qn('#__knowres_contract',
-				'c') . 'ON' . $db->qn('c.property_id') . '=' . $db->qn('p.id');
+				'c'
+			) . 'ON' . $db->qn('c.property_id') . '=' . $db->qn('p.id');
 		$query .= ' SET ' . $db->qn('p.state') . ' = (CASE WHEN `c`.`id` IS NULL THEN -2 ELSE 2 END)';
 		//	Do not use $db->qn('c.id') above as throws error
 		$query .= ' WHERE ' . $db->qn('p.id') . ' IN (' . implode(',', array_map('intval', $cid)) . ')';
@@ -154,11 +166,11 @@ class PropertyModel extends AdminModel
 	/**
 	 * Mark property for deletion
 	 *
-	 * @param  array  $cid  IDs of property to be actioned
+	 * @param   array  $cid  IDs of property to be actioned
 	 *
+	 * @return bool
 	 * @throws RuntimeException
 	 * @since  3.0.0
-	 * @return bool
 	 */
 	public function markForDeletion(array $cid): bool
 	{
@@ -178,16 +190,18 @@ class PropertyModel extends AdminModel
 	/**
 	 * Override publish function
 	 *
-	 * @param  array   &$pks    A list of the primary keys to change.
-	 * @param  int      $value  The value of the published state.
+	 * @param   array   &$pks    A list of the primary keys to change.
+	 * @param   int      $value  The value of the published state.
 	 *
 	 * @throws Exception
 	 * @since  3.1.0
 	 */
 	public function publish(&$pks, $value = 1): void
 	{
-		if (parent::publish($pks, $value)) {
-			foreach ($pks as $id) {
+		if (parent::publish($pks, $value))
+		{
+			foreach ($pks as $id)
+			{
 				KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updateProperty', $id, 0, 'ru');
 				self::setUpdatedAt($id, 'property');
 			}
@@ -198,15 +212,16 @@ class PropertyModel extends AdminModel
 	 * Method to save the form data
 	 * Override for coupon_code increment field
 	 *
-	 * @param  array  $data  The form data.
+	 * @param   array  $data  The form data.
 	 *
+	 * @return bool  True on success.
 	 * @throws Exception
 	 * @since  3.2
-	 * @return bool  True on success.
 	 */
 	public function save($data): bool
 	{
-		if (Factory::getApplication()->input->get('task') == 'save2copy') {
+		if (Factory::getApplication()->input->get('task') == 'save2copy')
+		{
 			$data['property_name'] = Utility::generateNewName($data['property_name']);
 		}
 
@@ -216,32 +231,37 @@ class PropertyModel extends AdminModel
 	/**
 	 * Add the property field text to $item
 	 *
-	 * @param  mixed   $item    Property item
+	 * @param   mixed  $item    Property item
 	 * @param  ?array  $fields  Property fields or null to read
 	 *
+	 * @return mixed
 	 * @throws Exception
 	 * @since  3.3.0
-	 * @return mixed
 	 */
 	public function setPropertyFields(mixed $item, ?array $fields = null): mixed
 	{
-		if (is_null($fields)) {
+		if (is_null($fields))
+		{
 			$fields = KrFactory::getListModel('propertyfields')->getAllPropertyFields();
 		}
 
-		if (is_countable($fields)) {
+		if (is_countable($fields))
+		{
 			$Translations = new Translations();
-			foreach ($fields as $f) {
+			foreach ($fields as $f)
+			{
 				$label = $Translations->getText('propertyfield', $f->id, 'label');
 
 				$field = 'p' . $f->id;
 				$name  = $field;
-				if ($f->special) {
+				if ($f->special)
+				{
 					$name = KrFactory::getAdminModel('propertyfield')->propertyFieldSpecial($f->special, false);
 				}
 
 				$item->{$name} = trim($Translations->getText('property', $item->id, $field));
-				if (!KrMethods::isAdmin() && $f->format == 2) {
+				if (!KrMethods::isAdmin() && $f->format == 2)
+				{
 					$item->{$name} = Utility::nl2p($item->{$name});
 				}
 				$item->buttons = "true";
@@ -256,13 +276,13 @@ class PropertyModel extends AdminModel
 	/**
 	 * Method to validate the form data.
 	 *
-	 * @param  Form    $form   The form to validate against.
-	 * @param  array   $data   The data to validate.
-	 * @param  string  $group  The name of the field group to validate.
+	 * @param   Form    $form   The form to validate against.
+	 * @param   array   $data   The data to validate.
+	 * @param   string  $group  The name of the field group to validate.
 	 *
+	 * @return bool|array  Array of filtered data if valid, false otherwise.
 	 * @throws Exception
 	 * @since  4.0.0
-	 * @return bool|array  Array of filtered data if valid, false otherwise.
 	 */
 	public function validate($form, $data, $group = null): bool|array
 	{
@@ -286,17 +306,20 @@ class PropertyModel extends AdminModel
 	/**
 	 * Method to test whether a record can be deleted.
 	 *
-	 * @param  object  $record  A record object.
+	 * @param   object  $record  A record object.
 	 *
-	 * @since  3.0.0
 	 * @return bool  True if allowed to delete the record.
+	 * @since  3.0.0
 	 */
 	protected function canDelete($record): bool
 	{
 		$userSession = new KrSession\User();
-		if ($userSession->getAccessLevel() == 40) {
+		if ($userSession->getAccessLevel() == 40)
+		{
 			return true;
-		} else {
+		}
+		else
+		{
 			return Factory::getUser()->authorise('core.delete', $this->option);
 		}
 	}
@@ -304,14 +327,15 @@ class PropertyModel extends AdminModel
 	/**
 	 * Method to get the data that should be injected in the form.
 	 *
+	 * @return mixed The data for the form array or object.
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return mixed The data for the form array or object.
 	 */
 	protected function loadFormData(): mixed
 	{
 		$data = KrMethods::getUserState('com_knowres.edit.property.data', []);
-		if (empty($data)) {
+		if (empty($data))
+		{
 			$data = $this->getItem();
 		}
 
@@ -321,20 +345,22 @@ class PropertyModel extends AdminModel
 	/**
 	 * Prepare and sanitize the table prior to saving.
 	 *
-	 * @param  PropertyTable  $table  Table object
+	 * @param   PropertyTable  $table  Table object
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
 	protected function prepareTable($table): void
 	{
-		if (empty($table->id)) {
+		if (empty($table->id))
+		{
 			$params       = KrMethods::getParams();
 			$userSession  = new KrSession\User();
 			$access_level = $userSession->getAccessLevel();
 
 			$table->approved = 1;
-			if ($access_level == 10 && $params->get('property_approve', 0)) {
+			if ($access_level == 10 && $params->get('property_approve', 0))
+			{
 				$table->approved = 0;
 			}
 		}
@@ -348,28 +374,32 @@ class PropertyModel extends AdminModel
 	/**
 	 * Preprocess the form.
 	 *
-	 * @param  Form    $form   Form object.
-	 * @param  object  $data   Data object.
-	 * @param  string  $group  Group name.
+	 * @param   Form    $form   Form object.
+	 * @param   object  $data   Data object.
+	 * @param   string  $group  Group name.
 	 *
+	 * @return void
 	 * @throws Exception
 	 * @since  4.0.0
-	 * @return void
 	 */
-	#[NoReturn] protected function preprocessForm(Form $form, $data, $group = null): void
+	#[NoReturn]
+	protected function preprocessForm(Form $form, $data, $group = null): void
 	{
 		$fields = KrFactory::getListModel('propertyfields')->getAllPropertyFields();
-		if (is_countable($fields) && count($fields)) {
+		if (is_countable($fields) && count($fields))
+		{
 			$Translations = new Translations();
 
-			foreach ($fields as $f) {
+			foreach ($fields as $f)
+			{
 				$label       = $Translations->getText('propertyfield', $f->id, 'label');
 				$description = $Translations->getText('propertyfield', $f->id, 'description');
 
 				$field = 'p' . $f->id;
 				$name  = $field;
 				$tab   = 'propertyfields';
-				if ($f->special) {
+				if ($f->special)
+				{
 					$name = KrFactory::getAdminModel('propertyfield')->propertyFieldSpecial($f->special, false);
 					$tab  = KrFactory::getAdminModel('propertyfield')->getPropertyTab($f->special);
 				}
@@ -378,20 +408,27 @@ class PropertyModel extends AdminModel
 				$fieldXml->addAttribute('name', htmlentities($name));
 				$fieldXml->addAttribute('label', htmlentities($label));
 				$fieldXml->addAttribute('description', htmlentities($description));
-				if ($name == 'tagline') {
+				if ($name == 'tagline')
+				{
 					$fieldXml->addAttribute('maxlength', 100);
 				}
-				if ($f->required) {
+				if ($f->required)
+				{
 					$fieldXml->addAttribute('required', true);
 				}
-				if ($f->format == 1) {
+				if ($f->format == 1)
+				{
 					$fieldXml->addAttribute('type', 'text');
 					$fieldXml->addAttribute('filter', 'string');
-				} elseif ($f->format == 2) {
+				}
+				elseif ($f->format == 2)
+				{
 					$fieldXml->addAttribute('type', 'textarea');
 					$fieldXml->addAttribute('filter', 'safehtml');
 					$fieldXml->addAttribute('rows', '6');
-				} elseif ($f->format == 3) {
+				}
+				elseif ($f->format == 3)
+				{
 					$fieldXml->addAttribute('type', 'editor');
 					$fieldXml->addAttribute('filter', 'safehtml');
 					$fieldXml->addAttribute('buttons', 'true');

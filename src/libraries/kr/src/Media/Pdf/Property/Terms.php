@@ -15,7 +15,6 @@ use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Media\Pdf\Property;
-
 use function is_null;
 
 /**
@@ -28,8 +27,8 @@ class Terms extends Property
 	/**
 	 * Initialize
 	 *
-	 * @param  string  $action       Destination output
-	 * @param  int     $property_id  ID of Property
+	 * @param   string  $action       Destination output
+	 * @param   int     $property_id  ID of Property
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -42,9 +41,9 @@ class Terms extends Property
 	/**
 	 * Create the pdf file and either download or return path name
 	 *
+	 * @return bool|string
 	 * @throws Exception
 	 * @since  3.3.0
-	 * @return bool|string
 	 */
 	public function getPdf(): bool|string
 	{
@@ -66,9 +65,9 @@ class Terms extends Property
 	 * @param  ?string  $property_name   Property name
 	 * @param  ?string  $property_terms  Property terms
 	 *
+	 * @return string
 	 * @throws Exception
 	 * @since  3.3.0
-	 * @return string
 	 */
 	protected function renderPdf(?string $property_name = null, ?string $property_terms = null): string
 	{

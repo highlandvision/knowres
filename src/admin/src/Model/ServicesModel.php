@@ -17,7 +17,6 @@ use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\ListModel;
 use Joomla\Database\QueryInterface;
 use RuntimeException;
-
 use function array_map;
 use function defined;
 use function implode;
@@ -40,19 +39,31 @@ class ServicesModel extends ListModel
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function __construct($config = []) {
-		if (empty($config['filter_fields'])) {
+	public function __construct($config = [])
+	{
+		if (empty($config['filter_fields']))
+		{
 			$config['filter_fields'] = [
-				'agency_id', 'a.agency_id',
-				'currency', 'a.currency',
-				'id', 'a.id',
-				'name', 'a.name',
-				'ordering', 'a.ordering',
-				'plugin', 'a.plugin',
-				'property_id', 'a.property_id',
-				'type', 'a.type',
-				'state', 'a.state',
-				'agency_name', 'property_name'
+				'agency_id',
+				'a.agency_id',
+				'currency',
+				'a.currency',
+				'id',
+				'a.id',
+				'name',
+				'a.name',
+				'ordering',
+				'a.ordering',
+				'plugin',
+				'a.plugin',
+				'property_id',
+				'a.property_id',
+				'type',
+				'a.type',
+				'state',
+				'a.state',
+				'agency_name',
+				'property_name'
 			];
 		}
 
@@ -67,21 +78,26 @@ class ServicesModel extends ListModel
 	 * @param   int     $agency_id  ID of agency
 	 * @param   string  $currency   Currency of service
 	 *
+	 * @return int
 	 * @throws RuntimeException
 	 * @since  3.2.0
-	 * @return int
 	 */
-	public static function checkForSingleService(bool $required, string $plugin, int $agency_id = 0, string $currency = ''): int {
+	public static function checkForSingleService(bool $required, string $plugin, int $agency_id = 0, string $currency = ''): int
+	{
 		$services = KrFactory::getListModel('services')->getServicesByPlugin($plugin, $agency_id, $currency);
-		if (count($services) > 1) {
+		if (count($services) > 1)
+		{
 			throw new RuntimeException('Multiple services found for service ' . $plugin . ' Please fix!');
 		}
 
-		if (!count($services)) {
-			if ($required) {
+		if (!count($services))
+		{
+			if ($required)
+			{
 				throw new RuntimeException('No Service details found for service ' . $plugin . ' Please add!');
 			}
-			else {
+			else
+			{
 				return 0;
 			}
 		}
@@ -92,18 +108,19 @@ class ServicesModel extends ListModel
 	/**
 	 * Get online gateway currencies
 	 *
-	 * @since  5.0.0
 	 * @return mixed
+	 * @since  5.0.0
 	 */
-	public function getGatewayCurrencies(): mixed {
+	public function getGatewayCurrencies(): mixed
+	{
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
 		$query->select($this->getState('list.select', 's.currency'))
-			->from($db->qn('#__knowres_service', 's'))
-			->where($db->qn('a.type') . '=' . $db->q('g'))
-			->where(JSON_CONTAINS(parameters, 'obd', 1))
-			->where($db->qn('a.state') . '=1');
+		      ->from($db->qn('#__knowres_service', 's'))
+		      ->where($db->qn('a.type') . '=' . $db->q('g'))
+		      ->where(JSON_CONTAINS(parameters, 'obd', 1))
+		      ->where($db->qn('a.state') . '=1');
 		$db->setQuery($query);
 
 		return $db->loadObjectList();
@@ -116,36 +133,43 @@ class ServicesModel extends ListModel
 	 * @param   int    $agency_id    ID of agency
 	 * @param   int    $property_id  ID of property
 	 *
+	 * @return mixed
 	 * @throws RuntimeException
 	 * @since  1.0.0
-	 * @return mixed
 	 */
-	public function getGateways(mixed $currency = null, int $agency_id = 0, int $property_id = 0): mixed {
+	public function getGateways(mixed $currency = null, int $agency_id = 0, int $property_id = 0): mixed
+	{
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
 		$query->select($this->getState('list.select', 'a.*'))
-			->from($db->qn('#__knowres_service', 'a'))
-			->select($db->qn('agency.name', 'agency_name'))
-			->join('LEFT',
-				$db->qn('#__knowres_agency', 'agency') . ' ON ' . $db->qn('agency.id') . '=' .
-				$db->qn('a.agency_id'))
-			->where($db->qn('a.type') . '=' . $db->q('g'))
-			->where($db->qn('a.state') . ' = 1');
+		      ->from($db->qn('#__knowres_service', 'a'))
+		      ->select($db->qn('agency.name', 'agency_name'))
+		      ->join('LEFT',
+			      $db->qn('#__knowres_agency', 'agency') . ' ON ' . $db->qn('agency.id') . '=' .
+			      $db->qn('a.agency_id')
+		      )
+		      ->where($db->qn('a.type') . '=' . $db->q('g'))
+		      ->where($db->qn('a.state') . ' = 1');
 
-		if (!is_null($currency)) {
-			if (is_string($currency)) {
+		if (!is_null($currency))
+		{
+			if (is_string($currency))
+			{
 				$query->where($db->qn('a.currency') . '=' . $db->q($currency));
 			}
-			elseif (is_array($currency)) {
+			elseif (is_array($currency))
+			{
 				$query->where($db->qn('a.currency') . ' IN (' . implode(',', $db->q(array_map('strval', $currency))) . ')');
 			}
 		}
 
-		if ($agency_id) {
+		if ($agency_id)
+		{
 			$query->where($db->qn('a.agency_id') . '=' . $agency_id);
 		}
-		else {
+		else
+		{
 			$query->where($db->qn('a.agency_id') . '>0');
 		}
 
@@ -162,19 +186,20 @@ class ServicesModel extends ListModel
 	/**
 	 * Get services for view New
 	 *
+	 * @return mixed
 	 * @throws RuntimeException
 	 * @since  1.0.0
-	 * @return mixed
 	 */
-	public function getNew(): mixed {
+	public function getNew(): mixed
+	{
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
 		$query->select($this->getState('list.select', 'a.*'))
-			->from($db->qn('#__knowres_service', 'a'))
-			->where($db->qn('a.agency_id') . '=0')
-			->where($db->qn('a.state') . '=1')
-			->order($db->qn('a.type'));
+		      ->from($db->qn('#__knowres_service', 'a'))
+		      ->where($db->qn('a.agency_id') . '=0')
+		      ->where($db->qn('a.state') . '=1')
+		      ->order($db->qn('a.type'));
 
 		$db->setQuery($query);
 
@@ -189,37 +214,44 @@ class ServicesModel extends ListModel
 	 * @param  ?string  $currency   ISO currency
 	 * @param   bool    $published  Publishd rows only
 	 *
+	 * @return mixed
 	 * @throws RuntimeException
 	 * @since  1.0.0
-	 * @return mixed
 	 */
 	public function getServicesByPlugin(string $plugin, int $agency_id = 0, ?string $currency = null,
-		bool $published = true): mixed {
+	                                    bool   $published = true): mixed
+	{
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
 		$query->select($this->getState('list.select', 'a.*'))
-			->from($db->qn('#__knowres_service', 'a'))
-			->select($db->qn('p.property_name', 'property_name'))
-			->join('LEFT',
-				$db->qn('#__knowres_property', 'p') . 'ON' . $db->qn('p.id') . '=' . $db->qn('a.property_id'))
-			->select($db->qn('ag.name', 'agency_name'))
-			->join('LEFT',
-				$db->qn('#__knowres_agency', 'ag') . 'ON' . $db->qn('ag.id') . '=' . $db->qn('a.agency_id'))
-			->where($db->qn('a.plugin') . '=' . $db->q(strtolower($plugin)));
+		      ->from($db->qn('#__knowres_service', 'a'))
+		      ->select($db->qn('p.property_name', 'property_name'))
+		      ->join('LEFT',
+			      $db->qn('#__knowres_property', 'p') . 'ON' . $db->qn('p.id') . '=' . $db->qn('a.property_id')
+		      )
+		      ->select($db->qn('ag.name', 'agency_name'))
+		      ->join('LEFT',
+			      $db->qn('#__knowres_agency', 'ag') . 'ON' . $db->qn('ag.id') . '=' . $db->qn('a.agency_id')
+		      )
+		      ->where($db->qn('a.plugin') . '=' . $db->q(strtolower($plugin)));
 
-		if ($published) {
+		if ($published)
+		{
 			$query->where($db->qn('a.state') . '=1');
 		}
 
-		if (!is_null($currency)) {
+		if (!is_null($currency))
+		{
 			$query->where($db->qn('a.currency') . '=' . $db->q($currency));
 		}
 
-		if ($agency_id) {
+		if ($agency_id)
+		{
 			$query->where($db->qn('a.agency_id') . '=' . $agency_id);
 		}
-		else {
+		else
+		{
 			$query->where($db->qn('a.agency_id') . '<>0');
 		}
 
@@ -234,19 +266,20 @@ class ServicesModel extends ListModel
 	 *
 	 * @param   string  $type  Service type
 	 *
+	 * @return mixed
 	 * @throws RuntimeException
 	 * @since  1.0.0
-	 * @return mixed
 	 */
-	public function getServicesByType(string $type): mixed {
+	public function getServicesByType(string $type): mixed
+	{
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
 		$query->select($this->getState('list.select', 'a.id, a.plugin, a.parameters'))
-			->from($db->qn('#__knowres_service', 'a'))
-			->where($db->qn('a.type') . '=' . $db->q($type))
-			->where($db->qn('a.agency_id') . '>0')
-			->where($db->qn('a.state') . '=1');
+		      ->from($db->qn('#__knowres_service', 'a'))
+		      ->where($db->qn('a.type') . '=' . $db->q($type))
+		      ->where($db->qn('a.agency_id') . '>0')
+		      ->where($db->qn('a.state') . '=1');
 
 		$db->setQuery($query);
 
@@ -256,77 +289,90 @@ class ServicesModel extends ListModel
 	/**
 	 * Build an SQL query to load the list data.
 	 *
+	 * @return QueryInterface
 	 * @throws RuntimeException
 	 * @since  1.0.0
-	 * @return QueryInterface
 	 */
-	protected function getListQuery(): QueryInterface {
+	protected function getListQuery(): QueryInterface
+	{
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
 		$query->select($this->getState('list.select', 'a.*'))
-			->from($db->qn('#__knowres_service', 'a'));
+		      ->from($db->qn('#__knowres_service', 'a'));
 
 		$query = self::commonJoins($db, $query);
 
 		$query->select($db->qn('property.property_name', 'property_name'))
-			->join('LEFT', $db->qn('#__knowres_property', 'property') . 'ON' .
-			               $db->qn('property.id') . '=' . $db->qn('a.property_id')
-			);
+		      ->join('LEFT', $db->qn('#__knowres_property', 'property') . 'ON' .
+			      $db->qn('property.id') . '=' . $db->qn('a.property_id')
+		      );
 		$query->select($db->qn('agency.name', 'agency_name'))
-			->join('LEFT', $db->qn('#__knowres_agency', 'agency') . 'ON' . $db->qn('agency.id') . '=' . $db->qn('a.agency_id'));
+		      ->join('LEFT', $db->qn('#__knowres_agency', 'agency') . 'ON' . $db->qn('agency.id') . '=' . $db->qn('a.agency_id'));
 
 		$query->select('CASE type 
 		WHEN "g" THEN "' . KrMethods::plain('COM_KNOWRES_SERVICE_GATEWAY') . '"
 		WHEN "s" THEN "' . KrMethods::plain('COM_KNOWRES_SERVICE_TYPE_SERVICE') . '"
 		WHEN "c" THEN "' . KrMethods::plain('COM_KNOWRES_SERVICE_TYPE_CHANNEL') . '"
 		WHEN "i" THEN "' . KrMethods::plain('COM_KNOWRES_SERVICE_TYPE_ICAL') . '"
-		END AS "type_name"');
+		END AS "type_name"'
+		);
 
 		$filter_plugin = $this->state->get('filter.plugin');
-		if ($filter_plugin) {
+		if ($filter_plugin)
+		{
 			$query->where($db->qn('a.plugin') . '=' . $db->q($filter_plugin));
 		}
 
 		$global = $this->getState('filter.global');
-		if (is_numeric($global) && $global == 1) {
+		if (is_numeric($global) && $global == 1)
+		{
 			$query->where($db->qn('a.agency_id') . '=0');
 		}
-		elseif (is_numeric($global) && $global == 2) {
+		elseif (is_numeric($global) && $global == 2)
+		{
 			$query->where($db->qn('a.agency_id') . '>0');
 		}
-		else {
+		else
+		{
 			$query->where($db->qn('a.agency_id') . '>=0');
 		}
 
 		$state = $this->getState('filter.state');
-		if (is_numeric($state)) {
+		if (is_numeric($state))
+		{
 			$query->where($db->qn('a.state') . '=' . (int) $state);
 		}
-		else {
+		else
+		{
 			$query->where($db->qn('a.state') . ' IN (0, 1)');
 		}
 
 		$filter_property_id = $this->state->get('filter.property_id');
-		if ($filter_property_id) {
+		if ($filter_property_id)
+		{
 			$query->where($db->qn('a.property_id') . '=' . (int) $filter_property_id);
 		}
 
 		$filter_agency_id = $this->state->get('filter.agency_id');
-		if (is_numeric($filter_agency_id)) {
+		if (is_numeric($filter_agency_id))
+		{
 			$query->where($db->qn('a.agency_id') . '=' . (int) $filter_agency_id);
 		}
-		else {
+		else
+		{
 			$query->where($db->qn('a.agency_id') . '>0');
 		}
 
 		$filter_currency = $this->state->get('filter.currency');
-		if ($filter_currency) {
+		if ($filter_currency)
+		{
 			$query->where($db->qn('a.currency') . '=' . $db->q($filter_currency));
 		}
 
 		$filter_type = $this->state->get('filter.type');
-		if ($filter_type) {
+		if ($filter_type)
+		{
 			$query->where($db->qn('a.type') . '=' . $db->q($filter_type));
 		}
 
@@ -344,10 +390,11 @@ class ServicesModel extends ListModel
 	 *
 	 * @param   string  $id  A prefix for the store id.
 	 *
-	 * @since  1.0.0
 	 * @return string  A store id.
+	 * @since  1.0.0
 	 */
-	protected function getStoreId($id = ''): string {
+	protected function getStoreId($id = ''): string
+	{
 		$id .= ':' . $this->getState('filter.search');
 		$id .= ':' . $this->getState('filter.state');
 		$id .= ':' . $this->getState('filter.global');
@@ -369,29 +416,46 @@ class ServicesModel extends ListModel
 	 *
 	 * @since 1.0.0
 	 */
-	protected function populateState($ordering = 'a.ordering', $direction = 'asc'): void {
+	protected function populateState($ordering = 'a.ordering', $direction = 'asc'): void
+	{
 		$this->setState('filter.search', $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search',
-			'', 'string'));
+			'', 'string'
+		)
+		);
 		$this->setState('filter.state', $this->getUserStateFromRequest($this->context . '.filter.state', 'filter_state', '',
-			'string'));
+			'string'
+		)
+		);
 		$this->setState('filter.global', $this->getUserStateFromRequest($this->context . '.filter.global', 'filter_global',
-			'', 'string'));
+			'', 'string'
+		)
+		);
 		$this->setState('filter.property_id', $this->getUserStateFromRequest($this->context . '.filter.property_id',
-			'filter_property_id', '', 'string'));
+			'filter_property_id', '', 'string'
+		)
+		);
 		$this->setState('filter.agency_id', $this->getUserStateFromRequest($this->context . '.filter.agency_id',
-			'filter_agency_id', '', 'string'));
+			'filter_agency_id', '', 'string'
+		)
+		);
 		$this->setState('filter.currency',
-			$this->getUserStateFromRequest($this->context . '.filter.currency', 'filter_currency', '', 'string'));
+			$this->getUserStateFromRequest($this->context . '.filter.currency', 'filter_currency', '', 'string')
+		);
 		$this->setState('filter.type', $this->getUserStateFromRequest($this->context . '.filter.type', 'filter_type', '',
-			'string'));
+			'string'
+		)
+		);
 		$this->setState('filter.plugin', $this->getUserStateFromRequest($this->context . '.filter.plugin', 'filter_plugin', '',
-			'string'));
+			'string'
+		)
+		);
 
 		$params = KrMethods::getParams();
 		$this->setState('params', $params);
 		$this->setState('list.select', 'a.id, a.name, a.currency, a.property_id, a.agency_id, a.plugin, a.type, a.parameters, 
 		                 a.ordering, a.state, a.checked_out, a.checked_out_time, a.created_by, a.created_at, 
-		                 a.updated_by, a.updated_at, a.version');
+		                 a.updated_by, a.updated_at, a.version'
+		);
 
 		parent::populateState($ordering, $direction);
 	}

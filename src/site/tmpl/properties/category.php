@@ -15,7 +15,8 @@ $wa = $this->document->getWebAssetManager();
 $wa->useScript('com_knowres.site')
    ->useScript('keepalive');
 
-echo KrMethods::render('properties.basicgrid', ['items'  => $this->items,
-                                                'params' => $this->params,
-                                                'title'  => $this->header
+echo KrMethods::render('properties.basicgrid', [
+	'items'  => $this->items,
+	'params' => $this->params,
+	'title'  => $this->header
 ]);

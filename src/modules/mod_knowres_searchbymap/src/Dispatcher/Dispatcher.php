@@ -17,10 +17,8 @@ use HighlandVision\KR\ExceptionHandling;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\SiteHelper;
 use Joomla\CMS\Dispatcher\AbstractModuleDispatcher;
-
 use function defined;
 use function is_dir;
-
 use const JPATH_ROOT;
 
 /**
@@ -28,7 +26,8 @@ use const JPATH_ROOT;
  *
  * @since  4.0.0
  */
-class Dispatcher extends AbstractModuleDispatcher {
+class Dispatcher extends AbstractModuleDispatcher
+{
 	/**
 	 * Define tasks for before dispatch
 	 *
@@ -37,7 +36,8 @@ class Dispatcher extends AbstractModuleDispatcher {
 	 */
 	public function dispatch(): void
 	{
-		if (is_dir(JPATH_ROOT . '/media/com_knowres/vendor')) {
+		if (is_dir(JPATH_ROOT . '/media/com_knowres/vendor'))
+		{
 			require_once(JPATH_ROOT . '/media/com_knowres/vendor/autoload.php');
 		}
 
@@ -50,18 +50,19 @@ class Dispatcher extends AbstractModuleDispatcher {
 	/**
 	 * Returns the layout data.
 	 *
+	 * @return array
 	 * @throws Exception
 	 * @since  4.0.0
-	 * @return array
 	 */
 	protected function getLayoutData(): array
 	{
 		$data   = parent::getLayoutData();
 		$params = $data['params'];
 
-		if ($data && !empty($params)) {
-			$region_id = KrMethods::getParams()->get('default_region');
-			$Itemid    = SiteHelper::getItemId('com_knowres', 'properties');
+		if ($data && !empty($params))
+		{
+			$region_id    = KrMethods::getParams()->get('default_region');
+			$Itemid       = SiteHelper::getItemId('com_knowres', 'properties');
 			$data['link'] = '/index.php?option=com_knowres&task=properties.search&map_modal=1';
 		}
 

@@ -18,7 +18,7 @@ $wa->useScript('keepalive')
 
 if (empty($this->item->id))
 {
-	$this->form->setValue('note_type', null, array(0));
+    $this->form->setValue('note_type', null, array(0));
 }
 ?>
 
@@ -26,18 +26,18 @@ if (empty($this->item->id))
       aria-label="<?php echo $this->form_aria_label; ?>" class="form-validate" id="contractnote-form" method="post"
       name="adminForm">
 
-	<div class="main-card">
-		<div class="row">
-			<div class="col-xl-9 col-xxl-8">
-				<?php echo $this->form->renderFieldset('krdata'); ?>
-			</div>
-			<div class="col-xl-3 offset-xxl-1">
-				<?php echo KrMethods::render('joomla.edit.global', $this); ?>
-			</div>
-		</div>
+    <div class="main-card">
+        <div class="row">
+            <div class="col-xl-9 col-xxl-8">
+                <?php echo $this->form->renderFieldset('krdata'); ?>
+            </div>
+            <div class="col-xl-3 offset-xxl-1">
+                <?php echo KrMethods::render('joomla.edit.global', $this); ?>
+            </div>
+        </div>
 
-		<input type="hidden" name="task" value="">
-		<input type="hidden" name="jform[contract_id]" value="<?php echo $this->contract->id; ?>">
-		<?php echo HTMLHelper::_('form.token'); ?>
-	</div>
+        <input type="hidden" name="task" value="">
+        <input type="hidden" name="jform[contract_id]" value="<?php echo $this->contract->id; ?>">
+        <?php echo HTMLHelper::_('form.token'); ?>
+    </div>
 </form>

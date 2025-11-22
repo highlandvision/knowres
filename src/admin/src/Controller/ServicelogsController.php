@@ -19,7 +19,6 @@ use JetBrains\PhpStorm\NoReturn;
 use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\Utilities\ArrayHelper;
-
 use function count;
 use function is_countable;
 
@@ -33,15 +32,15 @@ class ServicelogsController extends AdminController
 	/**
 	 * Proxy for getModel.
 	 *
-	 * @param  string  $name    Model name
-	 * @param  string  $prefix  Model prefix administrator or site (defaults to administrator)
-	 * @param  array   $config  Config options
+	 * @param   string  $name    Model name
+	 * @param   string  $prefix  Model prefix administrator or site (defaults to administrator)
+	 * @param   array   $config  Config options
 	 *
-	 * @since  1.6
 	 * @return bool|BaseDatabaseModel
+	 * @since  1.6
 	 */
 	public function getModel($name = 'servicelog', $prefix = 'Administrator',
-		$config = ['ignore_request' => true]): BaseDatabaseModel|bool
+	                         $config = ['ignore_request' => true]): BaseDatabaseModel|bool
 	{
 		return parent::getModel($name, $prefix, $config);
 	}
@@ -49,11 +48,12 @@ class ServicelogsController extends AdminController
 	/**
 	 * View service log
 	 *
+	 * @return void
 	 * @throws Exception
 	 * @since  3.0
-	 * @return void
 	 */
-	#[NoReturn] public function modal(): void
+	#[NoReturn]
+	public function modal(): void
 	{
 		$this->checkToken();
 

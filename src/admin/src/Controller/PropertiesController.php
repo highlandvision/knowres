@@ -20,7 +20,6 @@ use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Response\JsonResponse;
 use RuntimeException;
-
 use function header;
 use function jexit;
 use function json_encode;
@@ -35,10 +34,10 @@ class PropertiesController extends AdminController
 	/**
 	 * Constructor.
 	 *
-	 * @param  array                     $config   An optional associative array of configuration settings.
-	 * @param  MVCFactoryInterface|null  $factory  The factory.
-	 * @param  null                      $app      The Application for the dispatcher
-	 * @param  null                      $input    Input
+	 * @param   array                     $config   An optional associative array of configuration settings.
+	 * @param   MVCFactoryInterface|null  $factory  The factory.
+	 * @param   null                      $app      The Application for the dispatcher
+	 * @param   null                      $input    Input
 	 *
 	 * @throws Exception
 	 * @since  4.0
@@ -58,7 +57,8 @@ class PropertiesController extends AdminController
 	 */
 	public function area(): void
 	{
-		try {
+		try
+		{
 			$search    = KrMethods::inputString('query', '');
 			$region_id = KrMethods::inputInt('region_id');
 			$areas     = KrFactory::getListModel('properties')->getArea($region_id, $search);
@@ -66,7 +66,9 @@ class PropertiesController extends AdminController
 			header('Content-Type: application/json');
 			echo json_encode($areas);
 			jexit();
-		} catch (Exception $e) {
+		}
+		catch (Exception $e)
+		{
 			Logger::logMe($e->getMessage());
 			echo new JsonResponse(null, KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN'), true);
 			jexit();
@@ -76,12 +78,12 @@ class PropertiesController extends AdminController
 	/**
 	 * Proxy for getModel.
 	 *
-	 * @param  string  $name    Model name
-	 * @param  string  $prefix  Model prefix administrator or site (defaults to administrator)
-	 * @param  array   $config  Config options
+	 * @param   string  $name    Model name
+	 * @param   string  $prefix  Model prefix administrator or site (defaults to administrator)
+	 * @param   array   $config  Config options
 	 *
-	 * @since  1.6
 	 * @return bool|BaseDatabaseModel
+	 * @since  1.6
 	 */
 	public function getModel($name = 'property',
 	                         $prefix = 'Administrator',
@@ -101,15 +103,18 @@ class PropertiesController extends AdminController
 		$this->checkToken();
 
 		$cid = KrMethods::inputArray('cid');
-		if (!is_countable($cid) || count($cid) < 1) {
+		if (!is_countable($cid) || count($cid) < 1)
+		{
 			KrMethods::addLog(KrMethods::plain($this->text_prefix . '_NO_ITEM_SELECTED'));
 			KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&view=properties', false));
 		}
 
-		if (KrFactory::getAdminModel('property')->markAsTrash($cid)) {
+		if (KrFactory::getAdminModel('property')->markAsTrash($cid))
+		{
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_ACTION_SUCCESS'));
 		}
-		else {
+		else
+		{
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN'), 'error');
 		}
 
@@ -128,15 +133,18 @@ class PropertiesController extends AdminController
 		$this->checkToken();
 
 		$cid = KrMethods::inputArray('cid');
-		if (!is_countable($cid) || count($cid) < 1) {
+		if (!is_countable($cid) || count($cid) < 1)
+		{
 			KrMethods::addLog(KrMethods::plain($this->text_prefix . '_NO_ITEM_SELECTED'));
 			KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&view=properties', false));
 		}
 
-		if (KrFactory::getAdminModel('property')->markForDeletion($cid)) {
+		if (KrFactory::getAdminModel('property')->markForDeletion($cid))
+		{
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_ACTION_SUCCESS'));
 		}
-		else {
+		else
+		{
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN'), 'error');
 		}
 

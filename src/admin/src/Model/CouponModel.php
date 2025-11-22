@@ -41,9 +41,9 @@ class CouponModel extends AdminModel
 	 *
 	 * @param   array  $data  The form data.
 	 *
+	 * @return bool  True on success.
 	 * @throws Exception
 	 * @since  3.2
-	 * @return bool  True on success.
 	 */
 	public function save($data): bool
 	{
@@ -60,8 +60,8 @@ class CouponModel extends AdminModel
 	 *
 	 * @param   object  $record  A record object.
 	 *
-	 * @since  3.0.0
 	 * @return bool  True if allowed to delete the record, defaults to the permission for the component.
+	 * @since  3.0.0
 	 */
 	protected function canDelete($record): bool
 	{
@@ -73,9 +73,9 @@ class CouponModel extends AdminModel
 	/**
 	 * Method to get the data that should be injected in the form.
 	 *
+	 * @return mixed The data for the form.
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return mixed The data for the form.
 	 */
 	protected function loadFormData(): mixed
 	{

@@ -29,11 +29,11 @@ class ContractguestdataModel extends AdminContractguestdataModel
 	/**
 	 * Override checkout for guestdata as checked_out set to 0.
 	 *
-	 * @param  int|null  $pk  The id of the row to check out.
+	 * @param   int|null  $pk  The id of the row to check out.
 	 *
+	 * @return bool  True on success, false on failure
 	 * @throws Exception
 	 * @since  4.0.0
-	 * @return bool  True on success, false on failure
 	 */
 	public function checkout($pk = null): bool
 	{
@@ -52,13 +52,13 @@ class ContractguestdataModel extends AdminContractguestdataModel
 	/**
 	 * Method to get the record form.
 	 *
-	 * @param  array    $data      An optional array of data for the form to interogate.
-	 * @param  bool     $loadData  True if the form is to load its own data (default case), false if not.
+	 * @param   array   $data      An optional array of data for the form to interogate.
+	 * @param   bool    $loadData  True if the form is to load its own data (default case), false if not.
 	 * @param  ?string  $source    The form name if required.
 	 *
+	 * @return Form|false    A Form object on success, false on failure
 	 * @throws Exception
 	 * @since  1.0
-	 * @return Form|false    A Form object on success, false on failure
 	 */
 	public function getForm($data = [], $loadData = true, ?string $source = 'contractguestdata'): Form|false
 	{
@@ -68,9 +68,9 @@ class ContractguestdataModel extends AdminContractguestdataModel
 	/**
 	 * Method to get the data that should be injected in the form.
 	 *
+	 * @return mixed    The data for the form.
 	 * @throws Exception
 	 * @since  1.6
-	 * @return mixed    The data for the form.
 	 */
 	protected function loadFormData(): mixed
 	{

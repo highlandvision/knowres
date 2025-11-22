@@ -20,7 +20,6 @@ use HighlandVision\KR\SiteHelper;
 use JetBrains\PhpStorm\NoReturn;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Response\JsonResponse;
-
 use function jexit;
 
 /**
@@ -36,7 +35,8 @@ class GuestController extends FormController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	#[NoReturn] public function combo(): void
+	#[NoReturn]
+	public function combo(): void
 	{
 		$model     = new GuestModel();
 		$form      = $model->getForm([], false);
@@ -75,11 +75,11 @@ class GuestController extends FormController
 	 * @param   string  $prefix  Prefix Admin or Site
 	 * @param   array   $config  Config options
 	 *
-	 * @since  2.5.0
 	 * @return BaseDatabaseModel
+	 * @since  2.5.0
 	 */
 	public function getModel($name = 'guest', $prefix = 'Site',
-		$config = ['ignore_request' => true]): BaseDatabaseModel
+	                         $config = ['ignore_request' => true]): BaseDatabaseModel
 	{
 		return parent::getModel($name, $prefix, $config);
 	}
@@ -111,7 +111,9 @@ class GuestController extends FormController
 			{
 				$Itemid = SiteHelper::getItemId('com_knowres', 'paymentform');
 				KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&view=paymentform&Itemid=' . $Itemid,
-					false));
+					false
+				)
+				);
 			}
 
 			return true;
@@ -127,8 +129,8 @@ class GuestController extends FormController
 	 * @param   array   $data  An array of input data.
 	 * @param   string  $key   The name of the key for the primary key.
 	 *
-	 * @since  1.0.0
 	 * @return bool
+	 * @since  1.0.0
 	 */
 	protected function allowSave($data, $key = 'id'): bool
 	{

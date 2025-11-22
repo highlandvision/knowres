@@ -42,7 +42,8 @@ class Pkg_KnowresInstallerScript
 	public function fixupv4(): bool
 	{
 		$filename = JPATH_ROOT . '/administrator/components/com_knowres/queries/updates/fixupv4.sql';
-		if (!file_exists($filename)) {
+		if (!file_exists($filename))
+		{
 			return true;
 		}
 
@@ -50,17 +51,22 @@ class Pkg_KnowresInstallerScript
 		$buffer = file_get_contents($filename);
 
 		$queries = Installer::splitSql($buffer);
-		foreach ($queries as $query) {
+		foreach ($queries as $query)
+		{
 			$queryString = $query;
 			$queryString = str_replace(["\r", "\n"], ['', ' '], substr($queryString, 0, 80));
 
-			try {
+			try
+			{
 				$db->setQuery($query)->execute();
-			} catch (ExecutionFailureException|PrepareStatementFailureException $e) {
+			}
+			catch (ExecutionFailureException|PrepareStatementFailureException $e)
+			{
 				$errorMessage = Text::sprintf('JLIB_INSTALLER_ERROR_SQL_ERROR', $e->getMessage());
 				Log::add(Text::sprintf('JLIB_INSTALLER_UPDATE_LOG_QUERY', $filename, $queryString),
 					Log::INFO,
-					'Update');
+					'Update'
+				);
 				Log::add($errorMessage, Log::INFO, 'Update');
 				Log::add(Text::_('JLIB_INSTALLER_SQL_END_NOT_COMPLETE'), Log::INFO, 'Update');
 				Log::add($errorMessage, Log::WARNING, 'jerror');
@@ -75,13 +81,13 @@ class Pkg_KnowresInstallerScript
 	 * This should produce a single unique cell which is json encoded - it will then
 	 * return an associated array with this data in.
 	 *
-	 * @param  string  $element     The element to get from the query
-	 * @param  string  $table       The table to search for the data in
-	 * @param  string  $column      The column of the database to search from
-	 * @param  mixed   $identifier  The integer id or the string
+	 * @param   string  $element     The element to get from the query
+	 * @param   string  $table       The table to search for the data in
+	 * @param   string  $column      The column of the database to search from
+	 * @param   mixed   $identifier  The integer id or the string
 	 *
-	 * @since  3.6
 	 * @return mixed  Associated array containing data from the cell
+	 * @since  3.6
 	 */
 	public function getItemArray(string $element, string $table, string $column, mixed $identifier): mixed
 	{
@@ -90,16 +96,19 @@ class Pkg_KnowresInstallerScript
 		$paramType = is_numeric($identifier) ? ParameterType::INTEGER : ParameterType::STRING;
 
 		$query = $db->getQuery(true)
-			->select($db->quoteName($element))
-			->from($db->quoteName($table))
-			->where($db->quoteName($column) . ' = :id')
-			->bind(':id', $identifier, $paramType);
+		            ->select($db->quoteName($element))
+		            ->from($db->quoteName($table))
+		            ->where($db->quoteName($column) . ' = :id')
+		            ->bind(':id', $identifier, $paramType);
 		$db->setQuery($query);
 		$data = $db->loadResult();
 
-		if ($data) {
+		if ($data)
+		{
 			return json_decode($data, true);
-		} else {
+		}
+		else
+		{
 			return false;
 		}
 	}
@@ -107,10 +116,10 @@ class Pkg_KnowresInstallerScript
 	/**
 	 * Called on installation
 	 *
-	 * @param  InstallerAdapter  $parent  The object responsible for running this script
+	 * @param   InstallerAdapter  $parent  The object responsible for running this script
 	 *
-	 * @throws Exception
 	 * @return bool  True on success
+	 * @throws Exception
 	 */
 	public function install(
 		InstallerAdapter $parent
@@ -124,15 +133,16 @@ class Pkg_KnowresInstallerScript
 	/**
 	 * Called after any type of action
 	 *
-	 * @param  string            $type    Which action is happening (install|uninstall|discover_install|update)
-	 * @param  InstallerAdapter  $parent  The object responsible for running this script
+	 * @param   string            $type    Which action is happening (install|uninstall|discover_install|update)
+	 * @param   InstallerAdapter  $parent  The object responsible for running this script
 	 *
-	 * @throws Exception
 	 * @return bool  True on success
+	 * @throws Exception
 	 */
 	public function postflight(string $type, InstallerAdapter $parent): bool
 	{
-		if ($type == 'uninstall') {
+		if ($type == 'uninstall')
+		{
 			return true;
 		}
 
@@ -144,7 +154,8 @@ class Pkg_KnowresInstallerScript
 		JLoader::registerNamespace('HighlandVision\\Component\\Knowres\\Administrator\\',
 			JPATH_ADMINISTRATOR . '/components/com_knowres/src',
 			true,
-			true);
+			true
+		);
 		JLoader::registerNamespace('HighlandVision\\KR\\', JPATH_LIBRARIES . '/highlandvision/kr/src', false, true);
 		require_once(JPATH_ROOT . '/media/com_knowres/vendor/autoload.php');
 
@@ -156,7 +167,8 @@ class Pkg_KnowresInstallerScript
 		Upgrade\Upgrade::paramsToAgency();
 		Upgrade\Upgrade::deleteOldData();
 
-		if (!$this->old_version) {
+		if (!$this->old_version)
+		{
 			Log::add('Install complete', Log::INFO, 'Update');
 
 			return true;
@@ -165,17 +177,19 @@ class Pkg_KnowresInstallerScript
 		// Database changes
 		Upgrade\UpgradeDb::forV320();
 		Upgrade\UpgradeDb::forV321();
-		Upgrade\UpgradeDb::forV330();
-		Upgrade\UpgradeDb::forV331();
-		Upgrade\UpgradeDb::forV333();
-		Upgrade\UpgradeDb::forV400();
-		Upgrade\UpgradeDb::forV410();
-		if (version_compare($this->old_version, '4.0.0', '<')) {
+		UpgradeDb::forV330();
+		UpgradeDb::forV331();
+		UpgradeDb::forV333();
+		UpgradeDb::forV400();
+		UpgradeDb::forV410();
+		if (version_compare($this->old_version, '4.0.0', '<'))
+		{
 			$this->fixupv4();
 		}
 		Upgrade\UpgradeDb::forV510();
 
-		if (version_compare($this->old_version, '4.1.0', '<')) {
+		if (version_compare($this->old_version, '4.1.0', '<'))
+		{
 			$this->updatePartySize();
 		}
 
@@ -196,15 +210,16 @@ class Pkg_KnowresInstallerScript
 	/**
 	 * Called before any type of action
 	 *
-	 * @param  string            $type    Which action is happening (install|uninstall|discover_install|update)
-	 * @param  InstallerAdapter  $parent  The object responsible for running this script
+	 * @param   string            $type    Which action is happening (install|uninstall|discover_install|update)
+	 * @param   InstallerAdapter  $parent  The object responsible for running this script
 	 *
-	 * @throws Exception
 	 * @return bool  True on success
+	 * @throws Exception
 	 */
 	public function preflight(string $type, InstallerAdapter $parent): bool
 	{
-		if (version_compare(JVERSION, '5.0.0', 'lt')) {
+		if (version_compare(JVERSION, '5.0.0', 'lt'))
+		{
 			Log::add('Joomla version must be at least v5.0');
 			Factory::getApplication()->enqueueMessage('Joomla version must be at least v5.0', 'error');
 
@@ -213,7 +228,8 @@ class Pkg_KnowresInstallerScript
 
 		$this->old_version = $this->getVersionOld($parent);
 
-		if ($type == 'uninstall' || !$this->old_version) {
+		if ($type == 'uninstall' || !$this->old_version)
+		{
 			return true;
 		}
 
@@ -221,7 +237,8 @@ class Pkg_KnowresInstallerScript
 		Log::add('Upgrading from KR Version ' . $this->old_version, Log::INFO, 'install');
 		Log::add('Upgrading to KR Version ' . $this->getVersionNew($parent), Log::INFO, 'install');
 
-		if (version_compare(JVERSION, '4.0.0', '>=') && version_compare($this->old_version, '4.0.0', 'le')) {
+		if (version_compare(JVERSION, '4.0.0', '>=') && version_compare($this->old_version, '4.0.0', 'le'))
+		{
 			$this->preFour();
 			Log::add('Upgrading to v4 old v3 code deleted', Log::INFO, 'install');
 		}
@@ -232,10 +249,10 @@ class Pkg_KnowresInstallerScript
 	/**
 	 * Called on uninstallation
 	 *
-	 * @param  InstallerAdapter  $parent  The object responsible for running this script
+	 * @param   InstallerAdapter  $parent  The object responsible for running this script
 	 *
-	 * @throws Exception
 	 * @return bool
+	 * @throws Exception
 	 */
 	public function uninstall(InstallerAdapter $parent): bool
 	{
@@ -247,10 +264,10 @@ class Pkg_KnowresInstallerScript
 	/**
 	 * Called on update
 	 *
-	 * @param  InstallerAdapter  $parent  The object responsible for running this script
+	 * @param   InstallerAdapter  $parent  The object responsible for running this script
 	 *
-	 * @throws Exception
 	 * @return  bool  True on success
+	 * @throws Exception
 	 */
 	public function update(InstallerAdapter $parent): bool
 	{
@@ -280,22 +297,26 @@ class Pkg_KnowresInstallerScript
 		$query->from($db->qn('#__knowres_contract', 'c'));
 		$query->join('LEFT',
 			($db->qn('#__knowres_contract_guestdata', 'a') . 'ON' . $db->qn('a.contract_id') . '='
-			 . $db->qn('c.id')));
+				. $db->qn('c.id'))
+		);
 		$query->where($db->qn('c.black_booking') . '=0');
 		$db->setQuery($query);
 
 		$rows = $db->loadObjectList();
-		foreach ($rows as $r) {
+		foreach ($rows as $r)
+		{
 			$adults     = !empty($r->cd_adults) ? $r->cd_adults : $r->c_guests;
 			$children   = 0;
 			$infants    = !empty($r->cd_infants) ? $r->cd_infants : 0;
 			$gi_count   = !is_null($r->cd_guestinfo) ? json_decode($r->cd_guestinfo) : 0;
 			$child_ages = [];
-			if (!empty($r->cd_children)) {
+			if (!empty($r->cd_children))
+			{
 				$children   = str_replace('Under 1', 0, $r->cd_children);
 				$child_ages = explode(',', $children);
 
-				for ($i = 1; $i <= $infants; $i++) {
+				for ($i = 1; $i <= $infants; $i++)
+				{
 					$child_ages[] = '0';
 				}
 
@@ -317,26 +338,29 @@ class Pkg_KnowresInstallerScript
 	/**
 	 * Remove deprecated modules / plugins
 	 *
-	 * @param  string  $version  Version being installed
+	 * @param   string  $version  Version being installed
 	 *
 	 * @throws Exception
 	 * @since  3.2.1
 	 */
 	protected function deleteDeprecated(string $version): void
 	{
-		if ($version >= '3.2.1') {
+		if ($version >= '3.2.1')
+		{
 			Log::add('Uninstalling Deprecated KR Extensions', Log::INFO, 'install');
 
 			$this->deleteItem('plugin', 'knowresssl');
 		}
-		if ($version >= '4.0.0') {
+		if ($version >= '4.0.0')
+		{
 			Log::add('Uninstalling Deprecated KR Extensions', Log::INFO, 'install');
 
 			$this->deleteItem('library', 'knowres');
 			$this->deleteItem('plugin', 'knowreslib', 'system');
 			$this->deleteItem('plugin', 'knowreservations', 'osmap');
 		}
-		if ($version >= '5.0.0') {
+		if ($version >= '5.0.0')
+		{
 			Log::add('Uninstalling Deprecated KR Extensions', Log::INFO, 'install');
 
 			$this->deleteItem('plugin', 'knowresmega', 'system');
@@ -683,8 +707,8 @@ class Pkg_KnowresInstallerScript
 	/**
 	 * Uninstall extension
 	 *
-	 * @param  string   $type     Extension type
-	 * @param  string   $element  Element
+	 * @param   string  $type     Extension type
+	 * @param   string  $element  Element
 	 * @param  ?string  $folder   Folder
 	 *
 	 * @throws Exception
@@ -700,7 +724,8 @@ class Pkg_KnowresInstallerScript
 			$db->qn('element') . '=' . $db->q($element)
 		];
 
-		if (!is_null($folder)) {
+		if (!is_null($folder))
+		{
 			$db->qn('folder') . '=' . $db->q($folder);
 		}
 
@@ -710,9 +735,12 @@ class Pkg_KnowresInstallerScript
 		$result = $db->execute();
 
 		$text = 'The deprecated ' . $type . ' ' . $element;
-		if ($result) {
+		if ($result)
+		{
 			$text .= ' uninstalled successfully';
-		} else {
+		}
+		else
+		{
 			$text .= ' could not be uninstalled please uninstall manually';
 		}
 
@@ -727,17 +755,26 @@ class Pkg_KnowresInstallerScript
 	 */
 	protected function deleteObsolete(array $obsolete): void
 	{
-		foreach ($obsolete as $dir) {
-			if (file_exists($dir)) {
-				if (!is_dir($dir)) {
+		foreach ($obsolete as $dir)
+		{
+			if (file_exists($dir))
+			{
+				if (!is_dir($dir))
+				{
 					unlink($dir);
-				} else {
+				}
+				else
+				{
 					$it = new RecursiveDirectoryIterator($dir, FilesystemIterator::SKIP_DOTS);
 					$it = new RecursiveIteratorIterator($it, RecursiveIteratorIterator::CHILD_FIRST);
-					foreach ($it as $sub) {
-						if (is_dir($sub)) {
+					foreach ($it as $sub)
+					{
+						if (is_dir($sub))
+						{
 							rmdir($sub->getPathname());
-						} else {
+						}
+						else
+						{
 							unlink($sub->getPathname());
 						}
 					}
@@ -751,15 +788,16 @@ class Pkg_KnowresInstallerScript
 	/**
 	 * Get the currently installed KR version
 	 *
-	 * @param  InstallerAdapter  $parent  Calling function
+	 * @param   InstallerAdapter  $parent  Calling function
 	 *
-	 * @since  4.0.0
 	 * @return false|string
+	 * @since  4.0.0
 	 */
 	protected function getVersionNew(InstallerAdapter $parent): false|string
 	{
 		$version = $parent->getManifest()->version;
-		if (empty($version)) {
+		if (empty($version))
+		{
 			return false;
 		}
 
@@ -769,16 +807,19 @@ class Pkg_KnowresInstallerScript
 	/**
 	 * Get the currently installed KR version
 	 *
-	 * @param  InstallerAdapter  $parent  Calling function
+	 * @param   InstallerAdapter  $parent  Calling function
 	 *
-	 * @since  4.0.0
 	 * @return false|string
+	 * @since  4.0.0
 	 */
 	protected function getVersionOld(InstallerAdapter $parent): false|string
 	{
-		try {
+		try
+		{
 			$manifest = $this->getItemArray('manifest_cache', '#__extensions', 'element', 'pkg_knowres');
-		} catch (Exception) {
+		}
+		catch (Exception)
+		{
 			return false;
 		}
 
@@ -828,7 +869,8 @@ class Pkg_KnowresInstallerScript
 	protected function renameFolders(): void
 	{
 		$dir = JPATH_ROOT . '/images/map/';
-		if (is_dir($dir)) {
+		if (is_dir($dir))
+		{
 			rename($dir, JPATH_ROOT . '/images/krmap/');
 		}
 	}

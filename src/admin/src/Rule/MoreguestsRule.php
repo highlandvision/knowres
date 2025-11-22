@@ -41,12 +41,12 @@ class MoreguestsRule extends FormRule
 	 *                                      the entire form.
 	 * @param  ?Form              $form     The form object for which the field is being tested.
 	 *
+	 * @return bool  True if the value is valid, false otherwise.
 	 * @throws Exception
 	 * @since  3.4.0
-	 * @return bool  True if the value is valid, false otherwise.
 	 */
 	public function test(SimpleXMLElement $element, $value, $group = null, ?Registry $input = null,
-		?Form $form = null): bool
+	                     ?Form            $form = null): bool
 	{
 		/*
 		 * Here we match the value with a specific format. You may also use any kind of validation,
@@ -77,14 +77,16 @@ class MoreguestsRule extends FormRule
 		if ($max > $prop_max)
 		{
 			KrMethods::message(KrMethods::sprintf('COM_KNOWRES_RATES_ERROR1', $prop_max),
-				'error');
+				'error'
+			);
 
 			return false;
 		}
 		elseif ($max < $prop_max)
 		{
 			KrMethods::message(KrMethods::sprintf('COM_KNOWRES_RATES_ERROR2', $prop_max),
-				'error');
+				'error'
+			);
 
 			return false;
 		}

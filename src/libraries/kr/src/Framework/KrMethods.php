@@ -26,9 +26,7 @@ use Joomla\CMS\User\User;
 use Joomla\Registry\Registry;
 use Joomla\Session\SessionInterface;
 use RuntimeException;
-
 use function defined;
-
 use const JPATH_COMPONENT_ADMINISTRATOR;
 
 const OPTION = 'com_knowres';
@@ -43,19 +41,19 @@ class KrMethods
 	/**`
 	 * Create log entry
 	 *
-	 * @param  mixed    $entry
-	 * @param  integer  $priority
-	 * @param  string   $category
-	 * @param  ?string  $date
-	 * @param  array    $context
+	 * @param   mixed    $entry
+	 * @param   integer  $priority
+	 * @param   string   $category
+	 * @param  ?string   $date
+	 * @param   array    $context
 	 *
 	 * @since 3.7.0
 	 */
-	public static function addLog(mixed $entry,
-		int $priority = 64,
-		string $category = 'com_knowres',
-		?string $date = null,
-		array $context = []): void
+	public static function addLog(mixed   $entry,
+	                              int     $priority = 64,
+	                              string  $category = 'com_knowres',
+	                              ?string $date = null,
+	                              array   $context = []): void
 	{
 		FNS::addLogLog($entry, $priority, $category, $date, $context);
 	}
@@ -63,8 +61,8 @@ class KrMethods
 	/**
 	 * Create logging options
 	 *
-	 * @param  array  $options     Options
-	 * @param  array  $categories  Categories
+	 * @param   array  $options     Options
+	 * @param   array  $categories  Categories
 	 *
 	 * @since 3.7.0
 	 */
@@ -76,7 +74,7 @@ class KrMethods
 	/**
 	 * Remove cached data
 	 *
-	 * @param  string  $name  Name of cache
+	 * @param   string  $name  Name of cache
 	 *
 	 * @since  3.2.0
 	 */
@@ -95,10 +93,10 @@ class KrMethods
 	/**
 	 * Convert email to punycode
 	 *
-	 * @param  string  $email  Email to convert
+	 * @param   string  $email  Email to convert
 	 *
-	 * @since  3.3.0
 	 * @return string
+	 * @since  3.3.0
 	 */
 	public static function emailToPunycode(string $email): string
 	{
@@ -108,11 +106,11 @@ class KrMethods
 	/**
 	 * Get article
 	 *
-	 * @param  int  $article_id  ID of article
+	 * @param   int  $article_id  ID of article
 	 *
+	 * @return mixed
 	 * @throws Exception
 	 * @since  3.3.0
-	 * @return mixed
 	 */
 	public static function getArticle(int $article_id): mixed
 	{
@@ -122,8 +120,8 @@ class KrMethods
 	/**
 	 * Get uri base
 	 *
-	 * @since  1.0.0
 	 * @return string
+	 * @since  1.0.0
 	 */
 	public static function getBase(): string
 	{
@@ -133,10 +131,10 @@ class KrMethods
 	/**
 	 * Get cache instance
 	 *
-	 * @param  array  $options  Cache optionsRBD
+	 * @param   array  $options  Cache optionsRBD
 	 *
-	 * @since  3.2.0
 	 * @return Cache
+	 * @since  3.2.0
 	 */
 	public static function getCache(array $options): Cache
 	{
@@ -146,12 +144,12 @@ class KrMethods
 	/**
 	 * Get a configuration value
 	 *
-	 * @param  string  $value    Config value to return
-	 * @param  null    $default  The default return value
+	 * @param   string  $value    Config value to return
+	 * @param   null    $default  The default return value
 	 *
+	 * @return mixed
 	 * @throws Exception
 	 * @since  3.5.0
-	 * @return mixed
 	 */
 	public static function getCfg(string $value, $default = null): mixed
 	{
@@ -161,11 +159,11 @@ class KrMethods
 	/**
 	 * Returns cookie with the given name.
 	 *
-	 * @param  string  $name  Cookie name
+	 * @param   string  $name  Cookie name
 	 *
+	 * @return ?string
 	 * @throws Exception
 	 * @since  3.3.0
-	 * @return ?string
 	 */
 	public static function getCookie(string $name): ?string
 	{
@@ -175,10 +173,10 @@ class KrMethods
 	/**
 	 * Get default language
 	 *
-	 * @param  string  $area  'site' or 'administrator'
+	 * @param   string  $area  'site' or 'administrator'
 	 *
-	 * @since  3.5.0
 	 * @return mixed
+	 * @since  3.5.0
 	 */
 	public static function getDefaultLanguage(string $area = 'administrator'): mixed
 	{
@@ -188,8 +186,8 @@ class KrMethods
 	/**
 	 * Get uri instance
 	 *
-	 * @since  1.0.0
 	 * @return Uri
+	 * @since  1.0.0
 	 */
 	public static function getInstance(): Uri
 	{
@@ -199,8 +197,8 @@ class KrMethods
 	/**
 	 * Get current language
 	 *
-	 * @since  3.3.0
 	 * @return ?Language
+	 * @since  3.3.0
 	 */
 	public static function getLanguage(): ?Language
 	{
@@ -210,8 +208,8 @@ class KrMethods
 	/**
 	 * Get current language tag
 	 *
-	 * @since  3.2.0
 	 * @return string
+	 * @since  3.2.0
 	 */
 	public static function getLanguageTag(): string
 	{
@@ -221,8 +219,8 @@ class KrMethods
 	/**
 	 * Get languages
 	 *
-	 * @since  3.3.0
 	 * @return array
+	 * @since  3.3.0
 	 */
 	public static function getLanguages(): array
 	{
@@ -234,22 +232,26 @@ class KrMethods
 	 * Admin checks for admin layouts, site template layouts and finally site layouts
 	 * Site checks for site template and site layouts
 	 *
-	 * @param  string  $name  Name of layout
+	 * @param   string  $name  Name of layout
 	 *
+	 * @return FileLayout
 	 * @throws Exception
 	 * @since  3.2.0
-	 * @return FileLayout
 	 */
 	public static function getLayout(string $name): FileLayout
 	{
-		if (self::isAdmin()) {
+		if (self::isAdmin())
+		{
 			$paths[] = JPATH_COMPONENT_ADMINISTRATOR . '/layouts';
 
 			$site_template = SiteHelper::getSiteTemplate();
-			if ($site_template) {
+			if ($site_template)
+			{
 				$paths[] = JPATH_SITE . '/templates/' . $site_template . '/html/layouts/' . OPTION;
 			}
-		} else {
+		}
+		else
+		{
 			$template = self::getTemplate();
 			$paths[]  = JPATH_SITE . '/templates/' . $template . '/html/layouts/' . OPTION;
 		}
@@ -265,11 +267,11 @@ class KrMethods
 	/**
 	 * Get menu item
 	 *
-	 * @param  string  $link  Menu link to search for
+	 * @param   string  $link  Menu link to search for
 	 *
+	 * @return mixed
 	 * @throws Exception
 	 * @since  3.3.0
-	 * @return mixed
 	 */
 	public static function getMenuItemByLink(string $link): mixed
 	{
@@ -279,10 +281,10 @@ class KrMethods
 	/**
 	 * Get component params
 	 *
-	 * @param  string  $component  Component name
+	 * @param   string  $component  Component name
 	 *
-	 * @since  3.2.0
 	 * @return Registry
+	 * @since  3.2.0
 	 */
 	public static function getParams(string $component = OPTION): Registry
 	{
@@ -292,8 +294,8 @@ class KrMethods
 	/**
 	 * Get uri root
 	 *
-	 * @since  1.0.0
 	 * @return string
+	 * @since  1.0.0
 	 */
 	public static function getRoot(): string
 	{
@@ -303,9 +305,9 @@ class KrMethods
 	/**
 	 * Get Joomla session
 	 *
+	 * @return SessionInterface
 	 * @throws Exception
 	 * @since  3.3.0
-	 * @return SessionInterface
 	 */
 	public static function getSession(): SessionInterface
 	{
@@ -315,9 +317,9 @@ class KrMethods
 	/**
 	 * Get current template
 	 *
+	 * @return string
 	 * @throws Exception
 	 * @since  3.3.0
-	 * @return string
 	 */
 	public static function getTemplate(): string
 	{
@@ -329,9 +331,9 @@ class KrMethods
 	 *
 	 * @param  ?int  $id  ID of user or null for current
 	 *
+	 * @return User
 	 * @throws Exception
 	 * @since  3.2.0
-	 * @return User
 	 */
 	public static function getUser(?int $id = null): User
 	{
@@ -341,12 +343,12 @@ class KrMethods
 	/**
 	 * Get state
 	 *
-	 * @param  string  $key      State key
-	 * @param  mixed   $default  Default value
+	 * @param   string  $key      State key
+	 * @param   mixed   $default  Default value
 	 *
+	 * @return mixed
 	 * @throws Exception
 	 * @since  3.3.0
-	 * @return mixed
 	 */
 	public static function getUserState(string $key, mixed $default = null): mixed
 	{
@@ -356,12 +358,12 @@ class KrMethods
 	/**
 	 * Get user input
 	 *
-	 * @param  string  $name     Name of input
-	 * @param  array   $default  Default value
+	 * @param   string  $name     Name of input
+	 * @param   array   $default  Default value
 	 *
+	 * @return array
 	 * @throws Exception
 	 * @since  3.3.0
-	 * @return array
 	 */
 	public static function inputArray(string $name, array $default = []): array
 	{
@@ -371,12 +373,12 @@ class KrMethods
 	/**
 	 * Get user input
 	 *
-	 * @param  string  $name     Name of input
-	 * @param  bool    $default  Default value
+	 * @param   string  $name     Name of input
+	 * @param   bool    $default  Default value
 	 *
+	 * @return bool
 	 * @throws Exception
 	 * @since  3.3.0
-	 * @return bool
 	 */
 	public static function inputBool(string $name, bool $default = false): bool
 	{
@@ -386,12 +388,12 @@ class KrMethods
 	/**
 	 * Get user input
 	 *
-	 * @param  string  $name     Name of input
-	 * @param  array   $default  Default value
+	 * @param   string  $name     Name of input
+	 * @param   array   $default  Default value
 	 *
+	 * @return array
 	 * @throws Exception
 	 * @since  3.3.0
-	 * @return array
 	 */
 	public static function inputFiles(string $name, array $default = []): array
 	{
@@ -401,12 +403,12 @@ class KrMethods
 	/**
 	 * Get user input
 	 *
-	 * @param  string  $name     Name of input
-	 * @param  int     $default  Default value
+	 * @param   string  $name     Name of input
+	 * @param   int     $default  Default value
 	 *
+	 * @return int
 	 * @throws Exception
 	 * @since  3.3.0
-	 * @return int
 	 */
 	public static function inputInt(string $name, int $default = 0): int
 	{
@@ -416,12 +418,12 @@ class KrMethods
 	/**
 	 * Get user input
 	 *
-	 * @param  string   $name     Name of input
+	 * @param   string  $name     Name of input
 	 * @param  ?string  $default  Default value
 	 *
+	 * @return ?string
 	 * @throws Exception
 	 * @since  3.3.0
-	 * @return ?string
 	 */
 	public static function inputString(string $name, ?string $default = null): ?string
 	{
@@ -431,9 +433,9 @@ class KrMethods
 	/**
 	 * Return true for admin login
 	 *
+	 * @return bool
 	 * @throws Exception
 	 * @since  3.3.0
-	 * @return bool
 	 */
 	public static function isAdmin(): bool
 	{
@@ -443,10 +445,10 @@ class KrMethods
 	/**
 	 * Return a json response
 	 *
-	 * @param  array  $wrapper  Json wrapper
+	 * @param   array  $wrapper  Json wrapper
 	 *
-	 * @since  3.3.0
 	 * @return JsonResponse
+	 * @since  3.3.0
 	 */
 	public static function jsonResponse(array $wrapper): JsonResponse
 	{
@@ -456,11 +458,11 @@ class KrMethods
 	/**
 	 * Loads a plugin or module position
 	 *
-	 * @param  string  $position  Position to load
+	 * @param   string  $position  Position to load
 	 *
+	 * @return string
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return string
 	 */
 	public static function loadInternal(string $position): string
 	{
@@ -483,11 +485,11 @@ class KrMethods
 	/**
 	 * Logger out a user.
 	 *
-	 * @param  int  $user_id  ID of user
+	 * @param   int  $user_id  ID of user
 	 *
+	 * @return bool
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return bool
 	 */
 	public static function logoutUser(int $user_id): bool
 	{
@@ -497,8 +499,8 @@ class KrMethods
 	/**
 	 * Add message to queue
 	 *
-	 * @param  string  $message  Message text
-	 * @param  string  $type     Message type, error, alert etc
+	 * @param   string  $message  Message text
+	 * @param   string  $type     Message type, error, alert etc
 	 *
 	 * @throws Exception
 	 * @since  3.2.0
@@ -511,10 +513,10 @@ class KrMethods
 	/**
 	 * Translate language constant
 	 *
-	 * @param  string  $string  String to translate
+	 * @param   string  $string  String to translate
 	 *
-	 * @since  3.2.0
 	 * @return string
+	 * @since  3.2.0
 	 */
 	public static function plain(string $string): string
 	{
@@ -524,10 +526,10 @@ class KrMethods
 	/**
 	 * Translate language plural
 	 *
-	 * @param  mixed  ...$string  String to pluralize
+	 * @param   mixed  ...$string  String to pluralize
 	 *
-	 * @since  3.3.0
 	 * @return string
+	 * @since  3.3.0
 	 */
 	public static function plural(...$string): string
 	{
@@ -537,8 +539,8 @@ class KrMethods
 	/**
 	 * Redirect
 	 *
-	 * @param  string  $link    URL
-	 * @param  int     $status  HTTP status code
+	 * @param   string  $link    URL
+	 * @param   int     $status  HTTP status code
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -551,15 +553,15 @@ class KrMethods
 	/**
 	 * Register a new user
 	 *
-	 * @param  string  $name      Name of user
-	 * @param  string  $username  Username of user
-	 * @param  string  $email     Email of user
-	 * @param  string  $password  Generated password
+	 * @param   string  $name      Name of user
+	 * @param   string  $username  Username of user
+	 * @param   string  $email     Email of user
+	 * @param   string  $password  Generated password
 	 *
-	 * @throws InvalidArgumentException
-	 * @throws RuntimeException
-	 * @since  3.9.0
 	 * @return int
+	 * @throws RuntimeException
+	 * @throws InvalidArgumentException
+	 * @since  3.9.0
 	 */
 	public static function registerUser(string $name, string $username, string $email, string $password): int
 	{
@@ -569,18 +571,22 @@ class KrMethods
 	/**
 	 * Method to render the layout.
 	 *
-	 * @param  string             $name  Dot separated path to the layout file, relative to base path
-	 * @param  object|array|null  $data  Display fields in array
+	 * @param   string             $name  Dot separated path to the layout file, relative to base path
+	 * @param   object|array|null  $data  Display fields in array
 	 *
-	 * @since  3.1.0
 	 * @return string
+	 * @since  3.1.0
 	 */
 	public static function render(string $name, object|array|null $data = []): string
 	{
-		try {
+		try
+		{
 			$layout = self::getLayout($name);
-		} catch (Exception $e) {
+		}
+		catch (Exception $e)
+		{
 			Logger::logMe($e->getMessage());
+
 			return '';
 		}
 
@@ -590,12 +596,12 @@ class KrMethods
 	/**
 	 * Get router url
 	 *
-	 * @param  string  $url    URL
-	 * @param  bool    $xhtml  Replace & by &amp; for XML compliance.
-	 * @param  int     $ssl    Secure state for the resolved URI.
+	 * @param   string  $url    URL
+	 * @param   bool    $xhtml  Replace & by &amp; for XML compliance.
+	 * @param   int     $ssl    Secure state for the resolved URI.
 	 *
-	 * @since  3.3.0
 	 * @return ?string
+	 * @since  3.3.0
 	 */
 	public static function route(string $url, bool $xhtml = true, int $ssl = 0): ?string
 	{
@@ -605,17 +611,17 @@ class KrMethods
 	/**
 	 * Send email
 	 *
-	 * @param  mixed       $from        From email
-	 * @param  mixed       $fromName    From name
-	 * @param  mixed       $to          To email
-	 * @param  mixed       $subject     Subject
-	 * @param  mixed       $body        Body
-	 * @param  bool        $html        TRUE for html, FALSO for plain text
-	 * @param  mixed|null  $cc          Carbon copy emaiols
-	 * @param  mixed|null  $bcc         Blind carbon copy emails
-	 * @param  mixed|null  $reply       Reply email
-	 * @param  mixed|null  $replyName   Reply name
-	 * @param  mixed|null  $attachment  Attachments
+	 * @param   mixed       $from        From email
+	 * @param   mixed       $fromName    From name
+	 * @param   mixed       $to          To email
+	 * @param   mixed       $subject     Subject
+	 * @param   mixed       $body        Body
+	 * @param   bool        $html        TRUE for html, FALSO for plain text
+	 * @param   mixed|null  $cc          Carbon copy emaiols
+	 * @param   mixed|null  $bcc         Blind carbon copy emails
+	 * @param   mixed|null  $reply       Reply email
+	 * @param   mixed|null  $replyName   Reply name
+	 * @param   mixed|null  $attachment  Attachments
 	 *
 	 * @throws Exception
 	 * @since  2.3.0
@@ -626,14 +632,15 @@ class KrMethods
 		mixed $to,
 		mixed $subject,
 		mixed $body,
-		bool $html = true,
+		bool  $html = true,
 		mixed $cc = null,
 		mixed $bcc = null,
 		mixed $reply = null,
 		mixed $replyName = null,
 		mixed $attachment = null): void
 	{
-		try {
+		try
+		{
 			FNS::sendEmail($from,
 				$fromName,
 				$to,
@@ -644,8 +651,11 @@ class KrMethods
 				$bcc,
 				$reply,
 				$replyName,
-				$attachment);
-		} catch (Exception|MailDisabledException) {
+				$attachment
+			);
+		}
+		catch (Exception|MailDisabledException)
+		{
 			return;
 		}
 	}
@@ -653,8 +663,8 @@ class KrMethods
 	/**
 	 * Set state
 	 *
-	 * @param  string  $key    State key
-	 * @param  mixed   $value  State default value
+	 * @param   string  $key    State key
+	 * @param   mixed   $value  State default value
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -667,10 +677,10 @@ class KrMethods
 	/**
 	 * Translate language variable
 	 *
-	 * @param  mixed  ...$string  $string String to translate
+	 * @param   mixed  ...$string  $string String to translate
 	 *
-	 * @since  3.2.0
 	 * @return string
+	 * @since  3.2.0
 	 */
 	public static function sprintf(...$string): string
 	{

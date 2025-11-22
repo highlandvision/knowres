@@ -25,7 +25,6 @@ use Stripe\Exception\CardException;
 use Stripe\Exception\InvalidRequestException;
 use Stripe\PaymentIntent as StripePI;
 use Stripe\Stripe as StripeLib;
-
 use function count;
 use function is_countable;
 
@@ -46,16 +45,17 @@ class Requestapprove
 	/**
 	 * Process request approval
 	 *
-	 * @param  Hub  $Hub  Hub data
+	 * @param   Hub  $Hub  Hub data
 	 *
+	 * @return bool
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return bool
 	 */
 	public function action(Hub $Hub): bool
 	{
 		$this->hub = $Hub;
-		if (!$this->setValues()) {
+		if (!$this->setValues())
+		{
 			return false;
 		}
 
@@ -65,23 +65,26 @@ class Requestapprove
 	/**
 	 * Poll webhook for on request payment success
 	 *
-	 * @param  int  $contract_id  ID of contract
+	 * @param   int  $contract_id  ID of contract
 	 *
+	 * @return int
 	 * @throws Exception
 	 * @since  3.3.0
-	 * @return int
 	 */
 	protected function pollWebhook(int $contract_id): int
 	{
 		$count = 0;
-		while (true) {
+		while (true)
+		{
 			$contract = KrFactory::getAdminModel('contract')->getItem($contract_id);
-			if (!is_null($contract->on_request_paid)) {
+			if (!is_null($contract->on_request_paid))
+			{
 				return $contract->on_request_paid;
 			}
 
 			$count++;
-			if ($count > 3) {
+			if ($count > 3)
+			{
 				return 99;
 			}
 
@@ -98,12 +101,15 @@ class Requestapprove
 	 */
 	protected function saveAll(): bool
 	{
-		if (!$this->service_id) {
-			try {
+		if (!$this->service_id)
+		{
+			try
+			{
 				$db = KrFactory::getDatabase();
 				$db->transactionStart();
 				$settings = KrFactory::getListModel('propertysettings')->getPropertysettings(
-					$this->hub->getValue('property_id'));
+					$this->hub->getValue('property_id')
+				);
 
 				$expiry_days = $settings['expiry_days'] ?: 2;
 				$this->hub->setValue('expiry_days', $expiry_days);
@@ -112,19 +118,25 @@ class Requestapprove
 
 				$modelContract = KrFactory::getAdminModel('contract');
 				$data          = $modelContract->validate($modelContract->getForm(), (array) $this->hub->getData());
-				if (!$data) {
+				if (!$data)
+				{
 					$this->hub->errors = $modelContract->getErrors();
 					throw new RuntimeException('Validation errors found in Contract');
 				}
 				$modelContract->save($data);
 
 				KrFactory::getAdminModel('contractnote')::createContractNote($this->hub->getValue('id'),
-					KrMethods::plain('COM_KNOWRES_CONTRACTNOTE_TEXT_REQUEST_APPROVED'));
+					KrMethods::plain('COM_KNOWRES_CONTRACTNOTE_TEXT_REQUEST_APPROVED')
+				);
 				$db->transactionCommit();
-			} catch (Exception $e) {
+			}
+			catch (Exception $e)
+			{
 				$db->transactionRollback();
 			}
-		} else {
+		}
+		else
+		{
 			// TODO v6.0 do only for stripe
 			// Stripe only for now!
 			$paymentData = $this->hub->getData('paymentData');
@@ -136,35 +148,45 @@ class Requestapprove
 			$metadata['service_ref']     = "na";
 			$metadata['payment_ref']     = '';
 
-			try {
+			try
+			{
 				// Finalize payment, result sent to webhook processing
 				StripeLib::setApiKey(trim($paymentData->secret_key));
-				StripePI::create(['amount'         =>
-					                  Utility::setStripeAmount($paymentData->amount, $paymentData->currency),
-				                  'currency'       => strtolower($paymentData->currency),
-				                  'customer'       => $guestData->customer_ref,
-				                  'payment_method' => $paymentData->service_ref,
-				                  'metadata'       => $metadata,
-				                  'off_session'    => true,
-				                  'confirm'        => true,
+				StripePI::create([
+					'amount'         =>
+						Utility::setStripeAmount($paymentData->amount, $paymentData->currency),
+					'currency'       => strtolower($paymentData->currency),
+					'customer'       => $guestData->customer_ref,
+					'payment_method' => $paymentData->service_ref,
+					'metadata'       => $metadata,
+					'off_session'    => true,
+					'confirm'        => true,
 				]);
 
 				// Wait on webhook response for a few seconds to check for success
 				$on_request_paid = $this->pollWebhook($paymentData->contract_id);
-				if ($on_request_paid == 99) {
+				if ($on_request_paid == 99)
+				{
 					$this->hub->errors = [KrMethods::plain('COM_KNOWRES_CONTRACT_REQUEST_TRY_LATER')];
 				}
-			} catch (CardException $e) {
+			}
+			catch (CardException $e)
+			{
 				Logger::logMe("A payment error occurred: " . $e->getError()->message);
 				$this->hub->errors = ['A Stripe payment error occurred: ' . $e->getError()->message];
 				throw $e;
-			} catch (InvalidRequestException $e) {
+			}
+			catch (InvalidRequestException $e)
+			{
 				Logger::logMe("An invalid request occurred");
 				$this->hub->errors = ['An invalid request was received by Stripe: ' . $e->getError()->message];
 				throw $e;
-			} catch (Exception $e) {
+			}
+			catch (Exception $e)
+			{
 				$db->transactionRollback();
-				if (is_countable($this->hub->errors) && count($this->hub->errors)) {
+				if (is_countable($this->hub->errors) && count($this->hub->errors))
+				{
 					return false;
 				}
 				throw $e;
@@ -177,19 +199,21 @@ class Requestapprove
 	/**
 	 * Pre save processing
 	 *
+	 * @return bool
 	 * @throws Exception
 	 * @since  3.3.0
-	 * @return bool
 	 */
 	protected function setValues(): bool
 	{
 		$this->service_id = $this->hub->getValue('service_id', 'paymentData');
-		if (!$this->service_id) {
+		if (!$this->service_id)
+		{
 			return true;
 		}
 
 		$service = KrFactory::getAdminModel('service')->getItem($this->service_id);
-		if (!$service->id) {
+		if (!$service->id)
+		{
 			$this->hub->errors = [KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN_CHECK')];
 
 			return false;

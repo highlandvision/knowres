@@ -41,12 +41,12 @@ class DaterangeratesRule extends FormRule
 	 *                                      the entire form.
 	 * @param  ?Form              $form     The form object for which the field is being tested.
 	 *
+	 * @return bool  True if the value is valid, false otherwise.
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return bool  True if the value is valid, false otherwise.
 	 */
 	public function test(SimpleXMLElement $element, $value, $group = null, ?Registry $input = null,
-		?Form $form = null): bool
+	                     ?Form            $form = null): bool
 	{
 		$valid_from = ($input instanceof Registry) ? $input->get('valid_from') : '';
 		if ($value < $valid_from)

@@ -26,11 +26,12 @@ class XeroView extends KrHtmlView
 	 *
 	 * @param   null  $tpl
 	 *
+	 * @return void
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return void
 	 */
-	#[NoReturn] public function display($tpl = null): void
+	#[NoReturn]
+	public function display($tpl = null): void
 	{
 		$this->setLayout('xero');
 

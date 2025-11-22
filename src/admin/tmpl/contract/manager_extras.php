@@ -15,12 +15,12 @@ use HighlandVision\KR\Framework\KrMethods;
 $extras = KrFactory::getListModel('extras')->getByProperty($this->property_id);
 if (!count($extras))
 {
-	return;
+    return;
 }
 ?>
 
 <fieldset>
-	<legend><?php echo KrMethods::plain('COM_KNOWRES_CONTRACT_EXTRAS_LBL'); ?></legend>
-	<?php echo $this->form->renderField('extras'); ?>
+    <legend><?php echo KrMethods::plain('COM_KNOWRES_CONTRACT_EXTRAS_LBL'); ?></legend>
+    <?php echo $this->form->renderField('extras'); ?>
 </fieldset>
 

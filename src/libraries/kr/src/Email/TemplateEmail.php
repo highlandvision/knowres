@@ -12,7 +12,6 @@ namespace HighlandVision\KR\Email;
 defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrMethods;
-
 use function defined;
 
 /**
@@ -25,8 +24,8 @@ class TemplateEmail
 	/**
 	 * Return the available registration tags for the emails
 	 *
-	 * @since  1.0.0
 	 * @return array
+	 * @since  1.0.0
 	 */
 	public static function getRegistrationTags(): array
 	{
@@ -48,8 +47,8 @@ class TemplateEmail
 	/**
 	 * Return the available enquiry tags for the emails
 	 *
-	 * @since 1.0.0
 	 * @return array
+	 * @since 1.0.0
 	 */
 	public static function getRequestTags(): array
 	{
@@ -81,8 +80,8 @@ class TemplateEmail
 	/**
 	 * Return the available contract tags for the emails
 	 *
-	 * @since  1.0.0
 	 * @return array
+	 * @since  1.0.0
 	 */
 	public static function getReservationTags(): array
 	{
@@ -116,15 +115,17 @@ class TemplateEmail
 		$tags['GUESTNOTES']      = 'Guest Notes';
 		$tags['GUESTS']          = '#Guests';
 		$tags['LINKCARHIRE']     = 'Link to Car Hire affiliate with text - '
-		                           . KrMethods::plain('COM_KNOWRES_HERE');
+			. KrMethods::plain('COM_KNOWRES_HERE');
 		$tags['LINKGUESTTERMS']  = 'Link to Guest Terms with text - [sitename] Terms & Conditions';
-		if (KrMethods::getParams()->get('create_user', 0)) {
+		if (KrMethods::getParams()->get('create_user', 0))
+		{
 			$tags['LINKLOGIN'] = 'Link Login';
 		}
 		$tags['LINKPROPERTY']        = 'Link to Property Details with text - [property name]';
 		$tags['LINKOWNERTERMS']      = 'Link to Owner Terms with text - [your agency name]';
 		$tags['LINKTRAVELINSURANCE'] = 'Link to Travel Insurance affiliate with text - ' . KrMethods::plain(
-				'COM_KNOWRES_HERE');
+				'COM_KNOWRES_HERE'
+			);
 		$tags['MANAGEREMAIL']        = 'Manager Email';
 		$tags['MANAGERNAME']         = 'Manager Name';
 		$tags['NEARESTTRANSPORT']    = 'Nearest Transport';
@@ -181,7 +182,8 @@ class TemplateEmail
 				'COM_KNOWRES_EMAIL_BUTTONOWNERLINK'
 			);
 
-		if (KrMethods::getParams()->get('property_rooms', 0)) {
+		if (KrMethods::getParams()->get('property_rooms', 0))
+		{
 			$tags['BOOKINGGUESTS']     = 'Booking Guests';
 			$tags['BOOKINGROOMTYPES']  = 'Booking Room Types';
 			$tags['PROPERTYADDRESS']   = 'Property Address (one line)';

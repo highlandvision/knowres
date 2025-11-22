@@ -20,7 +20,6 @@ use InvalidArgumentException;
 use Joomla\CMS\Factory;
 use Joomla\Registry\Registry;
 use RuntimeException;
-
 use function count;
 use function is_dir;
 use function str_replace;
@@ -112,14 +111,15 @@ abstract class Email
 	/**
 	 * Constructor initialize
 	 *
-	 * @param  string  $trigger  Email trigger
+	 * @param   string  $trigger  Email trigger
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
 	public function __construct(string $trigger)
 	{
-		if (!$trigger) {
+		if (!$trigger)
+		{
 			throw new InvalidArgumentException(
 				KrMethods::sprintf(
 					'COM_KNOWRES_THROW_MISSING_PARAMETER',
@@ -154,8 +154,8 @@ abstract class Email
 	/**
 	 * Return string
 	 *
-	 * @since  1.0.0
 	 * @return string
+	 * @since  1.0.0
 	 */
 	public function __toString(): string
 	{
@@ -171,14 +171,18 @@ abstract class Email
 	protected function checkCustomByDate(): void
 	{
 		$emails = KrFactory::getListModel('emailtriggers')->getTriggers('CUSTOMBYDATE');
-		if ($emails) {
-			foreach ($emails as $e) {
-				if (!$e->days_before || !$e->send_guest) {
+		if ($emails)
+		{
+			foreach ($emails as $e)
+			{
+				if (!$e->days_before || !$e->send_guest)
+				{
 					continue;
 				}
 
 				$due_date = TickTock::modifyDays($this->today, $e->days);
-				if ($due_date < $actual_date) {
+				if ($due_date < $actual_date)
+				{
 					continue;
 				}
 
@@ -190,8 +194,8 @@ abstract class Email
 	/**
 	 * Build email body and subject
 	 *
-	 * @param  int   $template_id  ID of template to be used
-	 * @param  bool  $send_guest   Indicates a guest email
+	 * @param   int   $template_id  ID of template to be used
+	 * @param   bool  $send_guest   Indicates a guest email
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -202,7 +206,8 @@ abstract class Email
 
 		$this->output_message = $template->blurb;
 		$this->output_subject = $template->subject;
-		foreach ($this->data as $k => $v) {
+		foreach ($this->data as $k => $v)
+		{
 			$this->output_message = str_replace("[$k]", $v, $this->output_message);
 			$this->output_subject = str_replace("[$k]", $v, $this->output_subject);
 		}
@@ -214,10 +219,10 @@ abstract class Email
 	/**
 	 * Send via normal email or helpscout
 	 *
-	 * @param  string   $email_to   Recipient email
+	 * @param   string  $email_to   Recipient email
 	 * @param  ?string  $firstname  Name of recipient
 	 * @param  ?string  $surname    Surname of recipient
-	 * @param  array    $tags       Email related tags
+	 * @param   array   $tags       Email related tags
 	 *
 	 * @throws Exception
 	 * @since  3.2.0
@@ -237,19 +242,27 @@ abstract class Email
 		$optional['reply_to']    = $this->reply_to;
 		$optional['reply_name']  = $this->reply_name;
 
-		try {
-			if ($this->helpscout) {
+		try
+		{
+			if ($this->helpscout)
+			{
 				HelpScoutEmailService::dispatchEmail($email_to,
 					$this->output_subject,
 					$this->output_message,
-					$optional);
-			} else {
+					$optional
+				);
+			}
+			else
+			{
 				JoomlaEmailService::dispatchEmail($email_to,
 					$this->output_subject,
 					$this->output_message,
-					$optional);
+					$optional
+				);
 			}
-		} catch (Exception $e) {
+		}
+		catch (Exception $e)
+		{
 			Logger::logMe($e->getMessage(), 'alert');
 		}
 	}
@@ -263,13 +276,16 @@ abstract class Email
 	protected function gatherData(): void
 	{
 		$emails = KrFactory::getListModel('emailtriggers')->getTriggers($this->trigger, $this->trigger_id);
-		if (count($emails)) {
+		if (count($emails))
+		{
 			$this->setData();
-			foreach ($emails as $e) {
+			foreach ($emails as $e)
+			{
 				$this->sendEmails($e);
 			}
 
-			if ($this->trigger == 'BOOKCONFIRM' || $this->trigger == 'PAYRECEIPT') {
+			if ($this->trigger == 'BOOKCONFIRM' || $this->trigger == 'PAYRECEIPT')
+			{
 				$this->checkCustomByDate();
 			}
 		}
@@ -278,13 +294,14 @@ abstract class Email
 	/**
 	 * Set the "from" email
 	 *
+	 * @return string
 	 * @throws Exception
 	 * @since  3.2.0
-	 * @return string
 	 */
 	protected function getFromEmail(): string
 	{
-		if (empty($this->agency_email)) {
+		if (empty($this->agency_email))
+		{
 			return $this->fromemail;
 		}
 
@@ -299,7 +316,8 @@ abstract class Email
 	 */
 	protected function getFromName()
 	{
-		if (empty($this->agency_name)) {
+		if (empty($this->agency_name))
+		{
 			return $this->fromname;
 		}
 
@@ -309,20 +327,22 @@ abstract class Email
 	/**
 	 * Get email template
 	 *
-	 * @param  int  $template_id  ID of template
+	 * @param   int  $template_id  ID of template
 	 *
+	 * @return object
 	 * @throws Exception
 	 * @since  4.0.0
-	 * @return object
 	 */
 	protected function getTemplate(int $template_id): object
 	{
-		if (!$template_id) {
+		if (!$template_id)
+		{
 			throw new RuntimeException('Email template_id is not set');
 		}
 
 		$template = KrFactory::getAdminModel('emailtemplate')->getItem($template_id);
-		if (!$template) {
+		if (!$template)
+		{
 			throw new RuntimeException('Email template not found for ID ' . $template_id);
 		}
 
@@ -332,11 +352,11 @@ abstract class Email
 	/**
 	 * Add headers and footers to the email text
 	 *
-	 * @param  bool  $send_guest  Send guest email
+	 * @param   bool  $send_guest  Send guest email
 	 *
+	 * @return string
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return string
 	 */
 	protected function makePretty(bool $send_guest): string
 	{
@@ -364,9 +384,11 @@ abstract class Email
 	 */
 	protected function setAgency(?int $agency_id = 0): void
 	{
-		if (empty($agency_id)) {
+		if (empty($agency_id))
+		{
 			$agency_id = KrMethods::getParams()->get('default_agency');
-			if (!$agency_id) {
+			if (!$agency_id)
+			{
 				throw new RunTimeException('Please set Default agency in KR Options');
 			}
 		}
@@ -383,10 +405,11 @@ abstract class Email
 	protected function setHelpScout(): void
 	{
 		$this->helpscout = KrFactory::getListModel('services')::checkForSingleService(false,
-			'helpscout',
-			$this->agency->id);
+			'helpscout', $this->agency->id
+		);
 
-		if ($this->helpscout && !is_dir(JPATH_LIBRARIES . '/helpscout/src')) {
+		if ($this->helpscout && !is_dir(JPATH_LIBRARIES . '/helpscout/src'))
+		{
 			throw new RunTimeException('Please install Helpscout Library or disable Helpscout Service');
 		}
 	}

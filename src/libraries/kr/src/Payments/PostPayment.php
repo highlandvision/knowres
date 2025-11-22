@@ -22,7 +22,6 @@ use HighlandVision\KR\Utility;
 use InvalidArgumentException;
 use RuntimeException;
 use stdClass;
-
 use function defined;
 use function is_numeric;
 

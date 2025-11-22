@@ -13,20 +13,20 @@ use HighlandVision\KR\Framework\KrMethods;
 
 if (empty($this->ownerpayments))
 {
-	return;
+    return;
 }
 ?>
 
 <div class="card kr-daily">
-	<div class="card-header">
-		<a class="showbefore" data-bs-toggle="collapse" href="#panel-ownerpayments" role="button"
-		   aria-expanded="true" aria-controls="panel-ownerpayments">
-			<?php echo KrMethods::plain('COM_KNOWRES_CONTRACTS_DAILY_OVERVIEW_OWNERPAYMENTS_TITLE'); ?>
-		</a>
-	</div>
-	<div class="collapse show" id="panel-ownerpayments">
-		<div class="card-body">
-			<?php echo KrMethods::render('contract.daily.ownerpayments', ['lines' => $this->ownerpayments]); ?>
-		</div>
-	</div>
+    <div class="card-header">
+        <a class="showbefore" data-bs-toggle="collapse" href="#panel-ownerpayments" role="button"
+           aria-expanded="true" aria-controls="panel-ownerpayments">
+            <?php echo KrMethods::plain('COM_KNOWRES_CONTRACTS_DAILY_OVERVIEW_OWNERPAYMENTS_TITLE'); ?>
+        </a>
+    </div>
+    <div class="collapse show" id="panel-ownerpayments">
+        <div class="card-body">
+            <?php echo KrMethods::render('contract.daily.ownerpayments', ['lines' => $this->ownerpayments]); ?>
+        </div>
+    </div>
 </div>

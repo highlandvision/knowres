@@ -27,7 +27,6 @@ use Stripe\Exception\InvalidRequestException;
 use Stripe\PaymentIntent;
 use Stripe\SetupIntent;
 use Stripe\Stripe as StripeLib;
-
 use function http_response_code;
 use function jexit;
 use function trim;
@@ -58,7 +57,8 @@ class Stripe extends Gateway
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function __construct(int $service_id, stdClass $paymentData, string $action = '') {
+	public function __construct(int $service_id, stdClass $paymentData, string $action = '')
+	{
 		parent::__construct($service_id, $paymentData, 0, ['OBD', 'OBR', 'RBD', 'PBD', 'PBB']);
 
 		$this->action = $action;
@@ -67,19 +67,22 @@ class Stripe extends Gateway
 	/**
 	 * Set data for Stripe call
 	 *
-	 * @throws ApiErrorException
-	 * @throws Exception
-	 * @since  1.0.0
 	 * @return stdClass
+	 * @throws Exception
+	 * @throws ApiErrorException
+	 * @since  1.0.0
 	 */
-	public function setOutputData(): stdClass {
+	public function setOutputData(): stdClass
+	{
 		$this->readTables();
 		$this->setOutputForPaymentType();
 
 		$client_secret = false;
-		if ($this->paymentData->payment_type === 'OBR') {
+		if ($this->paymentData->payment_type === 'OBR')
+		{
 			StripeLib::setApiKey(trim($this->parameters->secret_key));
-			if (trim($this->parameters->api_version)) {
+			if (trim($this->parameters->api_version))
+			{
 				StripeLib::setApiVersion(trim($this->parameters->api_version));
 			}
 			$intent        = SetupIntent::create([]);
@@ -123,32 +126,40 @@ class Stripe extends Gateway
 	 * @param   array   $params  Stripe parameters
 	 * @param   string  $method  Stripe method
 	 *
-	 * @throws ApiErrorException
+	 * @return object|bool
 	 * @throws InvalidArgumentException
 	 * @throws Exception
+	 * @throws ApiErrorException
 	 * @since  2.3.0
-	 * @return object|bool
 	 */
-	protected function doStripe(array $params, string $method): object|bool {
-		if (!count($params) || !$method) {
+	protected function doStripe(array $params, string $method): object|bool
+	{
+		if (!count($params) || !$method)
+		{
 			throw new InvalidArgumentException('Params or method is missing');
 		}
 
 		$data = $this->setOutputData();
 		StripeLib::setApiKey(trim($this->parameters->secret_key));
-		if (trim($this->parameters->api_version)) {
+		if (trim($this->parameters->api_version))
+		{
 			StripeLib::setApiVersion(trim($this->parameters->api_version));
 		}
 
-		try {
-			if ($method === 'customer') {
+		try
+		{
+			if ($method === 'customer')
+			{
 				return Customer::create($params);
 			}
-			else {
-				if ($method === 'paymentmethod') {
+			else
+			{
+				if ($method === 'paymentmethod')
+				{
 					return $this->generatePaymentResponse(PaymentIntent::create($params));
 				}
-				elseif ($method === 'paymentintent') {
+				elseif ($method === 'paymentintent')
+				{
 					$response = PaymentIntent::retrieve($params['payment_intent_id']);
 					$response->confirm();
 
@@ -156,34 +167,44 @@ class Stripe extends Gateway
 				}
 			}
 		}
-		catch (CardException $e) {
-			if (!$this->off_session) {
+		catch (CardException $e)
+		{
+			if (!$this->off_session)
+			{
 				$this->error_to_display = KrMethods::plain('COM_KNOWRES_ERROR_DECLINED');
 				$this->writeErrors($e);
 			}
-			else {
+			else
+			{
 				$this->card_exception = $e->getJsonBody();
 				$this->messages       = [];
 
 				return false;
 			}
 		}
-		catch (InvalidRequestException $e) {
+		catch (InvalidRequestException $e)
+		{
 			$this->writeErrors($e, 'Invalid parameters supplied to Stripe API');
 		}
-		catch (AuthenticationException $e) {
+		catch (AuthenticationException $e)
+		{
 			$this->writeErrors($e, 'Authentication with Stripe API failed');
 		}
-		catch (ApiConnectionException $e) {
+		catch (ApiConnectionException $e)
+		{
 			$this->writeErrors($e, 'Network communication with Stripe failed');
 		}
-		catch (ApiErrorException $e) {
+		catch (ApiErrorException $e)
+		{
 			$this->writeErrors($e, 'Base error');
 		}
-		catch (Exception $e) {
+		catch (Exception $e)
+		{
 			$this->writeErrors($e, 'Other exception');
-		} finally {
-			if (is_countable($this->messages) && count($this->messages)) {
+		} finally
+		{
+			if (is_countable($this->messages) && count($this->messages))
+			{
 				throw new Exception(Utility::encodeJson($this->messages));
 			}
 		}
@@ -219,13 +240,16 @@ class Stripe extends Gateway
 	 *
 	 * @param   object  $response  Response from request
 	 *
+	 * @return object|bool
 	 * @throws Exception
 	 * @since  3.3.0
-	 * @return object|bool
 	 */
-	protected function generatePaymentResponse(object $response): object|bool {
-		if (!$this->off_session) {
-			if ($response->status == 'requires_action' && $response->next_action->type == 'use_stripe_sdk') {
+	protected function generatePaymentResponse(object $response): object|bool
+	{
+		if (!$this->off_session)
+		{
+			if ($response->status == 'requires_action' && $response->next_action->type == 'use_stripe_sdk')
+			{
 				echo Utility::encodeJson([
 					'requires_action'              => true,
 					'payment_intent_client_secret' => $response->client_secret
@@ -233,11 +257,14 @@ class Stripe extends Gateway
 
 				jexit();
 			}
-			else {
-				if ($response->status === 'succeeded') {
+			else
+			{
+				if ($response->status === 'succeeded')
+				{
 					return $response;
 				}
-				else {
+				else
+				{
 					http_response_code(500);
 					echo Utility::encodeJson(['error' => KrMethods::plain('COM_KNOWRES_ERROR_FATAL')]);
 
@@ -245,8 +272,10 @@ class Stripe extends Gateway
 				}
 			}
 		}
-		else {
-			if ($response->status === 'succeeded') {
+		else
+		{
+			if ($response->status === 'succeeded')
+			{
 				return $response;
 			}
 		}
@@ -303,17 +332,22 @@ class Stripe extends Gateway
 	 * @throws RuntimeException|Exception
 	 * @since  1.0.0
 	 */
-	protected function setOutputForPaymentType(): void {
-		if ($this->paymentData->payment_type == 'RBD') {
+	protected function setOutputForPaymentType(): void
+	{
+		if ($this->paymentData->payment_type == 'RBD')
+		{
 			$this->setPaymentDataRBD();
 		}
-		else {
-			if ($this->paymentData->payment_type == 'CBB') {
+		else
+		{
+			if ($this->paymentData->payment_type == 'CBB')
+			{
 				//TODO-v6.0 do this properly with emails etc and add to valid payment types above
 				//return $this->outputChannelBalance();
 				throw new RuntimeException('Payment type CBB not currently implemented');
 			}
-			else {
+			else
+			{
 				$this->setPaymentData();
 			}
 		}

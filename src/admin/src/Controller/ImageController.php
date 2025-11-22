@@ -43,7 +43,8 @@ class ImageController extends FormController
 		$description = (string) $validData['description'];
 		$alt_text    = (string) $validData['alt_text'];
 
-		if ($this->input->get('task') == 'save2copy') {
+		if ($this->input->get('task') == 'save2copy')
+		{
 			$description = StringHelper::increment($description);
 		}
 
@@ -52,6 +53,7 @@ class ImageController extends FormController
 		$Translations->updateDefault('image', $item->id, 'alt_text', $alt_text);
 
 		KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updateProperty', (int) $validData['property_id'],
-			0, 'ru');
+			0, 'ru'
+		);
 	}
 }

@@ -24,20 +24,20 @@ extract($displayData);
 $iconClass = '';
 if (!$data->canChange)
 {
-	$iconClass = ' inactive';
+    $iconClass = ' inactive';
 }
 elseif (!$data->saveOrder)
 {
-	$iconClass = ' inactive" title="' . KrMethods::plain('JORDERINGDISABLED');
+    $iconClass = ' inactive" title="' . KrMethods::plain('JORDERINGDISABLED');
 }
 ?>
-	<span class="sortable-handler <?php echo $iconClass ?>">
+    <span class="sortable-handler <?php echo $iconClass ?>">
 	<span class="icon-ellipsis-v" aria-hidden="true"></span>
 </span>
 
 <?php if ($data->canChange && $data->saveOrder): ?>
-	<label>
-		<input class="w-20 text-area-order hidden" name="order[]" size="5" type="text"
-		       value="<?php echo $data->item->ordering; ?>">
-	</label>
+    <label>
+        <input class="w-20 text-area-order hidden" name="order[]" size="5" type="text"
+               value="<?php echo $data->item->ordering; ?>">
+    </label>
 <?php endif; ?>

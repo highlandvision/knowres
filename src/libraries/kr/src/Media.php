@@ -15,7 +15,6 @@ use Exception;
 use HighlandVision\KR\Framework\KrMethods;
 use JetBrains\PhpStorm\Pure;
 use Joomla\CMS\Filesystem\File;
-
 use function basename;
 use function count;
 use function defined;
@@ -44,9 +43,9 @@ class Media
 	/**
 	 * Delete pdfs
 	 *
-	 * @param  string  $type   PDF type, property, region etc
-	 * @param  int     $id     ID of type
-	 * @param  array   $names  PDF names
+	 * @param   string  $type   PDF type, property, region etc
+	 * @param   int     $id     ID of type
+	 * @param   array   $names  PDF names
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -88,10 +87,10 @@ class Media
 	/**
 	 * Get file extension
 	 *
-	 * @param  string  $path  Path
+	 * @param   string  $path  Path
 	 *
-	 * @since  1.0.0
 	 * @return mixed
+	 * @since  1.0.0
 	 */
 	public static function getFileExtension(string $path): mixed
 	{
@@ -103,10 +102,10 @@ class Media
 	/**
 	 * Get file name
 	 *
-	 * @param  string  $path  Path
+	 * @param   string  $path  Path
 	 *
-	 * @since 1.0.0
 	 * @return array|string
+	 * @since 1.0.0
 	 */
 	public static function getFileName(string $path): array|string
 	{
@@ -118,10 +117,11 @@ class Media
 	/**
 	 * List pdfs folder
 	 *
-	 * @since  1.0.0
 	 * @return string
+	 * @since  1.0.0
 	 */
-	#[Pure] public static function getPdfLocation(): string
+	#[Pure]
+	public static function getPdfLocation(): string
 	{
 		$rootPath = Utility::getPath('root');
 		$upOne    = dirname($rootPath);
@@ -133,11 +133,11 @@ class Media
 	/**
 	 * List pdfs  folder
 	 *
-	 * @param  string  $type  e.g. "property" or "region" etc
-	 * @param  int     $id    ID of type
+	 * @param   string  $type  e.g. "property" or "region" etc
+	 * @param   int     $id    ID of type
 	 *
-	 * @since  1.0.0
 	 * @return array
+	 * @since  1.0.0
 	 */
 	public static function listPdfs(string $type, int $id): array
 	{
@@ -155,11 +155,11 @@ class Media
 	/**
 	 * Upload pdf
 	 *
-	 * @param  string  $type      e.g. "solo" or "slideshow".
-	 * @param  int     $id        ID of item.
-	 * @param  string  $pdf       Name of pdf.
-	 * @param  string  $filetype  File type.
-	 * @param  string  $tmpName   Temporary name.
+	 * @param   string  $type      e.g. "solo" or "slideshow".
+	 * @param   int     $id        ID of item.
+	 * @param   string  $pdf       Name of pdf.
+	 * @param   string  $filetype  File type.
+	 * @param   string  $tmpName   Temporary name.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0

@@ -6,6 +6,7 @@
  * @license    See the file "LICENSE.txt" for the full license governing this code.
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
+
 /** @noinspection PhpUnhandledExceptionInspection */
 
 defined('_JEXEC') or die;
@@ -19,12 +20,12 @@ $overview_url   = KrMethods::route('index.php?option=com_knowres&task=dashboard.
 ?>
 
 <div class="stacked button-group">
-	<a href="<?php echo $guestformlink; ?>" class="button alert">
-		<?php echo KrMethods::plain('COM_KNOWRES_DASHBOARD_PAY_DEPOSIT'); ?>
-	</a>
-	<a class="button" data-open="<?php echo $overview_modal; ?>">
-		<?php echo KrMethods::plain('COM_KNOWRES_DASHBOARD_VIEW_CONTRACT'); ?>
-	</a>
+    <a href="<?php echo $guestformlink; ?>" class="button alert">
+        <?php echo KrMethods::plain('COM_KNOWRES_DASHBOARD_PAY_DEPOSIT'); ?>
+    </a>
+    <a class="button" data-open="<?php echo $overview_modal; ?>">
+        <?php echo KrMethods::plain('COM_KNOWRES_DASHBOARD_VIEW_CONTRACT'); ?>
+    </a>
 </div>
 
 <div id="<?php echo $overview_modal; ?>" class="reveal kr-ajax-modal"

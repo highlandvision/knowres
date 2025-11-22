@@ -33,8 +33,7 @@ if (count($data))
 			$parts[] = $d['cancellation_penalty_from'] . "-" . $d['cancellation_penalty_to'];
 			$parts[] = $days;
 			$parts[] = $d['cancellation_penalty_pc'] . "%";
-
-			$all[] = implode(" ", $parts);
+			$all[]   = implode(" ", $parts);
 		}
 	}
 

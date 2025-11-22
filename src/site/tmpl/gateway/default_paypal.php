@@ -15,21 +15,21 @@ $approval_url = KrMethods::route('index.php?option=com_knowres&task=service.payp
 ?>
 
 <div class="grid-x grid-padding-x">
-	<div class="small-12 medium-10 large-8 medium-offset-1 large-offset-2 cell">
-		<div class="text-center">
-			<h4><?php echo $this->paymentData->note; ?></h4>
-			<br><br>
-		</div>
-	</div>
-	<div class="small-12 medium-8 large-6 medium-offset-2 large-offset-3 cell">
-		<div class="text-center">
-			<div id="paypal-button-container"></div>
-			<br>
-		</div>
-	</div>
+    <div class="small-12 medium-10 large-8 medium-offset-1 large-offset-2 cell">
+        <div class="text-center">
+            <h4><?php echo $this->paymentData->note; ?></h4>
+            <br><br>
+        </div>
+    </div>
+    <div class="small-12 medium-8 large-6 medium-offset-2 large-offset-3 cell">
+        <div class="text-center">
+            <div id="paypal-button-container"></div>
+            <br>
+        </div>
+    </div>
 </div>
 <button class="close-button" data-close aria-label="Close modal" type="button">
-	<span aria-hidden="true">&times;</span>
+    <span aria-hidden="true">&times;</span>
 </button>
 
 <script>
@@ -70,10 +70,10 @@ $approval_url = KrMethods::route('index.php?option=com_knowres&task=service.payp
                 },
             });
         },
-        onApprove:   function (data, actions) {
+        onApprove: function (data, actions) {
             return actions.order.capture().then(function (details) {
                 return fetch("<?php echo $approval_url; ?>", {
-                   headers: {
+                    headers: {
                         'Content-Type': 'application/json'
                     },
                     method: 'POST',

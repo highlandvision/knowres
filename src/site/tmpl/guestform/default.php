@@ -17,212 +17,212 @@ $settings = KrFactory::getListModel('propertysettings')->getPropertysettings($th
 
 $wa = $this->document->getWebAssetManager();
 $wa->useScript('com_knowres.site')
-	->useScript('form.validate')
-	->useScript('keepalive');
+   ->useScript('form.validate')
+   ->useScript('keepalive');
 ?>
 
 <div class="grid-x grid-margin-x">
-	<div class="small-12 medium-10 cell">
-		<?php if (!$this->contract_id): ?>
-			<h1><?php echo KrMethods::plain('COM_KNOWRES_DASHBOARD_EDIT_GUEST'); ?></h1>
-			<div class="callout small alert">
-				<p class="small"><?php echo KrMethods::plain('COM_KNOWRES_DASHBOARD_EDIT_GUEST2'); ?></p>
-			</div>
-		<?php else: ?>
-			<h1><?php echo KrMethods::plain('COM_KNOWRES_DASHBOARD_PAYMENT_GUEST'); ?></h1>
-		<?php endif; ?>
+    <div class="small-12 medium-10 cell">
+        <?php if (!$this->contract_id): ?>
+            <h1><?php echo KrMethods::plain('COM_KNOWRES_DASHBOARD_EDIT_GUEST'); ?></h1>
+            <div class="callout small alert">
+                <p class="small"><?php echo KrMethods::plain('COM_KNOWRES_DASHBOARD_EDIT_GUEST2'); ?></p>
+            </div>
+        <?php else: ?>
+            <h1><?php echo KrMethods::plain('COM_KNOWRES_DASHBOARD_PAYMENT_GUEST'); ?></h1>
+        <?php endif; ?>
 
-		<form action="<?php echo 'index.php?option=com_knowres'; ?>"
-		      aria-label="<?php echo $this->form_aria_label; ?>" class="form-validate" id="kr-guest-form"
-		      method="post" name="adminForm">
+        <form action="<?php echo 'index.php?option=com_knowres'; ?>"
+              aria-label="<?php echo $this->form_aria_label; ?>" class="form-validate" id="kr-guest-form"
+              method="post" name="adminForm">
 
-			<fieldset class="fieldset">
-				<legend><?php echo KrMethods::plain('COM_KNOWRES_LEAD_GUEST'); ?></legend>
+            <fieldset class="fieldset">
+                <legend><?php echo KrMethods::plain('COM_KNOWRES_LEAD_GUEST'); ?></legend>
 
-				<div class="callout small">
-					<div class="grid-x grid-margin-x">
-						<div class="small-12 medium-6 cell">
-							<?php echo $this->form->renderField('firstname'); ?>
-						</div>
-						<div class="small-12 medium-6 cell">
-							<?php echo $this->form->renderField('surname'); ?>
-						</div>
-						<div class="small-12 medium-6 cell">
-							<?php echo $this->form->renderField('mobile_country_id'); ?>
-						</div>
-						<div class="small-12 medium-6 cell">
-							<?php echo $this->form->renderField('mobile'); ?>
-						</div>
-					</div>
+                <div class="callout small">
+                    <div class="grid-x grid-margin-x">
+                        <div class="small-12 medium-6 cell">
+                            <?php echo $this->form->renderField('firstname'); ?>
+                        </div>
+                        <div class="small-12 medium-6 cell">
+                            <?php echo $this->form->renderField('surname'); ?>
+                        </div>
+                        <div class="small-12 medium-6 cell">
+                            <?php echo $this->form->renderField('mobile_country_id'); ?>
+                        </div>
+                        <div class="small-12 medium-6 cell">
+                            <?php echo $this->form->renderField('mobile'); ?>
+                        </div>
+                    </div>
 
-					<?php if ($this->params->get('guestdata_document', 0)) : ?>
-						<div class="grid-x grid-margin-x">
-							<div class="small-12 medium-6 cell">
-								<?php echo $this->form->getLabel('document_type'); ?>
-								<?php echo $this->form->getInput('document_type'); ?>
-							</div>
-							<div class="small-12 medium-6 cell">
-								<?php echo $this->form->getLabel('document_id'); ?>
-								<?php echo $this->form->getInput('document_id'); ?>
-							</div>
-							<div class="small-12 cell">
-								<div class="callout success small">
-									<div class="smaller">
-										<p><?php echo KrMethods::plain('COM_KNOWRES_DOCUMENT_TYPE_TEXT_DSC'); ?></p>
-										<ul style="list-style-type:disc;padding-left: 1rem;margin-left:1rem;">
-											<li>
-												<?php echo KrMethods::plain('COM_KNOWRES_DOCUMENT_TYPE_TEXT1_DSC'); ?>
-											</li>
-											<li>
-												<?php echo KrMethods::plain('COM_KNOWRES_DOCUMENT_TYPE_TEXT2_DSC'); ?>
-											</li>
-											<li>
-												<?php echo KrMethods::plain('COM_KNOWRES_DOCUMENT_TYPE_TEXT3_DSC'); ?>
-											</li>
-											<li>
-												<?php echo KrMethods::plain('COM_KNOWRES_DOCUMENT_TYPE_TEXT4_DSC'); ?>
-											</li>
-										</ul>
-									</div>
-								</div>
-							</div>
-						</div>
-					<?php endif; ?>
-				</div>
-			</fieldset>
+                    <?php if ($this->params->get('guestdata_document', 0)) : ?>
+                        <div class="grid-x grid-margin-x">
+                            <div class="small-12 medium-6 cell">
+                                <?php echo $this->form->getLabel('document_type'); ?>
+                                <?php echo $this->form->getInput('document_type'); ?>
+                            </div>
+                            <div class="small-12 medium-6 cell">
+                                <?php echo $this->form->getLabel('document_id'); ?>
+                                <?php echo $this->form->getInput('document_id'); ?>
+                            </div>
+                            <div class="small-12 cell">
+                                <div class="callout success small">
+                                    <div class="smaller">
+                                        <p><?php echo KrMethods::plain('COM_KNOWRES_DOCUMENT_TYPE_TEXT_DSC'); ?></p>
+                                        <ul style="list-style-type:disc;padding-left: 1rem;margin-left:1rem;">
+                                            <li>
+                                                <?php echo KrMethods::plain('COM_KNOWRES_DOCUMENT_TYPE_TEXT1_DSC'); ?>
+                                            </li>
+                                            <li>
+                                                <?php echo KrMethods::plain('COM_KNOWRES_DOCUMENT_TYPE_TEXT2_DSC'); ?>
+                                            </li>
+                                            <li>
+                                                <?php echo KrMethods::plain('COM_KNOWRES_DOCUMENT_TYPE_TEXT3_DSC'); ?>
+                                            </li>
+                                            <li>
+                                                <?php echo KrMethods::plain('COM_KNOWRES_DOCUMENT_TYPE_TEXT4_DSC'); ?>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            </fieldset>
 
-			<fieldset class="fieldset">
-				<legend><?php echo KrMethods::plain('COM_KNOWRES_GUEST_ADDITIONAL_CONTACT_DETAILS'); ?></legend>
-				<div class="callout small">
-					<div class="callout success small">
-						<p class="vsmall"><?php echo KrMethods::plain('COM_KNOWRES_ARRIVAL_EMAIL_CHANGE'); ?></p>
-					</div>
+            <fieldset class="fieldset">
+                <legend><?php echo KrMethods::plain('COM_KNOWRES_GUEST_ADDITIONAL_CONTACT_DETAILS'); ?></legend>
+                <div class="callout small">
+                    <div class="callout success small">
+                        <p class="vsmall"><?php echo KrMethods::plain('COM_KNOWRES_ARRIVAL_EMAIL_CHANGE'); ?></p>
+                    </div>
 
-					<div class="grid-x grid-margin-x">
-						<div class="small-12 medium-6 cell">
-							<?php echo $this->form->renderField('email_2'); ?>
-						</div>
-						<div class="small-12 medium-6 cell">
-							<?php echo $this->form->renderField('email_3'); ?>
-						</div>
-					</div>
+                    <div class="grid-x grid-margin-x">
+                        <div class="small-12 medium-6 cell">
+                            <?php echo $this->form->renderField('email_2'); ?>
+                        </div>
+                        <div class="small-12 medium-6 cell">
+                            <?php echo $this->form->renderField('email_3'); ?>
+                        </div>
+                    </div>
 
-					<?php echo $this->form->renderFieldSet('additionalphone'); ?>
-				</div>
-			</fieldset>
+                    <?php echo $this->form->renderFieldSet('additionalphone'); ?>
+                </div>
+            </fieldset>
 
-			<fieldset class="fieldset">
-				<legend><?php echo KrMethods::plain('COM_KNOWRES_MAILING_ADDRESS'); ?></legend>
-				<div class="callout small">
-					<div class="grid-x grid-margin-x">
-						<?php if ((int) $settings['bookingform_requiredfields_address1'] == 1) : ?>
-							<?php $this->form->setFieldAttribute('address1', 'required', 'true'); ?>
-						<?php endif; ?>
-						<div class="small-12 medium-6 cell end">
-							<?php echo $this->form->renderField('address1'); ?>
-						</div>
-						<div class="small-12 medium-6 cell end">
-							<?php echo $this->form->renderField('address2'); ?>
-						</div>
-					</div>
-					<div class="grid-x grid-margin-x">
-						<?php if ((int) $settings['bookingform_requiredfields_town'] == 1) : ?>
-							<?php $this->form->setFieldAttribute('town', 'required', 'true'); ?>
-						<?php endif; ?>
-						<div class="small-12 medium-6 cell end">
-							<?php echo $this->form->renderField('town'); ?>
-						</div>
+            <fieldset class="fieldset">
+                <legend><?php echo KrMethods::plain('COM_KNOWRES_MAILING_ADDRESS'); ?></legend>
+                <div class="callout small">
+                    <div class="grid-x grid-margin-x">
+                        <?php if ((int) $settings['bookingform_requiredfields_address1'] == 1) : ?>
+                            <?php $this->form->setFieldAttribute('address1', 'required', 'true'); ?>
+                        <?php endif; ?>
+                        <div class="small-12 medium-6 cell end">
+                            <?php echo $this->form->renderField('address1'); ?>
+                        </div>
+                        <div class="small-12 medium-6 cell end">
+                            <?php echo $this->form->renderField('address2'); ?>
+                        </div>
+                    </div>
+                    <div class="grid-x grid-margin-x">
+                        <?php if ((int) $settings['bookingform_requiredfields_town'] == 1) : ?>
+                            <?php $this->form->setFieldAttribute('town', 'required', 'true'); ?>
+                        <?php endif; ?>
+                        <div class="small-12 medium-6 cell end">
+                            <?php echo $this->form->renderField('town'); ?>
+                        </div>
 
-						<?php if ((int) $settings['bookingform_requiredfields_postcode'] == 1) : ?>
-							<?php $this->form->setFieldAttribute('postcode', 'required', 'true'); ?>
-						<?php endif; ?>
-						<div class="small-12 medium-6 cell end">
-							<?php echo $this->form->renderField('postcode'); ?>
-						</div>
-					</div>
-					<div class="grid-x grid-margin-x">
-						<?php if ((int) $settings['bookingform_requiredfields_region'] == 1) : ?>
-							<?php $this->form->setFieldAttribute('region_id', 'required', 'true'); ?>
-							<?php $this->form->setFieldAttribute('country_id', 'required', 'true'); ?>
-						<?php endif; ?>
-						<div class="small-12 medium-6 cell end">
-							<?php echo $this->form->renderField('country_id'); ?>
-						</div>
-						<div class="small-12 medium-6 cell end">
-							<?php echo $this->form->renderField('region_id'); ?>
-						</div>
-					</div>
-				</div>
-			</fieldset>
+                        <?php if ((int) $settings['bookingform_requiredfields_postcode'] == 1) : ?>
+                            <?php $this->form->setFieldAttribute('postcode', 'required', 'true'); ?>
+                        <?php endif; ?>
+                        <div class="small-12 medium-6 cell end">
+                            <?php echo $this->form->renderField('postcode'); ?>
+                        </div>
+                    </div>
+                    <div class="grid-x grid-margin-x">
+                        <?php if ((int) $settings['bookingform_requiredfields_region'] == 1) : ?>
+                            <?php $this->form->setFieldAttribute('region_id', 'required', 'true'); ?>
+                            <?php $this->form->setFieldAttribute('country_id', 'required', 'true'); ?>
+                        <?php endif; ?>
+                        <div class="small-12 medium-6 cell end">
+                            <?php echo $this->form->renderField('country_id'); ?>
+                        </div>
+                        <div class="small-12 medium-6 cell end">
+                            <?php echo $this->form->renderField('region_id'); ?>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
 
-			<fieldset class="fieldset">
-				<legend>
-					<?php echo KrMethods::plain('COM_KNOWRES_BILLING_ADDRESS'); ?>
-				</legend>
+            <fieldset class="fieldset">
+                <legend>
+                    <?php echo KrMethods::plain('COM_KNOWRES_BILLING_ADDRESS'); ?>
+                </legend>
 
-				<div class="callout small">
-					<div class="rgrid-x grid-margin-xow">
-						<div class="small-12 medium-6 cell" style="margin-bottom:10px;">
-							<?php echo $this->form->renderField('billing'); ?>
-						</div>
-					</div>
-					<div class="grid-x grid-margin-x">
-						<div class="small-12 medium-6 cell">
-							<?php echo $this->form->renderField('b_address1'); ?>
-						</div>
-						<div class="small-12 medium-6 cell">
-							<?php echo $this->form->renderField('b_address2'); ?>
-						</div>
-					</div>
-					<div class="grid-x grid-margin-x">
-						<div class="small-12 medium-6 cell">
-							<?php echo $this->form->renderField('b_town'); ?>
-						</div>
-						<div class="small-12 medium-6 cell">
-							<?php echo $this->form->renderField('b_postcode'); ?>
-						</div>
-					</div>
-					<div class="grid-x grid-margin-x">
-						<div class="small-12 medium-6 cell">
-							<?php echo $this->form->renderField('b_country_id'); ?>
-						</div>
-						<div class="small-12 medium-6 cell">
-							<?php echo $this->form->renderField('b_region_id'); ?>
-						</div>
-					</div>
-				</div>
-			</fieldset>
+                <div class="callout small">
+                    <div class="rgrid-x grid-margin-xow">
+                        <div class="small-12 medium-6 cell" style="margin-bottom:10px;">
+                            <?php echo $this->form->renderField('billing'); ?>
+                        </div>
+                    </div>
+                    <div class="grid-x grid-margin-x">
+                        <div class="small-12 medium-6 cell">
+                            <?php echo $this->form->renderField('b_address1'); ?>
+                        </div>
+                        <div class="small-12 medium-6 cell">
+                            <?php echo $this->form->renderField('b_address2'); ?>
+                        </div>
+                    </div>
+                    <div class="grid-x grid-margin-x">
+                        <div class="small-12 medium-6 cell">
+                            <?php echo $this->form->renderField('b_town'); ?>
+                        </div>
+                        <div class="small-12 medium-6 cell">
+                            <?php echo $this->form->renderField('b_postcode'); ?>
+                        </div>
+                    </div>
+                    <div class="grid-x grid-margin-x">
+                        <div class="small-12 medium-6 cell">
+                            <?php echo $this->form->renderField('b_country_id'); ?>
+                        </div>
+                        <div class="small-12 medium-6 cell">
+                            <?php echo $this->form->renderField('b_region_id'); ?>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
 
-			<?php if (!empty($this->gdpr)): ?>
-				<div class="callout small alert">
-					<p class="vsmall"><?php echo $this->gdpr; ?></p>
-				</div>
-			<?php endif; ?>
+            <?php if (!empty($this->gdpr)): ?>
+                <div class="callout small alert">
+                    <p class="vsmall"><?php echo $this->gdpr; ?></p>
+                </div>
+            <?php endif; ?>
 
-			<div class="text-right">
-				<?php if ($this->contract_id) : ?>
-					<button type="submit" class="button primary">
-						<?php echo KrMethods::plain('COM_KNOWRES_MAKE_A_PAYMENT'); ?>
-					</button>
-				<?php else: ?>
-					<button type="submit" class="button primary">
-						<?php echo KrMethods::plain('COM_KNOWRES_DASHBOARD_UPDATE_ITEM'); ?>
-					</button>
-				<?php endif; ?>
+            <div class="text-right">
+                <?php if ($this->contract_id) : ?>
+                    <button type="submit" class="button primary">
+                        <?php echo KrMethods::plain('COM_KNOWRES_MAKE_A_PAYMENT'); ?>
+                    </button>
+                <?php else: ?>
+                    <button type="submit" class="button primary">
+                        <?php echo KrMethods::plain('COM_KNOWRES_DASHBOARD_UPDATE_ITEM'); ?>
+                    </button>
+                <?php endif; ?>
 
-				<a href="<?php echo KrMethods::route('index.php?option=com_knowres&task=dashboard.cancel'); ?>"
-				   class="button clear small" title="<?php echo KrMethods::plain('JCANCEL'); ?>">
-					<?php echo KrMethods::plain('COM_KNOWRES_OR_CANCEL'); ?>
-				</a>
-			</div>
+                <a href="<?php echo KrMethods::route('index.php?option=com_knowres&task=dashboard.cancel'); ?>"
+                   class="button clear small" title="<?php echo KrMethods::plain('JCANCEL'); ?>">
+                    <?php echo KrMethods::plain('COM_KNOWRES_OR_CANCEL'); ?>
+                </a>
+            </div>
 
-			<?php echo HTMLHelper::_('form.token'); ?>
-			<input type="hidden" name="id" value="<?php echo $this->item->id; ?>">
-			<input type="hidden" name="jform[id]" value="<?php echo $this->item->id; ?>">
-			<input type="hidden" name="jform[email]" value="<?php echo $this->item->email; ?>">
-			<input type="hidden" name="task" value="guest.save">
-		</form>
-	</div>
+            <?php echo HTMLHelper::_('form.token'); ?>
+            <input type="hidden" name="id" value="<?php echo $this->item->id; ?>">
+            <input type="hidden" name="jform[id]" value="<?php echo $this->item->id; ?>">
+            <input type="hidden" name="jform[email]" value="<?php echo $this->item->email; ?>">
+            <input type="hidden" name="task" value="guest.save">
+        </form>
+    </div>
 </div>
 
 <script>

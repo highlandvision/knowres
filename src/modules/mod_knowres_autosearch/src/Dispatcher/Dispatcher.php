@@ -16,10 +16,8 @@ use Exception;
 use HighlandVision\KR\ExceptionHandling;
 use HighlandVision\KR\Framework\KrMethods;
 use Joomla\CMS\Dispatcher\AbstractModuleDispatcher;
-
 use function defined;
 use function is_dir;
-
 use const JPATH_ROOT;
 
 /**
@@ -27,7 +25,8 @@ use const JPATH_ROOT;
  *
  * @since  4.0.0
  */
-class Dispatcher extends AbstractModuleDispatcher {
+class Dispatcher extends AbstractModuleDispatcher
+{
 	/**
 	 * Define tasks for before dispatch
 	 *
@@ -36,7 +35,8 @@ class Dispatcher extends AbstractModuleDispatcher {
 	 */
 	public function dispatch(): void
 	{
-		if (is_dir(JPATH_ROOT . '/media/com_knowres/vendor')) {
+		if (is_dir(JPATH_ROOT . '/media/com_knowres/vendor'))
+		{
 			require_once(JPATH_ROOT . '/media/com_knowres/vendor/autoload.php');
 		}
 
@@ -49,15 +49,15 @@ class Dispatcher extends AbstractModuleDispatcher {
 	/**
 	 * Returns the layout data.
 	 *
+	 * @return array
 	 * @throws Exception
 	 * @since  4.0.0
-	 * @return array
 	 */
 	protected function getLayoutData(): array
 	{
 		$lang         = KrMethods::getLanguage();
 		$language_tag = KrMethods::getLanguageTag();
-		$base_dir = JPATH_ROOT . '/modules';
+		$base_dir     = JPATH_ROOT . '/modules';
 		$lang->load('mod_knowres_autosearch', $base_dir, $language_tag);
 
 		return parent::getLayoutData();

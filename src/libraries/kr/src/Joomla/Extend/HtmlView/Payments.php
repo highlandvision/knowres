@@ -6,6 +6,7 @@
  * @license     See the file "LICENSE.txt" for the full license governing this code.
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
+
 /** @noinspection PhpPossiblePolymorphicInvocationInspection */
 
 namespace HighlandVision\KR\Joomla\Extend\HtmlView;
@@ -18,7 +19,6 @@ use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\HtmlView as KrHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
-
 use function defined;
 use function in_array;
 
@@ -75,7 +75,8 @@ class Payments extends KrHtmlView
 				$Toolbar->standardButton('cancel')
 				        ->icon('fa-solid fa-thumbs-down knowres')
 				        ->onclick("return confirm('" . $text
-					        . "')?Knowres.submitform('contract.trash', document.getElementById('contract-form')):'';")
+					        . "')?Knowres.submitform('contract.trash', document.getElementById('contract-form')):'';"
+				        )
 				        ->text('JTOOLBAR_CANCEL');
 			}
 		}
@@ -86,7 +87,8 @@ class Payments extends KrHtmlView
 			$Toolbar->standardButton('delete')
 			        ->icon('fa-solid fa-exclamation-triangle knowres')
 			        ->onclick("return confirm('" . $text
-				        . "')?Knowres.submitform('contract.delete', document.getElementById('contract-form')):'';")
+				        . "')?Knowres.submitform('contract.delete', document.getElementById('contract-form')):'';"
+			        )
 			        ->text('JTOOLBAR_DELETE');
 		}
 
@@ -111,7 +113,8 @@ class Payments extends KrHtmlView
 			$hash = Cryptor::setHash(0, $this->item->guest_id, $this->item->qkey);
 			$key  = Cryptor::encrypt($hash);
 			$link = KrMethods::route(KrMethods::getRoot()
-				. 'index.php?option=com_knowres&task=dashboard.request&key=' . $key);
+				. 'index.php?option=com_knowres&task=dashboard.request&key=' . $key
+			);
 
 			$Toolbar->linkButton('guestdashboard', 'COM_KNOWRES_PROPERTYDASHBOARD_TITLE')
 			        ->buttonClass('btn btn-primary')
@@ -121,7 +124,8 @@ class Payments extends KrHtmlView
 		}
 
 		$link = KrMethods::route('index.php?option=com_knowres&task=property.calendar&property_id='
-			. $this->item->property_id);
+			. $this->item->property_id
+		);
 		$Toolbar->linkButton('calendar', 'COM_KNOWRES_TITLE_PROPERTY_CALENDAR')
 		        ->icon('fa-solid fa-calendar knowres')
 		        ->url($link);
@@ -149,9 +153,9 @@ class Payments extends KrHtmlView
 	 *
 	 * @param  ?string  $list_name  Name of list model
 	 *
+	 * @return Toolbar
 	 * @throws Exception
 	 * @since  4.0.0
-	 * @return Toolbar
 	 */
 	protected function addListToolbar(?string $list_name = null): Toolbar
 	{

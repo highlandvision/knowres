@@ -25,26 +25,26 @@ extract($displayData);
 ?>
 
 <div class="control-group">
-	<div class="control-label">
-		<?php echo $label; ?>
-	</div>
-	<div class="controls">
-		<div class="row">
-			<a href="#" id="geocodeAddress">
-				<?php echo KrMethods::plain('COM_KNOWRES_GEOCODE_ADDRESS'); ?>
-			</a>
-			<p><?php echo KrMethods::plain('COM_KNOWRES_GEOCODE_ADDRESS_INSTRUCTIONS'); ?></p>
-			<div class="col-xl-6">
-				<?php echo $f1; ?>
-			</div>
-			<div class="col-xl-6">
-				<?php echo $f2; ?>
-			</div>
-		</div>
-		<div class="row">
-			<div id="mapdrag" data-lat="<?php echo $lat; ?>" data-lng="<?php echo $lng; ?>"
-			     data-maxzoom="<?php echo $zoom; ?>" data-zoom="<?php echo $zoom; ?>">
-			</div>
-		</div>
-	</div>
+    <div class="control-label">
+        <?php echo $label; ?>
+    </div>
+    <div class="controls">
+        <div class="row">
+            <a href="#" id="geocodeAddress">
+                <?php echo KrMethods::plain('COM_KNOWRES_GEOCODE_ADDRESS'); ?>
+            </a>
+            <p><?php echo KrMethods::plain('COM_KNOWRES_GEOCODE_ADDRESS_INSTRUCTIONS'); ?></p>
+            <div class="col-xl-6">
+                <?php echo $f1; ?>
+            </div>
+            <div class="col-xl-6">
+                <?php echo $f2; ?>
+            </div>
+        </div>
+        <div class="row">
+            <div id="mapdrag" data-lat="<?php echo $lat; ?>" data-lng="<?php echo $lng; ?>"
+                 data-maxzoom="<?php echo $zoom; ?>" data-zoom="<?php echo $zoom; ?>">
+            </div>
+        </div>
+    </div>
 </div>

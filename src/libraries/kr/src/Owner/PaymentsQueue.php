@@ -12,7 +12,6 @@ namespace HighlandVision\KR\Owner;
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\TickTock;
-
 use function count;
 
 /**

@@ -20,7 +20,6 @@ use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Utility;
 use JetBrains\PhpStorm\NoReturn;
 use Joomla\CMS\Response\JsonResponse;
-
 use function jexit;
 
 /**
@@ -49,7 +48,8 @@ class GanttController extends FormController
 	 * @throws Exception
 	 * @since  3.2.0
 	 */
-	#[NoReturn] public function data(): void
+	#[NoReturn]
+	public function data(): void
 	{
 		$this->checkToken();
 

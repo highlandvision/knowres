@@ -30,9 +30,9 @@ class ContractfeeController extends FormController
 	 *
 	 * @param   null  $key  The name of the primary key of the URL variable.
 	 *
+	 * @return bool
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return bool
 	 */
 	public function cancel($key = null): bool
 	{
@@ -67,14 +67,14 @@ class ContractfeeController extends FormController
 			if (!$contract_id)
 			{
 				$this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=' . $this->view_list
-					. $this->getRedirectToListAppend(),
-					false));
+					. $this->getRedirectToListAppend(), false)
+				);
 			}
 			else
 			{
 				$this->setRedirect(Route::_('index.php?option=' . $this->option . '&task=contract.show&id='
-					. $contract_id,
-					false));
+					. $contract_id, false)
+				);
 			}
 		}
 	}

@@ -33,50 +33,50 @@ $count = 1;
 ?>
 
 <?php foreach ($values as $k => $v): ?>
-	<div class="grid-x grid-margin-x">
-		<div class="small-8 cell">
-			<div style="font-size:24px;">
-				<?php echo $count . '. ' . $v['name']; ?>
-			</div>
-		</div>
-		<div class="small-4 cell text-right">
-			<button type="button" class="button" tabindex="-1" style="margin-bottom:0.7rem;"
-			        data-toggle="guest_<?php echo $count; ?>">
-				<?php echo KrMethods::plain('COM_KNOWRES_SHOW_HIDE'); ?>
-			</button>
-		</div>
-	</div>
+    <div class="grid-x grid-margin-x">
+        <div class="small-8 cell">
+            <div style="font-size:24px;">
+                <?php echo $count . '. ' . $v['name']; ?>
+            </div>
+        </div>
+        <div class="small-4 cell text-right">
+            <button type="button" class="button" tabindex="-1" style="margin-bottom:0.7rem;"
+                    data-toggle="guest_<?php echo $count; ?>">
+                <?php echo KrMethods::plain('COM_KNOWRES_SHOW_HIDE'); ?>
+            </button>
+        </div>
+    </div>
 
-	<div id="guest_<?php echo $count; ?>" class="callout small" data-toggler="hideme">
-		<div class="grid-x grid-margin-x" id="<?php echo $group . $k; ?>">
-			<!-- Loop each fieldset - one fieldset per form item so each column can have a width-->
-			<?php foreach ($form->getFieldsets() as $fieldset) : ?>
-				<?php $hidden = ""; ?>
-				<?php if (!$surname2 && $fieldset->name == "surname2"): ?>
-					<?php $hidden = "hidden"; ?>
-				<?php endif; ?>
-				<?php if (!$sex && $fieldset->name == "sex"): ?>
-					<?php $hidden = "hidden"; ?>
-				<?php endif; ?>
-				<?php if (!$age && $fieldset->name == "dob"): ?>
-					<?php $hidden = "hidden"; ?>
-				<?php endif; ?>
-				<?php if (!$document && in_array($fieldset->name, $document_fields)): ?>
-					<?php $hidden = "hidden"; ?>
-				<?php endif; ?>
+    <div id="guest_<?php echo $count; ?>" class="callout small" data-toggler="hideme">
+        <div class="grid-x grid-margin-x" id="<?php echo $group . $k; ?>">
+            <!-- Loop each fieldset - one fieldset per form item so each column can have a width-->
+            <?php foreach ($form->getFieldsets() as $fieldset) : ?>
+                <?php $hidden = ""; ?>
+                <?php if (!$surname2 && $fieldset->name == "surname2"): ?>
+                    <?php $hidden = "hidden"; ?>
+                <?php endif; ?>
+                <?php if (!$sex && $fieldset->name == "sex"): ?>
+                    <?php $hidden = "hidden"; ?>
+                <?php endif; ?>
+                <?php if (!$age && $fieldset->name == "dob"): ?>
+                    <?php $hidden = "hidden"; ?>
+                <?php endif; ?>
+                <?php if (!$document && in_array($fieldset->name, $document_fields)): ?>
+                    <?php $hidden = "hidden"; ?>
+                <?php endif; ?>
 
-				<div class="<?php echo $fieldset->class; ?>" <?php echo $hidden; ?>>
-					<?php foreach ($form->getFieldset($fieldset->name) as $field) : ?>
-						<?php $name = $field->__get('name'); ?>
-						<?php $field_name = $group . '[' . $k . ']' . '[' . $field->__get('name') . ']'; ?>
-						<?php $field->__set('name', $field_name); ?>
-						<?php $field->__set('id', $name . $k); ?>
-						<?php $field->__set('value', $v[$name]); ?>
-						<?php echo $field->renderField(); ?>
-					<?php endforeach; ?>
-				</div>
-			<?php endforeach; ?>
-		</div>
-	</div>
-	<?php $count++; ?>
+                <div class="<?php echo $fieldset->class; ?>" <?php echo $hidden; ?>>
+                    <?php foreach ($form->getFieldset($fieldset->name) as $field) : ?>
+                        <?php $name = $field->__get('name'); ?>
+                        <?php $field_name = $group . '[' . $k . ']' . '[' . $field->__get('name') . ']'; ?>
+                        <?php $field->__set('name', $field_name); ?>
+                        <?php $field->__set('id', $name . $k); ?>
+                        <?php $field->__set('value', $v[$name]); ?>
+                        <?php echo $field->renderField(); ?>
+                    <?php endforeach; ?>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+    <?php $count++; ?>
 <?php endforeach; ?>

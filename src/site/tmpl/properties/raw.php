@@ -6,6 +6,7 @@
  * @license    See the file "LICENSE.txt" for the full license governing this code.
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
+
 /** @noinspection PhpUnhandledExceptionInspection */
 
 defined('_JEXEC') or die;
@@ -15,15 +16,18 @@ use HighlandVision\KR\Utility;
 use Joomla\CMS\Factory;
 
 $pagination = $this->pagination->getPagesLinks(true);
-if (!$pagination) {
+if (!$pagination)
+{
 	$pagination = '&nbsp;';
 }
 
 $data = [];
 
-if (!empty($this->items) && count($this->items)) {
+if (!empty($this->items) && count($this->items))
+{
 	$data['bar'] = $this->Response->searchData->bar;
-	if ($this->Response->searchData->bar == 'favs') {
+	if ($this->Response->searchData->bar == 'favs')
+	{
 		$this->Response->searchData->bar = $this->favs_bar;
 	}
 	$data['items']      = $this->loadTemplate($this->Response->searchData->bar);
@@ -32,11 +36,16 @@ if (!empty($this->items) && count($this->items)) {
 	$data['search']     = $this->modules;
 	$data['pagination'] = $pagination == '&nbsp;' ? '' : $pagination;
 	if (count($this->items) == 1)
+	{
 		$data['pcount'] = "1 " . KrMethods::plain('COM_KNOWRES_PROPERTY');
-	else {
+	}
+	else
+	{
 		$data['pcount'] = count($this->items) . ' ' . KrMethods::plain('COM_KNOWRES_PROPERTIES_FOUND');
 	}
-} else {
+}
+else
+{
 	$data['items']   = $this->loadTemplate('sorry');
 	$data['sortby']  = '';
 	$data['filters'] = '';
@@ -46,18 +55,23 @@ if (!empty($this->items) && count($this->items)) {
 echo Utility::encodeJson($data);
 
 $lifetime = 3600 * 24 * 30;
-if (count($this->Response->searchData->favs)) {
+if (count($this->Response->searchData->favs))
+{
 	Factory::getApplication()->getInput()->cookie->set('krsaved',
 		implode('xx', $this->Response->searchData->favs),
 		time() + $lifetime,
 		Factory::getApplication()->get('cookie_path', '/'),
-		Factory::getApplication()->get('cookie_domain'));
-} else {
+		Factory::getApplication()->get('cookie_domain')
+	);
+}
+else
+{
 	Factory::getApplication()->getInput()->cookie->set('krsaved',
 		'',
 		time() - $lifetime,
 		Factory::getApplication()->get('cookie_path', '/'),
-		Factory::getApplication()->get('cookie_domain'));
+		Factory::getApplication()->get('cookie_domain')
+	);
 }
 
 jexit();

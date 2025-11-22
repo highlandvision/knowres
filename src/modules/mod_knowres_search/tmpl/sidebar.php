@@ -24,44 +24,48 @@ $link         = '/index.php?option=com_knowres&task=properties.search';
 ?>
 
 <div class="sidebar">
-	<div class="grid-x grid-margin-x">
-		<div class="small-12 cell">
-			<form action="<?php echo $link; ?>" class="vertical" method="post" name="search-default">
-				<?php if ($show_regions): ?>
-					<?php echo $options; ?>
-				<?php endif; ?>
-				<?php if ($show_datepickers): ?>
-					<?php echo $form->renderField('arrivaldsp',
-						null,
-						TickTock::getDate((string) $initial->arrival, 'j M Y')); ?>
-					<?php echo $form->renderField('departuredsp',
-						null,
-						TickTock::getDate((string) $initial->departure, 'j M Y')); ?>
-					<input type="hidden" id="arrival" name="arrival" value="">
-					<input type="hidden" id="departure" name="departure" value="">
-				<?php endif; ?>
-				<?php if ($show_guests): ?>
-					<?php echo $form->renderField('guests', null, $initial->guests,
-						['adults'     => $initial->adults,
-						 'children'   => $initial->children,
-						 'child_ages' => $initial->child_ages ?: [],
-						 'max_guests' => $max_guests
-						]);
-					?>
-				<?php endif; ?>
-				<?php if ($show_flexible): ?>
-					<?php echo $form->renderField('flexible', null, $initial->flexible); ?>
-				<?php endif; ?>
+    <div class="grid-x grid-margin-x">
+        <div class="small-12 cell">
+            <form action="<?php echo $link; ?>" class="vertical" method="post" name="search-default">
+                <?php if ($show_regions): ?>
+                    <?php echo $options; ?>
+                <?php endif; ?>
+                <?php if ($show_datepickers): ?>
+                    <?php echo $form->renderField('arrivaldsp',
+                            null,
+                            TickTock::getDate((string) $initial->arrival, 'j M Y')
+                    ); ?>
+                    <?php echo $form->renderField('departuredsp',
+                            null,
+                            TickTock::getDate((string) $initial->departure, 'j M Y')
+                    ); ?>
+                    <input type="hidden" id="arrival" name="arrival" value="">
+                    <input type="hidden" id="departure" name="departure" value="">
+                <?php endif; ?>
+                <?php if ($show_guests): ?>
+                    <?php echo $form->renderField('guests', null, $initial->guests,
+                            [
+                                    'adults'     => $initial->adults,
+                                    'children'   => $initial->children,
+                                    'child_ages' => $initial->child_ages ?: [],
+                                    'max_guests' => $max_guests
+                            ]
+                    );
+                    ?>
+                <?php endif; ?>
+                <?php if ($show_flexible): ?>
+                    <?php echo $form->renderField('flexible', null, $initial->flexible); ?>
+                <?php endif; ?>
 
-				<button type="submit" class="button expanded large no-margin-bottom">
-					<?php echo KrMethods::plain("MOD_KNOWRES_SEARCH_BUTTON"); ?>
-					&nbsp;&nbsp;<i class="fa-solid fa-magnifying-glass"></i>
-				</button>
+                <button type="submit" class="button expanded large no-margin-bottom">
+                    <?php echo KrMethods::plain("MOD_KNOWRES_SEARCH_BUTTON"); ?>
+                    &nbsp;&nbsp;<i class="fa-solid fa-magnifying-glass"></i>
+                </button>
 
-				<?php if ($show_guests && $expanded_guests): ?>
-					<?php require ModuleHelper::getLayoutPath('mod_knowres_search', '_partypane'); ?>
-				<?php endif; ?>
-			</form>
-		</div>
-	</div>
+                <?php if ($show_guests && $expanded_guests): ?>
+                    <?php require ModuleHelper::getLayoutPath('mod_knowres_search', '_partypane'); ?>
+                <?php endif; ?>
+            </form>
+        </div>
+    </div>
 </div>

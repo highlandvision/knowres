@@ -20,14 +20,14 @@ $wa->useScript('keepalive')
 <form action="<?php echo KrMethods::route('index.php?option=com_knowres'); ?>" class="form-validate"
       id="export-form" method="post" name="adminForm">
 
-	<div class="main-card">
-		<div class="row">
-			<div class="col-xl-9 col-xxl-8">
-				<?php echo $this->form->renderFieldset('krdata'); ?>
-			</div>
-		</div>
-	</div>
+    <div class="main-card">
+        <div class="row">
+            <div class="col-xl-9 col-xxl-8">
+                <?php echo $this->form->renderFieldset('krdata'); ?>
+            </div>
+        </div>
+    </div>
 
-	<?php echo HTMLHelper::_('form.token'); ?>
-	<input type="hidden" name="task" value="">
+    <?php echo HTMLHelper::_('form.token'); ?>
+    <input type="hidden" name="task" value="">
 </form>

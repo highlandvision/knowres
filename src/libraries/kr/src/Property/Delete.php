@@ -6,6 +6,7 @@
  * @license    See the file "LICENSE.txt" for the full license governing this code.
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
+
 /** @noinspection PhpPossiblePolymorphicInvocationInspection */
 
 namespace HighlandVision\KR\Property;
@@ -34,7 +35,7 @@ class Delete
 	/**
 	 * Initialise
 	 *
-	 * @param  int  $id  ID of property to delete
+	 * @param   int  $id  ID of property to delete
 	 *
 	 * @throws InvalidArgumentException
 	 * @since  3.0.0
@@ -91,24 +92,10 @@ class Delete
 	}
 
 	/**
-	 * Create tmp table based on actual table
-	 * loading all rows with matching id
-	 *
-	 * @throws Exception
-	 * @since  3.0.0
-	 */
-	protected function deleteProperty(): void
-	{
-		$model = KrFactory::getAdminModel('property');
-		$cid   = array($this->property_id);
-		$model->delete($cid);
-	}
-
-	/**
 	 * Delete linked tables with translations
 	 *
-	 * @param  string  $table  Table to replicate
-	 * @param  string  $class  Model class
+	 * @param   string  $table  Table to replicate
+	 * @param   string  $class  Model class
 	 *
 	 * @throws Exception
 	 * @since  3.0.0
@@ -128,6 +115,20 @@ class Delete
 			$model = KrFactory::getAdminModel($class);
 			$model->delete($ids);
 		}
+	}
+
+	/**
+	 * Create tmp table based on actual table
+	 * loading all rows with matching id
+	 *
+	 * @throws Exception
+	 * @since  3.0.0
+	 */
+	protected function deleteProperty(): void
+	{
+		$model = KrFactory::getAdminModel('property');
+		$cid   = array($this->property_id);
+		$model->delete($cid);
 	}
 
 	/**

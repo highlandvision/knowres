@@ -29,8 +29,8 @@ class GuestData extends Contract
 	/**
 	 * Initialize
 	 *
-	 * @param  string  $action       Destination output
-	 * @param  int     $contract_id  Contract id
+	 * @param   string  $action       Destination output
+	 * @param   int     $contract_id  Contract id
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
@@ -43,9 +43,9 @@ class GuestData extends Contract
 	/**
 	 * Create the pdf file and either download or return path name
 	 *
+	 * @return bool|string
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return bool|string
 	 */
 	public function getPdf(): bool|string
 	{
@@ -61,9 +61,9 @@ class GuestData extends Contract
 	/**
 	 * Get the pdf text
 	 *
+	 * @return string
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return string
 	 */
 	protected function getContent(): string
 	{

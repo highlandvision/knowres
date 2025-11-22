@@ -37,9 +37,9 @@ class Wire extends Gateway
 	/**
 	 * Data for output
 	 *
+	 * @return stdClass
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return stdClass
 	 */
 	public function setOutputData(): stdClass
 	{

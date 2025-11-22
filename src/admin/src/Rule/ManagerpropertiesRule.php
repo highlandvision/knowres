@@ -39,19 +39,22 @@ class ManagerpropertiesRule extends FormRule
 	 *                                      the entire form.
 	 * @param  ?Form              $form     The form object for which the field is being tested.
 	 *
+	 * @return bool  True if the value is valid, false otherwise.
 	 * @throws Exception
 	 * @since  3.4.0
-	 * @return bool  True if the value is valid, false otherwise.
 	 */
 	public function test(SimpleXMLElement $element, $value, $group = null, ?Registry $input = null,
-	                        ?Form $form = null): bool
+	                     ?Form            $form = null): bool
 	{
 		$access_level = ($input instanceof Registry) ? $input->get('access_level') : '';
-		if ($access_level >= 30) {
+		if ($access_level >= 30)
+		{
 			return true;
 		}
-		elseif ($access_level == 20) {
-			if (!$value) {
+		elseif ($access_level == 20)
+		{
+			if (!$value)
+			{
 				KrMethods::message(KrMethods::plain('COM_KNOWRES_MANAGER_ERROR1'), 'error');
 
 				return false;

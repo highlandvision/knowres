@@ -25,9 +25,18 @@ use Joomla\Utilities\ArrayHelper;
 /**
  * Displays sitemap for KR properties
  */
-class PlgOSMapKnowres extends Base implements ContentInterface {
+class PlgOSMapKnowres extends Base implements ContentInterface
+{
 	/** @var ?PlgOSMapKnowres */
 	private static ?PlgOSMapKnowres $instance = null;
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getComponentElement(): string
+	{
+		return 'com_knowres';
+	}
 
 	/**
 	 * Returns the unique instance of the plugin
@@ -35,8 +44,10 @@ class PlgOSMapKnowres extends Base implements ContentInterface {
 	 * @return PlgOSMapKnowres
 	 * @noinspection PhpMissingReturnTypeInspection
 	 */
-	public static function getInstance() {
-		if (empty(static::$instance)) {
+	public static function getInstance()
+	{
+		if (empty(static::$instance))
+		{
 			$dispatcher       = Factory::getDispatcher();
 			static::$instance = new self($dispatcher);
 		}
@@ -54,13 +65,16 @@ class PlgOSMapKnowres extends Base implements ContentInterface {
 	 * @throws Exception
 	 * @since  4.0.0
 	 */
-	public static function getTree($collector, $parent, $params): void {
+	public static function getTree($collector, $parent, $params): void
+	{
 		$priority   = $params->get('priority', $parent->priority);
 		$changefreq = $params->get('changefreq', $parent->changefreq);
-		if ($priority == '-1') {
+		if ($priority == '-1')
+		{
 			$priority = $parent->priority;
 		}
-		if ($changefreq == '-1') {
+		if ($changefreq == '-1')
+		{
 			$changefreq = $parent->changefreq;
 		}
 
@@ -68,7 +82,8 @@ class PlgOSMapKnowres extends Base implements ContentInterface {
 		$params['changefreq'] = $changefreq;
 
 		$linkQuery = parse_url($parent->link);
-		if (!isset($linkQuery['query'])) {
+		if (!isset($linkQuery['query']))
+		{
 			return;
 		}
 
@@ -88,32 +103,37 @@ class PlgOSMapKnowres extends Base implements ContentInterface {
 	 * @param   Item      $node    Sitemap collector
 	 * @param   Registry  $params  Plugin params
 	 *
+	 * @return bool
 	 * @throws Exception
 	 * @since  4.0.0
-	 * @return bool
 	 */
-	public static function prepareMenuItem($node, $params): bool {
+	public static function prepareMenuItem($node, $params): bool
+	{
 		static::checkMemory();
 
 		$linkQuery = parse_url($node->link);
-		if (!isset($linkQuery['query'])) {
+		if (!isset($linkQuery['query']))
+		{
 			return false;
 		}
 
 		parse_str(html_entity_decode($linkQuery['query']), $linkVars);
 
 		$option = ArrayHelper::getValue($linkVars, 'option', '');
-		if ($option != 'com_knowres') {
+		if ($option != 'com_knowres')
+		{
 			return false;
 		}
 
 		$view = ArrayHelper::getValue($linkVars, 'view', '');
-		if ($view != 'properties') {
+		if ($view != 'properties')
+		{
 			return false;
 		}
 
 		$layout = ArrayHelper::getValue($linkVars, 'layout', '');
-		if ($layout == '' || $layout == 'search' || $layout == 'category') {
+		if ($layout == '' || $layout == 'search' || $layout == 'category')
+		{
 			return true;
 		}
 
@@ -129,24 +149,27 @@ class PlgOSMapKnowres extends Base implements ContentInterface {
 	 *
 	 * @throws Exception
 	 */
-	private static function processTreeProperties(Collector $collector, Item $menuItem, object $params): void {
+	private static function processTreeProperties(Collector $collector, Item $menuItem, object $params): void
+	{
 		static::checkMemory();
 
 		$db = KrFactory::getDatabase();
 
 		$query = $db->getQuery(true);
-		$query->select($db->qn(['id',
-		                        'property_name',
-		                        'created_at',
-		                        'updated_at'
+		$query->select($db->qn([
+			'id',
+			'property_name',
+			'created_at',
+			'updated_at'
 		]));
 		$query->from($db->qn('#__knowres_property'))
-			->where($db->qn('state') . '=1')
-			->order($db->qn('property_name'));
+		      ->where($db->qn('state') . '=1')
+		      ->order($db->qn('property_name'));
 
 		$db->setQuery($query);
 		$rows = $db->loadObjectList();
-		if (empty($rows)) {
+		if (empty($rows))
+		{
 			return;
 		}
 
@@ -155,7 +178,8 @@ class PlgOSMapKnowres extends Base implements ContentInterface {
 
 		$collector->changeLevel(1);
 
-		foreach ($rows as $row) {
+		foreach ($rows as $row)
+		{
 			$node             = new stdclass;
 			$node->id         = $row->id;
 			$node->pid        = $row->id;
@@ -163,10 +187,12 @@ class PlgOSMapKnowres extends Base implements ContentInterface {
 			$node->browserNav = $menuItem->browserNav;
 			$node->name       = $row->property_name;
 
-			if (empty($row->updated_at) || $row->updated_at == '0000-00-00 00:00:00') {
+			if (empty($row->updated_at) || $row->updated_at == '0000-00-00 00:00:00')
+			{
 				$node->modified = $row->created_at;
 			}
-			else {
+			else
+			{
 				$node->modified = $row->updated_at;
 			}
 			$node->priority   = $params['priority'];
@@ -175,18 +201,22 @@ class PlgOSMapKnowres extends Base implements ContentInterface {
 			$link       = 'index.php?option=com_knowres&Itemid=' . $Itemid . '&view=property&id=' . $row->id;
 			$node->link = KrMethods::getRoot() . KrMethods::route($link);
 
-			if ($params->get('add_images', 1)) {
+			if ($params->get('add_images', 1))
+			{
 				$max          = $params->get('max_images', 5);
 				$node->images = [];
 
 				$data   = KrFactory::getListModel('images')->getForSiteMap($row->id, $max);
 				$images = [];
-				foreach ($data as $i) {
+				foreach ($data as $i)
+				{
 					$title = $Translations->getText('image', $i->id, 'alt-text');
-					if (empty($title)) {
+					if (empty($title))
+					{
 						$title = $Translations->getText('image', $i->id, 'description');
 					}
-					if (empty($title)) {
+					if (empty($title))
+					{
 						$title = $row->property_name . ' ' . $i->id;
 					}
 					$images[] = (object) [
@@ -195,7 +225,8 @@ class PlgOSMapKnowres extends Base implements ContentInterface {
 					];
 				}
 
-				if (!empty($images)) {
+				if (!empty($images))
+				{
 					$node->images = array_merge(
 						$node->images,
 						$images
@@ -218,26 +249,31 @@ class PlgOSMapKnowres extends Base implements ContentInterface {
 	 *
 	 * @throws Exception
 	 */
-	private static function processTreeRegions(Collector $collector, Item $menuItem, object $params): void {
+	private static function processTreeRegions(Collector $collector, Item $menuItem, object $params): void
+	{
 		static::checkMemory();
 
 		$rows = KrFactory::getListModel('regions')->getDistinctRegions();
-		if (empty($rows)) {
+		if (empty($rows))
+		{
 			return;
 		}
 
 		$Itemid = SiteHelper::getItemId('com_knowres', 'properties');
-		foreach ($rows as $row) {
+		foreach ($rows as $row)
+		{
 			$node             = new stdclass;
 			$node->id         = $row->region_id;
 			$node->uid        = $menuItem->uid . 'r' . $row->region_id;
 			$node->browserNav = $menuItem->browserNav;
 			$node->name       = $row->name;
 
-			if (empty($row->updated_at) || $row->updated_at == '0000-00-00 00:00:00') {
+			if (empty($row->updated_at) || $row->updated_at == '0000-00-00 00:00:00')
+			{
 				$node->modified = $row->created_at;
 			}
-			else {
+			else
+			{
 				$node->modified = $row->updated_at;
 			}
 			$node->priority   = $params['priority'];
@@ -245,17 +281,11 @@ class PlgOSMapKnowres extends Base implements ContentInterface {
 
 			$link       =
 				KrMethods::route('index.php?option=com_knowres&view=properties&region_id=' . $row->region_id . '&Itemid=' .
-				                 $Itemid);
+					$Itemid
+				);
 			$node->link = KrMethods::getRoot() . KrMethods::route($link);
 
 			$collector->printNode($node);
 		}
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function getComponentElement(): string {
-		return 'com_knowres';
 	}
 }

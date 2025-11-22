@@ -32,7 +32,6 @@ use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Response\JsonResponse;
 use RuntimeException;
 use UnexpectedValueException;
-
 use function jexit;
 
 /**
@@ -40,16 +39,18 @@ use function jexit;
  *
  * @since 1.0.0
  */
-class PropertyController extends BaseController {
+class PropertyController extends BaseController
+{
 	/**
 	 * Ajax display geriatric calendar using property.js
 	 *
-	 * @throws Exception
-	 * @since        3.3.0
 	 * @return void
 	 * @noinspection PhpUnused
+	 * @throws Exception
+	 * @since        3.3.0
 	 */
-	#[NoReturn] public function geriatric(): void
+	#[NoReturn]
+	public function geriatric(): void
 	{
 		KrMethods::loadLanguage();
 
@@ -83,10 +84,12 @@ class PropertyController extends BaseController {
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	#[NoReturn] public function ics(): void
+	#[NoReturn]
+	public function ics(): void
 	{
 		$id = KrMethods::inputInt('id');
-		if (!$id) {
+		if (!$id)
+		{
 			exit('Invalid request');
 		}
 
@@ -94,7 +97,8 @@ class PropertyController extends BaseController {
 		$custom = KrMethods::inputString('custom', '');
 
 		$property = KrFactory::getAdminModel('property')->getItem($id);
-		if (!$property->id || $property->state != 1) {
+		if (!$property->id || $property->state != 1)
+		{
 			exit('Invalid property');
 		}
 
@@ -107,12 +111,13 @@ class PropertyController extends BaseController {
 	/**
 	 * Ajax - display properties map infowindow
 	 *
-	 * @throws Exception
-	 * @since        1.0.0
 	 * @return void
 	 * @noinspection PhpUnused
+	 * @throws Exception
+	 * @since        1.0.0
 	 */
-	#[NoReturn] public function mapinfowindow(): void
+	#[NoReturn]
+	public function mapinfowindow(): void
 	{
 		KrMethods::loadLanguage();
 		$searchSession = new KrSession\Search();
@@ -130,7 +135,8 @@ class PropertyController extends BaseController {
 		$view->params         = KrMethods::getParams();
 		$view->link           = SiteHelper::buildPropertyLink($id);
 
-		if (KrMethods::getParams()->get('review_ratings', 0)) {
+		if (KrMethods::getParams()->get('review_ratings', 0))
+		{
 			$view->ratings = KrFactory::getListModel('reviews')->getAvgReview($id);
 		}
 
@@ -144,12 +150,15 @@ class PropertyController extends BaseController {
 	 * @since        3.3.0
 	 * @noinspection PhpUnused
 	 */
-	#[NoReturn] public function mobi(): void
+	#[NoReturn]
+	public function mobi(): void
 	{
-		try {
+		try
+		{
 			KrMethods::loadLanguage();
 			$property_id = KrMethods::inputInt('pid');
-			if (!$property_id) {
+			if (!$property_id)
+			{
 				throw new RuntimeException(KrMethods::plain('COM_KNOWRES_ERROR_FATAL'));
 			}
 
@@ -166,7 +175,9 @@ class PropertyController extends BaseController {
 			list($wrapper['arrival'], $wrapper['departure']) = $Calendar->getFirstFreeDate();
 
 			echo new JsonResponse($wrapper);
-		} catch (Exception $e) {
+		}
+		catch (Exception $e)
+		{
 			echo new JsonResponse($e);
 		}
 
@@ -187,7 +198,8 @@ class PropertyController extends BaseController {
 		$property_id = KrMethods::inputInt('property_id');
 		$arrival     = KrMethods::inputString('arrival');
 		$departure   = KrMethods::inputString('departure');
-		if (empty($property_id) || empty($arrival) || empty($departure)) {
+		if (empty($property_id) || empty($arrival) || empty($departure))
+		{
 			jexit();
 		}
 
@@ -195,16 +207,19 @@ class PropertyController extends BaseController {
 		$children   = KrMethods::inputInt('children');
 		$child_ages = KrMethods::inputArray('child_ages');
 		$guests     = KrMethods::inputInt('guests');
-		if (!$guests) {
+		if (!$guests)
+		{
 			$guests = $adults + $children;
 		}
 
-		if (!KrFactory::getListModel('contracts')->isPropertyAvailable($property_id, $arrival, $departure)) {
+		if (!KrFactory::getListModel('contracts')->isPropertyAvailable($property_id, $arrival, $departure))
+		{
 			$view->error = KrMethods::plain('COM_KNOWRES_ERROR_AVAILABILITY_CHANGED');
 			$view->display();
 		}
 
-		try {
+		try
+		{
 			$contractSession           = new KrSession\Contract();
 			$contractData              = $contractSession->getData();
 			$contractData->property_id = $property_id;
@@ -217,10 +232,14 @@ class PropertyController extends BaseController {
 			$contractData->tax_total   = 0;
 			$contractData->taxes       = [];
 			$Hub                       = new Hub($contractData);
-		} catch (UnexpectedValueException $e) {
+		}
+		catch (UnexpectedValueException $e)
+		{
 			$view->error = $e->getMessage();
 			$view->display();
-		} catch (Exception $e) {
+		}
+		catch (Exception $e)
+		{
 			Logger::logme($e->getMessage());
 			$view->error = KrMethods::plain('COM_KNOWRES_NO_PRICE');
 			$view->display();
@@ -235,23 +254,26 @@ class PropertyController extends BaseController {
 		$searchSession->setData($searchData);
 
 		$Hub          = new Hub($contractData);
-		$computations = ['base',
-		                 'dow',
-		                 'seasons',
-		                 'shortstay',
-		                 'longstay',
-		                 'ratemarkup',
-		                 'discount',
-		                 'tax',
-		                 'extras',
-		                 'deposit',
-		                 'paymentdates',
+		$computations = [
+			'base',
+			'dow',
+			'seasons',
+			'shortstay',
+			'longstay',
+			'ratemarkup',
+			'discount',
+			'tax',
+			'extras',
+			'deposit',
+			'paymentdates',
 		];
 
-		try {
+		try
+		{
 			$Hub->compute($computations);
 			$gross = $Hub->getValue('room_total_gross');
-			if (!$gross) {
+			if (!$gross)
+			{
 				$view->error = KrMethods::plain('COM_KNOWRES_QUOTE_NO_RATES_YET');
 				$view->display();
 			}
@@ -260,7 +282,9 @@ class PropertyController extends BaseController {
 			$view->quote = $Hub;
 			$view->error = '';
 			$view->display();
-		} catch (Exception) {
+		}
+		catch (Exception)
+		{
 			$view->error = KrMethods::plain('COM_KNOWRES_QUOTE_NO_RATES_YET');
 			$view->display();
 		}
@@ -272,7 +296,8 @@ class PropertyController extends BaseController {
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	#[NoReturn] public function search(): void
+	#[NoReturn]
+	public function search(): void
 	{
 		$id     = KrMethods::inputString('id');
 		$Itemid = SiteHelper::getItemId('com_knowres', 'property', ['id' => 0]);
@@ -290,23 +315,28 @@ class PropertyController extends BaseController {
 	public function terms(): void
 	{
 		$id = KrMethods::inputInt('id');
-		if ($id) {
+		if ($id)
+		{
 			/** @var TermsView $view */
 			$view             = $this->getView('property', 'terms');
 			$view->item       = KrFactory::getAdminModel('property')->getItem($id);
 			$view->article_id = 0;
 
 			$summary = $this->input->getInt('summary', 0);
-			if ($summary) {
+			if ($summary)
+			{
 				$view->setLayout('terms_summary');
 				$view->article_id = $summary;
-			} else {
+			}
+			else
+			{
 				$view->setLayout('terms');
 				$params           = KrMethods::getParams();
 				$view->article_id = (int) $params->get('id_cancellation', '0');
 			}
 
-			if ($view->article_id) {
+			if ($view->article_id)
+			{
 				$view->article = KrMethods::getArticle($view->article_id);
 			}
 
@@ -317,22 +347,25 @@ class PropertyController extends BaseController {
 	/**
 	 * Download property terms PDF
 	 *
-	 * @throws Exception
-	 * @since        3.3.0
 	 * @return bool
 	 * @noinspection PhpUnused
+	 * @throws Exception
+	 * @since        3.3.0
 	 */
 	public function termspdf(): bool
 	{
 		$id = KrMethods::inputInt('id');
-		if (!$id) {
+		if (!$id)
+		{
 			throw new RuntimeException('Property ID not received for PDF download');
 		}
 
 		$Terms  = new Terms('download', $id);
 		$result = $Terms->getPdf();
-		if (!$result) {
-			foreach ($errors as $e) {
+		if (!$result)
+		{
+			foreach ($errors as $e)
+			{
 				KrMethods::message($e);
 			}
 

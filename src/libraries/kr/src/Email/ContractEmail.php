@@ -20,7 +20,6 @@ use HighlandVision\KR\SiteHelper;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Utility;
 use RuntimeException;
-
 use function array_unique;
 use function count;
 use function explode;
@@ -96,7 +95,7 @@ class ContractEmail extends Email
 	 * @since  3.3.0
 	 */
 	public function sendTheEmails(int $contract_id, float $payment_amount = 0.00, string $payment_currency = '',
-		int $service_id = 0): void
+	                              int $service_id = 0): void
 	{
 		$this->contract_id      = $contract_id;
 		$this->payment_amount   = $payment_amount;
@@ -386,7 +385,6 @@ class ContractEmail extends Email
 		{
 			$cc[] = $this->guest->email_3;
 		}
-
 		if (count($cc))
 		{
 			$this->cc = $cc;
@@ -517,7 +515,8 @@ class ContractEmail extends Email
 		if ($trigger->send_caretaker && $this->caretaker_email)
 		{
 			KrMethods::sendEmail($this->getFromEmail(), $this->getFromName(), $this->caretaker_email,
-				$this->output_subject, $this->output_message, 1, $this->cc, $this->bcc, $this->reply_to,
+				$this->output_subject, $this->output_message, 1, $this->cc, $this->bcc,
+				$this->reply_to,
 				$this->reply_name, $this->attachments
 			);
 		}
@@ -579,58 +578,67 @@ class ContractEmail extends Email
 	{
 		$link                       = SiteHelper::buildDashboardLink($this->contract, 'reviewform', true);
 		$this->data['BUTTONREVIEW'] = KrMethods::render('emails.button',
-			['button_bg' => $this->button_bg,
-			 'font'      => $this->font,
-			 'link'      => $link,
-			 'text'      => KrMethods::plain('COM_KNOWRES_EMAIL_BUTTONREVIEW'),
+			[
+				'button_bg' => $this->button_bg,
+				'font'      => $this->font,
+				'link'      => $link,
+				'text'      => KrMethods::plain('COM_KNOWRES_EMAIL_BUTTONREVIEW')
 			]);
 
 		// All buttons below go to dashboard only the text is different
 		$link                          = SiteHelper::buildDashboardLink($this->contract, null, true);
 		$this->data['BUTTONARRIVAL']   = KrMethods::render('emails.button',
-			['button_bg' => $this->button_bg,
-			 'font'      => $this->font,
-			 'link'      => $link,
-			 'text'      => KrMethods::plain('COM_KNOWRES_EMAIL_BUTTONARRIVAL'),
+			[
+				'button_bg' => $this->button_bg,
+				'font'      => $this->font,
+				'link'      => $link,
+				'text'      => KrMethods::plain('COM_KNOWRES_EMAIL_BUTTONARRIVAL'),
 			]);
 		$this->data['BUTTONBALANCE']   = KrMethods::render('emails.button',
-			['button_bg' => $this->button_bg,
-			 'font'      => $this->font,
-			 'link'      => $link,
-			 'text'      => KrMethods::plain('COM_KNOWRES_EMAIL_BUTTONBALANCE'),
+			[
+				'button_bg' => $this->button_bg,
+				'font'      => $this->font,
+				'link'      => $link,
+				'text'      => KrMethods::plain('COM_KNOWRES_EMAIL_BUTTONBALANCE'),
 			]);
 		$this->data['BUTTONCONFIRM']   = KrMethods::render('emails.button',
-			['button_bg' => $this->button_bg,
-			 'font'      => $this->font,
-			 'link'      => $link,
-			 'text'      => KrMethods::plain('COM_KNOWRES_EMAIL_BUTTONCONFIRM'),
+			[
+				'button_bg' => $this->button_bg,
+				'font'      => $this->font,
+				'link'      => $link,
+				'text'      => KrMethods::plain('COM_KNOWRES_EMAIL_BUTTONCONFIRM'),
 			]);
 		$this->data['BUTTONDASHBOARD'] = KrMethods::render('emails.button',
-			['button_bg' => $this->button_bg,
-			 'font'      => $this->font,
-			 'link'      => $link,
-			 'text'      => KrMethods::plain('COM_KNOWRES_EMAIL_BUTTONDASHBOARD'),
+			[
+				'button_bg' => $this->button_bg,
+				'font'      => $this->font,
+				'link'      => $link,
+				'text'      => KrMethods::plain('COM_KNOWRES_EMAIL_BUTTONDASHBOARD'),
 			]);
 		$this->data['BUTTONMANAGE']    = KrMethods::render('emails.button',
-			['button_bg' => $this->button_bg,
-			 'font'      => $this->font,
-			 'link'      => $link,
-			 'text'      => KrMethods::plain('COM_KNOWRES_EMAIL_BUTTONMANAGE'),
+			[
+				'button_bg' => $this->button_bg,
+				'font'      => $this->font,
+				'link'      => $link,
+				'text'      => KrMethods::plain('COM_KNOWRES_EMAIL_BUTTONMANAGE'),
 			]);
 		$this->data['BUTTONPAYNOW']    = KrMethods::render('emails.button',
-			['button_bg' => $this->button_bg,
-			 'font'      => $this->font,
-			 'link'      => $link,
-			 'text'      => KrMethods::plain('COM_KNOWRES_EMAIL_BUTTONPAYNOW'),
+			[
+				'button_bg' => $this->button_bg,
+				'font'      => $this->font,
+				'link'      => $link,
+				'text'      => KrMethods::plain('COM_KNOWRES_EMAIL_BUTTONPAYNOW'),
 			]);
 
 		$link                          = KrMethods::route(KrMethods::getRoot()
-			. 'administrator/index.php?option=com_knowres&task=contract.show&id=' . $this->contract->id);
+			. 'administrator/index.php?option=com_knowres&task=contract.show&id='
+			. $this->contract->id);
 		$this->data['BUTTONOWNERLINK'] = KrMethods::render('emails.button',
-			['button_bg' => $this->button_bg,
-			 'font'      => $this->font,
-			 'link'      => $link,
-			 'text'      => KrMethods::plain('COM_KNOWRES_EMAIL_BUTTONOWNERLINK'),
+			[
+				'button_bg' => $this->button_bg,
+				'font'      => $this->font,
+				'link'      => $link,
+				'text'      => KrMethods::plain('COM_KNOWRES_EMAIL_BUTTONOWNERLINK'),
 			]);
 	}
 
@@ -680,7 +688,8 @@ class ContractEmail extends Email
 		$this->data['BOOKREQUESTHOLD'] = $this->contract->on_request;
 		$this->data['BOOKINGSTATUS']   = Utility::getBookingStatus($this->contract->booking_status);
 		$this->data['BOOKINGTOTAL']    = Utility::displayValue($this->contract->contract_total,
-			$this->contract->currency);
+			$this->contract->currency
+		);
 
 		$this->data['DEPARTUREDATE'] = TickTock::displayDate($this->contract->departure);
 		$this->data['EXPIRYDATE']    = TickTock::displayDate($this->contract->expiry_date);
@@ -721,7 +730,8 @@ class ContractEmail extends Email
 		$this->data['GUESTFIRSTNAME'] = $this->guest->firstname;
 		$this->data['GUESTNAME']      = $this->guest->firstname . ' ' . $this->guest->surname;
 		$this->data['GUESTMOBILE']    = Utility::formatPhoneNumber($this->guest->mobile,
-			$this->guest->mobile_country_id);
+			$this->guest->mobile_country_id
+		);
 	}
 
 	/**
@@ -739,24 +749,27 @@ class ContractEmail extends Email
 			'id'     => $this->property->id
 		];
 		$this->data['LINKPROPERTY'] = KrMethods::render('html.link',
-			['query'    => $query,
-			 'external' => true,
-			 'text'     => $this->property->property_name,
-			 'title'    => $this->property->property_name
+			[
+				'query'    => $query,
+				'external' => true,
+				'text'     => $this->property->property_name,
+				'title'    => $this->property->property_name
 			]);
 
 		$this->data['LINKTRAVELINSURANCE'] = KrMethods::render('html.link',
-			['query'    => $this->params->get('link_travelinsurance'),
-			 'external' => false,
-			 'text'     => KrMethods::plain('COM_KNOWRES_HERE'),
-			 'title'    => KrMethods::plain('COM_KNOWRES_EMAIL_AFFILIATE_TRAVEL_INSURANCE')
+			[
+				'query'    => $this->params->get('link_travelinsurance'),
+				'external' => false,
+				'text'     => KrMethods::plain('COM_KNOWRES_HERE'),
+				'title'    => KrMethods::plain('COM_KNOWRES_EMAIL_AFFILIATE_TRAVEL_INSURANCE')
 			]);
 
 		$this->data['LINKCARHIRE'] = KrMethods::render('html.link',
-			['query'    => $this->params->get('link_carhire'),
-			 'external' => false,
-			 'text'     => KrMethods::plain('COM_KNOWRES_HERE'),
-			 'title'    => KrMethods::plain('COM_KNOWRES_EMAIL_AFFILIATE_CAR_HIRE')
+			[
+				'query'    => $this->params->get('link_carhire'),
+				'external' => false,
+				'text'     => KrMethods::plain('COM_KNOWRES_HERE'),
+				'title'    => KrMethods::plain('COM_KNOWRES_EMAIL_AFFILIATE_CAR_HIRE')
 			]);
 
 		if ((int) $this->params->get('link_cancellation', '0'))
@@ -766,10 +779,11 @@ class ContractEmail extends Email
 				'Itemid' => (int) $this->params->get('link_cancellation', '0'),
 			];
 			$this->data['LINKGUESTTERMS'] = KrMethods::render('html.link',
-				['query'    => $query,
-				 'external' => true,
-				 'text'     => KrMethods::plain('COM_KNOWRES_EMAIL_TERMS'),
-				 'title'    => ''
+				[
+					'query'    => $query,
+					'external' => true,
+					'text'     => KrMethods::plain('COM_KNOWRES_EMAIL_TERMS'),
+					'title'    => ''
 				]);
 		}
 
@@ -780,10 +794,11 @@ class ContractEmail extends Email
 				'Itemid' => (int) $this->params->get('link_owner_terms', '0'),
 			];
 			$this->data['LINKGUESTTERMS'] = KrMethods::render('html.link',
-				['query'    => $query,
-				 'external' => true,
-				 'text'     => KrMethods::plain('COM_KNOWRES_EMAIL_TERMS'),
-				 'title'    => ''
+				[
+					'query'    => $query,
+					'external' => true,
+					'text'     => KrMethods::plain('COM_KNOWRES_EMAIL_TERMS'),
+					'title'    => ''
 				]);
 		}
 
@@ -793,10 +808,11 @@ class ContractEmail extends Email
 				'Itemid' => (int) $this->params->get('link_login', '0'),
 			];
 			$this->data['LINKLOGIN'] = KrMethods::render('html.link',
-				['query'    => $query,
-				 'external' => true,
-				 'text'     => KrMethods::plain('COM_KNOWRES_HERE'),
-				 'title'    => ''
+				[
+					'query'    => $query,
+					'external' => true,
+					'text'     => KrMethods::plain('COM_KNOWRES_HERE'),
+					'title'    => ''
 				]);
 		}
 	}
@@ -806,8 +822,8 @@ class ContractEmail extends Email
 	 *
 	 * @param   int  $audience  '1' Guest, '2' Owner
 	 *
-	 * @since  1.0.0
 	 * @return string
+	 * @since  1.0.0
 	 */
 	protected function setNotes(int $audience): string
 	{
@@ -840,7 +856,8 @@ class ContractEmail extends Email
 
 		$this->data['OWNERNAME']      = $this->owner->name;
 		$this->data['OWNERTELEPHONE'] = Utility::formatPhoneNumber($this->owner->mobile,
-			$this->owner->mobile_country_id);
+			$this->owner->mobile_country_id
+		);
 	}
 
 	/**
@@ -852,8 +869,8 @@ class ContractEmail extends Email
 	protected function setPaymentData(): void
 	{
 		$this->data['PAYMENTAMOUNT']    = Utility::displayValue($this->payment_amount, $this->payment_currency);
-		$this->data['PAYMENTTOTAL']     = Utility::displayValue($this->setPaymentTotal(false),
-			$this->contract->currency);
+		$this->data['PAYMENTTOTAL']     =
+			Utility::displayValue($this->setPaymentTotal(false), $this->contract->currency);
 		$this->data['PAYMENTCONFIRMED'] = Utility::displayValue($this->setPaymentTotal(), $this->contract->currency);
 	}
 
@@ -908,8 +925,9 @@ class ContractEmail extends Email
 
 		$this->caretaker_email        = $this->property->caretaker_email;
 		$this->data['SECURITYTEXT']   = $this->property->security_text;
-		$this->data['SECURITYAMOUNT'] = Utility::displayValue($this->property->security_amount,
-			$this->contract->currency);
+		$this->data['SECURITYAMOUNT'] =
+			Utility::displayValue($this->property->security_amount, $this->contract->currency
+			);
 
 		if (isset($this->property->nearest_transport))
 		{
@@ -920,7 +938,8 @@ class ContractEmail extends Email
 			$this->data['WHEREKEYS'] = $this->property->where_keys;
 		}
 
-		$tmp = strtolower(KrMethods::plain('COM_KNOWRES_FROM')) . ' ' . $this->property->checkin_time;
+		$tmp =
+			strtolower(KrMethods::plain('COM_KNOWRES_FROM')) . ' ' . $this->property->checkin_time;
 		if ($this->property->checkin_time_to)
 		{
 			$tmp .= ' - ' . $this->property->checkin_time_to;

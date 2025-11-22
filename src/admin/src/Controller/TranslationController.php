@@ -30,11 +30,12 @@ class TranslationController extends FormController
 	/**
 	 * Modal for translations
 	 *
+	 * @return  void
 	 * @throws Exception
 	 * @since   3.0
-	 * @return  void
 	 */
-	#[NoReturn] public function translateme(): void
+	#[NoReturn]
+	public function translateme(): void
 	{
 		$this->checkToken();
 
@@ -45,8 +46,8 @@ class TranslationController extends FormController
 	/**
 	 * Function that allows child controller access to model data after the data has been saved.
 	 *
-	 * @param  BaseDatabaseModel  $model      The data model object.
-	 * @param  array              $validData  The validated data.
+	 * @param   BaseDatabaseModel  $model      The data model object.
+	 * @param   array              $validData  The validated data.
 	 *
 	 * @throws Exception
 	 * @since  1.0.0

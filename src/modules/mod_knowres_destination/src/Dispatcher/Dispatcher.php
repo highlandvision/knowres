@@ -18,11 +18,9 @@ use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Translations;
 use Joomla\CMS\Dispatcher\AbstractModuleDispatcher;
-
 use function count;
 use function defined;
 use function is_dir;
-
 use const JPATH_ROOT;
 
 /**
@@ -30,7 +28,8 @@ use const JPATH_ROOT;
  *
  * @since  4.0.0
  */
-class Dispatcher extends AbstractModuleDispatcher {
+class Dispatcher extends AbstractModuleDispatcher
+{
 	/**
 	 * Define tasks for before dispatch
 	 *
@@ -39,7 +38,8 @@ class Dispatcher extends AbstractModuleDispatcher {
 	 */
 	public function dispatch(): void
 	{
-		if (is_dir(JPATH_ROOT . '/media/com_knowres/vendor')) {
+		if (is_dir(JPATH_ROOT . '/media/com_knowres/vendor'))
+		{
 			require_once(JPATH_ROOT . '/media/com_knowres/vendor/autoload.php');
 		}
 
@@ -52,9 +52,9 @@ class Dispatcher extends AbstractModuleDispatcher {
 	/**
 	 * Returns the layout data.
 	 *
+	 * @return array
 	 * @throws Exception
 	 * @since  4.0.0
-	 * @return array
 	 */
 	protected function getLayoutData(): array
 	{
@@ -65,19 +65,24 @@ class Dispatcher extends AbstractModuleDispatcher {
 		$region_id    = $params->get('region_id');
 		$regions      = KrFactory::getListModel('regions')->getAllRegions(true);
 		$area         = $params->get('area');
-		if (count($regions) == 1 && $area) {
+		if (count($regions) == 1 && $area)
+		{
 			$destination = $area . ', ' . $Translations->getText('region', $region_id);
-		} else {
+		}
+		else
+		{
 			$destination = $Translations->getText('region', $region_id);
 			$area        = '';
 		}
 
-		if ($data && !empty($params)) {
+		if ($data && !empty($params))
+		{
 			$data['region_id']   = $region_id;
 			$data['area']        = $area;
 			$data['destination'] = $destination;
 			$data['link']        = 'index.php?option=com_knowres&task=properties.search&region_id=' . $region_id;
-			if ($area) {
+			if ($area)
+			{
 				$data['link'] .= '&area=' . $area;
 			}
 
@@ -103,11 +108,12 @@ class Dispatcher extends AbstractModuleDispatcher {
 			$data['tab4']     = 'panel4-' . $region_id;
 			$data['tab5']     = 'panel5-' . $region_id;
 
-			$data['options'] = ['src'    => $params->get('image'),
-			                    'alt'    => KrMethods::sprintf('MOD_KNOWRES_DESTINATION_VIEW_PROPERTIES', $destination),
-			                    'class'  => 'responsive',
-			                    'width'  => '100%',
-			                    'height' => 'auto'
+			$data['options'] = [
+				'src'    => $params->get('image'),
+				'alt'    => KrMethods::sprintf('MOD_KNOWRES_DESTINATION_VIEW_PROPERTIES', $destination),
+				'class'  => 'responsive',
+				'width'  => '100%',
+				'height' => 'auto'
 			];
 		}
 

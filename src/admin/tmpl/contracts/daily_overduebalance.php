@@ -14,20 +14,20 @@ use HighlandVision\KR\Utility;
 
 if (empty($this->lines['overduebalance']))
 {
-	return;
+    return;
 }
 ?>
 
 <div class="card kr-daily">
-	<div class="card-header">
-		<a class="showbefore" data-bs-toggle="collapse" href="#panel-overduebalance" role="button"
-		   aria-expanded="true" aria-controls="panel-overduebalance">
-			<?php echo Utility::getBookingStatus(35); ?>
-		</a>
-	</div>
-	<div class="collapse show" id="panel-overduebalance">
-		<div class="card-body">
-			<?php echo KrMethods::render('contract.daily.contract', ['lines' => $this->lines['overduebalance']]); ?>
-		</div>
-	</div>
+    <div class="card-header">
+        <a class="showbefore" data-bs-toggle="collapse" href="#panel-overduebalance" role="button"
+           aria-expanded="true" aria-controls="panel-overduebalance">
+            <?php echo Utility::getBookingStatus(35); ?>
+        </a>
+    </div>
+    <div class="collapse show" id="panel-overduebalance">
+        <div class="card-body">
+            <?php echo KrMethods::render('contract.daily.contract', ['lines' => $this->lines['overduebalance']]); ?>
+        </div>
+    </div>
 </div>

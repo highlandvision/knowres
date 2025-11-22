@@ -20,7 +20,6 @@ use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Response\JsonResponse;
 use stdClass;
-
 use function jexit;
 
 /**
@@ -42,14 +41,17 @@ class AjaxController extends BaseController
 		$column = KrMethods::inputString('column');
 		$text   = KrMethods::inputString('text');
 
-		if (empty($column) || empty($table)) {
+		if (empty($column) || empty($table))
+		{
 			echo new JsonResponse(null, KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN'), true);
 			jexit();
 		}
 
 		$translate = explode('~', $table);
-		if ($translate[0] == 'translate') {
-			try {
+		if ($translate[0] == 'translate')
+		{
+			try
+			{
 				$Translations = new Translations();
 				$Translations->updateDefault($translate[1], $translate[2], $column, $text);
 
@@ -58,7 +60,9 @@ class AjaxController extends BaseController
 				$data->updated_at = TickTock::getTS();
 				$data->updated_by = (int) KrMethods::getUser()->id;
 				KrFactory::update($translate[1], $data);
-			} catch (Exception $e) {
+			}
+			catch (Exception $e)
+			{
 				echo new JsonResponse(null, KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN'), true);
 				jexit();
 			}
@@ -73,16 +77,15 @@ class AjaxController extends BaseController
 	/**
 	 * Proxy for getModel.
 	 *
-	 * @param  string  $name    Name of model
-	 * @param  string  $prefix  Model prefix
-	 * @param  array   $config
+	 * @param   string  $name    Name of model
+	 * @param   string  $prefix  Model prefix
+	 * @param   array   $config
 	 *
-	 * @since  2.0.0
 	 * @return bool|BaseDatabaseModel
+	 * @since  2.0.0
 	 */
-	public function getModel($name = 'editinplace',
-		$prefix = 'Administrator',
-		$config = ['ignore_request' => true]): BaseDatabaseModel|bool
+	public function getModel($name = 'editinplace', $prefix = 'Administrator',
+	                         $config = ['ignore_request' => true]): BaseDatabaseModel|bool
 	{
 		return parent::getModel($name, $prefix, $config);
 	}
