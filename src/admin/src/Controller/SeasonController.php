@@ -38,7 +38,7 @@ class SeasonController extends FormController
 	protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
 	{
 		/* @var SeasonModel $model */
-		$id   = $model->getItem()->get('id');
+		$item = $model->getItem();
 		$name = (string) $validData['name'];
 
 		if ($this->input->get('task') == 'save2copy')
@@ -49,7 +49,10 @@ class SeasonController extends FormController
 		$Translations = new Translations();
 		$Translations->updateDefault('season', $item->id, 'name', $name);
 
-		KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updatePropertyRates', 0,
-			(int) $validData['cluster_id'], null, (string)$validData['valid_from'], (string)$validData['valid_to']);
+		/* @var ServicequeueModel $serviceQueue */
+		$serviceQueue = KrFactory::getAdminModel('servicequeue');
+		$servuceQueue::serviceQueueUpdate('updatePropertyRates', 0, (int) $validData['cluster_id'], null,
+			(string) $validData['valid_from'], (string) $validData['valid_to']
+		);
 	}
 }

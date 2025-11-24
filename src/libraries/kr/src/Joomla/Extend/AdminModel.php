@@ -18,11 +18,9 @@ use HighlandVision\KR\Logger;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Utility;
 use Joomla\CMS\Form\Form;
-use Joomla\CMS\Table\Table;
 use RuntimeException;
 use stdClass;
 use UnexpectedValueException;
-
 use function str_replace;
 
 /**

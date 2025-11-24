@@ -17,7 +17,6 @@ use HighlandVision\KR\Joomla\Extend\FormController;
 use HighlandVision\KR\Translations;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\String\StringHelper;
-
 use function defined;
 
 /**
@@ -39,7 +38,7 @@ class CategoryController extends FormController
 	protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
 	{
 		/* @var CategoryModel $model */
-		$id    = $model->getItem()->get('id');
+		$item  = $model->getItem();
 		$name  = (string) $validData['name'];
 		$blurb = (string) $validData['blurb'];
 

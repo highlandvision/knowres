@@ -32,14 +32,14 @@ class DiscountController extends FormController
 	 * @param   BaseDatabaseModel  $model      The data model object.
 	 * @param   array              $validData  The validated data.
 	 *
+	 * @return void
 	 * @throws Exception
 	 * @since  3.1
-	 * @return void
 	 */
 	protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
 	{
 		/* @var DiscountModel $model */
-		$id   = $model->getItem()->get('id');
+		$item = $model->getItem();
 		$name = (string) $validData['name'];
 
 		if ($this->input->get('task') == 'save2copy')
@@ -50,8 +50,10 @@ class DiscountController extends FormController
 		$Translations = new Translations();
 		$Translations->updateDefault('discount', $item->id, 'name', $name);
 
-		KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updatePropertyRates',
-			(int) $validData['property_id'], 0, null, (string)$validData['valid_from'],
-			(string)$validData['valid_to']);
+		/* @var ServicequeueModel $serviceQueue */
+		$serviceQueue = KrFactory::getAdminModel('servicequeue');
+		$serviceQueue::serviceQueueUpdate('updatePropertyRates', (int) $validData['property_id'], 0, null,
+			(string) $validData['valid_from'], (string) $validData['valid_to']
+		);
 	}
 }

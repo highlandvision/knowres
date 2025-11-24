@@ -20,7 +20,6 @@ use JetBrains\PhpStorm\NoReturn;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Response\JsonResponse;
 use Joomla\CMS\Versioning\VersionableControllerTrait;
-
 use function jexit;
 
 /**
@@ -38,7 +37,8 @@ class AgencyController extends FormController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	#[NoReturn] public function combo(): void
+	#[NoReturn]
+	public function combo(): void
 	{
 		$model     = new AgencyModel();
 		$form      = $model->getForm([], false);
@@ -79,8 +79,8 @@ class AgencyController extends FormController
 		$insurance_disclaimer = (string) $validData['insurance_disclaimer'];
 
 		$Translations = new Translations();
-		$Translations->updateDefault('agency', $id, 'gdpr_statement', $gdpr_statement);
-		$Translations->updateDefault('agency', $id, 'cancellation_terms', $cancellation_terms);
-		$Translations->updateDefault('agency', $id, 'insurance_disclaimer', $insurance_disclaimer);
+		$Translations->updateDefault('agency', $item->id, 'gdpr_statement', $gdpr_statement);
+		$Translations->updateDefault('agency', $item->id, 'cancellation_terms', $cancellation_terms);
+		$Translations->updateDefault('agency', $item->id, 'insurance_disclaimer', $insurance_disclaimer);
 	}
 }

@@ -38,7 +38,7 @@ class ExtraController extends FormController
 	protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
 	{
 		/* @var ExtraModel $model */
-		$id          = $model->getItem()->get('id');
+		$item        = $model->getItem();
 		$name        = (string) $validData['name'];
 		$description = (string) $validData['description'];
 
@@ -53,10 +53,10 @@ class ExtraController extends FormController
 
 		if ($validData['cleaning'])
 		{
-			KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updateProperty',
-				(int) $validData['property_id'], 0, 'ru');
-			KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updatePropertyRates',
-				(int) $validData['property_id'], 0, 'vrbo');
+			/* @var ServicequeueModel $serviceQueue */
+			$serviceQueue = KrFactory::getAdminModel('servicequeue');
+			$serviceQueue::serviceQueueUpdate('updateProperty', (int) $validData['property_id'], 0, 'ru');
+			$serviceQueue::serviceQueueUpdate('updatePropertyRates', (int) $validData['property_id'], 0, 'vrbo');
 		}
 	}
 }

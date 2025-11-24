@@ -36,7 +36,7 @@ class CountryController extends FormController
 	protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
 	{
 		/* @var CountryModel $model */
-		$id   = $model->getItem()->get('id');
+		$item = $model->getItem();
 		$name = (string) $validData['name'];
 
 		$Translations = new Translations();

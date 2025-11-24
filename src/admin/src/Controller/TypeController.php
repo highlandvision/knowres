@@ -63,9 +63,9 @@ class TypeController extends FormController
 	/**
 	 * Upload region pdf files
 	 *
+	 * @return bool|null
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return bool|null
 	 */
 	public function uploadpdf(): bool|null
 	{
@@ -101,7 +101,7 @@ class TypeController extends FormController
 	protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
 	{
 		/** @var TypeModel $model */
-		$id           = $model->getItem()->get('id');
+		$item         = $model->getItem();
 		$name         = (string) $validData['name'];
 		$abbreviation = (string) $validData['abbreviation'];
 

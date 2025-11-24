@@ -32,14 +32,14 @@ class MapcategoryController extends FormController
 	 * @param   BaseDatabaseModel  $model      The data model object.
 	 * @param   array              $validData  The validated data.
 	 *
+	 * @return void
 	 * @throws Exception
 	 * @since  3.1
-	 * @return void
 	 */
 	protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
 	{
 		/** @var MapcategoryModel $model */
-		$id   = $model->getItem()->get('id');
+		$item = $model->getItem();
 		$name = (string) $validData['name'];
 
 		if ($this->input->get('task') == 'save2copy')

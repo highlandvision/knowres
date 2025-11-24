@@ -20,7 +20,6 @@ use JetBrains\PhpStorm\NoReturn;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Response\JsonResponse;
 use Joomla\String\StringHelper;
-
 use function jexit;
 
 /**
@@ -36,9 +35,10 @@ class MapmarkerController extends FormController
 	 * @throws Exception
 	 * @since  4.0.0
 	 */
-	#[NoReturn] public function combo(): void
+	#[NoReturn]
+	public function combo(): void
 	{
-		$model  = new MapmarkerModel();
+		$model     = new MapmarkerModel();
 		$form      = $model->getForm([], false);
 		$parent_id = KrMethods::inputInt('parent');
 		$target    = KrMethods::inputString('target');
@@ -71,7 +71,7 @@ class MapmarkerController extends FormController
 	protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
 	{
 		/** @var MapmarkerModel $model */
-		$id          = $model->getItem()->get('id');
+		$item        = $model->getItem();
 		$name        = (string) $validData['name'];
 		$description = (string) $validData['description'];
 

@@ -38,18 +38,22 @@ class RateController extends FormController
 	protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
 	{
 		/** @var RateModel $model */
-		$id   = $model->getItem()->get('id');
+		$item = $model->getItem();
 		$name = (string) $validData['name'];
 
-		if ($this->input->get('task') == 'save2copy') {
+		if ($this->input->get('task') == 'save2copy')
+		{
 			$name = StringHelper::increment($name);
 		}
 
 		$Translations = new Translations();
 		$Translations->updateDefault('rate', $item->id, 'name', $name);
 
-		KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updateAvailability', (int) $validData['property_id']);
-		KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updatePropertyRates', (int) $validData['property_id'],
-			0, null, (string) $validData['valid_from'], (string) $validData['valid_to']);
+		/* @var ServicequeueModel $serviceQueue */
+		$serviceQueue = KrFactory::getAdminModel('servicequeue');
+		$serviceQueue::serviceQueueUpdate('updateAvailability', (int) $validData['property_id']);
+		$serviceQueue::serviceQueueUpdate('updatePropertyRates', (int) $validData['property_id'], 0, null,
+			(string) $validData['valid_from'], (string) $validData['valid_to']
+		);
 	}
 }

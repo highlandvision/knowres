@@ -6,6 +6,7 @@
  * @license    See the file "LICENSE.txt" for the full license governing this code.
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
+
 /** @noinspection PhpUnused */
 
 namespace HighlandVision\Component\Knowres\Administrator\Controller;
@@ -38,7 +39,7 @@ class TaxrateController extends FormController
 	protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
 	{
 		/** @var TaxrateModel $model */
-		$id = (int) $model->getItem()->get('id');
+		$item = $model->getItem();
 
 		$name = (string) $validData['name'];
 		if ($this->input->get('task') == 'save2copy')

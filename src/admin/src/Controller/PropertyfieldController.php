@@ -37,7 +37,7 @@ class PropertyfieldController extends FormController
 	protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
 	{
 		/** @var PropertyfieldModel $model */
-		$id          = $model->getItem()->get('id');
+		$item        = $model->getItem();
 		$name        = (string) $validData['label'];
 		$description = (string) $validData['description'];
 

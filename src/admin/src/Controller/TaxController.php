@@ -20,7 +20,6 @@ use JetBrains\PhpStorm\NoReturn;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Response\JsonResponse;
 use Joomla\String\StringHelper;
-
 use function jexit;
 
 /**
@@ -36,17 +35,20 @@ class TaxController extends FormController
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	#[NoReturn] public function combo(): void
+	#[NoReturn]
+	public function combo(): void
 	{
 		$model     = new TaxModel();
 		$form      = $model->getForm([], false);
 		$parent_id = KrMethods::inputInt('parent');
 		$target    = KrMethods::inputString('target');
 
-		if ($target == 'region_id') {
+		if ($target == 'region_id')
+		{
 			$form->setValue('country_id', null, $parent_id);
 		}
-		else {
+		else
+		{
 			$form->setValue('region_id', null, $parent_id);
 		}
 
@@ -69,9 +71,10 @@ class TaxController extends FormController
 	protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
 	{
 		/** @var TaxModel $model */
-		$id   = $model->getItem()->get('id');
+		$item = $model->getItem();
 		$name = (string) $validData['name'];
-		if ($this->input->get('task') == 'save2copy') {
+		if ($this->input->get('task') == 'save2copy')
+		{
 			$name = StringHelper::increment($name);
 		}
 

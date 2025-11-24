@@ -49,8 +49,10 @@ class PropertyroomController extends FormController
 		$count   = $this->input->post->get($name, [], 'array');
 
 		$features = [];
-		for ($i = 0; $i < count($id); $i++) {
-			if ((int) $count[$i]) {
+		for ($i = 0; $i < count($id); $i++)
+		{
+			if ((int) $count[$i])
+			{
 				$features[] = array(
 					'id'      => (string) $id[$i],
 					'count'   => (string) $count[$i],
@@ -77,11 +79,12 @@ class PropertyroomController extends FormController
 	protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
 	{
 		/** @var PropertyroomModel $model */
-		$id          = $model->getItem()->get('id');
+		$item        = $model->getItem();
 		$name        = (string) $validData['name'];
 		$description = (string) $validData['description'];
 
-		if ($this->input->get('task') == 'save2copy') {
+		if ($this->input->get('task') == 'save2copy')
+		{
 			$name = StringHelper::increment($name);
 		}
 

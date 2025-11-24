@@ -31,7 +31,7 @@ class CurrencyController extends FormController
 	 * Override to update json field so that updated values get stored in input and as such user state for redisplay
 	 * Can't seem to do this anywhere else as the save() reads the data from input again and no way to override
 	 *
-	 * @param   string  $key    The name of the primary key of the URL variable.
+	 * @param   string  $key     The name of the primary key of the URL variable.
 	 * @param   string  $urlVar  The name of the URL variable if different from the primary key sometimes required to avoid
 	 *                           router collisions.
 	 *
@@ -56,14 +56,14 @@ class CurrencyController extends FormController
 	 * @param   BaseDatabaseModel  $model      The data model object.
 	 * @param   array              $validData  The validated data.
 	 *
+	 * @return void
 	 * @throws Exception
 	 * @since  3.1
-	 * @return void
 	 */
 	protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
 	{
 		/* @var CurrencyModel $model */
-		$id           = $model->getItem()->get('id');
+		$item         = $model->getItem();
 		$name         = (string) $validData['name'];
 		$Translations = new Translations();
 		$Translations->updateDefault('currency', $item->id, 'name', $name);
