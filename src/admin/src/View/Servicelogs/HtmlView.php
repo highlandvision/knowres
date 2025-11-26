@@ -33,9 +33,9 @@ class HtmlView extends KrHtmlView
 	 *
 	 * @param  ?string  $tpl  A template file to load. [optional]
 	 *
+     * @return void
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return void
 	 */
 	public function display($tpl = null): void
 	{
@@ -64,11 +64,11 @@ class HtmlView extends KrHtmlView
 	 * Add the default toolbar for list view.
 	 *
 	 * @param  ?string  $list_name  Name of list model
-	 * @param  bool     $new        Fasle to suppress New button
+     * @param   bool  $new  Fasle to suppress New button
 	 *
+     * @return Toolbar
 	 * @throws Exception
 	 * @since  4.0.0
-	 * @return Toolbar
 	 */
 	protected function addListToolbar(?string $list_name = null, bool $new = true): Toolbar
 	{

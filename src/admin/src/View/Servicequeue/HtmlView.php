@@ -32,9 +32,9 @@ class HtmlView extends KrHtmlView
 	 *
 	 * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
 	 *
+     * @return void
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return void
 	 */
 	public function display($tpl = null): void
 	{

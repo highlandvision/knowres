@@ -45,11 +45,11 @@ class GuestModel extends AdminModel
 	/**
 	 * Override checkin for guest as checked_out set to 0.
 	 *
-	 * @param  mixed  $pks  The ID of the primary key or an array of IDs
+     * @param   mixed  $pks  The ID of the primary key or an array of IDs
 	 *
+     * @return bool  True on success, false on failure
 	 * @throws Exception
 	 * @since  4.0.0
-	 * @return bool  True on success, false on failure
 	 */
 	public function checkin(mixed $pks = null): bool
 	{
@@ -67,46 +67,16 @@ class GuestModel extends AdminModel
 	}
 
 	/**
-	 * Method to test whether a record can have its state changed.
-	 * Disallow when contracts ecist
-	 *
-	 * @param  object  $record  A record object.
-	 *
-	 * @throws Exception
-	 * @since  4.0.0
-	 * @return bool  True if allowed to change the state of the record. Defaults to the permission for the component.
-	 */
-	protected function canEditState($record): bool
-	{
-		//TODO-v5.2 Revisit this Joomla is a bit out with messages
-		// nothing is updated if errors exist but messages say that updates are done
-		// Action trying to unpublish guests from listing page when contracts exists
-		if ($record->state == 1)
-		{
-			$count = KrFactory::getListModel('contracts')->getCountForGuest($record->id);
-			if ($count > 0)
-			{
-				KrMethods::message(KrMethods::sprintf('COM_KNOWRES_GUEST_RULE_EDIT',
-					$record->firstname . ' ' . $record->surname), 'error');
-
-				return false;
-			}
-		}
-
-		return parent::canEditState($record);
-	}
-
-	/**
 	 * Method to get the record form.
 	 *
-	 * @param  array    $data         An optional array of data for the form to interogate.
-	 * @param  bool     $loadData     True if the form is to load its own data (default case), false if not.
+     * @param   array  $data         An optional array of data for the form to interogate.
+     * @param   bool   $loadData     True if the form is to load its own data (default case), false if not.
 	 * @param  ?string  $source       The form name if required.
-	 * @param  int      $property_id  ID of property if required fields to be set.
+     * @param   int    $property_id  ID of property if required fields to be set.
 	 *
+     * @return Form|false    A Form object on success, false on failure
 	 * @throws Exception
 	 * @since  1.0
-	 * @return Form|false    A Form object on success, false on failure
 	 */
 	public function getForm($data = [], $loadData = true, ?string $source = 'guest', int $property_id = 0): Form|false
 	{
@@ -126,11 +96,11 @@ class GuestModel extends AdminModel
 	/**
 	 * Method to get a Guest item.
 	 *
-	 * @param  int  $pk  The id of the primary key.
+     * @param   int  $pk  The id of the primary key.
 	 *
+     * @return object|false  Object on success, false on failure.
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return object|false  Object on success, false on failure.
 	 */
 	public function getItem($pk = null): object|false
 	{
@@ -195,14 +165,14 @@ class GuestModel extends AdminModel
 	/**
 	 * Method to validate the form data.
 	 *
-	 * @param  Form     $form      The form to validate against.
-	 * @param  array    $data      The data to validate.
+     * @param   Form   $form      The form to validate against.
+     * @param   array  $data      The data to validate.
 	 * @param  ?string  $group     The name of the field group to validate.
-	 * @param  array    $settings  Property settings
+     * @param   array  $settings  Property settings
 	 *
+     * @return array|bool  Array of filtered data if valid, false otherwise.
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return array|bool  Array of filtered data if valid, false otherwise.
 	 */
 	public function validate($form, $data, $group = null, array $settings = []): array|bool
 	{
@@ -216,12 +186,45 @@ class GuestModel extends AdminModel
 		return parent::validate($form, $data, $group);
 	}
 
+    /**
+     * Method to test whether a record can have its state changed.
+     * Disallow when contracts ecist
+     *
+     * @param   object  $record  A record object.
+     *
+     * @return bool  True if allowed to change the state of the record. Defaults to the permission for the component.
+     * @throws Exception
+     * @since  4.0.0
+     */
+    protected function canEditState($record): bool
+    {
+        //TODO-v5.2 Revisit this Joomla is a bit out with messages
+        // nothing is updated if errors exist but messages say that updates are done
+        // Action trying to unpublish guests from listing page when contracts exists
+        if ($record->state == 1) {
+            $count = KrFactory::getListModel('contracts')->getCountForGuest($record->id);
+            if ($count > 0) {
+                KrMethods::message(
+                    KrMethods::sprintf(
+                        'COM_KNOWRES_GUEST_RULE_EDIT',
+                        $record->firstname . ' ' . $record->surname
+                    ),
+                    'error'
+                );
+
+                return false;
+            }
+        }
+
+        return parent::canEditState($record);
+    }
+
 	/**
 	 * Method to get the data that should be injected in the form.
 	 *
+     * @return mixed The data for the form.
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return mixed The data for the form.
 	 */
 	protected function loadFormData(): mixed
 	{
@@ -237,12 +240,12 @@ class GuestModel extends AdminModel
 	/**
 	 * Set the required fields for the manager guest form (from settings)
 	 *
-	 * @param  Form   $form      Guest form
-	 * @param  array  $settings  Property settings
+     * @param   Form   $form      Guest form
+     * @param   array  $settings  Property settings
 	 *
+     * @return Form
 	 * @throws UnexpectedValueException
 	 * @since  1.0.0
-	 * @return Form
 	 */
 	protected function setFormRequired(Form $form, array $settings): Form
 	{

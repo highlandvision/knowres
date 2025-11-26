@@ -32,11 +32,11 @@ class HtmlView extends KrHtmlView\Site
 	/**
 	 * Display the view
 	 *
-	 * @param  null  $tpl  Default template.
+     * @param   null  $tpl  Default template.
 	 *
+     * @return void
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return void
 	 */
 	public function display($tpl = null): void
 	{
@@ -63,7 +63,8 @@ class HtmlView extends KrHtmlView\Site
 		$this->params = KrMethods::getParams();
 
 		/** @var ReviewModel $model */
-		$model      = KrFactory::getSiteModel('review');
+        $model = KrFactory::getSiteModel('review');
+        $model->setUseExceptions(true);
 		$this->item = $model->getItem();
 		$this->form = $model->getForm();
 

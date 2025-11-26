@@ -32,9 +32,9 @@ class HtmlView extends KrHtmlView\Property
 	 *
 	 * @param  ?string  $tpl  A template file to load. [optional]
 	 *
+     * @return  void
 	 * @throws  Exception
 	 * @since   1.0.0
-	 * @return  void
 	 */
 	public function display($tpl = null): void
 	{
@@ -49,7 +49,7 @@ class HtmlView extends KrHtmlView\Property
 		$this->ordering      = in_array('ordering', $model->getFilterFields());
 		$this->form_name     = 'type';
 
-		if (!$this->checkEmpty()) {
+        if (!$this->checkEmpty()) {
 			$this->checkErrors();
 			ToolbarHelper::title(KrMethods::plain('COM_KNOWRES_TYPES_TITLE'), 'tasks knowres');
 			$this->addListToolbar($this->get('name'));

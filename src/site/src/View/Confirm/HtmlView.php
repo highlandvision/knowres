@@ -50,13 +50,14 @@ class HtmlView extends KrHtmlView\Site
 	/**
 	 * Display the form
 	 *
-	 * @param  null  $tpl  Default template.
+     * @param   null  $tpl  Default template.
 	 *
+     * @return void
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return void
 	 */
-	#[NoReturn] public function display($tpl = null): void
+    #[NoReturn]
+    public function display($tpl = null): void
 	{
 		$this->contractSession = new KrSession\Contract();
 		$this->contractData    = $this->contractSession->getData();
@@ -65,7 +66,8 @@ class HtmlView extends KrHtmlView\Site
 		$this->checkSession();
 
 		/** @var ContractModel $model */
-		$model      = KrFactory::getAdminModel('contract');
+        $model                  = KrFactory::getAdminModel('contract');
+        $model->setUseExceptions(true);
 		$this->form = KrFactory::getAdhocForm('confirm', 'confirm.xml', 'site');
 
 		$this->item         = $model->getItem();
@@ -73,10 +75,10 @@ class HtmlView extends KrHtmlView\Site
 		$this->params       = KrMethods::getParams();
 		$this->Translations = new Translations();
 
-		if (is_null(KrMethods::getUserState('com_knowres.edit.confirm.data'))) {
+        if (is_null(KrMethods::getUserState('com_knowres.edit.confirm.data'))) {
 			KrMethods::setUserState('com_knowres.edit.confirm.data', $this->contractData);
 		}
-		if (is_null(KrMethods::getUserState('com_knowres.edit.guest.data'))) {
+        if (is_null(KrMethods::getUserState('com_knowres.edit.guest.data'))) {
 			KrMethods::setUserState('com_knowres.edit.guest.data', $guestData);
 		}
 
@@ -86,7 +88,7 @@ class HtmlView extends KrHtmlView\Site
 		$this->guestForm->bind($guestData);
 		$this->property         = KrFactory::getAdminModel('property')->getItem($this->contractData->property_id);
 		$this->settings         = KrFactory::getListModel('propertysettings')
-			->getPropertysettings($this->contractData->property_id);
+            ->getPropertysettings($this->contractData->property_id);
 		$this->pimage           = Images::getImagePath($this->property->id, 'solo',
 			Images::getPropertyImageName($this->property->id)
 		);
@@ -105,15 +107,17 @@ class HtmlView extends KrHtmlView\Site
 	 */
 	protected function checkSession(): void
 	{
-		if (!$this->contractData->contract_total) {
+        if (!$this->contractData->contract_total) {
 			$this->contractSession->resetData();
 			SiteHelper::expiredSession();
 		}
 
 		if (!KrFactory::getListModel('contracts')
-			->isPropertyAvailable($this->contractData->property_id, $this->contractData->arrival,
-				$this->contractData->departure
-			)) {
+            ->isPropertyAvailable(
+                $this->contractData->property_id,
+                $this->contractData->arrival,
+                $this->contractData->departure
+            )) {
 			$this->contractSession->resetData();
 			SiteHelper::expiredSession($jform['property_id']);
 		}

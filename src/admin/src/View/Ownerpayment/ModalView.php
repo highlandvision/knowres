@@ -25,38 +25,38 @@ use JetBrains\PhpStorm\NoReturn;
  */
 class ModalView extends KrHtmlView
 {
-	/**
-	 * Display the view via ajax
-	 *
-	 * @param  ?string  $tpl  A template file to load. [optional]
-	 *
-	 * @throws Exception
-	 * @since  3.3.4
-	 * @return void
-	 */
-	#[NoReturn] public function display($tpl = null): void
-	{
-		$id = KrMethods::inputInt('id');
-		if (empty($id))
-		{
-			jexit();
-		}
+    /**
+     * Display the view via ajax
+     *
+     * @param  ?string  $tpl  A template file to load. [optional]
+     *
+     * @return void
+     * @throws Exception
+     * @since  3.3.4
+     */
+    #[NoReturn]
+    public function display($tpl = null): void
+    {
+        $id = KrMethods::inputInt('id');
+        if (empty($id)) {
+            jexit();
+        }
 
-		/** @var OwnerpaymentModel $model */
-		$model      = KrFactory::getAdminModel('ownerpayment');
-		$this->item = $model->getItem($id);
-		if (empty($this->item->id))
-		{
-			jexit();
-		}
-		$this->form  = $model->getForm();
-		$this->state = $model->getState();
+        /** @var OwnerpaymentModel $model */
+        $model = KrFactory::getAdminModel('ownerpayment');
+        $model->setUseExceptions(true);
+        $this->item = $model->getItem($id);
+        if (empty($this->item->id)) {
+            jexit();
+        }
+        $this->form  = $model->getForm();
+        $this->state = $model->getState();
 
-		KrMethods::setUserState('com_knowres.edit.ownerpayment.data', $this->item);
+        KrMethods::setUserState('com_knowres.edit.ownerpayment.data', $this->item);
 
-		$this->setLayout('modal');
-		echo $this->loadTemplate($tpl);
+        $this->setLayout('modal');
+        echo $this->loadTemplate($tpl);
 
-		jexit();
-	}
+        jexit();
+    }
 }

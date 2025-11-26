@@ -66,22 +66,22 @@ class HtmlView extends KrHtmlView\Contract
 	/**
 	 * Display the view
 	 *
-	 * @param  string  $tpl  Template name
+     * @param   string  $tpl  Template name
 	 *
+     * @return void
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return void
 	 */
 	public function display($tpl = null): void
 	{
 		/** @var ContractModel $model */
-		$model       = $this->getModel();
-		$this->form  = $model->getForm();
-		$this->item  = $model->getItem();
-		$this->state = $model->getState();
-
-		$this->task    = KrMethods::inputString('task', 'manager');
-		$this->params  = KrMethods::getParams();
+        $model = $this->getModel();
+        $model->setUseExceptions(true);
+        $this->form   = $model->getForm();
+        $this->item   = $model->getItem();
+        $this->state  = $model->getState();
+        $this->task   = KrMethods::inputString('task', 'manager');
+        $this->params = KrMethods::getParams();
 		$this->setLayoutValue();
 
 		$userSession        = new KrSession\User();
@@ -169,11 +169,11 @@ class HtmlView extends KrHtmlView\Contract
 	/**
 	 * Add the page title and default toolbar for form view.
 	 *
-	 * @param  string  $name  Name of the form
+     * @param   string  $name  Name of the form
 	 *
+     * @return Toolbar
 	 * @throws Exception
 	 * @since  4.0.0
-	 * @return Toolbar
 	 */
 	protected function addFormToolbar(string $name): Toolbar
 	{
@@ -231,8 +231,8 @@ class HtmlView extends KrHtmlView\Contract
 	/**
 	 * Check owner access
 	 *
-	 * @since  1.0.0
 	 * @return bool
+     * @since  1.0.0
 	 */
 	protected function checkOwner(): bool
 	{
@@ -280,7 +280,9 @@ class HtmlView extends KrHtmlView\Contract
 			{
 				KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&task=contract.show&id='
 					. $this->item->id,
-					false));
+                    false
+                )
+                );
 			}
 			else
 			{
@@ -318,9 +320,9 @@ class HtmlView extends KrHtmlView\Contract
 	 * Layout is already set for new
 	 * Agent edit goes through manager
 	 *
+     * @return void
 	 * @throws Exception
 	 * @since  3.2.0
-	 * @return void
 	 */
 	protected function setLayoutValue(): void
 	{
@@ -361,17 +363,23 @@ class HtmlView extends KrHtmlView\Contract
 			if ($this->task == 'agent')
 			{
 				ToolbarHelper::title(KrMethods::plain('COM_KNOWRES_CONTRACT_AGENT_TITLE') . ' - '
-					. $this->property->property_name, 'fa-headphones');
+                    . $this->property->property_name,
+                    'fa-headphones'
+                );
 			}
 			elseif ($this->getLayout() == 'manager')
 			{
 				ToolbarHelper::title(KrMethods::plain('COM_KNOWRES_CONTRACT_MANAGER_TITLE') . ' - '
-					. $this->property->property_name, 'fa-home');
+                    . $this->property->property_name,
+                    'fa-home'
+                );
 			}
 			elseif ($this->getLayout() == 'block')
 			{
 				ToolbarHelper::title(KrMethods::plain('COM_KNOWRES_CONTRACT_BLOCK_TITLE') . ' - '
-					. $this->property->property_name, 'fa-lock');
+                    . $this->property->property_name,
+                    'fa-lock'
+                );
 			}
 		}
 		else

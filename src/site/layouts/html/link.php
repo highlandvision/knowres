@@ -20,20 +20,21 @@ extract($displayData);
  */
 
 if (is_array($query)) {
-	if ($external) {
-		$url = KrMethods::route(KrMethods::getRoot() . 'index.php?' . http_build_query($query));
-	}
-	else {
-		$url = KrMethods::route('index.php?' . http_build_query($query));
-	}
-}
-else {
-	$url = $query;
+    if ($external) {
+        $url = KrMethods::route(KrMethods::getRoot() . 'index.php?' . http_build_query($query));
+    } else {
+        $url = KrMethods::route('index.php?' . http_build_query($query));
+    }
+} else {
+    $url = $query;
 }
 
 $title = '' ? $text : $title;
 ?>
 
-<a href="<?php echo $url; ?>" title="<?php echo $title; ?>">
-	<?php echo $text; ?>
+<a href="<?php
+echo $url; ?>" title="<?php
+echo $title; ?>">
+    <?php
+    echo $text; ?>
 </a>

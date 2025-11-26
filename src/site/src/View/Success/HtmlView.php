@@ -23,33 +23,33 @@ use Joomla\CMS\Factory;
  */
 class HtmlView extends KrHtmlView\Site
 {
-	/**
-	 * Display the reservation success page
-	 *
-	 * @param  null  $tpl  Default template.
-	 *
-	 * @throws Exception
-	 * @since  4.0.0
-	 * @return void
-	 */
-	public function display($tpl = null): void
-	{
-		$this->meta_title       = KrMethods::plain('COM_KNOWRES_TITLE_CONFIRM_SUCCESS');
-		$this->meta_description = KrMethods::plain('COM_KNOWRES_PAGE_TITLE');
-		$this->prepareDocument();
+    /**
+     * Display the reservation success page
+     *
+     * @param   null  $tpl  Default template.
+     *
+     * @return void
+     * @throws Exception
+     * @since  4.0.0
+     */
+    public function display($tpl = null): void
+    {
+        $this->meta_title       = KrMethods::plain('COM_KNOWRES_TITLE_CONFIRM_SUCCESS');
+        $this->meta_description = KrMethods::plain('COM_KNOWRES_PAGE_TITLE');
+        $this->prepareDocument();
 
-		parent::display($tpl);
-	}
+        parent::display($tpl);
+    }
 
-	/**
-	 * Prepares the document
-	 *
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
-	protected function prepareDocument(): void
-	{
-		$this->document = Factory::getDocument();
-		$this->prepareDefaultDocument($this->meta_title, $this->meta_description);
-	}
+    /**
+     * Prepares the document
+     *
+     * @throws Exception
+     * @since  1.0.0
+     */
+    protected function prepareDocument(): void
+    {
+        $this->document = Factory::getDocument();
+        $this->prepareDefaultDocument($this->meta_title, $this->meta_description);
+    }
 }

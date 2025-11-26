@@ -37,11 +37,11 @@ class HtmlView extends KrHtmlView\Site
 	/**
 	 * Display the view
 	 *
-	 * @param  null  $tpl  Default template.
+     * @param   null  $tpl  Default template.
 	 *
+     * @return void
 	 * @throws Exception
 	 * @since  2.5.0
-	 * @return void
 	 */
 	public function display($tpl = null): void
 	{
@@ -49,7 +49,7 @@ class HtmlView extends KrHtmlView\Site
 
 		try
 		{
-			list($guest_id, $contract_id) = SiteHelper::validateDashboardSession();
+            [$guest_id, $contract_id] = SiteHelper::validateDashboardSession();
 		}
 		catch (Exception $e)
 		{
@@ -73,7 +73,8 @@ class HtmlView extends KrHtmlView\Site
 			SiteHelper::redirectDashboard();
 		}
 
-		$model      = KrFactory::getSiteModel('contractguestdata');
+        $model = KrFactory::getSiteModel('contractguestdata');
+        $model->setUseExceptions(true);
 		$this->item = $model->getItem($this->contract->guestdata_id);
 		if (!empty($this->item->id))
 		{

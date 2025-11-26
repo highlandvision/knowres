@@ -33,9 +33,9 @@ class HtmlView extends KrHtmlView\Payments
 	 *
 	 * @param  ?string  $tpl  A template file to load. [optional]
 	 *
+     * @return void
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return void
 	 */
 	public function display($tpl = null): void
 	{

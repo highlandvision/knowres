@@ -46,9 +46,9 @@ class HtmlView extends KrHtmlView\Site
 	 *
 	 * @param   null  $tpl  Default template.
 	 *
+     * @return void
 	 * @throws Exception
 	 * @since  2.5.0
-	 * @return void
 	 */
 	public function display($tpl = null): void
 	{
@@ -82,7 +82,9 @@ class HtmlView extends KrHtmlView\Site
 				$this->payment_confirmed = (float) $totals->confirmed;
 			}
 			$this->balance = Utility::roundValue($this->contract->contract_total + $this->fee_total -
-				$this->payment_confirmed, $this->contract->currency);
+                $this->payment_confirmed,
+                $this->contract->currency
+            );
 
 			$prePayment        = new PrePayment();
 			$this->paymentData = $prePayment->constructExisting($this->contract, $this->balance);

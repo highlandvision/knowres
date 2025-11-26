@@ -12,6 +12,7 @@ namespace HighlandVision\Component\Knowres\Administrator\Model;
 defined('_JEXEC') or die;
 
 use Exception;
+use HighlandVision\Component\Knowres\AdministratorModel\ContractModel;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\AdminModel;
@@ -63,9 +64,9 @@ class EmailactionModel extends AdminModel
 	/**
 	 * Method to get the data that should be injected in the form.
 	 *
+     * @return mixed The data for the form.
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return mixed The data for the form.
 	 */
 	protected function loadFormData(): mixed
 	{

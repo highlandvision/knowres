@@ -12,6 +12,7 @@ namespace HighlandVision\KR\Owner;
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\TickTock;
+
 use function count;
 
 /**
@@ -21,111 +22,90 @@ use function count;
  **/
 class PaymentsQueue
 {
-	/** @var object Payment data */
-	private object $payment;
-	/** @var string Today */
-	private string $today;
+    /** @var object Payment data */
+    private object $payment;
+    /** @var string Today */
+    private string $today;
 
-	/**
-	 * Initialize
-	 *
-	 * @throws Exception
-	 * @since  3.3.1
-	 */
-	public function __construct()
-	{
-		$this->today = TickTock::getDate();
-	}
+    /**
+     * Initialize
+     *
+     * @throws Exception
+     * @since  3.3.1
+     */
+    public function __construct()
+    {
+        $this->today = TickTock::getDate();
+    }
 
-	/**
-	 * Process payments in queue
-	 *
-	 * @throws Exception
-	 * @since  3.3.1
-	 */
-	public function process(): void
-	{
-		$queue = KrFactory::getListModel('contractpayments')->getPaymentQueue();
-		if (!count($queue))
-		{
-			return;
-		}
+    /**
+     * Process payments in queue
+     *
+     * @throws Exception
+     * @since  3.3.1
+     */
+    public function process(): void
+    {
+        $queue = KrFactory::getListModel('contractpayments')->getPaymentQueue();
+        if (!count($queue)) {
+            return;
+        }
 
-		foreach ($queue as $this->payment)
-		{
-			$this->processBySchedule();
-		}
-	}
+        foreach ($queue as $this->payment) {
+            $this->processBySchedule();
+        }
+    }
 
-	/**
-	 * Process payments as per schedule
-	 * eom = EOM payment
-	 * rgp = receipt of guest balance payment
-	 * dba = n days before arrival date
-	 * dad = n days after departure date
-	 *
-	 * @throws Exception
-	 * @since  3.3.1
-	 */
-	protected function processBySchedule(): void
-	{
-		$payments = false;
+    /**
+     * Process payments as per schedule
+     * eom = EOM payment
+     * rgp = receipt of guest balance payment
+     * dba = n days before arrival date
+     * dad = n days after departure date
+     *
+     * @throws Exception
+     * @since  3.3.1
+     */
+    protected function processBySchedule(): void
+    {
+        $payments = false;
 
-		if ($this->payment->schedule === 'eom')
-		{
-			if (TickTock::getEom() == $this->today)
-			{
-				$payments = new \HighlandVision\KR\Owner\Payments\EndOfMonth($this->payment);
-			}
-		}
-		elseif ($this->payment->schedule === 'rgp')
-		{
-			if ($this->payment->booking_status == 40)
-			{
-				$payments = new \HighlandVision\KR\Owner\Payments\Balance($this->payment, 'rgp');
-			}
-		}
-		elseif ($this->payment->schedule === 'dba')
-		{
-			if ($this->payment->booking_status == 40
-				&& TickTock::modifyDays($this->payment->arrival, $this->payment->days, '-') <= $this->today)
-			{
-				$payments = new Payments\Balance($this->payment, 'dba');
-			}
-		}
-		elseif ($this->payment->schedule === 'dad')
-		{
-			if ($this->payment->booking_status == 40
-				&& TickTock::modifyDays($this->payment->departure, $this->payment->days) <= $this->today)
-			{
-				$payments = new Payments\Balance($this->payment, 'dad');
-			}
-		}
+        if ($this->payment->schedule === 'eom') {
+            if (TickTock::getEom() == $this->today) {
+                $payments = new Payments\EndOfMonth($this->payment);
+            }
+        } elseif ($this->payment->schedule === 'rgp') {
+            if ($this->payment->booking_status == 40) {
+                $payments = new Payments\Balance($this->payment, 'rgp');
+            }
+        } elseif ($this->payment->schedule === 'dba') {
+            if ($this->payment->booking_status == 40
+                && TickTock::modifyDays($this->payment->arrival, $this->payment->days, '-') <= $this->today) {
+                $payments = new Payments\Balance($this->payment, 'dba');
+            }
+        } elseif ($this->payment->schedule === 'dad') {
+            if ($this->payment->booking_status == 40
+                && TickTock::modifyDays($this->payment->departure, $this->payment->days) <= $this->today) {
+                $payments = new Payments\Balance($this->payment, 'dad');
+            }
+        }
 
-		if ($payments)
-		{
-			$payments->process();
-			KrFactory::getListModel('contractpayments')->updateActionedPayments([$this->payment->id]);
-		}
-		elseif ($this->payment->pay_deposit > 0 && $this->payment->booking_status == 10 && $this->payment->deposit > 0)
-		{
-			if ($this->payment->pay_deposit == 1)
-			{
-				$payments = new Payments\Deposit($this->payment);
-			}
-			elseif ($this->payment->pay_deposit == 2)
-			{
-				if (TickTock::modifyDays($this->payment->payment_date, $this->payment->deposit_days) >= $this->today)
-				{
-					$payments = new Payments\Deposit($this->payment);
-				}
-			}
+        if ($payments) {
+            $payments->process();
+            KrFactory::getListModel('contractpayments')->updateActionedPayments([$this->payment->id]);
+        } elseif ($this->payment->pay_deposit > 0 && $this->payment->booking_status == 10 && $this->payment->deposit > 0) {
+            if ($this->payment->pay_deposit == 1) {
+                $payments = new Payments\Deposit($this->payment);
+            } elseif ($this->payment->pay_deposit == 2) {
+                if (TickTock::modifyDays($this->payment->payment_date, $this->payment->deposit_days) >= $this->today) {
+                    $payments = new Payments\Deposit($this->payment);
+                }
+            }
 
-			if ($payments)
-			{
-				$payments->process();
-				KrFactory::getListModel('contractpayments')->updateActionedPayments([$this->payment->id]);
-			}
-		}
-	}
+            if ($payments) {
+                $payments->process();
+                KrFactory::getListModel('contractpayments')->updateActionedPayments([$this->payment->id]);
+            }
+        }
+    }
 }

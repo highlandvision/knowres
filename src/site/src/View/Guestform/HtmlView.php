@@ -40,38 +40,39 @@ class HtmlView extends KrHtmlView\Site
 	/**
 	 * Display the view
 	 *
-	 * @param  null  $tpl  Default template.
+     * @param   null  $tpl  Default template.
 	 *
+     * @return void
 	 * @throws Exception
 	 * @since  2.5.0
-	 * @return void
 	 */
 	public function display($tpl = null): void
 	{
 		SiteHelper::checkUser();
 
-		try {
-			list($guest_id, $contract_id) = SiteHelper::validateDashboardSession();
-			if (!$contract_id) {
+        try {
+            [$guest_id, $contract_id] = SiteHelper::validateDashboardSession();
+            if (!$contract_id) {
 				SiteHelper::badUser();
 			}
-		} catch (Exception) {
+        } catch (Exception) {
 			SiteHelper::badUser();
 		}
 
 		$contract = KrFactory::getAdminModel('contract')->getItem($contract_id);
-		if (!$contract->id || $contract->guest_id != $guest_id) {
+        if (!$contract->id || $contract->guest_id != $guest_id) {
 			SiteHelper::badUser();
 		}
 
 		$this->property_id = $contract->property_id;
-		if ($contract->agency_id) {
+        if ($contract->agency_id) {
 			$Translations = new Translations();
 			$this->gdpr   = $Translations->getText('agency', $contract->agency_id, 'gdpr_statement');
 		}
 
 		/** @var GuestModel $model */
-		$model      = KrFactory::getSiteModel('guest');
+        $model = KrFactory::getSiteModel('guest');
+        $model->setUseExceptions(true);
 		$this->item = $model->getItem($guest_id);
 		SiteHelper::checkLocks($this->item, $model);
 
@@ -84,12 +85,12 @@ class HtmlView extends KrHtmlView\Site
 
 		$userSession = new KrSession\User();
 		$userData    = $userSession->getData();
-		if (!$userData->db_guest_update) {
+        if (!$userData->db_guest_update) {
 			$this->contract_id = $contract->id;
 
 			$paymentSession = new KrSession\Payment();
 			$paymentData    = $paymentSession->resetData();
-			if ($this->contract_id) {
+            if ($this->contract_id) {
 				$paymentData->contract_id      = $this->contract_id;
 				$paymentData->property_id      = $contract->property_id;
 				$paymentData->guest_id         = $guest_id;
@@ -98,7 +99,7 @@ class HtmlView extends KrHtmlView\Site
 			}
 
 			$paymentSession->setData($paymentData);
-		} else {
+        } else {
 			$this->contract_id = 0;
 		}
 

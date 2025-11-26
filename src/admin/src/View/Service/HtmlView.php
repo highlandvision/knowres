@@ -53,30 +53,31 @@ class HtmlView extends KrHtmlView
 	 *
 	 * @param  ?string  $tpl  A template file to load. [optional]
 	 *
+     * @return void
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return void
 	 */
 	public function display($tpl = null): void
 	{
 		/** @var ServiceModel $model */
-		$model       = $this->getModel();
+        $model = $this->getModel();
+        $model->setUseExceptions(true);
 		$this->state = $model->getState();
 		$this->item  = $model->getItem();
 		$this->form  = $model->getForm();
 
-		if (!empty($this->item->plugin)) {
+        if (!empty($this->item->plugin)) {
 			$this->plugin = $this->item->plugin;
 			$this->type   = $this->item->type;
-		} else {
+        } else {
 			$this->plugin = KrMethods::inputString('plugin');
 			$this->type   = $this->plugin == 'ical' ? 'i' : 'g';
 		}
 
-		if (in_array($this->plugin, $this->external)) {
+        if (in_array($this->plugin, $this->external)) {
 			$source      = $this->plugin . '.xml';
 			$this->adhoc = KrFactory::getAdhocForm($this->plugin, $source, 'library', 'custom');
-		} else {
+        } else {
 			$source      = 'service_' . $this->plugin . '.xml';
 			$this->adhoc = KrFactory::getAdhocForm($this->plugin, $source, 'administrator', 'custom');
 		}
@@ -90,7 +91,7 @@ class HtmlView extends KrHtmlView
 		$this->getFormAriaLabel();
 		ToolbarHelper::title($form_name, 'fa-solid fa-exchange-alt knowres');
 		$Toolbar = $this->addFormToolbar(strtolower($this->getName()));
-		if (!empty($this->adhoc->getFieldAttribute('apassword', 'type'))) {
+        if (!empty($this->adhoc->getFieldAttribute('apassword', 'type'))) {
 			$Toolbar = $this->addCustomToolbar($Toolbar);
 		}
 
@@ -100,11 +101,11 @@ class HtmlView extends KrHtmlView
 	/**
 	 * Add the toolbar.
 	 *
-	 * @param  Toolbar  $Toolbar  Current toolbar
+     * @param   Toolbar  $Toolbar  Current toolbar
 	 *
+     * @return Toolbar
 	 * @throws Exception
 	 * @since  4.0.0
-	 * @return Toolbar
 	 */
 	protected function addCustomToolbar(Toolbar $Toolbar): Toolbar
 	{

@@ -36,11 +36,11 @@ class HtmlView extends KrHtmlView
 	/**
 	 * Display the view
 	 *
-	 * @param  null  $tpl  Default template
+     * @param   null  $tpl  Default template
 	 *
+     * @return void
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return void
 	 */
 	public function display($tpl = null): void
 	{
@@ -54,7 +54,8 @@ class HtmlView extends KrHtmlView
 		$this->property = KrFactory::getAdminModel('property')->getItem($this->contract->property_id);
 
 		/** @var ContractguestdataModel $model */
-		$model      = $this->getModel();
+        $model = $this->getModel();
+        $model->setUseExceptions(true);
 		$this->item = $model->getItem();
 		$this->form = $model->getForm();
 		if (empty($this->form->getValue('id')))

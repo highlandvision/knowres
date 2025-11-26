@@ -38,9 +38,9 @@ class HtmlView extends KrHtmlView
 	 *
 	 * @param  ?string  $tpl  A template file to load. [optional]
 	 *
+     * @return  void
 	 * @throws  Exception
 	 * @since   1.0.0
-	 * @return  void
 	 */
 	public function display($tpl = null): void
 	{
@@ -58,7 +58,7 @@ class HtmlView extends KrHtmlView
 		$this->orphans      = $this->state->get('filter.orphans');
 		$this->Translations = new Translations();
 
-		if (!$this->checkEmpty()) {
+        if (!$this->checkEmpty()) {
 			$this->checkErrors();
 			ToolbarHelper::title(KrMethods::plain('COM_KNOWRES_TRANSLATIONS_TITLE'), 'tasks knowres');
 			$this->addListToolbar($this->get('name'));

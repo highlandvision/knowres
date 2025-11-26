@@ -33,9 +33,9 @@ class HtmlView extends KrHtmlView
 	 *
 	 * @param   null  $tpl
 	 *
+     * @return void
 	 * @throws Exception
 	 * @since  3.2.0
-	 * @return void
 	 */
 	public function display($tpl = null): void
 	{
@@ -60,25 +60,25 @@ class HtmlView extends KrHtmlView
 	{
 		$Toolbar = Toolbar::getInstance();
 		$Toolbar->linkButton('refresh')
-			->icon('fa-solid fa-redo knowres')
-			->text('COM_KNOWRES_REFRESH')
-			->url(KrMethods::route('index.php?option=com_knowres&view=gantt'));
+            ->icon('fa-solid fa-redo knowres')
+            ->text('COM_KNOWRES_REFRESH')
+            ->url(KrMethods::route('index.php?option=com_knowres&view=gantt'));
 		$Toolbar->linkButton('contracts')
-			->icon('fa-solid fa-list knowres')
-			->text('COM_KNOWRES_CONTRACTS_TITLE')
-			->url(KrMethods::route('index.php?option=com_knowres&view=contracts'));
+            ->icon('fa-solid fa-list knowres')
+            ->text('COM_KNOWRES_CONTRACTS_TITLE')
+            ->url(KrMethods::route('index.php?option=com_knowres&view=contracts'));
 		$Toolbar->linkButton('properties')
-			->icon('fa-solid fa-list knowres')
-			->text('COM_KNOWRES_PROPERTIES_TITLE')
-			->url(KrMethods::route('index.php?option=com_knowres&view=properties'));
+            ->icon('fa-solid fa-list knowres')
+            ->text('COM_KNOWRES_PROPERTIES_TITLE')
+            ->url(KrMethods::route('index.php?option=com_knowres&view=properties'));
 
 		$Toolbar = $this->addConfigToolbar($Toolbar);
 		$Toolbar = $this->addQuickLinksToolbar($Toolbar);
 		$Toolbar = $this->addBackLink($Toolbar);
 
 		$Toolbar->linkButton('close')
-			->icon('fa-solid fa-times knowres')
-			->text('JTOOLBAR_CLOSE')
-			->url(KrMethods::route('index.php?option=com_knowres&task=gantt.cancel'));
+            ->icon('fa-solid fa-times knowres')
+            ->text('JTOOLBAR_CLOSE')
+            ->url(KrMethods::route('index.php?option=com_knowres&task=gantt.cancel'));
 	}
 }

@@ -57,22 +57,25 @@ class DailyView extends KrHtmlView
 	 *
 	 * @param  ?string  $tpl  A template file to load. [optional]
 	 *
+     * @return void
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return void
 	 */
-	#[NoReturn] public function display($tpl = null): void {
+    #[NoReturn]
+    public function display($tpl = null): void
+    {
 		$this->setLayout('daily');
 
 		/** @var ContractsModel $model * */
-		$model        = KrFactory::getListModel('contracts');
+        $model = KrFactory::getListModel('contracts');
+        $model->setUseExceptions(true);
 		$this->state  = $model->getState();
 		$this->items  = $model->getOverview();
 		$this->params = KrMethods::getParams();
 		$this->getActions();
 		$userSession        = new KrSession\User();
 		$this->access_level = $userSession->getAccessLevel();
-		if ($this->access_level == 40) {
+        if ($this->access_level == 40) {
 			$this->approvals     = KrFactory::getListModel('properties')->getForApproval();
 			$this->reviews       = KrFactory::getListModel('reviews')->getReviewsForApproval();
 			$this->payments      = KrFactory::getListModel('contractpayments')->getOverview();
@@ -80,7 +83,7 @@ class DailyView extends KrHtmlView
 		}
 
 		$this->setLines();
-		if ($this->params->get('download_registration', 0)) {
+        if ($this->params->get('download_registration', 0)) {
 			$this->registration     = true;
 			$this->registrationform = KrFactory::getAdhocForm('export_registration', 'export_registration.xml');
 		}
@@ -101,21 +104,22 @@ class DailyView extends KrHtmlView
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected function addToolbar(): void {
+    protected function addToolbar(): void
+    {
 		$Toolbar = Toolbar::getInstance();
 
-		if (!empty($this->registration)) {
+        if (!empty($this->registration)) {
 			$title = KrMethods::plain('COM_KNOWRES_CONFIG_ADMIN_DOWNLOAD_REGISTRATION');
 			$html  = KrMethods::render('toolbar.contract.registration', ['title' => $title]);
 			$Toolbar->customButton('guestregistration')
-				->html($html);
+                ->html($html);
 		}
 
 		/* @var Toolbar\LinkButton $Toolbar * */
 		$Toolbar->linkButton('refresh')
-			->icon('fa-solid fa-redo knowres')
-			->text('COM_KNOWRES_REFRESH')
-			->url(KrMethods::route('index.php?option=com_knowres&task=contracts.daily'));
+            ->icon('fa-solid fa-redo knowres')
+            ->text('COM_KNOWRES_REFRESH')
+            ->url(KrMethods::route('index.php?option=com_knowres&task=contracts.daily'));
 
 		$Toolbar = $this->addConfigToolbar($Toolbar);
 		$Toolbar = $this->addQuickLinksToolbar($Toolbar);
@@ -123,11 +127,11 @@ class DailyView extends KrHtmlView
 
 		/* @var Toolbar\LinkButton $Toolbar * */
 		$Toolbar->linkButton('close')
-			->icon('fa-solid fa-times knowres')
-			->text('JTOOLBAR_CLOSE')
-			->url(KrMethods::route('index.php?option=com_knowres&task=gantt.cancel'));
+            ->icon('fa-solid fa-times knowres')
+            ->text('JTOOLBAR_CLOSE')
+            ->url(KrMethods::route('index.php?option=com_knowres&task=gantt.cancel'));
 
-		if ($this->canDo->get('core.admin')) {
+        if ($this->canDo->get('core.admin')) {
 			ToolbarHelper::preferences('com_knowres');
 		}
 	}
@@ -137,11 +141,12 @@ class DailyView extends KrHtmlView
 	 *
 	 * @param   stdClass  $c  Contract data
 	 *
+     * @return array
 	 * @throws Exception
 	 * @since  4.0.0
-	 * @return array
 	 */
-	protected function setLine(stdClass $c): array {
+    protected function setLine(stdClass $c): array
+    {
 		$line                   = [];
 		$line['id']             = $c->id;
 		$line['service_id']     = $c->service_id;
@@ -150,18 +155,17 @@ class DailyView extends KrHtmlView
 		$line['departure']      = TickTock::displayDate($c->departure, 'dMy');
 		$line['contract_total'] = $c->contract_total;
 		$line['agent_name']     = '';
-		if (!is_null($c->agent_name)) {
+        if (!is_null($c->agent_name)) {
 			$line['agent_name'] = $c->agent_name;
 		}
-		if ($c->guest_id > 0) {
+        if ($c->guest_id > 0) {
 			$name              = ucfirst($c->firstname) . " " . ucfirst($c->surname);
 			$line['guestname'] = $name;
 		}
-		if ((int) $c->on_request) {
+        if ((int)$c->on_request) {
 			$expires         = TickTock::modifyHours($c->created_at, $c->on_request);
 			$line['expires'] = TickTock::displayTs($expires);
-		}
-		else {
+		} else {
 			$line['expires'] = TickTock::displayDate($c->expiry_date, 'dMy');
 		}
 		$line['balancedate']    = TickTock::displayDate($c->balance_date, 'dMy');
@@ -173,7 +177,7 @@ class DailyView extends KrHtmlView
 		$line['tag'] = '<a href="' . $link . '">' . $c->tag . '</a>';
 
 		$link                  = KrMethods::route('index.php?option=com_knowres&task=property.dashboard&id='
-		                                          . $c->property_id
+            . $c->property_id
 		);
 		$line['property_name'] = '<a href="' . $link . '">' . $c->property_name . '</a>';
 
@@ -186,35 +190,29 @@ class DailyView extends KrHtmlView
 	 * @throws Exception
 	 * @since  4.0.0
 	 */
-	#[NoReturn] protected function setLines(): void {
-		foreach ($this->items as $c) {
+    #[NoReturn]
+    protected function setLines(): void
+    {
+        foreach ($this->items as $c) {
 			$line = $this->setLine($c);
 
-			if ($c->booking_status == 1 && (int) $c->on_request) {
+            if ($c->booking_status == 1 && (int)$c->on_request) {
 				$this->lines['requests'][] = $line;
-			}
-			elseif ($c->booking_status == 1 && !(int) $c->on_request) {
+			} elseif ($c->booking_status == 1 && !(int)$c->on_request) {
 				$this->lines['option'][] = $line;
-			}
-			elseif ($c->booking_status == 5) {
+			} elseif ($c->booking_status == 5) {
 				$this->lines['duedeposit'][] = $line;
-			}
-			elseif ($c->booking_status == 30) {
+			} elseif ($c->booking_status == 30) {
 				$this->lines['overduebalance'][] = $line;
-			}
-			elseif ($c->booking_status == 35) {
+			} elseif ($c->booking_status == 35) {
 				$this->lines['duebalance'][] = $line;
-			}
-			elseif ($c->booking_status == 99) {
+			} elseif ($c->booking_status == 99) {
 				$this->lines['cancelled'][] = $line;
-			}
-			elseif ($c->arrival == $this->today) {
+			} elseif ($c->arrival == $this->today) {
 				$this->lines['arrivals'][] = $line;
-			}
-			elseif ($c->departure == $this->today) {
+			} elseif ($c->departure == $this->today) {
 				$this->lines['departures'][] = $line;
-			}
-			elseif ($c->booking_status) {
+			} elseif ($c->booking_status) {
 				$this->lines['new'][] = $line;
 			}
 		}

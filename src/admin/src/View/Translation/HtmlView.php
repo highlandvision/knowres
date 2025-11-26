@@ -43,9 +43,9 @@ class HtmlView extends KrHtmlView
 	 *
 	 * @param   null  $tpl
 	 *
+     * @return void
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return void
 	 */
 	public function display($tpl = null): void
 	{

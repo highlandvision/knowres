@@ -40,16 +40,17 @@ class HtmlView extends KrHtmlView
 	 *
 	 * @param  ?string  $tpl  A template file to load. [optional]
 	 *
+     * @return void
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return void
 	 */
 	public function display($tpl = null): void
 	{
 		KrMethods::setUserState('com_knowres.edit.property.data', null);
 
 		/** @var PropertyModel $model */
-		$model       = $this->getModel();
+        $model = $this->getModel();
+        $model->setUseExceptions(true);
 		$this->form  = $model->getForm();
 		$this->item  = $model->getItem();
 		$this->state = $model->getState();
@@ -91,12 +92,16 @@ class HtmlView extends KrHtmlView
 		if (empty($this->item->id))
 		{
 			ToolbarHelper::title(KrMethods::plain('COM_KNOWRES_FORM_PROPERTY_TITLE') . ' - '
-				. KrMethods::plain('COM_KNOWRES_PROPERTY_NEW'), 'fa-solid fa-home knowres');
+                . KrMethods::plain('COM_KNOWRES_PROPERTY_NEW'),
+                'fa-solid fa-home knowres'
+            );
 		}
 		else
 		{
 			ToolbarHelper::title(KrMethods::plain('COM_KNOWRES_FORM_PROPERTY_TITLE') . ' - '
-				. $this->item->property_name, 'fa-solid fa-home knowres');
+                . $this->item->property_name,
+                'fa-solid fa-home knowres'
+            );
 		}
 	}
 }

@@ -100,13 +100,14 @@ class HtmlView extends KrHtmlView\Site
 	 *
 	 * @param   null  $tpl  Default template.
 	 *
+     * @return void
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return void
 	 */
-	public function display($tpl = null): void {
+    public function display($tpl = null): void
+    {
 		$id = KrMethods::inputInt('id');
-		if (!$id) {
+        if (!$id) {
 			Utility::goto('properties');
 		}
 
@@ -114,11 +115,11 @@ class HtmlView extends KrHtmlView\Site
 		$this->params = KrMethods::getParams();
 		$this->item   = KrFactory::getAdminModel('property')->getItem($id);
 		$layout       = KrMethods::inputString('layout', 'default');
-		if (empty($this->item->id) || ($layout != 'preview' && $this->item->state != 1)) {
+        if (empty($this->item->id) || ($layout != 'preview' && $this->item->state != 1)) {
 			// Admin preview link for properties prior to publishing
 			$this->redirectToSearch();
 		}
-		if ($this->item->private && $layout != 'preview') {
+        if ($this->item->private && $layout != 'preview') {
 			// Private property not for public view
 			$this->redirectToSearch();
 		}
@@ -135,10 +136,10 @@ class HtmlView extends KrHtmlView\Site
 			KrMethods::route('index.php?option=com_knowres&view=contact&id=' . $this->item->id . '&Itemid=' . $Itemid);
 
 		if (is_countable($this->searchData->baseIds) && count($this->searchData->baseIds)
-		    && $this->searchData->region_id == $this->item->region_id) {
+            && $this->searchData->region_id == $this->item->region_id) {
 			$Itemid         = SiteHelper::getItemId('com_knowres', 'properties');
 			$this->backlink = KrMethods::route('index.php?option=com_knowres&view=properties&Itemid=' . $Itemid
-			                                   . '&region_id=' . $this->item->region_id
+                . '&region_id=' . $this->item->region_id
 			);
 			$this->backlink .= '?retain=1';
 		}
@@ -150,7 +151,7 @@ class HtmlView extends KrHtmlView\Site
 		$this->tabs             = $this->params->get('property_tabs', 0);
 		$this->Itemid           = SiteHelper::getItemId('com_knowres', 'property', ['id' => 0]);
 		$this->meta_title       = $this->item->property_name . ' | ' . $this->item->region_name . ' | '
-		                          . $this->item->type_name;
+            . $this->item->type_name;
 		$this->meta_description = KrMethods::sprintf('COM_KNOWRES_SEO_DESCRIPTION_PROPERTY',
 			$this->item->property_name,
 			$this->item->tagline ?? '',
@@ -159,11 +160,11 @@ class HtmlView extends KrHtmlView\Site
 			$this->item->region_name
 		);
 
-		if (!$this->params->get('property_meta', 1)) {
-			if ($this->item->meta_title) {
+        if (!$this->params->get('property_meta', 1)) {
+            if ($this->item->meta_title) {
 				$this->meta_title = $this->item->meta_title;
 			}
-			if ($this->item->meta_description) {
+            if ($this->item->meta_description) {
 				$this->meta_description = $this->item->meta_description;
 			}
 		}
@@ -171,7 +172,7 @@ class HtmlView extends KrHtmlView\Site
 		$this->prepareDocument();
 
 		$errors = $this->get('errors');
-		if (is_countable($errors) && count($errors)) {
+        if (is_countable($errors) && count($errors)) {
 			throw new Exception(implode("\n", $errors));
 		}
 
@@ -184,7 +185,8 @@ class HtmlView extends KrHtmlView\Site
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected function prepareDocument(): void {
+    protected function prepareDocument(): void
+    {
 		$this->prepareDefaultDocument($this->meta_title, $this->meta_description);
 		$this->setPathway();
 	}
@@ -195,12 +197,13 @@ class HtmlView extends KrHtmlView\Site
 	 * @throws Exception
 	 * @since 1.0.0
 	 */
-	protected function quoteData(): void {
+    protected function quoteData(): void
+    {
 		$this->form = KrFactory::getAdhocForm('quote', 'quote.xml', 'site', null);
 
 		$contractSession = new KrSession\Contract();
 		$contractData    = $contractSession->getData();
-		if ($contractData->property_id != $this->item->id) {
+        if ($contractData->property_id != $this->item->id) {
 			$contractData = $contractSession->resetData();
 		}
 
@@ -210,23 +213,21 @@ class HtmlView extends KrHtmlView\Site
 		$this->adults      = KrMethods::inputInt('adults', 2);
 		$this->children    = KrMethods::inputInt('children');
 		$this->child_agess = KrMethods::inputArray('child_ages');
-		if ($this->arrival) {
+        if ($this->arrival) {
 			$contractData->arrival     = $this->arrival;
 			$contractData->departure   = $this->departure;
 			$contractData->guests      = $this->guests;
 			$contractData->adults      = $this->adults;
 			$contractData->children    = $this->children;
 			$contractData->child_agess = $this->child_ages;
-		}
-		elseif ($contractData->arrival) {
+		} elseif ($contractData->arrival) {
 			$this->arrival     = $contractData->arrival;
 			$this->departure   = $contractData->departure;
 			$this->guests      = $contractData->guests;
 			$this->adults      = $contractData->adults;
 			$this->children    = $contractData->children;
 			$this->child_agess = $contractData->child_ages;
-		}
-		elseif ($this->searchData->arrival) {
+		} elseif ($this->searchData->arrival) {
 			$this->arrival     = $this->searchData->arrival;
 			$this->departure   = $this->searchData->departure;
 			$this->guests      = $this->searchData->guests;
@@ -237,14 +238,14 @@ class HtmlView extends KrHtmlView\Site
 
 		$this->booking_type = $this->item->booking_type;
 		KrMethods::getLanguage()->load('mod_knowres_search', JPATH_SITE . '/modules/mod_knowres_search');
-		if ($this->booking_type) {
+        if ($this->booking_type) {
 			$current = KrFactory::getListModel('rates')->getCurrent($this->item->id);
-			if (!$current) {
+            if (!$current) {
 				$this->booking_type = 0;
 			}
 		}
-		if ($this->booking_type) {
-			if ($this->arrival && $this->arrival < $this->today && $this->departure) {
+        if ($this->booking_type) {
+            if ($this->arrival && $this->arrival < $this->today && $this->departure) {
 				$this->arrival = '';
 			}
 
@@ -259,11 +260,12 @@ class HtmlView extends KrHtmlView\Site
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	protected function redirectToSearch(): void {
+    protected function redirectToSearch(): void
+    {
 		$Itemid = SiteHelper::getItemId('com_knowres', 'properties');
 		$link   = '/index.php?Itemid=' . $Itemid . '&retain=1';
 
-		if (isset($this->item->state) && $this->item->state != 1) {
+        if (isset($this->item->state) && $this->item->state != 1) {
 			KrMethods::message(KrMethods::plain('COM_KNOWRES_UNPUBLISHED_PROPERTY'));
 		}
 
@@ -276,20 +278,21 @@ class HtmlView extends KrHtmlView\Site
 	 * @throws Exception
 	 * @since  4.0.0
 	 */
-	protected function setDisplayData(): void {
+    protected function setDisplayData(): void
+    {
 		$this->fields = KrFactory::getListModel('propertyfields')->getAllPropertyFields();
 
-		if (is_countable($this->item->property_alternatives) && count($this->item->property_alternatives)) {
+        if (is_countable($this->item->property_alternatives) && count($this->item->property_alternatives)) {
 			$this->alternatives = KrFactory::getListSiteModel('properties')
-				->getMinMaxRates($this->item->property_alternatives);
-			foreach ($this->alternatives as $a) {
+                ->getMinMaxRates($this->item->property_alternatives);
+            foreach ($this->alternatives as $a) {
 				KrFactory::getAdminModel('property')->setPropertyFields($a, $this->fields);
 			}
 		}
 
-		if (is_countable($this->item->property_units) && count($this->item->property_units)) {
+        if (is_countable($this->item->property_units) && count($this->item->property_units)) {
 			$this->units = KrFactory::getListSiteModel('properties')->getMinMaxRates($this->item->property_units);
-			foreach ($this->units as $a) {
+            foreach ($this->units as $a) {
 				KrFactory::getAdminModel('property')->setPropertyFields($a, $this->fields);
 			}
 		}
@@ -299,17 +302,17 @@ class HtmlView extends KrHtmlView\Site
 		$this->net_rates  = KrFactory::getListModel('propertysettings')->getOneSetting('net_rates');
 		$this->net_markup = KrFactory::getListModel('propertysettings')->getOneSetting('net_markup');
 		$this->weekly     = KrFactory::getListModel('propertysettings')
-			->getOneSetting('tariffChargesStoredWeeklyYesNo');
+            ->getOneSetting('tariffChargesStoredWeeklyYesNo');
 		$this->rooms      = KrFactory::getListModel('propertyrooms')->getForProperty($this->item->id);
 		$this->images     = KrFactory::getListModel('images')->forDisplay($this->item->id);
 
 		$region = KrFactory::getAdminModel('region')->getItem($this->item->region_id);
-		if (!empty($region->id)) {
+        if (!empty($region->id)) {
 			$this->map_zoom = $region->map_zoom;
 		}
 
 		$this->features = [];
-		foreach ($this->item->property_features as $f) {
+        foreach ($this->item->property_features as $f) {
 			$tmp              = new stdClass();
 			$tmp->name        = $this->Translations->getText('propertyfeature', (int) $f);
 			$this->features[] = $tmp;
@@ -322,7 +325,8 @@ class HtmlView extends KrHtmlView\Site
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected function setPathway(): void {
+    protected function setPathway(): void
+    {
 		$pathway = self::setPathwayBase();
 		$pathway = self::propertiesPathway($pathway, $this->searchData);
 		$pathway->addItem($this->item->property_name);
@@ -334,20 +338,21 @@ class HtmlView extends KrHtmlView\Site
 	 * @throws Exception
 	 * @since  4.0.0
 	 */
-	protected function setReviewData(): void {
+    protected function setReviewData(): void
+    {
 		$this->list_limit = $this->params->get('list_limit', 6);
-		if ($this->list_limit > 6) {
+        if ($this->list_limit > 6) {
 			$this->list_limit = 6;
 		}
 		$this->ratings = new stdClass();
 
 		$this->reviews = KrFactory::getListModel('reviews')->forDisplay($this->item->id, $this->list_limit + 1);
-		if (is_countable($this->reviews) && count($this->reviews)) {
-			if (count($this->reviews) > $this->list_limit) {
+        if (is_countable($this->reviews) && count($this->reviews)) {
+            if (count($this->reviews) > $this->list_limit) {
 				$this->more_reviews = true;
 			}
 
-			if ($this->params->get('review_ratings', 0)) {
+            if ($this->params->get('review_ratings', 0)) {
 				$this->ratings  = KrFactory::getListModel('reviews')->getAvgReview($this->item->id);
 				$this->scores[] = $this->ratings->avgrating1;
 				$this->scores[] = $this->ratings->avgrating2;

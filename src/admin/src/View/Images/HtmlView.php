@@ -34,9 +34,9 @@ class HtmlView extends KrHtmlView\Property
 	 *
 	 * @param  ?string  $tpl  A template file to load. [optional]
 	 *
+     * @return void
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return void
 	 */
 	public function display($tpl = null): void
 	{
@@ -71,8 +71,8 @@ class HtmlView extends KrHtmlView\Property
 	 * @param   Toolbar  $Toolbar  Toolbar instance
 	 * @param   string   $name     List name
 	 *
-	 * @since  4.0.0
 	 * @return Toolbar
+     * @since  4.0.0
 	 */
 	protected function addChildActionsToolbar(Toolbar $Toolbar, string $name): Toolbar
 	{

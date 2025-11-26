@@ -33,9 +33,9 @@ class HtmlView extends KrHtmlView
 	 *
 	 * @param  ?string  $tpl  A template file to load. [optional]
 	 *
+     * @return void
 	 * @throws Exception
 	 * @since  3.3.1
-	 * @return void
 	 */
 	public function display($tpl = null): void
 	{
@@ -63,9 +63,9 @@ class HtmlView extends KrHtmlView
 	 *
 	 * @param   Toolbar  $Toolbar  Current toolbar instance
 	 *
+     * @return Toolbar
 	 * @throws Exception
 	 * @since  4.0.0
-	 * @return Toolbar
 	 */
 	protected function addCustomToolbar(Toolbar $Toolbar): Toolbar
 	{

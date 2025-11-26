@@ -35,11 +35,11 @@ class HtmlView extends KrHtmlView\Site
 	/**
 	 * Display the view
 	 *
-	 * @param  null  $tpl  Default template.
+     * @param   null  $tpl  Default template.
 	 *
+     * @return void
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return void
 	 */
 	public function display($tpl = null): void
 	{
@@ -92,8 +92,8 @@ class HtmlView extends KrHtmlView\Site
 	/**
 	 * Set the pathway for the reviews
 	 *
-	 * @param  int     $region_id    ID of property / search region
-	 * @param  string  $region_name  Name of property / search region
+     * @param   int     $region_id    ID of property / search region
+     * @param   string  $region_name  Name of property / search region
 	 *
 	 * @throws Exception
 	 * @since  1.0.0
