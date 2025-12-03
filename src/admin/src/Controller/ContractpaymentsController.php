@@ -28,25 +28,31 @@ class ContractpaymentsController extends AdminController
 	/**
 	 * Remove an item(s)
 	 *
+	 * @return bool  True if access level checks pass, false otherwise.
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return bool  True if access level checks pass, false otherwise.
 	 */
 	public function delete(): bool
 	{
 		$this->checkToken('get');
 
 		$cid = KrMethods::inputArray('cid');
-		if (!is_countable($cid) || count($cid) < 1) {
+		if (!is_countable($cid) || count($cid) < 1)
+		{
 			KrMethods::message(KrMethods::plain($this->text_prefix . '_NO_ITEM_SELECTED'));
-		} else {
+		}
+		else
+		{
 			/* @var ContractpaymentModel $model */
 			$model = $this->getModel();
 			ArrayHelper::toInteger($cid);
 
-			if ($model->delete($cid)) {
+			if ($model->delete($cid))
+			{
 				KrMethods::message(KrMethods::plural($this->text_prefix . '_N_ITEMS_DELETED', count($cid)));
-			} else {
+			}
+			else
+			{
 				KrMethods::message($model->getError());
 			}
 		}
@@ -56,14 +62,25 @@ class ContractpaymentsController extends AdminController
 		KrMethods::redirect(KrMethods::route('index.php?option=' . $this->option . '&view=' . $this->view_list, false));
 
 		$contract_id = KrMethods::getUserState('com_knowres.current.contract_id', 0);
-		if (!$contract_id) {
-			KrMethods::redirect(KrMethods::route('index.php?option=' . $this->option . '&view=' . $this->view_list
-			                                     . $this->getRedirectToListAppend(),
-				false));
-		} else {
-			KrMethods::redirect(KrMethods::route('index.php?option=' . $this->option . '&task=contract.show&id='
-			                                     . $contract_id,
-				false));
+		if (!$contract_id)
+		{
+			KrMethods::redirect(
+				KrMethods::route(
+					'index.php?option=' . $this->option . '&view=' . $this->view_list
+					. $this->getRedirectToListAppend(),
+					false
+				)
+			);
+		}
+		else
+		{
+			KrMethods::redirect(
+				KrMethods::route(
+					'index.php?option=' . $this->option . '&task=contract.show&id='
+					. $contract_id,
+					false
+				)
+			);
 		}
 
 		return true;
@@ -72,17 +89,17 @@ class ContractpaymentsController extends AdminController
 	/**
 	 * Proxy for getModel.
 	 *
-	 * @param  string  $name    Model name
-	 * @param  string  $prefix  Model prefix administrator or site (defaults to administrator)
-	 * @param  array   $config  Configuration options
+	 * @param   string  $name    Model name
+	 * @param   string  $prefix  Model prefix administrator or site (defaults to administrator)
+	 * @param   array   $config  Configuration options
 	 *
-	 * @since  1.6
 	 * @return bool|BaseDatabaseModel
+	 * @since  1.6
 	 */
-	public function getModel($name = 'contractpayment',
-		$prefix = 'Administrator',
-		$config = ['ignore_request' => true]): BaseDatabaseModel|bool
-	{
+	public function getModel(
+		$name = 'contractpayment', $prefix = 'Administrator',
+		$config = ['ignore_request' => true]
+	): BaseDatabaseModel|bool {
 		return parent::getModel($name, $prefix, $config);
 	}
 }

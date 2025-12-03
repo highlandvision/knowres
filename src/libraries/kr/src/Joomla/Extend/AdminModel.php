@@ -18,9 +18,11 @@ use HighlandVision\KR\Logger;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Utility;
 use Joomla\CMS\Form\Form;
+use Joomla\CMS\Table\Table;
 use RuntimeException;
 use stdClass;
 use UnexpectedValueException;
+
 use function str_replace;
 
 /**
@@ -28,7 +30,7 @@ use function str_replace;
  *
  * @since 3.7.0
  */
-class AdminModel extends \Joomla\CMS\MVC\Model\AdminModel
+abstract class AdminModel extends \Joomla\CMS\MVC\Model\AdminModel
 {
 	/**
 	 * Constructor.
@@ -38,8 +40,96 @@ class AdminModel extends \Joomla\CMS\MVC\Model\AdminModel
 	 * @throws Exception
 	 * @since  3.0.0
 	 */
-	public function __construct($config = []) {
+	public function __construct($config = [])
+	{
 		parent::__construct($config);
+	}
+
+	/**
+	 * Method to get the record form.
+	 *
+	 * @param   array   $data      An optional array of data for the form to interogate.
+	 * @param   bool    $loadData  True if the form is to load its own data (default case), false if not.
+	 * @param  ?string  $source    The form name if required.
+	 *
+	 * @return Form|false
+	 * @throws Exception
+	 * @since  1.0.0
+	 */
+	public function getForm($data = [], $loadData = true, ?string $source = null): Form|false
+	{
+		try
+		{
+			if (empty($source))
+			{
+				$source = str_replace('com_knowres.', '', $this->typeAlias);
+			}
+
+			return $this->loadForm($this->typeAlias, $source, [
+				'control'   => 'jform',
+				'load_data' => $loadData
+			]);
+		}
+		catch (Exception $e)
+		{
+			KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_FATAL'));
+			Logger::logMe($e->getMessage());
+
+			return false;
+		}
+	}
+
+	/**
+	 * Method to get a model record.
+	 *
+	 * @param   int  $pk  The id of the primary key.
+	 *
+	 * @return stdClass|false  stdClass on success, false on failure.
+	 * @since  1.6
+	 */
+	public function getItem($pk = null): object|false
+	{
+		try
+		{
+			return parent::getItem($pk);
+		}
+		catch (Exception $e)
+		{
+			Logger::logMe($e->getMessage());
+			jexit();
+		}
+	}
+
+	/**
+	 * Method to save the form data.
+	 *
+	 * @param   array  $data  The form data.
+	 *
+	 * @return bool  True on success.
+	 * @throws Exception
+	 * @since  3.2
+	 */
+	public function save($data): bool
+	{
+		if (KrMethods::inputString('task', '') === 'save2copy')
+		{
+			if (isset($data['name']))
+			{
+				$data['name'] = Utility::generateNewName($data['name']);
+			}
+
+			if (isset($data['state']))
+			{
+				$data['state'] = 0;
+			}
+		}
+
+		if (!parent::save($data))
+		{
+			throw new RuntimeException('Save failed with error ' . $this->getError());
+		}
+
+		return true;
 	}
 
 	/**
@@ -51,8 +141,10 @@ class AdminModel extends \Joomla\CMS\MVC\Model\AdminModel
 	 * @throws Exception
 	 * @since   3.3.0
 	 */
-	public static function setUpdatedAt(int $id, string $table): void {
-		if ($id && $table) {
+	public static function setUpdatedAt(int $id, string $table): void
+	{
+		if ($id && $table)
+		{
 			$update             = new stdClass();
 			$update->id         = $id;
 			$update->updated_at = TickTock::getTS();
@@ -62,122 +154,24 @@ class AdminModel extends \Joomla\CMS\MVC\Model\AdminModel
 	}
 
 	/**
-	 * Method to get a model record.
-	 *
-	 * @param  int  $pk  The id of the primary key.
-	 *
-	 * @since  1.6
-	 * @return object|false  Object on success, false on failure.
-	 */
-	public function getItem($pk = null): object|false
-	{
-		return parent::getItem($pk);
-	}
-
-	/**
-	 * Method to get the record form.
-	 *
-	 * @param   array   $data      An optional array of data for the form to interogate.
-	 * @param   bool    $loadData  True if the form is to load its own data (default case), false if not.
-	 * @param  ?string  $source    The form name if required.
-	 *
-	 * @throws Exception
-	 * @since  1.0.0
-	 * @return Form|false
-	 */
-	public function getForm($data = [], $loadData = true, ?string $source = null): Form|false {
-		try {
-			if (empty($source)) {
-				$source = str_replace('com_knowres.', '', $this->typeAlias);
-			}
-
-			return $this->loadForm($this->typeAlias, $source, ['control'   => 'jform',
-			                                                   'load_data' => $loadData
-			]);
-		}
-		catch (Exception $e) {
-			KrMethods::message(KrMethods::plain('COM_KNOWRES_ERROR_FATAL'));
-			Logger::logMe($e->getMessage());
-
-			return false;
-		}
-	}
-
-	/**
-	 * Method to save the form data.
-	 *
-	 * @param   array  $data  The form data.
-	 *
-	 * @throws Exception
-	 * @since  3.2
-	 * @return bool  True on success.
-	 */
-	public function save($data): bool {
-		if (KrMethods::inputString('task', '') === 'save2copy') {
-			if (isset($data['name'])) {
-				$data['name'] = Utility::generateNewName($data['name']);
-			}
-
-			if (isset($data['state'])) {
-				$data['state'] = 0;
-			}
-		}
-
-		if (!parent::save($data)) {
-			throw new RuntimeException('Save failed with error ' . $this->getError());
-		}
-
-		return true;
-	}
-
-	/**
-	 * Set form attributes
-	 *
-	 * @param  int     $setting   Setting for field
-	 *                            0 = Optional, 1 = Required, 2 = Hidden
-	 * @param  string  $name      Field name
-	 *                            0 = Optional, 1 = Required, 2 = Hidden
-	 * @param  Form    $form      Form object
-	 *
-	 * @throws UnexpectedValueException
-	 * @since  4.0.0
-	 * @return Form $form
-	 */
-	protected function setAttribute(int $setting, string $name, Form $form): Form
-	{
-		if ($setting == 2) {
-			$form->setFieldAttribute($name, 'type', 'hidden');
-		}
-
-		if ($setting == 0 || $setting == 2) {
-			$attr  = 'required';
-			$value = 'false';
-		}
-		else if ($setting == 1) {
-			$attr  = 'required';
-			$value = 'true';
-		}
-
-		$form->setFieldAttribute($name, $attr, $value);
-
-		return $form;
-	}
-
-	/**
 	 * Prepare and sanitize the table prior to saving.
 	 *
 	 * @param   Table  $table  Table data
 	 *
+	 * @return void
 	 * @throws RuntimeException
 	 * @throws Exception
 	 * @since  3.2.0
 	 */
-	protected function prepareTable($table): void {
-		if (empty($table->id)) {
+	protected function prepareTable($table): void
+	{
+		if (empty($table->id))
+		{
 			$table->created_at = TickTock::getTS();
 			$table->created_by = KrMethods::getUser()->id;
 
-			if (isset($table->ordering) && empty($table->ordering)) {
+			if (isset($table->ordering) && empty($table->ordering))
+			{
 				$db    = $this->getDatabase();
 				$query = $db->getQuery(true)->select('MAX(ordering)')->from($db->qn($table->getTableName()));
 
@@ -187,16 +181,19 @@ class AdminModel extends \Joomla\CMS\MVC\Model\AdminModel
 				$table->ordering = $max + 1;
 			}
 		}
-		else {
+		else
+		{
 			$table->updated_at = TickTock::getTS();
 			$table->updated_by = KrMethods::getUser()->id;
 
-			if (isset($table->created_at) && $table->created_at == '') {
+			if (isset($table->created_at) && $table->created_at == '')
+			{
 				unset($table->created_at);
 			}
 		}
 
-		if (isset($table->version)) {
+		if (isset($table->version))
+		{
 			$table->version++;
 		}
 	}
@@ -210,20 +207,24 @@ class AdminModel extends \Joomla\CMS\MVC\Model\AdminModel
 	 *                            0 = Optional, 1 = Required, 2 = Hidden
 	 * @param   Form    $form     Form object
 	 *
+	 * @return Form $form
 	 * @throws UnexpectedValueException
 	 * @since  4.0.0
-	 * @return Form $form
 	 */
-	protected function setAttribute(int $setting, string $name, Form $form): Form {
-		if ($setting == 2) {
+	protected function setAttribute(int $setting, string $name, Form $form): Form
+	{
+		if ($setting == 2)
+		{
 			$form->setFieldAttribute($name, 'type', 'hidden');
 		}
 
-		if ($setting == 0 || $setting == 2) {
+		if ($setting == 0 || $setting == 2)
+		{
 			$attr  = 'required';
 			$value = 'false';
 		}
-		elseif ($setting == 1) {
+		elseif ($setting == 1)
+		{
 			$attr  = 'required';
 			$value = 'true';
 		}

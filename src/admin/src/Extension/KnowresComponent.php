@@ -8,8 +8,6 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Extension;
 
-defined('_JEXEC') or die;
-
 use HighlandVision\Component\Knowres\Administrator\Service\Html\Knowres;
 use Joomla\CMS\Component\Router\RouterServiceInterface;
 use Joomla\CMS\Component\Router\RouterServiceTrait;
@@ -22,6 +20,10 @@ use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use RuntimeException;
 use UnexpectedValueException;
+
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Component class for com_knowres
@@ -39,14 +41,14 @@ class KnowresComponent extends MVCComponent implements BootableExtensionInterfac
 	 * If required, some initial set up can be done from services of the container, e.g.
 	 * registering HTML services.
 	 *
-	 * @param  ContainerInterface  $container  The container
+	 * @param   ContainerInterface  $container  The container
 	 *
-	 * @throws ContainerExceptionInterface
+	 * @return void
 	 * @throws NotFoundExceptionInterface
 	 * @throws RuntimeException
 	 * @throws UnexpectedValueException
-	 * @since   4.0.0
-	 * @return  void
+	 * @throws ContainerExceptionInterface
+	 * @since  4.0.0
 	 */
 	public function boot(ContainerInterface $container): void
 	{

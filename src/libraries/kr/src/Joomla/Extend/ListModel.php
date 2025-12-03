@@ -37,10 +37,86 @@ defined('_JEXEC') or die;
 abstract class ListModel extends \Joomla\CMS\MVC\Model\ListModel
 {
 	/**
+	 * Generate query for common list query joins
+	 *
+	 * @param   DatabaseInterface  $db     Database instance
+	 * @param   QueryInterface     $query  Existing query
+	 *
+	 * @return QueryInterface
+	 * @throws QueryTypeAlreadyDefinedException
+	 * @since  4.0.0
+	 */
+	public static function commonJoins(DatabaseInterface $db, QueryInterface $query): QueryInterface
+	{
+		$query->select($db->qn('uc.name', 'editor'))
+		      ->join('LEFT', $db->qn('#__users', 'uc') . 'ON' . $db->qn('uc.id') . '=' . $db->qn('a.checked_out'));
+		$query->select($db->qn('created_by.name', 'created_by'))
+		      ->join(
+			      'LEFT',
+			      $db->qn('#__users', 'created_by') . 'ON' . $db->qn('created_by.id') . '=' . $db->qn('a.created_by')
+		      );
+		$query->select($db->qn('updated_by.name', 'updated_by'))
+		      ->join(
+			      'LEFT',
+			      $db->qn('#__users', 'updated_by') . 'ON' . $db->qn('updated_by.id') . '=' . $db->qn('a.updated_by')
+		      );
+
+		return $query;
+	}
+
+	/**
+	 * Generate query for integer Filter
+	 *
+	 * @param   DatabaseInterface  $db      Database instance
+	 * @param   QueryInterface     $query   Existing query
+	 * @param   mixed              $filter  Filter value
+	 *
+	 * @return QueryInterface
+	 * @since  3.3.0
+	 */
+	public static function filterProperty(DatabaseInterface $db, QueryInterface $query, mixed $filter): QueryInterface
+	{
+		if (!empty($filter))
+		{
+			if (is_numeric($filter))
+			{
+				$query->where($db->qn('a.property_id') . '=' . (int) $filter);
+			}
+			elseif (is_array($filter))
+			{
+				$query->where(
+					$db->qn('a.property_id') . ' IN (' . implode(
+						',',
+						array_map('intval', $filter)
+					) . ')'
+				);
+			}
+			elseif (is_string($filter) && strlen($filter) > 0)
+			{
+				$ids = explode(',', $filter);
+				$query->where($db->qn('a.property_id') . 'IN (' . implode(',', array_map('intval', $ids)) . ')');
+			}
+		}
+
+		return $query;
+	}
+
+	/**
+	 * Get filter fields
+	 *
+	 * @return array
+	 * @since  4.0.0
+	 */
+	public function getFilterFields(): array
+	{
+		return $this->filter_fields;
+	}
+
+	/**
 	 * Method to get model rows.
 	 *
-	 * @since   3.0.0
 	 * @return  array    Object on success, false on failure.
+	 * @since   3.0.0
 	 */
 	public function getItems(): array
 	{
@@ -53,17 +129,6 @@ abstract class ListModel extends \Joomla\CMS\MVC\Model\ListModel
 	}
 
 	/**
-	 * Get filter fields
-	 *
-	 * @since  4.0.0
-	 * @return array
-	 */
-	public function getFilterFields(): array
-	{
-		return $this->filter_fields;
-	}
-
-	/**
 	 * Generate query for multipurpose Int, Array, String
 	 *
 	 * @param   DatabaseInterface  $db      Database instance
@@ -71,12 +136,13 @@ abstract class ListModel extends \Joomla\CMS\MVC\Model\ListModel
 	 * @param   string             $column  Name of column
 	 * @param   mixed              $value   Value for field
 	 *
-	 * @since  3.3.0
 	 * @return QueryInterface
+	 * @since  3.3.0
 	 */
-	public static function intArrayString(DatabaseInterface $db, QueryInterface $query, string $column,
-		mixed $value): QueryInterface
-	{
+	public static function intArrayString(
+		DatabaseInterface $db, QueryInterface $query, string $column,
+		mixed $value
+	): QueryInterface {
 		if (!empty($value))
 		{
 			if (is_numeric($value))
@@ -98,60 +164,6 @@ abstract class ListModel extends \Joomla\CMS\MVC\Model\ListModel
 	}
 
 	/**
-	 * Generate query for string Filter
-	 *
-	 * @param   DatabaseInterface  $db      Database instance
-	 * @param   QueryInterface     $query   Existing query
-	 * @param   string             $column  Name of column
-	 * @param   mixed              $filter  Filter value
-	 *
-	 * @since  3.3.0
-	 * @return QueryInterface
-	 */
-	public static function stringFilter(DatabaseInterface $db, QueryInterface $query, string $column,
-		mixed $filter): QueryInterface
-	{
-		if (!empty($filter))
-		{
-			if (is_string($filter))
-			{
-				$filter = trim($filter);
-				$query->where($db->qn($column) . ' = ' . $db->q(trim($filter)));
-			}
-			elseif (is_array($filter))
-			{
-				$query->where($db->qn($column) . ' IN (' . implode(',', $db->q(array_map('strval', $filter))) . ')');
-			}
-		}
-
-		return $query;
-	}
-
-	/**
-	 * Generate query for common list query joins
-	 *
-	 * @param   DatabaseInterface  $db     Database instance
-	 * @param   QueryInterface     $query  Existing query
-	 *
-	 * @throws QueryTypeAlreadyDefinedException
-	 * @since  4.0.0
-	 * @return QueryInterface
-	 */
-	public static function commonJoins(DatabaseInterface $db, QueryInterface $query): QueryInterface
-	{
-		$query->select($db->qn('uc.name', 'editor'))
-		      ->join('LEFT', $db->qn('#__users', 'uc') . 'ON' . $db->qn('uc.id') . '=' . $db->qn('a.checked_out'));
-		$query->select($db->qn('created_by.name', 'created_by'))
-		      ->join('LEFT',
-			      $db->qn('#__users', 'created_by') . 'ON' . $db->qn('created_by.id') . '=' . $db->qn('a.created_by'));
-		$query->select($db->qn('updated_by.name', 'updated_by'))
-		      ->join('LEFT',
-			      $db->qn('#__users', 'updated_by') . 'ON' . $db->qn('updated_by.id') . '=' . $db->qn('a.updated_by'));
-
-		return $query;
-	}
-
-	/**
 	 * Generate query for integer Filter
 	 *
 	 * @param   DatabaseInterface  $db      Database instance
@@ -159,12 +171,13 @@ abstract class ListModel extends \Joomla\CMS\MVC\Model\ListModel
 	 * @param   string             $column  Name of column
 	 * @param   mixed              $filter  Filter value
 	 *
-	 * @since  3.3.0
 	 * @return QueryInterface
+	 * @since  3.3.0
 	 */
-	public static function intFilter(DatabaseInterface $db, QueryInterface $query, string $column,
-		mixed $filter): QueryInterface
-	{
+	public static function intFilter(
+		DatabaseInterface $db, QueryInterface $query, string $column,
+		mixed $filter
+	): QueryInterface {
 		if (!empty($filter))
 		{
 			if (is_numeric($filter))
@@ -181,41 +194,6 @@ abstract class ListModel extends \Joomla\CMS\MVC\Model\ListModel
 	}
 
 	/**
-	 * Generate query for integer Filter
-	 *
-	 * @param   DatabaseInterface  $db      Database instance
-	 * @param   QueryInterface     $query   Existing query
-	 * @param   mixed              $filter  Filter value
-	 *
-	 * @since  3.3.0
-	 * @return QueryInterface
-	 */
-	public static function filterProperty(DatabaseInterface $db, QueryInterface $query, mixed $filter): QueryInterface
-	{
-		if (!empty($filter))
-		{
-			if (is_numeric($filter))
-			{
-				$query->where($db->qn('a.property_id') . '=' . (int) $filter);
-			}
-			elseif (is_array($filter))
-			{
-				$query->where($db->qn('a.property_id') . ' IN (' . implode(',',
-						array_map('intval', $filter)
-					) . ')'
-				);
-			}
-			elseif (is_string($filter) && strlen($filter) > 0)
-			{
-				$ids = explode(',', $filter);
-				$query->where($db->qn('a.property_id') . 'IN (' . implode(',', array_map('intval', $ids)) . ')');
-			}
-		}
-
-		return $query;
-	}
-
-	/**
 	 * Set query for json string find in set
 	 *
 	 * @param   DatabaseInterface  $db      Database instance
@@ -223,34 +201,39 @@ abstract class ListModel extends \Joomla\CMS\MVC\Model\ListModel
 	 * @param   mixed              $filter  Current filter values
 	 * @param   string             $column  Database column
 	 *
-	 * @since  1.0.0
 	 * @return QueryInterface
+	 * @since  1.0.0
 	 */
-	public static function jsonFindInSet(DatabaseInterface $db, QueryInterface $query, mixed $filter,
-		string $column): QueryInterface
-	{
+	public static function jsonFindInSet(
+		DatabaseInterface $db, QueryInterface $query, mixed $filter,
+		string $column
+	): QueryInterface {
 		if (is_numeric($filter) && (int) $filter > 0)
 		{
-			$query->where('FIND_IN_SET( ' . (int) $filter . ', REPLACE(REPLACE(REPLACE(' . $db->qn($column) . ','
-			              . $db->q('"') . ',' . $db->q('') . ' ), ' . $db->q('[') . ',' . $db->q('') . ' ), ' . $db->q(']') . ','
-			              . $db->q('') . ')) > 0'
+			$query->where(
+				'FIND_IN_SET( ' . (int) $filter . ', REPLACE(REPLACE(REPLACE(' . $db->qn($column) . ','
+				. $db->q('"') . ',' . $db->q('') . ' ), ' . $db->q('[') . ',' . $db->q('') . ' ), ' . $db->q(']') . ','
+				. $db->q('') . ')) > 0'
 			);
 		}
 		elseif (is_array($filter) && count($filter) > 0)
 		{
 			foreach ($filter as $f)
 			{
-				$query->where('FIND_IN_SET( ' . (int) $f . ', REPLACE(REPLACE(REPLACE(' . $db->qn($column) . ','
-				              . $db->q('"') . ',' . $db->q('') . ' ), ' . $db->q('[') . ',' . $db->q('') . ' ), ' . $db->q(']')
-				              . ',' . $db->q('') . ')) > 0'
+				$query->where(
+					'FIND_IN_SET( ' . (int) $f . ', REPLACE(REPLACE(REPLACE(' . $db->qn($column) . ','
+					. $db->q('"') . ',' . $db->q('') . ' ), ' . $db->q('[') . ',' . $db->q('') . ' ), ' . $db->q(']')
+					. ',' . $db->q('') . ')) > 0'
 				);
 			}
 		}
 		elseif (is_string($filter) && $filter != '')
 		{
-			$query->where('FIND_IN_SET( ' . $db->q($filter) . ', REPLACE(REPLACE(REPLACE(' . $db->qn($column) . ','
+			$query->where(
+				'FIND_IN_SET( ' . $db->q($filter) . ', REPLACE(REPLACE(REPLACE(' . $db->qn($column) . ','
 				. $db->q('"') . ',' . $db->q('') . ' ), ' . $db->q('[') . ',' . $db->q('') . ' ), ' . $db->q(']') . ','
-				. $db->q('') . ')) > 0');
+				. $db->q('') . ')) > 0'
+			);
 		}
 
 		return $query;
@@ -264,12 +247,13 @@ abstract class ListModel extends \Joomla\CMS\MVC\Model\ListModel
 	 * @param   string             $column     Order column
 	 * @param   string             $direction  Order direction
 	 *
-	 * @since   3.3.0
 	 * @return QueryInterface
+	 * @since   3.3.0
 	 */
-	public static function order(DatabaseInterface $db, QueryInterface $query, string $column,
-		string $direction): QueryInterface
-	{
+	public static function order(
+		DatabaseInterface $db, QueryInterface $query, string $column,
+		string $direction
+	): QueryInterface {
 		if ($column && $direction)
 		{
 			$query->order($db->qn($column) . ' ' . $db->escape($direction));
@@ -286,12 +270,13 @@ abstract class ListModel extends \Joomla\CMS\MVC\Model\ListModel
 	 * @param   string             $search  Search string
 	 * @param   string             $field   Name of fiueld to search
 	 *
-	 * @since   3.3.0
 	 * @return  QueryInterface
+	 * @since   3.3.0
 	 */
-	public static function search(DatabaseInterface $db, QueryInterface $query, string $search,
-		string $field): QueryInterface
-	{
+	public static function search(
+		DatabaseInterface $db, QueryInterface $query, string $search,
+		string $field
+	): QueryInterface {
 		if (!empty($search))
 		{
 			if (stripos($search, 'id:') === 0)
@@ -309,6 +294,37 @@ abstract class ListModel extends \Joomla\CMS\MVC\Model\ListModel
 	}
 
 	/**
+	 * Generate query for string Filter
+	 *
+	 * @param   DatabaseInterface  $db      Database instance
+	 * @param   QueryInterface     $query   Existing query
+	 * @param   string             $column  Name of column
+	 * @param   mixed              $filter  Filter value
+	 *
+	 * @return QueryInterface
+	 * @since  3.3.0
+	 */
+	public static function stringFilter(
+		DatabaseInterface $db, QueryInterface $query, string $column,
+		mixed $filter
+	): QueryInterface {
+		if (!empty($filter))
+		{
+			if (is_string($filter))
+			{
+				$filter = trim($filter);
+				$query->where($db->qn($column) . ' = ' . $db->q(trim($filter)));
+			}
+			elseif (is_array($filter))
+			{
+				$query->where($db->qn($column) . ' IN (' . implode(',', $db->q(array_map('strval', $filter))) . ')');
+			}
+		}
+
+		return $query;
+	}
+
+	/**
 	 * Build translation subquery
 	 *
 	 * @param   DatabaseInterface  $db     Database interface
@@ -316,9 +332,9 @@ abstract class ListModel extends \Joomla\CMS\MVC\Model\ListModel
 	 * @param   string             $key    Key for item
 	 * @param   string             $field  Optional field name for multiple translations per table
 	 *
+	 * @return string
 	 * @throws RuntimeException
 	 * @since  3.3.0
-	 * @return string
 	 */
 	public static function transSQ(DatabaseInterface $db, string $item, string $key, string $field = ''): string
 	{

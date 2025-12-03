@@ -22,8 +22,6 @@ __webpack_require__.r(__webpack_exports__);
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
 
-
-
 // function is used ignore phpstorm warning
 function guestIncrement(updown, target, atext, ctext, ctext1) {
 			var cac = document.getElementById('child-ages-container');

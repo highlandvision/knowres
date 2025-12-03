@@ -20,7 +20,6 @@ use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Utility;
 use InvalidArgumentException;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Table\Table;
 use Joomla\CMS\Versioning\VersionableControllerTrait;
 use Joomla\Database\Exception\QueryTypeAlreadyDefinedException;
 use Joomla\DI\Exception\KeyNotFoundException;
@@ -51,22 +50,24 @@ class ServicequeueModel extends AdminModel
 	/**
 	 * Check if property is for cluster and thus to be updated
 	 *
-	 * @param  int    $cluster_id   |ID of cluster
-	 * @param  int    $property_id  ID of property
-	 * @param  array  $cluster      Cluster setttings
-	 * @param  array  $managed      Managed settings
+	 * @param   int    $cluster_id   |ID of cluster
+	 * @param   int    $property_id  ID of property
+	 * @param   array  $cluster      Cluster setttings
+	 * @param   array  $managed      Managed settings
 	 *
-	 * @since  3.3.0
 	 * @return bool
+	 * @since  3.3.0
 	 */
 	public static function checkCluster(int $cluster_id, int $property_id, array $cluster, array $managed): bool
 	{
 		$update = false;
 
 		$managed = $managed[$property_id] ?? $managed[0];
-		if ($managed) {
+		if ($managed)
+		{
 			$property_cluster = $cluster[$property_id] ?? $cluster[0];
-			if ((int) $property_cluster == $cluster_id) {
+			if ((int) $property_cluster == $cluster_id)
+			{
 				$update = true;
 			}
 		}
@@ -77,7 +78,7 @@ class ServicequeueModel extends AdminModel
 	/**
 	 * Delete old service queue rows
 	 *
-	 * @param  string  $date  Delete before this date
+	 * @param   string  $date  Delete before this date
 	 *
 	 * @throws RuntimeException
 	 * @throws InvalidArgumentException
@@ -101,17 +102,16 @@ class ServicequeueModel extends AdminModel
 	/**
 	 * Insert queue row
 	 *
-	 * @param  object   $xref       Service xref data
-	 * @param  string   $method     Queue method
+	 * @param   object  $xref       Service xref data
+	 * @param   string  $method     Queue method
 	 * @param  ?string  $arrival    Arrival for reervations or valid from date for rates
 	 * @param  ?string  $departure  Departure fo reservations or valid to date for rates
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-	public static function insertQueue(object  $xref, string $method, ?string $arrival = null,
-	                                   ?string $departure = null): void
-	{
+	public static function insertQueue(object $xref, string $method, ?string $arrival = null, ?string $departure = null
+	): void {
 		$queue               = new stdClass();
 		$queue->id           = 0;
 		$queue->service_id   = $xref->service_id;
@@ -131,14 +131,49 @@ class ServicequeueModel extends AdminModel
 	}
 
 	/**
+	 * Resend selected queue records
+	 *
+	 * @param   array  $pks  IDs to be resent
+	 *
+	 * @throws InvalidArgumentException
+	 * @throws RuntimeException
+	 * @throws KeyNotFoundException
+	 * @throws QueryTypeAlreadyDefinedException
+	 * @since  1.2.0
+	 */
+	public function resend(array $pks): void
+	{
+		if (!is_countable($pks) || !count($pks))
+		{
+			return;
+		}
+
+		$db = KrFactory::getDatabase();
+
+		$fields     = [$db->qn('q.actioned') . '=0'];
+		$conditions = [
+			$db->qn('q.id') . '=' . implode(' OR ' . $db->qn('q.id') . '=', $pks),
+			$db->qn('q.actioned') . '=1'
+		];
+
+		$query = $db->getQuery(true);
+		$query->update($db->qn('#__knowres_service_queue', 'q'))
+		      ->set($fields)
+		      ->where($conditions);
+
+		$db->setQuery($query);
+		$db->execute();
+	}
+
+	/**
 	 * Get all the channels for property or all properties excluding any current unactioned queue record
 	 * and update queue.
 	 * If cluster is set then have to get all properties for cluster and update each
 	 * NOTE: Combines all the previous update functions from earlier versions
 	 *
-	 * @param  string   $method       API method
-	 * @param  int      $property_id  ID of updated property
-	 * @param  int      $cluster_id   ID of updated cluster
+	 * @param   string  $method       API method
+	 * @param   int     $property_id  ID of updated property
+	 * @param   int     $cluster_id   ID of updated cluster
 	 * @param  ?string  $plugin       Service plugin to be updated or null for all
 	 * @param  ?string  $arrival      Applicable arrival (valid from ) date for rates
 	 * @param  ?string  $departure    Applicable departure (valid to ) date for rates
@@ -146,35 +181,43 @@ class ServicequeueModel extends AdminModel
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
-
-	public static function serviceQueueUpdate(string  $method, int $property_id = 0, int $cluster_id = 0,
-	                                          ?string $plugin = null,
-	                                          ?string $arrival = null, ?string $departure = null): void
-	{
-
-		if ($method == 'updatePropertyRates' && class_exists('HighlandVision\PriceLabs\PriceLabs')) {
+	public static function serviceQueueUpdate(
+		string $method, int $property_id = 0, int $cluster_id = 0, ?string $plugin = null, ?string $arrival = null,
+		?string $departure = null
+	): void {
+		if ($method == 'updatePropertyRates' && class_exists('HighlandVision\PriceLabs\PriceLabs'))
+		{
 			return;
 		}
 
-		$result = KrFactory::getListModel('servicexrefs')->getPropertiesForAllServices($property_id, $method, $plugin,
-			$arrival, $departure);
+		$result = KrFactory::getListModel('servicexrefs')->getPropertiesForAllServices(
+			$property_id, $method, $plugin,
+			$arrival, $departure
+		);
 
-		if (is_countable($result) && count($result)) {
-			if ($cluster_id) {
+		if (is_countable($result) && count($result))
+		{
+			if ($cluster_id)
+			{
 				$settings_cluster       = KrFactory::getListModel('propertysettings')->getOneSetting('cluster');
 				$settings_managed_rates = KrFactory::getListModel('propertysettings')->getOneSetting('managed_rates');
 			}
 
-			foreach ($result as $r) {
-				if ($method == 'updateProperty') {
+			foreach ($result as $r)
+			{
+				if ($method == 'updateProperty')
+				{
 					$parameters = Utility::decodeJson($r->parameters);
-					if (!isset($parameters->upload_properties) || !$parameters->upload_properties) {
+					if (!isset($parameters->upload_properties) || !$parameters->upload_properties)
+					{
 						continue;
 					}
 				}
 
-				if ($cluster_id) {
-					if (!self::checkCluster($cluster_id, $r->property_id, $settings_cluster, $settings_managed_rates)) {
+				if ($cluster_id)
+				{
+					if (!self::checkCluster($cluster_id, $r->property_id, $settings_cluster, $settings_managed_rates))
+					{
 						continue;
 					}
 				}
@@ -187,14 +230,15 @@ class ServicequeueModel extends AdminModel
 	/**
 	 * Update queue records to actioned
 	 *
-	 * @param  array  $ids  Queue ids to update
+	 * @param   array  $ids  Queue ids to update
 	 *
 	 * @throws Exception
 	 * @since  3.1.0
 	 */
 	public static function setQueueActioned(array $ids): void
 	{
-		if (is_countable($ids) && count($ids)) {
+		if (is_countable($ids) && count($ids))
+		{
 			$db    = KrFactory::getDatabase();
 			$query = $db->getQuery(true);
 
@@ -208,45 +252,12 @@ class ServicequeueModel extends AdminModel
 	}
 
 	/**
-	 * Resend selected queue records
-	 *
-	 * @param  array  $pks  IDs to be resent
-	 *
-	 * @throws InvalidArgumentException
-	 * @throws RuntimeException
-	 * @throws KeyNotFoundException
-	 * @throws QueryTypeAlreadyDefinedException
-	 * @since  1.2.0
-	 */
-	public function resend(array $pks): void
-	{
-		if (!is_countable($pks) || !count($pks)) {
-			return;
-		}
-
-		$db = KrFactory::getDatabase();
-
-		$fields     = [$db->qn('q.actioned') . '=0'];
-		$conditions = [$db->qn('q.id') . '=' . implode(' OR ' . $db->qn('q.id') . '=', $pks),
-		               $db->qn('q.actioned') . '=1'
-		];
-
-		$query = $db->getQuery(true);
-		$query->update($db->qn('#__knowres_service_queue', 'q'))
-		      ->set($fields)
-		      ->where($conditions);
-
-		$db->setQuery($query);
-		$db->execute();
-	}
-
-	/**
 	 * Method to test whether a record can be deleted.
 	 *
-	 * @param  object  $record  A record object.
+	 * @param   object  $record  A record object.
 	 *
-	 * @since  3.0.0
 	 * @return bool  True if allowed to delete the record. Defaults to the permission for the component.
+	 * @since  3.0.0
 	 */
 	protected function canDelete($record): bool
 	{
@@ -258,14 +269,15 @@ class ServicequeueModel extends AdminModel
 	/**
 	 * Method to get the data that should be injected in the form.
 	 *
+	 * @return mixed The data for the form.
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return mixed The data for the form.
 	 */
 	protected function loadFormData(): mixed
 	{
 		$data = KrMethods::getUserState('com_knowres.edit.servicequeue.data', []);
-		if (empty($data)) {
+		if (empty($data))
+		{
 			$data = $this->getItem();
 		}
 
@@ -275,15 +287,16 @@ class ServicequeueModel extends AdminModel
 	/**
 	 * Prepare and sanitize the table prior to saving.
 	 *
-	 * @param  Table  $table  Table instance
+	 * @param   AdminModel  $table  Table instance
 	 *
 	 * @throws RuntimeException
 	 * @throws Exception
-	 * @since        4.0.0
+	 * @since  4.0.0
 	 */
 	protected function prepareTable($table): void
 	{
-		if ($table->method != 'updateAvailability' && $table->method != 'updatePropertyRates') {
+		if ($table->method != 'updateAvailability' && $table->method != 'updatePropertyRates')
+		{
 			$table->arrival     = null;
 			$table->departure   = null;
 			$table->contract_id = 0;

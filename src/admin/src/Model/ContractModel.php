@@ -50,25 +50,28 @@ class ContractModel extends AdminModel
 	 * Delete contract and associated data
 	 * Delete the guest if only for this contract
 	 *
-	 * @param  int  $id        ID of contract
-	 * @param  int  $guest_id  ID of guest
+	 * @param   int  $id        ID of contract
+	 * @param   int  $guest_id  ID of guest
 	 *
+	 * @return void
 	 * @throws Exception
 	 * @since  2.3.0
-	 * @return void
 	 */
 	public static function deleteAll(int $id, int $guest_id = 0): void
 	{
-		if (!$id) {
+		if (!$id)
+		{
 			throw new RuntimeException('Contract ID not received for DeleteAll');
 		}
 
 		$guests = 0;
-		if ($guest_id) {
+		if ($guest_id)
+		{
 			$guests = KrFactory::getListModel('contracts')->getCountForGuest($guest_id);
 		}
 
-		try {
+		try
+		{
 			$db = KrFactory::getDatabase();
 			$db->transactionStart();
 
@@ -83,13 +86,16 @@ class ContractModel extends AdminModel
 
 			$conditions = [$db->qn('id') . '=' . $id];
 			KrFactory::deleteData('contract', $conditions);
-			if ($guests == 1) {
+			if ($guests == 1)
+			{
 				$conditions = [$db->qn('id') . '=' . $guest_id];
 				KrFactory::deleteData('guest', $conditions);
 			}
 
 			$db->transactionCommit();
-		} catch (Exception $e) {
+		}
+		catch (Exception $e)
+		{
 			$db->transactionRollback();
 			throw $e;
 		}
@@ -98,17 +104,19 @@ class ContractModel extends AdminModel
 	/**
 	 * Generate 8 digit contract tag
 	 *
+	 * @return string
 	 * @throws RuntimeException|InvalidArgumentException
 	 * @since  3.3.0
-	 * @return string
 	 */
 	public static function generateTag(): string
 	{
 		$tag         = '';
 		$keeplooking = true;
-		while ($keeplooking) {
+		while ($keeplooking)
+		{
 			$tag = mt_rand(10000000, 99999999);
-			if (!KrFactory::getListModel('contracts')::checkTag($tag)) {
+			if (!KrFactory::getListModel('contracts')::checkTag($tag))
+			{
 				$keeplooking = false;
 			}
 		}
@@ -119,27 +127,32 @@ class ContractModel extends AdminModel
 	/**
 	 * Get the currenct contract balance
 	 *
-	 * @param  float  $contract_total  Contract total
-	 * @param  mixed  $fees            Contract fees
-	 * @param  mixed  $payments        Contract payments
+	 * @param   float  $contract_total  Contract total
+	 * @param   mixed  $fees            Contract fees
+	 * @param   mixed  $payments        Contract payments
 	 *
-	 * @since  4.0.0
 	 * @return float
+	 * @since  4.0.0
 	 */
 	public static function getBalance(float $contract_total, mixed $fees, mixed $payments): float
 	{
 		$fee_total = 0;
 		$confirmed = 0;
 
-		if (is_countable($fees) && count($fees)) {
-			foreach ($fees as $f) {
+		if (is_countable($fees) && count($fees))
+		{
+			foreach ($fees as $f)
+			{
 				$fee_total += $f->value;
 			}
 		}
 
-		if (is_countable($payments) && count($payments)) {
-			foreach ($payments as $p) {
-				if ($p->confirmed) {
+		if (is_countable($payments) && count($payments))
+		{
+			foreach ($payments as $p)
+			{
+				if ($p->confirmed)
+				{
 					$confirmed += $p->amount;
 				}
 			}
@@ -149,64 +162,10 @@ class ContractModel extends AdminModel
 	}
 
 	/**
-	 * Get current contract balance
-	 *
-	 * @param  int  $contract_id  ID of contract
-	 *
-	 * @throws RuntimeException|InvalidArgumentException
-	 * @since  1.0.0
-	 * @return mixed
-	 */
-	public static function getCurrentBalance(int $contract_id): mixed
-	{
-		$db    = KrFactory::getDatabase();
-		$query = $db->getQuery(true);
-
-		$query->select($db->qn('c.contract_total') . ' +  IFNULL(SUM(' . $db->qn('cf.value') . ') ,0) - IFNULL(SUM('
-		               . $db->qn('cp.base_amount') . '),0) AS balance'
-		)
-			->from($db->qn('#__knowres_contract', 'c'))
-			->join('LEFT',
-				$db->qn('#__knowres_contract_fee', 'cf') . ' ON '
-				. $db->qn('cf.contract_id') . '=' . $contract_id
-			)
-			->join('LEFT',
-				$db->qn('#__knowres_contract_payment', 'cp') . ' ON '
-				. $db->qn('cp.contract_id') . '=' . $contract_id . ' AND '
-				. $db->qn('cp.state') . '=1'
-			)
-			->where($db->qn('c.id') . '=' . $contract_id);
-
-		$db->setQuery($query);
-
-		return $db->loadResult();
-	}
-
-	/**
-	 * Get gross rate from net rate
-	 * Net is net price x markup and rounding
-	 * Round net as required up / down plus unit
-	 *
-	 * @param  string  $net     Net rate
-	 * @param  string  $markup  Gross markup percentage
-	 * @param  int     $round   Up (1) or down (0)
-	 * @param  int     $unit    Unit for rounding
-	 *
-	 * @since  1.0.0
-	 * @return float Marked up rate
-	 */
-	public static function netRateMarkup(string $net, string $markup, int $round = 1, int $unit = 5): float
-	{
-		$rate = (float)$net + ($net * (float)$markup / 100);
-
-		return Utility::roundMe($rate, $round, $unit);
-	}
-
-	/**
 	 * Get booking status options for filters etc
 	 *
-	 * @since  1.0.0
 	 * @return array
+	 * @since  1.0.0
 	 */
 	public function getBookingStatusOptions(): array
 	{
@@ -224,27 +183,67 @@ class ContractModel extends AdminModel
 	}
 
 	/**
+	 * Get current contract balance
+	 *
+	 * @param   int  $contract_id  ID of contract
+	 *
+	 * @return mixed
+	 * @throws RuntimeException|InvalidArgumentException
+	 * @since  1.0.0
+	 */
+	public static function getCurrentBalance(int $contract_id): mixed
+	{
+		$db    = KrFactory::getDatabase();
+		$query = $db->getQuery(true);
+
+		$query->select(
+			$db->qn('c.contract_total') . ' +  IFNULL(SUM(' . $db->qn('cf.value') . ') ,0) - IFNULL(SUM('
+			. $db->qn('cp.base_amount') . '),0) AS balance'
+		)
+		      ->from($db->qn('#__knowres_contract', 'c'))
+		      ->join(
+			      'LEFT',
+			      $db->qn('#__knowres_contract_fee', 'cf') . ' ON '
+			      . $db->qn('cf.contract_id') . '=' . $contract_id
+		      )
+		      ->join(
+			      'LEFT',
+			      $db->qn('#__knowres_contract_payment', 'cp') . ' ON '
+			      . $db->qn('cp.contract_id') . '=' . $contract_id . ' AND '
+			      . $db->qn('cp.state') . '=1'
+		      )
+		      ->where($db->qn('c.id') . '=' . $contract_id);
+
+		$db->setQuery($query);
+
+		return $db->loadResult();
+	}
+
+	/**
 	 * Method to get the record form.
 	 *
-	 * @param  array    $data         An optional array of data for the form to interogate.
-	 * @param  bool     $loadData     True if the form is to load its own data (default case), false if not.
+	 * @param   array   $data         An optional array of data for the form to interogate.
+	 * @param   bool    $loadData     True if the form is to load its own data (default case), false if not.
 	 * @param  ?string  $source       The form name if required.
-	 * @param  int      $property_id  ID of property if required fields to be set.
+	 * @param   int     $property_id  ID of property if required fields to be set.
 	 *
+	 * @return Form|false    A Form object on success, false on failure
 	 * @throws Exception
 	 * @since  1.0
-	 * @return Form|false    A Form object on success, false on failure
 	 */
-	public function getForm($data = [],
+	public function getForm(
+		$data = [],
 		$loadData = true,
 		?string $source = 'contract',
-		int $property_id = 0): Form|false
-	{
+		int $property_id = 0
+	): Form|false {
 		$form = parent::getForm($data, $loadData, $source);
 
-		if ($property_id) {
+		if ($property_id)
+		{
 			$settings = KrFactory::getListModel('propertysettings')->getPropertysettings($property_id);
-			if (is_countable($settings) && count($settings)) {
+			if (is_countable($settings) && count($settings))
+			{
 				$form = $this->setFormRequired($form, $settings);
 			}
 		}
@@ -255,16 +254,17 @@ class ContractModel extends AdminModel
 	/**
 	 * Read and process the item.
 	 *
-	 * @param  int  $pk  The id of the primary key.
+	 * @param   int  $pk  The id of the primary key.
 	 *
+	 * @return object|false  Object on success, false on failure.
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return object|false  Object on success, false on failure.
 	 */
 	public function getItem($pk = null): object|false
 	{
 		$item = parent::getItem($pk);
-		if ($item) {
+		if ($item)
+		{
 			$item->adjustments = Utility::decodeJson($item->adjustments, true);
 			$item->discounts   = Utility::decodeJson($item->discounts, true);
 			$item->extras      = Utility::decodeJson($item->extras, true);
@@ -276,8 +276,9 @@ class ContractModel extends AdminModel
 
 			/** Code below works but can't get phpstorm to understand that ContractModel is not being used for getItem() */
 			$item->property_name = '';
-			if (isset($item->property_id) && $item->property_id != 0) {
-				$property            = KrFactory::getAdminModel('property')->getItem((int)$item->property_id);
+			if (isset($item->property_id) && $item->property_id != 0)
+			{
+				$property            = KrFactory::getAdminModel('property')->getItem((int) $item->property_id);
 				$item->property_name = $property->property_name;
 				$item->property_area = $property->property_area;
 				$item->region_name   = $property->region_name;
@@ -287,33 +288,38 @@ class ContractModel extends AdminModel
 			}
 
 			$item->agent_name = '';
-			if ($item->agent_id > 0) {
-				$agent            = KrFactory::getAdminModel('agent')->getItem((int)$item->agent_id);
+			if ($item->agent_id > 0)
+			{
+				$agent            = KrFactory::getAdminModel('agent')->getItem((int) $item->agent_id);
 				$item->agent_name = $agent->name ?? $item->agent_id;
 			}
 
 			$item->agency_name      = '';
 			$item->agency_telephone = '';
 			$item->agency_email     = '';
-			if ($item->manager_id > 0) {
-				$result                 = KrFactory::getAdminModel('manager')->getItem((int)$item->manager_id);
+			if ($item->manager_id > 0)
+			{
+				$result                 = KrFactory::getAdminModel('manager')->getItem((int) $item->manager_id);
 				$item->agency_name      = $result->agency_name ?? $item->agency_id;
 				$item->agency_telephone = $result->agency_telephone ?? '';
 				$item->agency_email     = $result->agency_email ?? '';
 			}
 
 			$item->service_name = '';
-			if (!empty($item->service_id)) {
-				$service = KrFactory::getAdminModel('service')->getItem((int)$item->service_id);
-				if (!empty($service->name)) {
+			if (!empty($item->service_id))
+			{
+				$service = KrFactory::getAdminModel('service')->getItem((int) $item->service_id);
+				if (!empty($service->name))
+				{
 					$item->service_name = $service->name;
 				}
 			}
 
 			$item->guest_name = '';
 			$item->user_id    = 0;
-			if (isset($item->guest_id) && $item->guest_id != 0) {
-				$guest                         = KrFactory::getAdminModel('guest')->getItem((int)$item->guest_id);
+			if (isset($item->guest_id) && $item->guest_id != 0)
+			{
+				$guest                         = KrFactory::getAdminModel('guest')->getItem((int) $item->guest_id);
 				$item->guest_name              = $guest->name ?? '';
 				$item->guest_firstname         = $guest->firstname ?? '';
 				$item->guest_surname           = $guest->surname ?? '';
@@ -323,7 +329,8 @@ class ContractModel extends AdminModel
 				$item->user_id                 = $guest->user_id ?? 0;
 			}
 
-			if (isset($item->created_by)) {
+			if (isset($item->created_by))
+			{
 				$item->created_by_name = KrMethods::getUser($item->created_by)->name;
 			}
 
@@ -334,19 +341,42 @@ class ContractModel extends AdminModel
 	}
 
 	/**
+	 * Get gross rate from net rate
+	 * Net is net price x markup and rounding
+	 * Round net as required up / down plus unit
+	 *
+	 * @param   string  $net     Net rate
+	 * @param   string  $markup  Gross markup percentage
+	 * @param   int     $round   Up (1) or down (0)
+	 * @param   int     $unit    Unit for rounding
+	 *
+	 * @return float Marked up rate
+	 * @since  1.0.0
+	 */
+	public static function netRateMarkup(string $net, string $markup, int $round = 1, int $unit = 5): float
+	{
+		$rate = (float) $net + ($net * (float) $markup / 100);
+
+		return Utility::roundMe($rate, $round, $unit);
+	}
+
+	/**
 	 * Method to test whether a record can be deleted.
 	 *
-	 * @param  object  $record  A record object.
+	 * @param   object  $record  A record object.
 	 *
-	 * @since   3.0.0
 	 * @return  bool  True if allowed to delete the record. Defaults to the permission for the component.
+	 * @since   3.0.0
 	 */
 	protected function canDelete($record): bool
 	{
 		$userSession = new KrSession\User();
-		if ($userSession->getAccessLevel() == 40) {
+		if ($userSession->getAccessLevel() == 40)
+		{
 			return true;
-		} else {
+		}
+		else
+		{
 			return Factory::getUser()->authorise('core.delete', $this->option);
 		}
 	}
@@ -354,14 +384,15 @@ class ContractModel extends AdminModel
 	/**
 	 * Method to get the data that should be injected in the form.
 	 *
+	 * @return mixed The data for the form.
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return mixed The data for the form.
 	 */
 	protected function loadFormData(): mixed
 	{
 		$data = KrMethods::getUserState('com_knowres.edit.contract.data', []);
-		if (empty($data)) {
+		if (empty($data))
+		{
 			$data = $this->getItem();
 		}
 
@@ -371,28 +402,35 @@ class ContractModel extends AdminModel
 	/**
 	 * Prepare and sanitize the table prior to saving.
 	 *
-	 * @param  Table  $table  Table instance
+	 * @param   Table  $table  Table instance
 	 *
 	 * @throws Exception
 	 * @since  2.4.0
 	 */
-	#[NoReturn] protected function prepareTable($table): void
+	#[NoReturn]
+	protected function prepareTable($table): void
 	{
-		if (!$table->black_booking) {
+		if (!$table->black_booking)
+		{
 			$hash        = $table->tag . $table->guest_id;
 			$table->qkey = hash('ripemd160', $hash);
 		}
 
-		if ($table->cancelled_timestamp == '0000-00-00 00:00:00' || $table->cancelled_timestamp == '') {
+		if ($table->cancelled_timestamp == '0000-00-00 00:00:00' || $table->cancelled_timestamp == '')
+		{
 			$table->cancelled_timestamp = null;
 		}
 
-		if (empty($table->id)) {
-			if (empty($table->created_at)) {
+		if (empty($table->id))
+		{
+			if (empty($table->created_at))
+			{
 				$table->created_at = TickTock::getTS();
 			}
 			$table->created_by = KrMethods::getUser()->id;
-		} else {
+		}
+		else
+		{
 			$table->updated_at       = TickTock::getTS();
 			$table->updated_by       = KrMethods::getUser()->id;
 			$table->checked_out      = null;
@@ -403,12 +441,12 @@ class ContractModel extends AdminModel
 	/**
 	 * Set the required fields for the manager guest form (from settings)
 	 *
-	 * @param  Form   $form      Guest form
-	 * @param  array  $settings  Property settings
+	 * @param   Form   $form      Guest form
+	 * @param   array  $settings  Property settings
 	 *
+	 * @return Form
 	 * @throws UnexpectedValueException
 	 * @since  1.0.0
-	 * @return Form
 	 */
 	protected function setFormRequired(Form $form, array $settings): Form
 	{

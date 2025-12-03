@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package    Know Reservations
  * @subpackage Admin Controllers
@@ -24,16 +25,15 @@ class AgenciesController extends AdminController
 	/**
 	 * Proxy for getModel.
 	 *
-	 * @param  string  $name    Model name
-	 * @param  string  $prefix  Model prefix administrator or site (defaults to administrator)
-	 * @param  array   $config
+	 * @param   string  $name    Model name
+	 * @param   string  $prefix  Model prefix administrator or site (defaults to administrator)
+	 * @param   array   $config
 	 *
-	 * @since  1.6
 	 * @return bool|BaseDatabaseModel
+	 * @since  1.6
 	 */
-	public function getModel($name = 'agency', $prefix = 'Administrator',
-		$config = ['ignore_request' => true]): bool|BaseDatabaseModel
-	{
+	public function getModel($name = 'agency', $prefix = 'Administrator', $config = ['ignore_request' => true]
+	): bool|BaseDatabaseModel {
 		return parent::getModel($name, $prefix, $config);
 	}
 }

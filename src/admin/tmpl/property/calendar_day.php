@@ -16,8 +16,10 @@ $bgcolor = 'bookme';
 $past    = false;
 $arrival = false;
 $inarray = false;
-$link    = KrMethods::route('index.php?option=com_knowres&view=contract&layout=manager&property_id=' . $this->item->id
-        . '&arrival=' . $this->dateYmd, false);
+$link    = KrMethods::route(
+        'index.php?option=com_knowres&view=contract&layout=manager&property_id=' . $this->item->id
+        . '&arrival=' . $this->dateYmd, false
+);
 
 if (array_key_exists($this->dateYmd, $this->dates))
 {
@@ -56,6 +58,7 @@ if ($this->dateYmd < $this->today)
 
 $this->order++;
 
+/** @noinspection PhpUnhandledExceptionInspection */
 $dow = TickTock::displayDate($this->dateYmd, 'w');
 if ($dow == 6 || $dow == 0)
 {

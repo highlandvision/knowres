@@ -40,7 +40,8 @@ define('KNOWRES_TEMP_PATH', JPATH_SITE . '/tmp');
  *
  * @since 1.0.0
  */
-class Images extends Media {
+class Images extends Media
+{
 	/** @var string The name of the uploaded image. */
 	public string $name = '' {
 		/** Return the image name */
@@ -72,7 +73,8 @@ class Images extends Media {
 	 * @throws RuntimeException
 	 * @since  1.0.0
 	 */
-	public function __construct() {
+	public function __construct()
+	{
 		$this->checkGDExtension();
 		$this->params     = KrMethods::getParams();
 		$this->max_upload = JUtility::getMaxUploadSize();
@@ -86,15 +88,17 @@ class Images extends Media {
 	 * @param   int  $old  Source property id
 	 * @param   int  $new  Dest property id
 	 *
+	 * @return bool
 	 * @throws RuntimeException|Exception
 	 * @since  3.0.0
-	 * @return bool
 	 */
-	public static function copyPropertyImages(int $old, int $new): bool {
+	public static function copyPropertyImages(int $old, int $new): bool
+	{
 		$source = self::getImageAbsPath($old);
 		$dest   = self::getImageAbsPath($new);
 
-		if (Folder::exists($source)) {
+		if (Folder::exists($source))
+		{
 			return Folder::copy($source, $dest, '', true);
 		}
 
@@ -108,15 +112,21 @@ class Images extends Media {
 	 *
 	 * @since 3.0.0
 	 */
-	public static function deleteAll(string $dir): void {
-		if (is_dir($dir)) {
+	public static function deleteAll(string $dir): void
+	{
+		if (is_dir($dir))
+		{
 			$objects = scandir($dir);
-			foreach ($objects as $object) {
-				if ($object != "." && $object != "..") {
-					if (filetype($dir . "/" . $object) == "dir") {
+			foreach ($objects as $object)
+			{
+				if ($object != "." && $object != "..")
+				{
+					if (filetype($dir . "/" . $object) == "dir")
+					{
 						self::deleteAll($dir . "/" . $object);
 					}
-					else {
+					else
+					{
 						unlink($dir . "/" . $object);
 					}
 				}
@@ -134,11 +144,24 @@ class Images extends Media {
 	 * @throws Exception
 	 * @since  3.0.0
 	 */
-	public static function deletePropertyImages(int $id): void {
+	public static function deletePropertyImages(int $id): void
+	{
 		$path = self::getImageAbsPath($id);
-		if (Folder::exists($path)) {
+		if (Folder::exists($path))
+		{
 			self::deleteAll($path);
 		}
+	}
+
+	/**
+	 * Return true if file already existed
+	 *
+	 * @return bool
+	 * @since 1.0.0
+	 */
+	public function getExists(): bool
+	{
+		return $this->exists;
 	}
 
 	/**
@@ -148,11 +171,12 @@ class Images extends Media {
 	 * @param   string  $type         e.g. "solo" or "slideshow"
 	 * @param   string  $image        Image name
 	 *
+	 * @return string
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return string
 	 */
-	public static function getImageAbsPath(int $property_id, string $type = '', string $image = ''): string {
+	public static function getImageAbsPath(int $property_id, string $type = '', string $image = ''): string
+	{
 		$path = self::getPath($property_id, $type, $image);
 
 		return JPATH_ROOT . '/' . implode('/', $path);
@@ -165,11 +189,12 @@ class Images extends Media {
 	 * @param   string  $type         e.g. "solo" or "slideshow"
 	 * @param   string  $image        Image name\
 	 *
+	 * @return string
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return string
 	 */
-	public static function getImagePath(int $property_id, string $type = '', string $image = ''): string {
+	public static function getImagePath(int $property_id, string $type = '', string $image = ''): string
+	{
 		$path = self::getPath($property_id, $type, $image);
 
 		return implode('/', $path);
@@ -180,10 +205,11 @@ class Images extends Media {
 	 *
 	 * @param   int  $mapcategory_id  ID of map category
 	 *
-	 * @since   3.2.0
 	 * @return  string
+	 * @since   3.2.0
 	 */
-	public static function getMarkerImageLink(int $mapcategory_id): string {
+	public static function getMarkerImageLink(int $mapcategory_id): string
+	{
 		$image = '';
 		$link  = '';
 
@@ -196,12 +222,14 @@ class Images extends Media {
 		$path  .= "/*.{jpg,gif,png,JPG,GIF,PNG}";
 		$files = glob($path, GLOB_BRACE);
 
-		if (count($files)) {
+		if (count($files))
+		{
 			$path_parts = pathinfo($files[0]);
 			$image      = $path_parts['filename'] . '.' . $path_parts['extension'];
 		}
 
-		if ($image) {
+		if ($image)
+		{
 			$folders[] = $image;
 			$link      = implode('/', $folders);
 		}
@@ -216,10 +244,11 @@ class Images extends Media {
 	 *
 	 * @param   int  $mapcategory_id  ID of map category
 	 *
-	 * @since  3.2.0
 	 * @return string
+	 * @since  3.2.0
 	 */
-	public static function getMarkerImageName(int $mapcategory_id): string {
+	public static function getMarkerImageName(int $mapcategory_id): string
+	{
 		$params    = KrMethods::getParams();
 		$folders   = [];
 		$folders[] = 'images';
@@ -230,7 +259,8 @@ class Images extends Media {
 		$path  .= "/*.{jpg,gif,png,JPG,GIF,PNG}";
 		$files = glob($path, GLOB_BRACE);
 
-		if (count($files)) {
+		if (count($files))
+		{
 			$path_parts = pathinfo($files[0]);
 
 			return $path_parts['filename'] . "." . $path_parts['extension'];
@@ -246,31 +276,36 @@ class Images extends Media {
 	 * @param   string  $type         e.g. "solo" or "slideshow"
 	 * @param   string  $image        Image name
 	 *
+	 * @return array
 	 * @throws Exception
 	 * @since  2.4.0
-	 * @return array
 	 */
-	public static function getPath(int $property_id, string $type = '', string $image = ''): array {
+	public static function getPath(int $property_id, string $type = '', string $image = ''): array
+	{
 		$params = KrMethods::getParams();
 		$path   = [];
 		$path[] = 'images';
 		$path[] = $params->get('image_path', 'krgallery');
 
-		if ($params->get('image_folder')) {
+		if ($params->get('image_folder'))
+		{
 			$property = KrFactory::getAdminModel('property')->getItem($property_id);
 			$folder   = Utility::makeFolderName($property->property_name);
 		}
-		else {
+		else
+		{
 			$folder = $property_id;
 		}
 
 		$path[] = $folder;
 
-		if ($type) {
+		if ($type)
+		{
 			$path[] = $type;
 		}
 
-		if ($image) {
+		if ($image)
+		{
 			$path[] = $image;
 		}
 
@@ -282,23 +317,26 @@ class Images extends Media {
 	 *
 	 * @param   int  $property_id  ID of property
 	 *
+	 * @return string
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return string
 	 */
-	public static function getPropertyImageLink(int $property_id): string {
+	public static function getPropertyImageLink(int $property_id): string
+	{
 		$link  = '';
 		$image = '';
 		$path  = self::getImageAbsPath($property_id, 'solo');
 		$path  .= "/*.{jpg,gif,png,JPG,GIF,PNG}";
 		$files = glob($path, GLOB_BRACE);
 
-		if (count($files)) {
+		if (count($files))
+		{
 			$path_parts = pathinfo($files[0]);
 			$image      = $path_parts['filename'] . '.' . $path_parts['extension'];
 		}
 
-		if ($image) {
+		if ($image)
+		{
 			$link = self::getImagePath($property_id, 'solo', $image);
 		}
 
@@ -310,16 +348,18 @@ class Images extends Media {
 	 *
 	 * @param   int  $property_id  ID of property
 	 *
+	 * @return string
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return string
 	 */
-	public static function getPropertyImageName(int $property_id): string {
+	public static function getPropertyImageName(int $property_id): string
+	{
 		$soloPath = self::getImageAbsPath($property_id, 'solo');
 		$soloPath .= "/*.{jpg,gif,png,JPG,GIF,PNG}";
 		$files    = glob($soloPath, GLOB_BRACE);
 
-		if (count($files)) {
+		if (count($files))
+		{
 			$path_parts = pathinfo($files[0]);
 
 			return $path_parts['filename'] . '.' . $path_parts['extension'];
@@ -336,12 +376,15 @@ class Images extends Media {
 	 * @throws RuntimeException
 	 * @since 1.0.0
 	 */
-	public static function makeFolder(string $folder_path): void {
-		if (Folder::exists($folder_path)) {
+	public static function makeFolder(string $folder_path): void
+	{
+		if (Folder::exists($folder_path))
+		{
 			return;
 		}
 
-		if (!Folder::create($folder_path)) {
+		if (!Folder::create($folder_path))
+		{
 			throw new RuntimeException($folder_path . ' ' . KrMethods::plain('FOLDER_CREATE_ERROR'));
 		}
 	}
@@ -359,16 +402,20 @@ class Images extends Media {
 	 * @throws RuntimeException
 	 * @since  1.0.0
 	 */
-	public static function resizeImage(string $source,
+	public static function resizeImage(
+		string $source,
 		string $target,
 		int $width,
 		int $height,
 		int $quality = 80,
-		int $crop = 0): void {
-		if ($crop && $width == 0 && $height == 0) {
+		int $crop = 0
+	): void {
+		if ($crop && $width == 0 && $height == 0)
+		{
 			throw new RuntimeException(KrMethods::plain('Width or height must be provided'));
 		}
-		elseif ($width == 0 && $height == 0) {
+		elseif ($width == 0 && $height == 0)
+		{
 			throw new RuntimeException(KrMethods::plain('Width and height must be provided'));
 		}
 
@@ -380,17 +427,21 @@ class Images extends Media {
 		$ZebraImage->enlarge_smaller_images = true;
 		$ZebraImage->preserve_time          = true;
 
-		if ($crop) {
+		if ($crop)
+		{
 			$ZebraImage->preserve_aspect_ratio = true;
 			$result                            = $ZebraImage->resize($width, $height);
 		}
-		else {
+		else
+		{
 			$ZebraImage->preserve_aspect_ratio = false;
 			$result                            = $ZebraImage->resize($width, $height, ZEBRA_IMAGE_BOXED);
 		}
 
-		if (!$result) {
-			switch ($ZebraImage->error) {
+		if (!$result)
+		{
+			switch ($ZebraImage->error)
+			{
 				case 1:
 					throw new RuntimeException($source . ' Source could not be found!');
 				case 2:
@@ -410,29 +461,6 @@ class Images extends Media {
 	}
 
 	/**
-	 * Return true if file already existed
-	 *
-	 * @since 1.0.0
-	 * @return bool
-	 */
-	public function getExists(): bool {
-		return $this->exists;
-	}
-
-	/**
-	 *  Set exists to true if file already in folder
-	 *
-	 * @param   string  $file  Name of file
-	 *
-	 * @since 1.0.0
-	 */
-	protected function setExists(string $file): void {
-		if (File::exists($file)) {
-			$this->exists = true;
-		}
-	}
-
-	/**
 	 * Validate uploaded file
 	 *
 	 * @param   string  $name      File name
@@ -442,11 +470,13 @@ class Images extends Media {
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function validate(string $name, string $tmp_name, int $error): void {
+	public function validate(string $name, string $tmp_name, int $error): void
+	{
 		$this->name     = $this->replaceSpecial($name);
 		$this->tmp_name = $tmp_name;
 
-		if ($error !== UPLOAD_ERR_OK) {
+		if ($error !== UPLOAD_ERR_OK)
+		{
 			$this->checkUploadError($error);
 			throw new RuntimeException(KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN_CHECK'));
 		}
@@ -462,9 +492,13 @@ class Images extends Media {
 	 * @throws InvalidArgumentException
 	 * @since  1.0.0
 	 */
-	protected function checkGDExtension(): void {
-		if (!extension_loaded('gd') && !function_exists('gd_info')) {
-			throw new InvalidArgumentException('Please Check the PHP extension "GD Image Library" is installed on this server');
+	protected function checkGDExtension(): void
+	{
+		if (!extension_loaded('gd') && !function_exists('gd_info'))
+		{
+			throw new InvalidArgumentException(
+				'Please Check the PHP extension "GD Image Library" is installed on this server'
+			);
 		}
 	}
 
@@ -474,9 +508,11 @@ class Images extends Media {
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected function checkIsImage(): void {
+	protected function checkIsImage(): void
+	{
 		$info = getimagesize($this->tmp_name);
-		if (!is_int($info[0]) || !is_int($info[1])) {
+		if (!is_int($info[0]) || !is_int($info[1]))
+		{
 			Logger::logMe(KrMethods::plain('No width or height detected in image file'));
 			throw new RuntimeException(KrMethods::plain($this->name . ' is not a valid image'));
 		}
@@ -488,24 +524,52 @@ class Images extends Media {
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	protected function checkMaxFilesize(): void {
+	protected function checkMaxFilesize(): void
+	{
 		$file_size = filesize($this->tmp_name);
 
-		if ($file_size > $this->max_upload) {
+		if ($file_size > $this->max_upload)
+		{
 			$error =
 				KrMethods::plain($this->name . ' exceeds server upload max size of ' . $this->max_upload . ' bytes');
 			throw new RuntimeException($error);
 		}
 
 		$max_upload_size = $this->params->get('max_upload_size', 4) * 1000000;
-		if ($max_upload_size < $file_size) {
+		if ($max_upload_size < $file_size)
+		{
 			$message = $this->name . ': ' . round($file_size / 1000000, 2) . 'MB '
-			           . KrMethods::plain('Maximum Allowed Size')
-			           . ': ' . $max_upload_size / 1000000 . 'MB - ';
+				. KrMethods::plain('Maximum Allowed Size')
+				. ': ' . $max_upload_size / 1000000 . 'MB - ';
 
 			Logger::logme($message);
 			throw new RuntimeException(KrMethods::plain($this->name . ' is too large please upload a smaller image'));
 		}
+	}
+
+	/**
+	 * Set exception messages
+	 *
+	 * @param   int  $error  Upload error
+	 *
+	 * @throws Exception
+	 * @since 1.0.0
+	 */
+	protected function checkUploadError(int $error): void
+	{
+		$message = match ($error)
+		{
+			1 => 'The uploaded file exceeds the upload_max_filesize directive in php.ini',
+			2 => 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form',
+			3 => 'The uploaded file was only partially uploaded',
+			4 => 'No file was uploaded',
+			6 => 'Server is missing a temporary upload folder',
+			7 => 'Failed to write file to phps temp upload folder, this may be a problem with your disk space limit',
+			8 => 'A PHP extension stopped the file upload',
+			default => 'Upload Error Code: ' . $error,
+		};
+
+		Logger::logMe($this->name . ' ' . $message);
 	}
 
 	//	/**
@@ -532,26 +596,18 @@ class Images extends Media {
 	//	}
 
 	/**
-	 * Set exception messages
+	 * Replace non-acceptable characters in file name
 	 *
-	 * @param   int  $error  Upload error
+	 * @param   string  $name  The raw file name;
 	 *
-	 * @throws Exception
-	 * @since 1.0.0
+	 * @since  1.0.0
 	 */
-	protected function checkUploadError(int $error): void {
-		$message = match ($error) {
-			1       => 'The uploaded file exceeds the upload_max_filesize directive in php.ini',
-			2       => 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form',
-			3       => 'The uploaded file was only partially uploaded',
-			4       => 'No file was uploaded',
-			6       => 'Server is missing a temporary upload folder',
-			7       => 'Failed to write file to phps temp upload folder, this may be a problem with your disk space limit',
-			8       => 'A PHP extension stopped the file upload',
-			default => 'Upload Error Code: ' . $error,
-		};
+	protected function replaceSpecial(string $name): string
+	{
+		$extension = strtolower(File::getExt($name));
+		$name      = preg_replace('/[^A-Za-z\d.]/', '_', File::stripExt($name));
 
-		Logger::logMe($this->name . ' ' . $message);
+		return $name . '.' . $extension;
 	}
 
 	//	/**
@@ -605,17 +661,18 @@ class Images extends Media {
 	//	}
 
 	/**
-	 * Replace non-acceptable characters in file name
+	 *  Set exists to true if file already in folder
 	 *
-	 * @param   string  $name  The raw file name;
+	 * @param   string  $file  Name of file
 	 *
-	 * @since  1.0.0
+	 * @since 1.0.0
 	 */
-	protected function replaceSpecial(string $name): string {
-		$extension = strtolower(File::getExt($name));
-		$name      = preg_replace('/[^A-Za-z\d.]/', '_', File::stripExt($name));
-
-		return $name . '.' . $extension;
+	protected function setExists(string $file): void
+	{
+		if (File::exists($file))
+		{
+			$this->exists = true;
+		}
 	}
 
 	/**
@@ -623,12 +680,14 @@ class Images extends Media {
 	 *
 	 * @param   int  $id  ID of image
 	 *
+	 * @return void
 	 * @throws InvalidArgumentException
 	 * @since  1.0.0
-	 * @return void
 	 */
-	protected function setId(int $id): void {
-		if (!$id) {
+	protected function setId(int $id): void
+	{
+		if (!$id)
+		{
 			throw new InvalidArgumentException('$id should consist of numbers only and should not be zero');
 		}
 
@@ -641,13 +700,17 @@ class Images extends Media {
 	 * @throws RuntimeException
 	 * @since  1.0.0
 	 */
-	protected function validateExtension(): void {
+	protected function validateExtension(): void
+	{
 		$extension = File::getExt($this->name);
-		if (!in_array($extension, $this->accepted)) {
-			if (empty($extension)) {
+		if (!in_array($extension, $this->accepted))
+		{
+			if (empty($extension))
+			{
 				$message = $this->name . ' ' . KrMethods::plain('the uploaded file had no extension');
 			}
-			else {
+			else
+			{
 				$message = $this->name . ' ' . KrMethods::plain('Invalid extension');
 			}
 

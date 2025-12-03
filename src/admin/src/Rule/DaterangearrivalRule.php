@@ -39,13 +39,12 @@ class DaterangearrivalRule extends FormRule
 	 *                                       the entire form.
 	 * @param   Form|null         $form      The form object for which the field is being tested.
 	 *
-	 * @return bool  True if the value is valid, false otherwise.
-	 * @throws Exception
-	 * @since  1.0.0
+	 * @return  bool  True if the value is valid, false otherwise.
+	 * @throws  Exception
+	 * @since   1.0.0
 	 */
-	public function test(SimpleXMLElement $element, $value, $group = null, ?Registry $input = null,
-	                     ?Form            $form = null): bool
-	{
+	public function test(SimpleXMLElement $element, $value, $group = null, ?Registry $input = null, ?Form $form = null
+	): bool {
 		$arrival = ($input instanceof Registry) ? $input->get('arrival') : '';
 		if ($value < $arrival)
 		{

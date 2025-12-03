@@ -41,13 +41,14 @@ class Contract extends Session
 	/**
 	 * Request session data
 	 *
-	 * @since 3.3.0
 	 * @return stdClass
+	 * @since 3.3.0
 	 */
 	public function getData(): stdClass
 	{
 		$data = $this->getSession();
-		if (is_null($data)) {
+		if (is_null($data))
+		{
 			$data = $this->init();
 		}
 
@@ -57,8 +58,8 @@ class Contract extends Session
 	/**
 	 * Reset data and session
 	 *
-	 * @since  3.3.0
 	 * @return stdClass
+	 * @since  3.3.0
 	 */
 	public function resetData(): stdClass
 	{
@@ -71,16 +72,18 @@ class Contract extends Session
 	/**
 	 * Update session data from array (db item or jform)
 	 *
-	 * @param  array|object  $item  Update data
+	 * @param   array|object  $item  Update data
 	 *
-	 * @since  3.2.0
 	 * @return stdClass
+	 * @since  3.2.0
 	 */
 	public function updateData(array|object $item): stdClass
 	{
 		$data = $this->getData();
-		foreach ($item as $key => $value) {
-			if (property_exists($data, $key)) {
+		foreach ($item as $key => $value)
+		{
+			if (property_exists($data, $key))
+			{
 				$data->$key = $value;
 			}
 		}
@@ -93,10 +96,11 @@ class Contract extends Session
 	/**
 	 * Initialise quote session
 	 *
-	 * @since 3.3.0
 	 * @return stdClass
+	 * @since 3.3.0
 	 */
-	#[Pure] private function init(): stdClass
+	#[Pure]
+	private function init(): stdClass
 	{
 		$data                                  = new stdClass();
 		$data->id                              = 0;
@@ -131,7 +135,6 @@ class Contract extends Session
 		$data->channel_markup                  = 0;
 		$data->children                        = 0;
 		$data->child_ages                      = [];
-		$data->child_ages_set                  = true;
 		$data->cluster_id                      = 0;
 		$data->commission                      = 0;
 		$data->contract_total                  = 0;

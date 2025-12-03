@@ -19,6 +19,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Uri;
 use RuntimeException;
 use stdClass;
+
 use function count;
 use function defined;
 

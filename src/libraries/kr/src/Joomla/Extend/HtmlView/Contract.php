@@ -6,6 +6,7 @@
  * @license     See the file "LICENSE.txt" for the full license governing this code.
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
+
 /** @noinspection PhpPossiblePolymorphicInvocationInspection */
 
 namespace HighlandVision\KR\Joomla\Extend\HtmlView;
@@ -51,9 +52,9 @@ class Contract extends KrHtmlView
 	 * @param   Toolbar  $Toolbar  Current toolbar.
 	 * @param   string   $name     Name of view
 	 *
+	 * @return Toolbar
 	 * @throws Exception
 	 * @since  4.0.0
-	 * @return Toolbar
 	 */
 	public function addRelated(Toolbar $Toolbar, string $name): Toolbar
 	{
@@ -152,13 +153,15 @@ class Contract extends KrHtmlView
 			{
 				$title = KrMethods::plain('COM_KNOWRES_CONTRACT_SEND_EMAIL');
 				$html  = KrMethods::render('toolbar.contract.trigger', ['title' => $title]);
-				$ChildToolbar->customButton('trigger')->html($html);
+				$ChildToolbar->customButton('trigger')
+				             ->html($html);
 			}
 			if ($this->item->cancelled && $this->item->arrival >= $this->today)
 			{
 				$title = KrMethods::plain('COM_KNOWRES_CONTRACTS_RESURRECT');
 				$html  = KrMethods::render('toolbar.contract.resurrect', ['title' => $title]);
-				$ChildToolbar->customButton('resurrect')->html($html);
+				$ChildToolbar->customButton('resurrect')
+				             ->html($html);
 			}
 		}
 
@@ -170,8 +173,10 @@ class Contract extends KrHtmlView
 				$text = KrMethods::plain('COM_KNOWRES_JS_CONFIRM');
 				$ChildToolbar->standardButton('cancel')
 				             ->icon('fa-solid fa-thumbs-down red knowres')
-				             ->onclick("return confirm('" . $text
-					             . "')?Knowres.submitform('contract.trash', document.getElementById('contract-form')):'';")
+				             ->onclick(
+					             "return confirm('" . $text
+					             . "')?Knowres.submitform('contract.trash', document.getElementById('contract-form')):'';"
+				             )
 				             ->text('JTOOLBAR_CANCEL');
 			}
 		}
@@ -181,8 +186,10 @@ class Contract extends KrHtmlView
 			$text = KrMethods::plain('COM_KNOWRES_CONTRACT_DELETE_CONFIRM');
 			$ChildToolbar->standardButton('delete')
 			             ->icon('fa-solid fa-exclamation-triangle red knowres')
-			             ->onclick("return confirm('" . $text
-				             . "')?Knowres.submitform('contract.delete', document.getElementById('contract-form')):'';")
+			             ->onclick(
+				             "return confirm('" . $text
+				             . "')?Knowres.submitform('contract.delete', document.getElementById('contract-form')):'';"
+			             )
 			             ->text('JTOOLBAR_DELETE');
 		}
 
@@ -192,8 +199,10 @@ class Contract extends KrHtmlView
 		}
 		$Toolbar = $this->addPdf($Toolbar);
 
-		$link = KrMethods::route('index.php?option=com_knowres&task=property.calendar&property_id='
-			. $this->item->property_id);
+		$link = KrMethods::route(
+			'index.php?option=com_knowres&task=property.calendar&property_id='
+			. $this->item->property_id
+		);
 		$Toolbar->linkButton('calendar', 'COM_KNOWRES_TITLE_PROPERTY_CALENDAR')
 		        ->icon('fa-solid fa-calendar knowres')
 		        ->url($link);
@@ -202,8 +211,10 @@ class Contract extends KrHtmlView
 		{
 			$hash = Cryptor::setHash(0, $this->item->guest_id, $this->item->qkey);
 			$key  = Cryptor::encrypt($hash);
-			$link = KrMethods::route(KrMethods::getRoot()
-				. 'index.php?option=com_knowres&task=dashboard.request&key=' . $key);
+			$link = KrMethods::route(
+				KrMethods::getRoot()
+				. 'index.php?option=com_knowres&task=dashboard.request&key=' . $key
+			);
 
 			$Toolbar->linkButton('guestdashboard', 'COM_KNOWRES_TITLE_DASHBOARD')
 			        ->buttonClass('btn btn-primary')
@@ -231,80 +242,13 @@ class Contract extends KrHtmlView
 	}
 
 	/**
-	 * Check if pdf toolbar required and add
-	 *
-	 * @param   Toolbar  $Toolbar  Toolbar instsance
-	 *
-	 * @since  4.0.0
-	 * @return Toolbar
-	 */
-	protected function addPdf(Toolbar $Toolbar): Toolbar
-	{
-		/** @noinspection PhpLoopNeverIteratesInspection */
-		while (true)
-		{
-			if (!empty($this->item->guestdata_id) && (int) $this->item->guestdata_id > 0
-				&& $this->item->booking_status > 9
-				&& !$this->item->black_booking
-				&& !$this->item->cancelled)
-			{
-				break;
-			}
-
-			if ($this->item->booking_status >= 39 && !$this->item->black_booking && !$this->item->cancelled)
-			{
-				break;
-			}
-
-			if ($this->item->booking_status > 9 && !$this->item->black_booking && !$this->item->cancelled)
-			{
-				break;
-			}
-
-			return $Toolbar;
-		}
-
-		$dropdown     = $Toolbar->dropdownButton('contract-pdf-group')
-		                        ->text('COM_KNOWRES_TOOLBAR_PDF')
-		                        ->toggleSplit(false)
-		                        ->icon('fa-solid fa-file-download knowres')
-		                        ->buttonClass('btn btn-action');
-		$ChildToolbar = $dropdown->getChildToolbar();
-
-		if (!empty($this->item->guestdata_id) && (int) $this->item->guestdata_id > 0 && $this->item->booking_status > 9
-			&& !$this->item->black_booking
-			&& !$this->item->cancelled)
-		{
-			$ChildToolbar->standardButton('guestdata', 'COM_KNOWRES_CONTRACTGUESTDATAS_PDF')
-			             ->onclick("Joomla.submitform('contractguestdata.pdf', document.getElementById('contractpdf-form'))")
-			             ->icon('fa-solid fa-file-pdf knowres');
-		}
-
-		if ($this->item->booking_status >= 39 && !$this->item->black_booking && !$this->item->cancelled)
-		{
-			$ChildToolbar->standardButton('voucher', 'COM_KNOWRES_CONTRACT_VOUCHER')
-			             ->onclick("Joomla.submitform('contract.voucher', document.getElementById('contractpdf-form'))")
-			             ->icon('fa-solid fa-file-pdf knowres');
-		}
-
-		if ($this->item->booking_status > 9 && !$this->item->black_booking && !$this->item->cancelled)
-		{
-			$ChildToolbar->standardButton('invoice', 'COM_KNOWRES_CONTRACT_INVOICE_PDF')
-			             ->onclick("Joomla.submitform('contract.invoice', document.getElementById('contractpdf-form'))")
-			             ->icon('fa-solid fa-file-pdf knowres');
-		}
-
-		return $Toolbar;
-	}
-
-	/**
 	 * Add the default toolbar for list view.
 	 *
 	 * @param  ?string  $list_name  Name of list model
 	 *
+	 * @return Toolbar
 	 * @throws Exception
 	 * @since  4.0.0
-	 * @return Toolbar
 	 */
 	protected function addListToolbar(?string $list_name = null): Toolbar
 	{
@@ -359,6 +303,82 @@ class Contract extends KrHtmlView
 		if ($this->canDo->get('core.admin'))
 		{
 			$Toolbar->preferences('com_knowres');
+		}
+
+		return $Toolbar;
+	}
+
+	/**
+	 * Check if pdf toolbar required and add
+	 *
+	 * @param   Toolbar  $Toolbar  Toolbar instsance
+	 *
+	 * @return Toolbar
+	 * @since  4.0.0
+	 */
+	protected function addPdf(Toolbar $Toolbar): Toolbar
+	{
+		/** @noinspection PhpLoopNeverIteratesInspection */
+		while (true)
+		{
+			if (!empty($this->item->guestdata_id)
+				&& (int) $this->item->guestdata_id > 0
+				&& $this->item->booking_status > 9
+				&& !$this->item->black_booking
+				&& !$this->item->cancelled)
+			{
+				break;
+			}
+
+			if ($this->item->booking_status >= 39 && !$this->item->black_booking && !$this->item->cancelled)
+			{
+				break;
+			}
+
+			if ($this->item->booking_status > 9 && !$this->item->black_booking && !$this->item->cancelled)
+			{
+				break;
+			}
+
+			return $Toolbar;
+		}
+
+		$dropdown     = $Toolbar->dropdownButton('contract-pdf-group')
+		                        ->text('COM_KNOWRES_TOOLBAR_PDF')
+		                        ->toggleSplit(false)
+		                        ->icon('fa-solid fa-file-download knowres')
+		                        ->buttonClass('btn btn-action');
+		$ChildToolbar = $dropdown->getChildToolbar();
+
+		if (!empty($this->item->guestdata_id)
+			&& (int) $this->item->guestdata_id > 0
+			&& $this->item->booking_status > 9
+			&& !$this->item->black_booking
+			&& !$this->item->cancelled)
+		{
+			$ChildToolbar->standardButton('guestdata', 'COM_KNOWRES_CONTRACTGUESTDATAS_PDF')
+			             ->onclick(
+				             "Joomla.submitform('contractguestdata.pdf', document.getElementById('contractpdf-form'))"
+			             )
+			             ->icon('fa-solid fa-file-pdf knowres');
+		}
+
+		if ($this->item->booking_status >= 39
+			&& !$this->item->black_booking
+			&& !$this->item->cancelled)
+		{
+			$ChildToolbar->standardButton('voucher', 'COM_KNOWRES_CONTRACT_VOUCHER')
+			             ->onclick("Joomla.submitform('contract.voucher', document.getElementById('contractpdf-form'))")
+			             ->icon('fa-solid fa-file-pdf knowres');
+		}
+
+		if ($this->item->booking_status > 9
+			&& !$this->item->black_booking
+			&& !$this->item->cancelled)
+		{
+			$ChildToolbar->standardButton('invoice', 'COM_KNOWRES_CONTRACT_INVOICE_PDF')
+			             ->onclick("Joomla.submitform('contract.invoice', document.getElementById('contractpdf-form'))")
+			             ->icon('fa-solid fa-file-pdf knowres');
 		}
 
 		return $Toolbar;

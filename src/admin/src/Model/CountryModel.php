@@ -35,7 +35,7 @@ class CountryModel extends AdminModel
 	protected $text_prefix = 'COM_KNOWRES_COUNTRY';
 
 	/**
-	 * Method to get a knowres record.
+	 * Method to get a KR item.
 	 *
 	 * @param   int  $pk  The id of the primary key.
 	 *

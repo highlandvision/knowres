@@ -5,6 +5,7 @@
  * @copyright   (C) 2014 Open Source Matters, Inc. <https://www.joomla.org>
  * @license         GNU General Public License version 2 or later; see LICENSE.txt
  */
+
 /** @noinspection PhpUnhandledExceptionInspection */
 
 defined('_JEXEC') or die;
@@ -19,88 +20,107 @@ $item    = $displayData['data'];
 $display = $item->text;
 $ajax    = !empty($displayData['ajax']) ? $displayData['ajax'] : false;
 $title   = null;
-$app     = Factory::getApplication();
+
+try
+{
+    $app = Factory::getApplication();
+}
+catch (Exception $e)
+{
+    Logger::logMe($e->getMessage());
+    echo new JsonResponse(null, KrMethods::plain('COM_KNOWRES_ERROR_TRY_AGAIN_CHECK'), true);
+    jexit();
+}
 
 $searchSession = new KrSession\Search();
 $searchData    = $searchSession->getData();
 
-switch ((string) $item->text) {
-	// Check for "Prev" item
-	case Text::_('JPREV'):
-		$item->text = Text::_('JPREVIOUS');
-		$icon       = $app->getLanguage()->isRtl() ? 'fa-solid fa-chevron-right' : 'fa-solid fa-chevron-left';
-		$aria       = Text::sprintf('JLIB_HTML_GOTO_POSITION', strtolower($item->text));
-		$title      = Text::_('JPREVIOUS');
-		break;
+switch ((string) $item->text)
+{
+    // Check for "Prev" item
+    case Text::_('JPREV'):
+        $item->text = Text::_('JPREVIOUS');
+        $icon       = $app->getLanguage()->isRtl() ? 'fa-solid fa-chevron-right' : 'fa-solid fa-chevron-left';
+        $aria       = Text::sprintf('JLIB_HTML_GOTO_POSITION', strtolower($item->text));
+        $title      = Text::_('JPREVIOUS');
+        break;
 
-	// Check for "Next" item
-	case Text::_('JNEXT'):
-		$item->text = Text::_('JNEXT');
-		$icon       = $app->getLanguage()->isRtl() ? 'fa-solid fa-chevron-left' : 'fa-solid fa-chevron-right';
-		$aria       = Text::sprintf('JLIB_HTML_GOTO_POSITION', strtolower($item->text));
-		$title      = Text::_('JNEXT');
-		break;
+    // Check for "Next" item
+    case Text::_('JNEXT'):
+        $item->text = Text::_('JNEXT');
+        $icon       = $app->getLanguage()->isRtl() ? 'fa-solid fa-chevron-left' : 'fa-solid fa-chevron-right';
+        $aria       = Text::sprintf('JLIB_HTML_GOTO_POSITION', strtolower($item->text));
+        $title      = Text::_('JNEXT');
+        break;
 
-	default:
-		$icon = null;
-		$aria = Text::sprintf('JLIB_HTML_GOTO_PAGE', strtolower($item->text));
-		break;
+    default:
+        $icon = null;
+        $aria = Text::sprintf('JLIB_HTML_GOTO_PAGE', strtolower($item->text));
+        break;
 }
 
-if ($icon !== null) {
-	$display = '<span class="' . $icon . '" aria-hidden="true"></span>';
+if ($icon !== null)
+{
+    $display = '<span class="' . $icon . '" aria-hidden="true"></span>';
 }
 
-if ($displayData['active']) {
-	$limit = $item->base > 0 ? 'limitstart.value=' . $item->base : 'limitstart.value=0';
+if ($displayData['active'])
+{
+    $limit = $item->base > 0 ? 'limitstart.value=' . $item->base : 'limitstart.value=0';
 
-	if ($app->isClient('administrator')) {
-		$link = 'href="#" onclick="document.adminForm.' . $item->prefix . $limit
-		        . '; Joomla.submitform();return false;"';
-	}
-	elseif ($app->isClient('site')) {
-		$region_id = $searchData->region_id;
-		$Itemid    = SiteHelper::getItemId('com_knowres', 'properties');
-		$link      = KrMethods::route('index.php?option=com_knowres&view=properties&Itemid=' . $Itemid .
-		                              '&limitstart=' . $item->base);
-		if ($region_id > 0) {
-			$link .= '&region_id=' . $region_id;
-		}
-		$link = KrMethods::route($link);
-	}
+    if ($app->isClient('administrator'))
+    {
+        $link = 'href="#" onclick="document.adminForm.' . $item->prefix . $limit
+                . '; Joomla.submitform();return false;"';
+    }
+    elseif ($app->isClient('site'))
+    {
+        $region_id = $searchData->region_id;
+        $Itemid    = SiteHelper::getItemId('com_knowres', 'properties');
+        $link      = KrMethods::route(
+                'index.php?option=com_knowres&view=properties&Itemid=' . $Itemid .
+                '&limitstart=' . $item->base
+        );
+        if ($region_id > 0)
+        {
+            $link .= '&region_id=' . $region_id;
+        }
+        $link = KrMethods::route($link);
+    }
 }
-else {
-	$class = (property_exists($item, 'active') && $item->active) ? 'active' : 'disabled';
-	$class = $ajax ? ($class . ' getResponseSearch') : $class;
+else
+{
+    $class = (property_exists($item, 'active') && $item->active) ? 'active' : 'disabled';
+    $class = $ajax ? ($class . ' getResponseSearch') : $class;
 }
 ?>
 
 <?php if ($displayData['active']) : ?>
-	<?php $class = 'page-link'; ?>
-	<?php $data = ''; ?>
-	<?php if ($ajax) : ?>
-		<?php $class = $class . ' getResponseSearch'; ?>
-		<?php $data = 'data-action="page" data-action-value="' . $item->base . '"' ?>
-	<?php endif; ?>
-	<?php $td = ''; ?>
-	<?php if ($title) : ?>
-		<?php $td = 'title=' . $title; ?>
-	<?php endif; ?>
+    <?php $class = 'page-link'; ?>
+    <?php $data = ''; ?>
+    <?php if ($ajax) : ?>
+        <?php $class = $class . ' getResponseSearch'; ?>
+        <?php $data = 'data-action="page" data-action-value="' . $item->base . '"' ?>
+    <?php endif; ?>
+    <?php $td = ''; ?>
+    <?php if ($title) : ?>
+        <?php $td = 'title=' . $title; ?>
+    <?php endif; ?>
 
-	<li class="page-item">
-		<a aria-label="<?php echo $aria; ?>" <?php echo $data; ?> href="<?php echo $link; ?>"
-		   class="<?php echo $class; ?>"
-			<?php echo $td; ?>>
-			<?php echo $display; ?>
-		</a>
-	</li>
+    <li class="page-item">
+        <a aria-label="<?php echo $aria; ?>" <?php echo $data; ?> href="<?php echo $link; ?>"
+           class="<?php echo $class; ?>"
+                <?php echo $td; ?>>
+            <?php echo $display; ?>
+        </a>
+    </li>
 <?php elseif (isset($item->active) && $item->active) : ?>
-	<?php $aria = Text::sprintf('JLIB_HTML_PAGE_CURRENT', strtolower($item->text)); ?>
-	<li class="<?php echo $class; ?> page-item">
-		<a aria-current="true" aria-label="<?php echo $aria; ?>" href="#" class="page-link"><?php echo $display; ?></a>
-	</li>
+    <?php $aria = Text::sprintf('JLIB_HTML_PAGE_CURRENT', strtolower($item->text)); ?>
+    <li class="<?php echo $class; ?> page-item">
+        <a aria-current="true" aria-label="<?php echo $aria; ?>" href="#" class="page-link"><?php echo $display; ?></a>
+    </li>
 <?php else : ?>
-	<li class="<?php echo $class; ?> page-item">
-		<span class="page-link" aria-hidden="true"><?php echo $display; ?></span>
-	</li>
+    <li class="<?php echo $class; ?> page-item">
+        <span class="page-link" aria-hidden="true"><?php echo $display; ?></span>
+    </li>
 <?php endif; ?>

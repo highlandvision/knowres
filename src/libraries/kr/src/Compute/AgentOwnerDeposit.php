@@ -12,6 +12,7 @@ namespace HighlandVision\KR\Compute;
 defined('_JEXEC') or die;
 
 use Exception;
+use HighlandVision\Component\Knowres\Administrator\Model\fOwner;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Hub;
 use HighlandVision\KR\TickTock;
@@ -72,7 +73,7 @@ class AgentOwnerDeposit
 				break;
 			}
 
-			$owner = KrFactory::getAdminModel('owner')->getItem($owner_id);
+			$owner = KrFactory::getChainedItem('owner', $owner_id);
 			if (!$owner->id || !$owner->pay_deposit)
 			{
 				break;
@@ -83,6 +84,39 @@ class AgentOwnerDeposit
 		}
 
 		$this->Hub->setValue('owner_deposit', $owner_deposit);
+	}
+
+	/**
+	 * Calculates the guest deposit that would be charged
+	 *
+	 * @param   float  $total  Value to base calculation
+	 *
+	 * @return float
+	 * @throws Exception
+	 * @since  3.3.3
+	 */
+	protected function setGuestDeposit(float $total): float
+	{
+		if ((int) $this->Hub->settings['depositIsPercentage'])
+		{
+			$guest_deposit = $total * $this->Hub->settings['depositValue'] / 100;
+		}
+		else
+		{
+			$guest_deposit = $this->Hub->settings['depositValue'];
+		}
+
+		if ((int) $this->Hub->settings['roundupDepositYesNo'])
+		{
+			$guest_deposit = ceil($guest_deposit);
+		}
+
+		if ($guest_deposit > $total)
+		{
+			$guest_deposit = $total;
+		}
+
+		return $this->Hub->round($guest_deposit);
 	}
 
 	/**
@@ -130,38 +164,5 @@ class AgentOwnerDeposit
 		}
 
 		return $this->Hub->round($owner_deposit);
-	}
-
-	/**
-	 * Calculates the guest deposit that would be charged
-	 *
-	 * @param   float  $total  Value to base calculation
-	 *
-	 * @throws Exception
-	 * @since  3.3.3
-	 * @return float
-	 */
-	protected function setGuestDeposit(float $total): float
-	{
-		if ((int) $this->Hub->settings['depositIsPercentage'])
-		{
-			$guest_deposit = $total * $this->Hub->settings['depositValue'] / 100;
-		}
-		else
-		{
-			$guest_deposit = $this->Hub->settings['depositValue'];
-		}
-
-		if ((int) $this->Hub->settings['roundupDepositYesNo'])
-		{
-			$guest_deposit = ceil($guest_deposit);
-		}
-
-		if ($guest_deposit > $total)
-		{
-			$guest_deposit = $total;
-		}
-
-		return $this->Hub->round($guest_deposit);
 	}
 }

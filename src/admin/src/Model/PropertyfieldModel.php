@@ -16,7 +16,6 @@ use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\AdminModel;
 use HighlandVision\KR\Translations;
 use Joomla\CMS\Versioning\VersionableControllerTrait;
-
 use RuntimeException;
 
 use function uasort;
@@ -38,32 +37,13 @@ class PropertyfieldModel extends AdminModel
 	protected $text_prefix = 'COM_KNOWRES_PROPERTYFIELD';
 
 	/**
-	 * Compare values
-	 *
-	 * @param  string  $a  Value 1
-	 * @param  string  $b  Value 2
-	 *
-	 * @since  1.0.0
-	 * @return int
-	 */
-	private static function cmp(string $a, string $b): int
-	{
-		if ($a == $b)
-		{
-			return 0;
-		}
-
-		return ($a < $b) ? -1 : 1;
-	}
-
-	/**
 	 * Method to get a knowres record.
 	 *
-	 * @param  int  $pk  The id of the primary key.
+	 * @param   int  $pk  The id of the primary key.
 	 *
+	 * @return false|object  Object on success, false on failure.
 	 * @throws RuntimeException
 	 * @since  1.0.0
-	 * @return false|object  Object on success, false on failure.
 	 */
 	public function getItem($pk = null): false|object
 	{
@@ -78,30 +58,11 @@ class PropertyfieldModel extends AdminModel
 		return $item;
 	}
 
-	//	/**
-	//	 * Set options for special property fields
-	//	 *
-	//	 * @param  mixed  $a  Key value
-	//	 * @param  mixed  $b  Option
-	//	 *
-	//	 * @since  4.0.0
-	//	 * @return int
-	//	 */
-	//	function sort(mixed $a, mixed $b): int
-	//	{
-	//		if ($a == $b)
-	//		{
-	//			return 0;
-	//		}
-	//
-	//		return ($a < $b) ? -1 : 1;
-	//	}
-
 	/**
 	 * Set options for special property fields
 	 *
-	 * @since  4.0.0
 	 * @return array
+	 * @since  4.0.0
 	 */
 	public function getOptions(): array
 	{
@@ -126,13 +87,32 @@ class PropertyfieldModel extends AdminModel
 		return $options;
 	}
 
+	//	/**
+	//	 * Set options for special property fields
+	//	 *
+	//	 * @param  mixed  $a  Key value
+	//	 * @param  mixed  $b  Option
+	//	 *
+	//	 * @since  4.0.0
+	//	 * @return int
+	//	 */
+	//	function sort(mixed $a, mixed $b): int
+	//	{
+	//		if ($a == $b)
+	//		{
+	//			return 0;
+	//		}
+	//
+	//		return ($a < $b) ? -1 : 1;
+	//	}
+
 	/**
 	 * Get the tab name for a special property field
 	 *
-	 * @param  int  $special  The special field ID
+	 * @param   int  $special  The special field ID
 	 *
-	 * @since  4.0.0
 	 * @return string
+	 * @since  4.0.0
 	 */
 	public function getPropertyTab(int $special): string
 	{
@@ -160,11 +140,11 @@ class PropertyfieldModel extends AdminModel
 	/**
 	 * Return name for special property field
 	 *
-	 * @param  string  $special   Special name
-	 * @param  bool    $external  External or internal display required
+	 * @param   string  $special   Special name
+	 * @param   bool    $external  External or internal display required
 	 *
-	 * @since  1.2.2
 	 * @return string
+	 * @since  1.2.2
 	 */
 	public function propertyFieldSpecial(string $special, bool $external = true): string
 	{
@@ -201,9 +181,9 @@ class PropertyfieldModel extends AdminModel
 	/**
 	 * Method to get the data that should be injected in the form.
 	 *
+	 * @return mixed The data for the form.
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return mixed The data for the form.
 	 */
 	protected function loadFormData(): mixed
 	{
@@ -215,5 +195,24 @@ class PropertyfieldModel extends AdminModel
 		}
 
 		return $data;
+	}
+
+	/**
+	 * Compare values
+	 *
+	 * @param   string  $a  Value 1
+	 * @param   string  $b  Value 2
+	 *
+	 * @return int
+	 * @since  1.0.0
+	 */
+	private static function cmp(string $a, string $b): int
+	{
+		if ($a == $b)
+		{
+			return 0;
+		}
+
+		return ($a < $b) ? -1 : 1;
 	}
 }

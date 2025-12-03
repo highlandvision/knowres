@@ -52,8 +52,7 @@ class ContractsController extends AdminController
 		$id  = KrMethods::getUserState('com_knowres.current.contract_id', 0);
 		$tag = KrMethods::inputString('tag');
 
-		$this->setRedirect(KrMethods::route('index.php?option=com_knowres&task=contract.show&id=' . $id,
-			false));
+		$this->setRedirect(KrMethods::route('index.php?option=com_knowres&task=contract.show&id=' . $id, false));
 
 		if (!$id || !$tag)
 		{
@@ -77,9 +76,8 @@ class ContractsController extends AdminController
 	 * @return bool|BaseDatabaseModel
 	 * @since  1.6
 	 */
-	public function getModel($name = 'contract', $prefix = 'Administrator',
-	                         $config = ['ignore_request' => true]): BaseDatabaseModel|bool
-	{
+	public function getModel($name = 'contract', $prefix = 'Administrator', $config = ['ignore_request' => true]
+	): BaseDatabaseModel|bool {
 		return parent::getModel($name, $prefix, $config);
 	}
 
@@ -95,8 +93,12 @@ class ContractsController extends AdminController
 
 		$id  = KrMethods::getUserState('com_knowres.current.contract_id', 0);
 		$tag = KrMethods::inputString('tag');
-		$this->setRedirect(KrMethods::route('index.php?option=com_knowres&task=contract.show&id=' . $id,
-			false));
+		$this->setRedirect(
+			KrMethods::route(
+				'index.php?option=com_knowres&task=contract.show&id=' . $id,
+				false
+			)
+		);
 
 		if (!$id || !$tag)
 		{

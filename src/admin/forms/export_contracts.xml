@@ -24,8 +24,8 @@
 			required="true"
 			label="COM_KNOWRES_EXPORT_DATETYPE_LBL"
 			description="COM_KNOWRES_EXPORT_DATETYPE_DSC">
-			<option value="0">COM_KNOWRES_DATETYPE_CREATION_LBL</option>
-			<option value="1">COM_KNOWRES_DATETYPE_ARRIVAL_LBL</option>
+            <option value="0">COM_KNOWRES_EXPORT_DATETYPE_CREATION_LBL</option>
+            <option value="1">COM_KNOWRES_EXPORT_DATETYPE_ARRIVAL_LBL</option>
 		</field>
 		<field name="inresidence"
 		       type="radio"

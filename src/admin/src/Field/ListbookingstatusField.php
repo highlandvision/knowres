@@ -29,16 +29,19 @@ class ListbookingstatusField extends ListField
 	/**
 	 * Display the list of booking status
 	 *
+	 * @return array The field input options.
 	 * @throws Exception
 	 * @since  1.0.0
-	 * @return array The field input options.
 	 */
 	public function getOptions(): array
 	{
 		$options = [];
 
-		$items = KrFactory::getAdminModel('contract')->getBookingStatusOptions();
-		foreach ($items as $k => $v) {
+		/** @var $model Contract */
+		$model = KrFactory::getAdminModel('contract');
+		$items = $model->getBookingStatusOptions();
+		foreach ($items as $k => $v)
+		{
 			$options[] = HTMLHelper::_('select.option', $k, $v);
 		}
 

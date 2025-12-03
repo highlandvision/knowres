@@ -32,11 +32,11 @@ class HtmlView extends KrHtmlView
 	 *
 	 * @param   string|null  $tpl  The name of the template file to parse; automatically searches through the template paths.
 	 *
-     * @return void
+	 * @return void
 	 * @throws Exception
 	 * @since  1.0.0
 	 */
-	public function display(?string $tpl = null): void
+	public function display($tpl = null): void
 	{
 		/** @var AgentModel $model */
 		$model = $this->getModel();

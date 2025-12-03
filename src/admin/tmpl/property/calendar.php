@@ -16,6 +16,8 @@ use Joomla\CMS\HTML\HTMLHelper;
 
 /** @var HighlandVision\Component\Knowres\Administrator\View\Property\CalendarView $this */
 
+/** @noinspection PhpUnhandledExceptionInspection */
+/** @noinspection PhpPossiblePolymorphicInvocationInspection */
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useScript('keepalive')
    ->useScript('bootstrap.dropdown')

@@ -42,11 +42,60 @@ class PropertysettingModel extends AdminModel
 	protected $text_prefix = 'COM_KNOWRES_PROPERTYSETTING';
 
 	/**
+	 * Method to get the data that should be injected in the form.
+	 *
+	 * @return false|object  Object on success, false on failure.
+	 * @throws Exception
+	 * @since  1.0.0
+	 */
+	public function getItem($pk = null): false|object
+	{
+		$data = KrMethods::getUserState('com_knowres.edit.propertysetting.data', []);
+		if (empty($data))
+		{
+			$data = parent::getItem();
+		}
+
+		return $data;
+	}
+
+	/**
+	 * Save settings
+	 *
+	 * @param   int  $property_id  ID of property or 0 for global
+	 *
+	 * @throws Exception
+	 * @since  3.3.0
+	 */
+	public function saveSettings(int $property_id): void
+	{
+		$old_settings    = KrMethods::inputString('old_settings');
+		$old_setting_ids = KrMethods::inputString('old_setting_ids');
+		$postArray       = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+		$oldSettings     = Utility::decodeJson($old_settings, true);
+		$oldSettingIds   = Utility::decodeJson($old_setting_ids, true);
+
+		$settings = [];
+		foreach ($postArray as $akey => $value)
+		{
+			if (array_key_exists($akey, $oldSettings) && $oldSettings[$akey] != $value)
+			{
+				$settings[$akey] = [
+					$value,
+					$oldSettingIds[$akey]
+				];
+			}
+		}
+
+		$this->updateSettings($settings, $property_id);
+	}
+
+	/**
 	 * Update akey setting for service
 	 *
-	 * @param  string  $akey         Name of setting
-	 * @param  int     $property_id  ID of property or 0 for all
-	 * @param  string  $plugin       Value of setting
+	 * @param   string  $akey         Name of setting
+	 * @param   int     $property_id  ID of property or 0 for all
+	 * @param   string  $plugin       Value of setting
 	 *
 	 * @throws RuntimeException
 	 * @throws Exception
@@ -54,12 +103,14 @@ class PropertysettingModel extends AdminModel
 	 */
 	public static function updateSetting(string $akey, int $property_id, string $plugin = 'vrbo'): void
 	{
-		if (!$akey) {
+		if (!$akey)
+		{
 			return;
 		}
 
 		$values = KrFactory::getListModel('propertysettings')->getOneSetting($akey);
-		if (!isset($values[$property_id])) {
+		if (!isset($values[$property_id]))
+		{
 			$setting              = new stdClass();
 			$setting->id          = 0;
 			$setting->akey        = $akey;
@@ -71,7 +122,9 @@ class PropertysettingModel extends AdminModel
 			$setting->updated_by  = 0;
 
 			KrFactory::insert('property_setting', $setting);
-		} else {
+		}
+		else
+		{
 			$db    = KrFactory::getDatabase();
 			$query = $db->getQuery(true);
 
@@ -92,56 +145,10 @@ class PropertysettingModel extends AdminModel
 	}
 
 	/**
-	 * Method to get the data that should be injected in the form.
-	 *
-	 * @throws Exception
-	 * @since  1.0.0
-	 * @return false|object  Object on success, false on failure.
-	 */
-	public function getItem($pk = null): false|object
-	{
-		$data = KrMethods::getUserState('com_knowres.edit.propertysetting.data', []);
-		if (empty($data)) {
-			$data = parent::getItem();
-		}
-
-		return $data;
-	}
-
-	/**
-	 * Save settings
-	 *
-	 * @param  int  $property_id  ID of property or 0 for global
-	 *
-	 * @throws Exception
-	 * @since  3.3.0
-	 */
-	public function saveSettings(int $property_id): void
-	{
-		$old_settings    = KrMethods::inputString('old_settings');
-		$old_setting_ids = KrMethods::inputString('old_setting_ids');
-		$postArray       = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-		$oldSettings     = Utility::decodeJson($old_settings, true);
-		$oldSettingIds   = Utility::decodeJson($old_setting_ids, true);
-
-		$settings = [];
-		foreach ($postArray as $akey => $value) {
-			if (array_key_exists($akey, $oldSettings) && $oldSettings[$akey] != $value) {
-				$settings[$akey] = [
-					$value,
-					$oldSettingIds[$akey]
-				];
-			}
-		}
-
-		$this->updateSettings($settings, $property_id);
-	}
-
-	/**
 	 * Save the property settings to the database.
 	 *
-	 * @param  array  $settings     Changed settings
-	 * @param  int    $property_id  ID of specific property or 0 for all
+	 * @param   array  $settings     Changed settings
+	 * @param   int    $property_id  ID of specific property or 0 for all
 	 *
 	 * @throws RuntimeException
 	 * @throws Exception
@@ -153,25 +160,35 @@ class PropertysettingModel extends AdminModel
 		$deposit_update = false;
 		$bp_update      = false;
 
-		if (is_countable($settings) && count($settings)) {
+		if (is_countable($settings) && count($settings))
+		{
 			$db      = $this->getDatabase();
 			$columns = [
-				'id', 'property_id', 'akey', 'value', 'created_at', 'created_by'
+				'id',
+				'property_id',
+				'akey',
+				'value',
+				'created_at',
+				'created_by'
 			];
 
 			$rows    = [];
 			$user_id = KrMethods::getUser()->get('id');
 
-			foreach ($settings as $akey => $value) {
-				if (!$rates_update && !str_contains($akey, 'requiredfields')) {
+			foreach ($settings as $akey => $value)
+			{
+				if (!$rates_update && !str_contains($akey, 'requiredfields'))
+				{
 					$rates_update = true;
 				}
 
-				if (!$deposit_update && str_contains($akey, 'deposit')) {
+				if (!$deposit_update && str_contains($akey, 'deposit'))
+				{
 					$deposit_update = true;
 				}
 
-				if (!$bp_update && ($akey == 'min_price' || $akey == 'base_price') && $value > 0) {
+				if (!$bp_update && ($akey == 'min_price' || $akey == 'base_price') && $value > 0)
+				{
 					$bp_update = true;
 				}
 
@@ -187,17 +204,20 @@ class PropertysettingModel extends AdminModel
 				$rows[] = $row;
 			}
 
-			if (count($rows)) {
-				foreach ($rows as &$row) {
+			if (count($rows))
+			{
+				foreach ($rows as &$row)
+				{
 					$row = implode(', ', $row);
 				}
 
-				try {
+				try
+				{
 					$db->transactionStart();
 
 					$query = $db->getQuery(true);
 					$query->insert($db->qn('#__knowres_property_setting'))
-						->columns($db->qn($columns))->values($rows);
+					      ->columns($db->qn($columns))->values($rows);
 					$query .= ' ON DUPLICATE KEY UPDATE ';
 					$query .= $db->qn('value') . ' = VALUES(value), ';
 					$query .= $db->qn('updated_at') . ' = VALUES(created_at), ';
@@ -206,26 +226,37 @@ class PropertysettingModel extends AdminModel
 					$db->setQuery($query);
 					$db->execute();
 
-					if ($rates_update) {
-						KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updatePropertyRates',
-							$property_id);
+					if ($rates_update)
+					{
+						KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate(
+							'updatePropertyRates',
+							$property_id
+						);
 					}
 
-					if ($bp_update && $property_id) {
+					if ($bp_update && $property_id)
+					{
 						Rates::settingRateUpdate($property_id);
 					}
 
-					if ($deposit_update) {
-						KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updateProperty', $property_id, 0,
-							'ru');
-						KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updatePropertyRates',
-							$property_id, 0, 'vrbo');
+					if ($deposit_update)
+					{
+						KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate(
+							'updateProperty', $property_id, 0,
+							'ru'
+						);
+						KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate(
+							'updatePropertyRates',
+							$property_id, 0, 'vrbo'
+						);
 					}
 
 					$db->transactionCommit();
 
 					KrMethods::message(KrMethods::plain('COM_KNOWRES_ACTION_SUCCESS'));
-				} catch (Exception $e) {
+				}
+				catch (Exception $e)
+				{
 					$db->transactionRollback();
 					throw new $e;
 				}

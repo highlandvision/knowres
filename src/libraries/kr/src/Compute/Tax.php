@@ -44,8 +44,8 @@ class Tax
 	/**
 	 * Process tax rates
 	 *
-	 * @param  Hub   $Hub    Hub base class
-	 * @param  bool  $gross  Set true for agent reverse calculation
+	 * @param   Hub   $Hub    Hub base class
+	 * @param   bool  $gross  Set true for agent reverse calculation
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
@@ -54,7 +54,8 @@ class Tax
 	{
 		$this->Hub = $Hub;
 
-		if ((int) $this->Hub->params->get('tax_ignore') || !(int) $this->Hub->getValue('guests')) {
+		if ((int) $this->Hub->params->get('tax_ignore') || !(int) $this->Hub->getValue('guests'))
+		{
 			return;
 		}
 
@@ -72,47 +73,64 @@ class Tax
 	/**
 	 * Calculate tax value for specific tax
 	 *
-	 * @param  float  $base     Base value
-	 * @param  array  $agents   All agent_id who include the tax
-	 * @param  int    $base_id  ID of base rate for supplements
+	 * @param   float  $base     Base value
+	 * @param   array  $agents   All agent_id who include the tax
+	 * @param   int    $base_id  ID of base rate for supplements
 	 *
+	 * @return float Tax value
 	 * @throws InvalidArgumentException
 	 * @since  2.5.0
-	 * @return float Tax value
 	 */
 	protected function calcTaxValue(float $base, array $agents, int $base_id = 0): float
 	{
 		$tax = 0;
 
-		if (!$this->trow->fixed) {
+		if (!$this->trow->fixed)
+		{
 			// % calculation
-			if ($this->trow->gross && !$base_id) {
+			if ($this->trow->gross && !$base_id)
+			{
 				$tax = $base * ($this->trow->rate / (100 + $this->trow->rate));
-			} else {
+			}
+			else
+			{
 				// Rate excludes tax or supplemental tax
 				$tax = $base * ($this->trow->rate / 100);
 			}
-		} else {
+		}
+		else
+		{
 			// Fixed value calculation
-			if (!$this->trow->per_night) {
+			if (!$this->trow->per_night)
+			{
 				// Charge per stay
 				$tax = $this->trow->rate;
-			} else {
+			}
+			else
+			{
 				// Charge per night
 				$nights = $this->Hub->getValue('nights');
-				$tax    = $this->trow->rate * min($nights,
-				                                  $this->trow->max_nights > 0 ? $this->trow->max_nights : $nights);
+				$tax    = $this->trow->rate * min(
+						$nights,
+						$this->trow->max_nights > 0 ? $this->trow->max_nights : $nights
+					);
 			}
 
-			if ($this->trow->basis) {
+			if ($this->trow->basis)
+			{
 				// Per guest
-				if ($this->trow->applicable_age > 17) {
+				if ($this->trow->applicable_age > 17)
+				{
 					$tax = $tax * $this->Hub->getValue('adults');
-				} else {
+				}
+				else
+				{
 					$count = $this->Hub->getValue('adults');
 					$ages  = $this->Hub->getValue('child_ages');
-					foreach ($ages as $age) {
-						if ($age >= $this->trow->applicable_age) {
+					foreach ($ages as $age)
+					{
+						if ($age >= $this->trow->applicable_age)
+						{
 							$count++;
 						}
 					}
@@ -128,40 +146,46 @@ class Tax
 	/**
 	 * Calculate taxes
 	 *
-	 * @param  string  $code   Tax ID
-	 * @param  bool    $gross  Set true for agent reverse calulation
+	 * @param   string  $code   Tax ID
+	 * @param   bool    $gross  Set true for agent reverse calulation
 	 *
 	 * @throws Exception
 	 * @since  3.3.0
 	 */
 	protected function calculateTaxes(string $code, bool $gross): void
 	{
-		if (empty($code)) {
+		if (empty($code))
+		{
 			return;
 		}
 
 		$row = KrFactory::getListModel('taxrates')->getByCode($code, $this->Hub->getValue('arrival'));
-		if (!is_countable($row) || count($row) != 1) {
+		if (!is_countable($row) || count($row) != 1)
+		{
 			return;
 		}
 
 		$this->trow = $row[0];
 
 		$agents = Utility::decodeJson($this->trow->agent, true);
-		if (!is_countable($agents) || !count($agents)) {
+		if (!is_countable($agents) || !count($agents))
+		{
 			$agents = [];
 		}
 		$type = $this->setType($this->trow, $agents);
-		if (!$type) {
+		if (!$type)
+		{
 			return;
 		}
 
-		if ($gross && in_array($this->agent_id, $agents)) {
+		if ($gross && in_array($this->agent_id, $agents))
+		{
 			$this->trow->gross = true;
 		}
 
 		$tax = $this->calcTaxValue($this->room_total, $agents);
-		if ($type <> 3) {
+		if ($type <> 3)
+		{
 			$this->tax_total += $tax;
 		}
 
@@ -179,7 +203,8 @@ class Tax
 			'base_id'     => 0
 		];
 
-		if ($this->trow->taxrate_id) {
+		if ($this->trow->taxrate_id)
+		{
 			$base_id   = $this->trow->id;
 			$gross     = $this->trow->gross;
 			$poa       = $this->trow->pay_arrival || $type == 3 ? 1 : 0;
@@ -188,7 +213,8 @@ class Tax
 
 			$this->trow = KrFactory::getAdminModel('taxrate')->getItem($this->trow->taxrate_id);
 			$supplement = $this->calcTaxValue($tax, $agents, $base_id);
-			if ($type <> 3) {
+			if ($type <> 3)
+			{
 				$this->tax_total += $supplement;
 			}
 
@@ -211,30 +237,35 @@ class Tax
 	/**
 	 * Set the tax type
 	 *
-	 * @param  mixed  $trow    Object or stdClass.
-	 * @param  array  $agents  Agents who already include this tax.
+	 * @param   mixed  $trow    Object or stdClass.
+	 * @param   array  $agents  Agents who already include this tax.
 	 *
+	 * @return int 0->Do not charge, 1->Charge, 2->Gross, 3->POA.
 	 * @throws InvalidArgumentException
 	 * @since  4.0.0
-	 * @return int 0->Do not charge, 1->Charge, 2->Gross, 3->POA.
 	 */
 	protected function setType(mixed $trow, array $agents): int
 	{
-		if (in_array($this->agent_id, $agents)) {
+		if (in_array($this->agent_id, $agents))
+		{
 			return 1;
 		}
 		// if Agent and TT
-		if ($this->agent_id && $trow->tax_type == 'TOURIST') {
+		if ($this->agent_id && $trow->tax_type == 'TOURIST')
+		{
 			// if !age applicable
-			if (!$trow->applicable_age) {
+			if (!$trow->applicable_age)
+			{
 				return 1;
 			}
 			// if child ages set
-			if ($this->Hub->getValue('child_ages_set')) {
+			if (!empty($this->Hub->getValue('child_ages')))
+			{
 				return 1;
 			}
 			// do not charge
-			if (!$trow->tt_option) {
+			if (!$trow->tt_option)
+			{
 				return 0;
 			}
 
@@ -242,10 +273,12 @@ class Tax
 			return 3;
 		}
 
-		if ($trow->gross) {
+		if ($trow->gross)
+		{
 			return 2;
 		}
-		if ($trow->pay_arrival) {
+		if ($trow->pay_arrival)
+		{
 			return 3;
 		}
 
