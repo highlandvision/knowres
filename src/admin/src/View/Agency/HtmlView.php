@@ -9,8 +9,6 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\View\Agency;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\Component\Knowres\Administrator\Model\AgencyModel;
 use HighlandVision\KR\Framework\KrMethods;
@@ -19,6 +17,10 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 
 use function defined;
 use function strtolower;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Agency edit view

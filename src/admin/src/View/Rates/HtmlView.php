@@ -9,16 +9,17 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\View\Rates;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\Component\Knowres\Administrator\Model\RatesModel;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\HtmlView as KrHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 
-use function defined;
 use function in_array;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * List rates
@@ -27,39 +28,39 @@ use function in_array;
  */
 class HtmlView extends KrHtmlView\Property
 {
-	/**
-	 * Display the view
-	 *
-	 * @param  ?string  $tpl  A template file to load. [optional]
-	 *
+    /**
+     * Display the view
+     *
+     * @param   string  $tpl  A template file to load. [optional]
+     *
      * @return  void
-	 * @throws  Exception
-	 * @since   1.0.0
-	 */
-	public function display($tpl = null): void
-	{
-		$this->getUserSessionData();
+     * @throws  Exception
+     * @since   1.0.0
+     */
+    public function display($tpl = null): void
+    {
+        /** @var RatesModel $model * */
+        $model = $this->getModel();
+        $model->setUseExceptions(true);
+        $this->getUserSessionData();
 
-		/** @var RatesModel $model * */
-		$model = $this->getModel();
-		$model->setUseExceptions(true);
-		$this->state = $model->getState();
-		$this->state->set('filter.property_id', $this->property_id);
-		$this->items         = $model->getItems();
-		$this->pagination    = $model->getPagination();
-		$this->filterForm    = $model->getFilterForm();
-		$this->activeFilters = $model->getActiveFilters();
-		$this->ordering      = in_array('ordering', $model->getFilterFields());
-		$this->form_name     = 'rate';
+        $this->state = $model->getState();
+        $this->state->set('filter.property_id', $this->property_id);
+        $this->items         = $model->getItems();
+        $this->pagination    = $model->getPagination();
+        $this->filterForm    = $model->getFilterForm();
+        $this->activeFilters = $model->getActiveFilters();
+        $this->ordering      = in_array('ordering', $model->getFilterFields());
+        $this->form_name     = 'rate';
 
-		if (!$this->checkEmpty())
-		{
-			$this->checkErrors();
-			$title = KrMethods::plain('COM_KNOWRES_RATES_TITLE') . ' - ' . $this->property_name;
-			ToolbarHelper::title($title, 'tasks knowres');
-			$this->addListToolbar($this->get('name'));
+        $this->checkErrors();
+        $title = KrMethods::plain('COM_KNOWRES_RATES_TITLE') . ' - ' . $this->property_name;
+        ToolbarHelper::title($title, 'tasks knowres');
+        $this->addListToolbar($model->getName());
+        if ($model->getIsEmptyState()) {
+            $this->setLayout('emptystate');
+        }
 
-			parent::display($tpl);
-		}
-	}
+        parent::display($tpl);
+    }
 }

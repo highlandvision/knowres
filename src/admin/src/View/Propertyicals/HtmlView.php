@@ -9,8 +9,6 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\View\Propertyicals;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\Component\Knowres\Administrator\Model\PropertyicalsModel;
 use HighlandVision\KR\Framework\KrMethods;
@@ -18,8 +16,11 @@ use HighlandVision\KR\Joomla\Extend\HtmlView as KrHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 
-use function defined;
 use function in_array;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * List property icals
@@ -28,83 +29,84 @@ use function in_array;
  */
 class HtmlView extends KrHtmlView\Property
 {
-	/**
-	 * Display the view
-	 *
-	 * @param  ?string  $tpl  A template file to load. [optional]
-	 *
+    /**
+     * Display the view
+     *
+     * @param   string  $tpl  A template file to load. [optional]
+     *
      * @return void
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
-	public function display($tpl = null): void
-	{
-		$this->getUserSessionData();
+     * @throws Exception
+     * @since  1.0.0
+     */
+    public function display($tpl = null): void
+    {
+        /** @var PropertyicalsModel $model * */
+        $model = $this->getModel();
+        $model->setUseExceptions(true);
+        $this->getUserSessionData();
 
-		/** @var PropertyicalsModel $model * */
-		$model = $this->getModel();
-		$model->setUseExceptions(true);
-		$this->state = $model->getState();
-		$this->state->set('filter.property_id', $this->property_id);
-		$this->items         = $model->getItems();
-		$this->pagination    = $model->getPagination();
-		$this->filterForm    = $model->getFilterForm();
-		$this->activeFilters = $model->getActiveFilters();
-		$this->ordering      = in_array('ordering', $model->getFilterFields());
-		$this->form_name     = 'propertyical';
+        $this->state = $model->getState();
+        $this->state->set('filter.property_id', $this->property_id);
+        $this->items         = $model->getItems();
+        $this->pagination    = $model->getPagination();
+        $this->filterForm    = $model->getFilterForm();
+        $this->activeFilters = $model->getActiveFilters();
+        $this->ordering      = in_array('ordering', $model->getFilterFields());
+        $this->form_name     = 'propertyical';
 
-        if (!$this->checkEmpty()) {
-			$this->checkErrors();
-			ToolbarHelper::title(KrMethods::plain('COM_KNOWRES_PROPERTYICALS_TITLE'), 'tasks knowres');
-			$this->addListToolbar($this->get('name'));
+        $this->checkErrors();
+        ToolbarHelper::title(KrMethods::plain('COM_KNOWRES_PROPERTYICALS_TITLE'), 'tasks knowres');
+        $this->addListToolbar($model->getName());
+        if ($model->getIsEmptyState()) {
+            $this->setLayout('emptystate');
+        }
 
-			parent::display($tpl);
-		}
-	}
+        parent::display($tpl);
+    }
 
-	/**
-	 * Add custom toolbar
-	 *
-	 * @param   Toolbar  $Toolbar  Joomla toolbar
-	 *
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
-	protected function addCustomToolbar(Toolbar $Toolbar): Toolbar
-	{
-		$dropdown = $Toolbar->dropdownButton('propertyical-manage-group')
+    /**
+     * Add custom toolbar
+     *
+     * @param   Toolbar  $Toolbar  Joomla toolbar
+     *
+     * @throws Exception
+     * @since  1.0.0
+     */
+    protected function addCustomToolbar(Toolbar $Toolbar): Toolbar
+    {
+        $dropdown = $Toolbar->dropdownButton('propertyical-manage-group')
             ->text('COM_KNOWRES_PROPERTYICALS_MANAGE')
             ->toggleSplit(false)
             ->icon('fa-solid fa-user')
             ->buttonClass('btn btn-action');
 
-		$ChildToolbar = $dropdown->getChildToolbar();
+        $ChildToolbar = $dropdown->getChildToolbar();
 
         if ($this->canDo->get('core.delete', 'com_knowres')) {
-			$ChildToolbar->confirmButton('kr-icals-purge')
+            $ChildToolbar->confirmButton('kr-icals-purge')
                 ->buttonClass('btn btn-danger')
                 ->icon('icon-trash')
                 ->listCheck(true)
                 ->message('COM_KNOWRES_ARE_YOU_SURE')
                 ->task('propertyicals.purge')
                 ->text('COM_KNOWRES_PROPERTYICALS_DELETE');
-		}
+        }
 
         if ($this->canDo->get('core.edit', 'com_knowres')) {
-			$ChildToolbar->popupButton('icalexport')
+            $ChildToolbar->popupButton('icalexport')
                 ->icon('icon-download')
                 ->listCheck(false)
                 ->selector('icalexportModal')
                 ->text('COM_KNOWRES_PROPERTYICALS_EXPORT');
 
-			$ChildToolbar->popupButton('icalimport')
+            $ChildToolbar->popupButton('icalimport')
                 ->icon('icon-upload')
                 ->listCheck(false)
                 ->selector('icalimportModal')
                 ->task('propertyicals.import')
                 ->text('COM_KNOWRES_PROPERTYICALS_IMPORT');
-		}
+        }
 
-		return $Toolbar;
-	}
+        return $Toolbar;
+    }
 }

@@ -28,44 +28,43 @@ use function in_array;
  */
 class HtmlView extends KrHtmlView\Contract
 {
-	/** @var bool Xero enabled. */
-	public bool $batch_xero = false;
+    /** @var bool Xero enabled. */
+    public bool $batch_xero = false;
 
-	/**
-	 * Display the view
-	 *
-	 * @param  ?string  $tpl  A template file to load. [optional]
-	 *
+    /**
+     * Display the view
+     *
+     * @param   string  $tpl  A template file to load. [optional]
+     *
      * @return  void
-	 * @throws  Exception
-	 * @since   1.0.0
-	 */
-	public function display($tpl = null): void
-	{
-		/** @var ContractsModel $model * */
-		$model = $this->getModel();
-		$model->setUseExceptions(true);
-		$this->state         = $model->getState();
-		$this->items         = $model->getItems();
-		$this->pagination    = $model->getPagination();
-		$this->filterForm    = $model->getFilterForm();
-		$this->activeFilters = $model->getActiveFilters();
-		$this->ordering      = in_array('ordering', $model->getFilterFields());
-		$this->form_name     = 'contract';
+     * @throws  Exception
+     * @since   1.0.0
+     */
+    public function display($tpl = null): void
+    {
+        /** @var ContractsModel $model * */
+        $model = $this->getModel();
+        $model->setUseExceptions(true);
+        $this->state         = $model->getState();
+        $this->items         = $model->getItems();
+        $this->pagination    = $model->getPagination();
+        $this->filterForm    = $model->getFilterForm();
+        $this->activeFilters = $model->getActiveFilters();
+        $this->ordering      = in_array('ordering', $model->getFilterFields());
+        $this->form_name     = 'contract';
 
-		if (!$this->checkEmpty())
-		{
-			$this->checkErrors();
+        if (!$this->checkEmpty()) {
+            $this->checkErrors();
 
-			$userSession        = new KrSession\User();
-			$this->access_level = $userSession->getAccessLevel();
-			$userSession->resetCurrentProperty();
-			$this->params = KrMethods::getParams();
+            $userSession        = new KrSession\User();
+            $this->access_level = $userSession->getAccessLevel();
+            $userSession->resetCurrentProperty();
+            $this->params = KrMethods::getParams();
 
-			ToolbarHelper::title(KrMethods::plain('COM_KNOWRES_CONTRACTS_TITLE'), 'tasks knowres');
-			$this->addListToolbar($this->get('name'));
+            ToolbarHelper::title(KrMethods::plain('COM_KNOWRES_CONTRACTS_TITLE'), 'tasks knowres');
+            $this->addListToolbar($model->getName());
 
-			parent::display($tpl);
-		}
-	}
+            parent::display($tpl);
+        }
+    }
 }

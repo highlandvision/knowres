@@ -9,8 +9,6 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\View\Media;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\Component\Knowres\Administrator\Model\PropertyModel;
 use HighlandVision\KR\Framework\KrFactory;
@@ -20,6 +18,10 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
+
 /**
  * Edit the media data for a property
  *
@@ -27,33 +29,33 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
  */
 class HtmlView extends KrHtmlView\Property
 {
-	/**
-	 * Display the view
-	 *
-	 * @param  ?string  $tpl  A template file to load. [optional]
-	 *
+    /**
+     * Display the view
+     *
+     * @param   string  $tpl  A template file to load. [optional]
+     *
      * @return void
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
-	public function display($tpl = null): void
-	{
-		$this->getUserSessionData();
+     * @throws Exception
+     * @since  1.0.0
+     */
+    public function display($tpl = null): void
+    {
+        $this->getUserSessionData();
 
-		/** @var PropertyModel $model */
-		$model = KrFactory::getAdminModel('property');
-		$model->setUseExceptions(true);
-		$this->form = $model->getForm();
-		$this->item = $model->getItem($this->property_id);
-		$this->form->bind($this->item);
-		$this->state = $model->getState();
+        /** @var PropertyModel $model */
+        $model = KrFactory::getAdminModel('property');
+        $model->setUseExceptions(true);
+        $this->form = $model->getForm();
+        $this->item = $model->getItem($this->property_id);
+        $this->form->bind($this->item);
+        $this->state = $model->getState();
 
-		Factory::getApplication()->input->set('hidemainmenu', true);
-		$title = KrMethods::plain('COM_KNOWRES_TITLE_PROPERTY_MEDIA') . ' - ' . $this->item->property_name;
-		ToolbarHelper::title($title, 'fa-solid fa-image knowres');
-		$Toolbar = Toolbar::getInstance();
-		$this->addToolbar($Toolbar, 'media');
+        Factory::getApplication()->input->set('hidemainmenu', true);
+        $title = KrMethods::plain('COM_KNOWRES_TITLE_PROPERTY_MEDIA') . ' - ' . $this->item->property_name;
+        ToolbarHelper::title($title, 'fa-solid fa-image knowres');
+        $Toolbar = Toolbar::getInstance();
+        $this->addToolbar($Toolbar, 'media');
 
-		parent::display($tpl);
-	}
+        parent::display($tpl);
+    }
 }

@@ -9,8 +9,6 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\View\Rate;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\Component\Knowres\Administrator\Model\RateModel;
 use HighlandVision\KR\Framework\KrMethods;
@@ -20,6 +18,10 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 use function defined;
 use function strtolower;
 
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
+
 /**
  * Edit Rate view
  *
@@ -27,34 +29,34 @@ use function strtolower;
  */
 class HtmlView extends KrHtmlView
 {
-	/**
-	 * Display the view
-	 *
-	 * @param  ?string  $tpl  A template file to load. [optional]
-	 *
+    /**
+     * Display the view
+     *
+     * @param   string  $tpl  A template file to load. [optional]
+     *
      * @return void
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
-	public function display($tpl = null): void
-	{
-		$this->getUserSessionData();
+     * @throws Exception
+     * @since  1.0.0
+     */
+    public function display($tpl = null): void
+    {
+        $this->getUserSessionData();
 
-		/** @var RateModel $model */
-		$model = $this->getModel();
-		$model->setUseExceptions(true);
-		$this->form  = $model->getForm();
-		$this->item  = $model->getItem();
-		$this->state = $model->getState();
+        /** @var RateModel $model */
+        $model = $this->getModel();
+        $model->setUseExceptions(true);
+        $this->form  = $model->getForm();
+        $this->item  = $model->getItem();
+        $this->state = $model->getState();
 
-		$this->checkVersions();
-		$this->checkErrors();
+        $this->checkVersions();
+        $this->checkErrors();
 
-		$this->form_name = KrMethods::plain('COM_KNOWRES_RATE_TITLE');
-		$this->getFormAriaLabel();
-		ToolbarHelper::title($this->form_name . ' - ' . $this->property_name, 'fa-solid fa-euro-sign knowres');
-		$this->addFormToolbar(strtolower($this->getName()));
+        $this->form_name = KrMethods::plain('COM_KNOWRES_RATE_TITLE');
+        $this->getFormAriaLabel();
+        ToolbarHelper::title($this->form_name . ' - ' . $this->property_name, 'fa-solid fa-euro-sign knowres');
+        $this->addFormToolbar(strtolower($this->getName()));
 
-		parent::display($tpl);
-	}
+        parent::display($tpl);
+    }
 }

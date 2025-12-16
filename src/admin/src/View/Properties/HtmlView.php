@@ -9,8 +9,6 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\View\Properties;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\Component\Knowres\Administrator\Model\PropertiesModel;
 use HighlandVision\KR\Framework\KrFactory;
@@ -19,8 +17,11 @@ use HighlandVision\KR\Joomla\Extend\HtmlView as KrHtmlView;
 use HighlandVision\KR\Session as KrSession;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 
-use function defined;
 use function in_array;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * List properties
@@ -29,60 +30,58 @@ use function in_array;
  */
 class HtmlView extends KrHtmlView\Property
 {
-	/** @var bool Agents exist. */
-	public bool $agent = false;
-	/** @var bool Allow black booking. */
-	public bool $allow_block = true;
-	/** @var bool Allow booking. */
-	public bool $allow_book = true;
+    /** @var bool Agents exist. */
+    public bool $agent = false;
+    /** @var bool Allow black booking. */
+    public bool $allow_block = true;
+    /** @var bool Allow booking. */
+    public bool $allow_book = true;
 
-	/**
-	 * Display the view
-	 *
-	 * @param  ?string  $tpl  A template file to load. [optional]
-	 *
+    /**
+     * Display the view
+     *
+     * @param   string  $tpl  A template file to load. [optional]
+     *
      * @return  void
-	 * @throws  Exception
-	 * @since   1.0.0
-	 */
-	public function display($tpl = null): void
-	{
-		/** @var PropertiesModel $model * */
-		$model = $this->getModel();
-		$model->setUseExceptions(true);
-		$this->state         = $model->getState();
-		$this->items         = $model->getItems();
-		$this->pagination    = $model->getPagination();
-		$this->filterForm    = $model->getFilterForm();
-		$this->activeFilters = $model->getActiveFilters();
-		$this->ordering      = in_array('ordering', $model->getFilterFields());
-		$this->form_name     = 'property';
+     * @throws  Exception
+     * @since   1.0.0
+     */
+    public function display($tpl = null): void
+    {
+        /** @var PropertiesModel $model * */
+        $model = $this->getModel();
+        $model->setUseExceptions(true);
 
-		if (!$this->checkEmpty())
-		{
-			$this->checkErrors();
+        $this->state         = $model->getState();
+        $this->items         = $model->getItems();
+        $this->pagination    = $model->getPagination();
+        $this->filterForm    = $model->getFilterForm();
+        $this->activeFilters = $model->getActiveFilters();
+        $this->ordering      = in_array('ordering', $model->getFilterFields());
+        $this->form_name     = 'property';
 
-			$userSession        = new KrSession\User();
-			$this->access_level = $userSession->getAccessLevel();
-			$userSession->resetCurrentProperty();
-			$this->params = KrMethods::getParams();
+        $userSession        = new KrSession\User();
+        $this->access_level = $userSession->getAccessLevel();
+        $userSession->resetCurrentProperty();
+        $this->params = KrMethods::getParams();
 
-			$agents = KrFactory::getListModel('agents')->getAgents();
-			if (is_countable($agents) && count($agents))
-			{
-				$this->agent = true;
-			}
+        $agents = KrFactory::getListModel('agents')->getAgents();
+        if (is_countable($agents) && count($agents)) {
+            $this->agent = true;
+        }
 
-			if ($this->access_level == 10)
-			{
-				$this->allow_block = (bool) $this->params->get('block_add');
-				$this->allow_book  = (bool) $this->params->get('contract_add');
-			}
+        if ($this->access_level == 10) {
+            $this->allow_block = (bool)$this->params->get('block_add');
+            $this->allow_book  = (bool)$this->params->get('contract_add');
+        }
 
-			ToolbarHelper::title(KrMethods::plain('COM_KNOWRES_PROPERTIES_TITLE'), 'tasks knowres');
-			$this->addListToolbar($this->get('name'));
+        $this->checkErrors();
+        ToolbarHelper::title(KrMethods::plain('COM_KNOWRES_PROPERTIES_TITLE'), 'tasks knowres');
+        $this->addListToolbar($model->getName());
+        if ($model->getIsEmptyState()) {
+            $this->setLayout('emptystate');
+        }
 
-			parent::display($tpl);
-		}
-	}
+        parent::display($tpl);
+    }
 }

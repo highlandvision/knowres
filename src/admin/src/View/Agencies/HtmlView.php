@@ -9,16 +9,17 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\View\Agencies;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\Component\Knowres\Administrator\Model\AgenciesModel;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\HtmlView as KrHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 
-use function defined;
 use function in_array;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * List Agencies

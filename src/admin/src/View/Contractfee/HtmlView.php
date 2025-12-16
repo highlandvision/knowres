@@ -9,8 +9,6 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\View\Contractfee;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\Component\Knowres\Administrator\Model\ContractfeeModel;
 use HighlandVision\KR\Framework\KrFactory;
@@ -21,6 +19,10 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 
 use function strtolower;
 
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
+
 /**
  * Contract Fee edit view
  *
@@ -28,47 +30,45 @@ use function strtolower;
  */
 class HtmlView extends KrHtmlView
 {
-	/** @var false|object Contract row. */
-	public false|object $contract;
+    /** @var false|object Contract row. */
+    public false|object $contract;
 
-	/**
-	 * Display the view
-	 *
-	 * @param   null  $tpl  Default template
-	 *
+    /**
+     * Display the view
+     *
+     * @param   string  $tpl  Default template
+     *
      * @return void
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
-	public function display($tpl = null): void
-	{
-		$contract_id = KrMethods::getUserState('com_knowres.current.contract_id', 0);
-		if (empty($contract_id))
-		{
-			Utility::goto('contracts');
-		}
-		$this->contract = KrFactory::getAdminModel('contract')->getItem($contract_id);
-		if (empty($this->contract->id))
-		{
-			Utility::goto('contracts');
-		}
+     * @throws Exception
+     * @since  1.0.0
+     */
+    public function display($tpl = null): void
+    {
+        $contract_id = KrMethods::getUserState('com_knowres.current.contract_id', 0);
+        if (empty($contract_id)) {
+            Utility::goto('contracts');
+        }
+        $this->contract = KrFactory::getAdminModel('contract')->getItem($contract_id);
+        if (empty($this->contract->id)) {
+            Utility::goto('contracts');
+        }
 
-		/** @var ContractfeeModel $model */
+        /** @var ContractfeeModel $model */
         $model = $this->getModel();
         $model->setUseExceptions(true);
-		$this->form   = $model->getForm();
-		$this->item   = $model->getItem();
-		$this->state  = $model->getState();
-		$this->params = KrMethods::getParams();
+        $this->form   = $model->getForm();
+        $this->item   = $model->getItem();
+        $this->state  = $model->getState();
+        $this->params = KrMethods::getParams();
 
-		$this->checkVersions();
-		$this->checkErrors();
+        $this->checkVersions();
+        $this->checkErrors();
 
-		$this->form_name = KrMethods::plain('COM_KNOWRES_CONTRACTFEE_TITLE');
-		$this->getFormAriaLabel();
-		ToolbarHelper::title($this->form_name, 'fa-solid fa-euro-sign knowres');
-		$this->addFormToolbar(strtolower($this->getName()));
+        $this->form_name = KrMethods::plain('COM_KNOWRES_CONTRACTFEE_TITLE');
+        $this->getFormAriaLabel();
+        ToolbarHelper::title($this->form_name, 'fa-solid fa-euro-sign knowres');
+        $this->addFormToolbar(strtolower($this->getName()));
 
-		parent::display($tpl);
-	}
+        parent::display($tpl);
+    }
 }

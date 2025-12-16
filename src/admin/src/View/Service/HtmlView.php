@@ -9,8 +9,6 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\View\Service;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\Component\Knowres\Administrator\Model\ServiceModel;
 use HighlandVision\KR\Framework\KrFactory;
@@ -23,6 +21,10 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 use function defined;
 use function strtolower;
 
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
+
 /**
  * Edit service view
  *
@@ -30,87 +32,87 @@ use function strtolower;
  */
 class HtmlView extends KrHtmlView
 {
-	/** @var Form Adhoc service form. */
-	public Form $adhoc;
-	/** @var array External services. */
-	public array $external
-		= [
-			'factura',
-			'helpscout',
-			'pricelabs',
-			'ru',
-			'vintagetravel',
-			'vrbo',
-			'xero'
-		];
-	/** @var string Internal name of service. */
-	public string $plugin = '';
-	/** @var string Type of plugin. */
-	public string $type = '';
+    /** @var Form Adhoc service form. */
+    public Form $adhoc;
+    /** @var array External services. */
+    public array $external
+        = [
+            'factura',
+            'helpscout',
+            'pricelabs',
+            'ru',
+            'vintagetravel',
+            'vrbo',
+            'xero',
+        ];
+    /** @var string Internal name of service. */
+    public string $plugin = '';
+    /** @var string Type of plugin. */
+    public string $type = '';
 
-	/**
-	 * Display the view
-	 *
-	 * @param  ?string  $tpl  A template file to load. [optional]
-	 *
+    /**
+     * Display the view
+     *
+     * @param   string  $tpl  A template file to load. [optional]
+     *
      * @return void
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
-	public function display($tpl = null): void
-	{
-		/** @var ServiceModel $model */
+     * @throws Exception
+     * @since  1.0.0
+     */
+    public function display($tpl = null): void
+    {
+        /** @var ServiceModel $model */
         $model = $this->getModel();
         $model->setUseExceptions(true);
-		$this->state = $model->getState();
-		$this->item  = $model->getItem();
-		$this->form  = $model->getForm();
+        $this->state = $model->getState();
+        $this->item  = $model->getItem();
+        $this->form  = $model->getForm();
 
         if (!empty($this->item->plugin)) {
-			$this->plugin = $this->item->plugin;
-			$this->type   = $this->item->type;
+            $this->plugin = $this->item->plugin;
+            $this->type   = $this->item->type;
         } else {
-			$this->plugin = KrMethods::inputString('plugin');
-			$this->type   = $this->plugin == 'ical' ? 'i' : 'g';
-		}
+            $this->plugin = KrMethods::inputString('plugin');
+            $this->type   = $this->plugin == 'ical' ? 'i' : 'g';
+        }
 
         if (in_array($this->plugin, $this->external)) {
-			$source      = $this->plugin . '.xml';
-			$this->adhoc = KrFactory::getAdhocForm($this->plugin, $source, 'library', 'custom');
+            $source      = $this->plugin . '.xml';
+            $this->adhoc = KrFactory::getAdhocForm($this->plugin, $source, 'library', 'custom');
         } else {
-			$source      = 'service_' . $this->plugin . '.xml';
-			$this->adhoc = KrFactory::getAdhocForm($this->plugin, $source, 'administrator', 'custom');
-		}
+            $source      = 'service_' . $this->plugin . '.xml';
+            $this->adhoc = KrFactory::getAdhocForm($this->plugin, $source, 'administrator', 'custom');
+        }
 
-		$this->adhoc->bind($this->item->parameters);
+        $this->adhoc->bind($this->item->parameters);
 
-		$this->checkVersions();
-		$this->checkErrors();
+        $this->checkVersions();
+        $this->checkErrors();
 
-		$form_name = KrMethods::plain('COM_KNOWRES_SERVICE_TITLE');
-		$this->getFormAriaLabel();
-		ToolbarHelper::title($form_name, 'fa-solid fa-exchange-alt knowres');
-		$Toolbar = $this->addFormToolbar(strtolower($this->getName()));
+        $form_name = KrMethods::plain('COM_KNOWRES_SERVICE_TITLE');
+        $this->getFormAriaLabel();
+        ToolbarHelper::title($form_name, 'fa-solid fa-exchange-alt knowres');
+        $Toolbar = $this->addFormToolbar(strtolower($this->getName()));
         if (!empty($this->adhoc->getFieldAttribute('apassword', 'type'))) {
-			$Toolbar = $this->addCustomToolbar($Toolbar);
-		}
+            $Toolbar = $this->addCustomToolbar($Toolbar);
+        }
 
-		parent::display($tpl);
-	}
+        parent::display($tpl);
+    }
 
-	/**
-	 * Add the toolbar.
-	 *
+    /**
+     * Add the toolbar.
+     *
      * @param   Toolbar  $Toolbar  Current toolbar
-	 *
+     *
      * @return Toolbar
-	 * @throws Exception
-	 * @since  4.0.0
-	 */
-	protected function addCustomToolbar(Toolbar $Toolbar): Toolbar
-	{
-		ToolbarHelper::custom('service.lnm', 'refresh', 'refresh', 'COM_KNOWRES_RU_RENEW_LNM', false);
+     * @throws Exception
+     * @since  4.0.0
+     */
+    protected function addCustomToolbar(Toolbar $Toolbar): Toolbar
+    {
+        ToolbarHelper::custom('service.lnm', 'refresh', 'refresh', 'COM_KNOWRES_RU_RENEW_LNM', false);
 
-		return $Toolbar;
-	}
+        return $Toolbar;
+    }
 }
