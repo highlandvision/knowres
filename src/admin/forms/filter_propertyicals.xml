@@ -27,8 +27,8 @@
 			<option value="">JGLOBAL_SORT_BY</option>
 			<option value="a.state ASC">JSTATUS_ASC</option>
 			<option value="a.state DESC">JSTATUS_DESC</option>
-			<option value="a.name ASC">COM_KNOWRES_NAME COM_KNOWRES_ASCENDING</option>
-			<option value="a.name DESC">COM_KNOWRES_NAME COM_KNOWRES_DESCENDING</option>
+            <option value="name ASC">COM_KNOWRES_NAME COM_KNOWRES_ASCENDING</option>
+            <option value="name DESC">COM_KNOWRES_NAME COM_KNOWRES_DESCENDING</option>
 			<option value="service_name ASC">COM_KNOWRES_PROPERTYICALS_SERVICE_ID COM_KNOWRES_ASCENDING</option>
 			<option value="service_name DESC">COM_KNOWRES_PROPERTYICALS_SERVICE_ID COM_KNOWRES_DESCENDING</option>
 			<option value="a.link ASC">COM_KNOWRES_PROPERTYICALS_LINK COM_KNOWRES_ASCENDING</option>

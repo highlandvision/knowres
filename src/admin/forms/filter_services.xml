@@ -40,7 +40,7 @@
 		       type="listorderingkr"
 		       class="js-select-submit-on-change"
 		       statuses="*,0,1,2,-2"
-		       default="a.name ASC"
+               default="name ASC"
 		       label="JGLOBAL_SORT_BY"
 		       description="JGLOBAL_SORT_BY">
 			<option value="">JGLOBAL_SORT_BY</option>
@@ -48,8 +48,8 @@
 			<option value="a.ordering DESC">JGRID_HEADING_ORDERING_DESC</option>
 			<option value="a.state ASC">JSTATUS_ASC</option>
 			<option value="a.state DESC">JSTATUS_DESC</option>
-			<option value="a.name ASC">COM_KNOWRES_NAME COM_KNOWRES_ASCENDING</option>
-			<option value="a.name DESC">COM_KNOWRES_NAME COM_KNOWRES_DESCENDING</option>
+            <option value="name ASC">COM_KNOWRES_NAME COM_KNOWRES_ASCENDING</option>
+            <option value="name DESC">COM_KNOWRES_NAME COM_KNOWRES_DESCENDING</option>
 			<option value="a.currency ASC">COM_KNOWRES_SERVICES_CURRENCY COM_KNOWRES_ASCENDING</option>
 			<option value="a.currency DESC">COM_KNOWRES_SERVICES_CURRENCY COM_KNOWRES_DESCENDING</option>
 			<option value="agency_name ASC">COM_KNOWRES_SERVICES_AGENCY_ID COM_KNOWRES_ASCENDING</option>
