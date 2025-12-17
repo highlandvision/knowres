@@ -4,15 +4,13 @@
 		<field name="currency_from"
 			type="listcurrency"
 			required="true"
-			class="input-mini"
-			size="3"
+               size="10"
 			label="COM_KNOWRES_EXCHANGERATE_CURRENCY_FROM_LBL"
 			description="COM_KNOWRES_EXCHANGERATE_CURRENCY_FROM_DSC"/>
 		<field name="currency_to"
 			type="listcurrency"
 			required="true"
-			class="input-mini"
-			size="3"
+               size="10"
 			label="COM_KNOWRES_EXCHANGERATE_CURRENCY_TO_LBL"
 			description="COM_KNOWRES_EXCHANGERATE_CURRENCY_TO_DSC"/>
 		<field name="rate"

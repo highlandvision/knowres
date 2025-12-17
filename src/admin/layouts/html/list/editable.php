@@ -26,8 +26,7 @@ extract($displayData);
  * @var string     $layout The required layout.
  */
 
-if (empty($column))
-{
+if (empty($column)) {
     $column = 'name';
 }
 
@@ -38,7 +37,7 @@ $value = in_array($column, $dates) ? TickTock::displayDate($item->$column, 'd M 
 <div class="break-word">
     <?php if (!empty($item->checked_out)) : ?>
         <?php echo HTMLHelper::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, $data->name . '.',
-                $data->canCheckin
+            $data->canCheckin,
         ); ?>
     <?php endif; ?>
     <?php if ($data->canEdit) : ?>
@@ -49,8 +48,9 @@ $value = in_array($column, $dates) ? TickTock::displayDate($item->$column, 'd M 
             </a>
         <?php else: ?>
             <?php $link = KrMethods::route('index.php?option=com_knowres&task=' . $data->form_name . '.edit&id='
-                    . $item->id
-            ); ?>
+                . $item->id,
+            );
+            ?>
             <a href="<?php echo $link; ?>" style="word-break:keep-all;">
                 <?php echo $this->escape($value); ?>
             </a>

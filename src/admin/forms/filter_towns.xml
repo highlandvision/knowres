@@ -65,6 +65,8 @@
 			<option value="region_name DESC">COM_KNOWRES_REGION COM_KNOWRES_DESCENDING</option>
 			<option value="a.allow_property ASC">COM_KNOWRES_TOWNS_ALLOW_PROPERTY COM_KNOWRES_ASCENDING</option>
 			<option value="a.allow_property DESC">COM_KNOWRES_TOWNS_ALLOW_PROPERTY COM_KNOWRES_DESCENDING</option>
+            <option value="a.property_licence ASC">COM_KNOWRES_TOWNS_PROPERTY_LICENCE COM_KNOWRES_ASCENDING</option>
+            <option value="a.property_licence DESC">COM_KNOWRES_TOWNS_PROPERTY_LICENCE COM_KNOWRES_DESCENDING</option>
 			<option value="a.id ASC">JGRID_HEADING_ID_ASC</option>
 			<option value="a.id DESC">JGRID_HEADING_ID_DESC</option>
 		</field>

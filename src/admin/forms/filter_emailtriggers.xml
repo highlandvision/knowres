@@ -47,8 +47,7 @@
             <option value="name DESC">COM_KNOWRES_NAME COM_KNOWRES_DESCENDING</option>
 			<option value="email_template_name ASC">COM_KNOWRES_EMAILTRIGGERS_EMAIL_TEMPLATE_ID COM_KNOWRES_ASCENDING
 			</option>
-			<option value="email_template_name DESC">COM_KNOWRES_EMAILTRIGGERS_EMAIL_TEMPLATE_ID
-				COM_KNOWRES_DESCENDING
+            <option value="email_template_name DESC">COM_KNOWRES_EMAILTRIGGERS_EMAIL_TEMPLATE_ID COM_KNOWRES_DESCENDING
 			</option>
 			<option value="a.trigger_actual ASC">COM_KNOWRES_EMAILTRIGGERS_TRIGGER_ACTUAL COM_KNOWRES_ASCENDING</option>
 			<option value="a.trigger_actual DESC">COM_KNOWRES_EMAILTRIGGERS_TRIGGER_ACTUAL COM_KNOWRES_DESCENDING

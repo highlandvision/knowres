@@ -17,19 +17,19 @@ use Joomla\CMS\WebAsset\WebAssetManager;
 /** @var WebAssetManager $wa */
 $wa = $this->document->getWebAssetManager();
 $wa->useScript('table.columns')
-   ->useScript('multiselect');
+    ->useScript('multiselect');
 
-$this->name      = $this->get('name');
+$this->name = $this->get('name');
+/** @noinspection PhpUnhandledExceptionInspection */
 $this->user      = KrMethods::getUser();
 $this->userId    = $this->user->get('id');
 $this->listOrder = $this->escape($this->state->get('list.ordering'));
 $this->listDirn  = $this->escape($this->state->get('list.direction'));
 $this->saveOrder = $this->listOrder == 'a.ordering';
-if ($this->saveOrder)
-{
-	$this->saveOrderingUrl = 'index.php?option=com_knowres&task=' . $this->name . '.saveOrderAjax&tmpl=component&'
-		. Session::getFormToken() . '=1';
-	HTMLHelper::_('draggablelist.draggable');
+if ($this->saveOrder) {
+    $this->saveOrderingUrl = 'index.php?option=com_knowres&task=' . $this->name . '.saveOrderAjax&tmpl=component&'
+        . Session::getFormToken() . '=1';
+    HTMLHelper::_('draggablelist.draggable');
 }
 
 $this->canChange  = $this->user->authorise('core.edit.state', 'com_knowres');
