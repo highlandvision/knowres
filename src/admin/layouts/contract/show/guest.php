@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package    KR
  * @subpackage Admin Layouts
@@ -76,7 +77,8 @@ extract($displayData);
             <?php endif; ?>
             <br>
             <?php if ($guest->mobile) : ?>
-                <?php $mobile = Utility::formatPhoneNumber($guest->mobile, $guest->mobile_country_id); ?>
+                <?php /** @noinspection PhpUnhandledExceptionInspection */
+                $mobile = Utility::formatPhoneNumber($guest->mobile, $guest->mobile_country_id); ?>
                 <i class='fa-solid fa-lg fa-mobile-alt'></i>
                 <a href="tel:<?php echo $mobile; ?>">
                     <?php echo $mobile; ?><br>
@@ -89,7 +91,8 @@ extract($displayData);
                             <?php $t->type = 1; ?>
                         <?php endif; ?>
                         <?php echo KrMethods::plain('COM_KNOWRES_GUEST_PHONE_TYPE' . $t->type); ?>
-                        <?php echo Utility::formatPhoneNumber($t->number, $t->country); ?>
+                        <?php /** @noinspection PhpUnhandledExceptionInspection */
+                        echo Utility::formatPhoneNumber($t->number, $t->country); ?>
                         <br>
                     <?php endif; ?>
                 <?php endforeach; ?>

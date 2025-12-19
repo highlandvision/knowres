@@ -20,7 +20,7 @@ $wa->useScript('keepalive')
    ->useScript('com_knowres.admin-emails');
 ?>
 
-<form action="<?php echo KrMethods::route('index.php?option=com_knowres&layout=edit&id=' . (int) $this->item->id); ?>"
+<form action="<?php echo KrMethods::route('index.php?option=com_knowres&layout=edit&id=' . (int)$this->item->id); ?>"
       aria-label="<?php echo $this->form_aria_label; ?>" class="form-validate" id="emailtrigger-form" method="post"
       name="adminForm">
 
@@ -46,6 +46,7 @@ $wa->useScript('keepalive')
     <?php echo HTMLHelper::_('form.token'); ?>
 </form>
 
+<!--suppress JSVoidFunctionReturnValueUsed -->
 <script>
     window.onload = toggleCron();
 </script>

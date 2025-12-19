@@ -10,7 +10,6 @@
 defined('_JEXEC') or die;
 
 use HighlandVision\KR\Framework\KrMethods;
-
 ?>
 
 <fieldset>
@@ -22,7 +21,7 @@ use HighlandVision\KR\Framework\KrMethods;
     </div>
 
     <?php if ($this->guestForm->getFieldAttribute('firstname', 'type', 'hidden') != 'hidden'
-            || $this->guestForm->getFieldAttribute('surname', 'type', 'hidden') != 'hidden'): ?>
+        || $this->guestForm->getFieldAttribute('surname', 'type', 'hidden') != 'hidden'): ?>
         <div class="row">
             <div class="col-lg-6">
                 <?php echo $this->guestForm->renderField('firstname'); ?>

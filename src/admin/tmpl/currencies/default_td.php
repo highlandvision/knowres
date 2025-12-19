@@ -25,7 +25,7 @@ use Joomla\CMS\HTML\HTMLHelper;
         <?php endif; ?>
         <td class="text-center">
             <?php echo HTMLHelper::_('jgrid.published', $this->item->state, $i, $this->name . '.', $this->canChange,
-                    'cb'
+                'cb',
             ); ?>
         </td>
         <th scope="row">
@@ -38,10 +38,10 @@ use Joomla\CMS\HTML\HTMLHelper;
             <?php echo $this->item->allow_property ? KrMethods::plain('JYES') : KrMethods::plain('JNO'); ?>
         </td>
         <td class="d-none d-md-table-cell">
-            <?php echo implode(", ", $this->item->allow_payment); ?>
+            <?php echo implode(', ', $this->item->allow_payment); ?>
         </td>
         <td class="d-none d-md-table-cell">
-            <?php echo (int) $this->item->id; ?>
+            <?php echo (int)$this->item->id; ?>
         </td>
     </tr>
 <?php endforeach; ?>

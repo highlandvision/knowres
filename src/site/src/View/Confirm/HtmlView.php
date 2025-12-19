@@ -32,134 +32,130 @@ use stdClass;
  */
 class HtmlView extends KrHtmlView\Site
 {
-	/** @var Translations Translations object */
-	public Translations $Translations;
-	/** @var stdClass Contract session data */
-	public stdClass $contractData;
-	/** @var KrSession\Contract Contract session */
-	public KrSession\Contract $contractSession;
-	/** @var Form Guest Form */
-	public Form $guestForm;
-	/** @var string Path to property image */
-	public string $pimage;
-	/** @var object|bool Property item */
-	public object|bool $property;
-	/** @var array Property settings */
-	public array $settings;
+    /** @var Translations Translations object */
+    public Translations $Translations;
+    /** @var stdClass Contract session data */
+    public stdClass $contractData;
+    /** @var KrSession\Contract Contract session */
+    public KrSession\Contract $contractSession;
+    /** @var Form Guest Form */
+    public Form $guestForm;
+    /** @var string Path to property image */
+    public string $pimage;
+    /** @var object|bool Property item */
+    public object|bool $property;
+    /** @var array Property settings */
+    public array $settings;
 
-	/**
-	 * Display the form
-	 *
+    /**
+     * Display the form
+     *
      * @param   null  $tpl  Default template.
-	 *
+     *
      * @return void
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
+     * @throws Exception
+     * @since  1.0.0
+     */
     #[NoReturn]
     public function display($tpl = null): void
-	{
-		$this->contractSession = new KrSession\Contract();
-		$this->contractData    = $this->contractSession->getData();
-		$guestSession          = new KrSession\Guest();
-		$guestData             = $guestSession->getData();
-		$this->checkSession();
+    {
+        $this->contractSession = new KrSession\Contract();
+        $this->contractData    = $this->contractSession->getData();
+        $guestSession          = new KrSession\Guest();
+        $guestData             = $guestSession->getData();
+        $this->checkSession();
 
-		/** @var ContractModel $model */
-        $model                  = KrFactory::getAdminModel('contract');
+        /** @var ContractModel $model */
+        $model = KrFactory::getAdminModel('contract');
         $model->setUseExceptions(true);
-		$this->form = KrFactory::getAdhocForm('confirm', 'confirm.xml', 'site');
+        $this->form = KrFactory::getAdhocForm('confirm', 'confirm.xml', 'site');
 
-		$this->item         = $model->getItem();
-		$this->state        = $model->getState();
-		$this->params       = KrMethods::getParams();
-		$this->Translations = new Translations();
+        $this->item         = $model->getItem();
+        $this->state        = $model->getState();
+        $this->params       = KrMethods::getParams();
+        $this->Translations = new Translations();
 
         if (is_null(KrMethods::getUserState('com_knowres.edit.confirm.data'))) {
-			KrMethods::setUserState('com_knowres.edit.confirm.data', $this->contractData);
-		}
+            KrMethods::setUserState('com_knowres.edit.confirm.data', $this->contractData);
+        }
         if (is_null(KrMethods::getUserState('com_knowres.edit.guest.data'))) {
-			KrMethods::setUserState('com_knowres.edit.guest.data', $guestData);
-		}
+            KrMethods::setUserState('com_knowres.edit.guest.data', $guestData);
+        }
 
-		/** @var GuestModel $guestModel */
-		$guestModel      = KrFactory::getSiteModel('guest');
-		$this->guestForm = $guestModel->getForm([], false, 'guest', $this->contractData->property_id);
-		$this->guestForm->bind($guestData);
-		$this->property         = KrFactory::getAdminModel('property')->getItem($this->contractData->property_id);
-		$this->settings         = KrFactory::getListModel('propertysettings')
-            ->getPropertysettings($this->contractData->property_id);
-		$this->pimage           = Images::getImagePath($this->property->id, 'solo',
-			Images::getPropertyImageName($this->property->id)
-		);
-		$this->meta_title       = KrMethods::plain('COM_KNOWRES_MAKE_A_RESERVATION');
-		$this->meta_description = KrMethods::plain('COM_KNOWRES_PAGE_TITLE');
-		$this->prepareDocument();
+        /** @var GuestModel $guestModel */
+        $guestModel      = KrFactory::getSiteModel('guest');
+        $this->guestForm = $guestModel->getForm([], false, 'guest', $this->contractData->property_id);
+        $this->guestForm->bind($guestData);
+        $this->property         = KrFactory::getAdminItem('property', $this->contractData->property_id);
+        $this->settings         = KrFactory::getListModel('propertysettings')
+                                           ->getPropertysettings($this->contractData->property_id);
+        $this->pimage           = Images::getImagePath($this->property->id, 'solo',
+            Images::getPropertyImageName($this->property->id),
+        );
+        $this->meta_title       = KrMethods::plain('COM_KNOWRES_MAKE_A_RESERVATION');
+        $this->meta_description = KrMethods::plain('COM_KNOWRES_PAGE_TITLE');
+        $this->prepareDocument();
 
-		parent::display($tpl);
-	}
+        parent::display($tpl);
+    }
 
-	/**
-	 * Check the session data is valid
-	 *
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
-	protected function checkSession(): void
-	{
+    /**
+     * Check the session data is valid
+     *
+     * @throws Exception
+     * @since  1.0.0
+     */
+    protected function checkSession(): void
+    {
         if (!$this->contractData->contract_total) {
-			$this->contractSession->resetData();
-			SiteHelper::expiredSession();
-		}
+            $this->contractSession->resetData();
+            SiteHelper::expiredSession();
+        }
 
-		if (!KrFactory::getListModel('contracts')
-            ->isPropertyAvailable(
-                $this->contractData->property_id,
-                $this->contractData->arrival,
-                $this->contractData->departure
-            )) {
-			$this->contractSession->resetData();
-			SiteHelper::expiredSession($jform['property_id']);
-		}
+        if (!KrFactory::getListModel('contracts')->isPropertyAvailable($this->contractData->property_id,
+            $this->contractData->arrival, $this->contractData->departure,
+        )) {
+            $this->contractSession->resetData();
+            SiteHelper::expiredSession($jform['property_id']);
+        }
 
-		if (!$this->contractData->property_id
-			|| !$this->contractData->arrival
-			|| !$this->contractData->departure
-			|| !$this->contractData->guests
-			|| !(float) $this->contractData->room_total)
-		{
-			$this->contractSession->resetData();
-			SiteHelper::expiredSession($this->contractData->property_id);
-		}
-	}
+        if (!$this->contractData->property_id
+            || !$this->contractData->arrival
+            || !$this->contractData->departure
+            || !$this->contractData->guests
+            || !(float)$this->contractData->room_total) {
+            $this->contractSession->resetData();
+            SiteHelper::expiredSession($this->contractData->property_id);
+        }
+    }
 
-	/**
-	 * Prepares the document
-	 *
-	 * @throws Exception
-	 * @since   1.0.0
-	 */
-	protected function prepareDocument(): void
-	{
-		$this->prepareDefaultDocument($this->meta_title, $this->meta_description);
-		$this->setPathway();
-	}
+    /**
+     * Prepares the document
+     *
+     * @throws Exception
+     * @since   1.0.0
+     */
+    protected function prepareDocument(): void
+    {
+        $this->prepareDefaultDocument($this->meta_title, $this->meta_description);
+        $this->setPathway();
+    }
 
-	/**
-	 * Set the pathway for the confirmation
-	 *
-	 * @throws Exception
-	 * @since  3.3.0
-	 */
-	protected function setPathway(): void
-	{
-		$searchSession = new KrSession\Search();
-		$searchData    = $searchSession->getData();
+    /**
+     * Set the pathway for the confirmation
+     *
+     * @throws Exception
+     * @since  3.3.0
+     */
+    protected function setPathway(): void
+    {
+        $searchSession = new KrSession\Search();
+        $searchData    = $searchSession->getData();
 
-		$pathway = self::setPathwayBase();
-		$pathway = self::propertiesPathway($pathway, $searchData);
-		$pathway = self::propertyPathway($pathway, $searchData, $this->property);
+        $pathway = self::setPathwayBase();
+        $pathway = self::propertiesPathway($pathway, $searchData);
+        $pathway = self::propertyPathway($pathway, $searchData, $this->property);
 
-		$pathway->addItem(KrMethods::plain('COM_KNOWRES_MAKE_A_RESERVATION'));
-	}
+        $pathway->addItem(KrMethods::plain('COM_KNOWRES_MAKE_A_RESERVATION'));
+    }
 }

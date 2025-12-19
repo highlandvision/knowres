@@ -29,32 +29,33 @@ defined('_JEXEC') or die;
  */
 class HtmlView extends KrHtmlView
 {
-	/**
-	 * Display the view
-	 *
-	 * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
-	 *
+    /**
+     * Display the view
+     *
+     * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
+     *
      * @return void
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
-	public function display($tpl = null): void
-	{
-		/** @var AgencyModel $model */
-		$model = $this->getModel();
-		$model->setUseExceptions(true);
-		$this->form  = $model->getForm();
-		$this->item  = $model->getItem();
-		$this->state = $model->getState();
+     * @throws Exception
+     * @since  1.0.0
+     */
+    public function display($tpl = null): void
+    {
+        /** @var AgencyModel $model */
+        $model = $this->getModel();
+        $model->setUseExceptions(true);
 
-		$this->checkVersions();
-		$this->checkErrors();
+        $this->form  = $model->getForm();
+        $this->item  = $model->getItem();
+        $this->state = $model->getState();
 
-		$this->form_name = KrMethods::plain('COM_KNOWRES_AGENCY_TITLE');
-		$this->getFormAriaLabel();
-		ToolbarHelper::title($this->form_name, 'user knowres');
-		$this->addFormToolbar(strtolower($this->getName()));
+        $this->checkVersions();
+        $this->checkErrors();
 
-		parent::display($tpl);
-	}
+        $this->form_name = KrMethods::plain('COM_KNOWRES_AGENCY_TITLE');
+        $this->getFormAriaLabel();
+        ToolbarHelper::title($this->form_name, 'user knowres');
+        $this->addFormToolbar(strtolower($model->getName()));
+
+        parent::display($tpl);
+    }
 }

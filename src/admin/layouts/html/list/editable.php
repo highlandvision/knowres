@@ -31,6 +31,8 @@ if (empty($column)) {
 }
 
 $dates = ['valid_from', 'payment_date'];
+/** @noinspection PhpVariableVariableInspection */
+/** @noinspection PhpUnhandledExceptionInspection */
 $value = in_array($column, $dates) ? TickTock::displayDate($item->$column, 'd M Y') : $item->$column;
 ?>
 

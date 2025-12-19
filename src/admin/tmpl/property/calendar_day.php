@@ -1,10 +1,11 @@
 <?php
 /**
- * @package     KR
- * @subpackage  Admin views
  * @copyright   2020 Highland Vision. All rights reserved.
  * @license     See the file "LICENSE.txt" for the full license governing this code.
  * @author      Hazel Wilson <hazel@highlandvision.com>
+ *
+ * @package     KR
+ * @subpackage  Admin views
  */
 
 defined('_JEXEC') or die;
@@ -16,13 +17,11 @@ $bgcolor = 'bookme';
 $past    = false;
 $arrival = false;
 $inarray = false;
-$link    = KrMethods::route(
-        'index.php?option=com_knowres&view=contract&layout=manager&property_id=' . $this->item->id
-        . '&arrival=' . $this->dateYmd, false
+$link    = KrMethods::route('index.php?option=com_knowres&view=contract&layout=manager&property_id=' . $this->item->id
+    . '&arrival=' . $this->dateYmd, false,
 );
 
-if (array_key_exists($this->dateYmd, $this->dates))
-{
+if (array_key_exists($this->dateYmd, $this->dates)) {
     $id        = $this->dates[$this->dateYmd]['id'];
     $confirmed = $this->dates[$this->dateYmd]['confirmed'];
     $black     = $this->dates[$this->dateYmd]['black'];
@@ -30,28 +29,20 @@ if (array_key_exists($this->dateYmd, $this->dates))
     $ical      = $this->dates[$this->dateYmd]['ical'];
     $inarray   = true;
 
-    if ($confirmed)
-    {
+    if ($confirmed) {
         $bgcolor = 'bgbook';
-    }
-    elseif ($black == 1)
-    {
+    } elseif ($black == 1) {
         $bgcolor = 'bgblack';
-    }
-    elseif ($black == 2)
-    {
+    } elseif ($black == 2) {
         $bgcolor = 'bggrey';
-    }
-    else
-    {
+    } else {
         $bgcolor = 'bgprov';
     }
 
     $link = KrMethods::route('index.php?option=com_knowres&task=contract.show&id=' . $id, false);
 }
 
-if ($this->dateYmd < $this->today)
-{
+if ($this->dateYmd < $this->today) {
     $bgcolor .= ' past';
     $past    = true;
 }
@@ -60,14 +51,14 @@ $this->order++;
 
 /** @noinspection PhpUnhandledExceptionInspection */
 $dow = TickTock::displayDate($this->dateYmd, 'w');
-if ($dow == 6 || $dow == 0)
-{
+if ($dow == 6 || $dow == 0) {
     $bgcolor .= ' weekend';
 }
 ?>
 
 <?php if (!$past && !array_key_exists($this->dateYmd, $this->dates)) : ?>
-<td data-order="<?php echo $this->order; ?>" data-date="<?php echo $this->dateYmd; ?>" class="<?php echo $bgcolor; ?>">
+<td data-order="<?php echo $this->order; ?>" data-date="<?php echo $this->dateYmd; ?>"
+    class="<?php echo $bgcolor; ?>">
     <?php else : ?>
 <td data-order="<?php echo $this->order; ?>" class="<?php echo $bgcolor; ?>">
     <?php endif; ?>
@@ -75,10 +66,12 @@ if ($dow == 6 || $dow == 0)
     <?php if (!$inarray) : ?>
         <?php if ($this->allow_block || $this->allow_book) : ?>
             <span>
-			<?php echo TickTock::displayDate($this->dateYmd, 'j'); ?>
-		</span>
+			    <?php /** @noinspection PhpUnhandledExceptionInspection */
+                echo TickTock::displayDate($this->dateYmd, 'j'); ?>
+		    </span>
         <?php else : ?>
-            <?php echo TickTock::displayDate($this->dateYmd, 'j'); ?>
+            <?php /** @noinspection PhpUnhandledExceptionInspection */
+            echo TickTock::displayDate($this->dateYmd, 'j'); ?>
         <?php endif; ?>
     <?php else: ?>
         <?php if ($arrival) : ?>
@@ -91,13 +84,15 @@ if ($dow == 6 || $dow == 0)
 
 		<span class="fa-stack-1x suitcase-text">
 			<span class="arrival modalshow" data-id="<?php echo $id; ?>" data-ical="<?php echo $ical; ?>">
-	            <?php echo TickTock::displayDate($this->dateYmd, 'j'); ?>
+	            <?php /** @noinspection PhpUnhandledExceptionInspection */
+                echo TickTock::displayDate($this->dateYmd, 'j'); ?>
 			</span>
 		</span>
 		</span>
         <?php else: ?>
             <span class="arrival modalshow" data-id="<?php echo $id; ?>" data-ical="<?php echo $ical; ?>">
-			<?php echo TickTock::displayDate($this->dateYmd, 'j'); ?>
+			<?php /** @noinspection PhpUnhandledExceptionInspection */
+            echo TickTock::displayDate($this->dateYmd, 'j'); ?>
 		</span>
         <?php endif; ?>
     <?php endif; ?>

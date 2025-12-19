@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package     KR
  * @subpackage  Admin views
@@ -12,44 +13,43 @@ defined('_JEXEC') or die;
 use HighlandVision\KR\Framework\KrMethods;
 use Joomla\CMS\Factory;
 
-$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+$wa = Factory::getDocument()->getWebAssetManager();
 $wa->useScript('keepalive')
    ->useScript('bootstrap.modal');
-?>
 
-<?php if (!is_countable($this->lines) || (!count($this->lines) &&
-                !count($this->payments) &&
-                !count($this->ownerpayments) &&
-                !count($this->approvals) &&
-                !count($this->reviews))): ?>
-    <div class="main-card" style="padding:1rem;">
-        <div class="row">
-            <h2><?php echo KrMethods::plain('COM_KNOWRES_CONTRACTS_OVERVIEW_EMPTY'); ?></h2>
-        </div>
-    </div>
-    <?php return; ?>
-<?php endif; ?>
-
+if (is_countable($this->lines) && count($this->lines)): ?>
     <div class="accordion">
         <div class="row no-gutters">
             <div class="col">
-                <?php echo $this->loadTemplate('requests'); ?>
-                <?php echo $this->loadTemplate('payments'); ?>
-                <?php echo $this->loadTemplate('option'); ?>
-                <?php echo $this->loadTemplate('new'); ?>
-                <?php echo $this->loadTemplate('duedeposit'); ?>
-                <?php echo $this->loadTemplate('overduebalance'); ?>
-                <?php echo $this->loadTemplate('duebalance'); ?>
-                <?php echo $this->loadTemplate('cancelled'); ?>
-                <?php echo $this->loadTemplate('arrivals'); ?>
-                <?php echo $this->loadTemplate('departures'); ?>
-                <?php echo $this->loadTemplate('ownerpayments'); ?>
-                <?php echo $this->loadTemplate('reviews'); ?>
-                <?php echo $this->loadTemplate('approvals'); ?>
+                <?php
+                echo $this->loadTemplate('requests');
+                echo $this->loadTemplate('payments');
+                echo $this->loadTemplate('option');
+                echo $this->loadTemplate('new');
+                echo $this->loadTemplate('duedeposit');
+                echo $this->loadTemplate('overduebalance');
+                echo $this->loadTemplate('duebalance');
+                echo $this->loadTemplate('cancelled');
+                echo $this->loadTemplate('arrivals');
+                echo $this->loadTemplate('departures');
+                echo $this->loadTemplate('ownerpayments');
+                echo $this->loadTemplate('reviews');
+                echo $this->loadTemplate('approvals');
+                if ($this->registration) {
+                    echo $this->loadTemplate('registrationmodal');
+                }
+                ?>
             </div>
         </div>
     </div>
 
-<?php if ($this->registration) : ?>
-    <?php echo $this->loadTemplate('registrationmodal'); ?>
+    <?php return; ?>
 <?php endif; ?>
+
+<div class="main-card" style="padding:1rem;">
+    <div class="row">
+        <h2>
+            <?php echo KrMethods::plain('COM_KNOWRES_CONTRACTS_OVERVIEW_EMPTY'); ?>
+        </h2>
+    </div>
+</div>

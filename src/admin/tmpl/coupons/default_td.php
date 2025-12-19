@@ -30,24 +30,22 @@ $currencies = KrFactory::getListModel('propertysettings')->getOneSetting('curren
         <?php endif; ?>
         <td class="text-center">
             <?php echo HTMLHelper::_('jgrid.published', $this->item->state, $i, $this->name . '.', $this->canChange,
-                    'cb'
+                'cb',
             ); ?>
         </td>
         <th scope="row">
             <?php echo KrMethods::render('html.list.editable',
-                    ['data' => $this, 'item' => $this->item, 'i' => $i, 'column' => 'coupon_code']
+                ['data' => $this, 'item' => $this->item, 'i' => $i, 'column' => 'coupon_code'],
             ); ?>
         </th>
-        <?php if (!$this->property_id): ?>
-            <td>
-                <?php echo $this->item->property_name; ?>
-            </td>
-        <?php endif; ?>
         <td class="d-none d-md-table-cell">
-            <?php echo TickTock::displayDate($this->item->valid_from); ?>
+            <?php
+            /** @noinspection PhpUnhandledExceptionInspection */
+            echo TickTock::displayDate($this->item->valid_from); ?>
         </td>
         <td class="d-none d-md-table-cell">
-            <?php echo TickTock::displayDate($this->item->valid_to); ?>
+            <?php /** @noinspection PhpUnhandledExceptionInspection */
+            echo TickTock::displayDate($this->item->valid_to); ?>
         </td>
         <td class="d-none d-md-table-cell">
             <?php if ($this->item->is_percentage): ?>
@@ -60,7 +58,7 @@ $currencies = KrFactory::getListModel('propertysettings')->getOneSetting('curren
             <?php endif; ?>
         </td>
         <td class="d-none d-md-table-cell">
-            <?php echo (int) $this->item->id; ?>
+            <?php echo (int)$this->item->id; ?>
         </td>
     </tr>
 <?php endforeach; ?>

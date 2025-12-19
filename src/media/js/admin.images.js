@@ -7,16 +7,23 @@
  */
 
 document.addEventListener('DOMContentLoaded', function () {
-	"use strict";
+    // "use strict";
+    //
+    // let previewNode = document.querySelector('#template');
+    // previewNode.id = '';
+    // let parent = previewNode.parentNode;
+    // let previewTemplate = parent.innerHTML;
+    // previewNode.parentNode.removeChild(previewNode);
+    // // noinspection TypeScriptUMDGlobal
+    // let Dropzone = previewNode.parentNode;
+    // Dropzone.autoDiscover = true;
 
-	let previewNode = document.querySelector('#template');
-	previewNode.id = '';
-	let parent = previewNode.parentNode;
-	let previewTemplate = parent.innerHTML;
-	previewNode.parentNode.removeChild(previewNode);
-	// noinspection TypeScriptUMDGlobal
-	let Dropzone = previewNode.parentNode;
-	Dropzone.autoDiscover = true;
+    let previewNode = document.querySelector('#template');
+    previewNode.id = '';
+    let previewTemplate = previewNode.parentNode.innerHTML;
+    previewNode.parentNode.removeChild(previewNode);
+    // noinspection TypeScriptUMDGlobal
+    Dropzone.autoDiscover = true;
 
 	const formdata = document.getElementById('dropzonedata');
 	// noinspection TypeScriptUMDGlobal

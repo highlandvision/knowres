@@ -13,8 +13,7 @@ use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use Joomla\CMS\HTML\HTMLHelper;
 
-if ($this->access_level == 10)
-{
+if ($this->access_level == 10) {
     $edit             = $this->params->get('property_edit', false);
     $this->canChange  = $edit;
     $this->canCheckin = $edit;
@@ -35,15 +34,15 @@ if ($this->access_level == 10)
         </td>
         <td class="text-center">
             <?php echo HTMLHelper::_('jgrid.published', $this->item->state, $i, $this->name . '.', $this->canChange,
-                    'cb'
+                'cb',
             ); ?>
         </td>
         <th scope="row">
             <?php echo KrMethods::render('html.list.editable',
-                    ['data' => $this, 'item' => $this->item, 'i' => $i, 'column' => 'property_name']
+                ['data' => $this, 'item' => $this->item, 'i' => $i, 'column' => 'property_name'],
             ); ?>
         </th>
-        <td>
+        <td style="padding-top:0.8rem;">
             <div class="btn-toolbar kr-property-action" style="margin:0;">
                 <div class="btn-group btn-group-sm">
                     <?php
@@ -69,8 +68,8 @@ if ($this->access_level == 10)
                     $data['layout']  = 'calendar';
                     echo KrMethods::render('html.list.propertybar', $data);
 
-                    if ($this->allow_block)
-                    {
+                    if ($this->allow_block) {
+                        /** @noinspection PhpUnhandledExceptionInspection */
                         KrMethods::setUserState('com_knowres.gobackto', 'view=properties');
                         $data            = [];
                         $data['label']   = KrMethods::plain('COM_KNOWRES_CONTRACT_BLOCK_TITLE_LONG');
@@ -83,8 +82,7 @@ if ($this->access_level == 10)
                         $data['layout']  = 'block';
                         echo KrMethods::render('html.list.propertybar', $data);
                     }
-                    if ($this->allow_book)
-                    {
+                    if ($this->allow_book) {
                         $data            = [];
                         $data['label']   = KrMethods::plain('COM_KNOWRES_CONTRACT_MANAGER_TITLE_LONG');
                         $data['icon']    = 'fa-suitcase';
@@ -96,8 +94,7 @@ if ($this->access_level == 10)
                         $data['layout']  = 'manager';
                         echo KrMethods::render('html.list.propertybar', $data);
                     }
-                    if ($this->allow_book && $this->agent)
-                    {
+                    if ($this->allow_book && $this->agent) {
                         $data            = [];
                         $data['label']   = KrMethods::plain('COM_KNOWRES_CONTRACT_AGENT_TITLE_LONG');
                         $data['icon']    = 'fa-headphones';
@@ -120,10 +117,11 @@ if ($this->access_level == 10)
             <?php echo $this->item->region_name; ?>
         </td>
         <td class="d-none d-md-table-cell">
-            <?php echo KrFactory::getAdminModel('property')::bookingTypeText($this->item->booking_type); ?>
+            <?php /** @noinspection PhpEchoOpenTagInspection */
+            echo KrFactory::getAdminModel('property')::bookingTypeText($this->item->booking_type); ?>
         </td>
         <td class="d-none d-md-table-cell">
-            <?php echo (int) $this->item->id; ?>
+            <?php echo (int)$this->item->id; ?>
         </td>
     </tr>
 <?php endforeach; ?>

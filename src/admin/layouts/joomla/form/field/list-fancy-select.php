@@ -46,7 +46,7 @@ extract($displayData);
  * @var   array        $dataAttributes Miscellaneous data attribute for eg, data-*
  */
 
-$html = array();
+$html = [];
 $attr = '';
 
 // Initialize the field attributes.
@@ -57,47 +57,37 @@ $attr .= $onchange ? ' onchange="' . $onchange . '"' : '';
 $attr .= $dataAttribute;
 
 // To avoid user's confusion, readonly="readonly" should imply disabled="disabled".
-if ($readonly || $disabled)
-{
+if ($readonly || $disabled) {
     $attr .= ' disabled="disabled"';
 }
 
 $attr2 = !empty($class) ? ' class="' . $class . '"' : '';
-$attr2 .= ' placeholder="' . $this->escape($hint ?: KrMethods::plain('JGLOBAL_TYPE_OR_SELECT_SOME_OPTIONS')) . '" ';
+//$attr2 .= ' placeholder="' . $this->escape($hint ?: KrMethods::plain('JGLOBAL_TYPE_OR_SELECT_SOME_OPTIONS')) . '" ';
 $attr2 .= ' search-placeholder="' . $this->escape(KrMethods::plain('COM_KNOWRES_SEARCH_PLUS')) . '" ';
 
-if ($required)
-{
+if ($required) {
     $attr  .= ' required class="required"';
     $attr2 .= ' required';
 }
 
 // Create a read-only list (no name) with hidden input(s) to store the value(s).
-if ($readonly)
-{
+if ($readonly) {
     $html[] = HTMLHelper::_('select.genericlist', $options, '', trim($attr), 'value', 'text', $value, $id);
 
     // E.g. form field type tag sends $this->value as array
-    if ($multiple && is_array($value))
-    {
-        if (!count($value))
-        {
+    if ($multiple && is_array($value)) {
+        if (!count($value)) {
             $value[] = '';
         }
-        foreach ($value as $val)
-        {
+        foreach ($value as $val) {
             $html[] = '<input type="hidden" name="' . $name . '" value="' . htmlspecialchars($val, ENT_COMPAT, 'UTF-8')
-                    . '">';
-        }
-    }
-    else
-    {
-        $html[] = '<input type="hidden" name="' . $name . '" value="' . htmlspecialchars($value, ENT_COMPAT, 'UTF-8')
                 . '">';
+        }
+    } else {
+        $html[] = '<input type="hidden" name="' . $name . '" value="' . htmlspecialchars($value, ENT_COMPAT, 'UTF-8')
+            . '">';
     }
-}
-else
-{
+} else {
     $html[] = HTMLHelper::_('select.genericlist', $options, $name, trim($attr), 'value', 'text', $value, $id);
 }
 

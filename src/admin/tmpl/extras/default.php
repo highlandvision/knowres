@@ -17,16 +17,20 @@ include(JPATH_ADMINISTRATOR . '/components/com_knowres/layouts/html/list/include
 ?>
 
 <?php include(JPATH_ADMINISTRATOR . '/components/com_knowres/layouts/html/list/includes/list-form-start.php'); ?>
-	<table class="table" id="kr-list">
-		<?php echo KrMethods::render('html.list.caption', ['name' => $this->name]); ?>
-		<thead>
-		<?php echo $this->loadTemplate('th'); ?>
-		</thead>
+    <table class="table" id="kr-list">
+        <?php echo KrMethods::render('html.list.caption', ['name' => $this->name]); ?>
+        <thead>
+        <?php
+        /** @noinspection PhpUnhandledExceptionInspection */
+        echo $this->loadTemplate('th'); ?>
+        </thead>
 
-		<tbody <?php if ($this->saveOrder): ?> class="js-draggable" data-url="<?php echo $this->saveOrderingUrl; ?>"
-			data-direction="<?php echo strtolower($this->listDirn); ?>"
-		<?php endif; ?>>
-		<?php echo $this->loadTemplate('td'); ?>
-		</tbody>
-	</table>
+        <tbody <?php if ($this->saveOrder): ?> class="js-draggable" data-url="<?php echo $this->saveOrderingUrl; ?>"
+            data-direction="<?php echo strtolower($this->listDirn); ?>"
+        <?php endif; ?>>
+        <?php
+        /** @noinspection PhpUnhandledExceptionInspection */
+        echo $this->loadTemplate('td'); ?>
+        </tbody>
+    </table>
 <?php include(JPATH_ADMINISTRATOR . '/components/com_knowres/layouts/html/list/includes/list-form-end.php'); ?>

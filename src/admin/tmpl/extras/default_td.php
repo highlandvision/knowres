@@ -26,11 +26,13 @@ use Joomla\CMS\HTML\HTMLHelper;
         <?php endif; ?>
         <td class="text-center">
             <?php echo HTMLHelper::_('jgrid.published', $this->item->state, $i, $this->name . '.', $this->canChange,
-                    'cb'
+                'cb',
             ); ?>
         </td>
         <th scope="row">
-            <?php echo KrMethods::render('html.list.editable', ['data' => $this, 'item' => $this->item, 'i' => $i]); ?>
+            <?php echo KrMethods::render('html.list.editable',
+                ['data' => $this, 'item' => $this->item, 'i' => $i, 'column' => 'name'],
+            ); ?>
         </th>
         <td class="text-center d-none d-md-table-cell">
             <?php echo $this->item->mandatory ? KrMethods::plain('JYES') : KrMethods::plain('JNO'); ?>
@@ -41,13 +43,18 @@ use Joomla\CMS\HTML\HTMLHelper;
             </td>
         <?php endif; ?>
         <td class="d-none d-md-table-cell">
-            <?php echo KrFactory::getAdminModel('extra')->displayExtraModel($this->item->model); ?>
+            <?php
+            /**  @var HighlandVision\Component\Knowres\Administrator\Model\Extra $model */
+            /** @noinspection PhpUnhandledExceptionInspection */
+            $model = KrFactory::getAdminModel('extra');
+            echo $model->displayExtraModel($this->item->model);
+            ?>
         </td>
         <td class="text-center d-none d-md-table-cell">
             <?php echo $this->item->max_quantity; ?>
         </td>
         <td class="d-none d-md-table-cell">
-            <?php echo (int) $this->item->id; ?>
+            <?php echo (int)$this->item->id; ?>
         </td>
     </tr>
 <?php endforeach; ?>

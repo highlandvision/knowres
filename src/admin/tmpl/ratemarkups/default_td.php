@@ -25,26 +25,23 @@ use Joomla\CMS\HTML\HTMLHelper;
             </td>
         <?php endif; ?>
         <td class="text-center">
-            <?php echo HTMLHelper::_('jgrid.published', $this->item->state, $i, $this->name . '.', $this->canChange,
-                    'cb'
+            <?php echo HTMLHelper::_('jgrid.published', $this->item->state, $i, $name . '.', $this->canChange,
+                'cb',
             ); ?>
         </td>
-        <th scope="row">
-            <?php echo KrMethods::render('html.list.editable',
-                    ['data' => $this, 'item' => $this->item, 'i' => $i, 'column' => 'property_name']
-            ); ?>
+        <th class="d-none d-md-table-cell">
+            <?php /** @noinspection PhpUnhandledExceptionInspection */
+            echo TickTock::displayDate($this->item->valid_from, 'd M Y'); ?>
         </th>
         <td class="d-none d-md-table-cell">
-            <?php echo TickTock::displayDate($this->item->valid_from, 'd M Y'); ?>
-        </td>
-        <td class="d-none d-md-table-cell">
-            <?php echo TickTock::displayDate($this->item->valid_to, 'd M Y'); ?>
+            <?php /** @noinspection PhpUnhandledExceptionInspection */
+            echo TickTock::displayDate($this->item->valid_to, 'd M Y'); ?>
         </td>
         <td class="d-none d-md-table-cell">
             <?php echo $this->item->net_markup . '%'; ?>
         </td>
         <td class="d-none d-md-table-cell">
-            <?php echo (int) $this->item->id; ?>
+            <?php echo (int)$this->item->id; ?>
         </td>
     </tr>
 <?php endforeach; ?>

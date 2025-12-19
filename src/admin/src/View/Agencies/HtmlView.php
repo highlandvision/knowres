@@ -28,35 +28,36 @@ defined('_JEXEC') or die;
  */
 class HtmlView extends KrHtmlView\Contract
 {
-	/**
-	 * Display the view
-	 *
-	 * @param  ?string  $tpl  A template file to load. [optional]
-	 *
+    /**
+     * Display the view
+     *
+     * @param   string  $tpl  A template file to load. [optional]
+     *
      * @return void
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
-	public function display($tpl = null): void
-	{
-		/** @var AgenciesModel $model */
-		$model = $this->getModel();
-		$model->setUseExceptions(true);
-		$this->state         = $model->getState();
-		$this->items         = $model->getItems();
-		$this->pagination    = $model->getPagination();
-		$this->filterForm    = $model->getFilterForm();
-		$this->activeFilters = $model->getActiveFilters();
-		$this->ordering      = in_array('ordering', $model->getFilterFields());
-		$this->form_name     = 'agency';
+     * @throws Exception
+     * @since  1.0.0
+     */
+    public function display($tpl = null): void
+    {
+        /** @var AgenciesModel $model */
+        $model = $this->getModel();
+        $model->setUseExceptions(true);
 
-		if (!$this->checkEmpty())
-		{
-			$this->checkErrors();
-			ToolbarHelper::title(KrMethods::plain('COM_KNOWRES_AGENCIES_TITLE'), 'tasks knowres');
-			$this->addListToolbar($this->get('name'));
+        $this->state         = $model->getState();
+        $this->items         = $model->getItems();
+        $this->pagination    = $model->getPagination();
+        $this->filterForm    = $model->getFilterForm();
+        $this->activeFilters = $model->getActiveFilters();
+        $this->ordering      = in_array('ordering', $model->getFilterFields());
+        $this->form_name     = 'agency';
 
-			parent::display($tpl);
-		}
-	}
+        $this->checkErrors();
+        ToolbarHelper::title(KrMethods::plain('COM_KNOWRES_AGENCIES_TITLE'), 'tasks knowres');
+        $this->addListToolbar($model->getName());
+        if ($model->getIsEmptyState()) {
+            $this->setLayout('emptystate');
+        }
+
+        parent::display($tpl);
+    }
 }

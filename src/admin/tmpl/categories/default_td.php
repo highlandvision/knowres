@@ -25,14 +25,14 @@ use Joomla\CMS\HTML\HTMLHelper;
         <?php endif; ?>
         <td class="text-center">
             <?php echo HTMLHelper::_('jgrid.published', $this->item->state, $i, $this->name . '.', $this->canChange,
-                    'cb'
+                'cb',
             ); ?>
         </td>
         <th scope="row">
             <?php echo KrMethods::render('html.list.editable', ['data' => $this, 'item' => $this->item, 'i' => $i]); ?>
         </th>
         <td class="d-none d-md-table-cell">
-            <?php echo (int) $this->item->id; ?>
+            <?php echo (int)$this->item->id; ?>
         </td>
     </tr>
 <?php endforeach; ?>

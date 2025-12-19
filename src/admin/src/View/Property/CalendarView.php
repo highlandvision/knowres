@@ -9,8 +9,6 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\View\Property;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
@@ -20,6 +18,10 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
+
 /**
  * Calendar view
  *
@@ -27,99 +29,95 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
  */
 class CalendarView extends KrHtmlView\Property
 {
-	/* $var bool True to add block */
-	public bool $allow_block = false;
-	/* $var bool True to add booking */
-	public bool $allow_book = false;
-	/* $var array Dates for calendar */
-	protected string $dateYmd = '';
-	/* $var int #months to display */
-	protected array $dates = [];
-	/* $var string Current calendar date */
-	protected int $monthsToShow = 18;
-	/* $var int Ordering? */
-	protected int $order = 0;
-	/* $var string Start date */
-	protected string $startDate = '';
-	/* $var string Start month */
-	protected string $startMonth = '';
+    /* $var bool True to add block */
+    public bool $allow_block = false;
+    /* $var bool True to add booking */
+    public bool $allow_book = false;
+    /* $var array Dates for calendar */
+    protected string $dateYmd = '';
+    /* $var int #months to display */
+    protected array $dates = [];
+    /* $var string Current calendar date */
+    protected int $monthsToShow = 18;
+    /* $var int Ordering? */
+    protected int $order = 0;
+    /* $var string Start date */
+    protected string $startDate = '';
+    /* $var string Start month */
+    protected string $startMonth = '';
 
-	/**
-	 * Display the view
-	 *
-	 * @param  ?string  $tpl  A template file to load. [optional]
-	 *
-	 * @return void
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
-	public function display($tpl = null): void
-	{
-		$this->setLayout('calendar');
-		$this->getUserSessionData();
+    /**
+     * Display the view
+     *
+     * @param   string  $tpl  A template file to load. [optional]
+     *
+     * @return void
+     * @throws Exception
+     * @since  1.0.0
+     */
+    public function display($tpl = null): void
+    {
+        $this->setLayout('calendar');
+        $this->getUserSessionData();
 
-		$this->params = KrMethods::getParams();
-		$booked       = KrFactory::getListModel('contracts')
-		                         ->getBookedDates($this->item->id, TickTock::getDate(), false, 0, false);
-		$this->dates  = $this->prepareData($booked);
-		if ($this->allow_block || $this->allow_book)
-		{
-			$this->form = KrFactory::getAdhocForm('calendar', 'calendar.xml');
-		}
+        $this->params = KrMethods::getParams();
+        $booked       = KrFactory::getListModel('contracts')
+                                 ->getBookedDates($this->item->id, TickTock::getDate(), false, 0, false);
+        $this->dates  = $this->prepareData($booked);
+        if ($this->allow_block || $this->allow_book) {
+            $this->form = KrFactory::getAdhocForm('calendar', 'calendar.xml');
+        }
 
-		$this->checkErrors();
+        $this->checkErrors();
 
-		Factory::getApplication()->input->set('hidemainmenu', true);
-		$title = KrMethods::plain('COM_KNOWRES_TITLE_PROPERTY_CALENDAR') . ' - ' . $this->property_name;
-		ToolbarHelper::title($title, 'fa-solid fa-calendar knowres');
-		$Toolbar = Toolbar::getInstance();
-		$this->addToolbar($Toolbar, 'calendar');
+        Factory::getApplication()->input->set('hidemainmenu', true);
+        $title = KrMethods::plain('COM_KNOWRES_TITLE_PROPERTY_CALENDAR') . ' - ' . $this->property_name;
+        ToolbarHelper::title($title, 'fa-solid fa-calendar knowres');
+        $Toolbar = Toolbar::getInstance();
+        $this->addToolbar($Toolbar, 'calendar');
 
-		KrMethods::setUserState('com_knowres.gobackto', 'task=property.calendar&property_id=' . $this->property_id);
+        KrMethods::setUserState('com_knowres.gobackto', 'task=property.calendar&property_id=' . $this->property_id);
 
-		$this->startMonth = TickTock::getDate('now', 'Y-m');
-		$this->startDate  = $this->startMonth . '-01';
-		$this->today      = TickTock::getDate();
+        $this->startMonth = TickTock::getDate('now', 'Y-m');
+        $this->startDate  = $this->startMonth . '-01';
+        $this->today      = TickTock::getDate();
 
-		parent::display($tpl);
-	}
+        parent::display($tpl);
+    }
 
-	/**
-	 * Prepare data for calendar
-	 *
-	 * @param   array  $booked  Booked dates
-	 *
-	 * @return array Formatted array of date blocks
-	 * @since 3.3.0
-	 */
-	protected function prepareData(array $booked): array
-	{
-		$dates = [];
+    /**
+     * Prepare data for calendar
+     *
+     * @param   array  $booked  Booked dates
+     *
+     * @return array Formatted array of date blocks
+     * @since 3.3.0
+     */
+    protected function prepareData(array $booked): array
+    {
+        $dates = [];
 
-		foreach ($booked as $b)
-		{
-			$confirmed = $b->booking_status > 9;
-			$black     = $b->black_booking;
+        foreach ($booked as $b) {
+            $confirmed = $b->booking_status > 9;
+            $black     = $b->black_booking;
 
-			$bdates = TickTock::allDatesBetween($b->arrival, $b->departure, true);
-			foreach ($bdates as $d)
-			{
-				$arrival = false;
-				if ($d == $b->arrival)
-				{
-					$arrival = true;
-				}
+            $bdates = TickTock::allDatesBetween($b->arrival, $b->departure, true);
+            foreach ($bdates as $d) {
+                $arrival = false;
+                if ($d == $b->arrival) {
+                    $arrival = true;
+                }
 
-				$dates[$d] = [
-					'id'        => $b->id,
-					'confirmed' => $confirmed,
-					'black'     => $black,
-					'arrival'   => $arrival,
-					'ical'      => $b->black_booking == 2 ? 1 : 0
-				];
-			}
-		}
+                $dates[$d] = [
+                    'id'        => $b->id,
+                    'confirmed' => $confirmed,
+                    'black'     => $black,
+                    'arrival'   => $arrival,
+                    'ical'      => $b->black_booking == 2 ? 1 : 0,
+                ];
+            }
+        }
 
-		return $dates;
-	}
+        return $dates;
+    }
 }

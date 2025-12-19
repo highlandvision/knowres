@@ -30,24 +30,25 @@ $currencies = KrFactory::getListModel('propertysettings')->getOneSetting('curren
         <?php endif; ?>
         <td class="text-center">
             <?php echo HTMLHelper::_('jgrid.published', $this->item->state, $i, $this->name . '.', $this->canChange,
-                    'cb'
+                'cb',
             ); ?>
         </td>
         <th scope="row">
             <?php echo KrMethods::render('html.list.editable',
-                    ['data' => $this, 'item' => $this->item, 'i' => $i, 'column' => 'name']
+                ['data' => $this, 'item' => $this->item, 'i' => $i, 'column' => 'name'],
             ); ?>
         </th>
-        <?php if (!$this->property_id): ?>
-            <td class="d-none d-md-table-cell">
-                <?php echo $this->item->property_name; ?>
-            </td>
-        <?php endif; ?>
         <td class="d-none d-md-table-cell">
-            <?php echo TickTock::displayDate($this->item->valid_from, 'd M Y'); ?>
+            <?php
+            /** @noinspection PhpUnhandledExceptionInspection */
+            echo TickTock::displayDate($this->item->valid_from, 'd M Y');
+            ?>
         </td>
         <td class="d-none d-md-table-cell">
-            <?php echo TickTock::displayDate($this->item->valid_to, 'd M Y'); ?>
+            <?php
+            /** @noinspection PhpUnhandledExceptionInspection */
+            echo TickTock::displayDate($this->item->valid_to, 'd M Y');
+            ?>
         </td>
         <td class="d-none d-md-table-cell">
             <?php if ($this->item->is_pc): ?>
@@ -60,14 +61,17 @@ $currencies = KrFactory::getListModel('propertysettings')->getOneSetting('curren
         <td class="d-none d-md-table-cell">
             <?php if (!$this->item->model): ?>
                 <?php echo KrMethods::plain('COM_KNOWRES_DISCOUNT_DAY_RANGE') . ' ' . $this->item->param1 . ' - '
-                        . $this->item->param2 ?>
+                    . $this->item->param2 ?>
             <?php else: ?>
-                <?php echo KrMethods::plain('COM_KNOWRES_DISCOUNT_DATE_RANGE') . ' '
-                        . TickTock::displayDate($this->item->param1) . ' - ' . TickTock::displayDate($this->item->param2) ?>
+                <?php
+                /** @noinspection PhpUnhandledExceptionInspection */
+                echo KrMethods::plain('COM_KNOWRES_DISCOUNT_DATE_RANGE') . ' '
+                    . TickTock::displayDate($this->item->param1) . ' - ' . TickTock::displayDate($this->item->param2)
+                ?>
             <?php endif; ?>
         </td>
         <td class="d-none d-md-table-cell">
-            <?php echo (int) $this->item->id; ?>
+            <?php echo (int)$this->item->id; ?>
         </td>
     </tr>
 <?php endforeach; ?>

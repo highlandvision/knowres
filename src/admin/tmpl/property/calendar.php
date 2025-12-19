@@ -33,11 +33,12 @@ $wa->useScript('keepalive')
             </h4>
             <br>
             <div id="kr-property-calendar" data-property_id="<?php echo $this->item->id; ?>">
-                <?php for ($m = 0; $m <= $this->monthsToShow; $m++) : ?>
-                    <?php echo $this->loadTemplate('month'); ?>
-                    <?php $this->startDate = TickTock::modifyMonths($this->startDate); ?>
-                    <?php $this->startMonth = TickTock::getDate($this->startDate, 'Y-m'); ?>
-                <?php endfor; ?>
+                <?php for ($m = 0; $m <= $this->monthsToShow; $m++) :
+                    /** @noinspection PhpUnhandledExceptionInspection */
+                    echo $this->loadTemplate('month');
+                    $this->startDate  = TickTock::modifyMonths($this->startDate);
+                    $this->startMonth = TickTock::getDate($this->startDate, 'Y-m');
+                endfor; ?>
             </div>
         </div>
     </div>

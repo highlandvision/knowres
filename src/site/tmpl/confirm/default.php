@@ -32,11 +32,14 @@ $action = KrMethods::route('index.php?option=com_knowres&view=confirm&layout=pay
         <div class="small-12 text-center medium-text-left cell">
             <?php if ($this->property->booking_type == 2) : ?>
                 <h1>
-                    <?php echo KrMethods::sprintf('COM_KNOWRES_CONFIRM_BOOK_YOUR_RESERVATION', $this->property->property_name); ?>
+                    <?php echo KrMethods::sprintf('COM_KNOWRES_CONFIRM_BOOK_YOUR_RESERVATION',
+                        $this->property->property_name,
+                    ); ?>
                 </h1>
             <?php else: ?>
                 <h1>
-                    <?php echo KrMethods::sprintf('COM_KNOWRES_CONFIRM_REQUEST_YOUR_RESERVATION', $this->property->property_name
+                    <?php echo KrMethods::sprintf('COM_KNOWRES_CONFIRM_REQUEST_YOUR_RESERVATION',
+                        $this->property->property_name,
                     ); ?>
                 </h1>
             <?php endif; ?>
@@ -52,7 +55,7 @@ $action = KrMethods::route('index.php?option=com_knowres&view=confirm&layout=pay
             </div>
             <div class="medium-4 cell show-for-medium">
                 <?php echo HTMLHelper::_('image', $this->pimage, $this->property->property_name,
-                        ['width' => $this->params->get('max_property_width', 100)]
+                    ['width' => $this->params->get('max_property_width', 100)],
                 ); ?>
                 <br><br>
                 <?php echo KrMethods::loadInternal('{loadposition help}'); ?>

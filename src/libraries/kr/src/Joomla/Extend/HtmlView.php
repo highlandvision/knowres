@@ -40,536 +40,566 @@ use function is_null;
  */
 class HtmlView extends \Joomla\CMS\MVC\View\HtmlView
 {
-	/** @var int User access level */
-	public int $access_level = 0;
-	/** @var ?array The active search filters */
-	public ?array $activeFilters = [];
-	/** @var object Allowed actions */
-	public object $canDo;
-	/** @var ?Form Search tools form */
-	public ?Form $filterForm;
-	/** @var Form|bool Form model */
-	public Form|bool $form;
-	/** @var string Form aria labeL */
-	public string $form_aria_label = '';
-	/** @var string Form name */
-	public string $form_name = '';
-	/** @var mixed Item object */
-	public mixed $item;
-	/** @var ?array Array of items */
-	public ?array $items;
-	/** @var string List name */
-	public string $name = '';
-	/** @var Pagination Pagination object */
-	public Pagination $pagination;
-	/** @var Registry KR params */
-	public Registry $params;
-	/** @var string User properties in csv string of IDs */
-	public string $properties = '';
-	/** @var int ID of property */
-	public int $property_id = 0;
-	/** @var string Property name */
-	public string $property_name = '';
-	/** @var bool Show state columns */
-	public bool $show_state;
-	/** @var mixed The model state seems to be mixed */
-	public mixed $state;
-	/** @var string Today's date as yy-mm-dd */
-	public mixed $today;
-	/** @var bool True if ordering required. */
-	protected bool $ordering = true;
+    /** @var int User access level */
+    public int $access_level = 0;
+    /** @var ?array The active search filters */
+    public ?array $activeFilters = [];
+    /** @var object Allowed actions */
+    public object $canDo;
+    /** @var Document Joomla document class */
+    public $document;
+    /** @var ?Form Search tools form */
+    public ?Form $filterForm;
+    /** @var Form|bool Form model */
+    public Form|bool $form;
+    /** @var string Form aria labeL */
+    public string $form_aria_label = '';
+    /** @var string Form name */
+    public string $form_name = '';
+    /** @var mixed Item object */
+    public mixed $item;
+    /** @var ?array Array of items */
+    public ?array $items;
+    /** @var string List name */
+    public string $name = '';
+    /** @var Pagination Pagination object */
+    public Pagination $pagination;
+    /** @var Registry KR params */
+    public Registry $params;
+    /** @var string User properties in csv string of IDs */
+    public string $properties = '';
+    /** @var int ID of property */
+    public int $property_id = 0;
+    /** @var string Property name */
+    public string $property_name = '';
+    /** @var bool Show state columns */
+    public bool $show_state;
+    /** @var mixed The model state seems to be mixed */
+    public mixed $state;
+    /** @var string Today's date as yy-mm-dd */
+    public mixed $today;
+    /** @var bool True if ordering required. */
+    protected bool $ordering = true;
 
-	/**
-	 * Constructor
-	 *
-	 * @param   array  $config  A named configuration array for object construction.
-	 *                          name: the name (optional) of the view (defaults to the view class name suffix).
-	 *                          charset: the character set to use for display
-	 *                          escape: the name (optional) of the function to use for escaping strings
-	 *                          base_path: the parent path (optional) of the view directory (defaults to the component folder)
-	 *                          template_plath: the path (optional) of the layout directory (defaults to
-	 *                          base_path + /views/ + view name
-	 *                          helper_path: the path (optional) of the helper files (defaults to base_path + /helpers/)
-	 *                          layout: the layout (optional) to use to display the view
-	 *
-	 * @throws Exception
-	 * @since  4.0.0
-	 */
+    /**
+     * Constructor
+     *
+     * @param   array  $config  A named configuration array for object construction.
+     *                          name: the name (optional) of the view (defaults to the view class name suffix).
+     *                          charset: the character set to use for display
+     *                          escape: the name (optional) of the function to use for escaping strings
+     *                          base_path: the parent path (optional) of the view directory (defaults to the component folder)
+     *                          template_plath: the path (optional) of the layout directory (defaults to
+     *                          base_path + /views/ + view name
+     *                          helper_path: the path (optional) of the helper files (defaults to base_path + /helpers/)
+     *                          layout: the layout (optional) to use to display the view
+     *
+     * @throws Exception
+     * @since  4.0.0
+     */
     public function __construct($config = [])
     {
-		parent::__construct($config);
+        parent::__construct($config);
 
-		$this->today  = TickTock::getDate();
-		$this->params = KrMethods::getParams();
-		$this->getUserSessionData(false);
-		$this->getActions();
-	}
+        $this->today  = TickTock::getDate();
+        $this->params = KrMethods::getParams();
+        $this->getUserSessionData(false);
+        $this->getActions();
+    }
 
-	/**
-	 * Add the back to link if required
-	 *
-	 * @param   Toolbar  $Toolbar
-	 *
+    /**
+     * Add the back to link if required
+     *
+     * @param   Toolbar  $Toolbar
+     *
      * @return Toolbar
-	 * @throws Exception
-	 * @since  4.0.0
-	 */
+     * @throws Exception
+     * @since  4.0.0
+     */
     public static function addBackLink(Toolbar $Toolbar): Toolbar
     {
-		$gobackto = KrMethods::getUserState('com_knowres.gobackto');
+        $gobackto = KrMethods::getUserState('com_knowres.gobackto');
         if (!empty($gobackto)) {
-			KrMethods::setUserState('com_knowres.gobackto', null);
-			$link = KrMethods::route('index.php?option=com_knowres&' . $gobackto);
+            KrMethods::setUserState('com_knowres.gobackto', null);
+            $link = KrMethods::route('index.php?option=com_knowres&' . $gobackto);
 
-			/** @var LinkButton $Toolbar */
-			$Toolbar->linkButton('back', 'JTOOLBAR_BACK')
+            /** @var LinkButton $Toolbar */
+            $Toolbar
+                ->linkButton('back', 'JTOOLBAR_BACK')
                 ->buttonClass('btn btn-danger')
                 ->icon('fa-solid fa-fast-backward knowres')
                 ->url($link);
-		}
+        }
 
-		return $Toolbar;
-	}
+        return $Toolbar;
+    }
 
-	/**
-	 * Check for access to edit action
-	 *
-	 * @param   string  $action  Action being taken
-	 *
+    /**
+     * Check for access to edit action
+     *
+     * @param   string  $action  Action being taken
+     *
      * @return bool
-	 * @since  4.0.0
-	 */
+     * @since  4.0.0
+     */
     public function checkAccess(string $action): bool
     {
         if ($this->access_level > 10 || $this->params->get($action)) {
-			return true;
-		}
+            return true;
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-	/**
-	 * Any errors?
-	 *
-	 * @throws Exception
-	 * @since  4.0.0
-	 */
+    /**
+     * Any errors?
+     *
+     * @throws Exception
+     * @since  4.0.0
+     */
     public function checkErrors(): void
     {
-		$errors = $this->get('Errors');
+        $errors = $this->get('Errors');
         if (is_countable($errors) && count($errors)) {
-			throw new Exception(implode("\n", $errors));
-		}
-	}
+            throw new Exception(implode("\n", $errors));
+        }
+    }
 
-	/**
-	 * Any errors?
-	 *
-	 * @throws Exception
-	 * @since  4.0.0
-	 */
+    /**
+     * Any errors?
+     *
+     * @throws Exception
+     * @since  4.0.0
+     */
     public function checkVersions(): void
     {
         if (!KrMethods::getParams('com_knowres')->get('save_history', 0)) {
-			$this->form->setFieldAttribute('version', 'type', 'hidden');
-			$this->form->setFieldAttribute('version_note', 'type', 'hidden');
-		}
-	}
+            $this->form->setFieldAttribute('version', 'type', 'hidden');
+            $this->form->setFieldAttribute('version_note', 'type', 'hidden');
+        }
+    }
 
-	/**
-	 * Set a list of the actions that can be performed by user access level
-	 *
-	 * @param   string  $view  View to be accessed
-	 * @param   int     $id    ID of view
-	 *
-	 * @since  4.0.0
-	 */
+    /**
+     * Set a list of the actions that can be performed by user access level
+     *
+     * @param   string  $view  View to be accessed
+     * @param   int     $id    ID of view
+     *
+     * @since  4.0.0
+     */
     public function getActions(string $view = '', int $id = 0): void
     {
-		$this->canDo = ContentHelper::getActions('com_knowres', $view, $id);
-	}
+        $this->canDo = ContentHelper::getActions('com_knowres', $view, $id);
+    }
 
-	/**
-	 * Add actions toolbar for list
-	 *
-	 * @param   Toolbar  $Toolbar  Toolbar instance
-	 * @param   string   $name     List name
-	 *
-	 * @return Toolbar
+    /**
+     * Add actions toolbar for list
+     *
+     * @param   Toolbar  $Toolbar  Toolbar instance
+     * @param   string   $name     List name
+     *
+     * @return Toolbar
      * @since  4.0.0
-	 */
+     */
     protected function addChildActionsToolbar(Toolbar $Toolbar, string $name): Toolbar
     {
-		/** @var DropdownButton $Toolbar */
-		$dropdown =
-			$Toolbar->dropdownButton('status-group')
+        /** @var DropdownButton $Toolbar */
+        $dropdown =
+            $Toolbar
+                ->dropdownButton('status-group')
                 ->text('JTOOLBAR_CHANGE_STATUS')
                 ->toggleSplit(false)
                 ->icon('icon-ellipsis-h')
                 ->buttonClass('btn btn-action')
                 ->listCheck(true);
 
-		$ChildToolbar = $dropdown->getChildToolbar();
+        $ChildToolbar = $dropdown->getChildToolbar();
 
         if ($this->canDo->get('core.edit.state')) {
             if (isset($this->items[0]->state)) {
-				$ChildToolbar->publish($name . '.publish')->listCheck(true);
-				$ChildToolbar->unpublish($name . '.unpublish')->listCheck(true);
-				$ChildToolbar->archive($name . '.archive')->listCheck(true);
-				$ChildToolbar->checkin($name . '.checkin')->listCheck(true);
+                $ChildToolbar->publish($name . '.publish')->listCheck(true);
+                $ChildToolbar->unpublish($name . '.unpublish')->listCheck(true);
+                $ChildToolbar->archive($name . '.archive')->listCheck(true);
+                $ChildToolbar->checkin($name . '.checkin')->listCheck(true);
 
                 if ($this->state->get('filter.state') != -2) {
                     if ($name != 'properties') {
-						$ChildToolbar->trash($name . '.trash')->listCheck(true);
-					} else {
-						$text = KrMethods::plain('COM_KNOWRES_PROPERTY_TRASH_MESSAGE');
-						$ChildToolbar->trash($name . '.markastrash')
-						             ->icon('fa-solid fa-trash')
-						             ->listCheck(true)
-						             ->onclick("return confirm('" .
-                                         $text .
-                                         "')?Joomla.submitform('properties.markastrash')):'';"
-                                     )
-						             ->text('JTOOLBAR_TRASH');
-					}
-				}
-			} elseif (isset($this->items[0]) && $this->canDo->get('core.delete')) {
-				/** @var ConfirmButton $Toolbar */
-				$Toolbar->delete($name . '.delete')
+                        $ChildToolbar->trash($name . '.trash')->listCheck(true);
+                    } else {
+                        $text = KrMethods::plain('COM_KNOWRES_PROPERTY_TRASH_MESSAGE');
+                        $ChildToolbar
+                            ->trash($name . '.markastrash')
+                            ->icon('fa-solid fa-trash')
+                            ->listCheck(true)
+                            ->onclick("return confirm('" .
+                                $text .
+                                "')?Joomla.submitform('properties.markastrash')):'';",
+                            )
+                            ->text('JTOOLBAR_TRASH');
+                    }
+                }
+            } elseif (isset($this->items[0]) && $this->canDo->get('core.delete')) {
+                /** @var ConfirmButton $Toolbar */
+                $Toolbar
+                    ->delete($name . '.delete')
                     ->listCheck(true)
                     ->message('JGLOBAL_CONFIRM_DELETE')
                     ->text('JTOOLBAR_DELETE');
-			}
-		}
+            }
+        }
 
         if ($this->state->get('filter.state') == -2 && $this->canDo->get('core.delete')) {
             if ($name != 'properties') {
-				/** @var ConfirmButton $Toolbar */
-				$Toolbar->delete($name . '.delete')
+                /** @var ConfirmButton $Toolbar */
+                $Toolbar
+                    ->delete($name . '.delete')
                     ->icon('fa-solid fa-trash red')
                     ->listCheck(true)
                     ->message('JGLOBAL_CONFIRM_DELETE')
                     ->text('JTOOLBAR_EMPTY_TRASH');
-			} else {
-				$text = KrMethods::plain('COM_KNOWRES_PROPERTY_DELETE_MESSAGE');
-				/** @var ConfirmButton $Toolbar */
-				$Toolbar->delete($name . '.markfordeletion')
+            } else {
+                $text = KrMethods::plain('COM_KNOWRES_PROPERTY_DELETE_MESSAGE');
+                /** @var ConfirmButton $Toolbar */
+                $Toolbar
+                    ->delete($name . '.markfordeletion')
                     ->icon('fa-solid fa-trash red')
                     ->listCheck(true)
                     ->message($text)
                     ->text('JTOOLBAR_EMPTY_TRASH');
-			}
-		}
+            }
+        }
 
-		return $Toolbar;
-	}
+        return $Toolbar;
+    }
 
-	/**
-	 * Add the quick links menu
-	 *
-	 * @param   Toolbar  $Toolbar
-	 *
+    /**
+     * Add the quick links menu
+     *
+     * @param   Toolbar  $Toolbar
+     *
      * @return Toolbar
-	 * @throws Exception
-	 * @since  4.0.0
-	 */
+     * @throws Exception
+     * @since  4.0.0
+     */
     protected function addConfigToolbar(Toolbar $Toolbar): Toolbar
     {
         if ($this->access_level == 40) {
-			/** @var DropdownButton $Toolbar */
-			$dropdown     =
-				$Toolbar->dropdownButton('config-links-group')
+            /** @var DropdownButton $Toolbar */
+            $dropdown     =
+                $Toolbar
+                    ->dropdownButton('config-links-group')
                     ->text('COM_KNOWRES_TOOLBAR_CONFIG')
                     ->toggleSplit(false)
                     ->icon('fa-solid fa-cog')
                     ->buttonClass('btn btn-action');
-			$ChildToolbar = $dropdown->getChildToolbar();
+            $ChildToolbar = $dropdown->getChildToolbar();
 
-			$ChildToolbar->linkButton('config-countries', 'COM_KNOWRES_COUNTRIES_TITLE')
+            $ChildToolbar
+                ->linkButton('config-countries', 'COM_KNOWRES_COUNTRIES_TITLE')
                 ->icon('fa-solid fa-flag fa-fw knowres')
                 ->url(KrMethods::route('index.php?option=com_knowres&view=countries'));
 
-			$ChildToolbar->linkButton('config-regions', 'COM_KNOWRES_REGIONS_TITLE')
+            $ChildToolbar
+                ->linkButton('config-regions', 'COM_KNOWRES_REGIONS_TITLE')
                 ->icon('fa-solid fa-map-pin fa-fw knowres')
                 ->url(KrMethods::route('index.php?option=com_knowres&view=regions'));
 
-			$ChildToolbar->linkButton('config-towns', 'COM_KNOWRES_TOWNS_TITLE')
+            $ChildToolbar
+                ->linkButton('config-towns', 'COM_KNOWRES_TOWNS_TITLE')
                 ->icon('fa-solid fa-city fa-fw knowres')
                 ->url(KrMethods::route('index.php?option=com_knowres&view=towns'));
 
-			$ChildToolbar->linkButton('currencies', 'COM_KNOWRES_CURRENCIES_TITLE')
+            $ChildToolbar
+                ->linkButton('currencies', 'COM_KNOWRES_CURRENCIES_TITLE')
                 ->icon('fa-solid fa-euro-sign fa-fw knowres')
                 ->url(KrMethods::route('index.php?option=com_knowres&view=currencies'));
 
-			$ChildToolbar->linkButton('config-mapcategories', 'COM_KNOWRES_MAPCATEGORIES_TITLE')
+            $ChildToolbar
+                ->linkButton('config-mapcategories', 'COM_KNOWRES_MAPCATEGORIES_TITLE')
                 ->icon('fa-solid fa-map-marked fa-fw knowres')
                 ->url(KrMethods::route('index.php?option=com_knowres&view=mapcategories'));
 
-			$ChildToolbar->linkButton('config-mapmarkers', 'COM_KNOWRES_MAPMARKERS_TITLE')
+            $ChildToolbar
+                ->linkButton('config-mapmarkers', 'COM_KNOWRES_MAPMARKERS_TITLE')
                 ->icon('fa-solid fa-map-marker fa-fw knowres')
                 ->url(KrMethods::route('index.php?option=com_knowres&view=mapmarkers'));
 
             if ($this->params->get('ignore_tax', 1)) {
-				$ChildToolbar->linkButton('config-taxes', 'COM_KNOWRES_TAXES_TITLE')
+                $ChildToolbar
+                    ->linkButton('config-taxes', 'COM_KNOWRES_TAXES_TITLE')
                     ->icon('fa-solid fa-map-marked fa-fw knowres')
                     ->url(KrMethods::route('index.php?option=com_knowres&view=taxes'));
 
-				$ChildToolbar->linkButton('config-taxrates', 'COM_KNOWRES_TAXRATES_TITLE')
+                $ChildToolbar
+                    ->linkButton('config-taxrates', 'COM_KNOWRES_TAXRATES_TITLE')
                     ->icon('fa-solid fa-percent fa-fw knowres')
                     ->url(KrMethods::route('index.php?option=com_knowres&view=taxrates'));
-			}
+            }
 
-			$ChildToolbar->linkButton('quick-link-translations', 'COM_KNOWRES_TRANSLATIONS_TITLE')
+            $ChildToolbar
+                ->linkButton('quick-link-translations', 'COM_KNOWRES_TRANSLATIONS_TITLE')
                 ->icon('fa-solid fa-globe fa-fw knowres')
                 ->url(KrMethods::route('index.php?option=com_knowres&view=translations'));
-		}
+        }
 
-		return $Toolbar;
-	}
+        return $Toolbar;
+    }
 
-	/**
-	 * Add any custom toolbar links
-	 *
-	 * @param   Toolbar  $Toolbar  Current toolbar instance
-	 *
-	 * @return Toolbar
+    /**
+     * Add any custom toolbar links
+     *
+     * @param   Toolbar  $Toolbar  Current toolbar instance
+     *
+     * @return Toolbar
      * @since  4.0.0
-	 */
+     */
     protected function addCustomToolbar(Toolbar $Toolbar): Toolbar
     {
-		return $Toolbar;
-	}
+        return $Toolbar;
+    }
 
-	/**
-	 * Add the page title and default toolbar for form view.
-	 *
-	 * @param   string  $name  Name of the form
-	 *
+    /**
+     * Add the page title and default toolbar for form view.
+     *
+     * @param   string  $name  Name of the form
+     *
      * @return Toolbar
-	 * @throws Exception
-	 * @since  4.0.0
-	 */
+     * @throws Exception
+     * @since  4.0.0
+     */
     protected function addFormToolbar(string $name): Toolbar
     {
-		Factory::getApplication()->input->set('hidemainmenu', true);
+        Factory::getApplication()->input->set('hidemainmenu', true);
 
-		$Toolbar = Toolbar::getInstance();
-		$isNew   = empty($this->item->id);
-		$this->getActions($name, !empty($this->item_id) ? $this->item_id : 0);
+        $Toolbar = Toolbar::getInstance();
+        $isNew   = empty($this->item->id);
+        $this->getActions($name, !empty($this->item_id) ? $this->item_id : 0);
 
-		$checkedOut = false;
+        $checkedOut = false;
         if (!is_null($this->item->checked_out)) {
-			$checkedOut = $this->item->checked_out != KrMethods::getUser()->id;
-		}
+            $checkedOut = $this->item->checked_out != KrMethods::getUser()->id;
+        }
 
-		$toolbarButtons = [];
+        $toolbarButtons = [];
         if ($isNew && $this->canDo->get('core.create')) {
-			ToolbarHelper::apply($name . '.apply');
+            ToolbarHelper::apply($name . '.apply');
             ToolbarHelper::saveGroup([
                 ['save', $name . '.save'],
-                ['save2new', $name . '.save2new']
+                ['save2new', $name . '.save2new'],
             ]);
 
-			$Toolbar->cancel($name . '.cancel', 'JTOOLBAR_CANCEL');
-		}
+            $Toolbar->cancel($name . '.cancel', 'JTOOLBAR_CANCEL');
+        }
 
         if (!$isNew && !$checkedOut && $this->canDo->get('core.edit')) {
-			ToolbarHelper::apply($name . '.apply');
-			$toolbarButtons[] = ['save', $name . '.save'];
+            ToolbarHelper::apply($name . '.apply');
+            $toolbarButtons[] = ['save', $name . '.save'];
 
             if ($this->canDo->get('core.create')) {
                 if ($name != strtolower(KrMethods::plain('COM_KNOWRES_SERVICE_TITLE'))) {
-					$toolbarButtons[] = ['save2new', $name . '.save2new'];
-				}
-				$toolbarButtons[] = ['save2copy', $name . '.save2copy'];
-			}
+                    $toolbarButtons[] = ['save2new', $name . '.save2new'];
+                }
+                $toolbarButtons[] = ['save2copy', $name . '.save2copy'];
+            }
 
-			ToolbarHelper::saveGroup($toolbarButtons);
+            ToolbarHelper::saveGroup($toolbarButtons);
 
-			if (ComponentHelper::isEnabled('com_contenthistory')
+            if (ComponentHelper::isEnabled('com_contenthistory')
                 && $this->state->params->get('save_history', 0)
                 && $this->canDo->get('core.edit')) {
-				$Toolbar->versions('com_knowres.' . $name, $this->item->id);
-			}
+                $Toolbar->versions('com_knowres.' . $name, $this->item->id);
+            }
 
-			$Toolbar->cancel($name . '.cancel', 'JTOOLBAR_CANCEL');
-		}
+            $Toolbar->cancel($name . '.cancel', 'JTOOLBAR_CANCEL');
+        }
 
-		return $Toolbar;
-	}
+        return $Toolbar;
+    }
 
-	/**
-	 * Add the default toolbar for list view.
-	 *
-	 * @param  ?string  $list_name  Name of list model
-	 *
+    /**
+     * Add the default toolbar for list view.
+     *
+     * @param  ?string  $list_name  Name of list model
+     *
      * @return Toolbar
-	 * @throws Exception
-	 * @since  4.0.0
-	 */
+     * @throws Exception
+     * @since  4.0.0
+     */
     protected function addListToolbar(?string $list_name = null): Toolbar
     {
-		$Toolbar = Toolbar::getInstance();
+        $Toolbar = Toolbar::getInstance();
 
-		$list_name = is_null($list_name) ? $this->form_name . 's' : $list_name;
+        $list_name = is_null($list_name) ? $this->form_name . 's' : $list_name;
 
         if ($this->canDo->get('core.create')) {
-			$Toolbar->addNew($this->form_name . '.add');
-		}
+            $Toolbar->addNew($this->form_name . '.add');
+        }
 
-		$Toolbar = $this->addChildActionsToolbar($Toolbar, $list_name);
-		$Toolbar = $this->addCustomToolbar($Toolbar);
-		$Toolbar = $this->addConfigToolbar($Toolbar);
-		$Toolbar = $this->addQuickLinksToolbar($Toolbar);
+        $Toolbar = $this->addChildActionsToolbar($Toolbar, $list_name);
+        $Toolbar = $this->addCustomToolbar($Toolbar);
+        $Toolbar = $this->addConfigToolbar($Toolbar);
+        $Toolbar = $this->addQuickLinksToolbar($Toolbar);
 
         if ($this->canDo->get('core.admin')) {
-			$Toolbar->preferences('com_knowres');
-		}
+            $Toolbar->preferences('com_knowres');
+        }
 
-		return $Toolbar;
-	}
+        return $Toolbar;
+    }
 
-	/**
-	 * Add the quick links menu
-	 *
-	 * @param   Toolbar  $Toolbar
-	 *
+    /**
+     * Add the quick links menu
+     *
+     * @param   Toolbar  $Toolbar
+     *
      * @return Toolbar
-	 * @throws Exception
-	 * @since  4.0.0
-	 */
+     * @throws Exception
+     * @since  4.0.0
+     */
     protected function addQuickLinksToolbar(Toolbar $Toolbar): Toolbar
     {
-		/** @var DropdownButton $Toolbar */
-		$dropdown     =
-			$Toolbar->dropdownButton('quick-links-group')
+        /** @var DropdownButton $Toolbar */
+        $dropdown     =
+            $Toolbar
+                ->dropdownButton('quick-links-group')
                 ->text('COM_KNOWRES_TOOLBAR_QUICKLINKS')
                 ->toggleSplit(false)
                 ->icon('fa-solid fa-link')
                 ->buttonClass('btn btn-action');
-		$ChildToolbar = $dropdown->getChildToolbar();
+        $ChildToolbar = $dropdown->getChildToolbar();
 
-		$ChildToolbar->linkButton('quick-links-overview', 'COM_KNOWRES_GANTT_TITLE')
+        $ChildToolbar
+            ->linkButton('quick-links-overview', 'COM_KNOWRES_GANTT_TITLE')
             ->icon('fa-solid fa-calendar-alt knowres')
             ->url(KrMethods::route('index.php?option=com_knowres&task=gantt.display'));
 
-		$ChildToolbar->linkButton('quick-links-admin', 'COM_KNOWRES_CONTRACTS_DAILY_TITLE')
+        $ChildToolbar
+            ->linkButton('quick-links-admin', 'COM_KNOWRES_CONTRACTS_DAILY_TITLE')
             ->icon('fa-solid fa-calendar-day knowres')
             ->url(KrMethods::route('index.php?option=com_knowres&task=contracts.daily'));
 
         if ($this->access_level == 40) {
-			$ChildToolbar->linkButton('quick-links-contractpayments', 'COM_KNOWRES_CONTRACTPAYMENTS_TITLE')
+            $ChildToolbar
+                ->linkButton('quick-links-contractpayments', 'COM_KNOWRES_CONTRACTPAYMENTS_TITLE')
                 ->icon('fa-solid fa-coins knowres')
                 ->url(KrMethods::route('index.php?option=com_knowres&view=contractpayments'));
-		}
+        }
 
-		$ChildToolbar->linkButton('quick-links-properties', 'COM_KNOWRES_PROPERTIES_TITLE')
+        $ChildToolbar
+            ->linkButton('quick-links-properties', 'COM_KNOWRES_PROPERTIES_TITLE')
             ->icon('fa-solid fa-home knowres')
             ->url(KrMethods::route('index.php?option=com_knowres&view=properties'));
 
-		$ChildToolbar->linkButton('quick-links-contracts', 'COM_KNOWRES_CONTRACTS_TITLE')
+        $ChildToolbar
+            ->linkButton('quick-links-contracts', 'COM_KNOWRES_CONTRACTS_TITLE')
             ->icon('fa-solid fa-calendar knowres')
             ->url(KrMethods::route('index.php?option=com_knowres&view=contracts'));
 
         if ($this->access_level == 40) {
-			$ChildToolbar->linkButton('quick-links-contracts', 'COM_KNOWRES_SERVICES_TITLE')
+            $ChildToolbar
+                ->linkButton('quick-links-contracts', 'COM_KNOWRES_SERVICES_TITLE')
                 ->icon('fa-solid fa-exchange-alt knowres')
                 ->url(KrMethods::route('index.php?option=com_knowres&view=services'));
-		}
+        }
 
-		return $Toolbar;
-	}
+        return $Toolbar;
+    }
 
-	/**
-	 * Add services dropdown.
-	 *
-	 * @param   Toolbar  $Toolbar  Current toolbar.
-	 *
+    /**
+     * Add services dropdown.
+     *
+     * @param   Toolbar  $Toolbar  Current toolbar.
+     *
      * @return Toolbar
-	 * @throws Exception
-	 * @since  4.0.0
-	 */
+     * @throws Exception
+     * @since  4.0.0
+     */
     protected function addServicesDropdown(Toolbar $Toolbar): Toolbar
     {
-		/** @var DropdownButton $Toolbar */
-		$dropdown     =
-			$Toolbar->dropdownButton('services-group')
+        /** @var DropdownButton $Toolbar */
+        $dropdown     =
+            $Toolbar
+                ->dropdownButton('services-group')
                 ->text('COM_KNOWRES_TOOLBAR_SERVICE_DATA')
                 ->toggleSplit(false)
                 ->icon('fa-solid fa-exchange-alt knowres')
                 ->buttonClass('btn btn-action');
-		$ChildToolbar = $dropdown->getChildToolbar();
+        $ChildToolbar = $dropdown->getChildToolbar();
 
-		$ChildToolbar->linkButton('services', 'COM_KNOWRES_SERVICES_TITLE')
+        $ChildToolbar
+            ->linkButton('services', 'COM_KNOWRES_SERVICES_TITLE')
             ->icon('fa-solid fa-concierge-bell knowres')
             ->url(KrMethods::route('index.php?option=com_knowres&view=services'));
 
-		$ChildToolbar->linkButton('servicelogs', 'COM_KNOWRES_SERVICELOGS_TITLE')
+        $ChildToolbar
+            ->linkButton('servicelogs', 'COM_KNOWRES_SERVICELOGS_TITLE')
             ->icon('fa-solid fa-stream knowres')
             ->url(KrMethods::route('index.php?option=com_knowres&view=servicelogs'));
 
-		$ChildToolbar->linkButton('servicequeues', 'COM_KNOWRES_SERVICEQUEUES_TITLE')
+        $ChildToolbar
+            ->linkButton('servicequeues', 'COM_KNOWRES_SERVICEQUEUES_TITLE')
             ->icon('fa-solid fa-stopwatch knowres')
             ->url(KrMethods::route('index.php?option=com_knowres&view=servicequeues'));
 
-		$ChildToolbar->linkButton('servicexrefs', 'COM_KNOWRES_SERVICEXREFS_TITLE')
+        $ChildToolbar
+            ->linkButton('servicexrefs', 'COM_KNOWRES_SERVICEXREFS_TITLE')
             ->icon('fa-solid fa-crosshairs knowres')
             ->url(KrMethods::route('index.php?option=com_knowres&view=servicexrefs'));
 
-		return $Toolbar;
-	}
+        return $Toolbar;
+    }
 
-	/**
-	 * Empty layout if no rows returned
-	 *
+    /**
+     * Empty layout if no rows returned
+     *
      * @return bool
-	 * @throws Exception
-	 * @since  4.0.0
-	 */
+     * @throws Exception
+     * @since  4.0.0
+     */
     protected function checkEmpty(): bool
     {
-		$this->isEmptyState = $this->get('IsEmptyState');
+        $this->isEmptyState = $this->get('IsEmptyState');
         if (!is_countable($this->items) || (!count($this->items) && $this->isEmptyState)) {
-			echo KrMethods::render('html.list.emptystate', ['data' => $this]);
+            echo KrMethods::render('html.list.emptystate', ['data' => $this]);
 
-			return true;
-		}
+            return true;
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-	/**
-	 * Get the form aria label.
-	 *
-	 * @since  4.0.0
-	 */
+    /**
+     * Get the form aria label.
+     *
+     * @since  4.0.0
+     */
     protected function getFormAriaLabel(): void
     {
-		$text = empty($this->item->id) ? KrMethods::plain('COM_KNOWRES_ADD') : KrMethods::plain('COM_KNOWRES_EDIT');
+        $text = empty($this->item->id) ? KrMethods::plain('COM_KNOWRES_ADD') : KrMethods::plain('COM_KNOWRES_EDIT');
 
-		$this->form_aria_label = $text . ' ' . $this->form_name;
-	}
+        $this->form_aria_label = $text . ' ' . $this->form_name;
+    }
 
-	/**
-	 * Set the user session data.
-	 *
-	 * @param   bool  $property_required  Set to false if property not required
-	 *
-	 * @throws Exception
-	 * @since  4.0.0
-	 */
+    /**
+     * Set the user session data.
+     *
+     * @param   bool  $property_required  Set to false if property not required
+     *
+     * @throws Exception
+     * @since  4.0.0
+     */
     protected function getUserSessionData(bool $property_required = true): void
     {
-		$userSession = new KrSession\User();
-		$userData    = $userSession->getData();
+        $userSession = new KrSession\User();
+        $userData    = $userSession->getData();
 
         if ($property_required && !(int)$userData->cr_property_id) {
-			Utility::goto('properties');
-		}
+            Utility::goto('properties');
+        }
 
-		$this->property_id   = (int) $userData->cr_property_id;
-		$this->property_name = $userData->cr_property_name;
-		$this->access_level  = $userData->access_level;
-		$this->properties    = $userData->properties;
-	}
+        $this->property_id   = (int)$userData->cr_property_id;
+        $this->property_name = $userData->cr_property_name;
+        $this->access_level  = $userData->access_level;
+        $this->properties    = $userData->properties;
+    }
 }
