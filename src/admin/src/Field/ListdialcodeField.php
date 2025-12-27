@@ -9,14 +9,16 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Field;
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use InvalidArgumentException;
 use Joomla\CMS\Form\Field\ListField;
 use Joomla\CMS\HTML\HTMLHelper;
 use RuntimeException;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Dialling code form field

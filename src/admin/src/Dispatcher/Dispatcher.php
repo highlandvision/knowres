@@ -9,8 +9,6 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Dispatcher;
 
-defined('_JEXEC') or die;
-
 use Carbon\Carbon;
 use Exception;
 use HighlandVision\KR\ExceptionHandling;
@@ -21,6 +19,10 @@ use Joomla\CMS\Factory;
 use function is_dir;
 
 use const JPATH_ROOT;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') || die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * ComponentDispatcher class for KR

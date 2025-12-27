@@ -7,11 +7,13 @@
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
 
+// phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 ?>
 
 <?php echo $this->loadTemplate('searchbar'); ?>
 <div class="kr-properties" id="kr-properties-data"></div>
 <div class="small-only-text-center">
-	<div class="kr-pager bottom"></div>
+    <div class="kr-pager bottom"></div>
 </div>

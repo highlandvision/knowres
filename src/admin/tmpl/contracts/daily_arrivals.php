@@ -7,12 +7,13 @@
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
 
-if (empty($this->lines['arrivals']))
-{
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
+
+if (empty($this->lines['arrivals'])) {
     return;
 }
 ?>

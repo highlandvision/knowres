@@ -7,12 +7,13 @@
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
 
-if ($this->arrival)
-{
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
+
+if ($this->arrival) {
     $this->form->setFieldAttribute('arrival_bd', 'default', $this->arrival_bd);
     $this->form->setFieldAttribute('departure_bd', 'default', $this->departure_bd);
 }

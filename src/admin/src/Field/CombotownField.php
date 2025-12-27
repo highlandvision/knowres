@@ -9,8 +9,6 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Field;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use InvalidArgumentException;
@@ -19,6 +17,10 @@ use Joomla\CMS\HTML\HTMLHelper;
 
 use function array_merge;
 
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') || die;
+// phpcs:enable PSR1.Files.SideEffects
+
 /**
  * Field for town combo.
  *
@@ -26,33 +28,33 @@ use function array_merge;
  */
 class CombotownField extends ListField
 {
-	/** @var string The form field type. */
-	protected $type = 'Combotown';
+    /** @var string The form field type. */
+    protected $type = 'Combotown';
 
-	/**
-	 * Get the field options.
-	 *
-	 * @throws InvalidArgumentException
-	 * @throws Exception
-	 * @since  1.0.0
-	 * @return array The field options
-	 */
-	public function getOptions(): array
-	{
-		$options = [];
+    /**
+     * Get the field options.
+     *
+     * @return array The field options
+     * @throws Exception
+     * @throws InvalidArgumentException
+     * @since  1.0.0
+     */
+    public function getOptions(): array
+    {
+        $options = [];
 
-		$region_id = $this->fieldname == 'town_id' ? $this->form->getValue('region_id')
-			: $this->form->getValue('b_region_id');
+        $region_id = $this->fieldname == 'town_id' ? $this->form->getValue('region_id')
+            : $this->form->getValue('b_region_id');
 
-		if ($region_id) {
-			$items = KrFactory::getListModel('towns')
-				->getByRegion($region_id, $this->getAttribute('allowproperty', false));
+        if ($region_id) {
+            $items = KrFactory::getListModel('towns')
+                              ->getByRegion($region_id, $this->getAttribute('allowproperty', false));
 
-			foreach ($items as $i) {
-				$options[] = HTMLHelper::_('select.option', $i->id, $i->name);
-			}
-		}
+            foreach ($items as $i) {
+                $options[] = HTMLHelper::_('select.option', $i->id, $i->name);
+            }
+        }
 
-		return array_merge(parent::getOptions(), $options);
-	}
+        return array_merge(parent::getOptions(), $options);
+    }
 }

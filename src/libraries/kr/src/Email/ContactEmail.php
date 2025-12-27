@@ -9,14 +9,16 @@
 
 namespace HighlandVision\KR\Email;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Email;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use InvalidArgumentException;
 use RuntimeException;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Emails for reservation enquiry.
@@ -25,169 +27,169 @@ use RuntimeException;
  */
 class ContactEmail extends Email
 {
-	/** @var string Guest (enquirer) name */
-	protected string $guest_name = '';
-	/** @var string Owner email */
-	protected string $owner_email = '';
-	/** @var string Owner name */
-	protected string $owner_name = '';
+    /** @var string Guest (enquirer) name */
+    protected string $guest_name = '';
+    /** @var string Owner email */
+    protected string $owner_email = '';
+    /** @var string Owner name */
+    protected string $owner_name = '';
 
-	/**
-	 * Constructor
-	 *
-	 * @param  string  $trigger     The email trigger
-	 * @param  int     $trigger_id  ID of required trigger
-	 *
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
-	public function __construct(string $trigger, int $trigger_id = 0)
-	{
-		parent::__construct($trigger);
+    /**
+     * Constructor
+     *
+     * @param   string  $trigger     The email trigger
+     * @param   int     $trigger_id  ID of required trigger
+     *
+     * @throws Exception
+     * @since  1.0.0
+     */
+    public function __construct(string $trigger, int $trigger_id = 0)
+    {
+        parent::__construct($trigger);
 
-		$this->trigger_id = $trigger_id;
-	}
+        $this->trigger_id = $trigger_id;
+    }
 
-	/**
-	 * Send email for form enquiry
-	 *
-	 * @param  int    $property_id  ID of property
-	 * @param  array  $input        Input from form data
-	 *
-	 * @throws InvalidArgumentException|Exception
-	 * @since  3.3.0
-	 * @return void
-	 */
-	public function sendTheEmails(int $property_id, array $input): void
-	{
-		if (!is_countable($input) || !count($input)) {
-			throw new InvalidArgumentException('Input parameter is required and must have data');
-		}
+    /**
+     * Send email for form enquiry
+     *
+     * @param   int    $property_id  ID of property
+     * @param   array  $input        Input from form data
+     *
+     * @return void
+     * @throws InvalidArgumentException|Exception
+     * @since  3.3.0
+     */
+    public function sendTheEmails(int $property_id, array $input): void
+    {
+        if (!is_countable($input) || !count($input)) {
+            throw new InvalidArgumentException('Input parameter is required and must have data');
+        }
 
-		$this->data             = $input;
-		$this->data['SITENAME'] = KrMethods::getCfg('sitename');
-		$this->property_id      = $property_id;
-		$this->gatherData();
-	}
+        $this->data             = $input;
+        $this->data['SITENAME'] = KrMethods::getCfg('sitename');
+        $this->property_id      = $property_id;
+        $this->gatherData();
+    }
 
-	/**
-	 * Set the email fields
-	 *
-	 * @throws RuntimeException|Exception
-	 * @since 1.0.0
-	 */
-	public function setData(): void
-	{
-		$this->guest_email = $this->data['REQEMAIL'];
-		$this->guest_name  = $this->data['REQNAME'];
+    /**
+     * Set the email fields
+     *
+     * @throws RuntimeException|Exception
+     * @since 1.0.0
+     */
+    public function setData(): void
+    {
+        $this->guest_email = $this->data['REQEMAIL'];
+        $this->guest_name  = $this->data['REQNAME'];
 
-		$this->setPropertyData();
-		$this->setContactData();
+        $this->setPropertyData();
+        $this->setContactData();
 
-		if ($this->agency->id) {
-			$this->setHelpScout();
-		}
-	}
+        if ($this->agency->id) {
+            $this->setHelpScout();
+        }
+    }
 
-	/**
-	 * Send email
-	 *
-	 * @param  object  $trigger  Email trigger
-	 *
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
-	protected function sendEmails(object $trigger): void
-	{
-		$this->constructEmail($trigger->email_template_id);
+    /**
+     * Send email
+     *
+     * @param   object  $trigger  Email trigger
+     *
+     * @throws Exception
+     * @since  1.0.0
+     */
+    protected function sendEmails(object $trigger): void
+    {
+        $this->constructEmail($trigger->email_template_id);
 
-		$this->cc         = null;
-		$this->bcc        = null;
-		$this->reply_to   = null;
-		$this->reply_name = null;
+        $this->cc         = null;
+        $this->bcc        = null;
+        $this->reply_to   = null;
+        $this->reply_name = null;
 
-		if ($trigger->send_guest && $this->guest_email) {
-			if ($trigger->send_owner && $this->owner_email) {
-				$this->reply_to   = $this->owner_email;
-				$this->reply_name = $this->owner_name;
-			} else {
-				$this->reply_to   = $this->manager_email;
-				$this->reply_name = $this->manager_name;
-			}
+        if ($trigger->send_guest && $this->guest_email) {
+            if ($trigger->send_owner && $this->owner_email) {
+                $this->reply_to   = $this->owner_email;
+                $this->reply_name = $this->owner_name;
+            } else {
+                $this->reply_to   = $this->manager_email;
+                $this->reply_name = $this->manager_name;
+            }
 
-			$this->dispatchEmail($this->guest_email, $this->guest_name);
-		}
+            $this->dispatchEmail($this->guest_email, $this->guest_name);
+        }
 
-		if ($trigger->send_owner && $this->owner_email) {
-			$this->reply_to   = $this->guest_email;
-			$this->reply_name = $this->guest_name;
+        if ($trigger->send_owner && $this->owner_email) {
+            $this->reply_to   = $this->guest_email;
+            $this->reply_name = $this->guest_name;
 
-			$this->dispatchEmail($this->owner_email, $this->guest_name);
-		}
+            $this->dispatchEmail($this->owner_email, $this->guest_name);
+        }
 
-		if ($trigger->send_agency && $this->agency_email) {
-			$this->reply_to   = $this->guest_email;
-			$this->reply_name = $this->guest_name;
+        if ($trigger->send_agency && $this->agency_email) {
+            $this->reply_to   = $this->guest_email;
+            $this->reply_name = $this->guest_name;
 
-			$this->dispatchEmail($this->agency_email, $this->guest_name);
-		}
+            $this->dispatchEmail($this->agency_email, $this->guest_name);
+        }
 
-		if ($trigger->send_admin) {
-			$this->dispatchEmail(KrMethods::getCfg('mailfrom'), $this->guest_name);
-		}
-	}
+        if ($trigger->send_admin) {
+            $this->dispatchEmail(KrMethods::getCfg('mailfrom'), $this->guest_name);
+        }
+    }
 
-	/**
-	 * Set contact details for Manager, Agency and Default
-	 * 1. Set property manager if there is a speciic property.
-	 * 2. Set to default agency if no manager or property for an enquiry.
-	 *
-	 * @param  ?int  $agency_id  ID of agency
-	 *
-	 * @throws Exception
-	 * @since  4.0.0
-	 */
-	protected function setContactData(?int $agency_id = null): void
-	{
-		$this->setAgency($agency_id);
-		$enquiry_email = KrMethods::getParams()->get('enquiry_email');
+    /**
+     * Set contact details for Manager, Agency and Default
+     * 1. Set property manager if there is a speciic property.
+     * 2. Set to default agency if no manager or property for an enquiry.
+     *
+     * @param  ?int  $agency_id  ID of agency
+     *
+     * @throws Exception
+     * @since  4.0.0
+     */
+    protected function setContactData(?int $agency_id = null): void
+    {
+        $this->setAgency($agency_id);
+        $enquiry_email = KrMethods::getParams()->get('enquiry_email');
 
-		if (!empty($enquiry_email)) {
-			$this->data['MANAGEREMAIL'] = $enquiry_email;
-			$this->data['AGENCYEMAIL']  = $enquiry_email;
-		} else {
-			$this->data['MANAGEREMAIL'] = KrMethods::getCfg('mailfrom');
-			$this->data['AGENCYEMAIL']  = KrMethods::getCfg('mailfrom');
-		}
+        if (!empty($enquiry_email)) {
+            $this->data['MANAGEREMAIL'] = $enquiry_email;
+            $this->data['AGENCYEMAIL']  = $enquiry_email;
+        } else {
+            $this->data['MANAGEREMAIL'] = KrMethods::getCfg('mailfrom');
+            $this->data['AGENCYEMAIL']  = KrMethods::getCfg('mailfrom');
+        }
 
-		$this->data['MANAGERNAME']     = $this->agency->name;
-		$this->data['AGENCYNAME']      = $this->agency->name;
-		$this->data['AGENCYTELEPHONE'] = $this->agency->telephone;
+        $this->data['MANAGERNAME']     = $this->agency->name;
+        $this->data['AGENCYNAME']      = $this->agency->name;
+        $this->data['AGENCYTELEPHONE'] = $this->agency->telephone;
 
-		$this->manager_email = $this->data['MANAGEREMAIL'];
-		$this->manager_name  = $this->data['MANAGERNAME'];
-		$this->agency_email  = $this->data['AGENCYEMAIL'];
-		$this->agency_name   = $this->data['AGENCYNAME'];
-	}
+        $this->manager_email = $this->data['MANAGEREMAIL'];
+        $this->manager_name  = $this->data['MANAGERNAME'];
+        $this->agency_email  = $this->data['AGENCYEMAIL'];
+        $this->agency_name   = $this->data['AGENCYNAME'];
+    }
 
-	/**
-	 * Set the email property data.
-	 *
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
-	protected function setPropertyData(): void
-	{
-		$this->owner_email = '--';
-		$this->owner_name  = '--';
+    /**
+     * Set the email property data.
+     *
+     * @throws Exception
+     * @since  1.0.0
+     */
+    protected function setPropertyData(): void
+    {
+        $this->owner_email = '--';
+        $this->owner_name  = '--';
 
-		if ($this->property_id) {
-			$this->property = KrFactory::getAdminModel('property')->getItem($this->property_id);
-			if (!empty($this->property)) {
-				$this->data['PROPERTYNAME'] = $this->property->property_name;
-				$this->owner_email          = $this->property->property_email;
-				$this->owner_name           = $this->property->property_name;
-			}
-		}
-	}
+        if ($this->property_id) {
+            $this->property = KrFactory::getAdminModel('property')->getItem($this->property_id);
+            if (!empty($this->property)) {
+                $this->data['PROPERTYNAME'] = $this->property->property_name;
+                $this->owner_email          = $this->property->property_email;
+                $this->owner_name           = $this->property->property_name;
+            }
+        }
+    }
 }

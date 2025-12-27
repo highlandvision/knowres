@@ -7,10 +7,11 @@
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
 
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 ?>
 
 <div class="card kr-card">
@@ -31,11 +32,11 @@ use HighlandVision\KR\Framework\KrMethods;
     <div class="collapse" id="panel-collapse-notes">
         <div class="card-body">
             <?php echo KrMethods::render('contract.show.notes',
-                    [
-                            'contract'   => $this->item,
-                            'notes'      => $this->notes,
-                            'allow_edit' => $this->access_level > 10
-                    ]
+                [
+                    'contract'   => $this->item,
+                    'notes'      => $this->notes,
+                    'allow_edit' => $this->access_level > 10,
+                ],
             );
             ?>
         </div>

@@ -8,8 +8,6 @@
 
 namespace HighlandVision\KR\Joomla\Extend;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Session as KrSession;
@@ -31,6 +29,10 @@ use function count;
 use function implode;
 use function is_countable;
 use function is_null;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Base class for a Joomla View

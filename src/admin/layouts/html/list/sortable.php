@@ -7,10 +7,12 @@
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\HtmlView as KrHtmlView;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') || die;
+// phpcs:enable PSR1.Files.SideEffects
 
 extract($displayData);
 /**
@@ -22,12 +24,9 @@ extract($displayData);
 
 <?php
 $iconClass = '';
-if (!$data->canChange)
-{
+if (!$data->canChange) {
     $iconClass = ' inactive';
-}
-elseif (!$data->saveOrder)
-{
+} elseif (!$data->saveOrder) {
     $iconClass = ' inactive" title="' . KrMethods::plain('JORDERINGDISABLED');
 }
 ?>

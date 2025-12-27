@@ -7,9 +7,11 @@
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 $tadults   = KrMethods::plain('MOD_KNOWRES_SEARCH_ADULTS');
 $tchildren = KrMethods::plain('MOD_KNOWRES_SEARCH_PLURAL_CHILDREN');
@@ -36,7 +38,7 @@ $tchild    = KrMethods::plain('MOD_KNOWRES_SEARCH_PLURAL_CHILDREN_1');
                         <button type="button" id="aminus" class="input-number-decrement"
                                 title="<?php echo KrMethods::plain('MOD_KNOWRES_SEARCH_DECREMENT'); ?>"
                                 onClick="moduleSearch.guestIncrement(-1, 'adults', '<?php echo $tadults; ?>',
-                                        '<?php echo $tchildren; ?>', '<?php echo $tchild; ?>', false)">
+                                    '<?php echo $tchildren; ?>', '<?php echo $tchild; ?>', false)">
                             <i class="fa-solid fa-circle-minus fa-xs"></i>
                         </button>
                     </div>
@@ -46,7 +48,7 @@ $tchild    = KrMethods::plain('MOD_KNOWRES_SEARCH_PLURAL_CHILDREN_1');
                         <button type="button" id="aplus" class="input-number-increment"
                                 title="<?php echo KrMethods::plain('MOD_KNOWRES_SEARCH_INCREMENT'); ?>"
                                 onClick="moduleSearch.guestIncrement(1, 'adults', '<?php echo $tadults; ?>',
-                                        '<?php echo $tchildren; ?>', '<?php echo $tchild; ?>', false)">
+                                    '<?php echo $tchildren; ?>', '<?php echo $tchild; ?>', false)">
                             <i class="fa-solid fa-circle-plus fa-xs"></i>
                         </button>
                     </div>
@@ -58,7 +60,7 @@ $tchild    = KrMethods::plain('MOD_KNOWRES_SEARCH_PLURAL_CHILDREN_1');
                         <button type="button" id="cminus" class="input-number-decrement"
                                 title="<?php echo KrMethods::plain('MOD_KNOWRES_SEARCH_DECREMENT'); ?>"
                                 onClick="moduleSearch.guestIncrement(-1, 'children', '<?php echo $tadults; ?>',
-                                        '<?php echo $tchildren; ?>', '<?php echo $tchild; ?>', false)">
+                                    '<?php echo $tchildren; ?>', '<?php echo $tchild; ?>', false)">
                             <i class="fa-solid fa-circle-minus fa-xs"></i>
                         </button>
                     </div>
@@ -68,7 +70,7 @@ $tchild    = KrMethods::plain('MOD_KNOWRES_SEARCH_PLURAL_CHILDREN_1');
                         <button type="button" id="cplus" class="input-number-increment"
                                 title="<?php echo KrMethods::plain('MOD_KNOWRES_SEARCH_INCREMENT'); ?>"
                                 onClick="moduleSearch.guestIncrement(1, 'children', '<?php echo $tadults; ?>',
-                                        '<?php echo $tchildren; ?>', '<?php echo $tchild; ?>', false)">
+                                    '<?php echo $tchildren; ?>', '<?php echo $tchild; ?>', false)">
                             <i class="fa-solid fa-circle-plus fa-xs"></i>
                         </button>
                     </div>

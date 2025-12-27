@@ -7,9 +7,11 @@
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') || die;
+// phpcs:enable PSR1.Files.SideEffects
 
 extract($displayData);
 /**
@@ -65,36 +67,36 @@ extract($displayData);
     <div class="p-3 tab-content">
         <div class="tab-pane active" id="summary" role="tabpanel" aria-labelledby="summary-tab">
             <?php echo KrMethods::render('contract.show.reservation',
-                    [
-                            'contract'  => $item,
-                            'guest'     => $guest,
-                            'guestdata' => $guestdata,
-                            'payment'   => $payment
-                    ]
+                [
+                    'contract'  => $item,
+                    'guest'     => $guest,
+                    'guestdata' => $guestdata,
+                    'payment'   => $payment,
+                ],
             ); ?>
         </div>
         <div class="tab-pane" id="account" role="tabpanel" aria-labelledby="account-tab">
             <?php echo KrMethods::render('contract.show.summary',
-                    [
-                            'item'        => $item,
-                            'fees'        => $fees,
-                            'payments'    => $payments,
-                            'audience'    => $audience,
-                            'balance'     => $balance,
-                            'balance_all' => $balance_all,
-                            'payment'     => $payment,
-                    ]
+                [
+                    'item'        => $item,
+                    'fees'        => $fees,
+                    'payments'    => $payments,
+                    'audience'    => $audience,
+                    'balance'     => $balance,
+                    'balance_all' => $balance_all,
+                    'payment'     => $payment,
+                ],
             );
             ?>
         </div>
         <div class="tab-pane" id="notes" role="tabpanel" aria-labelledby="notes-tab">
             <?php echo KrMethods::render('contract.modal.show.notes',
-                    ['item' => $item, 'notes' => $notes, 'system' => false]
+                ['item' => $item, 'notes' => $notes, 'system' => false],
             ); ?>
         </div>
         <div class="tab-pane" id="systemnotes" role="tabpanel" aria-labelledby="systemnotes-tab">
             <?php echo KrMethods::render('contract.modal.show.notes',
-                    ['item' => $item, 'notes' => $notes, 'system' => true]
+                ['item' => $item, 'notes' => $notes, 'system' => true],
             ); ?>
         </div>
     </div>

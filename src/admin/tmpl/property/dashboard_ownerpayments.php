@@ -7,38 +7,40 @@
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 ?>
 
 <?php if (!isset($this->ownerpayments) || !count($this->ownerpayments)): ?>
-	<?php echo KrMethods::plain('COM_KNOWRES_NO_DATA_FOUND'); ?>
+    <?php echo KrMethods::plain('COM_KNOWRES_NO_DATA_FOUND'); ?>
 <?php else: ?>
-	<?php foreach ($this->ownerpayments as $x) : ?>
-		<div class="row">
-			<div class="col-md-4">
-				<?php echo $x->name; ?>
-			</div>
-			<div class="col-md-3">
-				<?php echo $x->plugin; ?>
-			</div>
-			<div class="col-md-1">
-				<?php echo $x->currency; ?>
-			</div>
-			<div class="col-md-4">
-				<a href="<?php echo KrMethods::route("index.php?option=com_knowres&task=service.edit&id=$x->id"); ?>">
-					<i class='fa-solid fa-edit'></i> <?php echo KrMethods::plain('COM_KNOWRES_EDIT'); ?>
-				</a>
-			</div>
-		</div>
-	<?php endforeach; ?>
+    <?php foreach ($this->ownerpayments as $x) : ?>
+        <div class="row">
+            <div class="col-md-4">
+                <?php echo $x->name; ?>
+            </div>
+            <div class="col-md-3">
+                <?php echo $x->plugin; ?>
+            </div>
+            <div class="col-md-1">
+                <?php echo $x->currency; ?>
+            </div>
+            <div class="col-md-4">
+                <a href="<?php echo KrMethods::route("index.php?option=com_knowres&task=service.edit&id=$x->id"); ?>">
+                    <i class='fa-solid fa-edit'></i> <?php echo KrMethods::plain('COM_KNOWRES_EDIT'); ?>
+                </a>
+            </div>
+        </div>
+    <?php endforeach; ?>
 <?php endif; ?>
 
 <div class="row-fluid">
-	<div class="span3">
-		<a href="<?php echo KrMethods::route("index.php?option=com_knowres&view=services&filter[agency_id]=0"); ?>">
-			<i class='fa-solid fa-plus-square'></i> <?php echo KrMethods::plain('COM_KNOWRES_ADD'); ?>
-		</a>
-	</div>
+    <div class="span3">
+        <a href="<?php echo KrMethods::route("index.php?option=com_knowres&view=services&filter[agency_id]=0"); ?>">
+            <i class='fa-solid fa-plus-square'></i> <?php echo KrMethods::plain('COM_KNOWRES_ADD'); ?>
+        </a>
+    </div>
 </div>

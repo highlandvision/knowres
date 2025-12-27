@@ -9,8 +9,6 @@
 
 namespace HighlandVision\KR\Compute;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Hub;
@@ -24,6 +22,10 @@ use function in_array;
 use function min;
 use function round;
 use function substr;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Calculate general discount

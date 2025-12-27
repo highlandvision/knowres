@@ -7,10 +7,12 @@
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
 use Joomla\CMS\HTML\HTMLHelper;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /** @var HighlandVision\Component\Knowres\Administrator\View\Property\HtmlView $this */
 
@@ -22,11 +24,11 @@ $wa->useScript('keepalive')
    ->useScript('com_knowres.admin-combogeo');
 ?>
 
-<form action="<?php echo KrMethods::route('index.php?option=com_knowres&layout=edit&id=' . (int) $this->item->id); ?>"
+<form action="<?php echo KrMethods::route('index.php?option=com_knowres&layout=edit&id=' . (int)$this->item->id); ?>"
       class="form-validate" id="property-form" method="post" name="adminForm">
     <?php
     echo HTMLHelper::_('uitab.startTabSet', 'propertyTabs',
-            ['active' => 'basics', 'recall' => true, 'breakpoint' => 768]
+        ['active' => 'basics', 'recall' => true, 'breakpoint' => 768],
     );
     echo HTMLHelper::_('uitab.addTab', 'propertyTabs', 'basics', KrMethods::plain('COM_KNOWRES_PROPERTY_TAB_BASICS'));
     echo $this->loadTemplate('basic');
@@ -35,30 +37,29 @@ $wa->useScript('keepalive')
     echo $this->loadTemplate('capacity');
     echo HTMLHelper::_('uitab.endTab');
     echo HTMLHelper::_('uitab.addTab', 'propertyTabs', 'location',
-            KrMethods::plain('COM_KNOWRES_PROPERTY_TAB_LOCATION')
+        KrMethods::plain('COM_KNOWRES_PROPERTY_TAB_LOCATION'),
     );
     echo $this->loadTemplate('location');
     echo HTMLHelper::_('uitab.endTab');
     echo HTMLHelper::_('uitab.addTab', 'propertyTabs', 'propertyfields',
-            KrMethods::plain('COM_KNOWRES_PROPERTY_TAB_FIELDS')
+        KrMethods::plain('COM_KNOWRES_PROPERTY_TAB_FIELDS'),
     );
     echo $this->loadTemplate('propertyfields');
     echo HTMLHelper::_('uitab.endTab');
     echo HTMLHelper::_('uitab.addTab', 'propertyTabs', 'amenities',
-            KrMethods::plain('COM_KNOWRES_PROPERTY_TAB_AMENITIES')
+        KrMethods::plain('COM_KNOWRES_PROPERTY_TAB_AMENITIES'),
     );
     echo $this->loadTemplate('amenities');
     echo HTMLHelper::_('uitab.endTab');
 
-    if ($this->params->get('property_rooms', 0))
-    {
+    if ($this->params->get('property_rooms', 0)) {
         echo HTMLHelper::_('uitab.addTab', 'propertyTabs', 'rooms', KrMethods::plain('COM_KNOWRES_PROPERTY_TAB_ROOMS'));
         echo $this->loadTemplate('rooms');
         echo HTMLHelper::_('uitab.endTab');
     }
 
     echo HTMLHelper::_('uitab.addTab', 'propertyTabs', 'checkinout',
-            KrMethods::plain('COM_KNOWRES_PROPERTY_TAB_CHECKINOUT')
+        KrMethods::plain('COM_KNOWRES_PROPERTY_TAB_CHECKINOUT'),
     );
     echo $this->loadTemplate('checkinout');
     echo HTMLHelper::_('uitab.endTab');

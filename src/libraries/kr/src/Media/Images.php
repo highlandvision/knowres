@@ -9,8 +9,6 @@
 
 namespace HighlandVision\KR\Media;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
@@ -32,6 +30,10 @@ use function round;
 use function strtolower;
 
 use const UPLOAD_ERR_OK;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 define('KNOWRES_TEMP_PATH', JPATH_SITE . '/tmp');
 

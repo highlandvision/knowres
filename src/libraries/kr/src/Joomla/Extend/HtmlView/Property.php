@@ -11,8 +11,6 @@
 
 namespace HighlandVision\KR\Joomla\Extend\HtmlView;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\HtmlView as KrHtmlView;
@@ -21,6 +19,10 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 use function defined;
 use function in_array;
 use function is_null;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Property toolbars

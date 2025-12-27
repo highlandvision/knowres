@@ -9,7 +9,9 @@
 
 use HighlandVision\KR\Framework\KrMethods;
 
+// phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 $wa = $app->getDocument()->getWebAssetManager();
 $wa->getRegistry()->addExtensionRegistryFile('com_knowres');
@@ -20,14 +22,15 @@ $wa->useScript('com_knowres.site-modules');
     <?php foreach ($regions as $region): ?>
         <div class="small-12 medium-4 cell">
             <a href="<?php echo KrMethods::route('index.php?option=com_knowres&view=properties&region_id=' .
-                    $region['id'] . '&Itemid=' . $region['Itemid']); ?>" title="<?php echo $region['name']; ?>">
+                $region['id'] . '&Itemid=' . $region['Itemid'],
+            ); ?>" title="<?php echo $region['name']; ?>">
 
                 <?php
                 $options = [
-                        'src'   => $region['image'],
-                        'alt'   => $region['name'],
-                        'style' => 'min-height:180px',
-                        'class' => 'responsive'
+                    'src'   => $region['image'],
+                    'alt'   => $region['name'],
+                    'style' => 'min-height:180px',
+                    'class' => 'responsive',
                 ];
 
                 echo KrMethods::render('joomla.html.image', $options);

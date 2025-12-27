@@ -9,8 +9,6 @@
 
 namespace HighlandVision\KR\Session;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Session;
 use JetBrains\PhpStorm\Pure;
@@ -18,6 +16,10 @@ use stdClass;
 use function defined;
 use function is_null;
 use function property_exists;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Knowres Session helper

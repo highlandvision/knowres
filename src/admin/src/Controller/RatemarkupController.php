@@ -9,12 +9,14 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Controller;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Joomla\Extend\FormController;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') || die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Rate markup controller form class.
@@ -23,19 +25,19 @@ use Joomla\CMS\MVC\Model\BaseDatabaseModel;
  */
 class RatemarkupController extends FormController
 {
-	/**
-	 * Process additional requirements after save
-	 *
-	 * @param   BaseDatabaseModel  $model      The data model object.
-	 * @param   array              $validData  The validated data.
-	 *
-	 * @throws Exception
-	 * @since  3.1
-	 */
-	protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
-	{
-		KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updatePropertyRates',
-			(int) $validData['property_id'], 0, null, $validData['valid_from'], $validData['valid_to']
-		);
-	}
+    /**
+     * Process additional requirements after save
+     *
+     * @param   BaseDatabaseModel  $model      The data model object.
+     * @param   array              $validData  The validated data.
+     *
+     * @throws Exception
+     * @since  3.1
+     */
+    protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
+    {
+        KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updatePropertyRates',
+            (int)$validData['property_id'], 0, null, $validData['valid_from'], $validData['valid_to'],
+        );
+    }
 }

@@ -9,10 +9,12 @@
 
 /** @noinspection PhpUnhandledExceptionInspection */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\SiteHelper;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 $guestformlink  = SiteHelper::buildDashboardLink($this->item, 'guestform');
 $overview_modal = 'kr-overview-modal-' . $this->item->id;

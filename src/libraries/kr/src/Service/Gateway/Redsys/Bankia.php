@@ -9,11 +9,13 @@
 
 namespace HighlandVision\KR\Service\Gateway\Redsys;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Service\Gateway\Redsys;
 use stdClass;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Service gateway bankia (redsys)
@@ -22,17 +24,17 @@ use stdClass;
  */
 class Bankia extends Redsys
 {
-	/**
-	 * Initialize
-	 *
-	 * @param  int       $service_id   OD of service
-	 * @param  stdClass  $paymentData  Session payment data
-	 *
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
-	public function __construct(int $service_id, stdClass $paymentData)
-	{
-		parent::__construct($service_id, $paymentData);
-	}
+    /**
+     * Initialize
+     *
+     * @param   int       $service_id   OD of service
+     * @param   stdClass  $paymentData  Session payment data
+     *
+     * @throws Exception
+     * @since  1.0.0
+     */
+    public function __construct(int $service_id, stdClass $paymentData)
+    {
+        parent::__construct($service_id, $paymentData);
+    }
 }

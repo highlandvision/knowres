@@ -9,13 +9,15 @@
 
 /** @noinspection PhpUnhandledExceptionInspection */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\SiteHelper;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Utility;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 $paymentTotal = KrFactory::getListModel('contractpayments')->getPaymentTotal($this->item->id);
 $feeTotal     = KrFactory::getListModel('contractfees')->getTotalForContract($this->item->id);
@@ -23,12 +25,10 @@ $feeTotal     = KrFactory::getListModel('contractfees')->getTotalForContract($th
 $balance_to_pay  = false;
 $balance_due_now = false;
 $balance         = round($this->item->contract_total + $feeTotal - $paymentTotal, 2);
-if ($this->item->booking_status != 5 && $this->item->booking_status != 39 & $balance > 0)
-{
+if ($this->item->booking_status != 5 && $this->item->booking_status != 39 & $balance > 0) {
     $balance_to_pay = true;
     $sevenb4        = TickTock::modifyDays($this->item->balance_date, 7, '-');
-    if ($this->item->booking_status == 40 || $sevenb4 <= TickTock::getDate())
-    {
+    if ($this->item->booking_status == 40 || $sevenb4 <= TickTock::getDate()) {
         $balance_due_now = true;
     }
 }
@@ -41,11 +41,10 @@ $contractguestdataformlink = SiteHelper::buildDashboardLink($this->item, 'contra
 $overview_modal = 'kr-overview-modal-' . $this->item->id;
 $overview_url   = KrMethods::route('index.php?option=com_knowres&task=dashboard.statement&key=' . $this->item->id);
 
-if ($this->item->guestdata_id > 0)
-{
+if ($this->item->guestdata_id > 0) {
     $guestdata_modal = 'kr-guestdata-modal-' . $this->item->id;
     $guestdata_url   = KrMethods::route('index.php?option=com_knowres&view=dashboard&format=guestdata&key='
-            . $this->key
+        . $this->key,
     );
 }
 ?>
@@ -55,7 +54,7 @@ if ($this->item->guestdata_id > 0)
         <?php $class = $balance_due_now ? "button alert" : "button"; ?>
         <a href="<?php echo $paymentformlink; ?>" class="<?php echo $class ?>">
             <?php echo KrMethods::sprintf('COM_KNOWRES_DASHBOARD_PAY_BALANCE',
-                    Utility::displayValue($balance, $this->item->currency)
+                Utility::displayValue($balance, $this->item->currency),
             ); ?>
         </a>
     <?php endif; ?>
@@ -64,7 +63,7 @@ if ($this->item->guestdata_id > 0)
         <?php echo KrMethods::plain('COM_KNOWRES_DASHBOARD_VIEW_CONTRACT'); ?>
     </a>
 
-    <?php if ((int) $this->item->guestdata_id > 0) : ?>
+    <?php if ((int)$this->item->guestdata_id > 0) : ?>
         <a class="button" href="<?php echo $contractguestdataformlink; ?>">
             <?php echo KrMethods::plain('COM_KNOWRES_DASHBOARD_EDIT_CONTRACTGUESTDATA'); ?>
         </a>

@@ -7,30 +7,25 @@
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Utility;
 
-if ($this->contract->agent_id && $this->contract->agent_deposit_paid)
-{
-	$this->loadtemplate('summary_paynow_agent');
-}
-else
-{
-	if ($this->payment_total)
-	{
-		$left = KrMethods::plain('COM_KNOWRES_BALANCE');
-		$mid  = '';
-		if (!$this->balance)
-		{
-			$mid = !$this->payment_pending ? KrMethods::plain('COM_KNOWRES_PAID') : '';
-		}
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
-		$this->data[] = [
-			'left'  => $left,
-			'mid'   => $mid,
-			'right' => Utility::displayValue($this->balance, $this->contract->currency)
-		];
-	}
+if ($this->contract->agent_id && $this->contract->agent_deposit_paid) {
+    $this->loadtemplate('summary_paynow_agent');
+} elseif ($this->payment_total) {
+    $left = KrMethods::plain('COM_KNOWRES_BALANCE');
+    $mid  = '';
+    if (!$this->balance) {
+        $mid = !$this->payment_pending ? KrMethods::plain('COM_KNOWRES_PAID') : '';
+    }
+
+    $this->data[] = [
+        'left'  => $left,
+        'mid'   => $mid,
+        'right' => Utility::displayValue($this->balance, $this->contract->currency),
+    ];
 }

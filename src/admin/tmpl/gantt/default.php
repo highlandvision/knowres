@@ -8,11 +8,13 @@
  * @version     3.3.1
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\TickTock;
 use Joomla\CMS\Session\Session;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 $wa = $this->document->getWebAssetManager();
 $wa->useScript('keepalive')

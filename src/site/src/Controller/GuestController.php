@@ -9,8 +9,6 @@
 
 namespace HighlandVision\Component\Knowres\Site\Controller;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\Component\Knowres\Site\Model\GuestModel;
 use HighlandVision\KR\Framework\KrMethods;
@@ -21,6 +19,10 @@ use JetBrains\PhpStorm\NoReturn;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Response\JsonResponse;
 use function jexit;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Guest(form) controller class

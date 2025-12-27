@@ -9,9 +9,11 @@
 
 /** @noinspection PhpUnhandledExceptionInspection */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 extract($displayData);
 /**
@@ -31,7 +33,7 @@ extract($displayData);
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 <head>
     <meta name="viewport"
@@ -40,33 +42,33 @@ extract($displayData);
     <title><?php echo KrMethods::getCfg('sitename'); ?></title>
 
     <?php echo KrMethods::render('emails.style', [
-            'body_bg'      => $body_bg,
-            'content_bg'   => $content_bg,
-            'font'         => $font,
-            'font_color'   => $font_color,
-            'font_primary' => $font_primary,
-            'font_size'    => $font_size,
+        'body_bg'      => $body_bg,
+        'content_bg'   => $content_bg,
+        'font'         => $font,
+        'font_color'   => $font_color,
+        'font_primary' => $font_primary,
+        'font_size'    => $font_size,
     ]);
     ?>
 </head>
 
 <body style="color:<?php echo $font_color; ?>;background-color:<?php echo $body_bg; ?>;font-family:<?php echo $font; ?>;
-        font-size:<?php echo $font_size; ?>;mso-line-height-rule:exactly;line-height:120%;margin:0;padding:0;
-        -ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;">
+    font-size:<?php echo $font_size; ?>;mso-line-height-rule:exactly;line-height:120%;margin:0;padding:0;
+    -ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;">
 
 	<span style="color:transparent;visibility:hidden;display:none;opacity:0;height:0;width:0;font-size:0;">
 		<?php echo KrMethods::plain('COM_KNOWRES_EMAIL_PREHEADER'); ?>
 	</span>
 
     <table class="body" style="text-align:left;width:100%;border:none;background-color:<?php echo $body_bg; ?>;
-            border-collapse:separate;mso-table-lspace:0;mso-table-rspace:0;" role="presentation">
+        border-collapse:separate;mso-table-lspace:0;mso-table-rspace:0;" role="presentation">
         <tr>
             <td>
                 <!--CENTERED CONTAINER-->
                 <table class="main"
                        style="text-align:left;margin:0 auto 20px auto;background-color:<?php echo $content_bg; ?>;
-                               border:none;border-collapse:separate;mso-table-lspace:0;mso-table-rspace:0;width:620px;
-                               max-width:620px;" role="presentation">
+                           border:none;border-collapse:separate;mso-table-lspace:0;mso-table-rspace:0;width:620px;
+                           max-width:620px;" role="presentation">
                     <!--HEADER AREA-->
                     <tr>
                         <td class="wrapper" style="box-sizing:border-box;padding:20px 20px 20px 20px;">
@@ -76,8 +78,8 @@ extract($displayData);
                     <!--MAIN CONTENT -->
                     <tr>
                         <td class="wrapper" style="font-family:<?php echo $font; ?>;font-size:<?php echo $font_size; ?>;
-                                mso-line-height-rule:exactly;line-height:120%;vertical-align:top;box-sizing:border-box;
-                                padding:0 20px 0 20px;">
+                            mso-line-height-rule:exactly;line-height:120%;vertical-align:top;box-sizing:border-box;
+                            padding:0 20px 0 20px;">
                             <?php echo $message; ?>
                         </td>
                     </tr>
@@ -93,12 +95,12 @@ extract($displayData);
                             <td style="background-color:<?php echo $content_bg; ?>;height:15px;font-size:0;line-height:0;">
                                 &nbsp;
                                 <?php echo KrMethods::render('emails.affiliates', [
-                                        'body_bg'    => $body_bg,
-                                        'button_bg'  => $button_bg,
-                                        'content_bg' => $content_bg,
-                                        'font'       => $font,
-                                        'font_color' => $font_color,
-                                        'font_size'  => $font_size,
+                                    'body_bg'    => $body_bg,
+                                    'button_bg'  => $button_bg,
+                                    'content_bg' => $content_bg,
+                                    'font'       => $font,
+                                    'font_color' => $font_color,
+                                    'font_size'  => $font_size,
                                 ]); ?>
                             </td>
                         </tr>
@@ -106,14 +108,14 @@ extract($displayData);
                     <!--FOOTER -->
                     <tr>
                         <td class="wrapper" style="background-color:#fefefe;font-family:<?php echo $font; ?>;
-                                font-size:11px;vertical-align:top;box-sizing:border-box;">
+                            font-size:11px;vertical-align:top;box-sizing:border-box;">
                             <?php echo KrMethods::render('emails.footer', [
-                                    'agency_id'  => $agency_id,
-                                    'body_bg'    => $body_bg,
-                                    'content_bg' => $content_bg,
-                                    'font'       => $font,
-                                    'font_color' => $font_color,
-                                    'font_size'  => $font_size,
+                                'agency_id'  => $agency_id,
+                                'body_bg'    => $body_bg,
+                                'content_bg' => $content_bg,
+                                'font'       => $font,
+                                'font_color' => $font_color,
+                                'font_size'  => $font_size,
                             ]); ?>
                         </td>
                     </tr>

@@ -7,22 +7,24 @@
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
+// phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 ?>
 
 <div class="callout small gray">
-	<div class="grid-x grid-margin-x">
-		<div class="small-12 medium-4 cell">
-			<?php echo $this->form->getLabel('c_name'); ?>
-			<?php echo $this->form->getInput('c_name'); ?>
-		</div>
-		<div class="small-12 medium-4 cell">
-			<?php echo $this->form->getLabel('c_phone'); ?>
-			<?php echo $this->form->getInput('c_phone'); ?>
-		</div>
-		<div class="small-12 medium-4 cell">
-			<?php echo $this->form->getLabel('c_email'); ?>
-			<?php echo $this->form->getInput('c_email'); ?>
-		</div>
-	</div>
+    <div class="grid-x grid-margin-x">
+        <div class="small-12 medium-4 cell">
+            <?php echo $this->form->getLabel('c_name'); ?>
+            <?php echo $this->form->getInput('c_name'); ?>
+        </div>
+        <div class="small-12 medium-4 cell">
+            <?php echo $this->form->getLabel('c_phone'); ?>
+            <?php echo $this->form->getInput('c_phone'); ?>
+        </div>
+        <div class="small-12 medium-4 cell">
+            <?php echo $this->form->getLabel('c_email'); ?>
+            <?php echo $this->form->getInput('c_email'); ?>
+        </div>
+    </div>
 </div>

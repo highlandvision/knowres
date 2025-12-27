@@ -9,17 +9,17 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Controller;
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Joomla\Extend\FormController;
 
 use function defined;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') || die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Emailaction controller form class.
  *
  * @since 1.0.0
  */
-class EmailactionController extends FormController
-{
-}
+class EmailactionController extends FormController {}

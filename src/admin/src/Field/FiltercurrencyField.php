@@ -8,13 +8,15 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Field;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Joomla\Extend\ListField as KrListField;
 use RuntimeException;
 
 use function array_merge;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') || die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Form Field to load a list of currencies
@@ -23,22 +25,22 @@ use function array_merge;
  */
 class FiltercurrencyField extends KrListField
 {
-	/** @var string The form field type */
-	protected $type = 'Filtercurrency';
+    /** @var string The form field type */
+    protected $type = 'Filtercurrency';
 
-	/**
-	 * Method to get the currencies to populate filter list
-	 *
-	 * @throws RuntimeException|Exception
-	 * @since  2.5.1
-	 * @return array  The field option objects.
-	 */
-	protected function getOptions(): array
-	{
-		$table   = $this->getAttribute('table');
-		$column  = $this->getAttribute('column');
-		$options = self::filteringForeign('#__knowres_currency', $table, $column, 'iso', 'iso');
+    /**
+     * Method to get the currencies to populate filter list
+     *
+     * @return array  The field option objects.
+     * @throws RuntimeException|Exception
+     * @since  2.5.1
+     */
+    protected function getOptions(): array
+    {
+        $table   = $this->getAttribute('table');
+        $column  = $this->getAttribute('column');
+        $options = self::filteringForeign('#__knowres_currency', $table, $column, 'iso', 'iso');
 
-		return array_merge(parent::getOptions(), $options);
-	}
+        return array_merge(parent::getOptions(), $options);
+    }
 }

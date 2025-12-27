@@ -7,12 +7,14 @@
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\TickTock;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /** @var HighlandVision\Component\Knowres\Administrator\View\Property\CalendarView $this */
 

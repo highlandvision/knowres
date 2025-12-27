@@ -9,10 +9,12 @@
 
 /** @noinspection PhpUnhandledExceptionInspection */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\TickTock;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 $wa = $this->document->getWebAssetManager();
 $wa->useScript('com_knowres.site')

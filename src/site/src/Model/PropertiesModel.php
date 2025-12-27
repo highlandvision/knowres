@@ -9,8 +9,6 @@
 
 namespace HighlandVision\Component\Knowres\Site\Model;
 
-defined('_JEXEC') or die;
-
 use Carbon\Exceptions\InvalidFormatException;
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
@@ -37,6 +35,10 @@ use function implode;
 use function is_array;
 use function json_encode;
 use function trim;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Site properties model used for search

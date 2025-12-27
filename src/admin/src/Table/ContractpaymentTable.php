@@ -9,10 +9,12 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Table;
 
-defined('_JEXEC') or die;
-
 use Joomla\CMS\Table\Table;
 use Joomla\Database\DatabaseDriver;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Table Contract payment
@@ -21,32 +23,32 @@ use Joomla\Database\DatabaseDriver;
  */
 class ContractpaymentTable extends Table
 {
-	/** $var bool Indicates that columns fully support the NULL value in the database */
-	protected $_supportNullValue = true;
+    /** $var bool Indicates that columns fully support the NULL value in the database */
+    protected $_supportNullValue = true;
 
-	/**
-	 * Constructor
-	 *
-	 * @param   DatabaseDriver  $db  Db Connector
-	 *
-	 * @since  1.0.0
-	 */
-	public function __construct(DatabaseDriver $db)
-	{
-		$this->typeAlias = 'com_knowres.contractpayment';
-		parent::__construct('#__knowres_contract_payment', 'id', $db);
+    /**
+     * Constructor
+     *
+     * @param   DatabaseDriver  $db  Db Connector
+     *
+     * @since  1.0.0
+     */
+    public function __construct(DatabaseDriver $db)
+    {
+        $this->typeAlias = 'com_knowres.contractpayment';
+        parent::__construct('#__knowres_contract_payment', 'id', $db);
 
-		$this->setColumnAlias('published', 'state');
-	}
+        $this->setColumnAlias('published', 'state');
+    }
 
-	/**
-	 * Get the type alias for the history table
-	 *
-	 * @since   4.0.0
-	 * @return  string  The alias as described above
-	 */
-	public function getTypeAlias(): string
-	{
-		return $this->typeAlias;
-	}
+    /**
+     * Get the type alias for the history table
+     *
+     * @return  string  The alias as described above
+     * @since   4.0.0
+     */
+    public function getTypeAlias(): string
+    {
+        return $this->typeAlias;
+    }
 }

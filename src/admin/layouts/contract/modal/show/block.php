@@ -7,9 +7,11 @@
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') || die;
+// phpcs:enable PSR1.Files.SideEffects
 
 extract($displayData);
 /**
@@ -54,16 +56,18 @@ extract($displayData);
         </div>
         <div class="tab-pane" id="notes" role="tabpanel" aria-labelledby="notes-tab">
             <?php echo KrMethods::render('contract.modal.show.notes',
-                    ['item' => $item, 'notes' => $notes, 'system' => false]); ?>
+                ['item' => $item, 'notes' => $notes, 'system' => false],
+            ); ?>
         </div>
         <div class="tab-pane" id="systemnotes" role="tabpanel" aria-labelledby="systemnotes-tab">
             <?php echo KrMethods::render('contract.modal.show.notes',
-                    ['item' => $item, 'notes' => $notes, 'system' => true]); ?>
+                ['item' => $item, 'notes' => $notes, 'system' => true],
+            ); ?>
         </div>
     </div>
 </div>
 <div class="modal-footer">
-    <?php if ((int) $item->black_booking === 1): ?>
+    <?php if ((int)$item->black_booking === 1): ?>
         <?php if ($allow_cancel): ?>
             <button class="btn btn-primary modalshowcancel" data-task="contract.trash"
                     data-id="<?php echo $item->id; ?>">

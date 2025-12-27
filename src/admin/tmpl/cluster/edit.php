@@ -7,8 +7,6 @@
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
 use Joomla\CMS\HTML\HTMLHelper;
 

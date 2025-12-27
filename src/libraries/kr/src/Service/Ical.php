@@ -9,8 +9,6 @@
 
 namespace HighlandVision\KR\Service;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
@@ -22,6 +20,10 @@ use RuntimeException;
 use function file_exists;
 use function file_get_contents;
 use function unlink;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Service ical helper

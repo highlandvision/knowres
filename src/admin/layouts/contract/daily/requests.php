@@ -7,11 +7,13 @@
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Utility;
 use Joomla\CMS\HTML\HTMLHelper;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') || die;
+// phpcs:enable PSR1.Files.SideEffects
 
 extract($displayData);
 /**
@@ -52,13 +54,13 @@ extract($displayData);
                         <div class="btn-toolbar" role="toolbar" aria-label="Approve request">
                             <button class="btn btn-success"
                                     onclick="Knowres.submitform('contract.requestapprove',
-                                            document.getElementById('<?php echo $id; ?>')); this.disabled=true"
+                                        document.getElementById('<?php echo $id; ?>')); this.disabled=true"
                                     title="<?php echo KrMethods::plain('COM_KNOWRES_APPROVE'); ?>" type="button">
                                 <i class='fa-solid fa-check'></i>
                             </button>&nbsp;&nbsp;&nbsp;
                             <button class="btn btn-danger"
                                     onclick="Knowres.submitform('contract.requestreject',
-                                            document.getElementById('<?php echo $id; ?>')); this.disabled=true"
+                                        document.getElementById('<?php echo $id; ?>')); this.disabled=true"
                                     title="<?php echo KrMethods::plain('COM_KNOWRES_REJECT'); ?>" type="button">
                                 <i class='fa-solid fa-trash'></i>
                             </button>

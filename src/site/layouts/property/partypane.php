@@ -7,9 +7,11 @@
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 $tadults   = KrMethods::plain('MOD_KNOWRES_SEARCH_ADULTS');
 $tchildren = KrMethods::plain('MOD_KNOWRES_SEARCH_PLURAL_CHILDREN');

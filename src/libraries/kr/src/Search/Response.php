@@ -9,8 +9,6 @@
 
 namespace HighlandVision\KR\Search;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Translations;
@@ -21,6 +19,10 @@ use function array_values;
 use function arsort;
 use function asort;
 use function implode;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Site search for properties

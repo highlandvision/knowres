@@ -9,8 +9,6 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Controller;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\Component\Knowres\Administrator\Model\MapmarkerModel;
 use HighlandVision\KR\Framework\KrMethods;
@@ -20,7 +18,12 @@ use JetBrains\PhpStorm\NoReturn;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Response\JsonResponse;
 use Joomla\String\StringHelper;
+
 use function jexit;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') || die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Map marker controller form class.
@@ -29,61 +32,57 @@ use function jexit;
  */
 class MapmarkerController extends FormController
 {
-	/**
-	 * Return map marker combo
-	 *
-	 * @throws Exception
-	 * @since  4.0.0
-	 */
-	#[NoReturn]
-	public function combo(): void
-	{
-		$model     = new MapmarkerModel();
-		$form      = $model->getForm([], false);
-		$parent_id = KrMethods::inputInt('parent');
-		$target    = KrMethods::inputString('target');
+    /**
+     * Return map marker combo
+     *
+     * @throws Exception
+     * @since  4.0.0
+     */
+    #[NoReturn]
+    public function combo(): void
+    {
+        $model     = new MapmarkerModel();
+        $form      = $model->getForm([], false);
+        $parent_id = KrMethods::inputInt('parent');
+        $target    = KrMethods::inputString('target');
 
-		if ($target == 'region_id')
-		{
-			$form->setValue('country_id', null, $parent_id);
-		}
-		else
-		{
-			$form->setValue('region_id', null, $parent_id);
-		}
+        if ($target == 'region_id') {
+            $form->setValue('country_id', null, $parent_id);
+        } else {
+            $form->setValue('region_id', null, $parent_id);
+        }
 
-		$wrapper         = [];
-		$wrapper['html'] = $form->getInput($target);
+        $wrapper         = [];
+        $wrapper['html'] = $form->getInput($target);
 
-		echo new JsonResponse($wrapper);
-		jexit();
-	}
+        echo new JsonResponse($wrapper);
+        jexit();
+    }
 
-	/**
-	 * Process additional requirements after save map marker
-	 *
-	 * @param   BaseDatabaseModel  $model      The data model object.
-	 * @param   array              $validData  The validated data.
-	 *
-	 * @throws Exception
-	 * @since  3.1
-	 */
-	protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
-	{
-		/** @var MapmarkerModel $model */
-		$item        = $model->getItem();
-		$name        = (string) $validData['name'];
-		$description = (string) $validData['description'];
+    /**
+     * Process additional requirements after save map marker
+     *
+     * @param   BaseDatabaseModel  $model      The data model object.
+     * @param   array              $validData  The validated data.
+     *
+     * @throws Exception
+     * @since  3.1
+     */
+    protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
+    {
+        /** @var MapmarkerModel $model */
+        $item        = $model->getItem();
+        $name        = (string)$validData['name'];
+        $description = (string)$validData['description'];
 
-		if ($this->input->get('task') == 'save2copy')
-		{
-			$name = StringHelper::increment($name);
-		}
+        if ($this->input->get('task') == 'save2copy') {
+            $name = StringHelper::increment($name);
+        }
 
-		$Translations = new Translations();
-		$Translations->updateDefault('mapmarker', $item->id, 'name', $name);
-		$Translations->updateDefault('mapmarker', $item->id, 'description', $description);
+        $Translations = new Translations();
+        $Translations->updateDefault('mapmarker', $item->id, 'name', $name);
+        $Translations->updateDefault('mapmarker', $item->id, 'description', $description);
 
-		KrMethods::cleanCache('com_knowres_map');
-	}
+        KrMethods::cleanCache('com_knowres_map');
+    }
 }

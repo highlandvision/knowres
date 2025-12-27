@@ -9,8 +9,6 @@
 
 namespace HighlandVision\Component\Knowres\Site\Controller;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
@@ -33,6 +31,10 @@ use function is_countable;
 use function jexit;
 use function json_encode;
 use function trim;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Properties list controller class.

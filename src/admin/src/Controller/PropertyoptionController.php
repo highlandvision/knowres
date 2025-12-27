@@ -9,14 +9,16 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Controller;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\Component\Knowres\Administrator\Model\PropertyoptionModel;
 use HighlandVision\KR\Joomla\Extend\FormController;
 use HighlandVision\KR\Translations;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\String\StringHelper;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') || die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Property option controller form class.
@@ -25,27 +27,26 @@ use Joomla\String\StringHelper;
  */
 class PropertyoptionController extends FormController
 {
-	/**
-	 * Process additional requirements after save payment
-	 *
-	 * @param   BaseDatabaseModel  $model      The data model object.
-	 * @param   array              $validData  The validated data.
-	 *
-	 * @throws Exception
-	 * @since  3.1
-	 */
-	protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
-	{
-		/** @var PropertyoptionModel $model */
-		$item = $model->getItem();
-		$name = (string) $validData['name'];
+    /**
+     * Process additional requirements after save payment
+     *
+     * @param   BaseDatabaseModel  $model      The data model object.
+     * @param   array              $validData  The validated data.
+     *
+     * @throws Exception
+     * @since  3.1
+     */
+    protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
+    {
+        /** @var PropertyoptionModel $model */
+        $item = $model->getItem();
+        $name = (string)$validData['name'];
 
-		if ($this->input->get('task') == 'save2copy')
-		{
-			$name = StringHelper::increment($name);
-		}
+        if ($this->input->get('task') == 'save2copy') {
+            $name = StringHelper::increment($name);
+        }
 
-		$Translations = new Translations();
-		$Translations->updateDefault('propertyoption', $item->id, 'name', $name);
-	}
+        $Translations = new Translations();
+        $Translations->updateDefault('propertyoption', $item->id, 'name', $name);
+    }
 }

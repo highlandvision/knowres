@@ -9,11 +9,13 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Table;
 
-defined('_JEXEC') or die;
-
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Versioning\VersionableTableInterface;
 use Joomla\Database\DatabaseDriver;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Knowres Exchange rate Table
@@ -22,32 +24,32 @@ use Joomla\Database\DatabaseDriver;
  */
 class ExchangerateTable extends Table implements VersionableTableInterface
 {
-	/** $var bool Indicates that columns fully support the NULL value in the database */
-	protected $_supportNullValue = true;
+    /** $var bool Indicates that columns fully support the NULL value in the database */
+    protected $_supportNullValue = true;
 
-	/**
-	 * Constructor
-	 *
-	 * @param   DatabaseDriver  $db  Db Connector
-	 *
-	 * @since  1.0.0
-	 */
-	public function __construct(DatabaseDriver $db)
-	{
-		$this->typeAlias = 'com_knowres.exchangerate';
-		parent::__construct('#__knowres_exchange_rate', 'id', $db);
+    /**
+     * Constructor
+     *
+     * @param   DatabaseDriver  $db  Db Connector
+     *
+     * @since  1.0.0
+     */
+    public function __construct(DatabaseDriver $db)
+    {
+        $this->typeAlias = 'com_knowres.exchangerate';
+        parent::__construct('#__knowres_exchange_rate', 'id', $db);
 
-		$this->setColumnAlias('published', 'state');
-	}
+        $this->setColumnAlias('published', 'state');
+    }
 
-	/**
-	 * Get the type alias for the history table
-	 *
-	 * @since   4.0.0
-	 * @return  string  The alias as described above
-	 */
-	public function getTypeAlias(): string
-	{
-		return $this->typeAlias;
-	}
+    /**
+     * Get the type alias for the history table
+     *
+     * @return  string  The alias as described above
+     * @since   4.0.0
+     */
+    public function getTypeAlias(): string
+    {
+        return $this->typeAlias;
+    }
 }

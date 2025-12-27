@@ -7,9 +7,11 @@
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 extract($displayData);
 /**
@@ -58,7 +60,7 @@ $departure = [];
                         <?php if ($first): ?>
                             <td>
                                 <?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATAFORM_ARRIVAL_BY') . ' '
-                                        . KrMethods::plain($text); ?>
+                                    . KrMethods::plain($text); ?>
                             </td>
                             <?php $first = false; ?>
                         <?php else: ?>
@@ -83,7 +85,7 @@ $departure = [];
             </tr>
             <tr>
                 <td><?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATAFORM_ARRIVAL_BY')
-                            . ' ' . KrMethods::plain($text); ?></td>
+                        . ' ' . KrMethods::plain($text); ?></td>
                 <td><?php echo $guestdata->arrival_from; ?></td>
                 <td><?php echo $guestdata->arrival_place; ?></td>
                 <td><?php echo $guestdata->arrival_time; ?></td>
@@ -98,7 +100,7 @@ $departure = [];
             </tr>
             <tr>
                 <td><?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATAFORM_ARRIVAL_BY')
-                            . ' ' . KrMethods::plain($text); ?></td>
+                        . ' ' . KrMethods::plain($text); ?></td>
                 <td><?php echo $guestdata->arrival_from; ?></td>
                 <td><?php echo $guestdata->arrival_time; ?></td>
             </tr>
@@ -108,7 +110,7 @@ $departure = [];
             <tr>
                 <td>
                     <?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATAFORM_ARRIVAL_BY')
-                            . ' ' . KrMethods::plain($text); ?>
+                        . ' ' . KrMethods::plain($text); ?>
                 </td>
             </tr>
             <tr>

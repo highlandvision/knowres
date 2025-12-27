@@ -7,9 +7,11 @@
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 $this->form->setFieldAttribute('guest_note', 'hiddenLabel', false);
 ?>
@@ -24,7 +26,7 @@ $this->form->setFieldAttribute('guest_note', 'hiddenLabel', false);
         </div>
 
         <?php if ($this->guestForm->getFieldAttribute('firstname', 'type', 'hidden') != 'hidden'
-                || $this->guestForm->getFieldAttribute('surname', 'type', 'hidden') != 'hidden'): ?>
+            || $this->guestForm->getFieldAttribute('surname', 'type', 'hidden') != 'hidden'): ?>
             <div class="grid-x grid-margin-x">
                 <div class="large-6 cell">
                     <?php echo $this->guestForm->renderField('firstname'); ?>

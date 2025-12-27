@@ -8,13 +8,15 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Field;
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Joomla\Extend\ListField as KrListField;
 use InvalidArgumentException;
 use RuntimeException;
 
 use function array_merge;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') || die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Form Field to load a list of filter properties
@@ -23,21 +25,21 @@ use function array_merge;
  */
 class FiltermethodField extends KrListField
 {
-	/** @var string The form field type. */
-	protected $type = 'FilterMethod';
+    /** @var string The form field type. */
+    protected $type = 'FilterMethod';
 
-	/**
-	 * Populate the service method filter
-	 *
-	 * @throws RuntimeException
-	 * @throws InvalidArgumentException
-	 * @since  2.5.1
-	 * @return array  The field option objects.
-	 */
-	protected function getOptions(): array
-	{
-		$options = self::filterMethod($this->getAttribute('table'));
+    /**
+     * Populate the service method filter
+     *
+     * @return array  The field option objects.
+     * @throws InvalidArgumentException
+     * @throws RuntimeException
+     * @since  2.5.1
+     */
+    protected function getOptions(): array
+    {
+        $options = self::filterMethod($this->getAttribute('table'));
 
-		return array_merge(parent::getOptions(), $options);
-	}
+        return array_merge(parent::getOptions(), $options);
+    }
 }

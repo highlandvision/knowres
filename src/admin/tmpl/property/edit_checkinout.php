@@ -7,9 +7,11 @@
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /** @var HighlandVision\Component\Knowres\Administrator\View\Property\HtmlView $this */
 
@@ -17,14 +19,14 @@ $this->form->setFieldAttribute('security_amount', 'addonBefore', $this->settings
 ?>
 
 <div class="row">
-	<div>
-		<legend><?php echo KrMethods::plain('COM_KNOWRES_PROPERTY_LEGEND_SECURITY'); ?></legend>
-		<?php echo $this->form->renderFieldset('security'); ?>
-		<legend><?php echo KrMethods::plain('COM_KNOWRES_PROPERTY_LEGEND_CHECKINFEES'); ?></legend>
-		<?php echo $this->form->renderFieldset('checkintimesfees'); ?>
-		<legend><?php echo KrMethods::plain('COM_KNOWRES_PROPERTY_LEGEND_CANCELLATION'); ?></legend>
-		<?php echo $this->form->renderFieldset('cancellation'); ?>
-		<legend><?php echo KrMethods::plain('COM_KNOWRES_PROPERTY_LEGEND_CONTACT'); ?></legend>
-		<?php echo $this->form->renderFieldset('contact'); ?>
-	</div>
+    <div>
+        <legend><?php echo KrMethods::plain('COM_KNOWRES_PROPERTY_LEGEND_SECURITY'); ?></legend>
+        <?php echo $this->form->renderFieldset('security'); ?>
+        <legend><?php echo KrMethods::plain('COM_KNOWRES_PROPERTY_LEGEND_CHECKINFEES'); ?></legend>
+        <?php echo $this->form->renderFieldset('checkintimesfees'); ?>
+        <legend><?php echo KrMethods::plain('COM_KNOWRES_PROPERTY_LEGEND_CANCELLATION'); ?></legend>
+        <?php echo $this->form->renderFieldset('cancellation'); ?>
+        <legend><?php echo KrMethods::plain('COM_KNOWRES_PROPERTY_LEGEND_CONTACT'); ?></legend>
+        <?php echo $this->form->renderFieldset('contact'); ?>
+    </div>
 </div>

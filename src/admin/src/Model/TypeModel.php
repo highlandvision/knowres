@@ -9,14 +9,16 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Model;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\AdminModel;
 use HighlandVision\KR\Translations;
 use Joomla\CMS\Versioning\VersionableControllerTrait;
 use RuntimeException;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Knowres Type model
@@ -25,52 +27,50 @@ use RuntimeException;
  */
 class TypeModel extends AdminModel
 {
-	use VersionableControllerTrait;
+    use VersionableControllerTrait;
 
-	/**  @var string The type alias. */
-	public $typeAlias = 'com_knowres.type';
-	/** @var mixed Batch copy/move command. If set to false, the batch copy/move command is not supported. */
-	protected $batch_copymove = false;
-	/**  @var ?string The prefix to use with controller messages. */
-	protected $text_prefix = 'COM_KNOWRES_TYPE';
+    /**  @var string The type alias. */
+    public $typeAlias = 'com_knowres.type';
+    /** @var mixed Batch copy/move command. If set to false, the batch copy/move command is not supported. */
+    protected $batch_copymove = false;
+    /**  @var ?string The prefix to use with controller messages. */
+    protected $text_prefix = 'COM_KNOWRES_TYPE';
 
-	/**
-	 * Method to get a knowres record.
-	 *
-	 * @param   int  $pk  The id of the primary key.
-	 *
-	 * @return false|object  Object on success, false on failure.
-	 * @throws RuntimeException
-	 * @since  1.0.0
-	 */
-	public function getItem($pk = null): false|object
-	{
-		$item = parent::getItem($pk);
-		if ($item)
-		{
-			$Translations       = new Translations();
-			$item->name         = $Translations->getText('type', $item->id);
-			$item->abbreviation = $Translations->getText('type', $item->id, 'abbreviation');
-		}
+    /**
+     * Method to get a knowres record.
+     *
+     * @param   int  $pk  The id of the primary key.
+     *
+     * @return false|object  Object on success, false on failure.
+     * @throws RuntimeException
+     * @since  1.0.0
+     */
+    public function getItem($pk = null): false|object
+    {
+        $item = parent::getItem($pk);
+        if ($item) {
+            $Translations       = new Translations();
+            $item->name         = $Translations->getText('type', $item->id);
+            $item->abbreviation = $Translations->getText('type', $item->id, 'abbreviation');
+        }
 
-		return $item;
-	}
+        return $item;
+    }
 
-	/**
-	 * Method to get the data that should be injected in the form.
-	 *
-	 * @return mixed The data for the form.
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
-	protected function loadFormData(): mixed
-	{
-		$data = KrMethods::getUserState('com_knowres.edit.type.data', []);
-		if (empty($data))
-		{
-			$data = $this->getItem();
-		}
+    /**
+     * Method to get the data that should be injected in the form.
+     *
+     * @return mixed The data for the form.
+     * @throws Exception
+     * @since  1.0.0
+     */
+    protected function loadFormData(): mixed
+    {
+        $data = KrMethods::getUserState('com_knowres.edit.type.data', []);
+        if (empty($data)) {
+            $data = $this->getItem();
+        }
 
-		return $data;
-	}
+        return $data;
+    }
 }

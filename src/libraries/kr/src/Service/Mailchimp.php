@@ -9,8 +9,6 @@
 
 namespace HighlandVision\KR\Service;
 
-defined('_JEXEC') or die;
-
 use DrewM\MailChimp\MailChimp as VendorMailchimp;
 use Exception;
 use HighlandVision\KR\Framework\KrMethods;
@@ -18,6 +16,10 @@ use HighlandVision\KR\Service;
 use HighlandVision\KR\TickTock;
 use InvalidArgumentException;
 use function preg_match;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Service subscribe via mailchimp

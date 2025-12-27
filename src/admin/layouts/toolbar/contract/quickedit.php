@@ -7,7 +7,9 @@
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') || die;
+// phpcs:enable PSR1.Files.SideEffects
 
 extract($displayData);
 /** Layout variables
@@ -17,8 +19,8 @@ extract($displayData);
 ?>
 
 <joomla-toolbar-button id="contract-update-group-children-quickedit">
-	<button class="btn btn-primary dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#quickModal">
-		<span class='fa-solid fa-fighter-jet knowres' aria-hidden="true"></span>
-		<?php echo $title; ?>
-	</button>
+    <button class="btn btn-primary dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#quickModal">
+        <span class='fa-solid fa-fighter-jet knowres' aria-hidden="true"></span>
+        <?php echo $title; ?>
+    </button>
 </joomla-toolbar-button>

@@ -8,8 +8,6 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Field;
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Translations;
 use InvalidArgumentException;
@@ -19,6 +17,10 @@ use Joomla\DI\Exception\KeyNotFoundException;
 use RuntimeException;
 
 use function array_merge;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') || die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Load a list of translated fields

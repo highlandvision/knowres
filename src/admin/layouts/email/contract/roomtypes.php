@@ -7,9 +7,11 @@
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Translations;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') || die;
+// phpcs:enable PSR1.Files.SideEffects
 
 extract($displayData);
 /**
@@ -20,12 +22,10 @@ extract($displayData);
  */
 
 $lines = [];
-foreach ($rooms as $r)
-{
-	if ($r['number'] > 0)
-	{
-		$lines[] = $Translations->getText('room', (int) $r['room_id']) . ' x ' . $d['number'];
-	}
+foreach ($rooms as $r) {
+    if ($r['number'] > 0) {
+        $lines[] = $Translations->getText('room', (int)$r['room_id']) . ' x ' . $d['number'];
+    }
 }
 
 echo count($lines) ? implode('<br>', $lines) : '';

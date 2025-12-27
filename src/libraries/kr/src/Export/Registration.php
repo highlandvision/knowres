@@ -9,8 +9,6 @@
 
 namespace HighlandVision\KR\Export;
 
-defined('_JEXEC') or die;
-
 use Carbon\Exceptions\InvalidFormatException;
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
@@ -21,6 +19,10 @@ use HighlandVision\KR\Utility;
 use JetBrains\PhpStorm\NoReturn;
 use function count;
 use function implode;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Export plain text file of guest registration details

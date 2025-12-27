@@ -7,12 +7,13 @@
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Translations;
 
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 ?>
 
 <?php if (!count($this->latest)) : ?>
@@ -25,10 +26,11 @@ use HighlandVision\KR\Translations;
             <i class='fa-solid fa-long-arrow-alt-right' aria-hidden="true"></i>
             <a href="<?php echo KrMethods::route('index.php?option=com_knowres&task=contract.show&id=' . $l->id); ?>">
                 <?php echo KrMethods::sprintf('COM_KNOWRES_PROPERTYDASHBOARD_CONTRACTS_TEXT',
-                        TickTock::displayDate($l->arrival, 'd M Y'),
-                        TickTock::differenceDays($l->arrival, $l->departure),
-                        $l->firstname . ' ' . $l->surname,
-                        Translations::getCountryName($l->country_id)); ?>
+                    TickTock::displayDate($l->arrival, 'd M Y'),
+                    TickTock::differenceDays($l->arrival, $l->departure),
+                    $l->firstname . ' ' . $l->surname,
+                    Translations::getCountryName($l->country_id),
+                ); ?>
             </a>
         </div>
     </div>

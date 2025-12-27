@@ -9,12 +9,14 @@
 
 namespace HighlandVision\KR;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrMethods;
 use Joomla\Session\SessionInterface;
 use stdClass;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Knowres Session helper

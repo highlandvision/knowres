@@ -7,11 +7,13 @@
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Utility;
 use Stripe\Stripe as StripeLib;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 StripeLib::setApiKey(trim($this->paymentData->secret_key));
 ?>
@@ -34,7 +36,7 @@ StripeLib::setApiKey(trim($this->paymentData->secret_key));
                 <div class="spinner hidden" id="spinner"></div>
                 <span id="button-text">
 					<?php $payment_amount = Utility::displayValue($this->paymentData->amount,
-                            $this->paymentData->currency
+                        $this->paymentData->currency,
                     ); ?>
                     <?php echo KrMethods::sprintf('COM_KNOWRES_PAYMENT_CARD_SUBMIT', $payment_amount); ?>
             </button>

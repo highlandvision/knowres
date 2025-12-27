@@ -9,12 +9,14 @@
 
 namespace HighlandVision\Component\Knowres\Site\Field;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Session as KrSession;
 use Joomla\CMS\Form\FormField;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Supports a value from an external table

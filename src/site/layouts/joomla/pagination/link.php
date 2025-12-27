@@ -8,13 +8,15 @@
 
 /** @noinspection PhpUnhandledExceptionInspection */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Session as KrSession;
 use HighlandVision\KR\SiteHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 $item    = $displayData['data'];
 $display = $item->text;

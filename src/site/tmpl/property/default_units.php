@@ -9,12 +9,14 @@
 
 /** @noinspection PhpUnhandledExceptionInspection */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Media;
 use HighlandVision\KR\SiteHelper;
 use Joomla\CMS\HTML\HTMLHelper;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 ?>
 
 <div class="grid-x grid-margin-x">
@@ -27,13 +29,13 @@ use Joomla\CMS\HTML\HTMLHelper;
         <div class="small-12 medium-6 cell">
             <a href="<?php echo $plink; ?>" title="<?php echo $unit->property_name; ?>">
                 <?php echo HTMLHelper::_('image',
-                        Media\Images::getImagePath($unit->id, 'solo', $image),
-                        $unit->property_name,
-                        [
-                                'class'  => "relative",
-                                'width'  => $this->params->get('max_property_width'),
-                                'height' => $this->params->get('max_property_height')
-                        ]
+                    Media\Images::getImagePath($unit->id, 'solo', $image),
+                    $unit->property_name,
+                    [
+                        'class'  => "relative",
+                        'width'  => $this->params->get('max_property_width'),
+                        'height' => $this->params->get('max_property_height'),
+                    ],
                 );
                 ?>
             </a>

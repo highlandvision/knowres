@@ -9,8 +9,6 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Model;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
@@ -19,6 +17,10 @@ use HighlandVision\KR\TickTock;
 use Joomla\CMS\Table\Table;
 use RuntimeException;
 
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
+
 /**
  * Knowres owner payment model.
  *
@@ -26,70 +28,67 @@ use RuntimeException;
  */
 class OwnerpaymentModel extends AdminModel
 {
-	/**  @var string The type alias. */
-	public $typeAlias = 'com_knowres.ownerpayment';
-	/** @var mixed Batch copy/move command. If set to false, the batch copy/move command is not supported. */
-	protected $batch_copymove = false;
-	/**  @var ?string The prefix to use with controller messages. */
-	protected $text_prefix = 'COM_KNOWRES_OWNERPAYMENT';
+    /**  @var string The type alias. */
+    public $typeAlias = 'com_knowres.ownerpayment';
+    /** @var mixed Batch copy/move command. If set to false, the batch copy/move command is not supported. */
+    protected $batch_copymove = false;
+    /**  @var ?string The prefix to use with controller messages. */
+    protected $text_prefix = 'COM_KNOWRES_OWNERPAYMENT';
 
-	/**
-	 * Return the ownerpayment row.
-	 *
-	 * @param   integer  $pk  The id of the primary key.
-	 *
-	 * @return object|false  Object on success, false on failure.
-	 * @throws Exception
-	 * @since  3.3.1
-	 */
-	public function getItem($pk = null): object|false
-	{
-		/** @var OwnerpaymentModel $model */
-		$item = parent::getItem($pk);
-		if ($item)
-		{
-			$contract       = KrFactory::getAdminModel('contract')->getItem($item->contract_id);
-			$item->currency = $contract->currency;
-		}
+    /**
+     * Return the ownerpayment row.
+     *
+     * @param   integer  $pk  The id of the primary key.
+     *
+     * @return object|false  Object on success, false on failure.
+     * @throws Exception
+     * @since  3.3.1
+     */
+    public function getItem($pk = null): object|false
+    {
+        /** @var OwnerpaymentModel $model */
+        $item = parent::getItem($pk);
+        if ($item) {
+            $contract       = KrFactory::getAdminModel('contract')->getItem($item->contract_id);
+            $item->currency = $contract->currency;
+        }
 
-		return $item;
-	}
+        return $item;
+    }
 
-	/**
-	 * Method to get the data that should be injected in the form.
-	 *
-	 * @return mixed The data for the form.
-	 * @throws Exception
-	 * @since  3.3.1
-	 */
-	protected function loadFormData(): mixed
-	{
-		$data = KrMethods::getUserState('com_knowres.edit.ownerpayment.data', []);
-		if (empty($data))
-		{
-			$data = $this->getItem();
-		}
+    /**
+     * Method to get the data that should be injected in the form.
+     *
+     * @return mixed The data for the form.
+     * @throws Exception
+     * @since  3.3.1
+     */
+    protected function loadFormData(): mixed
+    {
+        $data = KrMethods::getUserState('com_knowres.edit.ownerpayment.data', []);
+        if (empty($data)) {
+            $data = $this->getItem();
+        }
 
-		return $data;
-	}
+        return $data;
+    }
 
-	/**
-	 * Prepare and sanitize the table prior to saving.
-	 *
-	 * @param   Table  $table  Table instance
-	 *
-	 * @throws RuntimeException
-	 * @throws Exception
-	 * @since  3.3.1
-	 */
-	protected function prepareTable($table): void
-	{
-		if ($table->confirmed && !$table->confirmed_by)
-		{
-			$table->confirmed_at = TickTock::getTs();
-			$table->confirmed_by = KrMethods::getUser()->id;
-		}
+    /**
+     * Prepare and sanitize the table prior to saving.
+     *
+     * @param   Table  $table  Table instance
+     *
+     * @throws RuntimeException
+     * @throws Exception
+     * @since  3.3.1
+     */
+    protected function prepareTable($table): void
+    {
+        if ($table->confirmed && !$table->confirmed_by) {
+            $table->confirmed_at = TickTock::getTs();
+            $table->confirmed_by = KrMethods::getUser()->id;
+        }
 
-		parent::prepareTable($table);
-	}
+        parent::prepareTable($table);
+    }
 }

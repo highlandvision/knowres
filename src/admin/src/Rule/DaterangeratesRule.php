@@ -9,8 +9,6 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Rule;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
@@ -20,6 +18,10 @@ use Joomla\CMS\Form\FormRule;
 use Joomla\Registry\Registry;
 use SimpleXMLElement;
 
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
+
 /**
  * Rule for date range
  *
@@ -27,51 +29,50 @@ use SimpleXMLElement;
  */
 class DaterangeratesRule extends FormRule
 {
-	/**
-	 * Method to test the value.
-	 *
-	 * @param   SimpleXMLElement  $element  The SimpleXMLElement object representing the `<field>` tag for the form
-	 *                                      field object.
-	 * @param   mixed             $value    The form field value to validate.
-	 * @param  ?string            $group    The field name group control value. This acts as an array container for
-	 *                                      the field.
-	 *                                      For example if the field name="foo" and the group value is set to "bar"
-	 *                                      then the full field name would end up being "bar[foo]".
-	 * @param  ?Registry          $input    An optional Registry object with the entire data set to validate against
-	 *                                      the entire form.
-	 * @param  ?Form              $form     The form object for which the field is being tested.
-	 *
-	 * @return bool  True if the value is valid, false otherwise.
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
-	public function test(SimpleXMLElement $element, $value, $group = null, ?Registry $input = null,
-	                     ?Form            $form = null): bool
-	{
-		$valid_from = ($input instanceof Registry) ? $input->get('valid_from') : '';
-		if ($value < $valid_from)
-		{
-			KrMethods::message(KrMethods::plain('COM_KNOWRES_RULES_DATERANGE'), 'error');
+    /**
+     * Method to test the value.
+     *
+     * @param   SimpleXMLElement  $element  The SimpleXMLElement object representing the `<field>` tag for the form
+     *                                      field object.
+     * @param   mixed             $value    The form field value to validate.
+     * @param  ?string            $group    The field name group control value. This acts as an array container for
+     *                                      the field.
+     *                                      For example if the field name="foo" and the group value is set to "bar"
+     *                                      then the full field name would end up being "bar[foo]".
+     * @param  ?Registry          $input    An optional Registry object with the entire data set to validate against
+     *                                      the entire form.
+     * @param  ?Form              $form     The form object for which the field is being tested.
+     *
+     * @return bool  True if the value is valid, false otherwise.
+     * @throws Exception
+     * @since  1.0.0
+     */
+    public function test(SimpleXMLElement $element, $value, $group = null, ?Registry $input = null,
+        ?Form $form = null): bool
+    {
+        $valid_from = ($input instanceof Registry) ? $input->get('valid_from') : '';
+        if ($value < $valid_from) {
+            KrMethods::message(KrMethods::plain('COM_KNOWRES_RULES_DATERANGE'), 'error');
 
-			return false;
-		}
+            return false;
+        }
 
-		$id          = ($input instanceof Registry) ? $input->get('id') : '';
-		$property_id = ($input instanceof Registry) ? $input->get('property_id') : '';
+        $id          = ($input instanceof Registry) ? $input->get('id') : '';
+        $property_id = ($input instanceof Registry) ? $input->get('property_id') : '';
 
-		$dates = KrFactory::getListModel('rates')->ruleDateRangeRates($id, $property_id, $value, $valid_from);
-		if (count($dates))
-		{
-			foreach ($dates as $d)
-			{
-				KrMethods::message(KrMethods::plain('Date range overlaps with period '
-					. TickTock::displayDate($d->valid_from) . ' to ' . TickTock::displayDate($d->valid_to)),
-					'error');
+        $dates = KrFactory::getListModel('rates')->ruleDateRangeRates($id, $property_id, $value, $valid_from);
+        if (count($dates)) {
+            foreach ($dates as $d) {
+                KrMethods::message(KrMethods::plain('Date range overlaps with period '
+                    . TickTock::displayDate($d->valid_from) . ' to ' . TickTock::displayDate($d->valid_to),
+                ),
+                    'error',
+                );
 
-				return false;
-			}
-		}
+                return false;
+            }
+        }
 
-		return true;
-	}
+        return true;
+    }
 }

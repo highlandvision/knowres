@@ -7,7 +7,9 @@
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') || die;
+// phpcs:enable PSR1.Files.SideEffects
 
 extract($displayData);
 /** Layout variables

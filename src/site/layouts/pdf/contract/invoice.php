@@ -7,9 +7,11 @@
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 extract($displayData);
 /**
@@ -29,18 +31,18 @@ extract($displayData);
     <tr>
         <td>
             <?php echo KrMethods::render('pdf.contract.invoice.header',
-                    ['contract' => $contract, 'guest' => $guest, 'property' => $property, 'agency' => $agency]
+                ['contract' => $contract, 'guest' => $guest, 'property' => $property, 'agency' => $agency],
             ); ?>
             <br><br>
 
             <?php echo KrMethods::render('pdf.contract.invoice.detail',
-                    ['contract' => $contract, 'agency' => $agency]
+                ['contract' => $contract, 'agency' => $agency],
             ); ?>
 
             <br><br>
 
             <table
-                    style="padding:5px;width:100%;border:1px solid #666;border-collapse:collapse;background-color:#d3f0f3;">
+                style="padding:5px;width:100%;border:1px solid #666;border-collapse:collapse;background-color:#d3f0f3;">
                 <tr>
                     <td colspan="2">
                         <?php echo KrMethods::plain('COM_KNOWRES_PDF_INVOICE_DSC'); ?>
@@ -52,7 +54,7 @@ extract($displayData);
                 <tr>
                     <td colspan="3" style="background-color:#fefefe;">
                         <?php echo KrMethods::render('pdf.contract.invoice.summary',
-                                ['contract' => $contract, 'fees' => $fees, 'payments' => $payments]
+                            ['contract' => $contract, 'fees' => $fees, 'payments' => $payments],
                         ); ?>
                     </td>
                 </tr>
@@ -61,7 +63,7 @@ extract($displayData);
             <?php if (!$dashboard): ?>
                 <br><br><br>
                 <?php echo KrMethods::render('pdf.contract.invoice.signatures',
-                        ['contract' => $contract]
+                    ['contract' => $contract],
                 ); ?>
             <?php endif; ?>
         </td>

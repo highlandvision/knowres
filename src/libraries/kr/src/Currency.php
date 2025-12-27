@@ -9,10 +9,12 @@
 
 namespace HighlandVision\KR;
 
-defined('_JEXEC') or die;
-
 use function count;
 use function defined;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Currency class

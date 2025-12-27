@@ -8,8 +8,6 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Field;
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Joomla\Extend\ListField as KrListField;
 use HighlandVision\KR\Session as KrSession;
@@ -20,6 +18,10 @@ use RuntimeException;
 use function array_merge;
 use function defined;
 
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') || die;
+// phpcs:enable PSR1.Files.SideEffects
+
 /**
  * Filter for restricted access to owner so owners only see their own names
  *
@@ -27,48 +29,48 @@ use function defined;
  */
 class FilterownerpropertiesField extends KrListField
 {
-	/** @var string The form field type. */
-	protected $type = 'Filterownerproperties';
+    /** @var string The form field type. */
+    protected $type = 'Filterownerproperties';
 
-	/**
-	 * Method to get the owners to populate filter list
-	 *
-	 * @throws RuntimeException
-	 * @throws KeyNotFoundException
-	 * @throws InvalidArgumentException
-	 * @since   5.0.0
-	 * @return  array  The field option objects.
-	 */
-	protected function getOptions(): array
-	{
-		$userSession = new KrSession\User();
-		if ($userSession->getAccessLevel() < 30) {
-			$options = [];
+    /**
+     * Method to get the owners to populate filter list
+     *
+     * @return  array  The field option objects.
+     * @throws KeyNotFoundException
+     * @throws InvalidArgumentException
+     * @throws RuntimeException
+     * @since   5.0.0
+     */
+    protected function getOptions(): array
+    {
+        $userSession = new KrSession\User();
+        if ($userSession->getAccessLevel() < 30) {
+            $options = [];
 
-			return array_merge(parent::getOptions(), $options);
-		}
+            return array_merge(parent::getOptions(), $options);
+        }
 
-		$db    = KrFactory::getDatabase();
-		$query = $db->getQuery(true);
+        $db    = KrFactory::getDatabase();
+        $query = $db->getQuery(true);
 
-		$query->select($db->qn('o.id', 'value'))
-			->select($db->qn('o.name', 'text'))
-			->from($db->qn('#__knowres_owner', 'o'))
-			->where($db->qn('o.state') . '=1');
+        $query->select($db->qn('o.id', 'value'))
+              ->select($db->qn('o.name', 'text'))
+              ->from($db->qn('#__knowres_owner', 'o'))
+              ->where($db->qn('o.state') . '=1');
 
-		$userProperties = $userSession->getUserProperties();
-		if (!empty($userProperties)) {
-			$query->from($db->qn('#__knowres_property', 'p'));
-			$query->where($db->qn('p.id') . 'IN (' . $userProperties . ')');
-		}
+        $userProperties = $userSession->getUserProperties();
+        if (!empty($userProperties)) {
+            $query->from($db->qn('#__knowres_property', 'p'));
+            $query->where($db->qn('p.id') . 'IN (' . $userProperties . ')');
+        }
 
-		$query->group($db->qn('value'))
-			->group($db->qn('text'))
-			->order($db->qn('text'));
+        $query->group($db->qn('value'))
+              ->group($db->qn('text'))
+              ->order($db->qn('text'));
 
-		$db->setQuery($query);
-		$options = $db->loadObjectList();
+        $db->setQuery($query);
+        $options = $db->loadObjectList();
 
-		return array_merge(parent::getOptions(), $options);
-	}
+        return array_merge(parent::getOptions(), $options);
+    }
 }

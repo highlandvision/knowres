@@ -9,12 +9,14 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Model;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\AdminModel;
 use Joomla\CMS\Versioning\VersionableModelTrait;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Knowres agent model
@@ -23,30 +25,29 @@ use Joomla\CMS\Versioning\VersionableModelTrait;
  */
 class AgentModel extends AdminModel
 {
-	use VersionableModelTrait;
+    use VersionableModelTrait;
 
-	/**  @var string The type alias. */
-	public $typeAlias = 'com_knowres.agent';
-	/** @var mixed Batch copy/move command. If set to false, the batch copy/move command is not supported. */
-	protected $batch_copymove = false;
-	/**  @var ?string The prefix to use with controller messages. */
-	protected $text_prefix = 'COM_KNOWRES_AGENT';
+    /**  @var string The type alias. */
+    public $typeAlias = 'com_knowres.agent';
+    /** @var mixed Batch copy/move command. If set to false, the batch copy/move command is not supported. */
+    protected $batch_copymove = false;
+    /**  @var ?string The prefix to use with controller messages. */
+    protected $text_prefix = 'COM_KNOWRES_AGENT';
 
-	/**
-	 * Method to get the data that should be injected in the form.
-	 *
-	 * @return mixed The data for the form.
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
-	protected function loadFormData(): mixed
-	{
-		$data = KrMethods::getUserState('com_knowres.edit.agency.data', []);
-		if (empty($data))
-		{
-			$data = $this->getItem();
-		}
+    /**
+     * Method to get the data that should be injected in the form.
+     *
+     * @return mixed The data for the form.
+     * @throws Exception
+     * @since  1.0.0
+     */
+    protected function loadFormData(): mixed
+    {
+        $data = KrMethods::getUserState('com_knowres.edit.agency.data', []);
+        if (empty($data)) {
+            $data = $this->getItem();
+        }
 
-		return $data;
-	}
+        return $data;
+    }
 }

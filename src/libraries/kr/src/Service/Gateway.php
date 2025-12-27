@@ -9,8 +9,6 @@
 
 namespace HighlandVision\KR\Service;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
@@ -22,6 +20,10 @@ use RuntimeException;
 use stdClass;
 use function in_array;
 use function nl2br;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Service gateways to process payments for

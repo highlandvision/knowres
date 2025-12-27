@@ -11,7 +11,9 @@ namespace HighlandVision\Component\Knowres\Administrator\Service\Html;
 
 use Joomla\Database\DatabaseAwareTrait;
 
+// phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Knowres HTML class.
@@ -20,15 +22,15 @@ defined('_JEXEC') or die;
  */
 class Knowres
 {
-	use DatabaseAwareTrait;
+    use DatabaseAwareTrait;
 
-	/**
-	 * Creates a list of types to filter on.
-	 *
-	 * @since   2.5
-	 */
-	public function testme(): void
-	{
-		$test = true;
-	}
+    /**
+     * Creates a list of types to filter on.
+     *
+     * @since   2.5
+     */
+    public function testme(): void
+    {
+        $test = true;
+    }
 }

@@ -9,12 +9,14 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Controller;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrMethods;
 use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') || die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Contract notes controller list class.
@@ -23,40 +25,41 @@ use Joomla\CMS\MVC\Model\BaseDatabaseModel;
  */
 class ContractnotesController extends AdminController
 {
-	/** @var string The URL view list variable */
-	protected $view_list = 'contract.show';
+    /** @var string The URL view list variable */
+    protected $view_list = 'contract.show';
 
-	/**
-	 * Delete notes
-	 *
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
-	public function delete(): bool
-	{
-		parent::delete();
+    /**
+     * Delete notes
+     *
+     * @throws Exception
+     * @since  1.0.0
+     */
+    public function delete(): bool
+    {
+        parent::delete();
 
-		$contract_id = KrMethods::getUserState('com_knowres.current.contract_id', 0);
-		if ($contract_id)
-		{
-			KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&task=contract.show&id=' . $contract_id,
-				false));
-		}
-	}
+        $contract_id = KrMethods::getUserState('com_knowres.current.contract_id', 0);
+        if ($contract_id) {
+            KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&task=contract.show&id=' . $contract_id,
+                false,
+            ),
+            );
+        }
+    }
 
-	/**
-	 * Proxy for getModel.
-	 *
-	 * @param   string  $name    Model name
-	 * @param   string  $prefix  Model prefix administrator or site (defaults to administrator)
-	 * @param   array   $config  Configuration options
-	 *
-	 * @return bool|BaseDatabaseModel
-	 * @since  1.6
-	 */
-	public function getModel($name = 'contractnote', $prefix = 'Administrator',
-	                         $config = ['ignore_request' => true]): BaseDatabaseModel|bool
-	{
-		return parent::getModel($name, $prefix, $config);
-	}
+    /**
+     * Proxy for getModel.
+     *
+     * @param   string  $name    Model name
+     * @param   string  $prefix  Model prefix administrator or site (defaults to administrator)
+     * @param   array   $config  Configuration options
+     *
+     * @return bool|BaseDatabaseModel
+     * @since  1.6
+     */
+    public function getModel($name = 'contractnote', $prefix = 'Administrator',
+        $config = ['ignore_request' => true]): BaseDatabaseModel|bool
+    {
+        return parent::getModel($name, $prefix, $config);
+    }
 }

@@ -9,7 +9,9 @@
 
 use HighlandVision\KR\Framework\KrMethods;
 
+// phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 ?>
 
 <?php echo KrMethods::render('property.area_beds_sleeps', ['item' => $this->item]); ?>

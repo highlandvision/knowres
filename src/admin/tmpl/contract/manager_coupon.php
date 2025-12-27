@@ -9,26 +9,28 @@
 
 use HighlandVision\KR\Framework\KrMethods;
 
+// phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 ?>
 
 <?php if ($this->show_coupon): ?>
-	<fieldset>
-		<legend><?php echo KrMethods::plain('COM_KNOWRES_CONTRACT_COUPON_LBL'); ?></legend>
-		<div class="row">
-			<div class="col-4">
-				<?php echo $this->form->renderField('coupon_code'); ?>
-			</div>
-			<div class="col-4">
-				<button type="button" class="btn btn-secondary kr-calculate">
-					<?php echo KrMethods::plain('COM_KNOWRES_CONTRACT_COUPON_APPLY'); ?>
-				</button>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col">
-				<div class="red info" id="coupon_response"></div>
-			</div>
-		</div>
-	</fieldset>
+    <fieldset>
+        <legend><?php echo KrMethods::plain('COM_KNOWRES_CONTRACT_COUPON_LBL'); ?></legend>
+        <div class="row">
+            <div class="col-4">
+                <?php echo $this->form->renderField('coupon_code'); ?>
+            </div>
+            <div class="col-4">
+                <button type="button" class="btn btn-secondary kr-calculate">
+                    <?php echo KrMethods::plain('COM_KNOWRES_CONTRACT_COUPON_APPLY'); ?>
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="red info" id="coupon_response"></div>
+            </div>
+        </div>
+    </fieldset>
 <?php endif; ?>

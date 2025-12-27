@@ -7,15 +7,17 @@
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 ?>
 
 <div class="topcorner">
-	<div class="triangle">
-		<div class="text">
-			<?php echo KrMethods::plain('COM_KNOWRES_NEW'); ?>
-		</div>
-	</div>
+    <div class="triangle">
+        <div class="text">
+            <?php echo KrMethods::plain('COM_KNOWRES_NEW'); ?>
+        </div>
+    </div>
 </div>

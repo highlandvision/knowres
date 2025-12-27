@@ -9,7 +9,9 @@
 
 use HighlandVision\KR\Utility;
 
-defined('_JEXEC') or die;
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') || die;
+// phpcs:enable PSR1.Files.SideEffects
 
 if (!$displayData['data']) {
 	return;

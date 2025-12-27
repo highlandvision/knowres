@@ -9,8 +9,6 @@
 
 namespace HighlandVision\Component\Knowres\Site\Field;
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
 use InvalidArgumentException;
 use Joomla\CMS\Form\Field\ListField;
@@ -18,6 +16,10 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 
 use function array_merge;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Displays either the expanded guest numbers with adults, children and ages

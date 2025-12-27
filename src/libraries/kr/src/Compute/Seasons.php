@@ -9,14 +9,16 @@
 
 namespace HighlandVision\KR\Compute;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Hub;
 
 use function count;
 use function is_countable;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Calculate seasons adjsutment

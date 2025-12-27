@@ -9,11 +9,13 @@
 
 namespace HighlandVision\Component\Knowres\Site\View\Property;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Joomla\Extend\HtmlView as KrHtmlView;
 use JetBrains\PhpStorm\NoReturn;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Display the map info window for a property.
@@ -22,20 +24,21 @@ use JetBrains\PhpStorm\NoReturn;
  */
 class MapinfowindowView extends KrHtmlView\Site
 {
-	/**
-	 * Display the view
-	 *
-	 * @param   null  $tpl  Default template.
-	 *
-	 * @throws Exception
-	 * @since  1.0.0
-	 * @return void
-	 */
-	#[NoReturn] public function display($tpl = null): void
-	{
-		$this->setLayout('mapinfowindow');
+    /**
+     * Display the view
+     *
+     * @param   null  $tpl  Default template.
+     *
+     * @return void
+     * @throws Exception
+     * @since  1.0.0
+     */
+    #[NoReturn]
+    public function display($tpl = null): void
+    {
+        $this->setLayout('mapinfowindow');
 
-		parent::display($tpl);
-		jexit();
-	}
+        parent::display($tpl);
+        jexit();
+    }
 }

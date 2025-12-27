@@ -7,10 +7,12 @@
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 $foreign_key = '';
 ?>
@@ -20,7 +22,7 @@ $foreign_key = '';
         <?php if ($this->item->service_id): ?>
             <?php $foreign_key = KrFactory::getListModel('servicexrefs')
                                           ->getForeignKeyForContract($this->item->service_id,
-                                                  $this->item->id, $this->item->cancelled
+                                              $this->item->id, $this->item->cancelled,
                                           ); ?>
         <?php endif; ?>
 
@@ -35,10 +37,10 @@ $foreign_key = '';
             <div class="collapse" id="panel-collapse-agent">
                 <div class="card-body">
                     <?php echo KrMethods::render('contract.show.agent',
-                            [
-                                    'contract'    => $this->item,
-                                    'foreign_key' => $foreign_key
-                            ]
+                        [
+                            'contract'    => $this->item,
+                            'foreign_key' => $foreign_key,
+                        ],
                     );
                     ?>
                 </div>

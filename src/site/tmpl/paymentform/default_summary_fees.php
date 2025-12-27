@@ -7,25 +7,25 @@
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Utility;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 $fees   = [];
 $values = [];
 
-foreach ($this->contract_fees as $fee)
-{
-	$fees[]   = $fee->description;
-	$values[] = Utility::displayValue($fee->value, $this->contract->currency);
+foreach ($this->contract_fees as $fee) {
+    $fees[]   = $fee->description;
+    $values[] = Utility::displayValue($fee->value, $this->contract->currency);
 }
 
-if (count($fees))
-{
-	$this->data[] = [
-		'left'  => KrMethods::plain('COM_KNOWRES_CONTRACTFEE_TITLE'),
-		'mid'   => implode("<br>", $fees),
-		'right' => implode("<br>", $values)
-	];
+if (count($fees)) {
+    $this->data[] = [
+        'left'  => KrMethods::plain('COM_KNOWRES_CONTRACTFEE_TITLE'),
+        'mid'   => implode("<br>", $fees),
+        'right' => implode("<br>", $values),
+    ];
 }

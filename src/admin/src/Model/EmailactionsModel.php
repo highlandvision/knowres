@@ -9,14 +9,17 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Model;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\ListModel;
 use Joomla\Database\QueryInterface;
 use RuntimeException;
+
 use function defined;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Methods supporting a list of Knowres email actions records.
@@ -25,19 +28,18 @@ use function defined;
  */
 class EmailactionsModel extends ListModel
 {
-	/**
-	 * Constructor.
-	 *
-	 * @param   array  $config  An optional associative array of configuration settings.
-	 *
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
-	public function __construct($config = [])
-	{
-		if (empty($config['filter_fields']))
-		{
-			//@formatter:off
+    /**
+     * Constructor.
+     *
+     * @param   array  $config  An optional associative array of configuration settings.
+     *
+     * @throws Exception
+     * @since  1.0.0
+     */
+    public function __construct($config = [])
+    {
+        if (empty($config['filter_fields'])) {
+            //@formatter:off
 			$config['filter_fields'] = [
 				'id',               'a.id',
 				'contract_id',      'a.contract_id',
@@ -48,101 +50,96 @@ class EmailactionsModel extends ListModel
 				'contract_tag'
 			];
 			//@formatter:on
-		}
+        }
 
-		parent::__construct($config);
-	}
+        parent::__construct($config);
+    }
 
-	/**
-	 * Build an SQL query to load the list data.
-	 *
-	 * @return QueryInterface
-	 * @throws RuntimeException
-	 * @since  2.0.0
-	 */
-	protected function getListQuery(): QueryInterface
-	{
-		$db    = $this->getDatabase();
-		$query = $db->getQuery(true);
+    /**
+     * Build an SQL query to load the list data.
+     *
+     * @return QueryInterface
+     * @throws RuntimeException
+     * @since  2.0.0
+     */
+    protected function getListQuery(): QueryInterface
+    {
+        $db    = $this->getDatabase();
+        $query = $db->getQuery(true);
 
-		$query->select($this->getState('list.select', 'a.*'));
-		$query->from($db->qn('#__knowres_email_action', 'a'));
+        $query->select($this->getState('list.select', 'a.*'));
+        $query->from($db->qn('#__knowres_email_action', 'a'));
 
-		$query->select($db->qn('uc.name', 'editor'))
-		      ->join('LEFT', $db->qn('#__users', 'uc') . ' ON ' . $db->qn('uc.id') . '=' . $db->qn('a.checked_out'));
-		$query->select($db->qn('created_by.name', 'created_by'))
-		      ->join('LEFT',
-			      $db->qn('#__users', 'created_by') . ' ON ' . $db->qn('created_by.id') . '='
-			      . $db->qn('a.created_by')
-		      );
-		$query->select($db->qn('updated_by.name', 'updated_by'))
-		      ->join('LEFT', $db->qn('#__users', 'updated_by') . ' ON ' . $db->qn('updated_by.id') . '='
-			      . $db->qn('a.updated_by')
-		      );
-		$query->select($db->qn('contract.tag', 'contract_tag'))
-		      ->join('LEFT', $db->qn('#__knowres_contract', 'contract') . ' ON ' . $db->qn('contract.id') . '='
-			      . $db->qn('a.contract_id')
-		      );
+        $query->select($db->qn('uc.name', 'editor'))
+              ->join('LEFT', $db->qn('#__users', 'uc') . ' ON ' . $db->qn('uc.id') . '=' . $db->qn('a.checked_out'));
+        $query->select($db->qn('created_by.name', 'created_by'))
+              ->join('LEFT',
+                  $db->qn('#__users', 'created_by') . ' ON ' . $db->qn('created_by.id') . '='
+                  . $db->qn('a.created_by'),
+              );
+        $query->select($db->qn('updated_by.name', 'updated_by'))
+              ->join('LEFT', $db->qn('#__users', 'updated_by') . ' ON ' . $db->qn('updated_by.id') . '='
+                  . $db->qn('a.updated_by'),
+              );
+        $query->select($db->qn('contract.tag', 'contract_tag'))
+              ->join('LEFT', $db->qn('#__knowres_contract', 'contract') . ' ON ' . $db->qn('contract.id') . '='
+                  . $db->qn('a.contract_id'),
+              );
 
-		$search = $this->getState('filter.search');
-		if (!empty($search))
-		{
-			if (stripos($search, 'id:') === 0)
-			{
-				$query->where($db->qn('a.id') . '=' . (int) substr($search, 3));
-			}
-			else
-			{
-				$search = $db->q('%' . $search . '%');
-				$query->where($db->qn('contract.tag') . ' LIKE ' . $search);
-			}
-		}
+        $search = $this->getState('filter.search');
+        if (!empty($search)) {
+            if (stripos($search, 'id:') === 0) {
+                $query->where($db->qn('a.id') . '=' . (int)substr($search, 3));
+            } else {
+                $search = $db->q('%' . $search . '%');
+                $query->where($db->qn('contract.tag') . ' LIKE ' . $search);
+            }
+        }
 
-		$orderCol  = $this->state->get('list.ordering');
-		$orderDirn = $this->state->get('list.direction');
-		if ($orderCol && $orderDirn)
-		{
-			$query->order($db->escape($orderCol . ' ' . $orderDirn));
-		}
+        $orderCol  = $this->state->get('list.ordering');
+        $orderDirn = $this->state->get('list.direction');
+        if ($orderCol && $orderDirn) {
+            $query->order($db->escape($orderCol . ' ' . $orderDirn));
+        }
 
-		return $query;
-	}
+        return $query;
+    }
 
-	/**
-	 * Method to get a store id based on model configuration state.
-	 * This is necessary because the model is used by the component and
-	 * different modules that might need different sets of data or different
-	 * ordering requirements.
-	 *
-	 * @param   string  $id  A prefix for the store id.
-	 *
-	 * @return string A store id.
-	 * @since  2.0.0
-	 */
-	protected function getStoreId($id = ''): string
-	{
-		$id .= ':' . $this->getState('filter.search');
+    /**
+     * Method to get a store id based on model configuration state.
+     * This is necessary because the model is used by the component and
+     * different modules that might need different sets of data or different
+     * ordering requirements.
+     *
+     * @param   string  $id  A prefix for the store id.
+     *
+     * @return string A store id.
+     * @since  2.0.0
+     */
+    protected function getStoreId($id = ''): string
+    {
+        $id .= ':' . $this->getState('filter.search');
 
-		return parent::getStoreId($id);
-	}
+        return parent::getStoreId($id);
+    }
 
-	/**
-	 * Method to autopopulate the model state.
-	 * Note. Calling getState in this method will result in recursion.
-	 *
-	 * @param   null|string  $ordering
-	 * @param   null|string  $direction
-	 *
-	 * @since 1.0.0
-	 */
-	protected function populateState($ordering = 'a.id', $direction = 'asc'): void
-	{
-		$this->setState('filter.search',
-			$this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string')
-		);
+    /**
+     * Method to autopopulate the model state.
+     * Note. Calling getState in this method will result in recursion.
+     *
+     * @param   null|string  $ordering
+     * @param   null|string  $direction
+     *
+     * @since 1.0.0
+     */
+    protected function populateState($ordering = 'a.id', $direction = 'asc'): void
+    {
+        $this->setState('filter.search',
+            $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string'),
+        );
 
-		$this->setState('params', KrMethods::getParams());
+        $this->setState('params', KrMethods::getParams());
 
-		parent::populateState('a.id', 'asc');
-	}
+        parent::populateState('a.id', 'asc');
+    }
 }

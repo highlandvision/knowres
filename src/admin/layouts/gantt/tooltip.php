@@ -7,10 +7,12 @@
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Utility;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') || die;
+// phpcs:enable PSR1.Files.SideEffects
 
 extract($displayData);
 /**
@@ -21,16 +23,16 @@ extract($displayData);
 ?>
 
 <div>
-	<i class='fa-solid fa-lg fa-mobile-alt'>&nbsp;</i>
-	<span><?php echo Utility::formatPhoneNumber($data->mobile, $data->mobile_country_id); ?></span>
+    <i class='fa-solid fa-lg fa-mobile-alt'>&nbsp;</i>
+    <span><?php echo Utility::formatPhoneNumber($data->mobile, $data->mobile_country_id); ?></span>
 </div>
 <?php if ($data->email): ?>
-	<div>
-		<i class='fa-solid fa-envelope'>&nbsp;</i>
-		<span><?php echo $data->email; ?></span>
-	</div>
+    <div>
+        <i class='fa-solid fa-envelope'>&nbsp;</i>
+        <span><?php echo $data->email; ?></span>
+    </div>
 <?php endif; ?>
 <div>
-	<i class='fa-solid fa-lg fa-calendar-alt'>&nbsp;</i>
-	<?php echo TickTock::displayDate($data->arrival) . ' - ' . TickTock::displayDate($data->departure); ?>
+    <i class='fa-solid fa-lg fa-calendar-alt'>&nbsp;</i>
+    <?php echo TickTock::displayDate($data->arrival) . ' - ' . TickTock::displayDate($data->departure); ?>
 </div>

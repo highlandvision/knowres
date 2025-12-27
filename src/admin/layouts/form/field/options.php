@@ -6,10 +6,12 @@
  * @license         GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
 use Joomla\CMS\HTML\HTMLHelper;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') || die;
+// phpcs:enable PSR1.Files.SideEffects
 
 extract($displayData);
 /**
@@ -39,8 +41,9 @@ extract($displayData);
             <div class="controls">
                 <?php if ($po->yesno) : ?>
                     <div class="col-2">
-                        <?php echo HTMLHelper::_('select.genericlist', $yesno, 'answer[]', 'class="form-select input-mini"',
-                                'value', 'text', $goptions[$po->id], $input_id
+                        <?php echo HTMLHelper::_('select.genericlist', $yesno, 'answer[]',
+                            'class="form-select input-mini"',
+                            'value', 'text', $goptions[$po->id], $input_id,
                         ); ?>
                         <input type=hidden name="oid[]" value="<?php echo $po->id; ?>">
                     </div>

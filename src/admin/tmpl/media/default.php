@@ -7,9 +7,11 @@
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Media;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 $wa = $this->document->getWebAssetManager();
 $wa->useScript('keepalive')
@@ -20,22 +22,22 @@ $this->lines = Media\Pdf::listPdfs('propertys', $this->item->id);
 ?>
 
 <div class="main-card">
-	<div class="row">
-		<div class="col-lg-4">
-			<?php echo $this->loadTemplate('youtube'); ?>
-		</div>
-		<div class="col-lg-4">
-			<?php echo $this->loadTemplate('addpdf'); ?>
-		</div>
-		<?php if (count($this->lines)): ?>
-			<div class="col-lg-4">
-				<?php echo $this->loadTemplate('delpdf'); ?>
-			</div>
-		<?php endif; ?>
-	</div>
-	<div class="row">
-		<div class="col-lg-12">
-			<?php echo $this->loadTemplate('propertyimage'); ?>
-		</div>
-	</div>
+    <div class="row">
+        <div class="col-lg-4">
+            <?php echo $this->loadTemplate('youtube'); ?>
+        </div>
+        <div class="col-lg-4">
+            <?php echo $this->loadTemplate('addpdf'); ?>
+        </div>
+        <?php if (count($this->lines)): ?>
+            <div class="col-lg-4">
+                <?php echo $this->loadTemplate('delpdf'); ?>
+            </div>
+        <?php endif; ?>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <?php echo $this->loadTemplate('propertyimage'); ?>
+        </div>
+    </div>
 </div>

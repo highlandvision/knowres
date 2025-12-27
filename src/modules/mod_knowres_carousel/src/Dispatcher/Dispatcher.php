@@ -9,8 +9,6 @@
 
 namespace HighlandVision\Module\KnowresCarousel\Site\Dispatcher;
 
-defined('JPATH_PLATFORM') or die;
-
 use Carbon\Carbon;
 use Exception;
 use HighlandVision\KR\ExceptionHandling;
@@ -23,6 +21,10 @@ use function is_dir;
 
 use const JPATH_ROOT;
 
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
+
 /**
  * Dispatcher class for mod_knowres_carousel
  *
@@ -30,46 +32,46 @@ use const JPATH_ROOT;
  */
 class Dispatcher extends AbstractModuleDispatcher implements HelperFactoryAwareInterface
 {
-	use HelperFactoryAwareTrait;
+    use HelperFactoryAwareTrait;
 
-	/**
-	 * Define tasks for before dispatch
-	 *
-	 * @throws Exception
-	 * @since  4.0.0
-	 */
-	public function dispatch(): void
-	{
-		if (is_dir(JPATH_ROOT . '/media/com_knowres/vendor')) {
-			require_once(JPATH_ROOT . '/media/com_knowres/vendor/autoload.php');
-		}
+    /**
+     * Define tasks for before dispatch
+     *
+     * @throws Exception
+     * @since  4.0.0
+     */
+    public function dispatch(): void
+    {
+        if (is_dir(JPATH_ROOT . '/media/com_knowres/vendor')) {
+            require_once(JPATH_ROOT . '/media/com_knowres/vendor/autoload.php');
+        }
 
-		new ExceptionHandling();
-		Carbon::setToStringFormat('Y-m-d');
+        new ExceptionHandling();
+        Carbon::setToStringFormat('Y-m-d');
 
-		parent::dispatch();
-	}
+        parent::dispatch();
+    }
 
-	/**
-	 * Returns the layout data.
-	 *
-	 * @throws Exception
-	 * @since  4.0.0
-	 * @return array
-	 */
-	protected function getLayoutData(): array
-	{
-		$data   = parent::getLayoutData();
-		$params = $data['params'];
+    /**
+     * Returns the layout data.
+     *
+     * @return array
+     * @throws Exception
+     * @since  4.0.0
+     */
+    protected function getLayoutData(): array
+    {
+        $data   = parent::getLayoutData();
+        $params = $data['params'];
 
-		if ($data && !empty($params)) {
-			$Helper                = $this->getHelperFactory()->getHelper('KnowresCarouselHelper');
-			$data['images']        = $Helper->getImages($params->get('folder'));
-			$data['url']           = $params->get('url', '');
-			$data['autoPlaySpeed'] = $params->get('autoPlaySpeed', '5000');
-			$data['speed']         = $params->get('speed', '50');
-		}
+        if ($data && !empty($params)) {
+            $Helper                = $this->getHelperFactory()->getHelper('KnowresCarouselHelper');
+            $data['images']        = $Helper->getImages($params->get('folder'));
+            $data['url']           = $params->get('url', '');
+            $data['autoPlaySpeed'] = $params->get('autoPlaySpeed', '5000');
+            $data['speed']         = $params->get('speed', '50');
+        }
 
-		return $data;
-	}
+        return $data;
+    }
 }

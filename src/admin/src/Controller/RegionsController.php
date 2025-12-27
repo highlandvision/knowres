@@ -9,10 +9,12 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Controller;
 
-defined('_JEXEC') or die;
-
 use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') || die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Regions controller list class.
@@ -21,19 +23,19 @@ use Joomla\CMS\MVC\Model\BaseDatabaseModel;
  */
 class RegionsController extends AdminController
 {
-	/**
-	 * Proxy for getModel.
-	 *
-	 * @param   string  $name
-	 * @param   string  $prefix
-	 * @param   array   $config
-	 *
-	 * @since  1.6
-	 * @return bool|BaseDatabaseModel
-	 */
-	public function getModel($name = 'region', $prefix = 'Administrator',
-		$config = ['ignore_request' => true]): BaseDatabaseModel|bool
-	{
-		return parent::getModel($name, $prefix, $config);
-	}
+    /**
+     * Proxy for getModel.
+     *
+     * @param   string  $name
+     * @param   string  $prefix
+     * @param   array   $config
+     *
+     * @return bool|BaseDatabaseModel
+     * @since  1.6
+     */
+    public function getModel($name = 'region', $prefix = 'Administrator',
+        $config = ['ignore_request' => true]): BaseDatabaseModel|bool
+    {
+        return parent::getModel($name, $prefix, $config);
+    }
 }

@@ -9,8 +9,6 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Controller;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\Component\Knowres\Administrator\Model\ImageModel;
 use HighlandVision\KR\Framework\KrFactory;
@@ -19,6 +17,10 @@ use HighlandVision\KR\Translations;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\String\StringHelper;
 
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') || die;
+// phpcs:enable PSR1.Files.SideEffects
+
 /**
  * Image controller form class.
  *
@@ -26,34 +28,33 @@ use Joomla\String\StringHelper;
  */
 class ImageController extends FormController
 {
-	/**
-	 * Process additional requirements after save image
-	 *
-	 * @param   BaseDatabaseModel  $model      The data model object.
-	 * @param   array              $validData  The validated data.
-	 *
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
-	protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
-	{
-		/** @var ImageModel $model */
-		$item = $model->getItem();
+    /**
+     * Process additional requirements after save image
+     *
+     * @param   BaseDatabaseModel  $model      The data model object.
+     * @param   array              $validData  The validated data.
+     *
+     * @throws Exception
+     * @since  1.0.0
+     */
+    protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
+    {
+        /** @var ImageModel $model */
+        $item = $model->getItem();
 
-		$description = (string) $validData['description'];
-		$alt_text    = (string) $validData['alt_text'];
+        $description = (string)$validData['description'];
+        $alt_text    = (string)$validData['alt_text'];
 
-		if ($this->input->get('task') == 'save2copy')
-		{
-			$description = StringHelper::increment($description);
-		}
+        if ($this->input->get('task') == 'save2copy') {
+            $description = StringHelper::increment($description);
+        }
 
-		$Translations = new Translations();
-		$Translations->updateDefault('image', $item->id, 'description', $description);
-		$Translations->updateDefault('image', $item->id, 'alt_text', $alt_text);
+        $Translations = new Translations();
+        $Translations->updateDefault('image', $item->id, 'description', $description);
+        $Translations->updateDefault('image', $item->id, 'alt_text', $alt_text);
 
-		KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updateProperty', (int) $validData['property_id'],
-			0, 'ru'
-		);
-	}
+        KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updateProperty', (int)$validData['property_id'],
+            0, 'ru',
+        );
+    }
 }

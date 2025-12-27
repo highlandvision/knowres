@@ -9,8 +9,6 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Model;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\AdminModel;
@@ -20,6 +18,10 @@ use RuntimeException;
 
 use function uasort;
 
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
+
 /**
  * Knowres property field model.
  *
@@ -27,192 +29,184 @@ use function uasort;
  */
 class PropertyfieldModel extends AdminModel
 {
-	use VersionableControllerTrait;
+    use VersionableControllerTrait;
 
-	/**  @var string The type alias. */
-	public $typeAlias = 'com_knowres.propertyfield';
-	/** @var mixed Batch copy/move command. If set to false, the batch copy/move command is not supported. */
-	protected $batch_copymove = false;
-	/**  @var ?string The prefix to use with controller messages. */
-	protected $text_prefix = 'COM_KNOWRES_PROPERTYFIELD';
+    /**  @var string The type alias. */
+    public $typeAlias = 'com_knowres.propertyfield';
+    /** @var mixed Batch copy/move command. If set to false, the batch copy/move command is not supported. */
+    protected $batch_copymove = false;
+    /**  @var ?string The prefix to use with controller messages. */
+    protected $text_prefix = 'COM_KNOWRES_PROPERTYFIELD';
 
-	/**
-	 * Method to get a knowres record.
-	 *
-	 * @param   int  $pk  The id of the primary key.
-	 *
-	 * @return false|object  Object on success, false on failure.
-	 * @throws RuntimeException
-	 * @since  1.0.0
-	 */
-	public function getItem($pk = null): false|object
-	{
-		$item = parent::getItem($pk);
-		if ($item)
-		{
-			$Translations      = new Translations();
-			$item->label       = $Translations->getText('propertyfield', $item->id, 'label');
-			$item->description = $Translations->getText('propertyfield', $item->id, 'description');
-		}
+    /**
+     * Compare values
+     *
+     * @param   string  $a  Value 1
+     * @param   string  $b  Value 2
+     *
+     * @return int
+     * @since  1.0.0
+     */
+    private static function cmp(string $a, string $b): int
+    {
+        if ($a == $b) {
+            return 0;
+        }
 
-		return $item;
-	}
+        return ($a < $b) ? -1 : 1;
+    }
 
-	/**
-	 * Set options for special property fields
-	 *
-	 * @return array
-	 * @since  4.0.0
-	 */
-	public function getOptions(): array
-	{
-		$options = [
-			'1'  => KrMethods::plain('COM_KNOWRES_FORM_PROPERTYFIELD_SPECIAL_1'),
-			'2'  => KrMethods::plain('COM_KNOWRES_FORM_PROPERTYFIELD_SPECIAL_2'),
-			'3'  => KrMethods::plain('COM_KNOWRES_FORM_PROPERTYFIELD_SPECIAL_3'),
-			'4'  => KrMethods::plain('COM_KNOWRES_FORM_PROPERTYFIELD_SPECIAL_4'),
-			'5'  => KrMethods::plain('COM_KNOWRES_FORM_PROPERTYFIELD_SPECIAL_5'),
-			'8'  => KrMethods::plain('COM_KNOWRES_FORM_PROPERTYFIELD_SPECIAL_8'),
-			'9'  => KrMethods::plain('COM_KNOWRES_FORM_PROPERTYFIELD_SPECIAL_9'),
-			'10' => KrMethods::plain('COM_KNOWRES_FORM_PROPERTYFIELD_SPECIAL_10'),
-			'11' => KrMethods::plain('COM_KNOWRES_FORM_PROPERTYFIELD_SPECIAL_11'),
-			'12' => KrMethods::plain('COM_KNOWRES_FORM_PROPERTYFIELD_SPECIAL_12'),
-		];
+    /**
+     * Method to get a knowres record.
+     *
+     * @param   int  $pk  The id of the primary key.
+     *
+     * @return false|object  Object on success, false on failure.
+     * @throws RuntimeException
+     * @since  1.0.0
+     */
+    public function getItem($pk = null): false|object
+    {
+        $item = parent::getItem($pk);
+        if ($item) {
+            $Translations      = new Translations();
+            $item->label       = $Translations->getText('propertyfield', $item->id, 'label');
+            $item->description = $Translations->getText('propertyfield', $item->id, 'description');
+        }
 
-		uasort($options, array(
-			'HighlandVision\Component\Knowres\Administrator\Model\PropertyfieldModel',
-			'cmp'
-		));
+        return $item;
+    }
 
-		return $options;
-	}
+    //	/**
+    //	 * Set options for special property fields
+    //	 *
+    //	 * @param  mixed  $a  Key value
+    //	 * @param  mixed  $b  Option
+    //	 *
+    //	 * @since  4.0.0
+    //	 * @return int
+    //	 */
+    //	function sort(mixed $a, mixed $b): int
+    //	{
+    //		if ($a == $b)
+    //		{
+    //			return 0;
+    //		}
+    //
+    //		return ($a < $b) ? -1 : 1;
+    //	}
 
-	//	/**
-	//	 * Set options for special property fields
-	//	 *
-	//	 * @param  mixed  $a  Key value
-	//	 * @param  mixed  $b  Option
-	//	 *
-	//	 * @since  4.0.0
-	//	 * @return int
-	//	 */
-	//	function sort(mixed $a, mixed $b): int
-	//	{
-	//		if ($a == $b)
-	//		{
-	//			return 0;
-	//		}
-	//
-	//		return ($a < $b) ? -1 : 1;
-	//	}
+    /**
+     * Set options for special property fields
+     *
+     * @return array
+     * @since  4.0.0
+     */
+    public function getOptions(): array
+    {
+        $options = [
+            '1'  => KrMethods::plain('COM_KNOWRES_FORM_PROPERTYFIELD_SPECIAL_1'),
+            '2'  => KrMethods::plain('COM_KNOWRES_FORM_PROPERTYFIELD_SPECIAL_2'),
+            '3'  => KrMethods::plain('COM_KNOWRES_FORM_PROPERTYFIELD_SPECIAL_3'),
+            '4'  => KrMethods::plain('COM_KNOWRES_FORM_PROPERTYFIELD_SPECIAL_4'),
+            '5'  => KrMethods::plain('COM_KNOWRES_FORM_PROPERTYFIELD_SPECIAL_5'),
+            '8'  => KrMethods::plain('COM_KNOWRES_FORM_PROPERTYFIELD_SPECIAL_8'),
+            '9'  => KrMethods::plain('COM_KNOWRES_FORM_PROPERTYFIELD_SPECIAL_9'),
+            '10' => KrMethods::plain('COM_KNOWRES_FORM_PROPERTYFIELD_SPECIAL_10'),
+            '11' => KrMethods::plain('COM_KNOWRES_FORM_PROPERTYFIELD_SPECIAL_11'),
+            '12' => KrMethods::plain('COM_KNOWRES_FORM_PROPERTYFIELD_SPECIAL_12'),
+        ];
 
-	/**
-	 * Get the tab name for a special property field
-	 *
-	 * @param   int  $special  The special field ID
-	 *
-	 * @return string
-	 * @since  4.0.0
-	 */
-	public function getPropertyTab(int $special): string
-	{
-		$tabs = [
-			1  => 'propertyfields',
-			2  => 'propertyfields',
-			3  => 'security',
-			4  => 'basic',
-			5  => 'propertyfields',
-			8  => 'checkinout',
-			9  => 'checkinout',
-			10 => 'basic',
-			11 => 'basic',
-			12 => 'basic',
-		];
+        uasort($options, [
+            'HighlandVision\Component\Knowres\Administrator\Model\PropertyfieldModel',
+            'cmp',
+        ]);
 
-		if (!empty($tabs[$special]))
-		{
-			return $tabs[$special];
-		}
+        return $options;
+    }
 
-		return 'propertyfields';
-	}
+    /**
+     * Get the tab name for a special property field
+     *
+     * @param   int  $special  The special field ID
+     *
+     * @return string
+     * @since  4.0.0
+     */
+    public function getPropertyTab(int $special): string
+    {
+        $tabs = [
+            1  => 'propertyfields',
+            2  => 'propertyfields',
+            3  => 'security',
+            4  => 'basic',
+            5  => 'propertyfields',
+            8  => 'checkinout',
+            9  => 'checkinout',
+            10 => 'basic',
+            11 => 'basic',
+            12 => 'basic',
+        ];
 
-	/**
-	 * Return name for special property field
-	 *
-	 * @param   string  $special   Special name
-	 * @param   bool    $external  External or internal display required
-	 *
-	 * @return string
-	 * @since  1.2.2
-	 */
-	public function propertyFieldSpecial(string $special, bool $external = true): string
-	{
-		if ($external)
-		{
-			$textvar = "COM_KNOWRES_FORM_PROPERTYFIELD_SPECIAL_" . $special;
+        if (!empty($tabs[$special])) {
+            return $tabs[$special];
+        }
 
-			return KrMethods::plain($textvar);
-		}
-		else
-		{
-			$name = [
-				1  => 'meta_title',
-				2  => 'meta_description',
-				3  => 'security_text',
-				4  => 'tagline',
-				5  => 'terms_conditions',
-				8  => 'nearest_transport',
-				9  => 'where_keys',
-				10 => 'channel_name',
-				11 => 'licence_id',
-				12 => 'catastral',
-			];
+        return 'propertyfields';
+    }
 
-			if (!empty(($name[$special])))
-			{
-				return $name[$special];
-			}
-		}
+    /**
+     * Return name for special property field
+     *
+     * @param   string  $special   Special name
+     * @param   bool    $external  External or internal display required
+     *
+     * @return string
+     * @since  1.2.2
+     */
+    public function propertyFieldSpecial(string $special, bool $external = true): string
+    {
+        if ($external) {
+            $textvar = "COM_KNOWRES_FORM_PROPERTYFIELD_SPECIAL_" . $special;
 
-		return '';
-	}
+            return KrMethods::plain($textvar);
+        } else {
+            $name = [
+                1  => 'meta_title',
+                2  => 'meta_description',
+                3  => 'security_text',
+                4  => 'tagline',
+                5  => 'terms_conditions',
+                8  => 'nearest_transport',
+                9  => 'where_keys',
+                10 => 'channel_name',
+                11 => 'licence_id',
+                12 => 'catastral',
+            ];
 
-	/**
-	 * Method to get the data that should be injected in the form.
-	 *
-	 * @return mixed The data for the form.
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
-	protected function loadFormData(): mixed
-	{
-		$data = KrMethods::getUserState('com_knowres.edit.propertyfield.data', []);
+            if (!empty(($name[$special]))) {
+                return $name[$special];
+            }
+        }
 
-		if (empty($data))
-		{
-			$data = $this->getItem();
-		}
+        return '';
+    }
 
-		return $data;
-	}
+    /**
+     * Method to get the data that should be injected in the form.
+     *
+     * @return mixed The data for the form.
+     * @throws Exception
+     * @since  1.0.0
+     */
+    protected function loadFormData(): mixed
+    {
+        $data = KrMethods::getUserState('com_knowres.edit.propertyfield.data', []);
 
-	/**
-	 * Compare values
-	 *
-	 * @param   string  $a  Value 1
-	 * @param   string  $b  Value 2
-	 *
-	 * @return int
-	 * @since  1.0.0
-	 */
-	private static function cmp(string $a, string $b): int
-	{
-		if ($a == $b)
-		{
-			return 0;
-		}
+        if (empty($data)) {
+            $data = $this->getItem();
+        }
 
-		return ($a < $b) ? -1 : 1;
-	}
+        return $data;
+    }
 }

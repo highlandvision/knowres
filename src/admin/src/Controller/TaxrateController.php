@@ -11,14 +11,16 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Controller;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\Component\Knowres\Administrator\Model\TaxrateModel;
 use HighlandVision\KR\Joomla\Extend\FormController;
 use HighlandVision\KR\Translations;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\String\StringHelper;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') || die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Taxrate controller form class
@@ -27,27 +29,26 @@ use Joomla\String\StringHelper;
  */
 class TaxrateController extends FormController
 {
-	/**
-	 * Process additional requirements after save
-	 *
-	 * @param   BaseDatabaseModel  $model      The data model object.
-	 * @param   array              $validData  The validated data.
-	 *
-	 * @throws Exception
-	 * @since  3.1
-	 */
-	protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
-	{
-		/** @var TaxrateModel $model */
-		$item = $model->getItem();
+    /**
+     * Process additional requirements after save
+     *
+     * @param   BaseDatabaseModel  $model      The data model object.
+     * @param   array              $validData  The validated data.
+     *
+     * @throws Exception
+     * @since  3.1
+     */
+    protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
+    {
+        /** @var TaxrateModel $model */
+        $item = $model->getItem();
 
-		$name = (string) $validData['name'];
-		if ($this->input->get('task') == 'save2copy')
-		{
-			$name = StringHelper::increment($name);
-		}
+        $name = (string)$validData['name'];
+        if ($this->input->get('task') == 'save2copy') {
+            $name = StringHelper::increment($name);
+        }
 
-		$Translations = new Translations();
-		$Translations->updateDefault('taxrate', $item->id, 'name', $name);
-	}
+        $Translations = new Translations();
+        $Translations->updateDefault('taxrate', $item->id, 'name', $name);
+    }
 }

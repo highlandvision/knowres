@@ -9,13 +9,15 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Field;
 
-defined('JPATH_BASE') or die;
-
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Utility;
 use Joomla\CMS\Form\FormField;
 
 use function count;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Supports a value from an external table
@@ -24,46 +26,46 @@ use function count;
  */
 class JsonmoreguestsField extends FormField
 {
-	/** @var string The form field layout. */
-	protected $layout = 'form.field.json.generic';
-	/** @var string The form field type. */
-	protected $type = 'Jsonmoreguests';
+    /** @var string The form field layout. */
+    protected $layout = 'form.field.json.generic';
+    /** @var string The form field type. */
+    protected $type = 'Jsonmoreguests';
 
-	/**
-	 * Get the field options.
-	 *
-	 * @since    1.0.0
-	 * @return    string    The field input markup.
-	 */
-	public function getInput(): string
-	{
-		$group  = 'more_guests';
-		$occurs = 5;
-		$values = [];
+    /**
+     * Get the field options.
+     *
+     * @return    string    The field input markup.
+     * @since    1.0.0
+     */
+    public function getInput(): string
+    {
+        $group  = 'more_guests';
+        $occurs = 5;
+        $values = [];
 
-		if (is_string($this->value)) {
-			$this->value = Utility::decodeJson($this->value);
-		}
+        if (is_string($this->value)) {
+            $this->value = Utility::decodeJson($this->value);
+        }
 
-		foreach ($this->value as $v) {
-			$tmp      = [$v->more_min, $v->more_max, $v->more_rate, $v->more_pppn];
-			$values[] = $tmp;
-		}
+        foreach ($this->value as $v) {
+            $tmp      = [$v->more_min, $v->more_max, $v->more_rate, $v->more_pppn];
+            $values[] = $tmp;
+        }
 
-		while (count($values) < $occurs) {
-			$tmp      = ['', '', '', 0];
-			$values[] = $tmp;
-		}
+        while (count($values) < $occurs) {
+            $tmp      = ['', '', '', 0];
+            $values[] = $tmp;
+        }
 
-		$form = KrFactory::getAdhocForm('json-moreguests', 'json_moreguests.xml', 'administrator', null);
+        $form = KrFactory::getAdhocForm('json-moreguests', 'json_moreguests.xml', 'administrator', null);
 
-		$data           = [];
-		$data['form']   = $form;
-		$data['values'] = $values;
-		$data['group']  = $group;
+        $data           = [];
+        $data['form']   = $form;
+        $data['values'] = $values;
+        $data['group']  = $group;
 
-		$renderer = $this->getRenderer($this->layout);
+        $renderer = $this->getRenderer($this->layout);
 
-		return $renderer->render($data);
-	}
+        return $renderer->render($data);
+    }
 }

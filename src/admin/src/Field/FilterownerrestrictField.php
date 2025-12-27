@@ -8,8 +8,6 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Field;
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Joomla\Extend\ListField as KrListField;
 use HighlandVision\KR\Session as KrSession;
@@ -18,6 +16,10 @@ use Joomla\DI\Exception\KeyNotFoundException;
 use RuntimeException;
 
 use function array_merge;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') || die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Filter for restricted access to owner

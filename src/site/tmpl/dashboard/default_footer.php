@@ -11,7 +11,9 @@
 
 use HighlandVision\KR\Framework\KrMethods;
 
+// phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 ?>
 
 <div class="grid-x grid-margin-x">

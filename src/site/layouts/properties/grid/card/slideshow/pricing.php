@@ -7,12 +7,14 @@
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Currency;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Utility;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 extract($displayData);
 /**
@@ -40,10 +42,10 @@ $params       = KrMethods::getParams();
             <?php $discounts = KrFactory::getListSiteModel('properties')->getDiscount($item->id); ?>
             <?php if (is_countable($discounts) && count($discounts)): ?>
                 <?php echo KrMethods::render('properties.discountsearch', [
-                        'property_id' => $item->id,
-                        'discounts'   => $discounts,
-                        'currency'    => $currency,
-                        'dropdown'    => true
+                    'property_id' => $item->id,
+                    'discounts'   => $discounts,
+                    'currency'    => $currency,
+                    'dropdown'    => true,
                 ]); ?>
                 <?php $discounts = true; ?>
             <?php endif; ?>

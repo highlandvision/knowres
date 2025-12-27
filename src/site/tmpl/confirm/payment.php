@@ -8,13 +8,16 @@
  */
 
 /** @noinspection PhpPossiblePolymorphicInvocationInspection */
-/** @noinspection PhpUnhandledExceptionInspection */
 
-defined('_JEXEC') or die;
+/** @noinspection PhpUnhandledExceptionInspection */
 
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Media;
 use Joomla\CMS\Factory;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 $this->client_id    = '';
 $this->currency     = '';
@@ -56,6 +59,7 @@ $wa->useScript('com_knowres.site')
 <?php echo $this->loadTemplate('modals'); ?>
 
 <?php if ($this->paypal_found): ?>
-    <script src="https://www.paypal.com/sdk/js?client-id=<?php echo $this->client_id; ?>&currency=<?php echo $this->currency; ?>"
-            data-order-id="<?php echo $this->contractData->tag; ?>"></script>
+    <script
+        src="https://www.paypal.com/sdk/js?client-id=<?php echo $this->client_id; ?>&currency=<?php echo $this->currency; ?>"
+        data-order-id="<?php echo $this->contractData->tag; ?>"></script>
 <?php endif; ?>

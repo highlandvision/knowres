@@ -9,13 +9,15 @@
 
 namespace HighlandVision\KR\Compute;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Hub;
 use HighlandVision\KR\TickTock;
 
 use function defined;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Calculate managed adjustments and update gross
@@ -24,108 +26,100 @@ use function defined;
  */
 class Dow
 {
-	/** @var Hub Hub data. */
-	protected Hub $Hub;
+    /** @var Hub Hub data. */
+    protected Hub $Hub;
 
-	/**
-	 * Get the total rate value for the stay
-	 *
-	 * @param  Hub  $Hub  Hub data
-	 *
-	 * @throws Exception
-	 * @since  3.3.0
-	 * @return void
-	 */
-	public function calculate(Hub $Hub): void
-	{
-		$this->Hub = $Hub;
-		if (!$this->Hub->settings['managed_rates'])
-		{
-			return;
-		}
+    /**
+     * Get the total rate value for the stay
+     *
+     * @param   Hub  $Hub  Hub data
+     *
+     * @return void
+     * @throws Exception
+     * @since  3.3.0
+     */
+    public function calculate(Hub $Hub): void
+    {
+        $this->Hub = $Hub;
+        if (!$this->Hub->settings['managed_rates']) {
+            return;
+        }
 
-		$dow_pc = $this->getDowPc();
-		$calc   = false;
-		foreach ($dow_pc as $pc)
-		{
-			if ($pc <> 100)
-			{
-				$calc = true;
-				break;
-			}
-		}
+        $dow_pc = $this->getDowPc();
+        $calc   = false;
+        foreach ($dow_pc as $pc) {
+            if ($pc <> 100) {
+                $calc = true;
+                break;
+            }
+        }
 
-		if (!$calc)
-		{
-			return;
-		}
+        if (!$calc) {
+            return;
+        }
 
-		$this->calculateDow($dow_pc);
-	}
+        $this->calculateDow($dow_pc);
+    }
 
-	/**
-	 * Calculate day of week adjustments
-	 *
-	 * @param  array  $dow_pc  Day of week percentage adjustments
-	 *
-	 * @throws Exception
-	 * @since  3.3.4
-	 */
-	private function calculateDow(array $dow_pc): void
-	{
-		$base         = $this->Hub->getValue('base_rate');
-		$gross        = $this->Hub->getValue('room_total_gross_system');
-		$base_nightly = $this->Hub->getValue('base_nightly');
-		$nightly      = $this->Hub->getValue('nightly');
-		$adjustment   = 0;
+    /**
+     * Calculate day of week adjustments
+     *
+     * @param   array  $dow_pc  Day of week percentage adjustments
+     *
+     * @throws Exception
+     * @since  3.3.4
+     */
+    private function calculateDow(array $dow_pc): void
+    {
+        $base         = $this->Hub->getValue('base_rate');
+        $gross        = $this->Hub->getValue('room_total_gross_system');
+        $base_nightly = $this->Hub->getValue('base_nightly');
+        $nightly      = $this->Hub->getValue('nightly');
+        $adjustment   = 0;
 
-		foreach ($base_nightly as $date => $rate)
-		{
-			$dow = TickTock::getDow($date);
-			if ((int) $dow_pc[$dow] !== 100)
-			{
-				$new            = $this->Hub->round($rate * ($dow_pc[$dow] / 100));
-				$nightly[$date] += $new - $rate;
-				$adjustment     += $new - $rate;
-			}
-		}
+        foreach ($base_nightly as $date => $rate) {
+            $dow = TickTock::getDow($date);
+            if ((int)$dow_pc[$dow] !== 100) {
+                $new            = $this->Hub->round($rate * ($dow_pc[$dow] / 100));
+                $nightly[$date] += $new - $rate;
+                $adjustment     += $new - $rate;
+            }
+        }
 
-		if ($adjustment == 0)
-		{
-			return;
-		}
+        if ($adjustment == 0) {
+            return;
+        }
 
-		$gross = $this->Hub->round($gross + $adjustment);
+        $gross = $this->Hub->round($gross + $adjustment);
 
-		if ($this->Hub->getValue('adjustmentsRq'))
-		{
-			$pc = $this->Hub->round($adjustment / $base * 100);
-			$this->Hub->setAdjustments('Dow Average', $adjustment, $pc . '%', $base);
-		}
+        if ($this->Hub->getValue('adjustmentsRq')) {
+            $pc = $this->Hub->round($adjustment / $base * 100);
+            $this->Hub->setAdjustments('Dow Average', $adjustment, $pc . '%', $base);
+        }
 
-		$this->Hub->setValue('room_total', $gross);
-		$this->Hub->setValue('room_total_gross', $gross);
-		$this->Hub->setValue('room_total_gross_system', $gross);
-		$this->Hub->setValue('nightly', $nightly);
-	}
+        $this->Hub->setValue('room_total', $gross);
+        $this->Hub->setValue('room_total_gross', $gross);
+        $this->Hub->setValue('room_total_gross_system', $gross);
+        $this->Hub->setValue('nightly', $nightly);
+    }
 
-	/**
-	 * Get DOW % adjustments
-	 *
-	 * @since  3.4.0
-	 * @return array
-	 */
-	private function getDowPc(): array
-	{
-		$dow_pc    = [];
-		$dow_pc[0] = $this->Hub->settings['sunday_pc'];
-		$dow_pc[1] = $this->Hub->settings['monday_pc'];
-		$dow_pc[2] = $this->Hub->settings['tuesday_pc'];
-		$dow_pc[3] = $this->Hub->settings['wednesday_pc'];
-		$dow_pc[4] = $this->Hub->settings['thursday_pc'];
-		$dow_pc[5] = $this->Hub->settings['friday_pc'];
-		$dow_pc[6] = $this->Hub->settings['saturday_pc'];
+    /**
+     * Get DOW % adjustments
+     *
+     * @return array
+     * @since  3.4.0
+     */
+    private function getDowPc(): array
+    {
+        $dow_pc    = [];
+        $dow_pc[0] = $this->Hub->settings['sunday_pc'];
+        $dow_pc[1] = $this->Hub->settings['monday_pc'];
+        $dow_pc[2] = $this->Hub->settings['tuesday_pc'];
+        $dow_pc[3] = $this->Hub->settings['wednesday_pc'];
+        $dow_pc[4] = $this->Hub->settings['thursday_pc'];
+        $dow_pc[5] = $this->Hub->settings['friday_pc'];
+        $dow_pc[6] = $this->Hub->settings['saturday_pc'];
 
-		return $dow_pc;
-	}
+        return $dow_pc;
+    }
 }

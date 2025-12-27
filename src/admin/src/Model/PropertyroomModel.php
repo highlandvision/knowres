@@ -9,8 +9,6 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Model;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
@@ -22,6 +20,10 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Versioning\VersionableControllerTrait;
 use RuntimeException;
 
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
+
 /**
  * Knowres property room model.
  *
@@ -29,108 +31,102 @@ use RuntimeException;
  */
 class PropertyroomModel extends AdminModel
 {
-	use VersionableControllerTrait;
+    use VersionableControllerTrait;
 
-	/**  @var string The type alias. */
-	public $typeAlias = 'com_knowres.propertyroom';
-	/** @var mixed Batch copy/move command. If set to false, the batch copy/move command is not supported. */
-	protected $batch_copymove = false;
-	/**  @var ?string The prefix to use with controller messages. */
-	protected $text_prefix = 'COM_KNOWRES_PROPERTYROOM';
+    /**  @var string The type alias. */
+    public $typeAlias = 'com_knowres.propertyroom';
+    /** @var mixed Batch copy/move command. If set to false, the batch copy/move command is not supported. */
+    protected $batch_copymove = false;
+    /**  @var ?string The prefix to use with controller messages. */
+    protected $text_prefix = 'COM_KNOWRES_PROPERTYROOM';
 
-	/**
-	 * Method to get a knowres record.
-	 *
-	 * @param   int  $pk  The id of the primary key.
-	 *
-	 * @return false|object  Object on success, false on failure.
-	 * @throws RuntimeException
-	 * @since  1.0.0
-	 */
-	public function getItem($pk = null): false|object
-	{
-		$item = parent::getItem($pk);
-		if ($item)
-		{
-			$item->features = Utility::decodeJson($item->features, true);
+    /**
+     * Method to get a knowres record.
+     *
+     * @param   int  $pk  The id of the primary key.
+     *
+     * @return false|object  Object on success, false on failure.
+     * @throws RuntimeException
+     * @since  1.0.0
+     */
+    public function getItem($pk = null): false|object
+    {
+        $item = parent::getItem($pk);
+        if ($item) {
+            $item->features = Utility::decodeJson($item->features, true);
 
-			$Translations      = new Translations();
-			$item->name        = $Translations->getText('propertyroom', $item->id);
-			$item->description = $Translations->getText('propertyroom', $item->id, 'description');
-		}
+            $Translations      = new Translations();
+            $item->name        = $Translations->getText('propertyroom', $item->id);
+            $item->description = $Translations->getText('propertyroom', $item->id, 'description');
+        }
 
-		return $item;
-	}
+        return $item;
+    }
 
-	/**
-	 * Override publish function
-	 *
-	 * @param   array   &$pks    A list of the primary keys to change.
-	 * @param   int      $value  The value of the published state.
-	 *
-	 * @return bool
-	 * @throws Exception
-	 * @since  3.4.0
-	 */
-	public function publish(&$pks, $value = 1): bool
-	{
-		$first = true;
-		if (parent::publish($pks, $value))
-		{
-			foreach ($pks as $id)
-			{
-				if ($first)
-				{
-					$item = parent::getItem($id);
-					if ($item)
-					{
-						KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updateProperty',
-							$item->property_id, 0, 'ru'
-						);
-					}
+    /**
+     * Override publish function
+     *
+     * @param   array   &$pks    A list of the primary keys to change.
+     * @param   int      $value  The value of the published state.
+     *
+     * @return bool
+     * @throws Exception
+     * @since  3.4.0
+     */
+    public function publish(&$pks, $value = 1): bool
+    {
+        $first = true;
+        if (parent::publish($pks, $value)) {
+            foreach ($pks as $id) {
+                if ($first) {
+                    $item = parent::getItem($id);
+                    if ($item) {
+                        KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updateProperty',
+                            $item->property_id, 0, 'ru',
+                        );
+                    }
 
-					$first = false;
-				}
+                    $first = false;
+                }
 
-				self::setUpdatedAt($id, 'property_room');
-			}
+                self::setUpdatedAt($id, 'property_room');
+            }
 
-			return true;
-		}
+            return true;
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-	/**
-	 * Method to test whether a record can be deleted.
-	 *
-	 * @param   object  $record  A record object.
-	 *
-	 * @return  bool  True if allowed to delete the record. Defaults to the permission for the component.
-	 * @since   3.0.0
-	 */
-	protected function canDelete($record): bool
-	{
-		$userSession = new KrSession\User();
+    /**
+     * Method to test whether a record can be deleted.
+     *
+     * @param   object  $record  A record object.
+     *
+     * @return  bool  True if allowed to delete the record. Defaults to the permission for the component.
+     * @since   3.0.0
+     */
+    protected function canDelete($record): bool
+    {
+        $userSession = new KrSession\User();
 
-		return $userSession->getAccessLevel() == 40 || Factory::getUser()->authorise('core.delete', $this->option);
-	}
+        return $userSession->getAccessLevel() == 40 || Factory::getUser()->authorise('core.delete', $this->option);
+    }
 
-	/**
-	 * Method to get the data that should be injected in the form.
-	 *
-	 * @return mixed The data for the form.
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
-	protected function loadFormData(): mixed
-	{
-		$data = KrMethods::getUserState('com_knowres.edit.propertyroom.data', []);
-		if (empty($data))
-		{
-			$data = $this->getItem();
-		}
+    /**
+     * Method to get the data that should be injected in the form.
+     *
+     * @return mixed The data for the form.
+     * @throws Exception
+     * @since  1.0.0
+     */
+    protected function loadFormData(): mixed
+    {
+        $data = KrMethods::getUserState('com_knowres.edit.propertyroom.data', []);
+        if (empty($data)) {
+            $data = $this->getItem();
+        }
 
-		return $data;
-	}
+        return $data;
+    }
 }

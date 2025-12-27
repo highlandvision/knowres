@@ -9,13 +9,15 @@
 
 namespace HighlandVision\Component\Knowres\Site\Field;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Joomla\Extend\ListField;
 use HighlandVision\KR\TickTock;
 use InvalidArgumentException;
 use Joomla\CMS\HTML\HTMLHelper;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Displays a select with months

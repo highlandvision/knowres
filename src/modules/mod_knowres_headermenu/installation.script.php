@@ -7,9 +7,11 @@
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
 
-use Joomla\CMS\Factory;
-
 defined('_JEXEC') or die;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Installation script

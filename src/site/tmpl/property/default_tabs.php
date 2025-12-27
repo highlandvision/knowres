@@ -7,9 +7,11 @@
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 ?>
 
 <ul class="tabs" id="kr-property-tabs" data-tabs data-deep-link="true" data-update-history="true">
@@ -54,7 +56,7 @@ use HighlandVision\KR\Framework\KrMethods;
             </a>
         </li>
     <?php endif; ?>
-    <?php if ((int) $this->settings['display_calendar']) : ?>
+    <?php if ((int)$this->settings['display_calendar']) : ?>
         <?php $help = KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_AVAILABILITY_PRICE"); ?>
         <li class="tabs-title" role="presentation">
             <a href="#calendar" id="kr-geriatric-calendar" data-tabs-target="calendar"
@@ -132,7 +134,7 @@ use HighlandVision\KR\Framework\KrMethods;
             </div>
         </div>
     <?php endif; ?>
-    <?php if ((int) $this->settings['display_calendar']) : ?>
+    <?php if ((int)$this->settings['display_calendar']) : ?>
         <div class="tabs-panel" id="calendar">
             <?php echo $this->loadTemplate('geriatric'); ?>
         </div>

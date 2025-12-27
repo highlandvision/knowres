@@ -9,8 +9,6 @@
 
 namespace HighlandVision\Component\Knowres\Site\Field;
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
 use InvalidArgumentException;
 use Joomla\CMS\Form\Field\GroupedlistField;
@@ -18,6 +16,10 @@ use Joomla\CMS\HTML\HTMLHelper;
 use UnexpectedValueException;
 
 use function array_merge;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Regions grouped by country.

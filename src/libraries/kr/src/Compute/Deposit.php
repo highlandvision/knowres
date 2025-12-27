@@ -9,13 +9,15 @@
 
 namespace HighlandVision\KR\Compute;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Hub;
 use HighlandVision\KR\TickTock;
 
 use function ceil;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Compute deposit payment

@@ -7,13 +7,14 @@
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
 use Joomla\CMS\HTML\HTMLHelper;
 
-/** @var HighlandVision\Component\Knowres\Administrator\View\Contract\HtmlView $this */
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
+/** @var HighlandVision\Component\Knowres\Administrator\View\Contract\HtmlView $this */
 $wa = $this->document->getWebAssetManager();
 $wa->useScript('keepalive')
    ->useScript('form.validate')
@@ -22,20 +23,20 @@ $wa->useScript('keepalive')
 
 $this->form->setFieldAttribute('guests', 'required', false);
 $this->form->setFieldAttribute('arrival_bd', 'label',
-        KrMethods::plain('COM_KNOWRES_CONTRACT_BLOCK_START_DATE_LBL')
+    KrMethods::plain('COM_KNOWRES_CONTRACT_BLOCK_START_DATE_LBL'),
 );
 $this->form->setFieldAttribute('arrival_bd', 'description',
-        KrMethods::plain('COM_KNOWRES_CONTRACT_BLOCK_START_DATE_FORM_DSC')
+    KrMethods::plain('COM_KNOWRES_CONTRACT_BLOCK_START_DATE_FORM_DSC'),
 );
 $this->form->setFieldAttribute('departure_bd', 'label',
-        KrMethods::plain('COM_KNOWRES_CONTRACT_BLOCK_RESUME_DATE_LBL')
+    KrMethods::plain('COM_KNOWRES_CONTRACT_BLOCK_RESUME_DATE_LBL'),
 );
 $this->form->setFieldAttribute('departure_bd', 'description',
-        KrMethods::plain('COM_KNOWRES_CONTRACT_BLOCK_RESUME_DATE_FORM_DSC')
+    KrMethods::plain('COM_KNOWRES_CONTRACT_BLOCK_RESUME_DATE_FORM_DSC'),
 );
 ?>
 
-<form action="<?php echo KrMethods::route('index.php?option=com_knowres&layout=edit&id=' . (int) $this->item->id); ?>"
+<form action="<?php echo KrMethods::route('index.php?option=com_knowres&layout=edit&id=' . (int)$this->item->id); ?>"
       class="form-validate" id="contract-form" method="post" name="adminForm">
     <div class="main-card">
         <div class="row">

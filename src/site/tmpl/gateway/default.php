@@ -6,12 +6,16 @@
  * @license     See the file "LICENSE.txt" for the full license governing this code.
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
+
 /** @noinspection PhpPossiblePolymorphicInvocationInspection */
+
 /** @noinspection PhpUnhandledExceptionInspection */
 
-defined('_JEXEC') or die;
-
 use Joomla\CMS\Factory;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useScript('com_knowres.site')
@@ -19,7 +23,7 @@ $wa->useScript('com_knowres.site')
    ->useScript('keepalive');
 
 if ($this->paymentData->payment_type == 'OBR') {
-	echo $this->loadTemplate('stripe_request');
+    echo $this->loadTemplate('stripe_request');
 } else {
-	echo $this->loadTemplate($this->gateway_name);
+    echo $this->loadTemplate($this->gateway_name);
 }

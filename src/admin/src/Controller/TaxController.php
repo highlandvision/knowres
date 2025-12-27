@@ -9,8 +9,6 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Controller;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\Component\Knowres\Administrator\Model\TaxModel;
 use HighlandVision\KR\Framework\KrMethods;
@@ -20,7 +18,12 @@ use JetBrains\PhpStorm\NoReturn;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Response\JsonResponse;
 use Joomla\String\StringHelper;
+
 use function jexit;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') || die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Tax controller class
@@ -29,56 +32,52 @@ use function jexit;
  */
 class TaxController extends FormController
 {
-	/**
-	 * Return regions combo
-	 *
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
-	#[NoReturn]
-	public function combo(): void
-	{
-		$model     = new TaxModel();
-		$form      = $model->getForm([], false);
-		$parent_id = KrMethods::inputInt('parent');
-		$target    = KrMethods::inputString('target');
+    /**
+     * Return regions combo
+     *
+     * @throws Exception
+     * @since  1.0.0
+     */
+    #[NoReturn]
+    public function combo(): void
+    {
+        $model     = new TaxModel();
+        $form      = $model->getForm([], false);
+        $parent_id = KrMethods::inputInt('parent');
+        $target    = KrMethods::inputString('target');
 
-		if ($target == 'region_id')
-		{
-			$form->setValue('country_id', null, $parent_id);
-		}
-		else
-		{
-			$form->setValue('region_id', null, $parent_id);
-		}
+        if ($target == 'region_id') {
+            $form->setValue('country_id', null, $parent_id);
+        } else {
+            $form->setValue('region_id', null, $parent_id);
+        }
 
-		$wrapper         = [];
-		$wrapper['html'] = $form->getInput($target);
+        $wrapper         = [];
+        $wrapper['html'] = $form->getInput($target);
 
-		echo new JsonResponse($wrapper);
-		jexit();
-	}
+        echo new JsonResponse($wrapper);
+        jexit();
+    }
 
-	/**
-	 * Function that allows child controller access to model data after the data has been saved.
-	 *
-	 * @param   BaseDatabaseModel  $model      The data model object.
-	 * @param   array              $validData  The validated data.
-	 *
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
-	protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
-	{
-		/** @var TaxModel $model */
-		$item = $model->getItem();
-		$name = (string) $validData['name'];
-		if ($this->input->get('task') == 'save2copy')
-		{
-			$name = StringHelper::increment($name);
-		}
+    /**
+     * Function that allows child controller access to model data after the data has been saved.
+     *
+     * @param   BaseDatabaseModel  $model      The data model object.
+     * @param   array              $validData  The validated data.
+     *
+     * @throws Exception
+     * @since  1.0.0
+     */
+    protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
+    {
+        /** @var TaxModel $model */
+        $item = $model->getItem();
+        $name = (string)$validData['name'];
+        if ($this->input->get('task') == 'save2copy') {
+            $name = StringHelper::increment($name);
+        }
 
-		$Translations = new Translations();
-		$Translations->updateDefault('tax', $item->id, 'name', $name);
-	}
+        $Translations = new Translations();
+        $Translations->updateDefault('tax', $item->id, 'name', $name);
+    }
 }

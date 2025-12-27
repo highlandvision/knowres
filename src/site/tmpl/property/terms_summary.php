@@ -7,9 +7,11 @@
  * @author      Hazel Wilson <hazel@highlandvision.com> - https://www.highlandvision.com
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 $summary = KrMethods::route('index.php?option=com_knowres&task=property.terms&id=' . $this->item->id, false);
 $link    = '<a class="bigger red link" href="' . $summary . '" data-reveal-id="termsModal" data-reveal-ajax="true">
@@ -17,11 +19,11 @@ $link    = '<a class="bigger red link" href="' . $summary . '" data-reveal-id="t
 ?>
 
 <div id="print-terms">
-	<h2><?php echo trim($this->article->title); ?></h2>
-	<p><?php echo trim($this->article->introtext); ?></p>
-	<?php echo $link; ?>
-	<a class="close-reveal-modal" aria-label="Close">&#215;</a>
+    <h2><?php echo trim($this->article->title); ?></h2>
+    <p><?php echo trim($this->article->introtext); ?></p>
+    <?php echo $link; ?>
+    <a class="close-reveal-modal" aria-label="Close">&#215;</a>
 </div>
 <button class="close-button" aria-label="Close alert" type="button" data-close>
-	<span aria-hidden="true">&times;</span>
+    <span aria-hidden="true">&times;</span>
 </button>

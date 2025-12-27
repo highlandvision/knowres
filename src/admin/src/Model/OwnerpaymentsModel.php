@@ -9,13 +9,15 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Model;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Joomla\Extend\ListModel;
 use HighlandVision\KR\TickTock;
 use Joomla\Database\QueryInterface;
 use RuntimeException;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Owner payments list model.
@@ -24,18 +26,18 @@ use RuntimeException;
  */
 class OwnerpaymentsModel extends ListModel
 {
-	/**
-	 * Constructor.
-	 *
-	 * @param  array  $config  An optional associative array of configuration settings.
-	 *
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
-	public function __construct($config = [])
-	{
-		if (empty($config['filter_fields'])) {
-			//@formatter:off
+    /**
+     * Constructor.
+     *
+     * @param   array  $config  An optional associative array of configuration settings.
+     *
+     * @throws Exception
+     * @since  1.0.0
+     */
+    public function __construct($config = [])
+    {
+        if (empty($config['filter_fields'])) {
+            //@formatter:off
 			$config['filter_fields'] = [
 				'id',           'a.id',
 				'owner_id',     'a.owner_id',

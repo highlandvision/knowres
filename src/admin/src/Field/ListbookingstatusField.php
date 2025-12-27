@@ -9,12 +9,14 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Field;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use Joomla\CMS\Form\Field\ListField;
 use Joomla\CMS\HTML\HTMLHelper;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') || die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Supports a value from an external table
@@ -23,28 +25,27 @@ use Joomla\CMS\HTML\HTMLHelper;
  */
 class ListbookingstatusField extends ListField
 {
-	/** @var string The form field type. */
-	protected $type = 'Listbookingstatus';
+    /** @var string The form field type. */
+    protected $type = 'Listbookingstatus';
 
-	/**
-	 * Display the list of booking status
-	 *
-	 * @return array The field input options.
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
-	public function getOptions(): array
-	{
-		$options = [];
+    /**
+     * Display the list of booking status
+     *
+     * @return array The field input options.
+     * @throws Exception
+     * @since  1.0.0
+     */
+    public function getOptions(): array
+    {
+        $options = [];
 
-		/** @var $model Contract */
-		$model = KrFactory::getAdminModel('contract');
-		$items = $model->getBookingStatusOptions();
-		foreach ($items as $k => $v)
-		{
-			$options[] = HTMLHelper::_('select.option', $k, $v);
-		}
+        /** @var $model Contract */
+        $model = KrFactory::getAdminModel('contract');
+        $items = $model->getBookingStatusOptions();
+        foreach ($items as $k => $v) {
+            $options[] = HTMLHelper::_('select.option', $k, $v);
+        }
 
-		return array_merge(parent::getOptions(), $options);
-	}
+        return array_merge(parent::getOptions(), $options);
+    }
 }

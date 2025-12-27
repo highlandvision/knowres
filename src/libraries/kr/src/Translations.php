@@ -9,8 +9,6 @@
 
 namespace HighlandVision\KR;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
@@ -18,6 +16,10 @@ use Joomla\CMS\Cache\Cache;
 use RuntimeException;
 use stdClass;
 use UnexpectedValueException;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Translations model extension

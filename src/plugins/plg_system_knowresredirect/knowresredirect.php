@@ -7,12 +7,14 @@
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Session as KrSession;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\CMSPlugin;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Redirect to selected page on login.

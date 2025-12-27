@@ -9,12 +9,14 @@
 
 namespace HighlandVision\KR\Joomla\Extend;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use Joomla\CMS\Form\Form;
 
 use function defined;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Knowres extension of SessionModel

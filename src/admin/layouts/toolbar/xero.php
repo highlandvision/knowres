@@ -7,9 +7,12 @@
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
 
+// phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 extract($displayData);
+
 /** Layout variables
  *
  * @var string $title Button title.
@@ -17,8 +20,8 @@ extract($displayData);
 ?>
 
 <joomla-toolbar-button>
-	<button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#xeroModal">
-		<span class='fa-solid fa-eye knowres' aria-hidden="true"></span>
-		<?php echo $title; ?>
-	</button>
+    <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#xeroModal">
+        <span class='fa-solid fa-eye knowres' aria-hidden="true"></span>
+        <?php echo $title; ?>
+    </button>
 </joomla-toolbar-button>

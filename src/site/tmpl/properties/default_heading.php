@@ -7,7 +7,9 @@
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
 
+// phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 ?>
 
 <h1 id="kr-properties-filter-heading" class="kr-properties-filter-heading"><?php echo $this->header; ?></h1>

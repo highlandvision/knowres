@@ -8,8 +8,6 @@
 
 namespace HighlandVision\Component\Knowres\Site\Service;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use Joomla\CMS\Component\Router\RouterBase;
 
@@ -18,6 +16,10 @@ use function count;
 use function implode;
 use function is_numeric;
 use function str_replace;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Routing class for com_knowres

@@ -8,13 +8,15 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Field;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Joomla\Extend\ListField as KrListField;
 use RuntimeException;
 
 use function array_merge;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') || die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Form Field to load a list of filter owners
@@ -23,20 +25,20 @@ use function array_merge;
  */
 class FilterownerField extends KrListField
 {
-	/** @var string The form field type. */
-	protected $type = 'Filterowner';
+    /** @var string The form field type. */
+    protected $type = 'Filterowner';
 
-	/**
-	 * Method to get the owners to populate filter list
-	 *
-	 * @throws  RuntimeException|Exception
-	 * @since   2.5.1
-	 * @return  array  The field option objects.
-	 */
-	protected function getOptions(): array
-	{
-		$options = self::filteringForeign('#__knowres_owner', $this->getAttribute('table'), 'owner_id');
+    /**
+     * Method to get the owners to populate filter list
+     *
+     * @return  array  The field option objects.
+     * @throws  RuntimeException|Exception
+     * @since   2.5.1
+     */
+    protected function getOptions(): array
+    {
+        $options = self::filteringForeign('#__knowres_owner', $this->getAttribute('table'), 'owner_id');
 
-		return array_merge(parent::getOptions(), $options);
-	}
+        return array_merge(parent::getOptions(), $options);
+    }
 }

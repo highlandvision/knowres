@@ -9,8 +9,6 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Field;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
@@ -18,6 +16,10 @@ use HighlandVision\KR\Service\Xero;
 use InvalidArgumentException;
 use Joomla\CMS\Form\FormHelper;
 use Joomla\CMS\HTML\HTMLHelper;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 FormHelper::loadFieldClass('list');
 
@@ -37,21 +39,21 @@ class JFormFieldXerotaxrate extends JFormField
 	 */
 	protected $type = 'Xerotaxrate';
 
-	/**
-	 * Get the field options.ader
-	 *
-	 * @throws InvalidArgumentException
-	 * @throws Exception|\XeroPHP\Remote\Exception
-	 * @since  3.1.0
-	 * @return string    The field input markup
-	 */
-	public function getInput(): string
-	{
-		$options = [];
+    /**
+     * Get the field options.ader
+     *
+     * @return string    The field input markup
+     * @throws Exception|\XeroPHP\Remote\Exception
+     * @throws InvalidArgumentException
+     * @since  3.1.0
+     */
+    public function getInput(): string
+    {
+        $options = [];
 
-		$service_id = KrFactory::getListModel('services')::checkForSingleService(true, 'xero');
-		$xero       = new Xero($service_id);
-		$data       = $xero->getTaxRates(true);
+        $service_id = KrFactory::getListModel('services')::checkForSingleService(true, 'xero');
+        $xero       = new Xero($service_id);
+        $data       = $xero->getTaxRates(true);
 
 		if (!count($data))
 		{
@@ -76,6 +78,6 @@ class JFormFieldXerotaxrate extends JFormField
 		return HTMLHelper::_('select.genericlist', $options, $this->name, implode(' ', $input_options), 'value', 'text',
 			$this->value);
 
-		return $html;
-	}
+        return $html;
+    }
 }

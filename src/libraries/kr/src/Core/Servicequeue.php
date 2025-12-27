@@ -9,8 +9,6 @@
 
 namespace HighlandVision\KR\Core;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
@@ -18,6 +16,10 @@ use HighlandVision\KR\Hub;
 use HighlandVision\KR\TickTock;
 use stdClass;
 use function count;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Checks for updates required for channels

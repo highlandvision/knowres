@@ -9,8 +9,6 @@
 
 namespace HighlandVision\KR\Core;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
@@ -18,8 +16,13 @@ use HighlandVision\KR\Hub;
 use HighlandVision\KR\TickTock;
 use RuntimeException;
 use stdClass;
+
 use function count;
 use function hash;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Saves reservations received from channel managers
@@ -28,237 +31,209 @@ use function hash;
  */
 class Channel
 {
-	/** @var string Channel reservation ID */
-	protected string $foreign_key = '';
-	/** @var Hub Hub data. */
-	protected Hub $hub;
-	/** @var int ID of contract. */
-	protected int $id;
+    /** @var string Channel reservation ID */
+    protected string $foreign_key = '';
+    /** @var Hub Hub data. */
+    protected Hub $hub;
+    /** @var int ID of contract. */
+    protected int $id;
 
-	/**
-	 * Action channel
-	 *
-	 * @param   Hub  $hub  Hub data
-	 *
-	 * @return bool
-	 * @throws Exception
-	 * @since 1.0.0
-	 */
-	public function action(Hub $hub): bool
-	{
-		$this->hub = $hub;
-		$this->setValues();
+    /**
+     * Action channel
+     *
+     * @param   Hub  $hub  Hub data
+     *
+     * @return bool
+     * @throws Exception
+     * @since 1.0.0
+     */
+    public function action(Hub $hub): bool
+    {
+        $this->hub = $hub;
+        $this->setValues();
 
-		return $this->saveAll();
-	}
+        return $this->saveAll();
+    }
 
-	/**
-	 * Controls the save and processing for the channel contract
-	 *
-	 * @return bool
-	 * @throws Exception
-	 * @throws RuntimeException
-	 * @since  3.3.0
-	 */
-	public function saveAll(): bool
-	{
-		try
-		{
-			$db = KrFactory::getDatabase();
-			$db->transactionStart();
+    /**
+     * Controls the save and processing for the channel contract
+     *
+     * @return bool
+     * @throws Exception
+     * @throws RuntimeException
+     * @since  3.3.0
+     */
+    public function saveAll(): bool
+    {
+        try {
+            $db = KrFactory::getDatabase();
+            $db->transactionStart();
 
-			$guestModel = KrFactory::getAdminModel('guest');
-			$guestForm  = $guestModel->getForm();
-			$data       = $guestForm->filter((array) $this->hub->getData('guestData'));
-			$data       = $guestModel->validate($guestForm, $data, null, $this->hub->settings);
-			if (!$data)
-			{
-				$this->hub->errors = $guestModel->getErrors();
-				throw new RuntimeException('Guest validation errors found in Core Channel');
-			}
+            /** @var GuestModel $guestModel */
+            $guestModel = KrFactory::getAdminModel('guest');
+            $guestForm  = $guestModel->getForm();
+            $data       = $guestForm->filter((array)$this->hub->getData('guestData'));
+            $data       = $guestModel->validate($guestForm, $data, null, $this->hub->settings);
+            if (!$data) {
+                $this->hub->errors = $guestModel->getErrors();
+                throw new RuntimeException('Guest validation errors found in Core Channel');
+            }
 
-			$guest_id = $data['id'];
-			$guestModel->save($data);
-			$guest_id = $guest_id ?: $guestModel->getState('guest.id');
-			if (!$this->hub->getValue('guest_id') && $guest_id)
-			{
-				$this->hub->setValue('guest_id', $guest_id);
-			}
+            $guest_id = $data['id'];
+            $guestModel->save($data);
+            $guest_id = $guest_id ?: $guestModel->getState('guest.id');
+            if (!$this->hub->getValue('guest_id') && $guest_id) {
+                $this->hub->setValue('guest_id', $guest_id);
+            }
 
-			$hash = $this->hub->getValue('tag') . $guest_id;
-			$this->hub->setValue('qkey', hash('ripemd160', $hash));
+            $hash = $this->hub->getValue('tag') . $guest_id;
+            $this->hub->setValue('qkey', hash('ripemd160', $hash));
 
-			$contractModel = KrFactory::getAdminModel('contract');
-			$contractForm  = KrFactory::getAdhocForm('contract-form', 'contract.xml');
-			$data          = $contractForm->filter((array) $this->hub->getData());
-			$data          = $contractModel->validate($contractForm, $data);
-			if (!$data)
-			{
-				$this->hub->errors = $contractModel->getErrors();
-				throw new RuntimeException('Contract validation errors found in Core Channel');
-			}
-			$contractModel->save($data);
-			$this->id = $contractModel->getState('contract.id');
-			$this->hub->setValue('id', $this->id);
+            /** @var ContractModel $contractModel */
+            $contractModel = KrFactory::getAdminModel('contract');
+            $contractForm  = KrFactory::getAdhocForm('contract-form', 'contract.xml');
+            $data          = $contractForm->filter((array)$this->hub->getData());
+            $data          = $contractModel->validate($contractForm, $data);
+            if (!$data) {
+                $this->hub->errors = $contractModel->getErrors();
+                throw new RuntimeException('Contract validation errors found in Core Channel');
+            }
+            $contractModel->save($data);
+            $this->id = $contractModel->getState('contract.id');
+            $this->hub->setValue('id', $this->id);
 
-			$this->saveNotes();
-			$this->savePaymentAgent();
-			$this->saveServiceXref();
+            $this->saveNotes();
+            $this->savePaymentAgent();
+            $this->saveServiceXref();
 
-			$db->transactionCommit();
-		}
-		catch (Exception $e)
-		{
-			$db->transactionRollback();
+            $db->transactionCommit();
+        } catch (Exception $e) {
+            $db->transactionRollback();
 
-			if (is_countable($this->hub->errors) && count($this->hub->errors))
-			{
-				return false;
-			}
+            if (is_countable($this->hub->errors) && count($this->hub->errors)) {
+                return false;
+            }
 
-			throw $e;
-		}
+            throw $e;
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	/**
-	 * Save the contract notes
-	 *
-	 * @throws Exception
-	 * @since   3.3.0
-	 */
-	protected function saveNotes(): void
-	{
-		$guest_note = $this->hub->getValue('guest_note');
-		if ($guest_note)
-		{
-			KrFactory::getAdminModel('contractnote')::createContractNote($this->id, $guest_note, '0,1', false);
-		}
+    /**
+     * Save the contract notes
+     *
+     * @throws Exception
+     * @since   3.3.0
+     */
+    protected function saveNotes(): void
+    {
+        $guest_note = $this->hub->getValue('guest_note');
 
-		$system_note = $this->hub->getValue('system_note');
-		if ($system_note)
-		{
-			KrFactory::getAdminModel('contractnote')::createContractNote($this->id, $system_note, '3', false);
-		}
+        /** @var ContractnoteModel $note */
+        $note = KrFactory::getAdminModel('contractnote');
+        if ($guest_note) {
+            $note::createContractNote($this->id, $guest_note, '0,1', false);
+        }
 
-		if ($this->hub->getValue('isEdit'))
-		{
-			KrFactory::getAdminModel('contractnote')::createContractNote($this->id, 'Reservation amended by channel',
-				'3', false
-			);
-		}
-		else
-		{
-			if ($this->hub->agent->deposit_paid)
-			{
-				KrFactory::getAdminModel('contractnote')::createContractNote($this->id,
-					'Channel confirmed reservation (deposit paid by agent)', '3', false
-				);
-			}
-			elseif ((int) $this->hub->getValue('on_request') > 0)
-			{
-				KrFactory::getAdminModel('contractnote')::createContractNote($this->id, 'Channel request reservation',
-					'3', false
-				);
-			}
-			else
-			{
-				KrFactory::getAdminModel('contractnote')::createContractNote($this->id,
-					'Channel provisional reservation', '3', false
-				);
-			}
-		}
-	}
+        $system_note = $this->hub->getValue('system_note');
+        if ($system_note) {
+            $note::createContractNote($this->id, $system_note, '3', false);
+        }
 
-	/**
-	 * Saves the agent pseudo payment if required
-	 *
-	 * @throws Exception
-	 * @since        3.2.0
-	 */
-	protected function savePaymentAgent(): void
-	{
-		$agent_id           = $this->hub->getValue('agent_id');
-		$agent_deposit_paid = $this->hub->getValue('agent_deposit_paid');
-		$deposit            = $this->hub->getValue('deposit');
+        if ($this->hub->getValue('isEdit')) {
+            $note::createContractNote($this->id, 'Reservation amended by channel', '3', false);
+        } elseif ($this->hub->agent->deposit_paid) {
+            $note::createContractNote($this->id, 'Channel confirmed reservation (deposit paid by agent)', '3', false);
+        } elseif ((int)$this->hub->getValue('on_request') > 0) {
+            $note::createContractNote($this->id, 'Channel request reservation', '3', false);
+        } else {
+            $note::createContractNote($this->id, 'Channel provisional reservation', '3', false);
+        }
+    }
 
-		if ($agent_id && $agent_deposit_paid && $deposit > 0)
-		{
-			if ($this->hub->getValue('isEdit'))
-			{
-				KrFactory::getAdminModel('contractpayments')->unsetPseudoPayments($this->id);
-			}
+    /**
+     * Saves the agent pseudo payment if required
+     *
+     * @throws Exception
+     * @since        3.2.0
+     */
+    protected function savePaymentAgent(): void
+    {
+        $agent_id           = $this->hub->getValue('agent_id');
+        $agent_deposit_paid = $this->hub->getValue('agent_deposit_paid');
+        $deposit            = $this->hub->getValue('deposit');
 
-			$agent                 = KrFactory::getAdminModel('agent')->getItem($agent_id);
-			$payment               = new stdClass();
-			$payment->id           = 0;
-			$payment->contract_id  = $this->id;
-			$payment->service_id   = 0;
-			$payment->payment_date = TickTock::getDate();
-			$payment->amount       = $deposit;
-			$payment->rate         = 1;
-			$payment->base_amount  = $deposit;
-			$payment->currency     = $this->hub->getValue('currency');
-			$payment->payment_ref  = $this->hub->getValue('agent_reference') ?: $agent->name;
-			$payment->note         = KrMethods::sprintf('COM_KNOWRES_PAID_AGENT_NOTE', $agent->name);
-			$payment->confirmed    = 1;
-			$payment->state        = 1;
-			$payment->created_at   = TickTock::getTS();
-			$payment->created_by   = KrMethods::getUser()->id;
-			KrFactory::insert('contract_payment', $payment);
-		}
-	}
+        if ($agent_id && $agent_deposit_paid && $deposit > 0) {
+            if ($this->hub->getValue('isEdit')) {
+                KrFactory::getAdminModel('contractpayments')->unsetPseudoPayments($this->id);
+            }
 
-	/**
-	 * Save the service xref contract row
-	 *
-	 * @throws Exception
-	 * @since  3.3.0
-	 */
-	protected function saveServiceXref(): void
-	{
-		if (!$this->hub->getValue('isEdit'))
-		{
-			$foreign_key = $this->hub->getValue('foreign_key');
-			if (!$foreign_key)
-			{
-				$foreign_key = $this->id;
-			}
+            $agent                 = KrFactory::getAdminModel('agent')->getItem($agent_id);
+            $payment               = new stdClass();
+            $payment->id           = 0;
+            $payment->contract_id  = $this->id;
+            $payment->service_id   = 0;
+            $payment->payment_date = TickTock::getDate();
+            $payment->amount       = $deposit;
+            $payment->rate         = 1;
+            $payment->base_amount  = $deposit;
+            $payment->currency     = $this->hub->getValue('currency');
+            $payment->payment_ref  = $this->hub->getValue('agent_reference') ?: $agent->name;
+            $payment->note         = KrMethods::sprintf('COM_KNOWRES_PAID_AGENT_NOTE', $agent->name);
+            $payment->confirmed    = 1;
+            $payment->state        = 1;
+            $payment->created_at   = TickTock::getTS();
+            $payment->created_by   = KrMethods::getUser()->id;
+            KrFactory::insert('contract_payment', $payment);
+        }
+    }
 
-			$xref              = new stdClass();
-			$xref->id          = 0;
-			$xref->property_id = 0;
-			$xref->contract_id = $this->id;
-			$xref->service_id  = $this->hub->getValue('service_id');
-			$xref->foreign_key = $foreign_key;
-			$xref->cancelled   = 0;
-			$xref->sell        = 0;
-			$xref->state       = 1;
-			$xref->created_at  = TickTock::getTS();
-			KrFactory::insert('service_xref', $xref);
-		}
-	}
+    /**
+     * Save the service xref contract row
+     *
+     * @throws Exception
+     * @since  3.3.0
+     */
+    protected function saveServiceXref(): void
+    {
+        if (!$this->hub->getValue('isEdit')) {
+            $foreign_key = $this->hub->getValue('foreign_key');
+            if (!$foreign_key) {
+                $foreign_key = $this->id;
+            }
 
-	/**
-	 * Pre save processing
-	 *
-	 * @throws Exception
-	 * @since  3.3.0
-	 */
-	protected function setValues(): void
-	{
-		$this->hub->checkGuestUser();
-		if (!$this->hub->getValue('isEdit'))
-		{
-			if (!$this->hub->getValue('tag'))
-			{
-				$this->hub->setValue('tag', KrFactory::getAdminModel('contract')::generateTag());
-			}
+            $xref              = new stdClass();
+            $xref->id          = 0;
+            $xref->property_id = 0;
+            $xref->contract_id = $this->id;
+            $xref->service_id  = $this->hub->getValue('service_id');
+            $xref->foreign_key = $foreign_key;
+            $xref->cancelled   = 0;
+            $xref->sell        = 0;
+            $xref->state       = 1;
+            $xref->created_at  = TickTock::getTS();
+            KrFactory::insert('service_xref', $xref);
+        }
+    }
 
-			$this->hub->setValue('booking_status', $this->hub->doBookingStatus());
-		}
+    /**
+     * Pre save processing
+     *
+     * @throws Exception
+     * @since  3.3.0
+     */
+    protected function setValues(): void
+    {
+        $this->hub->checkGuestUser();
+        if (!$this->hub->getValue('isEdit')) {
+            if (!$this->hub->getValue('tag')) {
+                $this->hub->setValue('tag', KrFactory::getAdminModel('contract')::generateTag());
+            }
 
-		$this->hub->setValue('net_price', $this->hub->getValue('net_price_system'));
-	}
+            $this->hub->setValue('booking_status', $this->hub->doBookingStatus());
+        }
+
+        $this->hub->setValue('net_price', $this->hub->getValue('net_price_system'));
+    }
 }

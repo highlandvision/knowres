@@ -8,13 +8,15 @@
 
 namespace HighlandVision\Component\Knowres\Site\Controller;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\SiteHelper;
 use Joomla\CMS\MVC\Controller\BaseController;
 use function defined;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Knowres Controller

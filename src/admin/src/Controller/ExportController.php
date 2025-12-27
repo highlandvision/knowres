@@ -11,14 +11,16 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Controller;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Export;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\FormController;
 use HighlandVision\KR\Utility;
 use JetBrains\PhpStorm\NoReturn;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') || die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Reporting list controller list class.
@@ -27,121 +29,115 @@ use JetBrains\PhpStorm\NoReturn;
  */
 class ExportController extends FormController
 {
-	/**
-	 * Method to cancel an edit.
-	 *
-	 * @param   null  $key  The name of the primary key of the URL variable.
-	 *
-	 * @return bool
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
-	public function cancel($key = null): bool
-	{
-		$gobackto = Utility::getGoBackTo();
-		if ($gobackto)
-		{
-			KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&' . $gobackto, false));
-		}
+    /**
+     * Method to cancel an edit.
+     *
+     * @param   null  $key  The name of the primary key of the URL variable.
+     *
+     * @return bool
+     * @throws Exception
+     * @since  1.0.0
+     */
+    public function cancel($key = null): bool
+    {
+        $gobackto = Utility::getGoBackTo();
+        if ($gobackto) {
+            KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&' . $gobackto, false));
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	/**
-	 * Export balances to csv as per POST request.
-	 *
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
-	#[NoReturn]
-	public function doBalances(): void
-	{
-		$this->checkToken();
+    /**
+     * Export balances to csv as per POST request.
+     *
+     * @throws Exception
+     * @since  1.0.0
+     */
+    #[NoReturn]
+    public function doBalances(): void
+    {
+        $this->checkToken();
 
-		$data = KrMethods::inputArray('jform');
-		if (!empty($data['property_id']))
-		{
-			$data['property_id'] = 0;
-		}
+        $data = KrMethods::inputArray('jform');
+        if (!empty($data['property_id'])) {
+            $data['property_id'] = 0;
+        }
 
-		new Export\ContractBalances($data);
-	}
+        new Export\ContractBalances($data);
+    }
 
-	/**
-	 * Export contracts to csv as per POST request.
-	 *
-	 * @throws Exception
-	 * @since 1.0.0
-	 */
-	#[NoReturn]
-	public function doContracts(): void
-	{
-		$this->checkToken();
+    /**
+     * Export contracts to csv as per POST request.
+     *
+     * @throws Exception
+     * @since 1.0.0
+     */
+    #[NoReturn]
+    public function doContracts(): void
+    {
+        $this->checkToken();
 
-		$data = KrMethods::inputArray('jform');
-		if (empty($data['property_id']))
-		{
-			$data['property_id'] = 0;
-		}
+        $data = KrMethods::inputArray('jform');
+        if (empty($data['property_id'])) {
+            $data['property_id'] = 0;
+        }
 
-		new Export\Contracts($data);
-	}
+        new Export\Contracts($data);
+    }
 
-	/**
-	 * Export owner payments to csv as per POST request.
-	 *
-	 * @throws Exception
-	 * @since 1.0.0
-	 */
-	#[NoReturn]
-	public function doOwnerPayments(): void
-	{
-		$this->checkToken();
+    /**
+     * Export owner payments to csv as per POST request.
+     *
+     * @throws Exception
+     * @since 1.0.0
+     */
+    #[NoReturn]
+    public function doOwnerPayments(): void
+    {
+        $this->checkToken();
 
-		$data = KrMethods::inputArray('jform');
-		if (empty($data['property_id']))
-		{
-			$data['property_id'] = 0;
-		}
-		if (empty($data['owner_id']))
-		{
-			$data['owner_id'] = 0;
-		}
+        $data = KrMethods::inputArray('jform');
+        if (empty($data['property_id'])) {
+            $data['property_id'] = 0;
+        }
+        if (empty($data['owner_id'])) {
+            $data['owner_id'] = 0;
+        }
 
-		new Export\OwnerPayments($data);
-	}
+        new Export\OwnerPayments($data);
+    }
 
-	/**
-	 * Export payments to csv as per POST request.
-	 *
-	 * @throws Exception
-	 * @since 1.0.0
-	 */
-	#[NoReturn]
-	public function doPayments(): void
-	{
-		$this->checkToken();
+    /**
+     * Export payments to csv as per POST request.
+     *
+     * @throws Exception
+     * @since 1.0.0
+     */
+    #[NoReturn]
+    public function doPayments(): void
+    {
+        $this->checkToken();
 
-		$data = KrMethods::inputArray('jform');
-		if (empty($data['property_id']))
-		{
-			$data['property_id'] = 0;
-		}
+        $data = KrMethods::inputArray('jform');
+        if (empty($data['property_id'])) {
+            $data['property_id'] = 0;
+        }
 
-		new Export\Payments($data);
-	}
+        new Export\Payments($data);
+    }
 
-	/**
-	 * Export guest registration data
-	 *
-	 * @throws Exception
-	 * @since  2.5.0
-	 */
-	public function doRegistration(): void
-	{
-		$this->checkToken();
-		$data = KrMethods::inputArray('jform');
+    /**
+     * Export guest registration data
+     *
+     * @throws Exception
+     * @since  2.5.0
+     */
+    public function doRegistration(): void
+    {
+        $this->checkToken();
+        $data = KrMethods::inputArray('jform');
 
-		new Export\Registration($data);
-	}
+        new Export\Registration($data);
+    }
 }

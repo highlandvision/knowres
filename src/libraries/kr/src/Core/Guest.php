@@ -9,8 +9,6 @@
 
 namespace HighlandVision\KR\Core;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Hub;
@@ -19,6 +17,10 @@ use RuntimeException;
 use function count;
 use function hash;
 use function is_countable;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Validate guest and contract details on POST confirm page

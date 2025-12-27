@@ -8,8 +8,6 @@
 
 namespace HighlandVision\Component\Knowres\Site\Service;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
@@ -22,6 +20,10 @@ use function implode;
 use function is_numeric;
 use function str_replace;
 use function strtolower;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Routing class for com_knowres

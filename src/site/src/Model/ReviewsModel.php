@@ -9,13 +9,15 @@
 
 namespace HighlandVision\Component\Knowres\Site\Model;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\Component\Knowres\Administrator\Model\ReviewsModel as AdminReviewsModel;
 use HighlandVision\KR\Joomla\Extend\Pagination;
 
 use function defined;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Guest review form

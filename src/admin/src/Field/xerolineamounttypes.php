@@ -9,14 +9,16 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Field;
 
-defined('_JEXEC') or die;
-
 require_once(JPATH_LIBRARIES . '/knowres/vendor/autoload.php');
 
 use InvalidArgumentException;
 use Joomla\CMS\Form\FormHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 use XeroPHP\Models\Accounting\Invoice;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 FormHelper::loadFieldClass('list');
 
@@ -36,16 +38,16 @@ class JFormFieldXerolineamounttypes extends JFormField
 	 */
 	protected string $type = 'Xerolineamounttypes';
 
-	/**
-	 * Get the field options.ader
-	 *
-	 * @throws InvalidArgumentException
-	 * @since  3.1.0
-	 * @return string    The field input markup
-	 */
-	public function getInput(): string
-	{
-		$options = [];
+    /**
+     * Get the field options.ader
+     *
+     * @return string    The field input markup
+     * @throws InvalidArgumentException
+     * @since  3.1.0
+     */
+    public function getInput(): string
+    {
+        $options = [];
 
 		$options[] = HTMLHelper::_('select.option', Invoice::LINEAMOUNT_TYPE_EXCLUSIVE,
 			Invoice::LINEAMOUNT_TYPE_EXCLUSIVE);
@@ -62,6 +64,6 @@ class JFormFieldXerolineamounttypes extends JFormField
 		return HTMLHelper::_('select.genericlist', $options, $this->name, implode(' ', $input_options), 'value', 'text',
 			$this->value);
 
-		return $html;
-	}
+        return $html;
+    }
 }

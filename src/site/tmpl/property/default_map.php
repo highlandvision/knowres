@@ -7,14 +7,16 @@
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
 
+// phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 ?>
 
 <div class="grid-x grid-margin-x ">
-	<div class="small-12 cell">
-		<div id="kr-map-solo"></div>
-	</div>
-	<div class="small-12 cell">
-		<p><?php echo $this->item->p2; ?></p>
-	</div>
+    <div class="small-12 cell">
+        <div id="kr-map-solo"></div>
+    </div>
+    <div class="small-12 cell">
+        <p><?php echo $this->item->p2; ?></p>
+    </div>
 </div>

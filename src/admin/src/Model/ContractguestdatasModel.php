@@ -9,8 +9,6 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Model;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\ListModel;
@@ -21,6 +19,10 @@ use RuntimeException;
 
 use function defined;
 
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
+
 /**
  * Methods supporting a list of Knowres records.
  *
@@ -28,18 +30,18 @@ use function defined;
  */
 class ContractguestdatasModel extends ListModel
 {
-	/**
-	 * Constructor.
-	 *
-	 * @param  array  $config  An optional associative array of configuration settings.
-	 *
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
-	public function __construct($config = [])
-	{
-		if (empty($config['filter_fields'])) {
-			//@formatter:off
+    /**
+     * Constructor.
+     *
+     * @param   array  $config  An optional associative array of configuration settings.
+     *
+     * @throws Exception
+     * @since  1.0.0
+     */
+    public function __construct($config = [])
+    {
+        if (empty($config['filter_fields'])) {
+            //@formatter:off
 			$config['filter_fields'] = [
 				'id',                   'a.id',
 				'contract_id',          'a.contract_id',
@@ -67,171 +69,171 @@ class ContractguestdatasModel extends ListModel
 				'updated_at',           'a.updated_at',
 			];
 			//@formatter:on
-		}
+        }
 
-		parent::__construct($config);
-	}
+        parent::__construct($config);
+    }
 
-	/**
-	 * Get contract export data for csv
-	 *
-	 * @param  string  $arrival  Date of arrival
-	 *
-	 * @throws RuntimeException
-	 * @since  1.0.0
-	 * @return mixed
-	 */
-	public function exportRegistration(string $arrival): mixed
-	{
-		$db    = $this->getDatabase();
-		$query = $db->getQuery(true);
+    /**
+     * Get contract export data for csv
+     *
+     * @param   string  $arrival  Date of arrival
+     *
+     * @return mixed
+     * @throws RuntimeException
+     * @since  1.0.0
+     */
+    public function exportRegistration(string $arrival): mixed
+    {
+        $db    = $this->getDatabase();
+        $query = $db->getQuery(true);
 
-		$query->select($db->qn(array(
-			'a.id',
-			'a.property_id'
-		)));
-		$query->from($db->qn('#__knowres_contract', 'a'))
-			->select($db->qn(array('p.property_name')))
-			->join('LEFT',
-				$db->qn('#__knowres_property', 'p') . ' ON ' . $db->qn('p.id') . '=' . $db->qn('a.property_id')
-			)
-			->select($db->qn(array(
-				'g.adults',
-				'g.children',
-				'g.guestinfo'
-			))
-			)
-			->join('LEFT',
-				$db->qn('#__knowres_contract_guestdata', 'g') . ' ON ' . $db->qn('g.contract_id') . '='
-				. $db->qn('a.id')
-			)
-			->where($db->qn('a.arrival') . '  = ' . $db->q($arrival))
-			->where($db->qn('a.cancelled') . ' = 0')
-			->where($db->qn('a.black_booking') . ' = 0')
-			->where($db->qn('a.state') . ' = 1');
-		$db->setQuery($query);
+        $query->select($db->qn([
+            'a.id',
+            'a.property_id',
+        ]));
+        $query->from($db->qn('#__knowres_contract', 'a'))
+              ->select($db->qn(['p.property_name']))
+              ->join('LEFT',
+                  $db->qn('#__knowres_property', 'p') . ' ON ' . $db->qn('p.id') . '=' . $db->qn('a.property_id'),
+              )
+              ->select($db->qn([
+                  'g.adults',
+                  'g.children',
+                  'g.guestinfo',
+              ]),
+              )
+              ->join('LEFT',
+                  $db->qn('#__knowres_contract_guestdata', 'g') . ' ON ' . $db->qn('g.contract_id') . '='
+                  . $db->qn('a.id'),
+              )
+              ->where($db->qn('a.arrival') . '  = ' . $db->q($arrival))
+              ->where($db->qn('a.cancelled') . ' = 0')
+              ->where($db->qn('a.black_booking') . ' = 0')
+              ->where($db->qn('a.state') . ' = 1');
+        $db->setQuery($query);
 
-		return $db->loadObjectList();
-	}
+        return $db->loadObjectList();
+    }
 
-	/**
-	 * Get guest data ID from contract ID
-	 *
-	 * @param  ?int  $contract_id  ID of contract
-	 *
-	 * @throws DatabaseNotFoundException
-	 * @throws QueryTypeAlreadyDefinedException
-	 * @throws RuntimeException
-	 * @since  1.0.0
-	 * @return ?int
-	 */
-	public function getByContractId(?int $contract_id): ?int
-	{
-		if (empty($contract_id)) {
-			return 0;
-		}
+    /**
+     * Get guest data ID from contract ID
+     *
+     * @param  ?int  $contract_id  ID of contract
+     *
+     * @return ?int
+     * @throws QueryTypeAlreadyDefinedException
+     * @throws RuntimeException
+     * @throws DatabaseNotFoundException
+     * @since  1.0.0
+     */
+    public function getByContractId(?int $contract_id): ?int
+    {
+        if (empty($contract_id)) {
+            return 0;
+        }
 
-		$db    = $this->getDatabase();
-		$query = $db->getQuery(true);
+        $db    = $this->getDatabase();
+        $query = $db->getQuery(true);
 
-		$query->select('id')
-			->from($db->qn('#__knowres_contract_guestdata'))
-			->where($db->qn('contract_id') . '=' . $contract_id)
-			->setLimit(1);
+        $query->select('id')
+              ->from($db->qn('#__knowres_contract_guestdata'))
+              ->where($db->qn('contract_id') . '=' . $contract_id)
+              ->setLimit(1);
 
-		$db->setQuery($query);
+        $db->setQuery($query);
 
-		return $db->loadResult();
-	}
+        return $db->loadResult();
+    }
 
-	/**
-	 * Build an SQL query to load the list data.
-	 *
-	 * @throws DatabaseNotFoundException
-	 * @throws QueryTypeAlreadyDefinedException
-	 * @throws RuntimeException
-	 * @since  1.0.0
-	 * @return QueryInterface
-	 */
-	protected function getListQuery(): QueryInterface
-	{
-		$db    = $this->getDatabase();
-		$query = $db->getQuery(true);
+    /**
+     * Build an SQL query to load the list data.
+     *
+     * @return QueryInterface
+     * @throws QueryTypeAlreadyDefinedException
+     * @throws RuntimeException
+     * @throws DatabaseNotFoundException
+     * @since  1.0.0
+     */
+    protected function getListQuery(): QueryInterface
+    {
+        $db    = $this->getDatabase();
+        $query = $db->getQuery(true);
 
-		$query->select($this->getState('list.select', 'a.*'));
-		$query->from($db->qn('#__knowres_contract_guestdata', 'a'));
-		$query = self::commonJoins($db, $query);
+        $query->select($this->getState('list.select', 'a.*'));
+        $query->from($db->qn('#__knowres_contract_guestdata', 'a'));
+        $query = self::commonJoins($db, $query);
 
-		$search = $this->getState('filter.search');
-		if (!empty($search)) {
-			if (stripos($search, 'id:') === 0) {
-				$query->where($db->qn('a.id') . '=' . (int)substr($search, 3));
-			} else {
-				$search = $db->q('%' . $db->escape($search) . '%');
-				$query->where('( a.guest_info LIKE ' . $search . ' )');
-			}
-		}
+        $search = $this->getState('filter.search');
+        if (!empty($search)) {
+            if (stripos($search, 'id:') === 0) {
+                $query->where($db->qn('a.id') . '=' . (int)substr($search, 3));
+            } else {
+                $search = $db->q('%' . $db->escape($search) . '%');
+                $query->where('( a.guest_info LIKE ' . $search . ' )');
+            }
+        }
 
-		$filter_guest_id = $this->state->get("filter.guest_id");
-		if ($filter_guest_id) {
-			$query->where($db->qn('a.guest_id') . '=' . (int)$filter_guest_id);
-		}
+        $filter_guest_id = $this->state->get("filter.guest_id");
+        if ($filter_guest_id) {
+            $query->where($db->qn('a.guest_id') . '=' . (int)$filter_guest_id);
+        }
 
-		$filter_contract_id = $this->state->get("filter.contract_id");
-		if ($filter_contract_id) {
-			$query->where($db->qn('a.contract_id') . '=' . (int)$filter_contract_id);
-		}
+        $filter_contract_id = $this->state->get("filter.contract_id");
+        if ($filter_contract_id) {
+            $query->where($db->qn('a.contract_id') . '=' . (int)$filter_contract_id);
+        }
 
-		$orderCol  = $this->state->get('list.ordering');
-		$orderDirn = $this->state->get('list.direction');
-		if ($orderCol && $orderDirn) {
-			$query->order($db->escape($orderCol . ' ' . $orderDirn));
-		}
+        $orderCol  = $this->state->get('list.ordering');
+        $orderDirn = $this->state->get('list.direction');
+        if ($orderCol && $orderDirn) {
+            $query->order($db->escape($orderCol . ' ' . $orderDirn));
+        }
 
-		return $query;
-	}
+        return $query;
+    }
 
-	/**
-	 * Method to get a store id based on model configuration state.
-	 * This is necessary because the model is used by the component and
-	 * different modules that might need different sets of data or different
-	 * ordering requirements.
-	 *
-	 * @param  string  $id  A prefix for the store id.
-	 *
-	 * @since  1.0.0
-	 * @return string        A store id.
-	 */
-	protected function getStoreId($id = ''): string
-	{
-		$id .= ':' . $this->getState('filter.search');
-		$id .= ':' . $this->getState('filter.state');
+    /**
+     * Method to get a store id based on model configuration state.
+     * This is necessary because the model is used by the component and
+     * different modules that might need different sets of data or different
+     * ordering requirements.
+     *
+     * @param   string  $id  A prefix for the store id.
+     *
+     * @return string        A store id.
+     * @since  1.0.0
+     */
+    protected function getStoreId($id = ''): string
+    {
+        $id .= ':' . $this->getState('filter.search');
+        $id .= ':' . $this->getState('filter.state');
 
-		return parent::getStoreId($id);
-	}
+        return parent::getStoreId($id);
+    }
 
-	/**
-	 * Method to autopopulate the model state.
-	 * Note. Calling getState in this method will result in recursion.
-	 *
-	 * @param  string  $ordering   Field
-	 * @param  string  $direction  Direction
-	 *
-	 * @since 1.0.0
-	 */
-	protected function populateState($ordering = 'a.guest_id', $direction = 'asc'): void
-	{
-		$search = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
-		$this->setState('filter.search', trim($search));
-		$this->setState('filter.guest_id',
-			$this->getUserStateFromRequest($this->context . '.filter.guest_id', 'filter_guest_id', 0, 'integer')
-		);
-		$this->setState('filter.contract_id',
-			$this->getUserStateFromRequest($this->context . '.filter.contract_id', 'filter_contract_id', 0, 'integer')
-		);
+    /**
+     * Method to autopopulate the model state.
+     * Note. Calling getState in this method will result in recursion.
+     *
+     * @param   string  $ordering   Field
+     * @param   string  $direction  Direction
+     *
+     * @since 1.0.0
+     */
+    protected function populateState($ordering = 'a.guest_id', $direction = 'asc'): void
+    {
+        $search = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
+        $this->setState('filter.search', trim($search));
+        $this->setState('filter.guest_id',
+            $this->getUserStateFromRequest($this->context . '.filter.guest_id', 'filter_guest_id', 0, 'integer'),
+        );
+        $this->setState('filter.contract_id',
+            $this->getUserStateFromRequest($this->context . '.filter.contract_id', 'filter_contract_id', 0, 'integer'),
+        );
 
-		$this->setState('params', KrMethods::getParams());
+        $this->setState('params', KrMethods::getParams());
 
-		parent::populateState($ordering, $direction);
-	}
+        parent::populateState($ordering, $direction);
+    }
 }

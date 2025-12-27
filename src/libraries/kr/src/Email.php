@@ -9,8 +9,6 @@
 
 namespace HighlandVision\KR;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Email\HelpScoutEmailService;
 use HighlandVision\KR\Email\JoomlaEmailService;
@@ -23,6 +21,10 @@ use RuntimeException;
 use function count;
 use function is_dir;
 use function str_replace;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Class KnowresEmailHelper

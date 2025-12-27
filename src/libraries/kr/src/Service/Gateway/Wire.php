@@ -9,11 +9,13 @@
 
 namespace HighlandVision\KR\Service\Gateway;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Service\Gateway;
 use stdClass;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Service gateway Wire

@@ -9,8 +9,6 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Field;
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrFactory;
 use InvalidArgumentException;
 use Joomla\CMS\Form\Field\ListField;
@@ -19,6 +17,10 @@ use RuntimeException;
 
 use function array_merge;
 
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') || die;
+// phpcs:enable PSR1.Files.SideEffects
+
 /**
  * Supports a value from an external table
  *
@@ -26,26 +28,26 @@ use function array_merge;
  */
 class ListclustersField extends ListField
 {
-	/** @var string The form field type. */
-	protected $type = 'Listclusters';
+    /** @var string The form field type. */
+    protected $type = 'Listclusters';
 
-	/**
-	 * Get the field options.
-	 *
-	 * @throws InvalidArgumentException
-	 * @throws RuntimeException
-	 * @since  1.6
-	 * @return array    The field input markup.
-	 */
-	public function getOptions(): array
-	{
-		$options = [];
+    /**
+     * Get the field options.
+     *
+     * @return array    The field input markup.
+     * @throws RuntimeException
+     * @throws InvalidArgumentException
+     * @since  1.6
+     */
+    public function getOptions(): array
+    {
+        $options = [];
 
-		$items = KrFactory::getListModel('clusters')->getAll();
-		foreach ($items as $i) {
-			$options[] = HTMLHelper::_('select.option', $i->id, $i->name);
-		}
+        $items = KrFactory::getListModel('clusters')->getAll();
+        foreach ($items as $i) {
+            $options[] = HTMLHelper::_('select.option', $i->id, $i->name);
+        }
 
-		return array_merge(parent::getOptions(), $options);
-	}
+        return array_merge(parent::getOptions(), $options);
+    }
 }

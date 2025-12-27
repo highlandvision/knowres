@@ -9,16 +9,19 @@
 
 namespace HighlandVision\KR\Core;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Hub;
 use InvalidArgumentException;
 use RuntimeException;
+
 use function count;
 use function is_countable;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Validates the contract and guest data before taking payment
@@ -27,81 +30,75 @@ use function is_countable;
  */
 class Confirm
 {
-	/** @var Hub Hub data. */
-	protected Hub $hub;
+    /** @var Hub Hub data. */
+    protected Hub $hub;
 
-	/**
-	 * Action manager
-	 *
-	 * @param   Hub  $hub  Hub data
-	 *
-	 * @return bool
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
-	public function action(Hub $hub): bool
-	{
-		$this->hub = $hub;
-		$this->setValues();
+    /**
+     * Action manager
+     *
+     * @param   Hub  $hub  Hub data
+     *
+     * @return bool
+     * @throws Exception
+     * @since  1.0.0
+     */
+    public function action(Hub $hub): bool
+    {
+        $this->hub = $hub;
+        $this->setValues();
 
-		return $this->validate();
-	}
+        return $this->validate();
+    }
 
-	/**
-	 * Add any additional fields before validation
-	 *
-	 * @throws InvalidArgumentException
-	 * @since  1.0.0
-	 */
-	protected function setValues(): void
-	{
-		$this->hub->setValue('id', 0, 'guestData');
-		$this->hub->setValue('user_id', 0, 'guestData');
-		$this->hub->setValue('email', KrMethods::emailToPunycode($this->hub->getValue('email', 'guestData')),
-			'guestData'
-		);
-	}
+    /**
+     * Add any additional fields before validation
+     *
+     * @throws InvalidArgumentException
+     * @since  1.0.0
+     */
+    protected function setValues(): void
+    {
+        $this->hub->setValue('id', 0, 'guestData');
+        $this->hub->setValue('user_id', 0, 'guestData');
+        $this->hub->setValue('email', KrMethods::emailToPunycode($this->hub->getValue('email', 'guestData')),
+            'guestData',
+        );
+    }
 
-	/**
-	 * Data validation
-	 *
-	 * @return bool
-	 * @throws Exception
-	 * @throws InvalidArgumentException
-	 * @since  1.0.0
-	 */
-	protected function validate(): bool
-	{
-		try
-		{
-			$guestModel = KrFactory::getSiteModel('guest');
-			$guestForm  = KrFactory::getAdhocForm('guest', 'guest.xml', 'site');
-			$data       = $guestForm->filter((array) $this->hub->getData('guestData'));
-			$data       = $guestModel->validate($guestForm, $data, null, $this->hub->settings);
-			if (!$data)
-			{
-				$this->hub->errors = $guestModel->getErrors();
-				throw new RuntimeException('Guest validation errors found in Confirm');
-			}
+    /**
+     * Data validation
+     *
+     * @return bool
+     * @throws Exception
+     * @throws InvalidArgumentException
+     * @since  1.0.0
+     */
+    protected function validate(): bool
+    {
+        try {
+            $guestModel = KrFactory::getSiteModel('guest');
+            $guestForm  = KrFactory::getAdhocForm('guest', 'guest.xml', 'site');
+            $data       = $guestForm->filter((array)$this->hub->getData('guestData'));
+            $data       = $guestModel->validate($guestForm, $data, null, $this->hub->settings);
+            if (!$data) {
+                $this->hub->errors = $guestModel->getErrors();
+                throw new RuntimeException('Guest validation errors found in Confirm');
+            }
 
-			$contractModel = KrFactory::getAdminModel('contract');
-			$form          = KrFactory::getAdhocForm('contract-form', 'contract.xml');
-			if (!$contractModel->validate($form, (array) $this->hub->getData()))
-			{
-				$this->hub->errors = $contractModel->getErrors();
-				throw new RuntimeException('Contract validation errors found in Confirm');
-			}
-		}
-		catch (Exception $e)
-		{
-			if (is_countable($this->hub->errors) && count($this->hub->errors))
-			{
-				return false;
-			}
+            $contractModel = KrFactory::getAdminModel('contract');
+            $form          = KrFactory::getAdhocForm('contract-form', 'contract.xml');
+            if (!$contractModel->validate($form, (array)$this->hub->getData())) {
+                $this->hub->errors = $contractModel->getErrors();
+                throw new RuntimeException('Contract validation errors found in Confirm');
+            }
+        } catch (Exception $e) {
+            if (is_countable($this->hub->errors) && count($this->hub->errors)) {
+                return false;
+            }
 
-			throw $e;
-		}
+            throw $e;
+        }
 
-		return true;
-	}
+        return true;
+    }
 }

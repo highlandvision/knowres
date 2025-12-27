@@ -7,11 +7,13 @@
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\TickTock;
 use Joomla\CMS\HTML\HTMLHelper;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 $wa = $this->document->getWebAssetManager();
 $wa->useScript('com_knowres.site')
@@ -37,8 +39,8 @@ $wa->useScript('com_knowres.site')
                             <div class="small-12 cell">
                                 <h4>
                                     <?php echo KrMethods::sprintf('COM_KNOWRES_HELLO',
-                                            ucfirst($this->contract->guest_firstname)
-                                            . ' ' . ucfirst($this->contract->guest_surname)
+                                        ucfirst($this->contract->guest_firstname)
+                                        . ' ' . ucfirst($this->contract->guest_surname),
                                     ); ?>
                                 </h4>
                             </div>
@@ -194,9 +196,9 @@ $wa->useScript('com_knowres.site')
                 </fieldset>
 
                 <?php echo HTMLHelper::_('form.token'); ?>
-                <input type="hidden" name="id" value="<?php echo (int) $this->item->id; ?>">
+                <input type="hidden" name="id" value="<?php echo (int)$this->item->id; ?>">
                 <input type="hidden" name="task" value="review.save">
-                <input type="hidden" name="jform[id]" value="<?php echo (int) $this->item->id; ?>">
+                <input type="hidden" name="jform[id]" value="<?php echo (int)$this->item->id; ?>">
                 <input type="hidden" name="jform[contract_id]" value="<?php echo $this->contract->id; ?>">
                 <input type="hidden" name="jform[property_id]" value="<?php echo $this->contract->property_id; ?>">
                 <input type="hidden" name="jform[review_date]" value="<?php echo TickTock::getDate(); ?>">

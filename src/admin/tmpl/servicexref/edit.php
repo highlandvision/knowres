@@ -7,11 +7,13 @@
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use Joomla\CMS\HTML\HTMLHelper;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /** @var HighlandVision\Component\Knowres\Administrator\View\Servicexref\HtmlView $this */
 
@@ -22,7 +24,7 @@ $wa->useScript('keepalive')
    ->useScript('form.validate');
 ?>
 
-<form action="<?php echo KrMethods::route('index.php?option=com_knowres&layout=edit&id=' . (int) $this->item->id); ?>"
+<form action="<?php echo KrMethods::route('index.php?option=com_knowres&layout=edit&id=' . (int)$this->item->id); ?>"
       aria-label="<?php echo $this->form_aria_label; ?>" class="form-validate" id="tax-form" method="post"
       name="adminForm">
 
@@ -31,8 +33,8 @@ $wa->useScript('keepalive')
             <div class="col-xl-9 col-xxl-8">
                 <?php echo $this->form->renderField('service_id'); ?>
 
-                <?php if (!(int) $this->item->contract_id && !(int) $this->item->guest_id
-                        && !(int) $this->item->owner_id) : ?>
+                <?php if (!(int)$this->item->contract_id && !(int)$this->item->guest_id
+                    && !(int)$this->item->owner_id) : ?>
                     <?php if (!$this->item->id && $this->property_id): ?>
                         <?php $this->form->setValue('property_id', '', $this->property_id); ?>
                     <?php endif; ?>
@@ -42,17 +44,17 @@ $wa->useScript('keepalive')
                         <?php echo $this->form->renderField('sell'); ?>
                     <?php endif; ?>
                 <?php endif; ?>
-                <?php if ((int) $this->item->contract_id) : ?>
+                <?php if ((int)$this->item->contract_id) : ?>
                     <?php $this->form->setFieldAttribute('property_id', 'required', false); ?>
                     <?php $this->form->setFieldAttribute('contract_id', 'required', true); ?>
                     <?php echo $this->form->renderField('contract_id'); ?>
                 <?php endif; ?>
-                <?php if ((int) $this->item->guest_id) : ?>
+                <?php if ((int)$this->item->guest_id) : ?>
                     <?php $this->form->setFieldAttribute('property_id', 'required', false); ?>
                     <?php $this->form->setFieldAttribute('guest_id', 'required', true); ?>
                     <?php echo $this->form->renderField('guest_id'); ?>
                 <?php endif; ?>
-                <?php if ((int) $this->item->owner_id) : ?>
+                <?php if ((int)$this->item->owner_id) : ?>
                     <?php $this->form->setFieldAttribute('property_id', 'required', false); ?>
                     <?php $this->form->setFieldAttribute('owner_id', 'required', true); ?>
                     <?php echo $this->form->renderField('owner_id'); ?>

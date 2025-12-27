@@ -9,8 +9,6 @@
 
 namespace HighlandVision\KR;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\Component\Knowres\Site\Model\ContractguestdataModel;
 use HighlandVision\Component\Knowres\Site\Model\GuestModel;
@@ -28,6 +26,10 @@ use function is_null;
 use function jexit;
 use function str_replace;
 use function trim;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Front end site adhoc functions

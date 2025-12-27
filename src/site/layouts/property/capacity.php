@@ -7,9 +7,11 @@
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 extract($displayData);
 /**
@@ -39,7 +41,8 @@ extract($displayData);
                 <?php echo KrMethods::sprintf('COM_KNOWRES_PROPERTY_SLEEPS_INFANT', $item->sleeps_infant_age); ?>
             <?php elseif ($item->sleeps_infant_max > 1): ?>
                 <?php echo KrMethods::sprintf('COM_KNOWRES_PROPERTY_SLEEPS_INFANTS',
-                        $item->sleeps_infant_max, $item->sleeps_infant_age);
+                    $item->sleeps_infant_max, $item->sleeps_infant_age,
+                );
                 ?>
             <?php endif; ?>
         </p>

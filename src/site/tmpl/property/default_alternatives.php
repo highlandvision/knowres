@@ -9,14 +9,15 @@
 
 /** @noinspection PhpUnhandledExceptionInspection */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Media;
 use HighlandVision\KR\SiteHelper;
 use HighlandVision\KR\Utility;
 use Joomla\CMS\HTML\HTMLHelper;
 
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 ?>
 
 <div id="kr-alternatives">
@@ -35,18 +36,15 @@ use Joomla\CMS\HTML\HTMLHelper;
             $plink    = SiteHelper::buildPropertyLink($item->id);
             $image    = Media\Images::getPropertyImageName($item->id);
             $currency = $this->currencies[0];
-            if (isset($this->currencies[$item->id]))
-            {
+            if (isset($this->currencies[$item->id])) {
                 $currency = $this->currencies[$item->id];
             }
             $netrate = $this->net_rates[0];
-            if (isset($this->net_rates[$item->id]))
-            {
+            if (isset($this->net_rates[$item->id])) {
                 $net_rate = $this->net_rates[$item->id];
             }
             $markup = $this->net_markup[0];
-            if (isset($this->net_markup[$item->id]))
-            {
+            if (isset($this->net_markup[$item->id])) {
                 $markup = $this->net_markup[$item->id];
             }
             ?>
@@ -56,22 +54,22 @@ use Joomla\CMS\HTML\HTMLHelper;
                    title="<?php echo $item->property_name; ?>">
                     <div class="image-wrapper">
                         <?php echo HTMLHelper::_('image',
-                                Media\Images::getImagePath($item->id, 'solo', $image),
-                                $item->property_name,
-                                [
-                                        'width'  => $this->params->get('max_property_width'),
-                                        'height' => $this->params->get('max_property_height')
-                                ]
+                            Media\Images::getImagePath($item->id, 'solo', $image),
+                            $item->property_name,
+                            [
+                                'width'  => $this->params->get('max_property_width'),
+                                'height' => $this->params->get('max_property_height'),
+                            ],
                         );
                         ?>
 
                         <?php echo KrMethods::render('properties.pricesummary', [
-                                'minrate'  => $item->minrate,
-                                'maxrate'  => $item->maxrate,
-                                'netrate'  => $netrate,
-                                'markup'   => $markup,
-                                'summary'  => $item->price_summary,
-                                'currency' => $currency
+                            'minrate'  => $item->minrate,
+                            'maxrate'  => $item->maxrate,
+                            'netrate'  => $netrate,
+                            'markup'   => $markup,
+                            'summary'  => $item->price_summary,
+                            'currency' => $currency,
                         ]);
                         ?>
                     </div>
@@ -84,9 +82,9 @@ use Joomla\CMS\HTML\HTMLHelper;
                             <i class='fa-solid fa-female fa-lg color-accent'></i>
                             <i class='fa-solid fa-male fa-lg color-accent'></i>
                             <?php echo ' ' . ($item->sleeps + $item->sleeps_extra)
-                                    . ' ' . KrMethods::plain('COM_KNOWRES_FEATURED_PERSONS')
-                                    . ' | ' . $item->bedrooms . ' '
-                                    . KrMethods::plain('COM_KNOWRES_BEDROOMS');
+                                . ' ' . KrMethods::plain('COM_KNOWRES_FEATURED_PERSONS')
+                                . ' | ' . $item->bedrooms . ' '
+                                . KrMethods::plain('COM_KNOWRES_BEDROOMS');
                             ?>
                         </p>
                     </div>

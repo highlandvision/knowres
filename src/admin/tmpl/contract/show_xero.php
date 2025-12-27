@@ -10,7 +10,9 @@
 use HighlandVision\KR\Framework\KrMethods;
 use Xero\API\XeroInterface\Payments;
 
+// phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 $this->payments = new Payments($this->xero);
 $result         = $this->payments->getInvoices($this->item);

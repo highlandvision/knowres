@@ -9,11 +9,13 @@
 
 /** @noinspection PhpUnhandledExceptionInspection */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\SiteHelper;
 use HighlandVision\KR\TickTock;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 ?>
 
 <div class="kr-reviews">
@@ -27,7 +29,7 @@ use HighlandVision\KR\TickTock;
                         <?php if ($text && $this->scores[$i] > 0) : ?>
                             <dt><?php echo $text; ?></dt>
                             <dd>
-								<span style="width:<?php echo (int) $this->scores[$i] * 10 . "%"; ?>;">
+								<span style="width:<?php echo (int)$this->scores[$i] * 10 . "%"; ?>;">
 									<?php echo $this->scores[$i]; ?>
 								</span>
                             </dd>
@@ -46,7 +48,7 @@ use HighlandVision\KR\TickTock;
                     </div>
                     <p class="small">
                         <?php echo KrMethods::sprintf('COM_KNOWRES_PROPERTY_HEADER_GUEST_REVIEW_COUNT',
-                                count($this->reviews)
+                            count($this->reviews),
                         ); ?>
                     </p>
                 <?php endif; ?>
@@ -70,7 +72,7 @@ use HighlandVision\KR\TickTock;
                     </div>
                     <div class="small-12 text-right medium-2 cell">
                         <?php $rating = $r->rating1 + $r->rating2 + $r->rating3 + $r->rating4 + $r->rating5
-                                + $r->rating6; ?>
+                            + $r->rating6; ?>
                         <?php if ($rating > 0): ?>
                             <?php $rating = round($rating / 6, 1); ?>
                             <div>
@@ -107,8 +109,8 @@ use HighlandVision\KR\TickTock;
     <?php if ($this->more_reviews): ?>
         <?php $Itemid = SiteHelper::getItemId('com_knowres', 'reviews'); ?>
         <?php $link = KrMethods::route('index.php?option=com_knowres&view=reviews&property_id=' . $this->item->id
-                . '&Itemid=' . $Itemid . '&limitstart=' . $this->list_limit,
-                false
+            . '&Itemid=' . $Itemid . '&limitstart=' . $this->list_limit,
+            false,
         ); ?>
         <a href="<?php echo $link; ?>" class="button float-right">
             <?php echo KrMethods::plain('COM_KNOWRES_READ_MORE'); ?></a>

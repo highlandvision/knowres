@@ -9,13 +9,15 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Controller;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\FormController;
 use HighlandVision\KR\Utility;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') || die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Contract note controller form class.
@@ -24,55 +26,53 @@ use Joomla\CMS\MVC\Model\BaseDatabaseModel;
  */
 class ContractnoteController extends FormController
 {
-	/**
-	 * Method to cancel an edit.
-	 *
-	 * @param   null  $key  The name of the primary key of the URL variable.
-	 *
-	 * @return bool
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
-	public function cancel($key = null): bool
-	{
-		if (parent::cancel($key))
-		{
-			$gobackto = Utility::getGoBackTo();
-			if ($gobackto)
-			{
-				KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&' . $gobackto, false));
-			}
+    /**
+     * Method to cancel an edit.
+     *
+     * @param   null  $key  The name of the primary key of the URL variable.
+     *
+     * @return bool
+     * @throws Exception
+     * @since  1.0.0
+     */
+    public function cancel($key = null): bool
+    {
+        if (parent::cancel($key)) {
+            $gobackto = Utility::getGoBackTo();
+            if ($gobackto) {
+                KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&' . $gobackto, false));
+            }
 
-			return true;
-		}
+            return true;
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-	/**
-	 * Process additional requirements after save payment
-	 *
-	 * @param   BaseDatabaseModel  $model      The data model object.
-	 * @param   array              $validData  The validated data.
-	 *
-	 * @throws Exception
-	 * @since  3.1
-	 */
-	protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
-	{
-		if ($this->getTask() == 'save')
-		{
-			$contract_id = KrMethods::getUserState('com_knowres.current.contract_id', 0);
-			if (!$contract_id)
-			{
-				KrMethods::redirect(KrMethods::route('index.php?option=' . $this->option . '&view=' . $this->view_list
-					. $this->getRedirectToListAppend(), false));
-			}
-			else
-			{
-				KrMethods::redirect(KrMethods::route('index.php?option=' . $this->option . '&task=contract.show&id='
-					. $contract_id, false));
-			}
-		}
-	}
+    /**
+     * Process additional requirements after save payment
+     *
+     * @param   BaseDatabaseModel  $model      The data model object.
+     * @param   array              $validData  The validated data.
+     *
+     * @throws Exception
+     * @since  3.1
+     */
+    protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
+    {
+        if ($this->getTask() == 'save') {
+            $contract_id = KrMethods::getUserState('com_knowres.current.contract_id', 0);
+            if (!$contract_id) {
+                KrMethods::redirect(KrMethods::route('index.php?option=' . $this->option . '&view=' . $this->view_list
+                    . $this->getRedirectToListAppend(), false,
+                ),
+                );
+            } else {
+                KrMethods::redirect(KrMethods::route('index.php?option=' . $this->option . '&task=contract.show&id='
+                    . $contract_id, false,
+                ),
+                );
+            }
+        }
+    }
 }

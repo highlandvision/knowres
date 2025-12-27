@@ -7,10 +7,11 @@
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
 
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 ?>
 
 <div class="grid-x grid-margin-x">
@@ -21,21 +22,21 @@ use HighlandVision\KR\Framework\KrMethods;
             <div class="callout small financial">
                 <?php if (is_countable($this->payments) && count($this->payments)): ?>
                     <?php echo KrMethods::render('dashboard.schedule.payments',
-                            [
-                                    'contract' => $this->item,
-                                    'fees'     => $this->fees,
-                                    'payments' => $this->payments,
-                                    'balance'  => $this->balance
-                            ]
+                        [
+                            'contract' => $this->item,
+                            'fees'     => $this->fees,
+                            'payments' => $this->payments,
+                            'balance'  => $this->balance,
+                        ],
                     );
                     ?>
                 <?php else: ?>
                     <?php echo KrMethods::render('dashboard.schedule.nopayments',
-                            [
-                                    'contract' => $this->item,
-                                    'fees'     => $this->fees,
-                                    'balance'  => $this->balance
-                            ]
+                        [
+                            'contract' => $this->item,
+                            'fees'     => $this->fees,
+                            'balance'  => $this->balance,
+                        ],
                     );
                     ?>
                 <?php endif; ?>
@@ -45,12 +46,12 @@ use HighlandVision\KR\Framework\KrMethods;
         <h6><?php echo KrMethods::plain('COM_KNOWRES_YOUR_STATEMENT'); ?></h6>
         <div class="callout small financial">
             <?php echo KrMethods::render('dashboard.summary', [
-                    'contract'    => $this->item,
-                    'fees'        => $this->fees,
-                    'payments'    => $this->payments,
-                    'audience'    => $this->audience,
-                    'balance'     => $this->balance,
-                    'balance_all' => $this->balance_all,
+                'contract'    => $this->item,
+                'fees'        => $this->fees,
+                'payments'    => $this->payments,
+                'audience'    => $this->audience,
+                'balance'     => $this->balance,
+                'balance_all' => $this->balance_all,
             ]); ?>
         </div>
 

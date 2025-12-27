@@ -7,11 +7,13 @@
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 /** @var HighlandVision\Component\Knowres\Administrator\View\Contractguestdata\HtmlView $this */
 
 use HighlandVision\KR\Framework\KrMethods;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 $wa = $this->document->getWebAssetManager();
 $wa->useScript('keepalive')

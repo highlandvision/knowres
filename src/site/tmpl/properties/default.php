@@ -7,16 +7,18 @@
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Utility;
 use Joomla\CMS\HTML\HTMLHelper;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 $wa = $this->document->getWebAssetManager();
 $wa->getRegistry()->addExtensionRegistryFile('com_knowres');
 $wa->useScript('com_knowres.site')
-	->useScript('form.validate')
-	->useScript('keepalive');
+   ->useScript('form.validate')
+   ->useScript('keepalive');
 
 HTMLHelper::_('script', trim(Utility::getGmapsURL()), [], ['async' => 'async', 'defer' => 'defer']);
 HTMLHelper::_('script', trim(Utility::getMarkerClustererURL()), [], ['async' => 'async', 'defer' => 'defer']);

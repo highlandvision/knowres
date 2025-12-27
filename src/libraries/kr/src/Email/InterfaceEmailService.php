@@ -9,7 +9,9 @@
 
 namespace HighlandVision\KR\Email;
 
+// phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Interface email service currently Joomla / Helpscout.

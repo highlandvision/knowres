@@ -7,10 +7,12 @@
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Utility;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') || die;
+// phpcs:enable PSR1.Files.SideEffects
 
 extract($displayData);
 /**
@@ -22,80 +24,80 @@ extract($displayData);
 ?>
 
 <div class="row">
-	<div class="col-4">
-		<?php echo KrMethods::plain('COM_KNOWRES_CONTRACTS_AGENT_ID'); ?>
-	</div>
-	<div class="col-8">
-		<?php echo $contract->agent_name; ?>
-	</div>
+    <div class="col-4">
+        <?php echo KrMethods::plain('COM_KNOWRES_CONTRACTS_AGENT_ID'); ?>
+    </div>
+    <div class="col-8">
+        <?php echo $contract->agent_name; ?>
+    </div>
 </div>
 
 <?php if ($contract->agent_reference): ?>
-	<div class="row">
-		<div class="col-4">
-			<?php echo KrMethods::plain('COM_KNOWRES_CONTRACTS_AGENT_REFERENCE'); ?>
-		</div>
-		<div class="col-8">
-			<?php echo $contract->agent_reference; ?>
-		</div>
-	</div>
+    <div class="row">
+        <div class="col-4">
+            <?php echo KrMethods::plain('COM_KNOWRES_CONTRACTS_AGENT_REFERENCE'); ?>
+        </div>
+        <div class="col-8">
+            <?php echo $contract->agent_reference; ?>
+        </div>
+    </div>
 <?php endif; ?>
 
 <?php if ($contract->agent_value): ?>
-	<div class="row">
-		<div class="col-4">
-			<?php echo KrMethods::plain('COM_KNOWRES_CONTRACTS_AGENT_VALUE'); ?>
-		</div>
-		<div class="col-8">
-			<?php echo Utility::displayValue($contract->agent_value, $contract->currency); ?>
-		</div>
-	</div>
+    <div class="row">
+        <div class="col-4">
+            <?php echo KrMethods::plain('COM_KNOWRES_CONTRACTS_AGENT_VALUE'); ?>
+        </div>
+        <div class="col-8">
+            <?php echo Utility::displayValue($contract->agent_value, $contract->currency); ?>
+        </div>
+    </div>
 <?php endif; ?>
 
 <div class="row">
-	<div class="col-4">
-		<?php echo KrMethods::plain('COM_KNOWRES_CONTRACTS_AGENT_COMMISSION'); ?>
-	</div>
-	<div class="col-8">
-		<?php echo Utility::displayValue($contract->agent_commission, $contract->currency); ?>
-	</div>
+    <div class="col-4">
+        <?php echo KrMethods::plain('COM_KNOWRES_CONTRACTS_AGENT_COMMISSION'); ?>
+    </div>
+    <div class="col-8">
+        <?php echo Utility::displayValue($contract->agent_commission, $contract->currency); ?>
+    </div>
 </div>
 
 <?php if (!empty($contract->service_id)): ?>
-	<div class="row">
-		<div class="col-4">
-			<?php echo '----------'; ?>
-		</div>
-		<div class="col-8">
-			<?php echo '----------'; ?>
-		</div>
-		<div class="col-4">
-			<?php echo KrMethods::plain('COM_KNOWRES_CONTRACTS_SERVICE_ID'); ?>
-		</div>
-		<div class="col-8">
-			<?php echo $contract->service_name; ?>
-		</div>
-	</div>
+    <div class="row">
+        <div class="col-4">
+            <?php echo '----------'; ?>
+        </div>
+        <div class="col-8">
+            <?php echo '----------'; ?>
+        </div>
+        <div class="col-4">
+            <?php echo KrMethods::plain('COM_KNOWRES_CONTRACTS_SERVICE_ID'); ?>
+        </div>
+        <div class="col-8">
+            <?php echo $contract->service_name; ?>
+        </div>
+    </div>
 <?php endif; ?>
 
 <?php if ($foreign_key): ?>
-	<div class="row">
-		<div class="col-4">
-			<?php echo KrMethods::plain('COM_KNOWRES_CONTRACTS_SERVICE_REFERENCE'); ?>
-		</div>
-		<div class="col-8">
-			<?php echo $foreign_key; ?>
-		</div>
-	</div>
+    <div class="row">
+        <div class="col-4">
+            <?php echo KrMethods::plain('COM_KNOWRES_CONTRACTS_SERVICE_REFERENCE'); ?>
+        </div>
+        <div class="col-8">
+            <?php echo $foreign_key; ?>
+        </div>
+    </div>
 <?php endif; ?>
 
-<?php if ((float) $contract->channel_commission > 0): ?>
-	<div class="row">
-		<div class="col-4">
-			<?php echo KrMethods::plain('COM_KNOWRES_CONTRACTS_CHANNEL_COMMISSION'); ?>
-		</div>
-		<div class="col-8">
-			<?php echo Utility::displayValue($contract->channel_commission, $contract->currency); ?>
-		</div>
-	</div>
+<?php if ((float)$contract->channel_commission > 0): ?>
+    <div class="row">
+        <div class="col-4">
+            <?php echo KrMethods::plain('COM_KNOWRES_CONTRACTS_CHANNEL_COMMISSION'); ?>
+        </div>
+        <div class="col-8">
+            <?php echo Utility::displayValue($contract->channel_commission, $contract->currency); ?>
+        </div>
+    </div>
 <?php endif; ?>

@@ -11,14 +11,16 @@
 
 namespace HighlandVision\KR\Property;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Logger;
 use HighlandVision\KR\Media;
 use InvalidArgumentException;
 use Joomla\Database\DatabaseDriver;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Property deletion

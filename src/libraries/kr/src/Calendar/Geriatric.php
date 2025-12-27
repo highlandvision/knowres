@@ -9,14 +9,16 @@
 
 namespace HighlandVision\KR\Calendar;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Calendar;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\TickTock;
 
 use function defined;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Geriatric calendar

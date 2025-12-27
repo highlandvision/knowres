@@ -9,8 +9,6 @@
 
 namespace HighlandVision\KR\Payments;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Session as KrSession;
@@ -19,6 +17,10 @@ use InvalidArgumentException;
 use RuntimeException;
 use stdClass;
 use function count;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Pre payment processor sets Payment Session data

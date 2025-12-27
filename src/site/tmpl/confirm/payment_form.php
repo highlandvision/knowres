@@ -9,22 +9,20 @@
 
 /** @noinspection PhpUnhandledExceptionInspection */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\SiteHelper;
 use HighlandVision\KR\Utility;
 use Joomla\CMS\HTML\HTMLHelper;
 
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
+
 $multi = '';
-foreach ($this->gateways as $gateway)
-{
-    if (!$multi)
-    {
+foreach ($this->gateways as $gateway) {
+    if (!$multi) {
         $multi = $gateway->currency;
-    }
-    elseif ($multi != $gateway->currency)
-    {
+    } elseif ($multi != $gateway->currency) {
         $multi = true;
         break;
     }
@@ -40,13 +38,13 @@ $action = '/index.php?option=com_knowres&view=confirm&layout=payment&Itemid=' . 
             <h3>
                 <?php if ($this->contractData->contract_total == $this->contractData->deposit): ?>
                     <?php echo KrMethods::sprintf('COM_KNOWRES_CONFIRM_AMOUNT_DUE_FULL',
-                            Utility::displayValue($this->contractData->deposit, $this->contractData->currency),
-                            $this->when
+                        Utility::displayValue($this->contractData->deposit, $this->contractData->currency),
+                        $this->when,
                     ); ?>
                 <?php else: ?>
                     <?php echo KrMethods::sprintf('COM_KNOWRES_CONFIRM_AMOUNT_DUE_DEPOSIT',
-                            Utility::displayValue($this->contractData->deposit, $this->contractData->currency),
-                            $this->when
+                        Utility::displayValue($this->contractData->deposit, $this->contractData->currency),
+                        $this->when,
                     ); ?>
                 <?php endif; ?>
             </h3>
@@ -80,18 +78,18 @@ $action = '/index.php?option=com_knowres&view=confirm&layout=payment&Itemid=' . 
         <?php endif; ?>
 
         <?php echo KrMethods::render('payment.terms', [
-                'title' => KrMethods::plain('COM_KNOWRES_CANCELLATION_TERMS'),
-                'text'  => $this->Translations->getText('agency', $this->contractData->agency_id, 'cancellation_terms'),
-                'label' => KrMethods::plain('COM_KNOWRES_PAYMENT_TERMS_CANCELLATION'),
-                'name'  => "agreecheckc"
+            'title' => KrMethods::plain('COM_KNOWRES_CANCELLATION_TERMS'),
+            'text'  => $this->Translations->getText('agency', $this->contractData->agency_id, 'cancellation_terms'),
+            'label' => KrMethods::plain('COM_KNOWRES_PAYMENT_TERMS_CANCELLATION'),
+            'name'  => "agreecheckc",
         ]);
         ?>
 
         <?php echo KrMethods::render('payment.terms', [
-                'title' => KrMethods::plain('COM_KNOWRES_TRAVEL_INSURANCE'),
-                'text'  => $this->Translations->getText('agency', $this->contractData->agency_id, 'insurance_disclaimer'),
-                'label' => KrMethods::plain('COM_KNOWRES_PAYMENT_TERMS_INSURANCE'),
-                'name'  => "agreecheckt"
+            'title' => KrMethods::plain('COM_KNOWRES_TRAVEL_INSURANCE'),
+            'text'  => $this->Translations->getText('agency', $this->contractData->agency_id, 'insurance_disclaimer'),
+            'label' => KrMethods::plain('COM_KNOWRES_PAYMENT_TERMS_INSURANCE'),
+            'name'  => "agreecheckt",
         ]);
         ?>
 

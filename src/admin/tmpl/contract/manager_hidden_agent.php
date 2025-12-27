@@ -7,7 +7,9 @@
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
+// phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 ?>
 
 <input type="hidden" name="jform[arrival]" id="arrival" value="<?php echo $this->arrival; ?>">

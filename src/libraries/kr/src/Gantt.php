@@ -14,7 +14,9 @@ use HighlandVision\KR\Framework\KrMethods;
 use RuntimeException;
 use function implode;
 
+// phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Get bookings data for gantt claendar (multiple properties)

@@ -9,8 +9,6 @@
 
 namespace HighlandVision\KR\Compute;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Hub;
 use HighlandVision\KR\TickTock;
@@ -18,6 +16,10 @@ use HighlandVision\KR\TickTock;
 use function explode;
 use function in_array;
 use function intval;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Calculate payment dates

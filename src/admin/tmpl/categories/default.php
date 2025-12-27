@@ -7,12 +7,13 @@
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
 
-/** @var HighlandVision\Component\Knowres\Administrator\View\Categories\HtmlView $this */
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
+/** @var HighlandVision\Component\Knowres\Administrator\View\Categories\HtmlView $this */
 include(JPATH_ADMINISTRATOR . '/components/com_knowres/layouts/html/list/includes/list-header.php');
 ?>
 

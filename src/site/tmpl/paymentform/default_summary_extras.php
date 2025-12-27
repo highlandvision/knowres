@@ -6,39 +6,38 @@
  * @license    See the file "LICENSE.txt" for the full license governing this code.
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
-/** @noinspection PhpUnhandledExceptionInspection */
 
-defined('_JEXEC') or die;
+/** @noinspection PhpUnhandledExceptionInspection */
 
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Utility;
 
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
+
 $extras           = [];
 $extras_value     = [];
 $prices_inclusive = 1;
 
-foreach ($this->contract->extras as $id => $d)
-{
-	if (!empty($id) && $id > 0)
-	{
-		$extra = KrFactory::getAdminModel('extra')->getItem($id);
-		$name  = $extra->name;
-		if ((int) $d['quantity'] > 1)
-		{
-			$name = $name . " x " . $d['quantity'];
-		}
+foreach ($this->contract->extras as $id => $d) {
+    if (!empty($id) && $id > 0) {
+        $extra = KrFactory::getAdminModel('extra')->getItem($id);
+        $name  = $extra->name;
+        if ((int)$d['quantity'] > 1) {
+            $name = $name . " x " . $d['quantity'];
+        }
 
-		$extras[]       = $name;
-		$extras_value[] = Utility::displayValue($d['value'], $this->contract->currency);
-	}
+        $extras[]       = $name;
+        $extras_value[] = Utility::displayValue($d['value'], $this->contract->currency);
+    }
 }
 
-if (count($extras))
-{
-	$this->data[] = [
-		'left'  => KrMethods::plain('COM_KNOWRES_EXTRAS'),
-		'mid'   => implode("<br>", $extras),
-		'right' => implode("<br>", $extras_value)
-	];
+if (count($extras)) {
+    $this->data[] = [
+        'left'  => KrMethods::plain('COM_KNOWRES_EXTRAS'),
+        'mid'   => implode("<br>", $extras),
+        'right' => implode("<br>", $extras_value),
+    ];
 }

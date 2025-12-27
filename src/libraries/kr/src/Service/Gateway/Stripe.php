@@ -9,8 +9,6 @@
 
 namespace HighlandVision\KR\Service\Gateway;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Service\Gateway;
@@ -30,6 +28,10 @@ use Stripe\Stripe as StripeLib;
 use function http_response_code;
 use function jexit;
 use function trim;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Service gateway Stripe

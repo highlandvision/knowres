@@ -9,8 +9,6 @@
 
 namespace HighlandVision\KR\Media\Images;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
@@ -19,13 +17,20 @@ use HighlandVision\KR\Utility;
 use InvalidArgumentException;
 use Joomla\CMS\Filesystem\File;
 use RuntimeException;
+
 use function glob;
 use function implode;
 use function move_uploaded_file;
 use function unlink;
+
 use const GLOB_BRACE;
 
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
+
 /**
+ *
  * Media properties image upload.
  *
  * @since 1.0.0

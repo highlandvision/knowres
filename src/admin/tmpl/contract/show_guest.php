@@ -7,11 +7,13 @@
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\TickTock;
 use Joomla\CMS\Factory;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 $guest_edit = KrMethods::route('index.php?option=com_knowres&task=guest.edit&id=' . $this->item->guest_id, false);
 KrMethods::setUserState('com_knowres.gobackto', 'task=contract.show&id=' . $this->item->id);

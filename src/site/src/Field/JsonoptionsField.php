@@ -11,8 +11,6 @@
 
 namespace HighlandVision\Component\Knowres\Site\Field;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
@@ -21,6 +19,10 @@ use Joomla\CMS\HTML\HTMLHelper;
 
 use function is_countable;
 
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
+
 /**
  * Property options preparation for guest.
  *
@@ -28,52 +30,52 @@ use function is_countable;
  */
 class JsonoptionsField extends FormField
 {
-	/** @var string The form field type. */
-	protected $type = 'Jsonoptions';
+    /** @var string The form field type. */
+    protected $type = 'Jsonoptions';
 
-	/**
-	 * Get the field markup.
-	 *
-	 * @throws Exception
-	 * @since  1.6
-	 * @return string
-	 */
-	public function getInput(): string
-	{
-		$this->layout = "form.field.options";
-		//	$this->type   = "JsonOptions";
+    /**
+     * Get the field markup.
+     *
+     * @return string
+     * @throws Exception
+     * @since  1.6
+     */
+    public function getInput(): string
+    {
+        $this->layout = "form.field.options";
+        //	$this->type   = "JsonOptions";
 
-		$contract_id      = $this->form->getValue('contract_id');
-		$contract         = KrFactory::getAdminModel('contract')->getItem($contract_id);
-		$property_options = KrFactory::getListModel('propertyoptions')
-			->getPropertyOptionsForProperty($contract->property_id);
-		if (empty($property_options)) {
-			return '';
-		}
+        $contract_id      = $this->form->getValue('contract_id');
+        $contract         = KrFactory::getAdminModel('contract')->getItem($contract_id);
+        $property_options = KrFactory::getListModel('propertyoptions')
+                                     ->getPropertyOptionsForProperty($contract->property_id);
+        if (empty($property_options)) {
+            return '';
+        }
 
-		$yesno   = [];
-		$yesno[] = HTMLHelper::_('select.option', 0, KrMethods::plain('JNO'));
-		$yesno[] = HTMLHelper::_('select.option', 1, KrMethods::plain('JYES'));
+        $yesno   = [];
+        $yesno[] = HTMLHelper::_('select.option', 0, KrMethods::plain('JNO'));
+        $yesno[] = HTMLHelper::_('select.option', 1, KrMethods::plain('JYES'));
 
-		$goptions = [];
-		if (is_countable($this->value)) {
-			foreach ($this->value as $v) {
-				$goptions[$v->id] = $v->answer;
-			}
-		}
-		foreach ($property_options as $po) {
-			if (!isset($goptions[$po->id])) {
-				$goptions[$po->id] = '';
-			}
-		}
+        $goptions = [];
+        if (is_countable($this->value)) {
+            foreach ($this->value as $v) {
+                $goptions[$v->id] = $v->answer;
+            }
+        }
+        foreach ($property_options as $po) {
+            if (!isset($goptions[$po->id])) {
+                $goptions[$po->id] = '';
+            }
+        }
 
-		$data                     = [];
-		$data['property_options'] = $property_options;
-		$data['goptions']         = $goptions;
-		$data['yesno']            = $yesno;
+        $data                     = [];
+        $data['property_options'] = $property_options;
+        $data['goptions']         = $goptions;
+        $data['yesno']            = $yesno;
 
-		$renderer = $this->getRenderer($this->layout);
+        $renderer = $this->getRenderer($this->layout);
 
-		return $renderer->render($data);
-	}
+        return $renderer->render($data);
+    }
 }

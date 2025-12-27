@@ -9,8 +9,6 @@
 
 namespace HighlandVision\KR\Core;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
@@ -27,6 +25,10 @@ use Stripe\PaymentIntent as StripePI;
 use Stripe\Stripe as StripeLib;
 use function count;
 use function is_countable;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Process an approved request

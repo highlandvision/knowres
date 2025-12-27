@@ -7,10 +7,12 @@
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
 use Joomla\CMS\HTML\HTMLHelper;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 ?>
 
 <tr>
@@ -20,7 +22,7 @@ use Joomla\CMS\HTML\HTMLHelper;
     <?php if ($this->ordering): ?>
         <th scope="col" class="w-1 text-center d-none d-md-table-cell">
             <?php echo HTMLHelper::_('searchtools.sort', '', 'a.ordering', $this->listDirn, $this->listOrder, null,
-                    'asc', 'JGRID_HEADING_ORDERING', 'icon-sort'
+                'asc', 'JGRID_HEADING_ORDERING', 'icon-sort',
             ); ?>
         </th>
     <?php endif; ?>
@@ -29,7 +31,7 @@ use Joomla\CMS\HTML\HTMLHelper;
     </th>
     <th scope="col" class='w-20'>
         <?php echo HTMLHelper::_('searchtools.sort', 'COM_KNOWRES_NAME', 'a.property_name', $this->listDirn,
-                $this->listOrder
+            $this->listOrder,
         ); ?>
     </th>
     <th scope="col" class='w-10 d-none d-md-table-cell'>
@@ -37,17 +39,17 @@ use Joomla\CMS\HTML\HTMLHelper;
     </th>
     <th scope="col" class='w-10 d-none d-md-table-cell'>
         <?php echo HTMLHelper::_('searchtools.sort', 'COM_KNOWRES_PROPERTIES_TYPE_ID', 'type_name', $this->listDirn,
-                $this->listOrder
+            $this->listOrder,
         ); ?>
     </th>
     <th scope="col" class='w-10 d-none d-md-table-cell'>
         <?php echo HTMLHelper::_('searchtools.sort', 'COM_KNOWRES_REGION', 'region_name', $this->listDirn,
-                $this->listOrder
+            $this->listOrder,
         ); ?>
     </th>
     <th scope="col" class='w-10 d-none d-md-table-cell'>
         <?php echo HTMLHelper::_('searchtools.sort', 'COM_KNOWRES_PROPERTIES_BOOKING_TYPE', 'booking_type',
-                $this->listDirn, $this->listOrder
+            $this->listDirn, $this->listOrder,
         ); ?>
     </th>
     <th scope="col" class="w-5 d-none d-md-table-cell">

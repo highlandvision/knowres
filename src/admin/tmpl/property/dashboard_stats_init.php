@@ -10,7 +10,9 @@
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Utility;
 
+// phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 foreach ($this->stats as $p => $d)
 {

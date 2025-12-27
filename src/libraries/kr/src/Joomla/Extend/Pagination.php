@@ -10,8 +10,6 @@
 
 namespace HighlandVision\KR\Joomla\Extend;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Layout\LayoutHelper;
@@ -20,6 +18,10 @@ use Joomla\CMS\Pagination\PaginationObject;
 
 use function defined;
 use function is_file;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Knowres pagination override

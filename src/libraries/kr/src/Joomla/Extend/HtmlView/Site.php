@@ -10,8 +10,6 @@
 
 namespace HighlandVision\KR\Joomla\Extend\HtmlView;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\HtmlView as KrHtmlView;
@@ -23,6 +21,10 @@ use Joomla\Component\Menus\Administrator\Helper\MenusHelper;
 use stdClass;
 
 use function count;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Base class for a Joomla View

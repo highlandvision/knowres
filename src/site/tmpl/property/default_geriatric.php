@@ -7,53 +7,54 @@
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
 
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 ?>
 
 <div id="geriatric-key">
-	<table class="legend">
-		<tr>
-			<td>
-				<div class="bookme"></div>
-			</td>
-			<td>
-				<?php echo KrMethods::plain('COM_KNOWRES_CALENDAR_AVAILABLE'); ?>
-			</td>
-		</tr>
-	</table>
-	<table class="legend">
-		<tr>
-			<td>
-				<div class="bgbook"></div>
-			</td>
-			<td>
-				<?php echo KrMethods::plain('COM_KNOWRES_CALENDAR_BOOKED'); ?>
-			</td>
-		</tr>
-	</table>
-	<?php if ($this->params->get('calendar_booked') != $this->params->get('calendar_provisional')): ?>
-		<table class="legend">
-			<tr>
-				<td>
-					<div class="bgprov"></div>
-				</td>
-				<td>
-					<?php echo KrMethods::plain('COM_KNOWRES_CALENDAR_PROVISIONAL'); ?>
-				</td>
-			</tr>
-		</table>
-	<?php endif; ?>
-	<table class="legend">
-		<tr>
-			<td>
-				<div class="duo bgfrombook bgtoavail"></div>
-			</td>
-			<td>
-				<?php echo KrMethods::plain('COM_KNOWRES_CALENDAR_CHANGEOVER'); ?>
-			</td>
-		</tr>
-	</table>
+    <table class="legend">
+        <tr>
+            <td>
+                <div class="bookme"></div>
+            </td>
+            <td>
+                <?php echo KrMethods::plain('COM_KNOWRES_CALENDAR_AVAILABLE'); ?>
+            </td>
+        </tr>
+    </table>
+    <table class="legend">
+        <tr>
+            <td>
+                <div class="bgbook"></div>
+            </td>
+            <td>
+                <?php echo KrMethods::plain('COM_KNOWRES_CALENDAR_BOOKED'); ?>
+            </td>
+        </tr>
+    </table>
+    <?php if ($this->params->get('calendar_booked') != $this->params->get('calendar_provisional')): ?>
+        <table class="legend">
+            <tr>
+                <td>
+                    <div class="bgprov"></div>
+                </td>
+                <td>
+                    <?php echo KrMethods::plain('COM_KNOWRES_CALENDAR_PROVISIONAL'); ?>
+                </td>
+            </tr>
+        </table>
+    <?php endif; ?>
+    <table class="legend">
+        <tr>
+            <td>
+                <div class="duo bgfrombook bgtoavail"></div>
+            </td>
+            <td>
+                <?php echo KrMethods::plain('COM_KNOWRES_CALENDAR_CHANGEOVER'); ?>
+            </td>
+        </tr>
+    </table>
 </div>

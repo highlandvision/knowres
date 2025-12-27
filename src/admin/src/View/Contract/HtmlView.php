@@ -380,6 +380,7 @@ class HtmlView extends KrHtmlView\Contract
 
         foreach ($this->item as $key => $value) {
             if (property_exists($this->contractData, $key)) {
+                /** @noinspection PhpVariableVariableInspection */
                 $this->contractData->$key = $value;
             }
         }

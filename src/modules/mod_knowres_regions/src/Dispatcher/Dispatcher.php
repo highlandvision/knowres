@@ -9,8 +9,6 @@
 
 namespace HighlandVision\Module\KnowresRegions\Site\Dispatcher;
 
-defined('JPATH_PLATFORM') or die;
-
 use Carbon\Carbon;
 use Exception;
 use HighlandVision\KR\ExceptionHandling;
@@ -24,6 +22,10 @@ use function is_dir;
 
 use const JPATH_ROOT;
 
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
+
 /**
  * Dispatcher class for mod_knowres_Regions
  *
@@ -31,61 +33,61 @@ use const JPATH_ROOT;
  */
 class Dispatcher extends AbstractModuleDispatcher
 {
-	/**
-	 * Define tasks for before dispatch
-	 *
-	 * @throws Exception
-	 * @since  4.0.0
-	 */
-	public function dispatch(): void
-	{
-		if (is_dir(JPATH_ROOT . '/media/com_knowres/vendor')) {
-			require_once(JPATH_ROOT . '/media/com_knowres/vendor/autoload.php');
-		}
+    /**
+     * Define tasks for before dispatch
+     *
+     * @throws Exception
+     * @since  4.0.0
+     */
+    public function dispatch(): void
+    {
+        if (is_dir(JPATH_ROOT . '/media/com_knowres/vendor')) {
+            require_once(JPATH_ROOT . '/media/com_knowres/vendor/autoload.php');
+        }
 
-		new ExceptionHandling();
-		Carbon::setToStringFormat('Y-m-d');
+        new ExceptionHandling();
+        Carbon::setToStringFormat('Y-m-d');
 
-		parent::dispatch();
-	}
+        parent::dispatch();
+    }
 
-	/**
-	 * Returns the layout data.
-	 *
-	 * @throws Exception
-	 * @since  5.0.0
-	 * @return array
-	 */
-	protected function getLayoutData(): array
-	{
-		$data = parent::getLayoutData();
-		if (!$data) {
-			return [];
-		}
+    /**
+     * Returns the layout data.
+     *
+     * @return array
+     * @throws Exception
+     * @since  5.0.0
+     */
+    protected function getLayoutData(): array
+    {
+        $data = parent::getLayoutData();
+        if (!$data) {
+            return [];
+        }
 
-		$params = $data['params'];
+        $params = $data['params'];
 
-		$regions = [];
-		$results = KrFactory::getListModel('regions')->getAllRegions(true);
-		if (count($results)) {
-			foreach ($results as $r) {
-				$regions[$r->id] = $r->name;
-			}
-		}
+        $regions = [];
+        $results = KrFactory::getListModel('regions')->getAllRegions(true);
+        if (count($results)) {
+            foreach ($results as $r) {
+                $regions[$r->id] = $r->name;
+            }
+        }
 
-		for ($i = 1; $i <= 6; $i++) {
-			if ($params->get('image' . $i) && $params->get('region' . $i) != -1) {
-				$pdata           = [];
-				$pdata['image']  = $params->get('image' . $i);
-				$pdata['id']     = $params->get('region' . $i);
-				$pdata['name']   = $regions[$params->get('region' . $i)];
-				$pdata['Itemid'] =
-					SiteHelper::getItemId("com_knowres", "properties", ['region_id' => $params->get('region' . $i)]);
+        for ($i = 1; $i <= 6; $i++) {
+            if ($params->get('image' . $i) && $params->get('region' . $i) != -1) {
+                $pdata           = [];
+                $pdata['image']  = $params->get('image' . $i);
+                $pdata['id']     = $params->get('region' . $i);
+                $pdata['name']   = $regions[$params->get('region' . $i)];
+                $pdata['Itemid'] =
+                    SiteHelper::getItemId("com_knowres", "properties", ['region_id' => $params->get('region' . $i)]);
 
-				$data['regions'][$i] = $pdata;
-			}
-		}
+                $data['regions'][$i] = $pdata;
+            }
+        }
 
-		return $data;
-	}
+        return $data;
+    }
 }

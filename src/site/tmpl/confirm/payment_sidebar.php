@@ -9,14 +9,16 @@
 
 /** @noinspection PhpUnhandledExceptionInspection */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Utility;
 
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
+
 $address = Utility::formatAddress($this->guestData->address1, $this->guestData->address2,
-        $this->guestData->postcode, $this->guestData->town, $this->guestData->region_id,
-        $this->guestData->country_id, '<br>'
+    $this->guestData->postcode, $this->guestData->town, $this->guestData->region_id,
+    $this->guestData->country_id, '<br>',
 );
 ?>
 
@@ -63,7 +65,7 @@ $address = Utility::formatAddress($this->guestData->address1, $this->guestData->
             <span>
 				<i class='fa-solid fa-mobile-alt'></i>
 				<?php echo Utility::formatPhoneNumber($this->guestData->mobile,
-                        $this->guestData->mobile_country_id
+                    $this->guestData->mobile_country_id,
                 ); ?>
 			</span>
         <?php endif; ?>

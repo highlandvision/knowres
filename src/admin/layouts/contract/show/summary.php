@@ -7,12 +7,14 @@
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Utility;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') || die;
+// phpcs:enable PSR1.Files.SideEffects
 
 extract($displayData);
 /**
@@ -94,11 +96,11 @@ extract($displayData);
 <?php endif; ?>
 
 <?php echo KrMethods::render('contract.show.taxes',
-        [
-                'taxes'     => $item->taxes,
-                'tax_total' => $item->tax_total,
-                'currency'  => $item->currency
-        ]
+    [
+        'taxes'     => $item->taxes,
+        'tax_total' => $item->tax_total,
+        'currency'  => $item->currency,
+    ],
 )
 ?>
 
@@ -115,7 +117,7 @@ extract($displayData);
             <?php $extra = KrFactory::getAdminModel('extra')->getItem($e); ?>
             <?php $name = $extra->name; ?>
             <?php $value = $d['value']; ?>
-            <?php if ((int) $d['quantity'] > 1): ?>
+            <?php if ((int)$d['quantity'] > 1): ?>
                 <?php $name = $name . ' x ' . $d['quantity']; ?>
             <?php endif; ?>
 
@@ -204,17 +206,13 @@ extract($displayData);
         <?php
         $refund = $p->amount < 0;
         $fex    = '';
-        if ($p->amount != $p->base_amount)
-        {
+        if ($p->amount != $p->base_amount) {
             $fex = '(' . Utility::displayValue($p->amount, $p->currency) . ' @ ' . $p->rate
-                    . ')&nbsp;&nbsp;&nbsp;';
+                . ')&nbsp;&nbsp;&nbsp;';
         }
-        if ($p->confirmed)
-        {
+        if ($p->confirmed) {
             $payment_total += $p->base_amount;
-        }
-        else
-        {
+        } else {
             $pending_total += $p->base_amount;
         }
         ?>
@@ -223,7 +221,7 @@ extract($displayData);
             <div class="col-4 indent">
                 <?php if ($p->service_plugin): ?>
                     <?php echo TickTock::displayDate($p->payment_date, 'dMy') . ' '
-                            . KrMethods::sprintf('COM_KNOWRES_CONTRACTPAYMENTS_BY', ucfirst($p->service_plugin)); ?>
+                        . KrMethods::sprintf('COM_KNOWRES_CONTRACTPAYMENTS_BY', ucfirst($p->service_plugin)); ?>
                 <?php else: ?>
                     <?php echo TickTock::displayDate($p->payment_date, 'dMy'); ?>
                 <?php endif; ?>
@@ -235,8 +233,8 @@ extract($displayData);
             <?php else: ?>
                 <div class="col-5 red text-end">
                     <?php echo KrMethods::plain('COM_KNOWRES_REFUND') .
-                            ' -' .
-                            Utility::displayValue($p->base_amount * -1, $item->currency); ?>
+                        ' -' .
+                        Utility::displayValue($p->base_amount * -1, $item->currency); ?>
                 </div>
             <?php endif; ?>
         </div>
@@ -279,12 +277,12 @@ extract($displayData);
             <?php $due = KrMethods::plain('COM_KNOWRES_CONTRACTPAYMENTS_PAYMENT_ON_ARRIVAL'); ?>
         <?php elseif ($item->balance_date > TickTock::getDate() && $item->booking_status >= 10): ?>
             <?php $due = KrMethods::plain('COM_KNOWRES_BALANCE') . ' ('
-                    . KrMethods::sprintf('COM_KNOWRES_DUE_BY', TickTock::displayDate($item->balance_date)) . ')'; ?>
+                . KrMethods::sprintf('COM_KNOWRES_DUE_BY', TickTock::displayDate($item->balance_date)) . ')'; ?>
         <?php elseif ($item->balance_date <= TickTock::getDate()): ?>
             <?php $due = KrMethods::plain('COM_KNOWRES_BALANCE')
-                    . ' ('
-                    . KrMethods::plain('COM_KNOWRES_DUE_NOW')
-                    . ')'; ?>
+                . ' ('
+                . KrMethods::plain('COM_KNOWRES_DUE_NOW')
+                . ')'; ?>
         <?php else: ?>
             <?php $due = KrMethods::plain('COM_KNOWRES_BALANCE'); ?>
         <?php endif; ?>

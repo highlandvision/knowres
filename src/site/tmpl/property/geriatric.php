@@ -7,23 +7,25 @@
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
 
+// phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 $counter = 0;
 ?>
 
 <div id="calendar-months" class="calendar-months">
-	<?php while ($counter < $this->months_to_show) : ?>
-		<?php
-		echo $this->loadTemplate('month');
+    <?php while ($counter < $this->months_to_show) : ?>
+        <?php
+        echo $this->loadTemplate('month');
 
-		$counter++;
-		$this->month++;
+        $counter++;
+        $this->month++;
 
-		if ($this->month > 12) {
-			$this->year  += 1;
-			$this->month = 1;
-		}
-		?>
-	<?php endwhile; ?>
+        if ($this->month > 12) {
+            $this->year  += 1;
+            $this->month = 1;
+        }
+        ?>
+    <?php endwhile; ?>
 </div>

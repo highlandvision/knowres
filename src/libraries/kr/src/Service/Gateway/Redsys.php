@@ -9,8 +9,6 @@
 
 namespace HighlandVision\KR\Service\Gateway;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Service\Gateway;
@@ -30,6 +28,10 @@ use function str_pad;
 use function strlen;
 use const OPENSSL_NO_PADDING;
 use const OPENSSL_RAW_DATA;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Parent class for multiple redsys gateways

@@ -9,8 +9,6 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Model;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
@@ -23,6 +21,10 @@ use Joomla\CMS\Form\Form;
 use Joomla\CMS\Versioning\VersionableControllerTrait;
 use RuntimeException;
 
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
+
 /**
  * Knowres rate model
  *
@@ -30,128 +32,122 @@ use RuntimeException;
  */
 class RateModel extends AdminModel
 {
-	use VersionableControllerTrait;
+    use VersionableControllerTrait;
 
-	/**  @var string The type alias. */
-	public $typeAlias = 'com_knowres.rate';
-	/** @var mixed Batch copy/move command. If set to false, the batch copy/move command is not supported. */
-	protected $batch_copymove = false;
-	/**  @var ?string The prefix to use with controller messages. */
-	protected $text_prefix = 'COM_KNOWRES_RATE';
+    /**  @var string The type alias. */
+    public $typeAlias = 'com_knowres.rate';
+    /** @var mixed Batch copy/move command. If set to false, the batch copy/move command is not supported. */
+    protected $batch_copymove = false;
+    /**  @var ?string The prefix to use with controller messages. */
+    protected $text_prefix = 'COM_KNOWRES_RATE';
 
-	/**
-	 * Method to get a knowres record.
-	 *
-	 * @param   int  $pk  The id of the primary key.
-	 *
-	 * @return false|object  Object on success, false on failure.
-	 * @throws RuntimeException
-	 * @since  1.0.0
-	 */
-	public function getItem($pk = null): false|object
-	{
-		$item = parent::getItem($pk);
-		if ($item)
-		{
-			$item->more_guests = Utility::decodeJson($item->more_guests);
+    /**
+     * Method to get a knowres record.
+     *
+     * @param   int  $pk  The id of the primary key.
+     *
+     * @return false|object  Object on success, false on failure.
+     * @throws RuntimeException
+     * @since  1.0.0
+     */
+    public function getItem($pk = null): false|object
+    {
+        $item = parent::getItem($pk);
+        if ($item) {
+            $item->more_guests = Utility::decodeJson($item->more_guests);
 
-			$Translations = new Translations();
-			$item->name   = $Translations->getText('rate', $item->id);
-		}
+            $Translations = new Translations();
+            $item->name   = $Translations->getText('rate', $item->id);
+        }
 
-		return $item;
-	}
+        return $item;
+    }
 
-	/**
-	 * Override publish function
-	 *
-	 * @param   array    &$pks    A list of the primary keys to change.
-	 * @param   int       $value  The value of the published state.
-	 *
-	 * @return bool
-	 * @throws Exception
-	 * @since  3.1.0
-	 */
-	public function publish(&$pks, $value = 1): bool
-	{
-		$first = true;
+    /**
+     * Override publish function
+     *
+     * @param   array    &$pks    A list of the primary keys to change.
+     * @param   int       $value  The value of the published state.
+     *
+     * @return bool
+     * @throws Exception
+     * @since  3.1.0
+     */
+    public function publish(&$pks, $value = 1): bool
+    {
+        $first = true;
 
-		if (parent::publish($pks, $value))
-		{
-			foreach ($pks as $id)
-			{
-				if ($first)
-				{
-					$item = parent::getItem($id);
-					if ($item)
-					{
-						KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updatePropertyRates',
-							(int) $item->property_id, 0, null, (string) $item->valid_from, (string) $item->valid_to
-						);
-						KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updateAvailability',
-							(int) $item->property_id, 0, 'vrbo'
-						);
-					}
+        if (parent::publish($pks, $value)) {
+            foreach ($pks as $id) {
+                if ($first) {
+                    $item = parent::getItem($id);
+                    if ($item) {
+                        KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updatePropertyRates',
+                            (int)$item->property_id, 0, null, (string)$item->valid_from, (string)$item->valid_to,
+                        );
+                        KrFactory::getAdminModel('servicequeue')::serviceQueueUpdate('updateAvailability',
+                            (int)$item->property_id, 0, 'vrbo',
+                        );
+                    }
 
-					$first = false;
-				}
+                    $first = false;
+                }
 
-				self::setUpdatedAt($id, 'rate');
-			}
-		}
+                self::setUpdatedAt($id, 'rate');
+            }
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-	/**
-	 * Method to validate the form data.
-	 *
-	 * @param   Form    $form   The form to validate against.
-	 * @param   array   $data   The data to validate.
-	 * @param   string  $group  The name of the field group to validate.
-	 *
-	 * @return bool|array
-	 * @throws Exception
-	 * @since  1.6
-	 */
-	public function validate($form, $data, $group = null): bool|array
-	{
-		$more_guests         = KrMethods::inputArray('more_guests');
-		$data['more_guests'] = Utility::encodeJson($more_guests);
+    /**
+     * Method to validate the form data.
+     *
+     * @param   Form    $form   The form to validate against.
+     * @param   array   $data   The data to validate.
+     * @param   string  $group  The name of the field group to validate.
+     *
+     * @return bool|array
+     * @throws Exception
+     * @since  1.6
+     */
+    public function validate($form, $data, $group = null): bool|array
+    {
+        $more_guests         = KrMethods::inputArray('more_guests');
+        $data['more_guests'] = Utility::encodeJson($more_guests);
 
-		return parent::validate($form, $data, $group);
-	}
+        return parent::validate($form, $data, $group);
+    }
 
-	/**
-	 * Method to test whether a record can be deleted.
-	 *
-	 * @param   object  $record  A record object.
-	 *
-	 * @return  bool  True if allowed to delete the record. Defaults to the permission for the component.
-	 * @since   3.0.0
-	 */
-	protected function canDelete($record): bool
-	{
-		$userSession = new KrSession\User();
+    /**
+     * Method to test whether a record can be deleted.
+     *
+     * @param   object  $record  A record object.
+     *
+     * @return  bool  True if allowed to delete the record. Defaults to the permission for the component.
+     * @since   3.0.0
+     */
+    protected function canDelete($record): bool
+    {
+        $userSession = new KrSession\User();
 
-		return $userSession->getAccessLevel() == 40 || Factory::getUser()->authorise('core.delete', $this->option);
-	}
+        return $userSession->getAccessLevel() == 40 || Factory::getUser()->authorise('core.delete', $this->option);
+    }
 
-	/**
-	 * Method to get the data that should be injected in the form.
-	 *
-	 * @return mixed The data for the form.
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
-	protected function loadFormData(): mixed
-	{
-		$data = KrMethods::getUserState('com_knowres.edit.rate.data', []);
-		if (empty($data))
-		{
-			$data = $this->getItem();
-		}
+    /**
+     * Method to get the data that should be injected in the form.
+     *
+     * @return mixed The data for the form.
+     * @throws Exception
+     * @since  1.0.0
+     */
+    protected function loadFormData(): mixed
+    {
+        $data = KrMethods::getUserState('com_knowres.edit.rate.data', []);
+        if (empty($data)) {
+            $data = $this->getItem();
+        }
 
-		return $data;
-	}
+        return $data;
+    }
 }

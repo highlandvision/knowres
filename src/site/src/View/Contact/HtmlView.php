@@ -9,8 +9,6 @@
 
 namespace HighlandVision\Component\Knowres\Site\View\Contact;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\Component\Knowres\Site\Model\ContactModel;
 use HighlandVision\KR\Framework\KrFactory;
@@ -18,6 +16,10 @@ use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\HtmlView as KrHtmlView;
 use HighlandVision\KR\Session as KrSession;
 use HighlandVision\KR\SiteHelper;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Contact form

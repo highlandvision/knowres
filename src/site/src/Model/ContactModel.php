@@ -9,12 +9,14 @@
 
 namespace HighlandVision\Component\Knowres\Site\Model;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\AdminModel;
 use Joomla\CMS\Form\Form;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Contact model
@@ -23,36 +25,35 @@ use Joomla\CMS\Form\Form;
  */
 class ContactModel extends AdminModel
 {
-	/**
-	 * Method to get the contact form. The base form is loaded from XML
-	 *
-	 * @param   array  $data      An optional array of data for the form to interogate.
-	 * @param   bool   $loadData  True if the form is to load its own data (default case), false if not.
-	 *
-	 * @return Form|false    A Form object on success, false on failure
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
-	public function getForm($data = [], $loadData = true, ?string $source = null): Form|false
-	{
-		$form = $this->loadForm('com_knowres.contact', 'contact', ['control' => 'jform', 'load_data' => $loadData]);
-		if (empty($form))
-		{
-			return false;
-		}
+    /**
+     * Method to get the contact form. The base form is loaded from XML
+     *
+     * @param   array  $data      An optional array of data for the form to interogate.
+     * @param   bool   $loadData  True if the form is to load its own data (default case), false if not.
+     *
+     * @return Form|false    A Form object on success, false on failure
+     * @throws Exception
+     * @since  1.0.0
+     */
+    public function getForm($data = [], $loadData = true, ?string $source = null): Form|false
+    {
+        $form = $this->loadForm('com_knowres.contact', 'contact', ['control' => 'jform', 'load_data' => $loadData]);
+        if (empty($form)) {
+            return false;
+        }
 
-		return $form;
-	}
+        return $form;
+    }
 
-	/**
-	 * Method to get the data that should be injected in the form.
-	 *
-	 * @return mixed    The data for the form
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
-	protected function loadFormData(): mixed
-	{
-		return KrMethods::getUserState('com_knowres.contact.data', []);
-	}
+    /**
+     * Method to get the data that should be injected in the form.
+     *
+     * @return mixed    The data for the form
+     * @throws Exception
+     * @since  1.0.0
+     */
+    protected function loadFormData(): mixed
+    {
+        return KrMethods::getUserState('com_knowres.contact.data', []);
+    }
 }

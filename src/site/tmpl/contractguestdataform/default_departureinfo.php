@@ -7,23 +7,25 @@
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
+// phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 ?>
 
 <div class="callout small gray">
-	<div class="grid-x grid-margin-x">
-		<div class="small-12 medium-4 cell">
-			<?php echo $this->form->getLabel('departure_time'); ?><?php echo $this->form->getInput('departure_time'); ?>
-		</div>
-		<?php if ($this->params->get('guestdata_departure_means', 0)) : ?>
-			<div class="small-12 medium-4 cell">
-				<?php echo $this->form->getLabel('departure_means'); ?>
-				<?php echo $this->form->getInput('departure_means'); ?>
-			</div>
-			<div class="small-12 medium-4 cell">
-				<?php echo $this->form->getLabel('departure_number'); ?>
-				<?php echo $this->form->getInput('departure_number'); ?>
-			</div>
-		<?php endif; ?>
-	</div>
+    <div class="grid-x grid-margin-x">
+        <div class="small-12 medium-4 cell">
+            <?php echo $this->form->getLabel('departure_time'); ?><?php echo $this->form->getInput('departure_time'); ?>
+        </div>
+        <?php if ($this->params->get('guestdata_departure_means', 0)) : ?>
+            <div class="small-12 medium-4 cell">
+                <?php echo $this->form->getLabel('departure_means'); ?>
+                <?php echo $this->form->getInput('departure_means'); ?>
+            </div>
+            <div class="small-12 medium-4 cell">
+                <?php echo $this->form->getLabel('departure_number'); ?>
+                <?php echo $this->form->getInput('departure_number'); ?>
+            </div>
+        <?php endif; ?>
+    </div>
 </div>

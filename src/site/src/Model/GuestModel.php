@@ -9,8 +9,6 @@
 
 namespace HighlandVision\Component\Knowres\Site\Model;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\Component\Knowres\Administrator\Model\GuestModel as AdminGuestModel;
 use HighlandVision\KR\Framework\KrFactory;
@@ -23,6 +21,10 @@ use UnexpectedValueException;
 
 use function count;
 
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
+
 /**
  * Site guest form model
  *
@@ -30,28 +32,27 @@ use function count;
  */
 class GuestModel extends AdminGuestModel
 {
-	/**
-	 * Override checkout for guestdata as checked_out set to 0.
-	 *
+    /**
+     * Override checkout for guestdata as checked_out set to 0.
+     *
      * @param   int|null  $pk  The id of the row to check out.
-	 *
+     *
      * @return bool  True on success, false on failure
-	 * @throws Exception
-	 * @since  4.0.0
-	 */
-	public function checkout($pk = null): bool
-	{
-		if (!empty($pk))
-		{
-			$update                   = new stdClass();
-			$update->id               = $pk;
-			$update->checked_out      = 0;
-			$update->checked_out_time = TickTock::getTs();
-			KrFactory::update('guest', $update);
-		}
+     * @throws Exception
+     * @since  4.0.0
+     */
+    public function checkout($pk = null): bool
+    {
+        if (!empty($pk)) {
+            $update                   = new stdClass();
+            $update->id               = $pk;
+            $update->checked_out      = 0;
+            $update->checked_out_time = TickTock::getTs();
+            KrFactory::update('guest', $update);
+        }
 
-		return true;
-	}
+        return true;
+    }
 
     /**
      * Set the required fields for the manager guest form (from settings)
@@ -82,45 +83,43 @@ class GuestModel extends AdminGuestModel
         return $this->setAttribute($settings['bookingform_requiredfields_region'], 'country_id', $form);
     }
 
-	/**
-	 * Method to validate the form data.
-	 *
-     * @param   Form   $form      The form to validate against.
-     * @param   array  $data      The data to validate.
-	 * @param  ?string  $group     The name of the field group to validate.
-     * @param   array  $settings  Property settings
-	 *
+    /**
+     * Method to validate the form data.
+     *
+     * @param   Form    $form      The form to validate against.
+     * @param   array   $data      The data to validate.
+     * @param  ?string  $group     The name of the field group to validate.
+     * @param   array   $settings  Property settings
+     *
      * @return array|bool  Array of filtered data if valid, false otherwise.
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
-	public function validate($form, $data, $group = null, array $settings = []): array|bool
-	{
-		$data['telephone'] = Utility::encodeJson(KrMethods::inputArray('telephone'));
+     * @throws Exception
+     * @since  1.0.0
+     */
+    public function validate($form, $data, $group = null, array $settings = []): array|bool
+    {
+        $data['telephone'] = Utility::encodeJson(KrMethods::inputArray('telephone'));
 
-		if (is_countable($settings) && count($settings))
-		{
-			$form = $this->setFormRequired($form, $settings);
-		}
+        if (is_countable($settings) && count($settings)) {
+            $form = $this->setFormRequired($form, $settings);
+        }
 
-		return parent::validate($form, $data, $group);
-	}
+        return parent::validate($form, $data, $group);
+    }
 
-	/**
-	 * Method to get the data that should be injected in the form.
-	 *
+    /**
+     * Method to get the data that should be injected in the form.
+     *
      * @return mixed The data for the form.
-	 * @throws Exception
-	 * @since  1.6
-	 */
-	protected function loadFormData(): mixed
-	{
-		$data = KrMethods::getUserState('com_knowres.edit.guestform.data', []);
-		if (empty($data))
-		{
-			$data = $this->getItem();
-		}
+     * @throws Exception
+     * @since  1.6
+     */
+    protected function loadFormData(): mixed
+    {
+        $data = KrMethods::getUserState('com_knowres.edit.guestform.data', []);
+        if (empty($data)) {
+            $data = $this->getItem();
+        }
 
-		return $data;
-	}
+        return $data;
+    }
 }

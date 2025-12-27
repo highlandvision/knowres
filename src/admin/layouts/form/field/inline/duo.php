@@ -6,7 +6,9 @@
  * @license         GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-defined('_JEXEC') or die;
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') || die;
+// phpcs:enable PSR1.Files.SideEffects
 
 extract($displayData);
 /**
@@ -16,19 +18,19 @@ extract($displayData);
  * @var   string $label Group label.
  * @var   string $f1    Field 1 input.
  * @var   string $f2    Field 2 input.
-  */
+ */
 ?>
 
 <div class="row">
-	<div class="col" style="margin-bottom:8px;">
-		<?php echo $label; ?>
-	</div>
+    <div class="col" style="margin-bottom:8px;">
+        <?php echo $label; ?>
+    </div>
 </div>
 <div class="row">
-	<div class="col">
-		<?php echo $f1; ?>
-	</div>
-	<div class="col">
-		<?php echo $f2; ?>
-	</div>
+    <div class="col">
+        <?php echo $f1; ?>
+    </div>
+    <div class="col">
+        <?php echo $f2; ?>
+    </div>
 </div>

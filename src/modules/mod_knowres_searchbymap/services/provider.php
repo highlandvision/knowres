@@ -7,13 +7,14 @@
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use Joomla\CMS\Extension\Service\Provider\Module;
 use Joomla\CMS\Extension\Service\Provider\ModuleDispatcherFactory;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
 
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * KR service provider.
@@ -21,17 +22,18 @@ use Joomla\DI\ServiceProviderInterface;
  * @since  4.0.0
  */
 return new class implements ServiceProviderInterface {
-	/**
-	 * Registers the service provider with a DI container.
-	 *
-	 * @param   Container  $container  The DI container.
-	 *
-	 * @since   4.0.0
-	 * @return  void
-	 */
-	public function register(Container $container): void
-	{
-		$container->registerServiceProvider(new ModuleDispatcherFactory('\\HighlandVision\\Module\\KnowresSearchbymap'));
-		$container->registerServiceProvider(new Module());
-	}
+    /**
+     * Registers the service provider with a DI container.
+     *
+     * @param   Container  $container  The DI container.
+     *
+     * @return  void
+     * @since   4.0.0
+     */
+    public function register(Container $container): void
+    {
+        $container->registerServiceProvider(new ModuleDispatcherFactory('\\HighlandVision\\Module\\KnowresSearchbymap'),
+        );
+        $container->registerServiceProvider(new Module());
+    }
 };

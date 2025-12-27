@@ -9,8 +9,6 @@
 
 namespace HighlandVision\KR\Joomla\Extend;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use InvalidArgumentException;
@@ -19,6 +17,10 @@ use RuntimeException;
 
 use function defined;
 use function is_null;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Generic filter functions

@@ -9,8 +9,6 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Field;
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrFactory;
 use InvalidArgumentException;
 use Joomla\CMS\Form\Field\ListField;
@@ -19,6 +17,10 @@ use RuntimeException;
 
 use function array_merge;
 
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
+
 /**
  * Supports a value from an external table
  *
@@ -26,26 +28,26 @@ use function array_merge;
  */
 class ListguestemailField extends ListField
 {
-	/** @var string The form field type. */
-	protected $type = 'Listguestemail';
+    /** @var string The form field type. */
+    protected $type = 'Listguestemail';
 
-	/**
-	 * Get the field options.
-	 *
-	 * @throws InvalidArgumentException
-	 * @throws RuntimeException
-	 * @since  4.0.0
-	 * @return array The field options.
-	 */
-	protected function getOptions(): array
-	{
-		$options = [];
-		$items   = KrFactory::getListModel('guests')->getEmails('', 999);
+    /**
+     * Get the field options.
+     *
+     * @return array The field options.
+     * @throws RuntimeException
+     * @throws InvalidArgumentException
+     * @since  4.0.0
+     */
+    protected function getOptions(): array
+    {
+        $options = [];
+        $items   = KrFactory::getListModel('guests')->getEmails('', 999);
 
-		foreach ($items as $i) {
-			$options[] = HTMLHelper::_('select.option', $i->id, $i->email);
-		}
+        foreach ($items as $i) {
+            $options[] = HTMLHelper::_('select.option', $i->id, $i->email);
+        }
 
-		return array_merge(parent::getOptions(), $options);
-	}
+        return array_merge(parent::getOptions(), $options);
+    }
 }

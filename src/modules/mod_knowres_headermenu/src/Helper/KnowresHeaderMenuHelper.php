@@ -9,12 +9,14 @@
 
 namespace Knowres\Module\Headermenu\Administrator\Helper;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrMethods;
 
 use function defined;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Helper class mod_knowres_headermenu

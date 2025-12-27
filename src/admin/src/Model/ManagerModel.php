@@ -9,8 +9,6 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Model;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
@@ -22,6 +20,10 @@ use Joomla\CMS\Versioning\VersionableModelTrait;
 use Joomla\DI\Exception\KeyNotFoundException;
 use RuntimeException;
 
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
+
 /**
  * Knowres Manager model
  *
@@ -29,109 +31,105 @@ use RuntimeException;
  */
 class ManagerModel extends AdminModel
 {
-	use VersionableModelTrait;
+    use VersionableModelTrait;
 
-	/**  @var string The type alias. */
-	public $typeAlias = 'com_knowres.manager';
-	/** @var mixed Batch copy/move command. If set to false, the batch copy/move command is not supported. */
-	protected $batch_copymove = false;
-	/**  @var ?string The prefix to use with controller messages. */
-	protected $text_prefix = 'COM_KNOWRES_MANAGER';
+    /**  @var string The type alias. */
+    public $typeAlias = 'com_knowres.manager';
+    /** @var mixed Batch copy/move command. If set to false, the batch copy/move command is not supported. */
+    protected $batch_copymove = false;
+    /**  @var ?string The prefix to use with controller messages. */
+    protected $text_prefix = 'COM_KNOWRES_MANAGER';
 
-	/**
-	 * Method to get a manager row.
-	 *
-	 * @param   int  $pk  The id of the primary key.
-	 *
-	 * @return object|false  Object on success, false on failure.
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
-	public function getItem($pk = null): object|false
-	{
-		$item = parent::getItem($pk);
-		if ($item)
-		{
-			$item->properties = Utility::decodeJson($item->properties, true);
-			$user             = KrMethods::getUser($item->user_id);
-			$item->email      = $user->email;
-			$item->name       = $user->name;
-			if (!empty($item->agency_id))
-			{
-				$agency                 = KrFactory::getAdminModel('agency')->getItem($item->agency_id);
-				$item->agency_email     = !empty($agency->email) ? $agency->email : KrMethods::getCfg('mailfrom');
-				$item->agency_name      = !empty($agency->name) ? $agency->name : $item->agency_id;
-				$item->agency_telephone = !empty($agency->telephone) ? $agency->telephone : '';
-			}
-		}
+    /**
+     * Method to get a manager row.
+     *
+     * @param   int  $pk  The id of the primary key.
+     *
+     * @return object|false  Object on success, false on failure.
+     * @throws Exception
+     * @since  1.0.0
+     */
+    public function getItem($pk = null): object|false
+    {
+        $item = parent::getItem($pk);
+        if ($item) {
+            $item->properties = Utility::decodeJson($item->properties, true);
+            $user             = KrMethods::getUser($item->user_id);
+            $item->email      = $user->email;
+            $item->name       = $user->name;
+            if (!empty($item->agency_id)) {
+                $agency                 = KrFactory::getAdminModel('agency')->getItem($item->agency_id);
+                $item->agency_email     = !empty($agency->email) ? $agency->email : KrMethods::getCfg('mailfrom');
+                $item->agency_name      = !empty($agency->name) ? $agency->name : $item->agency_id;
+                $item->agency_telephone = !empty($agency->telephone) ? $agency->telephone : '';
+            }
+        }
 
-		return $item;
-	}
+        return $item;
+    }
 
-	/**
-	 * Get KR access level for user
-	 *
-	 * @param   int  $user_id  ID of user
-	 *
-	 * @return mixed
-	 * @throws KeyNotFoundException|InvalidArgumentException
-	 * @throws RuntimeException
-	 * @since  1.0.0
-	 */
-	public function getManagerbyUserId(int $user_id): mixed
-	{
-		$db    = KrFactory::getDatabase();
-		$query = $db->getQuery(true);
+    /**
+     * Get KR access level for user
+     *
+     * @param   int  $user_id  ID of user
+     *
+     * @return mixed
+     * @throws KeyNotFoundException|InvalidArgumentException
+     * @throws RuntimeException
+     * @since  1.0.0
+     */
+    public function getManagerbyUserId(int $user_id): mixed
+    {
+        $db    = KrFactory::getDatabase();
+        $query = $db->getQuery(true);
 
-		$query->select($db->qn([
-			'id',
-			'access_level',
-			'properties',
-			'agency_id'
-		]));
+        $query->select($db->qn([
+            'id',
+            'access_level',
+            'properties',
+            'agency_id',
+        ]));
 
-		$query->from($db->qn('#__knowres_manager'))
-		      ->where($db->qn('user_id') . '=' . $user_id)
-		      ->setLimit(1);
+        $query->from($db->qn('#__knowres_manager'))
+              ->where($db->qn('user_id') . '=' . $user_id)
+              ->setLimit(1);
 
-		$db->setQuery($query);
+        $db->setQuery($query);
 
-		return $db->loadObject();
-	}
+        return $db->loadObject();
+    }
 
-	/**
-	 * Method to get the data that should be injected in the form.
-	 *
-	 * @return mixed The data for the form.
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
-	protected function loadFormData(): mixed
-	{
-		$data = KrMethods::getUserState('com_knowres.edit.manager.data', []);
-		if (empty($data))
-		{
-			$data = $this->getItem();
-		}
+    /**
+     * Method to get the data that should be injected in the form.
+     *
+     * @return mixed The data for the form.
+     * @throws Exception
+     * @since  1.0.0
+     */
+    protected function loadFormData(): mixed
+    {
+        $data = KrMethods::getUserState('com_knowres.edit.manager.data', []);
+        if (empty($data)) {
+            $data = $this->getItem();
+        }
 
-		return $data;
-	}
+        return $data;
+    }
 
-	/**
-	 * Prepare and sanitize the table prior to saving.
-	 *
-	 * @param   Table  $table  Table instance.
-	 *
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
-	protected function prepareTable($table): void
-	{
-		if ($table->access_level >= 30)
-		{
-			$table->properties = '';
-		}
+    /**
+     * Prepare and sanitize the table prior to saving.
+     *
+     * @param   Table  $table  Table instance.
+     *
+     * @throws Exception
+     * @since  1.0.0
+     */
+    protected function prepareTable($table): void
+    {
+        if ($table->access_level >= 30) {
+            $table->properties = '';
+        }
 
-		parent::prepareTable($table);
-	}
+        parent::prepareTable($table);
+    }
 }

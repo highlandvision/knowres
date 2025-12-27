@@ -9,10 +9,12 @@
 
 /** @noinspection PhpUnhandledExceptionInspection */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
 use Joomla\CMS\HTML\HTMLHelper;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 $wa = $this->document->getWebAssetManager();
 $wa->useScript('com_knowres.site')
@@ -118,7 +120,7 @@ $action = '/index.php?option=com_knowres&task=contact.submit';
                         </button>
                         <p class="smaller text-center">
                             <?php echo KrMethods::sprintf('COM_KNOWRES_CONTACT_SEND_3RDPARTY',
-                                    KrMethods::getCfg('sitename')
+                                KrMethods::getCfg('sitename'),
                             ); ?>
                         </p>
                     </div>

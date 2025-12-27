@@ -9,16 +9,16 @@
 
 /** @noinspection PhpUnhandledExceptionInspection */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\SiteHelper;
 
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
+
 $guestformlink = false;
-if ($this->guest->id)
-{
-    foreach ($this->items as $i)
-    {
+if ($this->guest->id) {
+    foreach ($this->items as $i) {
         $guestformlink = SiteHelper::buildDashboardLink($i, 'guestupdate');
     }
 }

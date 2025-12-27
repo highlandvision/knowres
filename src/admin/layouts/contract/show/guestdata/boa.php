@@ -7,10 +7,12 @@
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Utility;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') || die;
+// phpcs:enable PSR1.Files.SideEffects
 
 extract($displayData);
 /**
@@ -25,7 +27,8 @@ extract($displayData);
     <div class="row">
         <div class="col-12">
             <?php echo KrMethods::sprintf('COM_KNOWRES_CONTRACTPAYMENTS_PAID_ON_ARRIVAL',
-                    Utility::displayValue($balance, $contract->currency));
+                Utility::displayValue($balance, $contract->currency),
+            );
             ?>
         </div>
     </div>

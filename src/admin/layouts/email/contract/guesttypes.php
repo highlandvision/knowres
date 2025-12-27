@@ -7,7 +7,9 @@
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') || die;
+// phpcs:enable PSR1.Files.SideEffects
 
 extract($displayData);
 /**
@@ -17,17 +19,13 @@ extract($displayData);
  * @var array $guest_types Contract guest types (jsa only).
  */
 
-if (!is_countable($guest_types))
-{
-	echo '';
-}
-else
-{
-	$lines = [];
-	foreach ($guest_types as $d)
-	{
-		$lines[] = $d['number'] . ' ' . $d['type'];
-	}
+if (!is_countable($guest_types)) {
+    echo '';
+} else {
+    $lines = [];
+    foreach ($guest_types as $d) {
+        $lines[] = $d['number'] . ' ' . $d['type'];
+    }
 
-	echo count($lines) ? implode('<br>', $lines) : $guests;
+    echo count($lines) ? implode('<br>', $lines) : $guests;
 }

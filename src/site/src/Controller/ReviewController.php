@@ -9,8 +9,6 @@
 
 namespace HighlandVision\Component\Knowres\Site\Controller;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
@@ -19,6 +17,10 @@ use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\DI\Exception\KeyNotFoundException;
 use RuntimeException;
 use stdClass;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Review form controller class

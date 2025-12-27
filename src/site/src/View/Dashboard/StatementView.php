@@ -9,12 +9,14 @@
 
 namespace HighlandVision\Component\Knowres\Site\View\Dashboard;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Joomla\Extend\HtmlView as KrHtmlView;
 use JetBrains\PhpStorm\NoReturn;
 use function jexit;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Guest statement view

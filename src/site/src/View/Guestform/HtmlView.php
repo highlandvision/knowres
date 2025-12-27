@@ -11,8 +11,6 @@
 
 namespace HighlandVision\Component\Knowres\Site\View\GuestForm;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\Component\Knowres\Site\Model\GuestModel;
 use HighlandVision\KR\Framework\KrFactory;
@@ -23,6 +21,10 @@ use HighlandVision\KR\SiteHelper;
 use HighlandVision\KR\Translations;
 use Joomla\CMS\Factory;
 
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
+
 /**
  * Dashboard guest data form
  *
@@ -30,110 +32,110 @@ use Joomla\CMS\Factory;
  */
 class HtmlView extends KrHtmlView\Site
 {
-	/** @var int ID of contract */
-	public int $contract_id = 0;
-	/** @var string GDPR text */
-	public string $gdpr = '';
-	/** @var int ID of property */
-	public int $property_id = 0;
+    /** @var int ID of contract */
+    public int $contract_id = 0;
+    /** @var string GDPR text */
+    public string $gdpr = '';
+    /** @var int ID of property */
+    public int $property_id = 0;
 
-	/**
-	 * Display the view
-	 *
+    /**
+     * Display the view
+     *
      * @param   null  $tpl  Default template.
-	 *
+     *
      * @return void
-	 * @throws Exception
-	 * @since  2.5.0
-	 */
-	public function display($tpl = null): void
-	{
-		SiteHelper::checkUser();
+     * @throws Exception
+     * @since  2.5.0
+     */
+    public function display($tpl = null): void
+    {
+        SiteHelper::checkUser();
 
         try {
             [$guest_id, $contract_id] = SiteHelper::validateDashboardSession();
             if (!$contract_id) {
-				SiteHelper::badUser();
-			}
+                SiteHelper::badUser();
+            }
         } catch (Exception) {
-			SiteHelper::badUser();
-		}
+            SiteHelper::badUser();
+        }
 
-		$contract = KrFactory::getAdminModel('contract')->getItem($contract_id);
+        $contract = KrFactory::getAdminModel('contract')->getItem($contract_id);
         if (!$contract->id || $contract->guest_id != $guest_id) {
-			SiteHelper::badUser();
-		}
+            SiteHelper::badUser();
+        }
 
-		$this->property_id = $contract->property_id;
+        $this->property_id = $contract->property_id;
         if ($contract->agency_id) {
-			$Translations = new Translations();
-			$this->gdpr   = $Translations->getText('agency', $contract->agency_id, 'gdpr_statement');
-		}
+            $Translations = new Translations();
+            $this->gdpr   = $Translations->getText('agency', $contract->agency_id, 'gdpr_statement');
+        }
 
-		/** @var GuestModel $model */
+        /** @var GuestModel $model */
         $model = KrFactory::getSiteModel('guest');
         $model->setUseExceptions(true);
-		$this->item = $model->getItem($guest_id);
-		SiteHelper::checkLocks($this->item, $model);
+        $this->item = $model->getItem($guest_id);
+        SiteHelper::checkLocks($this->item, $model);
 
-		$this->form  = $model->getForm();
-		$this->state = $model->getState();
-		$this->state->set('guestform.id', $guest_id);
-		$this->form->bind($this->item);
-		$this->form_aria_label = KrMethods::plain('COM_KNOWRES_DASHBOARD_EDIT_GUEST');
-		$this->params          = KrMethods::getParams();
+        $this->form  = $model->getForm();
+        $this->state = $model->getState();
+        $this->state->set('guestform.id', $guest_id);
+        $this->form->bind($this->item);
+        $this->form_aria_label = KrMethods::plain('COM_KNOWRES_DASHBOARD_EDIT_GUEST');
+        $this->params          = KrMethods::getParams();
 
-		$userSession = new KrSession\User();
-		$userData    = $userSession->getData();
+        $userSession = new KrSession\User();
+        $userData    = $userSession->getData();
         if (!$userData->db_guest_update) {
-			$this->contract_id = $contract->id;
+            $this->contract_id = $contract->id;
 
-			$paymentSession = new KrSession\Payment();
-			$paymentData    = $paymentSession->resetData();
+            $paymentSession = new KrSession\Payment();
+            $paymentData    = $paymentSession->resetData();
             if ($this->contract_id) {
-				$paymentData->contract_id      = $this->contract_id;
-				$paymentData->property_id      = $contract->property_id;
-				$paymentData->guest_id         = $guest_id;
-				$paymentData->agency_id        = $contract->agency_id;
-				$paymentData->booking_currency = $contract->currency;
-			}
+                $paymentData->contract_id      = $this->contract_id;
+                $paymentData->property_id      = $contract->property_id;
+                $paymentData->guest_id         = $guest_id;
+                $paymentData->agency_id        = $contract->agency_id;
+                $paymentData->booking_currency = $contract->currency;
+            }
 
-			$paymentSession->setData($paymentData);
+            $paymentSession->setData($paymentData);
         } else {
-			$this->contract_id = 0;
-		}
+            $this->contract_id = 0;
+        }
 
-		$this->meta_title       = KrMethods::plain('COM_KNOWRES_TITLE_DASHBOARD_GUEST');
-		$this->meta_description = KrMethods::plain('COM_KNOWRES_TITLE_DASHBOARD_GUEST');
-		$this->prepareDocument();
+        $this->meta_title       = KrMethods::plain('COM_KNOWRES_TITLE_DASHBOARD_GUEST');
+        $this->meta_description = KrMethods::plain('COM_KNOWRES_TITLE_DASHBOARD_GUEST');
+        $this->prepareDocument();
 
-		parent::display($tpl);
-	}
+        parent::display($tpl);
+    }
 
-	/**
-	 * Prepares the document
-	 *
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
-	protected function prepareDocument(): void
-	{
-		$this->prepareDefaultDocument($this->meta_title, $this->meta_description);
-		$this->setMyPathway();
-	}
+    /**
+     * Prepares the document
+     *
+     * @throws Exception
+     * @since  1.0.0
+     */
+    protected function prepareDocument(): void
+    {
+        $this->prepareDefaultDocument($this->meta_title, $this->meta_description);
+        $this->setMyPathway();
+    }
 
-	/**
-	 * Set the pathway for the guest update
-	 *
-	 * @throws Exception
-	 * @since  3.3.0
-	 */
-	protected function setMyPathway(): void
-	{
-		$pathway = Factory::getApplication()->getPathway();
-		$pathway->setPathway([]);
+    /**
+     * Set the pathway for the guest update
+     *
+     * @throws Exception
+     * @since  3.3.0
+     */
+    protected function setMyPathway(): void
+    {
+        $pathway = Factory::getApplication()->getPathway();
+        $pathway->setPathway([]);
 
-		$pathway = HtmlView::dashboardPathway($pathway);
-		$pathway->addItem(KrMethods::plain('COM_KNOWRES_TITLE_DASHBOARD_GUEST'));
-	}
+        $pathway = HtmlView::dashboardPathway($pathway);
+        $pathway->addItem(KrMethods::plain('COM_KNOWRES_TITLE_DASHBOARD_GUEST'));
+    }
 }

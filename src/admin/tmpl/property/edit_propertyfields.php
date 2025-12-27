@@ -7,11 +7,13 @@
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
+// phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 ?>
 
 <div class="row">
-	<div class="col-xl-9">
-		<?php echo $this->form->renderFieldset('propertyfields'); ?>
-	</div>
+    <div class="col-xl-9">
+        <?php echo $this->form->renderFieldset('propertyfields'); ?>
+    </div>
 </div>

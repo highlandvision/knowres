@@ -9,10 +9,12 @@
 
 /** @noinspection PhpUnhandledExceptionInspection */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\TickTock;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 extract($displayData);
 /**
@@ -24,48 +26,48 @@ extract($displayData);
 ?>
 
 <table style="padding:3px 5px;width:100%;border:none;background-color:#d3f0f3;">
-	<tr>
-		<td>
-			<?php echo KrMethods::plain('COM_KNOWRES_PDF_INVOICE_NUMBER'); ?>
-		</td>
-		<td style="text-align:right;">
-			<?php echo $contract->id . '-' . $contract->tag; ?>
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<?php echo KrMethods::plain('COM_KNOWRES_PDF_INVOICE_ISSUE_DATE'); ?>
-		</td>
-		<td style="text-align:right;">
-			<?php echo TickTock::displayDate($contract->created_at); ?>
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<?php echo KrMethods::plain('COM_KNOWRES_PDF_INVOICE_DUE_DATE'); ?>
-		</td>
-		<td style="text-align:right;">
-			<?php echo TickTock::displayDate($contract->arrival); ?>
-		</td>
-	</tr>
-	<?php if ($agency->tax_code) : ?>
-		<tr>
-			<td>
-				<?php echo KrMethods::plain('COM_KNOWRES_PDF_INVOICE_TAX_CODE'); ?>
-			</td>
-			<td style="text-align:right;">
-				<?php echo $agency->tax_code; ?>
-			</td>
-		</tr>
-	<?php endif; ?>
-	<?php if ($agency->company_number) : ?>
-		<tr>
-			<td>
-				<?php echo KrMethods::plain('COM_KNOWRES_PDF_INVOICE_COMPANY_NUMBER'); ?>
-			</td>
-			<td style="text-align:right;">
-				<?php echo $agency->company_number; ?>
-			</td>
-		</tr>
-	<?php endif; ?>
+    <tr>
+        <td>
+            <?php echo KrMethods::plain('COM_KNOWRES_PDF_INVOICE_NUMBER'); ?>
+        </td>
+        <td style="text-align:right;">
+            <?php echo $contract->id . '-' . $contract->tag; ?>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <?php echo KrMethods::plain('COM_KNOWRES_PDF_INVOICE_ISSUE_DATE'); ?>
+        </td>
+        <td style="text-align:right;">
+            <?php echo TickTock::displayDate($contract->created_at); ?>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <?php echo KrMethods::plain('COM_KNOWRES_PDF_INVOICE_DUE_DATE'); ?>
+        </td>
+        <td style="text-align:right;">
+            <?php echo TickTock::displayDate($contract->arrival); ?>
+        </td>
+    </tr>
+    <?php if ($agency->tax_code) : ?>
+        <tr>
+            <td>
+                <?php echo KrMethods::plain('COM_KNOWRES_PDF_INVOICE_TAX_CODE'); ?>
+            </td>
+            <td style="text-align:right;">
+                <?php echo $agency->tax_code; ?>
+            </td>
+        </tr>
+    <?php endif; ?>
+    <?php if ($agency->company_number) : ?>
+        <tr>
+            <td>
+                <?php echo KrMethods::plain('COM_KNOWRES_PDF_INVOICE_COMPANY_NUMBER'); ?>
+            </td>
+            <td style="text-align:right;">
+                <?php echo $agency->company_number; ?>
+            </td>
+        </tr>
+    <?php endif; ?>
 </table>

@@ -7,10 +7,12 @@
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
 use Joomla\CMS\HTML\HTMLHelper;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 ?>
 
 <?php foreach ($this->items as $i => $this->item): ?>
@@ -25,12 +27,12 @@ use Joomla\CMS\HTML\HTMLHelper;
         <?php endif; ?>
         <td class="text-center">
             <?php echo HTMLHelper::_('jgrid.published', $this->item->state, $i, $this->name . '.', $this->canChange,
-                    'cb'
+                'cb',
             ); ?>
         </td>
         <th scope="row">
             <?php echo KrMethods::render('html.list.editable',
-                    ['data' => $this, 'item' => $this->item, 'i' => $i, 'column' => 'user_name']
+                ['data' => $this, 'item' => $this->item, 'i' => $i, 'column' => 'user_name'],
             ); ?>
         </th>
         <td class="d-none d-md-table-cell">
@@ -38,8 +40,7 @@ use Joomla\CMS\HTML\HTMLHelper;
         </td>
         <td class="d-none d-md-table-cell">
             <?php
-            echo match ((int) $this->item->access_level)
-            {
+            echo match ((int)$this->item->access_level) {
                 40 => KrMethods::plain('COM_KNOWRES_MANAGER_SUPER_PROPERTY_MANAGER_ADMIN'),
                 30 => KrMethods::plain('COM_KNOWRES_MANAGER_SUPER_PROPERTY_MANAGER'),
                 20 => KrMethods::plain('COM_KNOWRES_MANAGER_PROPERTY_MANAGER'),
@@ -51,7 +52,7 @@ use Joomla\CMS\HTML\HTMLHelper;
             <?php echo $this->item->agency_name; ?>
         </td>
         <td class="d-none d-md-table-cell">
-            <?php echo (int) $this->item->id; ?>
+            <?php echo (int)$this->item->id; ?>
         </td>
     </tr>
 <?php endforeach; ?>

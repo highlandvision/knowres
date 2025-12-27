@@ -7,16 +7,17 @@
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
+// phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
-if (!$this->params->get('property_stars', false))
-{
-	$this->form->setFieldAttribute('stars', 'type', 'hidden');
+if (!$this->params->get('property_stars', false)) {
+    $this->form->setFieldAttribute('stars', 'type', 'hidden');
 }
 ?>
 
 <div class="row">
-	<div class="col-xl-9">
-		<?php echo $this->form->renderFieldset('amenities'); ?>
-	</div>
+    <div class="col-xl-9">
+        <?php echo $this->form->renderFieldset('amenities'); ?>
+    </div>
 </div>

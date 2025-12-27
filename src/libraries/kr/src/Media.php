@@ -9,8 +9,6 @@
 
 namespace HighlandVision\KR;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrMethods;
 use JetBrains\PhpStorm\Pure;
@@ -32,6 +30,10 @@ use function str_replace;
 use function strtolower;
 use function trim;
 use function unlink;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * General media functions for images, pdf files etc

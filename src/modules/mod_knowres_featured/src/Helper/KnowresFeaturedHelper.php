@@ -9,14 +9,16 @@
 
 namespace HighlandVision\Module\KnowresFeatured\Site\Helper;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Media;
 use HighlandVision\KR\Model\SiteModel;
 use HighlandVision\KR\SiteHelper;
 use HighlandVision\KR\Translations;
 use HighlandVision\KR\Utility;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Helper class for KR featured

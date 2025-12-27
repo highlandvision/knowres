@@ -7,11 +7,13 @@
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /** @var HighlandVision\Component\Knowres\Administrator\View\Image\HtmlView $this */
 
@@ -23,7 +25,7 @@ $wa->useScript('keepalive')
    ->useScript('form.validate');
 ?>
 
-<form action="<?php echo KrMethods::route('index.php?option=com_knowres&layout=edit&id=' . (int) $this->item->id); ?>"
+<form action="<?php echo KrMethods::route('index.php?option=com_knowres&layout=edit&id=' . (int)$this->item->id); ?>"
       aria-label="<?php echo $this->form_aria_label; ?>" class="form-validate" enctype="multipart/form-data"
       id="image-form" method="post" name="adminForm">
 

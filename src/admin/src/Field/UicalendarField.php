@@ -9,15 +9,17 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Field;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Field\TextField;
 
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
+
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useStyle('com_knowres.admin-datepicker')
-	->useScript('com_knowres.admin-datepicker');
+   ->useScript('com_knowres.admin-datepicker');
 
 /**
  * Displays jQuery Ui Datepicker
@@ -26,50 +28,53 @@ $wa->useStyle('com_knowres.admin-datepicker')
  */
 class UicalendarField extends TextField
 {
-	/** @var string Required layout */
-	protected $layout = 'form.field.uicalendar';
-	/** @var string The form field type. */
-	protected $type = 'Uicalendar';
+    /** @var string Required layout */
+    protected $layout = 'form.field.uicalendar';
+    /** @var string The form field type. */
+    protected $type = 'Uicalendar';
 
-	/**
-	 * Get the field options.
-	 *
-	 * @throws Exception
-	 * @since  1.6
-	 * @return string The field input markup.
-	 */
-	protected function getInput(): string {
-		parent::getInput();
+    /**
+     * Get the field options.
+     *
+     * @return string The field input markup.
+     * @throws Exception
+     * @since  1.6
+     */
+    protected function getInput(): string
+    {
+        parent::getInput();
 
-		return $this->getRenderer($this->layout)->render($this->getLayoutData());
-	}
+        return $this->getRenderer($this->layout)->render($this->getLayoutData());
+    }
 
-	/**
-	 * Method to get the data to be passed to the layout for rendering.
-	 *
-	 * @since   4.0.0
-	 * @return  array
-	 */
-	protected function getLayoutData(): array {
-		$data = parent::getLayoutData();
+    /**
+     * Method to get the data to be passed to the layout for rendering.
+     *
+     * @return  array
+     * @since   4.0.0
+     */
+    protected function getLayoutData(): array
+    {
+        $data = parent::getLayoutData();
 
-		$this->dataAttributes  = $this->setDataAttributes();
-		$data['dataAttribute'] = $this->renderDataAttributes();
+        $this->dataAttributes  = $this->setDataAttributes();
+        $data['dataAttribute'] = $this->renderDataAttributes();
 
-		return $data;
-	}
+        return $data;
+    }
 
-	/**
-	 * Get the field data attributes.
-	 *
-	 * @since  4.0.0
-	 * @return array    The field input markup.
-	 */
-	protected function setDataAttributes(): array {
-		$attributes                    = [];
-		$attributes['data-avail']      = $this->getAttribute('avail', '');
-		$attributes['data-datepicker'] = $this->getAttribute('datepicker', '');
+    /**
+     * Get the field data attributes.
+     *
+     * @return array    The field input markup.
+     * @since  4.0.0
+     */
+    protected function setDataAttributes(): array
+    {
+        $attributes                    = [];
+        $attributes['data-avail']      = $this->getAttribute('avail', '');
+        $attributes['data-datepicker'] = $this->getAttribute('datepicker', '');
 
-		return $attributes;
-	}
+        return $attributes;
+    }
 }

@@ -9,14 +9,16 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Controller;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\Component\Knowres\Administrator\Model\EmailtemplateModel;
 use HighlandVision\KR\Joomla\Extend\FormController;
 use HighlandVision\KR\Translations;
 use HighlandVision\KR\Utility;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') || die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Emailtemplate controller form class.
@@ -25,31 +27,30 @@ use Joomla\CMS\MVC\Model\BaseDatabaseModel;
  */
 class EmailtemplateController extends FormController
 {
-	/**
-	 * Process additional requirements after save
-	 *
-	 * @param   BaseDatabaseModel  $model      The data model object.
-	 * @param   array              $validData  The validated data.
-	 *
-	 * @throws Exception
-	 * @since  3.1
-	 */
-	protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
-	{
-		/* @var EmailtemplateModel $model */
-		$item    = $model->getItem();
-		$name    = (string) $validData['name'];
-		$subject = (string) $validData['subject'];
-		$blurb   = (string) $validData['blurb'];
+    /**
+     * Process additional requirements after save
+     *
+     * @param   BaseDatabaseModel  $model      The data model object.
+     * @param   array              $validData  The validated data.
+     *
+     * @throws Exception
+     * @since  3.1
+     */
+    protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
+    {
+        /* @var EmailtemplateModel $model */
+        $item    = $model->getItem();
+        $name    = (string)$validData['name'];
+        $subject = (string)$validData['subject'];
+        $blurb   = (string)$validData['blurb'];
 
-		if ($this->input->get('task') == 'save2copy')
-		{
-			$name = Utility::generateNewName($name);
-		}
+        if ($this->input->get('task') == 'save2copy') {
+            $name = Utility::generateNewName($name);
+        }
 
-		$Translations = new Translations();
-		$Translations->updateDefault('emailtemplate', $item->id, 'name', $name);
-		$Translations->updateDefault('emailtemplate', $item->id, 'subject', $subject);
-		$Translations->updateDefault('emailtemplate', $item->id, 'blurb', $blurb);
-	}
+        $Translations = new Translations();
+        $Translations->updateDefault('emailtemplate', $item->id, 'name', $name);
+        $Translations->updateDefault('emailtemplate', $item->id, 'subject', $subject);
+        $Translations->updateDefault('emailtemplate', $item->id, 'blurb', $blurb);
+    }
 }

@@ -9,8 +9,6 @@
 
 namespace HighlandVision\KR\Core;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Compute;
 use HighlandVision\KR\Framework\KrFactory;
@@ -21,6 +19,10 @@ use HighlandVision\KR\Utility;
 use RuntimeException;
 use function count;
 use function is_countable;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Resurrect a contract

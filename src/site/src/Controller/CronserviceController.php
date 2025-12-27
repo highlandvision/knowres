@@ -12,8 +12,6 @@
 
 namespace HighlandVision\Component\Knowres\Site\Controller;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\Factura\Factura;
 use HighlandVision\KR\Framework\KrFactory;
@@ -33,6 +31,10 @@ use function class_exists;
 use function count;
 use function jexit;
 use function method_exists;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 //TODO-v5.2 Reinstate Xero II
 //use HighlandVision\XERO\Xero\Payments;

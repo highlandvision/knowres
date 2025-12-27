@@ -9,8 +9,6 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Field;
 
-defined('_JEXEC') or die;
-
 use DOMDocument;
 use Exception;
 use HighlandVision\KR\Utility;
@@ -25,6 +23,10 @@ use function trim;
 
 use const LIBXML_NOERROR;
 
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
+
 /**
  * Formats xml text from api
  *
@@ -32,66 +34,62 @@ use const LIBXML_NOERROR;
  */
 class TextapiField extends FormField
 {
-	/** @var string The form field type. */
-	protected $type = 'Textapi';
+    /** @var string The form field type. */
+    protected $type = 'Textapi';
 
-	/**
-	 * Simple method to set the value
-	 *
-	 * @since  3.2
-	 * @return string
-	 */
-	public function getInput(): string {
-		if (!trim($this->value)) {
-			return '';
-		}
+    /**
+     * Simple method to set the value
+     *
+     * @return string
+     * @since  3.2
+     */
+    public function getInput(): string
+    {
+        if (!trim($this->value)) {
+            return '';
+        }
 
-		try {
-			libxml_use_internal_errors(true);
-			$xml                     = new SimpleXMLElement(trim($this->value, LIBXML_NOERROR));
-			$dom                     = new DOMDocument();
-			$dom->preserveWhiteSpace = true;
-			$dom->loadXML($xml->asXml());
-			$dom->formatOutput = true;
-			$output            = str_replace('<?xml version="1.0"?>', '', $dom->saveXML());
+        try {
+            libxml_use_internal_errors(true);
+            $xml                     = new SimpleXMLElement(trim($this->value, LIBXML_NOERROR));
+            $dom                     = new DOMDocument();
+            $dom->preserveWhiteSpace = true;
+            $dom->loadXML($xml->asXml());
+            $dom->formatOutput = true;
+            $output            = str_replace('<?xml version="1.0"?>', '', $dom->saveXML());
 
-			return '<pre>' . htmlentities($output) . '</pre>';
-		}
-		catch (Exception) {
-			$test = @json_decode($this->value);
-			if ($test) {
-				$json = Utility::decodeJson($this->value, true);
-				$d    = '<pre>';
-				foreach ($json as $key => $text) {
-					if (is_object($text) || is_array($text)) {
-						$properties = (array) $text;
-						foreach ($properties as $k => $v) {
-							$d .= $k . ' = ' . $v . '<br>';
-						}
-					}
-					else {
-						$d .= $key . ' = ' . $text . '<br>';
-					}
-				}
-				$d .= '</pre>';
+            return '<pre>' . htmlentities($output) . '</pre>';
+        } catch (Exception) {
+            $test = @json_decode($this->value);
+            if ($test) {
+                $json = Utility::decodeJson($this->value, true);
+                $d    = '<pre>';
+                foreach ($json as $key => $text) {
+                    if (is_object($text) || is_array($text)) {
+                        $properties = (array)$text;
+                        foreach ($properties as $k => $v) {
+                            $d .= $k . ' = ' . $v . '<br>';
+                        }
+                    } else {
+                        $d .= $key . ' = ' . $text . '<br>';
+                    }
+                }
+                $d .= '</pre>';
 
-				return $d;
-			}
-			elseif (is_string($this->value)) {
-				return '<pre>' . $this->value . '</pre>';
-			}
-			elseif (is_countable($this->value) && count($this->value)) {
-				$d = '<pre>';
-				foreach ($this->value as $key => $value) {
-					$d .= $key . ' = ' . $value . '<br>';
-				}
-				$d .= '</pre>';
+                return $d;
+            } elseif (is_string($this->value)) {
+                return '<pre>' . $this->value . '</pre>';
+            } elseif (is_countable($this->value) && count($this->value)) {
+                $d = '<pre>';
+                foreach ($this->value as $key => $value) {
+                    $d .= $key . ' = ' . $value . '<br>';
+                }
+                $d .= '</pre>';
 
-				return $d;
-			}
-			else {
-				return "<pre>Sorry the data could not be displayed</pre>";
-			}
-		}
-	}
+                return $d;
+            } else {
+                return "<pre>Sorry the data could not be displayed</pre>";
+            }
+        }
+    }
 }

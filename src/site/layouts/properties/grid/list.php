@@ -9,13 +9,15 @@
 
 /** @noinspection PhpUnhandledExceptionInspection */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\SiteHelper;
 use HighlandVision\KR\Translations;
 use HighlandVision\KR\Utility;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 extract($displayData);
 /**
@@ -50,47 +52,47 @@ $large        = Utility::setColumns($params->get('per_row_large', 3), 'large');
                 <?php if ($item->imagefilename) : ?>
                     <div class="kr-slideshow-wrapper">
                         <?php echo KrMethods::render('properties.grid.card.slideshow.images',
-                                [
-                                        'item'         => $item,
-                                        'params'       => $params,
-                                        'plink'        => $plink,
-                                        'Translations' => $Translations
-                                ]
+                            [
+                                'item'         => $item,
+                                'params'       => $params,
+                                'plink'        => $plink,
+                                'Translations' => $Translations,
+                            ],
                         ); ?>
                         <?php echo KrMethods::render('properties.grid.card.slideshow.favicon',
-                                [
-                                        'item' => $item,
-                                        'favs' => $favs,
-                                        'bar'  => $bar
-                                ]
+                            [
+                                'item' => $item,
+                                'favs' => $favs,
+                                'bar'  => $bar,
+                            ],
                         ); ?>
                     </div>
                 <?php endif; ?>
 
                 <?php echo KrMethods::render('properties.grid.card.slideshow.pricing',
-                        [
-                                'item'           => $item,
-                                'currency'       => $currency,
-                                'byAvailability' => $byAvailability,
-                                'net'            => $net[$item->id] ?? 0,
-                                'discount'       => $discount[$item->id] ?? 0,
-                                'weekly'         => $weekly[$item->id] ?? $weekly[0],
-                                'plink'          => $plink,
-                                'nights'         => $nights
-                        ]
+                    [
+                        'item'           => $item,
+                        'currency'       => $currency,
+                        'byAvailability' => $byAvailability,
+                        'net'            => $net[$item->id] ?? 0,
+                        'discount'       => $discount[$item->id] ?? 0,
+                        'weekly'         => $weekly[$item->id] ?? $weekly[0],
+                        'plink'          => $plink,
+                        'nights'         => $nights,
+                    ],
                 );
                 ?>
 
                 <a class="suppress-underline" href="<?php echo $plink; ?>">
                     <div class="card-section">
                         <?php echo KrMethods::render('properties.grid.card.section',
-                                [
-                                        'item'         => $item,
-                                        'params'       => $params,
-                                        'plink'        => $plink,
-                                        'key_features' => $key_features,
-                                        'Translations' => $Translations
-                                ]
+                            [
+                                'item'         => $item,
+                                'params'       => $params,
+                                'plink'        => $plink,
+                                'key_features' => $key_features,
+                                'Translations' => $Translations,
+                            ],
                         ); ?>
                     </div>
                 </a>

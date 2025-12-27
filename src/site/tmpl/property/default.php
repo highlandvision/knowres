@@ -7,9 +7,11 @@
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 $wa = $this->document->getWebAssetManager();
 $wa->getRegistry()->addExtensionRegistryFile('com_knowres');
@@ -53,7 +55,7 @@ $wa->useScript('com_knowres.site')
 
             <div id="sidebar-right" class="small-12 small-order-1 medium-5 large-4 medium-order-2 cell">
                 <div class="kr-property-quote">
-                    <?php if ((int) $this->booking_type) : ?>
+                    <?php if ((int)$this->booking_type) : ?>
                         <?php echo $this->loadTemplate('quote'); ?>
                     <?php else: ?>
                         <?php echo $this->loadTemplate('reservation'); ?>

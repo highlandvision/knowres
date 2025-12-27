@@ -7,10 +7,12 @@
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
 use Joomla\CMS\HTML\HTMLHelper;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 ?>
 
 <!--suppress JSCheckFunctionSignatures -->
@@ -29,7 +31,7 @@ use Joomla\CMS\HTML\HTMLHelper;
     }
 </script>
 
-<form action="<?php echo KrMethods::route('index.php?option=com_knowres&layout=edit&id=' . (int) $this->item->id); ?>"
+<form action="<?php echo KrMethods::route('index.php?option=com_knowres&layout=edit&id=' . (int)$this->item->id); ?>"
       method="post" enctype="multipart/form-data" name="adminForm" id="propertysetting-form" class="form-validate">
     <div class="form-horizontal">
         <div class="row-fluid">
@@ -41,10 +43,10 @@ use Joomla\CMS\HTML\HTMLHelper;
                     </div>
 
                     <?php
-                    foreach ((array) $this->item->property_id as $value):
+                    foreach ((array)$this->item->property_id as $value):
                         if (!is_array($value)):
                             echo '<input type="hidden" class="property_id" name="jform[property_idhidden][' . $value
-                                    . ']" value="' . $value . '" />';
+                                . ']" value="' . $value . '" />';
                         endif;
                     endforeach;
                     ?>

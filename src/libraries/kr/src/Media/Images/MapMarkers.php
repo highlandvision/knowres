@@ -9,8 +9,6 @@
 
 namespace HighlandVision\KR\Media\Images;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Media\Images;
 use InvalidArgumentException;
@@ -22,6 +20,10 @@ use function glob;
 use function unlink;
 
 use const GLOB_BRACE;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 define('KNOWRES_MARKER_IMAGE_WIDTH', 200);
 define('KNOWRES_MARKER_IMAGE_HEIGHT', 150);

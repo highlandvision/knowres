@@ -7,11 +7,12 @@
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Utility;
 
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 ?>
 
 <div id="kr-totals" class="callout primary">
@@ -68,12 +69,12 @@ use HighlandVision\KR\Utility;
             <h4 id="balance_date" class="no-margin-bottom"></h4>
             <p id="balance" class="bigger"></p>
 
-            <?php if ((float) $this->property->security_amount > 0): ?>
+            <?php if ((float)$this->property->security_amount > 0): ?>
                 <div class="security no-margin-bottom">
                     <h6 class="no-margin-bottom"><?php echo KrMethods::plain('COM_KNOWRES_SECURITY_DEPOSIT'); ?></h6>
                     <p class="bigger no-margin-bottom">
                         <?php echo Utility::displayValue($this->property->security_amount,
-                                $this->contractData->currency
+                            $this->contractData->currency,
                         ); ?>
                     </p>
                     <small><?php echo $this->property->security_text; ?></small>

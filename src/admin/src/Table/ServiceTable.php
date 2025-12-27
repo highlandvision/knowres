@@ -9,11 +9,13 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Table;
 
-defined('_JEXEC') or die;
-
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Versioning\VersionableTableInterface;
 use Joomla\Database\DatabaseDriver;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Service Table class
@@ -22,34 +24,34 @@ use Joomla\Database\DatabaseDriver;
  */
 class ServiceTable extends Table implements VersionableTableInterface
 {
-	/** @var array An array of key names to be json encoded in the bind function */
-	protected $_jsonEncode = ['parameters'];
-	/** $var bool Indicates that columns fully support the NULL value in the database */
-	protected $_supportNullValue = true;
+    /** @var array An array of key names to be json encoded in the bind function */
+    protected $_jsonEncode = ['parameters'];
+    /** $var bool Indicates that columns fully support the NULL value in the database */
+    protected $_supportNullValue = true;
 
-	/**
-	 * Constructor
-	 *
-	 * @param   DatabaseDriver  $db  Db Connector
-	 *
-	 * @since  1.0.0
-	 */
-	public function __construct(DatabaseDriver $db)
-	{
-		$this->typeAlias = 'com_knowres.service';
-		parent::__construct('#__knowres_service', 'id', $db);
+    /**
+     * Constructor
+     *
+     * @param   DatabaseDriver  $db  Db Connector
+     *
+     * @since  1.0.0
+     */
+    public function __construct(DatabaseDriver $db)
+    {
+        $this->typeAlias = 'com_knowres.service';
+        parent::__construct('#__knowres_service', 'id', $db);
 
-		$this->setColumnAlias('published', 'state');
-	}
+        $this->setColumnAlias('published', 'state');
+    }
 
-	/**
-	 * Get the type alias for the history table
-	 *
-	 * @since   4.0.0
-	 * @return  string  The alias as described above
-	 */
-	public function getTypeAlias(): string
-	{
-		return $this->typeAlias;
-	}
+    /**
+     * Get the type alias for the history table
+     *
+     * @return  string  The alias as described above
+     * @since   4.0.0
+     */
+    public function getTypeAlias(): string
+    {
+        return $this->typeAlias;
+    }
 }

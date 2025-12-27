@@ -7,8 +7,6 @@
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Media;
@@ -16,6 +14,10 @@ use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Translations;
 use HighlandVision\KR\Utility;
 use Joomla\CMS\HTML\HTMLHelper;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 $Translations = new Translations();
 $region_name  = $Translations->getText('region', $this->item->region_id);

@@ -9,11 +9,13 @@
 
 namespace HighlandVision\KR\Compute;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Hub;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Calculate commission
@@ -22,109 +24,95 @@ use HighlandVision\KR\Hub;
  */
 class Commission
 {
-	/** @var Hub Hub data. */
-	protected Hub $Hub;
+    /** @var Hub Hub data. */
+    protected Hub $Hub;
 
-	/**
-	 * Calculate commission
-	 *
-	 * @param   Hub  $Hub  Hub base class
-	 *
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
-	public function calculate(Hub $Hub): void
-	{
-		$this->Hub = $Hub;
+    /**
+     * Calculate commission
+     *
+     * @param   Hub  $Hub  Hub base class
+     *
+     * @throws Exception
+     * @since  1.0.0
+     */
+    public function calculate(Hub $Hub): void
+    {
+        $this->Hub = $Hub;
 
-		if (!$this->Hub->settings['net_rates'])
-		{
-			$this->calculatePc();
-		}
-		else
-		{
-			$this->calculateNet();
-		}
-	}
+        if (!$this->Hub->settings['net_rates']) {
+            $this->calculatePc();
+        } else {
+            $this->calculateNet();
+        }
+    }
 
-	/**
-	 * Calculate commission and owner rate based on commission %
-	 *
-	 * @throws Exception
-	 * @since  3.3.0
-	 */
-	private function calculatePc(): void
-	{
-		$room_total = $this->Hub->getValue('room_total');
-		$net_price  = $this->Hub->getValue('net_price');
+    /**
+     * Calculate net and commission rate based on net rate markup and discounts
+     *
+     * @throws Exception
+     * @since  3.3.0
+     */
+    private function calculateNet(): void
+    {
+        $markup                  = $this->Hub->getValue('markup');
+        $markup_pc               = $this->Hub->getValue('markup_pc');
+        $room_total_gross_system = $this->Hub->getValue('room_total_gross_system');
+        $discount                = (float)$this->Hub->getValue('discount');
+        $coupon                  = (float)$this->Hub->getValue('coupon_discount');
+        $net_discount            = 0;
+        $commission_discount     = 0;
 
-		if (!$this->Hub->property->owner_id)
-		{
-			$net_price_system = 0;
-			$commission       = $room_total;
-		}
-		else
-		{
-			$owner = KrFactory::getAdminModel('owner')->getItem($this->Hub->property->owner_id);
-			if (empty($owner->id))
-			{
-				$net_price_system = 0;
-				$commission       = $room_total;
-			}
-			elseif ($net_price)
-			{
-				$net_price_system = $this->Hub->round($room_total * ((100 - $owner->commission) / 100));
-				$commission       = $room_total - $net_price;
-			}
-			else
-			{
-				$base           = $this->Hub->getValue('room_total');
-				$channel_markup = $this->Hub->getValue('channel_markup');
-				$adjusted       = $base - $channel_markup;
+        $average = 0;
+        $total   = 0;
+        if (!empty($discount) || !empty($coupon)) {
+            if (is_countable($markup_pc) && count($markup_pc)) {
+                foreach ($markup_pc as $m) {
+                    $total += $m;
+                }
+                $average = $total / count($markup_pc);
+            }
 
-				$net_price_system = $this->Hub->round($adjusted * ((100 - $owner->commission) / 100));
-				$commission       = $adjusted - $net_price_system;
-			}
-		}
+            $net_discount        = ($discount + $coupon) * (100 / (100 + $average));
+            $commission_discount = $discount + $coupon - $net_discount;
+        }
 
-		$this->Hub->setValue('net_price_system', $net_price_system);
-		$this->Hub->setValue('commission', $commission);
-	}
+        $this->Hub->setValue('net_price_system', $room_total_gross_system - $net_discount);
+        $this->Hub->setValue('commission', $markup - $commission_discount);
+    }
 
-	/**
-	 * Calculate net and commission rate based on net rate markup and discounts
-	 *
-	 * @throws Exception
-	 * @since  3.3.0
-	 */
-	private function calculateNet(): void
-	{
-		$markup                  = $this->Hub->getValue('markup');
-		$markup_pc               = $this->Hub->getValue('markup_pc');
-		$room_total_gross_system = $this->Hub->getValue('room_total_gross_system');
-		$discount                = (float) $this->Hub->getValue('discount');
-		$coupon                  = (float) $this->Hub->getValue('coupon_discount');
-		$net_discount            = 0;
-		$commission_discount     = 0;
+    /**
+     * Calculate commission and owner rate based on commission %
+     *
+     * @throws Exception
+     * @since  3.3.0
+     */
+    private function calculatePc(): void
+    {
+        $room_total = $this->Hub->getValue('room_total');
+        $net_price  = $this->Hub->getValue('net_price');
 
-		$average = 0;
-		$total   = 0;
-		if (!empty($discount) || !empty($coupon))
-		{
-			if (is_countable($markup_pc) && count($markup_pc))
-			{
-				foreach ($markup_pc as $m)
-				{
-					$total += $m;
-				}
-				$average = $total / count($markup_pc);
-			}
+        if (!$this->Hub->property->owner_id) {
+            $net_price_system = 0;
+            $commission       = $room_total;
+        } else {
+            $owner = KrFactory::getAdminModel('owner')->getItem($this->Hub->property->owner_id);
+            if (empty($owner->id)) {
+                $net_price_system = 0;
+                $commission       = $room_total;
+            } elseif ($net_price) {
+                $net_price_system = $this->Hub->round($room_total * ((100 - $owner->commission) / 100));
+                $commission       = $room_total - $net_price;
+            } else {
+                $base           = $this->Hub->getValue('room_total');
+                $channel_markup = $this->Hub->getValue('channel_markup');
+                $adjusted       = $base - $channel_markup;
 
-			$net_discount        = ($discount + $coupon) * (100 / (100 + $average));
-			$commission_discount = $discount + $coupon - $net_discount;
-		}
+                $net_price_system = $this->Hub->round($adjusted * ((100 - $owner->commission) / 100));
+                $commission       = $adjusted - $net_price_system;
+            }
+        }
 
-		$this->Hub->setValue('net_price_system', $room_total_gross_system - $net_discount);
-		$this->Hub->setValue('commission', $markup - $commission_discount);
-	}
+        $this->Hub->setValue('net_price_system', $net_price_system);
+        $this->Hub->setValue('commission', $commission);
+    }
 }

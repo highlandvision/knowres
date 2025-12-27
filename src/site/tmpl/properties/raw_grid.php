@@ -7,14 +7,15 @@
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
+
 $results = KrFactory::getListModel('propertyfeatures')->getAll(true);
-foreach ($results as $r)
-{
+foreach ($results as $r) {
     $key_features[$r->id] = $r->name;
 }
 ?>
@@ -29,16 +30,16 @@ foreach ($results as $r)
 <?php endif; ?>
 
 <?php echo KrMethods::render('properties.grid.list', [
-        'items'          => $this->items,
-        'params'         => $this->params,
-        'currency'       => $this->Response->searchData->currency,
-        'favs'           => $this->Response->searchData->favs,
-        'bar'            => $this->Response->searchData->bar,
-        'byAvailability' => $this->Response->searchData->byAvailability,
-        'net'            => $this->Response->searchData->rateNet,
-        'discount'       => $this->Response->searchData->rateDiscount,
-        'rating'         => $this->Response->searchData->rating,
-        'key_features'   => $key_features,
-        'nights'         => $this->Response->searchData->nights
+    'items'          => $this->items,
+    'params'         => $this->params,
+    'currency'       => $this->Response->searchData->currency,
+    'favs'           => $this->Response->searchData->favs,
+    'bar'            => $this->Response->searchData->bar,
+    'byAvailability' => $this->Response->searchData->byAvailability,
+    'net'            => $this->Response->searchData->rateNet,
+    'discount'       => $this->Response->searchData->rateDiscount,
+    'rating'         => $this->Response->searchData->rating,
+    'key_features'   => $key_features,
+    'nights'         => $this->Response->searchData->nights,
 ]);
 ?>

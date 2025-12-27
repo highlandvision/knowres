@@ -7,11 +7,13 @@
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\TickTock;
 use Joomla\CMS\HTML\HTMLHelper;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 $max = $this->item->sleeps + $this->item->sleeps_extra + $this->item->sleeps_infant_max;
 ?>
@@ -29,34 +31,34 @@ $max = $this->item->sleeps + $this->item->sleeps_extra + $this->item->sleeps_inf
     <div class="grid-x grid-margin-x">
         <div class="small-6 medium-12 cell">
             <?php echo $this->form->renderField('qarrivaldsp',
-                    null,
-                    TickTock::getDate($this->arrival, 'j M Y')
+                null,
+                TickTock::getDate($this->arrival, 'j M Y'),
             ); ?>
         </div>
         <div class="small-6 medium-12 cell">
             <?php echo $this->form->renderField('qdeparturedsp',
-                    null,
-                    TickTock::getDate($this->departure, 'j M Y')
+                null,
+                TickTock::getDate($this->departure, 'j M Y'),
             ); ?>
         </div>
         <div class="small-12 cell">
             <?php echo $this->form->renderField('guests', null, $this->searchData->guests, [
+                'adults'     => $this->searchData->adults ?: 2,
+                'children'   => $this->searchData->children ?: 0,
+                'child_ages' => $this->searchData->child_ages ?: [],
+                'max_guests' => $max,
+                'infant_max' => $this->item->sleeps_infant_max,
+                'infant_age' => $this->item->sleeps_infant_age,
+                'fixed'      => true,
+            ]); ?>
+
+            <?php echo KrMethods::render('property.partypane',
+                [
                     'adults'     => $this->searchData->adults ?: 2,
                     'children'   => $this->searchData->children ?: 0,
                     'child_ages' => $this->searchData->child_ages ?: [],
                     'max_guests' => $max,
-                    'infant_max' => $this->item->sleeps_infant_max,
-                    'infant_age' => $this->item->sleeps_infant_age,
-                    'fixed'      => true,
-            ]); ?>
-
-            <?php echo KrMethods::render('property.partypane',
-                    [
-                            'adults'     => $this->searchData->adults ?: 2,
-                            'children'   => $this->searchData->children ?: 0,
-                            'child_ages' => $this->searchData->child_ages ?: [],
-                            'max_guests' => $max
-                    ]
+                ],
             ); ?>
         </div>
     </div>

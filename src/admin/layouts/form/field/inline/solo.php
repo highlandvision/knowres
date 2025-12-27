@@ -6,7 +6,9 @@
  * @license         GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-defined('_JEXEC') or die;
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') || die;
+// phpcs:enable PSR1.Files.SideEffects
 
 extract($displayData);
 /**
@@ -20,12 +22,12 @@ extract($displayData);
 ?>
 
 <div class="row">
-	<div class="col">
-		<?php echo $label; ?>
-	</div>
+    <div class="col">
+        <?php echo $label; ?>
+    </div>
 </div>
 <div class="row">
-	<div class="<?php echo $class; ?>">
-		<?php echo $f1; ?>
-	</div>
+    <div class="<?php echo $class; ?>">
+        <?php echo $f1; ?>
+    </div>
 </div>

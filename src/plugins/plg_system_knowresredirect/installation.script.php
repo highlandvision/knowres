@@ -9,7 +9,9 @@
 
 use Joomla\CMS\Factory;
 
+// phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Installation/Uninstallation script

@@ -11,8 +11,6 @@
 
 namespace HighlandVision\Component\Knowres\Site\Controller;
 
-defined('_JEXEC') or die;
-
 use DOMDocument;
 use Exception;
 use HighlandVision\Helpscout\Helpdesk;
@@ -55,6 +53,10 @@ use function simplexml_import_dom;
 use function simplexml_load_string;
 use function strtolower;
 use function trim;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Service controller

@@ -59,7 +59,9 @@ class HtmlView extends KrHtmlView
         $this->state = $model->getState();
 
         if ($this->item->item === 'property') {
-            $field        = KrFactory::getAdminModel('propertyfield')->getItem(substr($this->item->field, 1));
+            /** @var PropertyfieldModel $pf */
+            $pf           = KrFactory::getAdminModel('propertyfield');
+            $field        = $pf->getItem(substr($this->item->field, 1));
             $Translations = new Translations();
             $this->label  = $Translations->getText('propertyfield', $field->id, 'label');
 

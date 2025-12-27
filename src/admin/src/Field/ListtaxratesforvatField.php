@@ -9,8 +9,6 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Field;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
@@ -20,6 +18,10 @@ use Joomla\CMS\HTML\HTMLHelper;
 
 use function array_merge;
 
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
+
 /**
  * Supports a value from an external table
  *
@@ -27,66 +29,66 @@ use function array_merge;
  */
 class ListtaxratesforvatField extends ListField
 {
-	/** @var string The form field type. */
-	protected $type = 'Listtaxratesforvat';
+    /** @var string The form field type. */
+    protected $type = 'Listtaxratesforvat';
 
-	/**
-	 * Method to instantiate the form field object.
-	 *
-	 * @since   1.7.0
-	 */
-	public function __construct()
-	{
-		if (KrMethods::getParams()->get('ignore_taxes', 0)) {
-			return;
-		}
+    /**
+     * Method to instantiate the form field object.
+     *
+     * @since   1.7.0
+     */
+    public function __construct()
+    {
+        if (KrMethods::getParams()->get('ignore_taxes', 0)) {
+            return;
+        }
 
-		parent::__construct();
-	}
+        parent::__construct();
+    }
 
-	/**
-	 * Get the field options.
-	 *
-	 * @throws InvalidArgumentException
-	 * @throws Exception
-	 * @since  1.6
-	 * @return array    The field input markup.
-	 */
-	public function getOptions(): array
-	{
-		$taxrates = KrFactory::getListModel('taxrates')->getAll();
-		if (is_countable($taxrates) && count($taxrates)) {
-			$taxrates = $this->matchTax($taxrates);
-		}
+    /**
+     * Get the field options.
+     *
+     * @return array    The field input markup.
+     * @throws Exception
+     * @throws InvalidArgumentException
+     * @since  1.6
+     */
+    public function getOptions(): array
+    {
+        $taxrates = KrFactory::getListModel('taxrates')->getAll();
+        if (is_countable($taxrates) && count($taxrates)) {
+            $taxrates = $this->matchTax($taxrates);
+        }
 
-		$options = [];
-		foreach ($taxrates as $i) {
-			$options[] = HTMLHelper::_('select.option', $i->id, $i->name);
-		}
+        $options = [];
+        foreach ($taxrates as $i) {
+            $options[] = HTMLHelper::_('select.option', $i->id, $i->name);
+        }
 
-		return array_merge(parent::getOptions(), $options);
-	}
+        return array_merge(parent::getOptions(), $options);
+    }
 
-	/**
-	 * Filter tax rates by basis
-	 *
-	 * @param  array  $taxrates  Array of all tax rates
-	 *
-	 * @throws Exception
-	 * @since  4.0.0
-	 * @return array
-	 */
-	private function matchTax(array $taxrates): array
-	{
-		$rates    = $taxrates;
-		$taxrates = [];
+    /**
+     * Filter tax rates by basis
+     *
+     * @param   array  $taxrates  Array of all tax rates
+     *
+     * @return array
+     * @throws Exception
+     * @since  4.0.0
+     */
+    private function matchTax(array $taxrates): array
+    {
+        $rates    = $taxrates;
+        $taxrates = [];
 
-		foreach ($rates as $t) {
-			if ($t->basis < 1) {
-				$taxrates[] = $t;
-			}
-		}
+        foreach ($rates as $t) {
+            if ($t->basis < 1) {
+                $taxrates[] = $t;
+            }
+        }
 
-		return $taxrates;
-	}
+        return $taxrates;
+    }
 }

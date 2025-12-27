@@ -7,31 +7,33 @@
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
+
 if (is_null(KrFactory::getListModel('coupons')->getValidCoupons($this->property->id))) {
-	return;
+    return;
 }
 ?>
 
 <fieldset class="fieldset">
-	<legend><?php echo KrMethods::plain('COM_KNOWRES_CONFIRM_COUPON_LBL'); ?></legend>
-	<div class="callout small">
-		<div class="grid-x grid-margin-x">
-			<div class="small-12 medium-8 cell">
-				<?php echo $this->form->getInput('coupon_code', null, ''); ?>
-			</div>
-			<div class="small-12 medium-4 cell">
-				<a class="button primary kr-calculate no-margin-bottom" href="#">
-					<?php echo KrMethods::plain('COM_KNOWRES_CONFIRM_COUPON_APPLY'); ?>
-				</a>
-			</div>
-			<div class="small-12 cell">
-				<span class="red info" id="coupon-response"></span>
-			</div>
-		</div>
-	</div>
+    <legend><?php echo KrMethods::plain('COM_KNOWRES_CONFIRM_COUPON_LBL'); ?></legend>
+    <div class="callout small">
+        <div class="grid-x grid-margin-x">
+            <div class="small-12 medium-8 cell">
+                <?php echo $this->form->getInput('coupon_code', null, ''); ?>
+            </div>
+            <div class="small-12 medium-4 cell">
+                <a class="button primary kr-calculate no-margin-bottom" href="#">
+                    <?php echo KrMethods::plain('COM_KNOWRES_CONFIRM_COUPON_APPLY'); ?>
+                </a>
+            </div>
+            <div class="small-12 cell">
+                <span class="red info" id="coupon-response"></span>
+            </div>
+        </div>
+    </div>
 </fieldset>

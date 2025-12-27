@@ -7,11 +7,13 @@
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\TickTock;
 use Joomla\CMS\HTML\HTMLHelper;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 $params = KrMethods::getParams();
 ?>
@@ -43,7 +45,7 @@ $params = KrMethods::getParams();
         <td class="d-none d-md-table-cell">
             <?php if ($this->item->contract_id && $this->item->contract_tag): ?>
                 <a href="<?php echo KrMethods::route('index.php?option=com_knowres&task=contract.show&id='
-                        . (int) $this->item->contract_id
+                    . (int)$this->item->contract_id,
                 ); ?>">
                     <?php echo $this->item->contract_tag; ?>
                 </a>
@@ -56,7 +58,7 @@ $params = KrMethods::getParams();
             <?php echo TickTock::displayTS($this->item->created_at); ?>
         </td>
         <td class="d-none d-md-table-cell">
-            <?php echo (int) $this->item->id; ?>
+            <?php echo (int)$this->item->id; ?>
         </td>
     </tr>
 <?php endforeach; ?>

@@ -9,8 +9,6 @@
 
 namespace HighlandVision\KR\Payments;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Utility;
@@ -19,6 +17,10 @@ use stdClass;
 use function defined;
 use function floatval;
 use function nl2br;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Get gateways available for a payment

@@ -9,8 +9,6 @@
 
 namespace HighlandVision\KR;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Calendar\Los;
 use HighlandVision\KR\Framework\KrFactory;
@@ -18,6 +16,10 @@ use HighlandVision\KR\Session as KrSession;
 use function count;
 use function is_countable;
 use function min;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Los rates calculation for multiple dates and stays

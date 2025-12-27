@@ -9,10 +9,12 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Controller;
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Joomla\Extend\FormController;
 use Joomla\CMS\Versioning\VersionableControllerTrait;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') || die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Manager controller class

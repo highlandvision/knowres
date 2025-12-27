@@ -7,11 +7,13 @@
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Utility;
 use Joomla\CMS\HTML\HTMLHelper;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /** @var HighlandVision\Component\Knowres\Administrator\View\Property\HtmlView $this */
 
@@ -20,8 +22,7 @@ HTMLHelper::script(trim(Utility::getGmapsURL()));
 $this->lat  = $this->item->lat;
 $this->lng  = $this->item->lng;
 $this->zoom = $this->item->map_max_zoom;
-if (empty($this->item->id))
-{
+if (empty($this->item->id)) {
     $this->lat  = $this->params->get('default_lat');
     $this->lng  = $this->params->get('default_lng');
     $this->zoom = $this->params->get('default_zoom', 20);

@@ -11,8 +11,6 @@
 
 namespace HighlandVision\Component\Knowres\Site\View\Contractguestdataform;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
@@ -21,6 +19,10 @@ use HighlandVision\KR\Logger;
 use HighlandVision\KR\SiteHelper;
 use Joomla\CMS\Factory;
 use RuntimeException;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Dashboard contract guest data form (arrival details)

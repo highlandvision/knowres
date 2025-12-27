@@ -7,16 +7,18 @@
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 $wa = $this->document->getWebAssetManager();
 $wa->useScript('com_knowres.site')
    ->useScript('keepalive');
 
 echo KrMethods::render('properties.basicgrid', [
-	'items'  => $this->items,
-	'params' => $this->params,
-	'title'  => KrMethods::plain('COM_KNOWRES_BROWSE_NEW_VILLAS')
+    'items'  => $this->items,
+    'params' => $this->params,
+    'title'  => KrMethods::plain('COM_KNOWRES_BROWSE_NEW_VILLAS'),
 ]);

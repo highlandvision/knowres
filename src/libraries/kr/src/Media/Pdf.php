@@ -9,14 +9,16 @@
 
 namespace HighlandVision\KR\Media;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Extend\KrTcpdf;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Media;
 use Joomla\CMS\Factory;
 use RuntimeException;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Generate, download or email PDF files

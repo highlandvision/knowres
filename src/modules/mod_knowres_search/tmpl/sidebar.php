@@ -7,12 +7,14 @@
  * @author     Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\TickTock;
 use Joomla\CMS\Helper\ModuleHelper;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 $wa = $app->getDocument()->getWebAssetManager();
 $wa->getRegistry()->addExtensionRegistryFile('com_knowres');
@@ -32,24 +34,24 @@ $link         = '/index.php?option=com_knowres&task=properties.search';
                 <?php endif; ?>
                 <?php if ($show_datepickers): ?>
                     <?php echo $form->renderField('arrivaldsp',
-                            null,
-                            TickTock::getDate((string) $initial->arrival, 'j M Y')
+                        null,
+                        TickTock::getDate((string)$initial->arrival, 'j M Y'),
                     ); ?>
                     <?php echo $form->renderField('departuredsp',
-                            null,
-                            TickTock::getDate((string) $initial->departure, 'j M Y')
+                        null,
+                        TickTock::getDate((string)$initial->departure, 'j M Y'),
                     ); ?>
                     <input type="hidden" id="arrival" name="arrival" value="">
                     <input type="hidden" id="departure" name="departure" value="">
                 <?php endif; ?>
                 <?php if ($show_guests): ?>
                     <?php echo $form->renderField('guests', null, $initial->guests,
-                            [
-                                    'adults'     => $initial->adults,
-                                    'children'   => $initial->children,
-                                    'child_ages' => $initial->child_ages ?: [],
-                                    'max_guests' => $max_guests
-                            ]
+                        [
+                            'adults'     => $initial->adults,
+                            'children'   => $initial->children,
+                            'child_ages' => $initial->child_ages ?: [],
+                            'max_guests' => $max_guests,
+                        ],
                     );
                     ?>
                 <?php endif; ?>

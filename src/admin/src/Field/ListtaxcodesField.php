@@ -9,8 +9,6 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Field;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
@@ -21,6 +19,10 @@ use Joomla\CMS\HTML\HTMLHelper;
 
 use function array_merge;
 
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
+
 /**
  * Supports a value from an external table
  *
@@ -28,121 +30,121 @@ use function array_merge;
  */
 class ListtaxcodesField extends ListField
 {
-	/** @var string The form field type. */
-	protected $type = 'Listtaxcodes';
+    /** @var string The form field type. */
+    protected $type = 'Listtaxcodes';
 
-	/**
-	 * Method to instantiate the form field object.
-	 *
-	 * @since   1.7.0
-	 */
-	public function __construct()
-	{
-		if (KrMethods::getParams()->get('ignore_taxes', 0)) {
-			return;
-		}
+    /**
+     * Method to instantiate the form field object.
+     *
+     * @since   1.7.0
+     */
+    public function __construct()
+    {
+        if (KrMethods::getParams()->get('ignore_taxes', 0)) {
+            return;
+        }
 
-		parent::__construct();
-	}
+        parent::__construct();
+    }
 
-	/**
-	 * Get the field options.
-	 *
-	 * @throws InvalidArgumentException
-	 * @throws Exception
-	 * @since  1.6
-	 * @return array    The field input markup.
-	 */
-	public function getOptions(): array
-	{
-		$taxrates    = KrFactory::getListModel('taxrates')->getAll();
-		$property_id = $this->getProperty();
-		if ($property_id) {
-			if (is_countable($taxrates) && count($taxrates)) {
-				$taxrates = $this->matchTax($property_id, $taxrates);
-			}
-		}
+    /**
+     * Get the field options.
+     *
+     * @return array    The field input markup.
+     * @throws Exception
+     * @throws InvalidArgumentException
+     * @since  1.6
+     */
+    public function getOptions(): array
+    {
+        $taxrates    = KrFactory::getListModel('taxrates')->getAll();
+        $property_id = $this->getProperty();
+        if ($property_id) {
+            if (is_countable($taxrates) && count($taxrates)) {
+                $taxrates = $this->matchTax($property_id, $taxrates);
+            }
+        }
 
-		$taxrates = $this->getCurrent($taxrates);
+        $taxrates = $this->getCurrent($taxrates);
 
-		$options = [];
-		foreach ($taxrates as $k => $v) {
-			$options[] = HTMLHelper::_('select.option', $k, $k);
-		}
+        $options = [];
+        foreach ($taxrates as $k => $v) {
+            $options[] = HTMLHelper::_('select.option', $k, $k);
+        }
 
-		return array_merge(parent::getOptions(), $options);
-	}
+        return array_merge(parent::getOptions(), $options);
+    }
 
-	/**
-	 * Filter tax rates to get current rates only
-	 *
-	 * @param  array  $taxrates  Array of all tax rates
-	 *
-	 * @throws Exception
-	 * @since  4.0.0
-	 * @return array
-	 */
-	private function getCurrent(array $taxrates): array
-	{
-		$tmp   = [];
-		$first = true;
+    /**
+     * Filter tax rates to get current rates only
+     *
+     * @param   array  $taxrates  Array of all tax rates
+     *
+     * @return array
+     * @throws Exception
+     * @since  4.0.0
+     */
+    private function getCurrent(array $taxrates): array
+    {
+        $tmp   = [];
+        $first = true;
 
-		foreach ($taxrates as $t) {
-			if (!$first && array_key_exists($t->code, $tmp) && $t->valid_from > $tmp[$t->code]) {
-				$tmp[$t->code] = $t->valid_from;
-			}
+        foreach ($taxrates as $t) {
+            if (!$first && array_key_exists($t->code, $tmp) && $t->valid_from > $tmp[$t->code]) {
+                $tmp[$t->code] = $t->valid_from;
+            }
 
-			$tmp[$t->code] = $t->valid_from;
-			$first         = false;
-		}
+            $tmp[$t->code] = $t->valid_from;
+            $first         = false;
+        }
 
-		return $tmp;
-	}
+        return $tmp;
+    }
 
-	/**
-	 * Get the current property from the session
-	 *
-	 * @since  4.0.0
-	 * @return int
-	 */
-	private function getProperty(): int
-	{
-		$userSession = new KrSession\User();
-		$userData    = $userSession->getData();
+    /**
+     * Get the current property from the session
+     *
+     * @return int
+     * @since  4.0.0
+     */
+    private function getProperty(): int
+    {
+        $userSession = new KrSession\User();
+        $userData    = $userSession->getData();
 
-		return (int)$userData->cr_property_id;
-	}
+        return (int)$userData->cr_property_id;
+    }
 
-	/**
-	 * Filter tax rates by property location
-	 *
-	 * @param  int    $property_id  ID of property
-	 * @param  array  $taxrates     Array of all tax rates
-	 *
-	 * @throws Exception
-	 * @since  4.0.0
-	 * @return array
-	 */
-	private function matchTax(int $property_id, array $taxrates): array
-	{
-		$property = KrFactory::getAdminModel('property')->getItem($property_id);
-		$rates    = $taxrates;
-		$taxrates = [];
+    /**
+     * Filter tax rates by property location
+     *
+     * @param   int    $property_id  ID of property
+     * @param   array  $taxrates     Array of all tax rates
+     *
+     * @return array
+     * @throws Exception
+     * @since  4.0.0
+     */
+    private function matchTax(int $property_id, array $taxrates): array
+    {
+        $property = KrFactory::getAdminModel('property')->getItem($property_id);
+        $rates    = $taxrates;
+        $taxrates = [];
 
-		foreach ($rates as $t) {
-			if ($t->town_id == $property->town_id) {
-				$taxrates[] = $t;
-				continue;
-			}
-			if ($t->region_id == $property->region_id) {
-				$taxrates[] = $t;
-				continue;
-			}
-			if ($t->country_id == $property->country_id) {
-				$taxrates[] = $t;
-			}
-		}
+        foreach ($rates as $t) {
+            if ($t->town_id == $property->town_id) {
+                $taxrates[] = $t;
+                continue;
+            }
+            if ($t->region_id == $property->region_id) {
+                $taxrates[] = $t;
+                continue;
+            }
+            if ($t->country_id == $property->country_id) {
+                $taxrates[] = $t;
+            }
+        }
 
-		return $taxrates;
-	}
+        return $taxrates;
+    }
 }

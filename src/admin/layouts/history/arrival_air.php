@@ -7,32 +7,29 @@
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Utility;
 
-if (empty($displayData['data']))
-{
-	return;
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') || die;
+// phpcs:enable PSR1.Files.SideEffects
+
+if (empty($displayData['data'])) {
+    return;
 }
 
 $data = Utility::arrayToObject($displayData['data']);
-if (count($data))
-{
-	foreach ($data as $d)
-	{
-		$parts = [];
+if (count($data)) {
+    foreach ($data as $d) {
+        $parts = [];
 
-		foreach ($d as $k => $v)
-		{
-			if ($v)
-			{
-				$parts[] = ucfirst($k) . ": " . $v;
-			}
-		}
+        foreach ($d as $k => $v) {
+            if ($v) {
+                $parts[] = ucfirst($k) . ": " . $v;
+            }
+        }
 
-		$all[] = implode(" ", $parts);
-	}
+        $all[] = implode(" ", $parts);
+    }
 
-	echo implode(", ", $all);
+    echo implode(", ", $all);
 }

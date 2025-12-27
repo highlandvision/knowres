@@ -9,8 +9,6 @@
 
 namespace HighlandVision\Component\Knowres\Site\View\Confirm;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\Component\Knowres\Administrator\Model\ContractModel;
 use HighlandVision\Component\Knowres\Site\Model\GuestModel;
@@ -24,6 +22,10 @@ use HighlandVision\KR\Translations;
 use JetBrains\PhpStorm\NoReturn;
 use Joomla\CMS\Form\Form;
 use stdClass;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Reservation confirm

@@ -9,11 +9,13 @@
 
 namespace HighlandVision\Component\Knowres\Site\View\Property;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Joomla\Extend\HtmlView as KrHtmlView;
 use JetBrains\PhpStorm\NoReturn;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Display property
@@ -22,21 +24,22 @@ use JetBrains\PhpStorm\NoReturn;
  */
 class TermsView extends KrHtmlView\Site
 {
-	/** @var mixed Article data. */
-	public mixed $article = '';
+    /** @var mixed Article data. */
+    public mixed $article = '';
 
-	/**
-	 * Display the view
-	 *
-	 * @param   null  $tpl  Default template.
-	 *
-	 * @throws Exception
-	 * @since  1.0.0
-	 * @return void
-	 */
-	#[NoReturn] public function display($tpl = null): void
-	{
-		parent::display($tpl);
-		jexit();
-	}
+    /**
+     * Display the view
+     *
+     * @param   null  $tpl  Default template.
+     *
+     * @return void
+     * @throws Exception
+     * @since  1.0.0
+     */
+    #[NoReturn]
+    public function display($tpl = null): void
+    {
+        parent::display($tpl);
+        jexit();
+    }
 }

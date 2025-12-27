@@ -9,15 +9,9 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Controller;
 
-defined('_JEXEC') or die;
-
-use Exception;
-use HighlandVision\Component\Knowres\Administrator\Model\DiscountModel;
-use HighlandVision\KR\Framework\KrFactory;
-use HighlandVision\KR\Joomla\Extend\FormController;
-use HighlandVision\KR\Translations;
-use Joomla\CMS\MVC\Model\BaseDatabaseModel;
-use Joomla\String\StringHelper;
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') || die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Discount controller form class.
@@ -26,34 +20,33 @@ use Joomla\String\StringHelper;
  */
 class DiscountController extends FormController
 {
-	/**
-	 * Process additional requirements after save payment
-	 *
-	 * @param   BaseDatabaseModel  $model      The data model object.
-	 * @param   array              $validData  The validated data.
-	 *
-	 * @return void
-	 * @throws Exception
-	 * @since  3.1
-	 */
-	protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
-	{
-		/* @var DiscountModel $model */
-		$item = $model->getItem();
-		$name = (string) $validData['name'];
+    /**
+     * Process additional requirements after save payment
+     *
+     * @param   BaseDatabaseModel  $model      The data model object.
+     * @param   array              $validData  The validated data.
+     *
+     * @return void
+     * @throws Exception
+     * @since  3.1
+     */
+    protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
+    {
+        /* @var DiscountModel $model */
+        $item = $model->getItem();
+        $name = (string)$validData['name'];
 
-		if ($this->input->get('task') == 'save2copy')
-		{
-			$name = StringHelper::increment($name);
-		}
+        if ($this->input->get('task') == 'save2copy') {
+            $name = StringHelper::increment($name);
+        }
 
-		$Translations = new Translations();
-		$Translations->updateDefault('discount', $item->id, 'name', $name);
+        $Translations = new Translations();
+        $Translations->updateDefault('discount', $item->id, 'name', $name);
 
-		/* @var ServicequeueModel $serviceQueue */
-		$serviceQueue = KrFactory::getAdminModel('servicequeue');
-		$serviceQueue::serviceQueueUpdate('updatePropertyRates', (int) $validData['property_id'], 0, null,
-			(string) $validData['valid_from'], (string) $validData['valid_to']
-		);
-	}
+        /* @var ServicequeueModel $serviceQueue */
+        $serviceQueue = KrFactory::getAdminModel('servicequeue');
+        $serviceQueue::serviceQueueUpdate('updatePropertyRates', (int)$validData['property_id'], 0, null,
+            (string)$validData['valid_from'], (string)$validData['valid_to'],
+        );
+    }
 }

@@ -9,8 +9,6 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Field;
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Translations;
 use InvalidArgumentException;
@@ -21,6 +19,10 @@ use stdClass;
 
 use function array_merge;
 
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') || die;
+// phpcs:enable PSR1.Files.SideEffects
+
 /**
  * Supports a value from an external table
  *
@@ -28,31 +30,31 @@ use function array_merge;
  */
 class FilterguestcountryField extends ListField
 {
-	/** @var string The form field type. */
-	protected $type = 'Filterguestcountry';
+    /** @var string The form field type. */
+    protected $type = 'Filterguestcountry';
 
-	/**
-	 * Get the field options.
-	 *
-	 * @throws InvalidArgumentException|RuntimeException
-	 * @since  1.6
-	 * @return array    The field input markup.
-	 */
-	public function getOptions(): array
-	{
-		$options[] = HTMLHelper::_('select.option', 0, "- Select Country -");
-		$items     = KrFactory::getListModel('guests')->getGuestCountries();
+    /**
+     * Get the field options.
+     *
+     * @return array    The field input markup.
+     * @throws InvalidArgumentException|RuntimeException
+     * @since  1.6
+     */
+    public function getOptions(): array
+    {
+        $options[] = HTMLHelper::_('select.option', 0, "- Select Country -");
+        $items     = KrFactory::getListModel('guests')->getGuestCountries();
 
-		$Translations = new Translations();
-		$data         = $Translations->getArray($items, 'country', 'name');
+        $Translations = new Translations();
+        $data         = $Translations->getArray($items, 'country', 'name');
 
-		foreach ($data as $k => $v) {
-			$option        = new stdClass();
-			$option->value = $k;
-			$option->text  = $v;
-			$options[]     = $option;
-		}
+        foreach ($data as $k => $v) {
+            $option        = new stdClass();
+            $option->value = $k;
+            $option->text  = $v;
+            $options[]     = $option;
+        }
 
-		return array_merge(parent::getOptions(), $options);
-	}
+        return array_merge(parent::getOptions(), $options);
+    }
 }

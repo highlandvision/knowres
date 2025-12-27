@@ -9,8 +9,6 @@
 
 namespace HighlandVision\Module\KnowresSearch\Site\Helper;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
@@ -21,6 +19,10 @@ use Joomla\CMS\HTML\HTMLHelper;
 use RuntimeException;
 use stdClass;
 use function implode;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Helper class mod_knowres_search

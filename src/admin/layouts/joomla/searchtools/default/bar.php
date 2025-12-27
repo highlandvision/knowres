@@ -6,18 +6,19 @@
  * @license         GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-defined('_JEXEC') or die;
-
 use Joomla\CMS\Language\Text;
 use Joomla\Registry\Registry;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') || die;
+// phpcs:enable PSR1.Files.SideEffects
 
 $data = $displayData;
 
 // Receive overridable options
 $data['options'] = !empty($data['options']) ? $data['options'] : [];
-if (is_array($data['options']))
-{
-	$data['options'] = new Registry($data['options']);
+if (is_array($data['options'])) {
+    $data['options'] = new Registry($data['options']);
 }
 
 // Options
@@ -27,41 +28,41 @@ $filters      = $data['view']->filterForm->getGroup('filter');
 ?>
 
 <?php if (!empty($filters['filter_search'])) : ?>
-	<?php if ($searchButton) : ?>
-		<div class="filter-search-bar btn-group">
-			<?php if (isset($filters['filter_departure'])) : ?>
-				<?php echo $filters['filter_departure']->input; ?>
-			<?php elseif (isset($filters['filter_payment_date'])) : ?>
-				<?php echo $filters['filter_payment_date']->input; ?>
-			<?php endif; ?>
-			<div class="input-group">
-				<?php echo $filters['filter_search']->input; ?>
-				<?php if ($filters['filter_search']->description) : ?>
-					<div role="tooltip"
-					     id="<?php echo ($filters['filter_search']->id ?: $filters['filter_search']->name)
-						     . '-desc'; ?>" class="filter-search-bar__description">
-						<?php echo htmlspecialchars(Text::_($filters['filter_search']->description), ENT_COMPAT); ?>
-					</div>
-				<?php endif; ?>
-				<span class="filter-search-bar__label visually-hidden">
+    <?php if ($searchButton) : ?>
+        <div class="filter-search-bar btn-group">
+            <?php if (isset($filters['filter_departure'])) : ?>
+                <?php echo $filters['filter_departure']->input; ?>
+            <?php elseif (isset($filters['filter_payment_date'])) : ?>
+                <?php echo $filters['filter_payment_date']->input; ?>
+            <?php endif; ?>
+            <div class="input-group">
+                <?php echo $filters['filter_search']->input; ?>
+                <?php if ($filters['filter_search']->description) : ?>
+                    <div role="tooltip"
+                         id="<?php echo ($filters['filter_search']->id ?: $filters['filter_search']->name)
+                             . '-desc'; ?>" class="filter-search-bar__description">
+                        <?php echo htmlspecialchars(Text::_($filters['filter_search']->description), ENT_COMPAT); ?>
+                    </div>
+                <?php endif; ?>
+                <span class="filter-search-bar__label visually-hidden">
 					<?php echo $filters['filter_search']->label; ?>
 				</span>
-				<button type="submit" class="filter-search-bar__button btn btn-primary"
-				        aria-label="<?php echo Text::_('JSEARCH_FILTER_SUBMIT'); ?>">
-					<span class="filter-search-bar__button-icon icon-search" aria-hidden="true"></span>
-				</button>
-			</div>
-		</div>
-		<div class="filter-search-actions btn-group">
-			<?php if ($filterButton) : ?>
-				<button type="button" class="filter-search-actions__button btn btn-primary js-stools-btn-filter">
-					<?php echo Text::_('JFILTER_OPTIONS'); ?>
-					<span class="icon-angle-down" aria-hidden="true"></span>
-				</button>
-			<?php endif; ?>
-			<button type="button" class="filter-search-actions__button btn btn-primary js-stools-btn-clear">
-				<?php echo Text::_('JSEARCH_FILTER_CLEAR'); ?>
-			</button>
-		</div>
-	<?php endif; ?>
+                <button type="submit" class="filter-search-bar__button btn btn-primary"
+                        aria-label="<?php echo Text::_('JSEARCH_FILTER_SUBMIT'); ?>">
+                    <span class="filter-search-bar__button-icon icon-search" aria-hidden="true"></span>
+                </button>
+            </div>
+        </div>
+        <div class="filter-search-actions btn-group">
+            <?php if ($filterButton) : ?>
+                <button type="button" class="filter-search-actions__button btn btn-primary js-stools-btn-filter">
+                    <?php echo Text::_('JFILTER_OPTIONS'); ?>
+                    <span class="icon-angle-down" aria-hidden="true"></span>
+                </button>
+            <?php endif; ?>
+            <button type="button" class="filter-search-actions__button btn btn-primary js-stools-btn-clear">
+                <?php echo Text::_('JSEARCH_FILTER_CLEAR'); ?>
+            </button>
+        </div>
+    <?php endif; ?>
 <?php endif;

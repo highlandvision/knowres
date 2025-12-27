@@ -9,13 +9,15 @@
 
 namespace HighlandVision\Component\Knowres\Site\Controller;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\FormController;
 use HighlandVision\KR\SiteHelper;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Contractguestdata(form) controller class
@@ -24,60 +26,60 @@ use Joomla\CMS\MVC\Model\BaseDatabaseModel;
  */
 class ContractguestdataController extends FormController
 {
-	/**
-	 * Proxy for getModel
-	 * Includes the admin model to save repetition and not a site model
-	 *
-	 * @param  string  $name    Name of model
-	 * @param  string  $prefix  Prefix Admin or Site
-	 * @param  array   $config  Config options
-	 *
-	 * @since  2.5.0
-	 * @return BaseDatabaseModel
-	 */
-	public function getModel($name = 'contractguestdata',
-		$prefix = 'Site',
-		$config = ['ignore_request' => true]): BaseDatabaseModel
-	{
-		return parent::getModel($name, $prefix, $config);
-	}
+    /**
+     * Proxy for getModel
+     * Includes the admin model to save repetition and not a site model
+     *
+     * @param   string  $name    Name of model
+     * @param   string  $prefix  Prefix Admin or Site
+     * @param   array   $config  Config options
+     *
+     * @return BaseDatabaseModel
+     * @since  2.5.0
+     */
+    public function getModel($name = 'contractguestdata',
+        $prefix = 'Site',
+        $config = ['ignore_request' => true]): BaseDatabaseModel
+    {
+        return parent::getModel($name, $prefix, $config);
+    }
 
-	/**
-	 * Method to save a record.
-	 *
-	 * @param ?string  $key     The name of the primary key of the URL variable.
-	 * @param ?string  $urlVar  The name of the URL variable if different from the primary key. Sometimes required to
-	 *                          avoid router collisions.
-	 *
-	 * @throws Exception
-	 * @since  4.0.0
-	 */
-	public function save(?string $key = null, ?string $urlVar = null): bool
-	{
-		$this->checkToken();
+    /**
+     * Method to save a record.
+     *
+     * @param ?string  $key     The name of the primary key of the URL variable.
+     * @param ?string  $urlVar  The name of the URL variable if different from the primary key. Sometimes required to
+     *                          avoid router collisions.
+     *
+     * @throws Exception
+     * @since  4.0.0
+     */
+    public function save(?string $key = null, ?string $urlVar = null): bool
+    {
+        $this->checkToken();
 
-		if (parent::save($key, $urlVar)) {
-			KrMethods::message(KrMethods::plain('COM_KNOWRES_ITEM_UPDATED_SUCCESSFULLY'));
-			SiteHelper::redirectDashboard();
+        if (parent::save($key, $urlVar)) {
+            KrMethods::message(KrMethods::plain('COM_KNOWRES_ITEM_UPDATED_SUCCESSFULLY'));
+            SiteHelper::redirectDashboard();
 
-			return true;
-		}
+            return true;
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-	/**
-	 * Method to check if you can save a new or existing record.
-	 * Override - All edit checks have been done so just return true
-	 *
-	 * @param  array   $data  An array of input data.
-	 * @param  string  $key   The name of the key for the primary key.
-	 *
-	 * @since  1.0.0
-	 * @return bool
-	 */
-	protected function allowSave($data, $key = 'id'): bool
-	{
-		return true;
-	}
+    /**
+     * Method to check if you can save a new or existing record.
+     * Override - All edit checks have been done so just return true
+     *
+     * @param   array   $data  An array of input data.
+     * @param   string  $key   The name of the key for the primary key.
+     *
+     * @return bool
+     * @since  1.0.0
+     */
+    protected function allowSave($data, $key = 'id'): bool
+    {
+        return true;
+    }
 }

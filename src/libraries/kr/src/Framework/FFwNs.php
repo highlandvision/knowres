@@ -9,9 +9,11 @@
 
 namespace HighlandVision\KR\Framework;
 
-defined('_JEXEC') or die;
-
 use const KRFRAMEWORK;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Framework linking
@@ -20,28 +22,28 @@ use const KRFRAMEWORK;
  */
 class FFwNs
 {
-	const string KRFRAMEWORKDB = '\HighlandVision\\KR\\' . KRFRAMEWORK . '\\FDatabase';
-	const string KRFRAMEWORKNS = '\HighlandVision\\KR\\' . KRFRAMEWORK . '\\FMethods';
+    const string KRFRAMEWORKDB = '\HighlandVision\\KR\\' . KRFRAMEWORK . '\\FDatabase';
+    const string KRFRAMEWORKNS = '\HighlandVision\\KR\\' . KRFRAMEWORK . '\\FMethods';
 
-	/**
-	 * Get namespace for Models
-	 *
-	 * @since  3.3.0
-	 * @return string
-	 */
-	public static function getDB(): string
-	{
-		return self::KRFRAMEWORKDB;
-	}
+    /**
+     * Get namespace for Models
+     *
+     * @return string
+     * @since  3.3.0
+     */
+    public static function getDB(): string
+    {
+        return self::KRFRAMEWORKDB;
+    }
 
-	/**
-	 * Get namespace for KrMethods
-	 *
-	 * @since  3.3.0
-	 * @return string
-	 */
-	public static function getNS(): string
-	{
-		return self::KRFRAMEWORKNS;
-	}
+    /**
+     * Get namespace for KrMethods
+     *
+     * @return string
+     * @since  3.3.0
+     */
+    public static function getNS(): string
+    {
+        return self::KRFRAMEWORKNS;
+    }
 }

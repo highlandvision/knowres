@@ -8,14 +8,16 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Field;
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Joomla\Extend\ListField as KrListField;
 use HighlandVision\KR\Translations;
 use InvalidArgumentException;
 use RuntimeException;
 
 use function array_merge;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') || die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Form Field to load a list of filter regions

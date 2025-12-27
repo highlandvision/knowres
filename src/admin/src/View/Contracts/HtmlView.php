@@ -9,8 +9,6 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\View\Contracts;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\Component\Knowres\Administrator\Model\ContractsModel;
 use HighlandVision\KR\Framework\KrMethods;
@@ -20,6 +18,10 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 
 use function defined;
 use function in_array;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * List Contracts

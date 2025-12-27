@@ -11,10 +11,12 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\View\Contracts;
 
-defined('_JEXEC') or die;
-
 use Exception;
+use HighlandVision\Component\Knowres\Administrator\Model\ContractpaymentsModel;
 use HighlandVision\Component\Knowres\Administrator\Model\ContractsModel;
+use HighlandVision\Component\Knowres\Administrator\Model\OwnerpaymentsModel;
+use HighlandVision\Component\Knowres\Administrator\Model\PropertiesModel;
+use HighlandVision\Component\Knowres\Administrator\Model\ReviewsModel;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\HtmlView as KrHtmlView;
@@ -29,6 +31,10 @@ use stdClass;
 use function defined;
 use function is_null;
 use function ucfirst;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Daily contracts overview

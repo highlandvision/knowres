@@ -9,8 +9,6 @@
 
 namespace HighlandVision\KR\Core;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Hub;
@@ -19,6 +17,10 @@ use RuntimeException;
 use function count;
 use function is_countable;
 
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
+
 /**
  * Contract block (black booking) save functionality
  *
@@ -26,72 +28,66 @@ use function is_countable;
  */
 class Block
 {
-	/** @var Hub Hub data. */
-	protected Hub $hub;
+    /** @var Hub Hub data. */
+    protected Hub $hub;
 
-	/**
-	 * Process block
-	 *
-	 * @param  Hub  $hub  Hub data
-	 *
-	 * @throws Exception
-	 * @since  1.0.0
-	 * @return bool
-	 */
-	public function action(Hub $hub): bool
-	{
-		$this->hub = $hub;
+    /**
+     * Process block
+     *
+     * @param   Hub  $hub  Hub data
+     *
+     * @return bool
+     * @throws Exception
+     * @since  1.0.0
+     */
+    public function action(Hub $hub): bool
+    {
+        $this->hub = $hub;
 
-		return $this->saveAll();
-	}
+        return $this->saveAll();
+    }
 
-	/**
-	 * Controls the save and processing for the contract
-	 *
-	 * @throws Exception
-	 * @throws RuntimeException
-	 * @since  1.0.0
-	 * @return bool
-	 */
-	protected function saveAll(): bool
-	{
-		try
-		{
-			$db = KrFactory::getDatabase();
-			$db->transactionStart();
+    /**
+     * Controls the save and processing for the contract
+     *
+     * @return bool
+     * @throws RuntimeException
+     * @throws Exception
+     * @since  1.0.0
+     */
+    protected function saveAll(): bool
+    {
+        try {
+            $db = KrFactory::getDatabase();
+            $db->transactionStart();
 
-			$modelContract = KrFactory::getAdminModel('contract');
-			$data          = $modelContract->validate($modelContract->getForm(), (array) $this->hub->getData());
-			if (!$data)
-			{
-				$this->hub->errors = $modelContract->getErrors();
-				throw new RuntimeException('Validation errors found in Contract');
-			}
+            $modelContract = KrFactory::getAdminModel('contract');
+            $data          = $modelContract->validate($modelContract->getForm(), (array)$this->hub->getData());
+            if (!$data) {
+                $this->hub->errors = $modelContract->getErrors();
+                throw new RuntimeException('Validation errors found in Contract');
+            }
 
-			$modelContract->save($data);
-			$id = $modelContract->getState('contract.id');
-			$this->hub->setValue('id', $id);
+            $modelContract->save($data);
+            $id = $modelContract->getState('contract.id');
+            $this->hub->setValue('id', $id);
 
-			$note = $this->hub->getValue('block_note');
-			if ($note)
-			{
-				KrFactory::getAdminModel('contractnote')::createContractNote($id, $note, '0,2');
-			}
+            $note = $this->hub->getValue('block_note');
+            if ($note) {
+                KrFactory::getAdminModel('contractnote')::createContractNote($id, $note, '0,2');
+            }
 
-			$db->transactionCommit();
-		}
-		catch (Exception $e)
-		{
-			$db->transactionRollback();
+            $db->transactionCommit();
+        } catch (Exception $e) {
+            $db->transactionRollback();
 
-			if (is_countable($this->hub->errors) && count($this->hub->errors))
-			{
-				return false;
-			}
+            if (is_countable($this->hub->errors) && count($this->hub->errors)) {
+                return false;
+            }
 
-			throw $e;
-		}
+            throw $e;
+        }
 
-		return true;
-	}
+        return true;
+    }
 }

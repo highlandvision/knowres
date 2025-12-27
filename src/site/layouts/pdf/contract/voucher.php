@@ -9,11 +9,13 @@
 
 /** @noinspection PhpUnhandledExceptionInspection */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Utility;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 extract($displayData);
 
@@ -29,19 +31,18 @@ extract($displayData);
  */
 
 $checkintime = strtolower(KrMethods::sprintf('COM_KNOWRES_ARRIVAL_FROM', $property->checkin_time));
-if ($property->checkin_time_to)
-{
+if ($property->checkin_time_to) {
     $checkintime .= ' - ' . $property->checkin_time_to;
 }
 $checkouttime = strtolower(KrMethods::sprintf('COM_KNOWRES_DEPARTURE_BY', $property->checkout_time));
 
 $address = Utility::formatAddress($property->property_street,
-        '',
-        $property->property_postcode,
-        $property->town_name,
-        $property->region_name,
-        $property->country_name,
-        '<br>'
+    '',
+    $property->property_postcode,
+    $property->town_name,
+    $property->region_name,
+    $property->country_name,
+    '<br>',
 );
 
 $lat = '';
@@ -123,12 +124,12 @@ $lng = floatval(trim($property->lng_actual)) ? trim($property->lng_actual) : tri
         </tr>
     <?php endif; ?>
 
-    <?php if ((float) $property->security_amount > 0
-            || (isset($property->security_text) && trim($property->security_text))) : ?>
+    <?php if ((float)$property->security_amount > 0
+        || (isset($property->security_text) && trim($property->security_text))) : ?>
         <tr>
             <td><?php echo KrMethods::plain('COM_KNOWRES_PDF_ACCOMMODATION_VOUCHER_SECURITY_DEPOSIT'); ?></td>
             <td>
-                <?php if ((float) $property->security_amount > 0): ?>
+                <?php if ((float)$property->security_amount > 0): ?>
                     <?php echo Utility::displayValue($property->security_amount, $contract->currency); ?>
                     <?php echo '<br>'; ?>
                 <?php endif; ?>
@@ -167,7 +168,7 @@ $lng = floatval(trim($property->lng_actual)) ? trim($property->lng_actual) : tri
             <?php if ($property->contact_days): ?>
                 <td style="font-style:italic;color:#cc0000;">
                     <?php echo KrMethods::sprintf('COM_KNOWRES_PDF_ACCOMMODATION_VOUCHER_DAYS',
-                            $property->contact_days
+                        $property->contact_days,
                     ); ?>
                 </td>
             <?php else: ?>
@@ -219,7 +220,7 @@ $lng = floatval(trim($property->lng_actual)) ? trim($property->lng_actual) : tri
     <tr>
         <td>
             <?php echo KrMethods::sprintf('COM_KNOWRES_PDF_ACCOMMODATION_VOUCHER_TEAM',
-                    KrMethods::getCfg('sitename')
+                KrMethods::getCfg('sitename'),
             ); ?>
         </td>
     </tr>

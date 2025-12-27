@@ -8,14 +8,17 @@
  */
 
 /** @noinspection PhpPossiblePolymorphicInvocationInspection */
-/** @noinspection PhpUnhandledExceptionInspection */
 
-defined('_JEXEC') or die;
+/** @noinspection PhpUnhandledExceptionInspection */
 
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\SiteHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useScript('com_knowres.site')

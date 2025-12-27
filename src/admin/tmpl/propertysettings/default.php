@@ -7,12 +7,14 @@
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Utility;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /** @var HighlandVision\Component\Knowres\Administrator\View\Property\CalendarView $this */
 
@@ -26,10 +28,10 @@ $wa->useScript('keepalive')
 
     <div class="main-card">
         <?php echo HTMLHelper::_('uitab.startTabSet', 'myTab',
-                ['active' => 'booking', 'recall' => true, 'breakpoint' => 768]
+            ['active' => 'booking', 'recall' => true, 'breakpoint' => 768],
         ); ?>
         <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'booking',
-                KrMethods::plain('COM_KNOWRES_PROPERTYSETTINGS_BOOKING')
+            KrMethods::plain('COM_KNOWRES_PROPERTYSETTINGS_BOOKING'),
         ); ?>
         <div class="row">
             <div class="col-lg-6">
@@ -48,7 +50,7 @@ $wa->useScript('keepalive')
         </div>
         <?php echo HTMLHelper::_('uitab.endTab'); ?>
         <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'fields',
-                KrMethods::plain('COM_KNOWRES_PROPERTYSETTINGS_BOOKING_REQUIRED')
+            KrMethods::plain('COM_KNOWRES_PROPERTYSETTINGS_BOOKING_REQUIRED'),
         ); ?>
         <div class="row">
             <div class="col-lg-6">
@@ -56,13 +58,14 @@ $wa->useScript('keepalive')
                 <?php echo $this->form->renderFieldset('form-left'); ?>
             </div>
             <div class="col-lg-6">
-                <legend><?php echo KrMethods::plain('COM_KNOWRES_PROPERTYSETTINGS_BOOKING_REQUIRED_MANAGER'); ?></legend>
+                <legend><?php echo KrMethods::plain('COM_KNOWRES_PROPERTYSETTINGS_BOOKING_REQUIRED_MANAGER',
+                    ); ?></legend>
                 <?php echo $this->form->renderFieldset('form-right'); ?>
             </div>
         </div>
         <?php echo HTMLHelper::_('uitab.endTab'); ?>
         <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'rates',
-                KrMethods::plain('COM_KNOWRES_PROPERTYSETTINGS_RATE')
+            KrMethods::plain('COM_KNOWRES_PROPERTYSETTINGS_RATE'),
         ); ?>
         <div class="row">
             <div class="col-lg-6">

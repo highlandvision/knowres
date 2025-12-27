@@ -9,8 +9,6 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Model;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
@@ -19,6 +17,10 @@ use HighlandVision\KR\Utility;
 use Joomla\CMS\Form\Form;
 use RuntimeException;
 
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
+
 /**
  * Knowres contract payment model.
  *
@@ -26,169 +28,149 @@ use RuntimeException;
  */
 class ContractpaymentModel extends AdminModel
 {
-	/**  @var string The type alias. */
-	public $typeAlias = 'com_knowres.contractpayment';
-	/** @var mixed Batch copy/move command. If set to false, the batch copy/move command is not supported. */
-	protected $batch_copymove = false;
-	/**  @var ?string The prefix to use with controller messages. */
-	protected $text_prefix = 'COM_KNOWRES_PAYMENT';
+    /**  @var string The type alias. */
+    public $typeAlias = 'com_knowres.contractpayment';
+    /** @var mixed Batch copy/move command. If set to false, the batch copy/move command is not supported. */
+    protected $batch_copymove = false;
+    /**  @var ?string The prefix to use with controller messages. */
+    protected $text_prefix = 'COM_KNOWRES_PAYMENT';
 
-	/**
-	 * Method to get a knowres record.
-	 *
-	 * @param   int  $pk  The id of the primary key.
-	 *
-	 * @return false|object  Object on success, false on failure.
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
-	public function getItem($pk = null): false|object
-	{
-		$item = parent::getItem($pk);
-		if ($item)
-		{
-			if ($item->service_id > 0)
-			{
-				/* @var ServiceModel $service */
-				$service              = KrFactory::getAdminModel('service')->getItem($item->service_id);
-				$item->service_name   = $service->name;
-				$item->service_plugin = $service->plugin;
-			}
-		}
+    /**
+     * Calculate full balance (includes unconfirmed payments) and confirmed balances
+     *
+     * @param   object  $contract  Contract row
+     * @param   array   $payments  Contract payments
+     * @param   array   $fees      Contract fees
+     *
+     * @return array [Confirmed balance, Full balance].
+     * @throws RuntimeException
+     * @since  4.0.0
+     */
+    public static function setBalances(object $contract, array $payments = [], array $fees = []): array
+    {
+        $balance = $contract->contract_total;
+        foreach ($fees as $f) {
+            $balance += $f->value;
+        }
 
-		return $item;
-	}
+        $balance_all = $balance;
 
-	/**
-	 * Calculate full balance (includes unconfirmed payments) and confirmed balances
-	 *
-	 * @param   object  $contract  Contract row
-	 * @param   array   $payments  Contract payments
-	 * @param   array   $fees      Contract fees
-	 *
-	 * @return array [Confirmed balance, Full balance].
-	 * @throws RuntimeException
-	 * @since  4.0.0
-	 */
-	public static function setBalances(object $contract, array $payments = [], array $fees = []): array
-	{
-		$balance = $contract->contract_total;
-		foreach ($fees as $f)
-		{
-			$balance += $f->value;
-		}
+        foreach ($payments as $p) {
+            $balance_all -= $p->base_amount;
+            if ($p->confirmed) {
+                $balance -= $p->base_amount;
+            }
+        }
 
-		$balance_all = $balance;
+        return [
+            Utility::roundValue($balance, $contract->currency),
+            Utility::roundValue($balance_all, $contract->currency),
+        ];
+    }
 
-		foreach ($payments as $p)
-		{
-			$balance_all -= $p->base_amount;
-			if ($p->confirmed)
-			{
-				$balance -= $p->base_amount;
-			}
-		}
+    /**
+     * Method to get a knowres record.
+     *
+     * @param   int  $pk  The id of the primary key.
+     *
+     * @return false|object  Object on success, false on failure.
+     * @throws Exception
+     * @since  1.0.0
+     */
+    public function getItem($pk = null): false|object
+    {
+        $item = parent::getItem($pk);
+        if ($item) {
+            if ($item->service_id > 0) {
+                /* @var ServiceModel $service */
+                $service              = KrFactory::getAdminModel('service')->getItem($item->service_id);
+                $item->service_name   = $service->name;
+                $item->service_plugin = $service->plugin;
+            }
+        }
 
-		return [
-			Utility::roundValue($balance, $contract->currency),
-			Utility::roundValue($balance_all, $contract->currency)
-		];
-	}
+        return $item;
+    }
 
-	/**
-	 * Add additional validation to form data
-	 *
-	 * @param   Form   $form  The form to validate against.
-	 * @param   array  $data  The data to validate.
-	 * @param   null   $group
-	 *
-	 * @return bool|array
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
-	public function validate($form, $data, $group = null): bool|array
-	{
-		$data = parent::validate($form, $data, $group);
-		if ($data === false)
-		{
-			return false;
-		}
+    /**
+     * Add additional validation to form data
+     *
+     * @param   Form   $form  The form to validate against.
+     * @param   array  $data  The data to validate.
+     * @param   null   $group
+     *
+     * @return bool|array
+     * @throws Exception
+     * @since  1.0.0
+     */
+    public function validate($form, $data, $group = null): bool|array
+    {
+        $data = parent::validate($form, $data, $group);
+        if ($data === false) {
+            return false;
+        }
 
-		if (!(float) $data['amount'])
-		{
-			$this->setError("Please enter a payment amount");
+        if (!(float)$data['amount']) {
+            $this->setError("Please enter a payment amount");
 
-			return false;
-		}
+            return false;
+        }
 
-		if ((float) $data['amount'] < 0)
-		{
-			$this->setError("Please remove the - sign from the Amount and set Refund to Yes");
+        if ((float)$data['amount'] < 0) {
+            $this->setError("Please remove the - sign from the Amount and set Refund to Yes");
 
-			return false;
-		}
+            return false;
+        }
 
-		if ($data['currency_res'] == $data['currency'])
-		{
-			$data['rate']        = 1;
-			$data['base_amount'] = $data['amount'];
+        if ($data['currency_res'] == $data['currency']) {
+            $data['rate']        = 1;
+            $data['base_amount'] = $data['amount'];
 
-			if ((int) $data['refund'])
-			{
-				$data['amount']      = $data['amount'] * -1;
-				$data['base_amount'] = $data['base_amount'] * -1;
-			}
+            if ((int)$data['refund']) {
+                $data['amount']      = $data['amount'] * -1;
+                $data['base_amount'] = $data['base_amount'] * -1;
+            }
 
-			return $data;
-		}
-		else
-		{
-			if (((float) $data['rate'] == 1 && !(float) $data['base_amount'])
-				|| ((float) $data['rate'] == 0
-					&& (float) $data['base_amount'] == 0))
-			{
-				$this->setError("Please enter Reservation amount or rate");
+            return $data;
+        } else {
+            if (((float)$data['rate'] == 1 && !(float)$data['base_amount'])
+                || ((float)$data['rate'] == 0
+                    && (float)$data['base_amount'] == 0)) {
+                $this->setError("Please enter Reservation amount or rate");
 
-				return false;
-			}
-			else
-			{
-				if ((float) $data['base_amount'] == 0 && (float) $data['rate'] > 0)
-				{
-					$data['base_amount'] = round((float) $data['amount'] / (float) $data['rate'], 2);
-				}
-				elseif (((float) $data['rate'] == 0 || (float) $data['rate'] == 1)
-					&& (float) $data['base_amount'] > 0)
-				{
-					$data['rate'] = round((float) $data['amount'] / (float) $data['base_amount'], 4);
-				}
+                return false;
+            } else {
+                if ((float)$data['base_amount'] == 0 && (float)$data['rate'] > 0) {
+                    $data['base_amount'] = round((float)$data['amount'] / (float)$data['rate'], 2);
+                } elseif (((float)$data['rate'] == 0 || (float)$data['rate'] == 1)
+                    && (float)$data['base_amount'] > 0) {
+                    $data['rate'] = round((float)$data['amount'] / (float)$data['base_amount'], 4);
+                }
 
-				if ((int) $data['refund'])
-				{
-					$data['amount']      = $data['amount'] * -1;
-					$data['base_amount'] = $data['base_amount'] * -1;
-				}
+                if ((int)$data['refund']) {
+                    $data['amount']      = $data['amount'] * -1;
+                    $data['base_amount'] = $data['base_amount'] * -1;
+                }
 
-				return $data;
-			}
-		}
-	}
+                return $data;
+            }
+        }
+    }
 
-	/**
-	 * Method to get the data that should be injected in the form.
-	 *
-	 * @return mixed The data for the form.
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
-	protected function loadFormData(): mixed
-	{
-		$data = KrMethods::getUserState('com_knowres.edit.contractpayment.data', []);
-		if (empty($data))
-		{
-			$data = $this->getItem();
-		}
+    /**
+     * Method to get the data that should be injected in the form.
+     *
+     * @return mixed The data for the form.
+     * @throws Exception
+     * @since  1.0.0
+     */
+    protected function loadFormData(): mixed
+    {
+        $data = KrMethods::getUserState('com_knowres.edit.contractpayment.data', []);
+        if (empty($data)) {
+            $data = $this->getItem();
+        }
 
-		return $data;
-	}
+        return $data;
+    }
 }

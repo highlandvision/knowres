@@ -13,7 +13,9 @@ use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Utility;
 
+// phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 extract($displayData);
 /**
@@ -45,7 +47,7 @@ extract($displayData);
                 <strong><?php echo KrMethods::plain('COM_KNOWRES_PDF_INVOICE_BOOKING_INFORMATION'); ?></strong><br>
                 <?php echo KrMethods::sprintf('COM_KNOWRES_PDF_INVOICE_REFERENCE', $contract->tag); ?><br>
                 <?php echo KrMethods::sprintf('COM_KNOWRES_PDF_INVOICE_PROPERTY',
-                        $contract->property_name
+                    $contract->property_name,
                 ); ?>
                 <br>
                 <?php echo $property->property_street; ?><br>
@@ -59,12 +61,12 @@ extract($displayData);
                 <strong><?php echo KrMethods::plain('COM_KNOWRES_PDF_INVOICE_TO'); ?></strong>
                 <?php echo $guest->firstname . ' ' . $guest->surname; ?><br>
                 <?php echo Utility::formatAddress($guest->address1, $guest->address2,
-                        $guest->postcode, $guest->town, $guest->region_name, $guest->country_name,
-                        '<br>'
+                    $guest->postcode, $guest->town, $guest->region_name, $guest->country_name,
+                    '<br>',
                 ); ?>
                 <br>
                 <?php echo KrMethods::sprintf('COM_KNOWRES_PDF_INVOICE_TELEPHONE',
-                        Utility::formatPhoneNumber($guest->mobile, $guest->mobile_country_id)
+                    Utility::formatPhoneNumber($guest->mobile, $guest->mobile_country_id),
                 ); ?>
                 <br>
                 <?php echo KrMethods::sprintf('COM_KNOWRES_PDF_INVOICE_EMAIL', $guest->email); ?><br>
@@ -72,18 +74,18 @@ extract($displayData);
 
             <div>
                 <?php echo KrMethods::sprintf('COM_KNOWRES_PDF_INVOICE_ARRIVAL',
-                        TickTock::displayDate($contract->arrival)
+                    TickTock::displayDate($contract->arrival),
                 ); ?><br>
                 <?php echo KrMethods::sprintf('COM_KNOWRES_PDF_INVOICE_DEPARTURE',
-                        TickTock::displayDate($contract->departure)
+                    TickTock::displayDate($contract->departure),
                 ); ?><br>
                 <?php echo KrMethods::sprintf('COM_KNOWRES_PDF_INVOICE_NIGHTS',
-                        TickTock::differenceDays($contract->arrival, $contract->departure)
+                    TickTock::differenceDays($contract->arrival, $contract->departure),
                 ); ?><br>
                 <?php echo KrMethods::sprintf('COM_KNOWRES_PDF_INVOICE_GUESTS', $contract->guests); ?><br>
-                <?php if ((float) $property->security_amount > 0) : ?>
+                <?php if ((float)$property->security_amount > 0) : ?>
                     <?php echo KrMethods::sprintf('COM_KNOWRES_PDF_INVOICE_SECURITY_DEPOSIT',
-                            Utility::displayValue($property->security_amount, $contract->currency)
+                        Utility::displayValue($property->security_amount, $contract->currency),
                     ); ?>
                 <?php endif; ?>
             </div>

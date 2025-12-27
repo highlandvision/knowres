@@ -9,11 +9,13 @@
 
 namespace HighlandVision\KR\Service\Gateway;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Service\Gateway;
 use stdClass;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Service gateway check helper
@@ -22,45 +24,45 @@ use stdClass;
  */
 class Check extends Gateway
 {
-	/**
-	 * Initialize
-	 *
-	 * @param  int       $service_id   OD of service
-	 * @param  stdClass  $paymentData  Session payment data
-	 *
-	 * @throws Exception
-	 * @since 1.0.0
-	 */
-	public function __construct(int $service_id, stdClass $paymentData)
-	{
-		parent::__construct($service_id, $paymentData, 1, ['PBD', 'PBB']);
-	}
+    /**
+     * Initialize
+     *
+     * @param   int       $service_id   OD of service
+     * @param   stdClass  $paymentData  Session payment data
+     *
+     * @throws Exception
+     * @since 1.0.0
+     */
+    public function __construct(int $service_id, stdClass $paymentData)
+    {
+        parent::__construct($service_id, $paymentData, 1, ['PBD', 'PBB']);
+    }
 
-	/**
-	 * Data for output
-	 *
-	 * @throws Exception
-	 * @since  1.0.0
-	 * @return stdClass
-	 */
-	public function setOutputData(): stdClass
-	{
-		$this->readTables();
-		$this->setOutputManualDates();
-		$this->setOutputForPaymentType();
+    /**
+     * Data for output
+     *
+     * @return stdClass
+     * @throws Exception
+     * @since  1.0.0
+     */
+    public function setOutputData(): stdClass
+    {
+        $this->readTables();
+        $this->setOutputManualDates();
+        $this->setOutputForPaymentType();
 
-		return $this->paymentData;
-	}
+        return $this->paymentData;
+    }
 
-	/**
-	 * Set payment object
-	 *
-	 * @throws Exception
-	 * @since 3.3.0
-	 */
-	protected function setPayment(): void
-	{
-		$this->paymentData->confirmed  = 0;
-		$this->paymentData->service_id = $this->service_id;
-	}
+    /**
+     * Set payment object
+     *
+     * @throws Exception
+     * @since 3.3.0
+     */
+    protected function setPayment(): void
+    {
+        $this->paymentData->confirmed  = 0;
+        $this->paymentData->service_id = $this->service_id;
+    }
 }

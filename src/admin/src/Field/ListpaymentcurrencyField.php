@@ -9,8 +9,6 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Field;
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Utility;
 use InvalidArgumentException;
@@ -19,6 +17,10 @@ use Joomla\CMS\HTML\HTMLHelper;
 
 use function array_merge;
 
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
+
 /**
  * Supports a value from an external table
  *
@@ -26,37 +28,37 @@ use function array_merge;
  */
 class ListpaymentcurrencyField extends ListField
 {
-	/** @var string $type The form field type. */
-	protected $type = 'Listpaymentcurrency';
+    /** @var string $type The form field type. */
+    protected $type = 'Listpaymentcurrency';
 
-	/**
-	 * Get the field options.
-	 *
-	 * @throws InvalidArgumentException
-	 * @throws RuntimeException
-	 * @since  1.6
-	 * @return array  The field input markup.
-	 */
-	public function getOptions(): array
-	{
-		$options    = [];
-		$currencies = [];
+    /**
+     * Get the field options.
+     *
+     * @return array  The field input markup.
+     * @throws RuntimeException
+     * @throws InvalidArgumentException
+     * @since  1.6
+     */
+    public function getOptions(): array
+    {
+        $options    = [];
+        $currencies = [];
 
-		$items = KrFactory::getListModel('currencies')->getAllPropertyCurrencies();
-		foreach ($items as $i) {
-			$currencies[]  = $i->iso;
-			$allow_payment = Utility::decodeJson($i->allow_payment, true);
-			foreach ($allow_payment as $c) {
-				$currencies[] = $c;
-			}
-		}
+        $items = KrFactory::getListModel('currencies')->getAllPropertyCurrencies();
+        foreach ($items as $i) {
+            $currencies[]  = $i->iso;
+            $allow_payment = Utility::decodeJson($i->allow_payment, true);
+            foreach ($allow_payment as $c) {
+                $currencies[] = $c;
+            }
+        }
 
-		$items = array_unique($currencies);
+        $items = array_unique($currencies);
 
-		foreach ($items as $c) {
-			$options[] = HTMLHelper::_('select.option', $c, $c);
-		}
+        foreach ($items as $c) {
+            $options[] = HTMLHelper::_('select.option', $c, $c);
+        }
 
-		return array_merge(parent::getOptions(), $options);
-	}
+        return array_merge(parent::getOptions(), $options);
+    }
 }

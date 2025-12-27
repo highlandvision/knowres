@@ -9,8 +9,6 @@
 
 namespace HighlandVision\KR\Export;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\TickTock;
@@ -28,6 +26,10 @@ use function readfile;
 use function str_replace;
 use function ucfirst;
 use function unlink;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Export payments

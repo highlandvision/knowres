@@ -7,9 +7,11 @@
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /** @var HighlandVision\Component\Knowres\Administrator\View\Propertyfields\HtmlView $this */
 
@@ -17,15 +19,15 @@ include(JPATH_ADMINISTRATOR . '/components/com_knowres/layouts/html/list/include
 ?>
 
 <?php include(JPATH_ADMINISTRATOR . '/components/com_knowres/layouts/html/list/includes/list-form-start.php'); ?>
-	<table class="table" id="kr-list">
-		<?php echo KrMethods::render('html.list.caption', ['name' => $this->name]); ?>
-		<thead>
-		<?php echo $this->loadTemplate('th'); ?>
-		</thead>
+    <table class="table" id="kr-list">
+        <?php echo KrMethods::render('html.list.caption', ['name' => $this->name]); ?>
+        <thead>
+        <?php echo $this->loadTemplate('th'); ?>
+        </thead>
 
-		<tbody <?php if ($this->saveOrder): ?> class="js-draggable" data-url="<?php echo $this->saveOrderingUrl; ?>"
-			data-direction="<?php echo strtolower($this->listDirn); ?>"<?php endif; ?>>
-		<?php echo $this->loadTemplate('td'); ?>
-		</tbody>
-	</table>
+        <tbody <?php if ($this->saveOrder): ?> class="js-draggable" data-url="<?php echo $this->saveOrderingUrl; ?>"
+            data-direction="<?php echo strtolower($this->listDirn); ?>"<?php endif; ?>>
+        <?php echo $this->loadTemplate('td'); ?>
+        </tbody>
+    </table>
 <?php include(JPATH_ADMINISTRATOR . '/components/com_knowres/layouts/html/list/includes/list-form-end.php'); ?>

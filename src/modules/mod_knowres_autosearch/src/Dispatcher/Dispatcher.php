@@ -9,16 +9,20 @@
 
 namespace HighlandVision\Module\KnowresAutosearch\Site\Dispatcher;
 
-defined('JPATH_PLATFORM') or die;
-
 use Carbon\Carbon;
 use Exception;
 use HighlandVision\KR\ExceptionHandling;
 use HighlandVision\KR\Framework\KrMethods;
 use Joomla\CMS\Dispatcher\AbstractModuleDispatcher;
+
 use function defined;
 use function is_dir;
+
 use const JPATH_ROOT;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Dispatcher class for mod_knowres_search
@@ -27,39 +31,38 @@ use const JPATH_ROOT;
  */
 class Dispatcher extends AbstractModuleDispatcher
 {
-	/**
-	 * Define tasks for before dispatch
-	 *
-	 * @throws Exception
-	 * @since  4.0.0
-	 */
-	public function dispatch(): void
-	{
-		if (is_dir(JPATH_ROOT . '/media/com_knowres/vendor'))
-		{
-			require_once(JPATH_ROOT . '/media/com_knowres/vendor/autoload.php');
-		}
+    /**
+     * Define tasks for before dispatch
+     *
+     * @throws Exception
+     * @since  4.0.0
+     */
+    public function dispatch(): void
+    {
+        if (is_dir(JPATH_ROOT . '/media/com_knowres/vendor')) {
+            require_once(JPATH_ROOT . '/media/com_knowres/vendor/autoload.php');
+        }
 
-		new ExceptionHandling();
-		Carbon::setToStringFormat('Y-m-d');
+        new ExceptionHandling();
+        Carbon::setToStringFormat('Y-m-d');
 
-		parent::dispatch();
-	}
+        parent::dispatch();
+    }
 
-	/**
-	 * Returns the layout data.
-	 *
-	 * @return array
-	 * @throws Exception
-	 * @since  4.0.0
-	 */
-	protected function getLayoutData(): array
-	{
-		$lang         = KrMethods::getLanguage();
-		$language_tag = KrMethods::getLanguageTag();
-		$base_dir     = JPATH_ROOT . '/modules';
-		$lang->load('mod_knowres_autosearch', $base_dir, $language_tag);
+    /**
+     * Returns the layout data.
+     *
+     * @return array
+     * @throws Exception
+     * @since  4.0.0
+     */
+    protected function getLayoutData(): array
+    {
+        $lang         = KrMethods::getLanguage();
+        $language_tag = KrMethods::getLanguageTag();
+        $base_dir     = JPATH_ROOT . '/modules';
+        $lang->load('mod_knowres_autosearch', $base_dir, $language_tag);
 
-		return parent::getLayoutData();
-	}
+        return parent::getLayoutData();
+    }
 }

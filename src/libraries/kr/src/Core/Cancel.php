@@ -9,16 +9,19 @@
 
 namespace HighlandVision\KR\Core;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Hub;
 use HighlandVision\KR\TickTock;
 use RuntimeException;
+
 use function count;
 use function is_countable;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Cancels a contract
@@ -27,85 +30,74 @@ use function is_countable;
  */
 class Cancel
 {
-	/** @var Hub Hub data. */
-	protected Hub $hub;
+    /** @var Hub Hub data. */
+    protected Hub $hub;
 
-	/**
-	 * Process cancel
-	 *
-	 * @param   Hub  $hub  Hub data
-	 *
-	 * @return bool
-	 * @throws Exception
-	 * @since  3.3.0
-	 */
-	public function action(Hub $hub): bool
-	{
-		$this->hub = $hub;
+    /**
+     * Process cancel
+     *
+     * @param   Hub  $hub  Hub data
+     *
+     * @return bool
+     * @throws Exception
+     * @since  3.3.0
+     */
+    public function action(Hub $hub): bool
+    {
+        $this->hub = $hub;
 
-		return $this->saveAll();
-	}
+        return $this->saveAll();
+    }
 
-	/**
-	 * Cancel contract
-	 *
-	 * @return bool
-	 * @throws Exception
-	 * @throws RuntimeException
-	 * @since  3.3.0
-	 */
-	public function saveAll(): bool
-	{
-		$this->hub->setValue('booking_status', 99);
-		$this->hub->setValue('cancelled', 1);
-		$this->hub->setValue('cancelled_timestamp', TickTock::getTs());
+    /**
+     * Cancel contract
+     *
+     * @return bool
+     * @throws Exception
+     * @throws RuntimeException
+     * @since  3.3.0
+     */
+    public function saveAll(): bool
+    {
+        $this->hub->setValue('booking_status', 99);
+        $this->hub->setValue('cancelled', 1);
+        $this->hub->setValue('cancelled_timestamp', TickTock::getTs());
 
-		try
-		{
-			$db = KrFactory::getDatabase();
-			$db->transactionStart();
+        try {
+            $db = KrFactory::getDatabase();
+            $db->transactionStart();
 
-			$modelContract = KrFactory::getAdminModel('contract');
-			$form          = KrFactory::getAdhocForm('contract', 'contract.xml');
-			$data          = $modelContract->validate($form, (array) $this->hub->getData());
-			if (!$data)
-			{
-				$this->hub->errors = $modelContract->getErrors();
-				throw new RuntimeException('Validation errors found in Contract');
-			}
+            $modelContract = KrFactory::getAdminModel('contract');
+            $form          = KrFactory::getAdhocForm('contract', 'contract.xml');
+            $data          = $modelContract->validate($form, (array)$this->hub->getData());
+            if (!$data) {
+                $this->hub->errors = $modelContract->getErrors();
+                throw new RuntimeException('Validation errors found in Contract');
+            }
 
-			$modelContract->save((array) $this->hub->getData());
-			if (!$this->hub->getValue('on_request'))
-			{
-				if ($this->hub->getValue('email_trigger') == 'BOOKCANCELNODEP')
-				{
-					$note = KrMethods::plain('COM_KNOWRES_CONTRACTNOTE_TEXT_CANCEL_NO_DEPOSIT');
-				}
-				else
-				{
-					$note = KrMethods::plain('COM_KNOWRES_CONTRACT_CANCELLED');
-				}
-			}
-			else
-			{
-				$note = KrMethods::plain('COM_KNOWRES_CONTRACTNOTE_TEXT_REQUEST_EXPIRED');
-			}
-			KrFactory::getAdminModel('contractnote')::createContractNote($this->hub->getValue('id'), $note);
+            $modelContract->save((array)$this->hub->getData());
+            if (!$this->hub->getValue('on_request')) {
+                if ($this->hub->getValue('email_trigger') == 'BOOKCANCELNODEP') {
+                    $note = KrMethods::plain('COM_KNOWRES_CONTRACTNOTE_TEXT_CANCEL_NO_DEPOSIT');
+                } else {
+                    $note = KrMethods::plain('COM_KNOWRES_CONTRACT_CANCELLED');
+                }
+            } else {
+                $note = KrMethods::plain('COM_KNOWRES_CONTRACTNOTE_TEXT_REQUEST_EXPIRED');
+            }
+            KrFactory::getAdminModel('contractnote')::createContractNote($this->hub->getValue('id'), $note);
 
-			$db->transactionCommit();
+            $db->transactionCommit();
 
-			return true;
-		}
-		catch (Exception $e)
-		{
-			$db->transactionRollback();
+            return true;
+        } catch (Exception $e) {
+            $db->transactionRollback();
 
-			if (is_countable($this->hub->errors) && count($this->hub->errors))
-			{
-				return false;
-			}
+            if (is_countable($this->hub->errors) && count($this->hub->errors)) {
+                return false;
+            }
 
-			throw $e;
-		}
-	}
+            throw $e;
+        }
+    }
 }

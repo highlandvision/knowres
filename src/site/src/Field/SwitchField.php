@@ -9,12 +9,14 @@
 
 namespace HighlandVision\Component\Knowres\Site\Field;
 
-defined('_JEXEC') or die;
-
 use Joomla\CMS\Form\FormField;
 use UnexpectedValueException;
 
 use function sprintf;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Display google recaptcha
@@ -23,22 +25,22 @@ use function sprintf;
  */
 class SwitchField extends FormField
 {
-	/** @var string The form field type. */
-	protected $type = 'switch';
+    /** @var string The form field type. */
+    protected $type = 'switch';
 
-	/**
-	 * Method to get the radio button field input markup.
-	 *
-	 * @throws UnexpectedValueException
-	 * @since  1.7.0
-	 * @return string  The field input markup.
-	 */
-	protected function getInput(): string
-	{
-		if (empty($this->layout)) {
-			throw new UnexpectedValueException(sprintf('%s has no layout assigned.', $this->name));
-		}
+    /**
+     * Method to get the radio button field input markup.
+     *
+     * @return string  The field input markup.
+     * @throws UnexpectedValueException
+     * @since  1.7.0
+     */
+    protected function getInput(): string
+    {
+        if (empty($this->layout)) {
+            throw new UnexpectedValueException(sprintf('%s has no layout assigned.', $this->name));
+        }
 
-		return $this->getRenderer($this->layout)->render($this->getLayoutData());
-	}
+        return $this->getRenderer($this->layout)->render($this->getLayoutData());
+    }
 }

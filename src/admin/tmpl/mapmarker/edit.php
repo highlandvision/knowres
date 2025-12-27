@@ -7,11 +7,13 @@
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Utility;
 use Joomla\CMS\HTML\HTMLHelper;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 HTMLHelper::script(trim(Utility::getGmapsURL()));
 
@@ -25,7 +27,7 @@ $wa->useScript('keepalive')
    ->usePreset('choicesjs');
 ?>
 
-<form action="<?php echo KrMethods::route('index.php?option=com_knowres&layout=edit&id=' . (int) $this->item->id); ?>"
+<form action="<?php echo KrMethods::route('index.php?option=com_knowres&layout=edit&id=' . (int)$this->item->id); ?>"
       aria-label="<?php echo $this->form_aria_label; ?>" class="form-validate" enctype="multipart/form-data"
       id="mapmarker-form" method="post" name="adminForm">
 
@@ -34,12 +36,12 @@ $wa->useScript('keepalive')
             <div class="col-xl-9 col-xxl-8">
                 <?php echo $this->form->renderFieldset('krdata'); ?>
                 <?php echo KrMethods::render('form.field.geocode', [
-                        'label' => KrMethods::plain('COM_KNOWRES_FORM_MAPMARKER_GEOCODE'),
-                        'f1'    => $this->form->renderField('lat'),
-                        'f2'    => $this->form->renderField('lng'),
-                        'lat'   => $this->lat,
-                        'lng'   => $this->lng,
-                        'zoom'  => $this->zoom
+                    'label' => KrMethods::plain('COM_KNOWRES_FORM_MAPMARKER_GEOCODE'),
+                    'f1'    => $this->form->renderField('lat'),
+                    'f2'    => $this->form->renderField('lng'),
+                    'lat'   => $this->lat,
+                    'lng'   => $this->lng,
+                    'zoom'  => $this->zoom,
                 ]);
                 ?>
             </div>

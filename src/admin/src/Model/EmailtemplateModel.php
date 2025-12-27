@@ -9,8 +9,6 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Model;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\AdminModel;
@@ -20,6 +18,10 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Versioning\VersionableControllerTrait;
 use RuntimeException;
 
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
+
 /**
  * KnowresEmail template model.
  *
@@ -27,82 +29,78 @@ use RuntimeException;
  */
 class EmailtemplateModel extends AdminModel
 {
-	use VersionableControllerTrait;
+    use VersionableControllerTrait;
 
-	/**  @var string The type alias. */
-	public $typeAlias = 'com_knowres.emailtemplate';
-	/** @var mixed Batch copy/move command. If set to false, the batch copy/move command is not supported. */
-	protected $batch_copymove = false;
-	/**  @var ?string The prefix to use with controller messages. */
-	protected $text_prefix = 'EMAILTEMPLATE';
+    /**  @var string The type alias. */
+    public $typeAlias = 'com_knowres.emailtemplate';
+    /** @var mixed Batch copy/move command. If set to false, the batch copy/move command is not supported. */
+    protected $batch_copymove = false;
+    /**  @var ?string The prefix to use with controller messages. */
+    protected $text_prefix = 'EMAILTEMPLATE';
 
-	/**
-	 * Method to get an email template item.
-	 *
-	 * @param   int  $pk  The id of the primary key.
-	 *
-	 * @return object|false  Object on success, false on failure.
-	 * @throws RuntimeException
-	 * @since  1.0.0
-	 */
-	public function getItem($pk = null): object|false
-	{
-		$item = parent::getItem($pk);
-		if ($item)
-		{
-			$item->pdf_uploaded = Utility::decodeJson($item->pdf_uploaded, true);
-			$item->pdf_auto     = Utility::decodeJson($item->pdf_auto, true);
+    /**
+     * Method to get an email template item.
+     *
+     * @param   int  $pk  The id of the primary key.
+     *
+     * @return object|false  Object on success, false on failure.
+     * @throws RuntimeException
+     * @since  1.0.0
+     */
+    public function getItem($pk = null): object|false
+    {
+        $item = parent::getItem($pk);
+        if ($item) {
+            $item->pdf_uploaded = Utility::decodeJson($item->pdf_uploaded, true);
+            $item->pdf_auto     = Utility::decodeJson($item->pdf_auto, true);
 
-			$Translations  = new Translations();
-			$item->name    = $Translations->getText('emailtemplate', $item->id);
-			$item->subject = $Translations->getText('emailtemplate', $item->id, 'subject');
-			$item->blurb   = $Translations->getText('emailtemplate', $item->id, 'blurb');
-		}
+            $Translations  = new Translations();
+            $item->name    = $Translations->getText('emailtemplate', $item->id);
+            $item->subject = $Translations->getText('emailtemplate', $item->id, 'subject');
+            $item->blurb   = $Translations->getText('emailtemplate', $item->id, 'blurb');
+        }
 
-		return $item;
-	}
+        return $item;
+    }
 
-	/**
-	 * Method to get the data that should be injected in the form.
-	 *
-	 * @return mixed The data for the form.
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
-	protected function loadFormData(): mixed
-	{
-		$data = KrMethods::getUserState('com_knowres.edit.emailtemplate.data', []);
-		if (empty($data))
-		{
-			$data = $this->getItem();
-		}
+    /**
+     * Method to get the data that should be injected in the form.
+     *
+     * @return mixed The data for the form.
+     * @throws Exception
+     * @since  1.0.0
+     */
+    protected function loadFormData(): mixed
+    {
+        $data = KrMethods::getUserState('com_knowres.edit.emailtemplate.data', []);
+        if (empty($data)) {
+            $data = $this->getItem();
+        }
 
-		return $data;
-	}
+        return $data;
+    }
 
-	/**
-	 * Prepare and sanitize the table prior to saving.
-	 *
-	 * @param $table
-	 *
-	 * @throws RuntimeException
-	 * @throws Exception
-	 * @since    2.4.0
-	 */
-	protected function prepareTable($table): void
-	{
-		$jform = Factory::getApplication()->input->post->get('jform', [], 'array');
+    /**
+     * Prepare and sanitize the table prior to saving.
+     *
+     * @param $table
+     *
+     * @throws RuntimeException
+     * @throws Exception
+     * @since    2.4.0
+     */
+    protected function prepareTable($table): void
+    {
+        $jform = Factory::getApplication()->input->post->get('jform', [], 'array');
 
-		if (!isset($jform['pdf_uploaded']))
-		{
-			$table->pdf_uploaded = "";
-		}
+        if (!isset($jform['pdf_uploaded'])) {
+            $table->pdf_uploaded = "";
+        }
 
-		if (!isset($jform['pdf_auto']))
-		{
-			$table->pdf_auto = "";
-		}
+        if (!isset($jform['pdf_auto'])) {
+            $table->pdf_auto = "";
+        }
 
-		parent::prepareTable($table);
-	}
+        parent::prepareTable($table);
+    }
 }

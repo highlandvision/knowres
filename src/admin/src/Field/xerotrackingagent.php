@@ -9,8 +9,6 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Field;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
@@ -18,6 +16,10 @@ use HighlandVision\KR\Service\Xero;
 use HighlandVision\KR\Utility;
 use Joomla\CMS\Form\FormHelper;
 use Joomla\CMS\HTML\HTMLHelper;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 FormHelper::loadFieldClass('list');
 
@@ -37,18 +39,18 @@ class JFormFieldXerotrackingagent extends JFormField
 	 */
 	protected $type = 'Xerotrackingagent';
 
-	/**
-	 * Get the field options.ader
-	 *
-	 * @throws Exception
-	 * @since  3.1.0
-	 * @return string    The field input markup
-	 */
-	public function getInput(): string
-	{
-		$xero_tracking = [];
-		$html          = [];
-		$message       = '';
+    /**
+     * Get the field options.ader
+     *
+     * @return string    The field input markup
+     * @throws Exception
+     * @since  3.1.0
+     */
+    public function getInput(): string
+    {
+        $xero_tracking = [];
+        $html          = [];
+        $message       = '';
 
 		while (true)
 		{
@@ -62,21 +64,17 @@ class JFormFieldXerotrackingagent extends JFormField
 				break;
 			}
 
-			$xero_tracking[] = HTMLHelper::_('select.option', 0, KrMethods::plain('JSELECT'));
+            $xero_tracking[] = HTMLHelper::_('select.option', 0, KrMethods::plain('JSELECT'));
 
-			foreach ($tracking as $d)
-			{
-				if ($d->Status == "ACTIVE")
-				{
-					$top = $d->Name;
-					foreach ($d->Options as $o)
-					{
-						if ($o->Status == "ACTIVE")
-						{
-							$option = array(
-								$top,
-								$o->Name
-							);
+            foreach ($tracking as $d) {
+                if ($d->Status == "ACTIVE") {
+                    $top = $d->Name;
+                    foreach ($d->Options as $o) {
+                        if ($o->Status == "ACTIVE") {
+                            $option = [
+                                $top,
+                                $o->Name,
+                            ];
 
 							$xero_tracking[] = HTMLHelper::_('select.option', Utility::encodeJson($option),
 								$top . ' / ' . $o->Name);
@@ -91,7 +89,7 @@ class JFormFieldXerotrackingagent extends JFormField
 				$input_options[] = 'class="' . $this->class . '"';
 			}
 
-			$data = Utility::decodeJson($this->value, true);
+            $data = Utility::decodeJson($this->value, true);
 
 			$agents = KrFactory::getListModel('agents')->getAgents();
 			foreach ($agents as $a)
@@ -113,9 +111,9 @@ class JFormFieldXerotrackingagent extends JFormField
 				$html[] = '</div>';
 			}
 
-			return implode('', $html);
-		}
+            return implode('', $html);
+        }
 
-		return $message;
-	}
+        return $message;
+    }
 }

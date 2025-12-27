@@ -7,25 +7,24 @@
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Media;
 use Joomla\CMS\HTML\HTMLHelper;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 $soloPath = Media\Images::getImageAbsPath($this->item->id, 'solo');
 $soloPath .= "/*.{jpg,gif,png,JPG,GIF,PNG}";
 $files    = glob($soloPath, GLOB_BRACE);
 $params   = KrMethods::getParams();
 
-if (count($files))
-{
+if (count($files)) {
     $path_parts  = pathinfo($files[0]);
     $this->image = $path_parts['filename'] . "." . $path_parts['extension'];
     $text        = KrMethods::plain('COM_KNOWRES_PROPERTY_IMAGE_REPLACE_DSC');
-}
-else
-{
+} else {
     $this->image = "";
     $text        = KrMethods::plain('COM_KNOWRES_PROPERTY_IMAGE_UPLOAD_DSC');
 }
@@ -55,12 +54,12 @@ else
             <?php if ($this->image) : ?>
                 <div class="col-lg-9" style="margin-top:10px;">
                     <?php echo HTMLHelper::_('image',
-                            Media\Images::getImagePath($this->item->id, 'solo', $this->image),
-                            $this->item->property_name,
-                            [
-                                    'width'  => $params->get('max_property_width'),
-                                    'height' => $params->get('max_property_height')
-                            ]
+                        Media\Images::getImagePath($this->item->id, 'solo', $this->image),
+                        $this->item->property_name,
+                        [
+                            'width'  => $params->get('max_property_width'),
+                            'height' => $params->get('max_property_height'),
+                        ],
                     ); ?>
                 </div>
             <?php endif; ?>

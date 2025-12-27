@@ -6,9 +6,11 @@
  * @license         GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-defined('_JEXEC') or die;
-
 use Joomla\CMS\Form\Form;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') || die;
+// phpcs:enable PSR1.Files.SideEffects
 
 extract($displayData);
 /**
@@ -21,22 +23,22 @@ extract($displayData);
  */
 ?>
 
-	<!-- Loop each set of values set up in Field-->
+    <!-- Loop each set of values set up in Field-->
 <?php foreach ($values as $k => $v): ?>
-	<div class="row" id="<?php echo $group . $k; ?>">
-		<!-- Loop each fieldset - one fieldset per form item so each column can have a width-->
-		<?php $count = 0; ?>
-		<?php foreach ($form->getFieldsets() as $fieldset) : ?>
-			<div class="<?php echo $fieldset->class; ?>">
-				<?php foreach ($form->getFieldset($fieldset->name) as $field) : ?>
-					<?php $name = $group . '[' . $k . ']' . '[' . $field->__get('name') . ']'; ?>
-					<?php $field->__set('name', $name); ?>
-					<?php $field->__set('id', $field->__get('name') . $k); ?>
-					<?php $field->setValue($v[$count]); ?>
-					<?php echo $field->renderField(); ?>
-					<?php $count++; ?>
-				<?php endforeach; ?>
-			</div>
-		<?php endforeach; ?>
-	</div>
+    <div class="row" id="<?php echo $group . $k; ?>">
+        <!-- Loop each fieldset - one fieldset per form item so each column can have a width-->
+        <?php $count = 0; ?>
+        <?php foreach ($form->getFieldsets() as $fieldset) : ?>
+            <div class="<?php echo $fieldset->class; ?>">
+                <?php foreach ($form->getFieldset($fieldset->name) as $field) : ?>
+                    <?php $name = $group . '[' . $k . ']' . '[' . $field->__get('name') . ']'; ?>
+                    <?php $field->__set('name', $name); ?>
+                    <?php $field->__set('id', $field->__get('name') . $k); ?>
+                    <?php $field->setValue($v[$count]); ?>
+                    <?php echo $field->renderField(); ?>
+                    <?php $count++; ?>
+                <?php endforeach; ?>
+            </div>
+        <?php endforeach; ?>
+    </div>
 <?php endforeach; ?>

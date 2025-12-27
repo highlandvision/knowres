@@ -7,12 +7,15 @@
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Utility;
 
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') || die;
+// phpcs:enable PSR1.Files.SideEffects
+
 extract($displayData);
+
 /**
  * Layout variables
  *
@@ -40,7 +43,7 @@ extract($displayData);
         <?php foreach ($lines as $l): ?>
             <?php $clink = KrMethods::route('index.php?option=com_knowres&task=contract.show&id=' . $l->contract_id); ?>
             <?php $plink = KrMethods::route('index.php?option=com_knowres&task=property.dashboard&id='
-                    . $l->property_id
+                . $l->property_id,
             ); ?>
 
             <tr>

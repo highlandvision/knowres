@@ -7,13 +7,14 @@
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
 use Joomla\CMS\HTML\HTMLHelper;
 
-/** @var HighlandVision\Component\Knowres\Administrator\View\Contract\HtmlView $this */
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
+/** @var HighlandVision\Component\Knowres\Administrator\View\Contract\HtmlView $this */
 $wa = $this->document->getWebAssetManager();
 $wa->useScript('keepalive')
    ->useScript('form.validate')
@@ -27,8 +28,9 @@ $wa->useScript('keepalive')
 
     <div id="message"></div>
 
-    <form action="<?php echo KrMethods::route('index.php?option=com_knowres&layout=edit&id=' . (int) $this->item->id); ?>"
-          class="form-validate" id="contract-form" method="post" name="adminForm">
+    <form
+        action="<?php echo KrMethods::route('index.php?option=com_knowres&layout=edit&id=' . (int)$this->item->id); ?>"
+        class="form-validate" id="contract-form" method="post" name="adminForm">
 
         <div class="main-card">
             <div class="row">

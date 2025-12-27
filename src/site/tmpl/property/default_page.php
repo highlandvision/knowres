@@ -9,7 +9,9 @@
 
 use HighlandVision\KR\Framework\KrMethods;
 
+// phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 ?>
 
 <div class="page">
@@ -50,7 +52,7 @@ defined('_JEXEC') or die;
     <?php endforeach; ?>
 
     <!--  Geriatric calendar -->
-    <?php if ((int) $this->settings['display_calendar']) : ?>
+    <?php if ((int)$this->settings['display_calendar']) : ?>
         <h5 class="header"><?php echo KrMethods::plain("COM_KNOWRES_PROPERTY_TAB_AVAILABILITY_PRICE"); ?></h5>
         <div id="kr-page-geriatric-calendar" class="section"></div>
         <a href="#" id="kr-page-geriatric-calendar-trigger" data-pid="<?php echo $this->item->id; ?>"

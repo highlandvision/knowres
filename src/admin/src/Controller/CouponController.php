@@ -9,15 +9,15 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Controller;
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Joomla\Extend\FormController;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') || die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Coupon controller form class.
  *
  * @since 1.0.0
  */
-class CouponController extends FormController
-{
-}
+class CouponController extends FormController {}

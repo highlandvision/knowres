@@ -7,12 +7,14 @@
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\TickTock;
 use HighlandVision\KR\Utility;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') || die;
+// phpcs:enable PSR1.Files.SideEffects
 
 extract($displayData);
 /**
@@ -52,9 +54,10 @@ extract($displayData);
             </div>
             <div class="col-8">
                 <b>
-                    <?php echo KrFactory::getAdminModel('contractnote')::contractNoteTypes(Utility::decodeJson($n->note_type,
-                            true
-                    )
+                    <?php echo KrFactory::getAdminModel('contractnote',
+                    )::contractNoteTypes(Utility::decodeJson($n->note_type,
+                        true,
+                    ),
                     ); ?>
                 </b>
                 <br>

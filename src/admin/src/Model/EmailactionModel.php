@@ -9,8 +9,6 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Model;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\Component\Knowres\AdministratorModel\ContractModel;
 use HighlandVision\KR\Framework\KrFactory;
@@ -19,6 +17,10 @@ use HighlandVision\KR\Joomla\Extend\AdminModel;
 use HighlandVision\KR\TickTock;
 use stdClass;
 
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
+
 /**
  * Knowres email action model.
  *
@@ -26,56 +28,53 @@ use stdClass;
  */
 class EmailactionModel extends AdminModel
 {
-	/**  @var string The type alias. */
-	public $typeAlias = 'com_knowres.emailaction';
-	/** @var mixed Batch copy/move command. If set to false, the batch copy/move command is not supported. */
-	protected $batch_copymove = false;
-	/**  @var ?string The prefix to use with controller messages. */
-	protected $text_prefix = 'COM_KNOWRES_EMAILACTION';
+    /**  @var string The type alias. */
+    public $typeAlias = 'com_knowres.emailaction';
+    /** @var mixed Batch copy/move command. If set to false, the batch copy/move command is not supported. */
+    protected $batch_copymove = false;
+    /**  @var ?string The prefix to use with controller messages. */
+    protected $text_prefix = 'COM_KNOWRES_EMAILACTION';
 
-	/**
-	 * Update email actions
-	 *
-	 * @param   int     $contract_id  ID of contract
-	 * @param   string  $trigger      Trigger to be actioned
-	 *
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
-	public static function updateEmailAction(int $contract_id, string $trigger): void
-	{
-		if ($contract_id && $trigger)
-		{
-			/* @var ContractModel $contract */
-			$contract = KrFactory::getAdminModel('contract')->getItem($contract_id);
-			if (isset($contract->id) && $contract->arrival < TickTock::modifyDays('now', 30))
-			{
-				$data                = new stdClass();
-				$data->id            = 0;
-				$data->contract_id   = $contract_id;
-				$data->email_trigger = $trigger;
-				$data->created_at    = TickTock::getTS();
-				$data->created_by    = KrMethods::getUser()->id;
-				KrFactory::insert('email_action', $data);
-			}
-		}
-	}
+    /**
+     * Update email actions
+     *
+     * @param   int     $contract_id  ID of contract
+     * @param   string  $trigger      Trigger to be actioned
+     *
+     * @throws Exception
+     * @since  1.0.0
+     */
+    public static function updateEmailAction(int $contract_id, string $trigger): void
+    {
+        if ($contract_id && $trigger) {
+            /* @var ContractModel $contract */
+            $contract = KrFactory::getAdminModel('contract')->getItem($contract_id);
+            if (isset($contract->id) && $contract->arrival < TickTock::modifyDays('now', 30)) {
+                $data                = new stdClass();
+                $data->id            = 0;
+                $data->contract_id   = $contract_id;
+                $data->email_trigger = $trigger;
+                $data->created_at    = TickTock::getTS();
+                $data->created_by    = KrMethods::getUser()->id;
+                KrFactory::insert('email_action', $data);
+            }
+        }
+    }
 
-	/**
-	 * Method to get the data that should be injected in the form.
-	 *
+    /**
+     * Method to get the data that should be injected in the form.
+     *
      * @return mixed The data for the form.
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
-	protected function loadFormData(): mixed
-	{
-		$data = KrMethods::getUserState('com_knowres.edit.emailaction.data', []);
-		if (empty($data))
-		{
-			$data = $this->getItem();
-		}
+     * @throws Exception
+     * @since  1.0.0
+     */
+    protected function loadFormData(): mixed
+    {
+        $data = KrMethods::getUserState('com_knowres.edit.emailaction.data', []);
+        if (empty($data)) {
+            $data = $this->getItem();
+        }
 
-		return $data;
-	}
+        return $data;
+    }
 }

@@ -9,14 +9,16 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Field;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use Joomla\CMS\Form\Field\ListField;
 use Joomla\CMS\HTML\HTMLHelper;
 
 use function array_merge;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Displays the properties available to switch to
@@ -25,25 +27,25 @@ use function array_merge;
  */
 class ListpropertyfieldsField extends ListField
 {
-	/** @var string The form field type. */
-	protected $type = 'Listpropertyfields';
+    /** @var string The form field type. */
+    protected $type = 'Listpropertyfields';
 
-	/**
-	 * Get the field options.
-	 *
-	 * @throws Exception
-	 * @since  1.0.0
-	 * @return array  The field input markup.
-	 */
-	public function getOptions(): array
-	{
-		$options = [];
+    /**
+     * Get the field options.
+     *
+     * @return array  The field input markup.
+     * @throws Exception
+     * @since  1.0.0
+     */
+    public function getOptions(): array
+    {
+        $options = [];
 
-		$values = KrFactory::getAdminModel('propertyfield')->getOptions();
-		foreach ($values as $k => $v) {
-			$options[] = HTMLHelper::_('select.option', $k, $v);
-		}
+        $values = KrFactory::getAdminModel('propertyfield')->getOptions();
+        foreach ($values as $k => $v) {
+            $options[] = HTMLHelper::_('select.option', $k, $v);
+        }
 
-		return array_merge(parent::getOptions(), $options);
-	}
+        return array_merge(parent::getOptions(), $options);
+    }
 }

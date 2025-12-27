@@ -7,10 +7,12 @@
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\TickTock;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') || die;
+// phpcs:enable PSR1.Files.SideEffects
 
 extract($displayData);
 /**
@@ -69,7 +71,7 @@ extract($displayData);
                 <?php echo KrMethods::plain('COM_KNOWRES_CREATED_BY_LBL'); ?>
             </div>
             <div class="col-8">
-                <?php if ((int) $item->black_booking == 1): ?>
+                <?php if ((int)$item->black_booking == 1): ?>
                     <?php echo $item->created_by_name ?: KrMethods::plain('COM_KNOWRES_GUEST'); ?>
                 <?php else: ?>
                     <?php echo KrMethods::plain('COM_KNOWRES_CONTRACTS_SERVICE_ID'); ?>
