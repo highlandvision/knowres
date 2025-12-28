@@ -9,8 +9,6 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\View\Gantt;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
@@ -19,6 +17,10 @@ use HighlandVision\KR\Session as KrSession;
 use HighlandVision\KR\Utility;
 use JetBrains\PhpStorm\NoReturn;
 
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
+
 /**
  * Show contract details in modal.
  *
@@ -26,79 +28,72 @@ use JetBrains\PhpStorm\NoReturn;
  */
 class ShowModalView extends KrHtmlView\Contract
 {
-	/** @var string The viewing level */
-	public string $audience;
-	/** @var array|bool Contract notes. */
-	public array|bool $contract_notes;
-	/** @var mixed Fees list */
-	public array $fees;
-	/** @var false|object Guest data. */
-	public false|object $guest;
-	/** @var false|object Contract guest data. */
-	public false|object $guestdata;
-	/** @var int ID of contract. */
-	public int $id = 0;
-	/** @var float Value of payments. */
-	public float $payment = 0;
-	/** @var mixed Payments */
-	public mixed $payments;
-	/** @var float Contract balance */
-	protected float $balance = 0;
-	/** @var float Contract balance less pending payments */
-	protected float $balance_all = 0;
+    /** @var string The viewing level */
+    public string $audience;
+    /** @var array|bool Contract notes. */
+    public array|bool $contract_notes;
+    /** @var mixed Fees list */
+    public array $fees;
+    /** @var false|object Guest data. */
+    public false|object $guest;
+    /** @var false|object Contract guest data. */
+    public false|object $guestdata;
+    /** @var int ID of contract. */
+    public int $id = 0;
+    /** @var float Value of payments. */
+    public float $payment = 0;
+    /** @var mixed Payments */
+    public mixed $payments;
+    /** @var float Contract balance */
+    protected float $balance = 0;
+    /** @var float Contract balance less pending payments */
+    protected float $balance_all = 0;
 
-	/**
-	 * Display the view
-	 *
-	 * @param  ?string  $tpl  A template file to load. [optional]
-	 *
-	 * @return void
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
-	#[NoReturn]
-	public function display($tpl = null): void
-	{
-		$this->item = KrFactory::getAdminModel('contract')->getItem($this->id);
-		if (empty($this->item->id))
-		{
-			Utility::goto('contracts');
-		}
+    /**
+     * Display the view
+     *
+     * @param  ?string  $tpl  A template file to load. [optional]
+     *
+     * @return void
+     * @throws Exception
+     * @since  1.0.0
+     */
+    #[NoReturn]
+    public function display($tpl = null): void
+    {
+        $this->item = KrFactory::getAdminModel('contract')->getItem($this->id);
+        if (empty($this->item->id)) {
+            Utility::goto('contracts');
+        }
 
-		$this->getActions();
-		$userSession        = new KrSession\User();
-		$this->access_level = $userSession->getAccessLevel();
-		$this->audience     = $this->access_level > 10 ? 'manager' : 'owner';
-		$this->setCustomActions();
+        $this->getActions();
+        $userSession        = new KrSession\User();
+        $this->access_level = $userSession->getAccessLevel();
+        $this->audience     = $this->access_level > 10 ? 'manager' : 'owner';
+        $this->setCustomActions();
 
-		$this->contract_notes = KrFactory::getListModel('contractnotes')->getForContract($this->item->id);
-		if ($this->item->black_booking)
-		{
-			$layout = 'blockmodal';
-		}
-		else
-		{
-			$layout          = 'modalbook';
-			$this->guest     = KrFactory::getAdminModel('guest')->getItem($this->item->guest_id);
-			$this->guestdata = false;
-			if ($this->item->guestdata_id)
-			{
-				$this->guestdata = KrFactory::getAdminModel('contractguestdata')->getItem($this->item->guestdata_id);
-			}
-			$this->payments = KrFactory::getListModel('contractpayments')->getForContract($this->item->id);
-			$this->fees     = KrFactory::getListModel('contractfees')->getForContract($this->item->id);
-			[$this->balance, $this->balance_all]
-				= KrFactory::getAdminModel('contractpayment')::setBalances($this->item, $this->payments,
-				$this->fees
-			);
-			$this->payment = KrFactory::getListModel('contractpayments')->getPaymentTotal($this->item->id);
-		}
+        $this->contract_notes = KrFactory::getListModel('contractnotes')->getForContract($this->item->id);
+        if ($this->item->black_booking) {
+            $layout = 'blockmodal';
+        } else {
+            $layout          = 'modalbook';
+            $this->guest     = KrFactory::getAdminModel('guest')->getItem($this->item->guest_id);
+            $this->guestdata = false;
+            if ($this->item->guestdata_id) {
+                $this->guestdata = KrFactory::getAdminModel('contractguestdata')->getItem($this->item->guestdata_id);
+            }
+            $this->payments = KrFactory::getListModel('contractpayments')->getForContract($this->item->id);
+            $this->fees     = KrFactory::getListModel('contractfees')->getForContract($this->item->id);
+            [$this->balance, $this->balance_all]
+                = KrFactory::getAdminModel('contractpayment')::setBalances($this->item, $this->payments, $this->fees);
+            $this->payment = KrFactory::getListModel('contractpayments')->getPaymentTotal($this->item->id);
+        }
 
-		KrMethods::setUserState('com_knowres.current.contract_id', $this->item->id);
+        KrMethods::setUserState('com_knowres.current.contract_id', $this->item->id);
 
-		$this->setLayout($layout);
-		echo $this->loadTemplate($tpl);
+        $this->setLayout($layout);
+        echo $this->loadTemplate($tpl);
 
-		jexit();
-	}
+        jexit();
+    }
 }

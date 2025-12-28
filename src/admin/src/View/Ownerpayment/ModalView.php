@@ -9,14 +9,16 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\View\Ownerpayment;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\Component\Knowres\Administrator\Model\OwnerpaymentModel;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\HtmlView as KrHtmlView;
 use JetBrains\PhpStorm\NoReturn;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Owner payment form modal

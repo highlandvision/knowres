@@ -9,8 +9,6 @@
 
 namespace HighlandVision\KR;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
@@ -27,6 +25,14 @@ use function number_format;
 use function pow;
 
 use const JSON_NUMERIC_CHECK;
+
+if (!defined('KRFRAMEWORK')) {
+    define('KRFRAMEWORK', 'Joomla');
+}
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * KrMethods Linker (currently just Joomla)

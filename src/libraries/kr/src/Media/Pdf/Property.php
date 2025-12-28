@@ -9,14 +9,17 @@
 
 namespace HighlandVision\KR\Media\Pdf;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Media\Pdf;
 use RuntimeException;
+
 use function nl2br;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Overrides for TCPDF
@@ -25,91 +28,87 @@ use function nl2br;
  */
 class Property extends Pdf
 {
-	/** @var false|object Property details */
-	public false|object $property;
-	/** @var  int ID of property */
-	protected int $property_id;
+    /** @var false|object Property details */
+    public false|object $property;
+    /** @var  int ID of property */
+    protected int $property_id;
 
-	/**
-	 * Initialize
-	 *
-	 * @param   string  $action       Destination output
-	 * @param   int     $property_id  ID of Property
-	 *
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
-	function __construct(string $action = 'download', int $property_id = 0)
-	{
-		parent::__construct($action);
+    /**
+     * Initialize
+     *
+     * @param   string  $action       Destination output
+     * @param   int     $property_id  ID of Property
+     *
+     * @throws Exception
+     * @since  1.0.0
+     */
+    public function __construct(string $action = 'download', int $property_id = 0)
+    {
+        parent::__construct($action);
 
-		$this->property_id = $property_id;
-		$this->setAgency();
-	}
+        $this->property_id = $property_id;
+        $this->setAgency();
+    }
 
-	/**
-	 * Get the agency for the property manager
-	 *
-	 * @throws RuntimeException
-	 * @throws Exception
-	 * @since  3.2.0
-	 */
-	public function setAgency(): void
-	{
-		$settings = KrFactory::getListModel('propertysettings')
-		                     ->getPropertysettings($this->property_id, 'default_manager');
+    /**
+     * Get the agency for the property manager
+     *
+     * @throws RuntimeException
+     * @throws Exception
+     * @since  3.2.0
+     */
+    public function setAgency(): void
+    {
+        $settings = KrFactory::getListModel('propertysettings')
+                             ->getPropertysettings($this->property_id, 'default_manager');
 
-		$this->agency = KrFactory::getListModel('agencies')->getAgencyForManager($settings['default_manager']);
-		if (!isset($this->agency->id))
-		{
-			$this->agency = KrFactory::getAdminModel('agency')->getItem(1);
-			if (!isset($this->agency->id))
-			{
-				throw new RuntimeException('Agency not found for default manager for property '
-					. $this->property->property_name
-				);
-			}
-		}
-	}
+        $this->agency = KrFactory::getListModel('agencies')->getAgencyForManager($settings['default_manager']);
+        if (!isset($this->agency->id)) {
+            /** @var AgencyyModel $am */
+            $am           = KrFactory::getAdminModel('agency');
+            $this->agency = $am->getItem(1);
+            if (!isset($this->agency->id)) {
+                throw new RuntimeException('Agency not found for default manager for property '
+                    . $this->property->property_name,
+                );
+            }
+        }
+    }
 
-	/**
-	 * Get the site terms plus property specific if sent
-	 *
-	 * @param  ?string  $property_name   Property name
-	 * @param  ?string  $property_terms  Property terms
-	 *
-	 * @return string
-	 * @throws Exception
-	 * @since  3.3.0
-	 */
-	protected function renderPdf(?string $property_name = null, ?string $property_terms = null): string
-	{
-		$params     = KrMethods::getParams();
-		$article_id = (int) $params->get('id_cancellation', '0');
-		if ($article_id)
-		{
-			$article = KrMethods::getArticle($article_id);
-		}
+    /**
+     * Get the site terms plus property specific if sent
+     *
+     * @param  ?string  $property_name   Property name
+     * @param  ?string  $property_terms  Property terms
+     *
+     * @return string
+     * @throws Exception
+     * @since  3.3.0
+     */
+    protected function renderPdf(?string $property_name = null, ?string $property_terms = null): string
+    {
+        $params     = KrMethods::getParams();
+        $article_id = (int)$params->get('id_cancellation', '0');
+        if ($article_id) {
+            $article = KrMethods::getArticle($article_id);
+        }
 
-		if (!is_null($property_name))
-		{
-			$heading = KrMethods::sprintf('COM_KNOWRES_PROPERTY_TERMS', KrMethods::getCfg('sitename'), $property_name);
-		}
-		else
-		{
-			$heading = KrMethods::sprintf('COM_KNOWRES_RENTAL_TERMS', KrMethods::getCfg('sitename'));
-		}
+        if (!is_null($property_name)) {
+            $heading = KrMethods::sprintf('COM_KNOWRES_PROPERTY_TERMS', KrMethods::getCfg('sitename'), $property_name);
+        } else {
+            $heading = KrMethods::sprintf('COM_KNOWRES_RENTAL_TERMS', KrMethods::getCfg('sitename'));
+        }
 
-		$this->createPdf(KrMethods::plain('COM_KNOWRES_PROPERTY_TERMS_TITLE'), $heading, 30);
-		$content = KrMethods::render('pdf.property.terms', [
-			'heading' => $heading,
-			'text'    => nl2br($property_terms),
-			'intro'   => isset($article->id) ? $article->introtext : ''
-		]);
+        $this->createPdf(KrMethods::plain('COM_KNOWRES_PROPERTY_TERMS_TITLE'), $heading, 30);
+        $content = KrMethods::render('pdf.property.terms', [
+            'heading' => $heading,
+            'text'    => nl2br($property_terms),
+            'intro'   => isset($article->id) ? $article->introtext : '',
+        ]);
 
-		$this->setContent($content);
-		$file = 'property_terms_' . $this->property->property_name . '.pdf';
+        $this->setContent($content);
+        $file = 'property_terms_' . $this->property->property_name . '.pdf';
 
-		return $this->actionPdf($file);
-	}
+        return $this->actionPdf($file);
+    }
 }

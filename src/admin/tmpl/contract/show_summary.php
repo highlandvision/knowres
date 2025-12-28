@@ -25,15 +25,15 @@ defined('_JEXEC') or die;
         <div class="collapse show" id="panel-collapse-statement">
             <div class="card-body">
                 <?php echo KrMethods::render('contract.show.summary',
-                        [
-                                'item'        => $this->item,
-                                'fees'        => $this->fees,
-                                'payments'    => $this->payments,
-                                'audience'    => $this->audience,
-                                'balance'     => $this->balance,
-                                'balance_all' => $this->balance_all,
-                                'notes'       => $this->notes
-                        ]
+                    [
+                        'item'        => $this->item,
+                        'fees'        => $this->fees,
+                        'payments'    => $this->payments,
+                        'audience'    => $this->audience,
+                        'balance'     => $this->balance,
+                        'balance_all' => $this->balance_all,
+                        'notes'       => $this->notes,
+                    ],
                 );
                 ?>
             </div>

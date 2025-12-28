@@ -9,8 +9,6 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Controller;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\Component\Knowres\Administrator\Model\OwnerModel;
 use HighlandVision\KR\Framework\KrMethods;
@@ -19,7 +17,12 @@ use HighlandVision\KR\Utility;
 use JetBrains\PhpStorm\NoReturn;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Response\JsonResponse;
+
 use function jexit;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Controller form class for owner
@@ -28,79 +31,49 @@ use function jexit;
  */
 class OwnerController extends FormController
 {
-	/**
-	 * Method to cancel an edit.
-	 *
-	 * @param   null  $key  The name of the primary key of the URL variable.
-	 *
-	 * @return bool
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
-	public function cancel($key = null): bool
-	{
-		if (parent::cancel($key))
-		{
-			$gobackto = Utility::getGoBackTo();
-			if ($gobackto)
-			{
-				KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&' . $gobackto, false));
-			}
+    /**
+     * Return owners combo
+     *
+     * @throws Exception
+     * @since  1.0.0
+     */
+    #[NoReturn]
+    public function combo(): void
+    {
+        $model     = new OwnerModel();
+        $form      = $model->getForm([], false);
+        $parent_id = KrMethods::inputInt('parent');
+        $target    = KrMethods::inputString('target');
 
-			return true;
-		}
+        if ($target == 'region_id') {
+            $form->setValue('country_id', null, $parent_id);
+        } else {
+            $form->setValue('region_id', null, $parent_id);
+        }
 
-		return false;
-	}
+        $wrapper         = [];
+        $wrapper['html'] = $form->getInput($target);
 
-	/**
-	 * Return owners combo
-	 *
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
-	#[NoReturn]
-	public function combo(): void
-	{
-		$model     = new OwnerModel();
-		$form      = $model->getForm([], false);
-		$parent_id = KrMethods::inputInt('parent');
-		$target    = KrMethods::inputString('target');
+        echo new JsonResponse($wrapper);
+        jexit();
+    }
 
-		if ($target == 'region_id')
-		{
-			$form->setValue('country_id', null, $parent_id);
-		}
-		else
-		{
-			$form->setValue('region_id', null, $parent_id);
-		}
-
-		$wrapper         = [];
-		$wrapper['html'] = $form->getInput($target);
-
-		echo new JsonResponse($wrapper);
-		jexit();
-	}
-
-	/**
-	 * Function that allows child controller access to model data after the data has been saved.
-	 *
-	 * @param   BaseDatabaseModel  $model      The data model object.
-	 * @param   array              $validData  The validated data.
-	 *
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
-	protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
-	{
-		if ($this->getTask() != 'apply')
-		{
-			$gobackto = Utility::getGoBackTo();
-			if ($gobackto)
-			{
-				KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&' . $gobackto, false));
-			}
-		}
-	}
+    /**
+     * Function that allows child controller access to model data after the data has been saved.
+     *
+     * @param   BaseDatabaseModel  $model      The data model object.
+     * @param   array              $validData  The validated data.
+     *
+     * @throws Exception
+     * @since  1.0.0
+     */
+    protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
+    {
+        if ($this->getTask() != 'apply') {
+            $gobackto = Utility::getGoBackTo();
+            if ($gobackto) {
+                KrMethods::redirect(KrMethods::route('index.php?option=com_knowres&' . $gobackto, false));
+            }
+        }
+    }
 }

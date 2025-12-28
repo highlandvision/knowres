@@ -9,8 +9,6 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Field;
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Framework\KrFactory;
 use InvalidArgumentException;
 use Joomla\CMS\Form\Field\ListField;
@@ -19,31 +17,35 @@ use RuntimeException;
 
 use function array_merge;
 
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
+
 /**
- * Currency form field
+ * Agencies form field
  *
  * @since 1.0.0
  */
 class ListagenciesField extends ListField
 {
-	/** @var string The form field type. */
-	protected $type = 'Listagencies';
+    /** @var string The form field type. */
+    protected $type = 'Listagencies';
 
-	/**
-	 * Get the field options.
-	 *
-	 * @throws RuntimeException|InvalidArgumentException
-	 * @since  4.0.0
-	 * @return array    The field options.
-	 */
-	protected function getOptions(): array
-	{
-		$options = [];
-		$items   = KrFactory::getListModel('agencies')->getAll();
-		foreach ($items as $i) {
-			$options[] = HTMLHelper::_('select.option', $i->id, $i->name);
-		}
+    /**
+     * Get the field options.
+     *
+     * @return array    The field options.
+     * @throws RuntimeException|InvalidArgumentException
+     * @since  4.0.0
+     */
+    protected function getOptions(): array
+    {
+        $options = [];
+        $items   = KrFactory::getListModel('agencies')->getAll();
+        foreach ($items as $i) {
+            $options[] = HTMLHelper::_('select.option', $i->id, $i->name);
+        }
 
-		return array_merge(parent::getOptions(), $options);
-	}
+        return array_merge(parent::getOptions(), $options);
+    }
 }

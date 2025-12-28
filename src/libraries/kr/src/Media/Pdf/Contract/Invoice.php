@@ -43,7 +43,7 @@ class Invoice extends Contract
     }
 
     /**
-     * Create the pdf file and either download or return path name
+     * Create the PDF file and either download or return path name
      *
      * @param   bool  $dashboard  Set to true for guest dashbaord download
      *
@@ -57,13 +57,13 @@ class Invoice extends Contract
         $subject = KrMethods::sprintf('COM_KNOWRES_PDF_INVOICE_SUBJECT', $this->contract->tag);
         $this->createPdf($title, $subject, 30);
         $this->setContent($this->getContent($dashboard));
-        $filename = "invoice_" . $this->contract->id . '.pdf';
+        $filename = 'invoice_' . $this->contract->id . '.pdf';
 
         return $this->actionPdf($filename);
     }
 
     /**
-     * Get the pdf text
+     * Get the PDF text
      *
      * @param   bool  $dashboard  Set to true for guest dashboard download
      *

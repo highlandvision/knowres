@@ -19,10 +19,10 @@ extract($displayData);
 ?>
 
 <div class="row">
-	<div class="col-6">
-		<?php echo KrMethods::plain('COM_KNOWRES_CONTRACTS_NET_PRICE'); ?>
-	</div>
-	<div class="col-3 text-end">
-		<?php echo Utility::displayValue($contract->net_price, $contract->currency); ?>
-	</div>
+    <div class="col-6">
+        <?php echo KrMethods::plain('COM_KNOWRES_CONTRACTS_NET_PRICE'); ?>
+    </div>
+    <div class="col-3 text-end">
+        <?php echo Utility::displayValue($contract->net_price, $contract->currency); ?>
+    </div>
 </div>

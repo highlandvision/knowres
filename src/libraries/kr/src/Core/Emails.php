@@ -24,72 +24,58 @@ defined('_JEXEC') or die;
  */
 class Emails
 {
-	/** @var Hub Hub data. */
-	protected Hub $hub;
+    /** @var Hub Hub data. */
+    protected Hub $hub;
 
-	/**
-	 * Action emails
-	 *
-	 * @param   Hub  $hub  Hub data
-	 *
-	 * @throws Exception
-	 * @since  1.0.0
-	 * @return bool
-	 */
-	public function action(Hub $hub): bool
-	{
-		$this->hub = $hub;
-		if ($this->hub->getValue('isEdit'))
-		{
-			return true;
-		}
-		if (!$this->hub->getValue('guest_id'))
-		{
-			return true;
-		}
+    /**
+     * Action emails
+     *
+     * @param   Hub  $hub  Hub data
+     *
+     * @return bool
+     * @throws Exception
+     * @since  1.0.0
+     */
+    public function action(Hub $hub): bool
+    {
+        $this->hub = $hub;
+        if ($this->hub->getValue('isEdit')) {
+            return true;
+        }
+        if (!$this->hub->getValue('guest_id')) {
+            return true;
+        }
 
-		$this->sendEmails();
+        $this->sendEmails();
 
-		return true;
-	}
+        return true;
+    }
 
-	/**
-	 * Sends the emails as required
-	 *
-	 * @throws Exception
-	 * @since 1.0.0
-	 */
-	protected function sendEmailS(): void
-	{
-		if ($this->hub->getValue('email_trigger'))
-		{
-			$trigger = $this->hub->getValue('email_trigger');
-		}
-		elseif ($this->hub->getValue('booking_status') == 99)
-		{
-			if ($this->hub->getValue('on_request'))
-			{
-				$trigger = 'BOOKREQUESTCANCEL';
-			}
-			else
-			{
-				$trigger = 'BOOKCANCEL';
-			}
-		}
-		elseif ($this->hub->getValue('on_request'))
-		{
-			$trigger = 'BOOKREQUEST';
-		}
-		elseif ($this->hub->getValue('booking_status') >= 10)
-		{
-			$trigger = 'BOOKCONFIRM';
-		}
-		else
-		{
-			$trigger = 'BOOK';
-		}
+    /**
+     * Sends the emails as required
+     *
+     * @throws Exception
+     * @since 1.0.0
+     */
+    protected function sendEmails(): void
+    {
+        if ($this->hub->getValue('email_trigger')) {
+            $trigger = $this->hub->getValue('email_trigger');
+        } elseif ($this->hub->getValue('booking_status') == 99) {
+            if ($this->hub->getValue('on_request')) {
+                $trigger = 'BOOKREQUESTCANCEL';
+            } else {
+                $trigger = 'BOOKCANCEL';
+            }
+        } elseif ($this->hub->getValue('on_request')) {
+            $trigger = 'BOOKREQUEST';
+        } elseif ($this->hub->getValue('booking_status') >= 10) {
+            $trigger = 'BOOKCONFIRM';
+        } else {
+            $trigger = 'BOOK';
+        }
 
-		$email = new ContractEmail($trigger);
-		$email->sendTheEmails($this->hub->getValue('id'));
-	}
+        $email = new ContractEmail($trigger);
+        $email->sendTheEmails($this->hub->getValue('id'));
+    }
 }

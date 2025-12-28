@@ -15,13 +15,11 @@ use Joomla\CMS\HTML\HTMLHelper;
 defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
 
-/** @noinspection PhpUnhandledExceptionInspection */
-$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-$wa
-    ->useScript('keepalive')
-    ->useScript('bootstrap.dropdown')
-    ->useScript('bootstrap.modal')
-    ->useScript('core');
+$wa = Factory::getDocument()->getWebAssetManager();
+$wa->useScript('keepalive')
+   ->useScript('bootstrap.dropdown')
+   ->useScript('bootstrap.modal')
+   ->useScript('core');
 
 if ($this->access_level > 10 && !$this->item->black_booking) {
     echo $this->loadTemplate('modal_trigger');

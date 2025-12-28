@@ -9,10 +9,7 @@
 
 namespace HighlandVision\KR;
 
-defined('_JEXEC') or die;
-
 use Exception;
-use HighlandVision\Component\Knowres\Administrator\Model\ServiceModel;
 use HighlandVision\Component\Knowres\Administrator\Model\ServicequeueModel;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
@@ -33,6 +30,10 @@ use const JPATH_ROOT;
 use const LIBXML_ERR_ERROR;
 use const LIBXML_ERR_FATAL;
 use const LIBXML_ERR_WARNING;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Service base

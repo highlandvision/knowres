@@ -9,8 +9,6 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Field;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\Component\Knowres\Administrator\Model\ContractModel;
 use HighlandVision\KR\Framework\KrFactory;
@@ -20,6 +18,10 @@ use InvalidArgumentException;
 use Joomla\CMS\Form\Field\ListField;
 use Joomla\CMS\HTML\HTMLHelper;
 
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
+
 /**
  * Payment currency form field
  *
@@ -27,43 +29,42 @@ use Joomla\CMS\HTML\HTMLHelper;
  */
 class ListcurrencypaymentField extends ListField
 {
-	/** @var string The form field type. */
-	protected $type = 'Listcurrencypayment';
+    /** @var string The form field type. */
+    protected $type = 'Listcurrencypayment';
 
-	/**
-	 * Get the field options.
-	 *
-	 * @throws InvalidArgumentException
-	 * @throws Exception
-	 * @since  1.0.0
-	 * @return array
-	 */
-	public function getOptions(): array
-	{
-		$options = [];
+    /**
+     * Get the field options.
+     *
+     * @return array
+     * @throws Exception
+     * @throws InvalidArgumentException
+     * @since  1.0.0
+     */
+    public function getOptions(): array
+    {
+        $options   = [];
+        $formData  = $this->form->getData();
+        $id        = $formData->get('id', 0);
+        $confirmed = $formData->get('confirmed', 0);
 
-		$formData  = $this->form->getData();
-		$id        = $formData->get('id', 0);
-		$confirmed = $formData->get('confirmed', 0);
+        if ($id && !$confirmed) {
+            $options[] = HTMLHelper::_('select.option', $this->value, $this->value);
+        } else {
+            $contract_id = KrMethods::getUserState('com_knowres.current.contract_id', 0);
+            /** @var ContractModel $contract */
+            $contract = KrFactory::getAdminItem('contract', $contract_id);
+            if ($contract->id) {
+                $this->value = $contract->currency;
+                $options[]   = HTMLHelper::_('select.option', $this->value, $this->value);
+            }
 
-		if ($id && !$confirmed) {
-			$options[] = HTMLHelper::_('select.option', $this->value, $this->value);
-		} else {
-			$contract_id = KrMethods::getUserState('com_knowres.current.contract_id', 0);
-			/** @var ContractModel $contract */
-			$contract = KrFactory::getAdminModel('contract')->getItem($contract_id);
-			if ($contract->id) {
-				$this->value = $contract->currency;
-				$options[]   = HTMLHelper::_('select.option', $this->value, $this->value);
-			}
+            $currencies = KrFactory::getListModel('currencies')->getPaymentCurrencies($this->value);
+            $currencies = Utility::decodeJson($currencies, true);
+            foreach ($currencies as $c) {
+                $options[] = HTMLHelper::_('select.option', $c, $c);
+            }
+        }
 
-			$currencies = KrFactory::getListModel('currencies')->getPaymentCurrencies($this->value);
-			$currencies = Utility::decodeJson($currencies, true);
-			foreach ($currencies as $c) {
-				$options[] = HTMLHelper::_('select.option', $c, $c);
-			}
-		}
-
-		return array_merge(parent::getOptions(), $options);
-	}
+        return array_merge(parent::getOptions(), $options);
+    }
 }

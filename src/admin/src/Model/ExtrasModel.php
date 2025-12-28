@@ -9,13 +9,15 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Model;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\ListModel;
 use Joomla\Database\QueryInterface;
 use RuntimeException;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Methods supporting a list of Knowres records.
@@ -24,18 +26,18 @@ use RuntimeException;
  */
 class ExtrasModel extends ListModel
 {
-	/**
-	 * Constructor.
-	 *
-	 * @param  array  $config  An optional associative array of configuration settings.
-	 *
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
-	public function __construct($config = [])
-	{
-		if (empty($config['filter_fields'])) {
-			//@formatter:off
+    /**
+     * Constructor.
+     *
+     * @param   array  $config  An optional associative array of configuration settings.
+     *
+     * @throws Exception
+     * @since  1.0.0
+     */
+    public function __construct($config = [])
+    {
+        if (empty($config['filter_fields'])) {
+            //@formatter:off
 			$config['filter_fields'] = [
 				'id',           'a.id',
 				'price',        'a.price',
@@ -221,47 +223,40 @@ class ExtrasModel extends ListModel
 		$query->join('LEFT', $db->qn('#__knowres_tax_rate', 't') . 'ON' . $db->qn('t.id') . '=' . $db->qn('a.tax_id'));
 
 		$state = $this->getState('filter.state');
-		if (is_numeric($state))
-		{
+		if (is_numeric($state)) {
 			$query->where($db->qn('a.state') . '=' . (int) $state);
-		}
-		elseif ($state === '')
-		{
+		} elseif ($state === '') {
 			$query->where($db->qn('a.state') . ' IN (0, 1)');
 		}
 
-		$filter_property_id = $this->state->get("filter.property_id");
-		if (is_numeric($filter_property_id))
-		{
+		$filter_property_id = $this->state->get('filter.property_id');
+		if (is_numeric($filter_property_id)) {
 			$query->where($db->qn('a.property_id') . '=' . (int) $filter_property_id);
-		}
-		elseif (is_string($filter_property_id) && strlen($filter_property_id) > 0)
-		{
+		} elseif (is_string($filter_property_id) && strlen($filter_property_id) > 0) {
 			$ids = explode(',', $filter_property_id);
 			$query->where($db->qn('a.property_id') . ' IN (' . implode(',', array_map('intval', $ids)) . ')');
 		}
 
 		$filter_mandatory = $this->state->get('filter.mandatory');
-		if ($filter_mandatory)
-		{
+		if ($filter_mandatory) {
 			$query->where($db->qn('a.mandatory') . '=' . (int) $filter_mandatory);
 		}
 
-		$filter_tax_id = $this->state->get("filter.tax_id");
-		if ($filter_tax_id)
-		{
+        $filter_model = $this->state->get('filter.model');
+        if ($filter_model) {
+            $query->where($db->qn('a.model') . '=' . (int) $filter_model);
+        }
+
+		$filter_tax_id = $this->state->get('filter.tax_id');
+		if ($filter_tax_id) {
 			$query->where($db->qn('a.tax_id') . '=' . (int) $filter_tax_id);
 		}
 
 		$search = $this->getState('filter.search');
-		if (!empty($search))
-		{
-			if (stripos($search, 'id:') === 0)
-			{
+		if (!empty($search)) {
+			if (stripos($search, 'id:') === 0) {
 				$query->where('a.id = ' . (int) substr($search, 3));
-			}
-			else
-			{
+			} else {
 				$search = $db->q('%' . $search . '%');
 				$query->where('(' . $subQuery->__toString() . ') ' . ' LIKE ' . $search);
 			}
@@ -269,8 +264,8 @@ class ExtrasModel extends ListModel
 
 		$orderCol  = $this->state->get('list.ordering');
 		$orderDirn = $this->state->get('list.direction');
-		if ($orderCol && $orderDirn)
-		{
+
+        if ($orderCol && $orderDirn) {
 			$query->order($db->escape($orderCol . ' ' . $orderDirn));
 		}
 
@@ -292,8 +287,9 @@ class ExtrasModel extends ListModel
 	{
 		$id .= ':' . $this->getState('filter.search');
 		$id .= ':' . $this->getState('filter.state');
-		$id .= ':' . $this->getState('filter.tax_id');
-		$id .= ':' . $this->getState('filter.property_id');
+        $id .= ':' . $this->getState('filter.tax_id');
+        $id .= ':' . $this->getState('filter.property_id');
+        $id .= ':' . $this->getState('filter.mandatory');
 
 		return parent::getStoreId($id);
 	}
@@ -313,11 +309,13 @@ class ExtrasModel extends ListModel
 			$this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string'));
 		$this->setState('filter.state',
 			$this->getUserStateFromRequest($this->context . '.filter.state', 'filter_state', '', 'string'));
-		$this->setState('filter.tax_id',
-			$this->getUserStateFromRequest($this->context . '.filter.tax_id', 'filter_tax_id', '', 'integer'));
-		$this->setState('filter.property_id',
-			$this->getUserStateFromRequest($this->context . '.filter.property_id', 'filter_property_id', '',
-				'integer'));
+        $this->setState('filter.property_id',
+            $this->getUserStateFromRequest($this->context . '.filter.property_id', 'filter_property_id', '',
+                'integer'));
+        $this->setState('filter.mandatory',
+            $this->getUserStateFromRequest($this->context . '.filter.mandatory', 'filter_mandatory', '', 'stringr'));
+        $this->setState('filter.tax_id',
+            $this->getUserStateFromRequest($this->context . '.filter.tax_id', 'filter_tax_id', '', 'integer'));
 
 		$this->setState('params', KrMethods::getParams());
 

@@ -86,16 +86,13 @@ class KrFactory
      * @param   string  $name     Form name
      * @param   string  $source   Name of XML file
      * @param   string  $area     Set to 'site' for Site or 'module' for Module or 'library' for Library
-     * @param  ?string  $control  Form control name
+     * @param ?string   $control  Form control name
      *
      * @return Form
      * @since  3.3.0
      */
-    public static function getAdhocForm(
-        string $name,
-        string $source,
-        string $area = 'administrator',
-        ?string $control = 'jform'
+    public static function getAdhocForm(string $name, string $source, string $area = 'administrator',
+        ?string $control = 'jform',
     ): Form {
         if ($area == 'site') {
             $filepath = JPATH_COMPONENT_SITE . '/forms/' . $source;
@@ -115,17 +112,43 @@ class KrFactory
     }
 
     /**
+     * Get item from model and id
+     *
+     * @param   string  $model  Model name
+     * @param   int     $id     Item ID
+     *
+     * @return stdClass|false
+     * @throws Exception
+     * @since  5.2.0
+     */
+    public static function getAdminItem(string $model, int $id): stdClass|false
+    {
+        /** @noinspection PhpPossiblePolymorphicInvocationInspection */
+        $item = self::getAdminModel($model)->getItem($id);
+        if ($item->id == $id) {
+            return $item;
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * Get admin model
      *
      * @param   string  $name  Model name
      *
-     * @return ?ModelInterface  The model object
+     * @return ?ModelInterface The model object
      * @throws Exception
      * @since  3.3.0
      */
     public static function getAdminModel(string $name): ?ModelInterface
     {
-        return FNS::getAdminModel($name);
+        try {
+            return FNS::getAdminModel($name);
+        } catch (Exception $e) {
+            Logger::logMe($e->getMessage());
+            jexit();
+        }
     }
 
     /**
@@ -167,7 +190,7 @@ class KrFactory
     }
 
     /**
-     * Get admin model
+     * Get site model
      *
      * @param   string  $name  Model name
      *

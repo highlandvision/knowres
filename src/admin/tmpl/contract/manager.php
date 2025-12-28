@@ -7,6 +7,8 @@
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
+/** @noinspection PhpUnhandledExceptionInspection */
+
 use HighlandVision\KR\Framework\KrMethods;
 use Joomla\CMS\HTML\HTMLHelper;
 
@@ -51,7 +53,8 @@ $wa->useScript('keepalive')
                 <div class="col-lg-7">
                     <fieldset>
                         <div id="jform_ajax_warning" style="display:none;margin-bottom:1rem"></div>
-                        <?php echo $this->loadTemplate('dates'); ?>
+                        <?php /** @noinspection PhpEchoOpenTagInspection */
+                        echo $this->loadTemplate('dates'); ?>
                         <?php if (!$this->agent) : ?>
                             <div class="hideinitial">
                                 <?php echo $this->loadTemplate('coupon'); ?>

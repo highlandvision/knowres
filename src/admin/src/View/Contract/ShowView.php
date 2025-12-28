@@ -9,8 +9,6 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\View\Contract;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\Component\Knowres\Administrator\Model\ContractModel;
 use HighlandVision\KR\Framework\KrFactory;
@@ -24,6 +22,10 @@ use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\Registry\Registry;
 use RuntimeException;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Contract show view
@@ -79,17 +81,17 @@ class ShowView extends KrHtmlView\Contract
 
         $this->audience = $this->access_level > 10 ? 'manager' : 'owner';
         if ($this->item->guest_id) {
-            $this->guest = KrFactory::getAdminModel('guest')->getItem($this->item->guest_id);
+            /** @var $gm HighlandVision\Component\Knowres\Administrator\Model\Guest */
+            $gm          = KrFactory::getAdminModel('guest');
+            $this->guest = $gm->getItem($this->item->guest_id);
         }
         $this->notes    = KrFactory::getListModel('contractnotes')->getForContract($this->item->id);
         $this->payments = KrFactory::getListModel('contractpayments')->getForContract($this->item->id);
         $this->fees     = KrFactory::getListModel('contractfees')->getForContract($this->item->id);
-        [$this->balance, $this->balance_all]
-            = KrFactory::getAdminModel('contractpayment')::setBalances(
-            $this->item,
-            $this->payments,
-            $this->fees
-        );
+
+        /** @var $cp HighlandVision\Component\Knowres\Administrator\Model\Contractpayment */
+        $cp = KrFactory::getAdminModel('contractpayment');
+        [$this->balance, $this->balance_all] = $cp::setBalances($this->item, $this->payments, $this->fees);
 
         if ($this->access_level > 10 && !$this->item->black_booking) {
             $this->formtrigger = KrFactory::getAdhocForm('trigger', 'contract_modal_trigger.xml');
@@ -128,34 +130,30 @@ class ShowView extends KrHtmlView\Contract
             if ($this->item->booking_status < 10) {
                 if ($this->item->on_request) {
                     $expiry  = TickTock::modifyHours($this->item->created_at, $this->item->on_request);
-                    $title[] = KrMethods::sprintf('COM_KNOWRES_CONTRACTS_EXPIRES_ON', TickTock::displayTs($expiry));
+                    $title[] = KrMethods::sprintf('COM_KNOWRES_CONTRACTS_EXPIRES_ON', TickTock::displayTS($expiry));
                 } else {
-                    $title[] = KrMethods::sprintf(
-                        'COM_KNOWRES_CONTRACTS_EXPIRES_ON',
-                        TickTock::displayDate($this->item->expiry_date, 'dMy')
+                    $title[] = KrMethods::sprintf('COM_KNOWRES_CONTRACTS_EXPIRES_ON',
+                        TickTock::displayDate($this->item->expiry_date, 'dMy'),
                     );
                 }
             } elseif ($this->item->booking_status < 39) {
-                $title[] = KrMethods::sprintf(
-                    'COM_KNOWRES_CONTRACTS_BALANCE_ON',
-                    TickTock::displayDate($this->item->balance_date, 'dMy')
+                $title[] = KrMethods::sprintf('COM_KNOWRES_CONTRACTS_BALANCE_ON',
+                    TickTock::displayDate($this->item->balance_date, 'dMy'),
                 );
             }
         } else {
             $title[] = KrMethods::plain('COM_KNOWRES_CONTRACT_BLOCK_TITLE');
             $title[] = $this->item->property_name;
-            $title[] = TickTock::displayDate($this->item->arrival, 'dMy') . ' to '
-                . TickTock::displayDate($this->item->departure, 'dMy');
-            $title[] = TickTock::differenceDays(
-                    $this->item->arrival,
-                    $this->item->departure
+            $title[] = TickTock::displayDate($this->item->arrival, 'dMy') . ' - ' .
+                TickTock::displayDate($this->item->departure, 'dMy');
+            $title[] = TickTock::differenceDays($this->item->arrival, $this->item->departure,
                 ) . ' ' . KrMethods::plain('COM_KNOWRES_NIGHTS');
             if ($this->item->cancelled) {
                 $title[] = KrMethods::plain('COM_KNOWRES_CONTRACT_CANCELLED_LBL');
             }
         }
 
-        ToolbarHelper::title(implode(" | ", $title), 'briefcase');
+        ToolbarHelper::title(implode(' | ', $title), 'briefcase');
     }
 
     /**

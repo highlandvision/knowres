@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package     KR
  * @subpackage  Admin views
@@ -6,6 +7,8 @@
  * @license     See the file "LICENSE.txt" for the full license governing this code.
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
+
+/** @noinspection PhpUnhandledExceptionInspection */
 
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\TickTock;
@@ -61,10 +64,10 @@ defined('_JEXEC') or die;
                 <?php echo Utility::displayValue($i['amountDue'], $this->item->currency); ?>
             </div>
             <div class="span2 text-right">
-                <?php if ($i['type'] == "ACCREC" && $i['status'] != "DRAFT"): ?>
+                <?php if ($i['type'] == 'ACCREC' && $i['status'] != 'DRAFT'): ?>
                     <?php $link = $this->payments->getInvoiceUrl($i['invoiceId']); ?>
                     <?php echo '<a href="' . $link . '" target="_blank">' . KrMethods::plain('COM_KNOWRES_VIEW')
-                            . '</a>'; ?>
+                        . '</a>'; ?>
                 <?php endif; ?>
             </div>
         </div>

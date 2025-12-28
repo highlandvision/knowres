@@ -9,14 +9,16 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Controller;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\Component\Knowres\Administrator\Model\ClusterModel;
 use HighlandVision\KR\Joomla\Extend\FormController;
 use HighlandVision\KR\Translations;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\String\StringHelper;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Cluster controller class.
@@ -25,26 +27,25 @@ use Joomla\String\StringHelper;
  */
 class ClusterController extends FormController
 {
-	/**
-	 * Process additional requirements after save payment
-	 *
-	 * @param   BaseDatabaseModel  $model      The data model object.
-	 * @param   array              $validData  The validated data.
-	 *
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
-	protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
-	{
-		/* @var ClusterModel $model */
-		$item = $model->getItem();
-		$name = (string) $validData['name'];
-		if ($this->input->get('task') == 'save2copy')
-		{
-			$name = StringHelper::increment($name);
-		}
+    /**
+     * Process additional requirements after save payment
+     *
+     * @param   BaseDatabaseModel  $model      The data model object.
+     * @param   array              $validData  The validated data.
+     *
+     * @throws Exception
+     * @since  1.0.0
+     */
+    protected function postSaveHook(BaseDatabaseModel $model, $validData = []): void
+    {
+        /* @var ClusterModel $model */
+        $item = $model->getItem();
+        $name = (string)$validData['name'];
+        if ($this->input->get('task') == 'save2copy') {
+            $name = StringHelper::increment($name);
+        }
 
-		$Translations = new Translations();
-		$Translations->updateDefault('cluster', $item->id, 'name', $name);
-	}
+        $Translations = new Translations();
+        $Translations->updateDefault('cluster', $item->id, 'name', $name);
+    }
 }

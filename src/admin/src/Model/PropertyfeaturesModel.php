@@ -9,8 +9,6 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Model;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\Joomla\Extend\ListModel;
@@ -23,6 +21,10 @@ use function is_numeric;
 use function stripos;
 use function substr;
 
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
+
 /**
  * Property features list model.
  *
@@ -30,18 +32,18 @@ use function substr;
  */
 class PropertyfeaturesModel extends ListModel
 {
-	/**
-	 * Constructor.
-	 *
-	 * @param  array  $config  An optional associative array of configuration settings.
-	 *
-	 * @throws Exception
-	 * @since  1.0.0
-	 */
-	public function __construct($config = [])
-	{
-		if (empty($config['filter_fields'])) {
-			//@formatter:off
+    /**
+     * Constructor.
+     *
+     * @param   array  $config  An optional associative array of configuration settings.
+     *
+     * @throws Exception
+     * @since  1.0.0
+     */
+    public function __construct($config = [])
+    {
+        if (empty($config['filter_fields'])) {
+            //@formatter:off
 			$config['filter_fields'] = [
 				'id',           'a.id',
                 'filter',       'a.filter',
@@ -140,8 +142,8 @@ class PropertyfeaturesModel extends ListModel
 		$query->from('`#__knowres_property_feature` AS a');
 		$query->select('(' . $subQuery->__toString() . ') ' . $db->q('name'));
 
-		$query->select("uc.name AS editor");
-		$query->join("LEFT", "#__users AS uc ON uc.id=a.checked_out");
+		$query->select('uc.name AS editor');
+		$query->join('LEFT', '#__users AS uc ON uc.id=a.checked_out');
 		$query->select('created_by.name AS created_by');
 		$query->join('LEFT', '#__users AS created_by ON created_by.id = a.created_by');
 		$query->select('updated_by.name AS updated_by');

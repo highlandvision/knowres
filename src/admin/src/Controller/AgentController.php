@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package    Know Reservations
  * @subpackage Admin Controllers
@@ -9,15 +10,15 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Controller;
 
-defined('_JEXEC') or die;
-
 use HighlandVision\KR\Joomla\Extend\FormController;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') || die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Agent controller class.
  *
  * @since 1.0.0
  */
-class AgentController extends FormController
-{
-}
+class AgentController extends FormController {}

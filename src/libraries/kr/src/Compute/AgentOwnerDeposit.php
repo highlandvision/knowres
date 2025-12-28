@@ -9,15 +9,17 @@
 
 namespace HighlandVision\KR\Compute;
 
-defined('_JEXEC') or die;
-
 use Exception;
-use HighlandVision\Component\Knowres\Administrator\Model\fOwner;
+use HighlandVision\Component\Knowres\Administrator\Model\Owner;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Hub;
 use HighlandVision\KR\TickTock;
 
 use function ceil;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Compute agent owner deposit payment
@@ -26,143 +28,122 @@ use function ceil;
  */
 class AgentOwnerDeposit
 {
-	/** @var Hub $Hub Hub. */
-	protected Hub $Hub;
+    /** @var Hub $Hub Hub. */
+    protected Hub $Hub;
 
-	/**
-	 * Calculate agent owner deposit payment
-	 *
-	 * @param   Hub  $Hub  Hub base class
-	 *
-	 * @throws Exception
-	 * @since        3.3.3
-	 * @noinspection PhpLoopNeverIteratesInspection
-	 */
-	public function calculate(Hub $Hub): void
-	{
-		$this->Hub     = $Hub;
-		$owner_deposit = 0;
+    /**
+     * Calculate agent owner deposit payment
+     *
+     * @param   Hub  $Hub  Hub base class
+     *
+     * @throws Exception
+     * @since        3.3.3
+     * @noinspection PhpLoopNeverIteratesInspection
+     */
+    public function calculate(Hub $Hub): void
+    {
+        $this->Hub     = $Hub;
+        $owner_deposit = 0;
 
-		while (true)
-		{
-			if (!(int) $this->Hub->settings['chargeDepositYesNo'])
-			{
-				break;
-			}
-			if ($this->Hub->getValue('isEdit'))
-			{
-				break;
-			}
-			if (!$this->Hub->getValue('agent_id'))
-			{
-				break;
-			}
-			//TODO-v5.2 Shift owner payments to custom library?
-			if (!$this->Hub->params->get('owner_payments', false))
-			{
-				break;
-			}
-			if (!$this->Hub->agent->owner_deposit_payment)
-			{
-				break;
-			}
+        while (true) {
+            if (!(int)$this->Hub->settings['chargeDepositYesNo']) {
+                break;
+            }
+            if ($this->Hub->getValue('isEdit')) {
+                break;
+            }
+            if (!$this->Hub->getValue('agent_id')) {
+                break;
+            }
+            //TODO-v5.3 Shift owner payments to custom library?
+            if (!$this->Hub->params->get('owner_payments', false)) {
+                break;
+            }
+            if (!$this->Hub->agent->owner_deposit_payment) {
+                break;
+            }
 
-			$owner_id = $this->Hub->getValue('owner_id');
-			if (!$owner_id)
-			{
-				break;
-			}
+            $owner_id = $this->Hub->getValue('owner_id');
+            if (!$owner_id) {
+                break;
+            }
 
-			$owner = KrFactory::getChainedItem('owner', $owner_id);
-			if (!$owner->id || !$owner->pay_deposit)
-			{
-				break;
-			}
+            $owner = KrFactory::getAdminItem('owner', $owner_id);
+            if (!$owner->id || !$owner->pay_deposit) {
+                break;
+            }
 
-			$owner_deposit = $this->setOwnerDeposit($owner);
-			break;
-		}
+            $owner_deposit = $this->setOwnerDeposit($owner);
+            break;
+        }
 
-		$this->Hub->setValue('owner_deposit', $owner_deposit);
-	}
+        $this->Hub->setValue('owner_deposit', $owner_deposit);
+    }
 
-	/**
-	 * Calculates the guest deposit that would be charged
-	 *
-	 * @param   float  $total  Value to base calculation
-	 *
-	 * @return float
-	 * @throws Exception
-	 * @since  3.3.3
-	 */
-	protected function setGuestDeposit(float $total): float
-	{
-		if ((int) $this->Hub->settings['depositIsPercentage'])
-		{
-			$guest_deposit = $total * $this->Hub->settings['depositValue'] / 100;
-		}
-		else
-		{
-			$guest_deposit = $this->Hub->settings['depositValue'];
-		}
+    /**
+     * Calculates the guest deposit that would be charged
+     *
+     * @param   float  $total  Value to base calculation
+     *
+     * @return float
+     * @throws Exception
+     * @since  3.3.3
+     */
+    protected function setGuestDeposit(float $total): float
+    {
+        if ((int)$this->Hub->settings['depositIsPercentage']) {
+            $guest_deposit = $total * $this->Hub->settings['depositValue'] / 100;
+        } else {
+            $guest_deposit = $this->Hub->settings['depositValue'];
+        }
 
-		if ((int) $this->Hub->settings['roundupDepositYesNo'])
-		{
-			$guest_deposit = ceil($guest_deposit);
-		}
+        if ((int)$this->Hub->settings['roundupDepositYesNo']) {
+            $guest_deposit = ceil($guest_deposit);
+        }
 
-		if ($guest_deposit > $total)
-		{
-			$guest_deposit = $total;
-		}
+        if ($guest_deposit > $total) {
+            $guest_deposit = $total;
+        }
 
-		return $this->Hub->round($guest_deposit);
-	}
+        return $this->Hub->round($guest_deposit);
+    }
 
-	/**
-	 * Set the owner deposit
-	 *
-	 * @param   object  $owner  Owner row
-	 *
-	 * @throws Exception
-	 * @since  3.3.0
-	 */
-	protected function setOwnerDeposit(object $owner): float
-	{
-		$owner_deposit = 0;
-		$arrival       = $this->Hub->getValue('arrival');
-		$today         = $this->Hub->today;
-		$total         = $this->Hub->getValue('contract_total');
+    /**
+     * Set the owner deposit
+     *
+     * @param   object  $owner  Owner row
+     *
+     * @throws Exception
+     * @since  3.3.0
+     */
+    protected function setOwnerDeposit(object $owner): float
+    {
+        $owner_deposit = 0;
+        $arrival       = $this->Hub->getValue('arrival');
+        $today         = $this->Hub->today;
+        $total         = $this->Hub->getValue('contract_total');
 
-		if ((int) $this->Hub->settings['variable_deposit_threashold'])
-		{
-			if (TickTock::differenceDays($today, $arrival) <= (int) $this->Hub->settings['variable_deposit_threashold'])
-			{
-				return (float) $owner_deposit;
-			}
-		}
+        if ((int)$this->Hub->settings['variable_deposit_threashold']) {
+            if (TickTock::differenceDays($today, $arrival,
+                ) <= (int)$this->Hub->settings['variable_deposit_threashold']) {
+                return (float)$owner_deposit;
+            }
+        }
 
-		$guest_deposit = $this->setGuestDeposit($total);
-		if ($guest_deposit > 0)
-		{
-			if ($this->Hub->params->get('net_rates', 0))
-			{
-				if ($this->Hub->getValue('net_price') > 0)
-				{
-					$owner_deposit = $guest_deposit / $total * $this->Hub->getValue('net_price');
-				}
-				elseif ($this->Hub->getValue('net_price_system') > 0)
-				{
-					$owner_deposit = $guest_deposit / $total * $this->Hub->getValue('net_price_system');
-				}
-			}
-			elseif ($owner->commission)
-			{
-				$pc            = (100 - $owner->commission) / 100;
-				$owner_deposit = $guest_deposit * $pc;
-			}
-		}
+        $guest_deposit = $this->setGuestDeposit($total);
+        if ($guest_deposit > 0) {
+            if ($this->Hub->params->get('net_rates', 0)) {
+                if ($this->Hub->getValue('net_price') > 0) {
+                    $owner_deposit = $guest_deposit / $total * $this->Hub->getValue('net_price');
+                } elseif ($this->Hub->getValue('net_price_system') > 0) {
+                    $owner_deposit = $guest_deposit / $total * $this->Hub->getValue('net_price_system');
+                }
+            } elseif ($owner->commission) {
+                $pc            = (100 - $owner->commission) / 100;
+                $owner_deposit = $guest_deposit * $pc;
+            }
+        }
 
-		return $this->Hub->round($owner_deposit);
-	}
+        return $this->Hub->round($owner_deposit);
+    }
 }

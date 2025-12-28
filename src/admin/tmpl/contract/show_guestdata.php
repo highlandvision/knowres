@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package     KR
  * @subpackage  Admin views
@@ -7,6 +8,9 @@
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
+/** @noinspection PhpUnhandledExceptionInspection */
+
+use HighlandVision\Component\Knowres\Administrator\Model\ContractguestdataModel;
 use HighlandVision\KR\Framework\KrFactory;
 use HighlandVision\KR\Framework\KrMethods;
 use HighlandVision\KR\TickTock;
@@ -20,7 +24,11 @@ defined('_JEXEC') or die;
 <?php if ($this->access_level > 10 || ($this->access_level == 10 && $this->params->get('show_arrival'))): ?>
     <div class="card kr-card">
         <div class="card-header">
-            <?php $guestdata = KrFactory::getAdminModel('contractguestdata')->getItem($this->item->guestdata_id); ?>
+            <?php
+            /** @var ContractguestdataModel $cgd */
+            $cgd       = KrFactory::getAdminModel('contractguestdata');
+            $guestdata = $cgd->getItem($this->item->guestdata_id);
+            ?>
             <a class="showbefore collapsed" data-bs-toggle="collapse" href="#panel-collapse-guestdata" role="button"
                aria-expanded="false" aria-controls="panel-collapse-guest">
                 <?php echo KrMethods::plain('COM_KNOWRES_CONTRACTGUESTDATA_TITLE'); ?>
@@ -41,7 +49,7 @@ defined('_JEXEC') or die;
                 <?php if ($this->access_level > 10): ?>
                     <div class="float-end">
                         <a href="<?php echo KrMethods::route('index.php?option=com_knowres&task=contractguestdata.edit&id='
-                                . $this->item->guestdata_id, false
+                            . $this->item->guestdata_id, false,
                         ); ?>">
                             <i class='fa-solid fa-edit'></i> <?php echo KrMethods::plain('COM_KNOWRES_EDIT'); ?>
                         </a>
@@ -51,17 +59,23 @@ defined('_JEXEC') or die;
         </div>
         <div class="collapse" id="panel-collapse-guestdata">
             <div class="card-body">
+                <?php
+                /** @var HighlandVision\Component\Knowres\Administrator\Model\PropertyModel $pm */
+                $pm       = KrFactory::getAdminModel('property');
+                $property = $pm->getItem($this->item->property_id);
+                ?>
+
                 <?php echo KrMethods::render('contract.show.guestdata',
-                        [
-                                'contract'     => $this->item,
-                                'fees'         => $this->fees,
-                                'guest'        => $this->guest,
-                                'guestdata'    => $guestdata,
-                                'property'     => KrFactory::getAdminModel('property')->getItem($this->item->property_id),
-                                'balance'      => $this->balance,
-                                'balance_all'  => $this->balance_all,
-                                'access_level' => $this->access_level,
-                        ]
+                    [
+                        'contract'     => $this->item,
+                        'fees'         => $this->fees,
+                        'guest'        => $this->guest,
+                        'guestdata'    => $guestdata,
+                        'property'     => $property,
+                        'balance'      => $this->balance,
+                        'balance_all'  => $this->balance_all,
+                        'access_level' => $this->access_level,
+                    ],
                 );
                 ?>
             </div>

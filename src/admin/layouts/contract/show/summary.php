@@ -30,17 +30,19 @@ extract($displayData);
  */
 ?>
 
-<?php if (!Utility::compareFloat($item->room_total_gross, $item->room_total)): ?>
-    <div class="row">
-        <div class="col-6 strong">
-            <?php echo KrMethods::plain('COM_KNOWRES_CONTRACT_ROOM_TOTAL_GROSS_LBL'); ?>
+<?php if ($item->room_total_gross > 0) : ?>
+    <?php if (!Utility::compareFloat($item->room_total_gross, $item->room_total)): ?>
+        <div class="row">
+            <div class="col-6 strong">
+                <?php echo KrMethods::plain('COM_KNOWRES_CONTRACT_ROOM_TOTAL_GROSS_LBL'); ?>
+            </div>
+            <div class="col-3">
+            </div>
+            <div class="col-3 text-end">
+                <?php echo Utility::displayValue($item->room_total_gross, $item->currency); ?>
+            </div>
         </div>
-        <div class="col-3">
-        </div>
-        <div class="col-3 text-end">
-            <?php echo Utility::displayValue($item->room_total_gross, $item->currency); ?>
-        </div>
-    </div>
+    <?php endif; ?>
 <?php endif; ?>
 
 <?php if ($item->discount > 0): ?>
@@ -104,7 +106,7 @@ extract($displayData);
 )
 ?>
 
-<?php if (count($item->extras)): ?>
+<?php if (is_countable($item->extras) && count($item->extras)) : ?>
     <div class="row" style="margin-top:10px;">
         <div class="col-6">
             <?php echo KrMethods::plain('COM_KNOWRES_EXTRA_TITLE'); ?>
@@ -114,12 +116,17 @@ extract($displayData);
     <?php $prices_inclusive = 1; ?>
     <?php foreach ($item->extras as $e => $d): ?>
         <?php if (!empty($e) && $e > 0): ?>
-            <?php $extra = KrFactory::getAdminModel('extra')->getItem($e); ?>
-            <?php $name = $extra->name; ?>
-            <?php $value = $d['value']; ?>
-            <?php if ((int)$d['quantity'] > 1): ?>
-                <?php $name = $name . ' x ' . $d['quantity']; ?>
-            <?php endif; ?>
+            <?php
+            /** @var HighlandVision\Component\Knowres\Administrator\Model\ExtraModel $em */
+            /** @noinspection PhpUnhandledExceptionInspection */
+            $em    = KrFactory::getAdminModel('extra');
+            $extra = $em->getItem($e);
+            $name  = $extra->name;
+            $value = $d['value'];
+            if ((int)$d['quantity'] > 1) {
+                $name = $name . ' x ' . $d['quantity'];
+            }
+            ?>
 
             <div class="row infolist">
                 <div class="col-6 indent">
@@ -155,7 +162,10 @@ extract($displayData);
     <?php foreach ($fees as $fee): ?>
         <div class="row">
             <div class="col-6 indent">
-                <?php echo TickTock::displayDate($fee->created_at) . ' - ' . $fee->description; ?>
+                <?php
+                /** @noinspection PhpUnhandledExceptionInspection */
+                echo TickTock::displayDate($fee->created_at) . ' - ' . $fee->description;
+                ?>
             </div>
             <div class="col-3 text-end">
                 <?php echo Utility::displayValue($fee->value, $item->currency); ?>
@@ -220,10 +230,12 @@ extract($displayData);
         <div class="row">
             <div class="col-4 indent">
                 <?php if ($p->service_plugin): ?>
-                    <?php echo TickTock::displayDate($p->payment_date, 'dMy') . ' '
+                    <?php /** @noinspection PhpUnhandledExceptionInspection */
+                    echo TickTock::displayDate($p->payment_date, 'dMy') . ' '
                         . KrMethods::sprintf('COM_KNOWRES_CONTRACTPAYMENTS_BY', ucfirst($p->service_plugin)); ?>
                 <?php else: ?>
-                    <?php echo TickTock::displayDate($p->payment_date, 'dMy'); ?>
+                    <?php /** @noinspection PhpUnhandledExceptionInspection */
+                    echo TickTock::displayDate($p->payment_date, 'dMy'); ?>
                 <?php endif; ?>
             </div>
             <?php if ($p->base_amount > 0): ?>
@@ -276,7 +288,8 @@ extract($displayData);
         <?php if (!$item->balance_days && $payment_total): ?>
             <?php $due = KrMethods::plain('COM_KNOWRES_CONTRACTPAYMENTS_PAYMENT_ON_ARRIVAL'); ?>
         <?php elseif ($item->balance_date > TickTock::getDate() && $item->booking_status >= 10): ?>
-            <?php $due = KrMethods::plain('COM_KNOWRES_BALANCE') . ' ('
+            <?php /** @noinspection PhpUnhandledExceptionInspection */
+            $due = KrMethods::plain('COM_KNOWRES_BALANCE') . ' ('
                 . KrMethods::sprintf('COM_KNOWRES_DUE_BY', TickTock::displayDate($item->balance_date)) . ')'; ?>
         <?php elseif ($item->balance_date <= TickTock::getDate()): ?>
             <?php $due = KrMethods::plain('COM_KNOWRES_BALANCE')
