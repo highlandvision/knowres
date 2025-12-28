@@ -9,6 +9,24 @@
 
 namespace HighlandVision\Component\Knowres\Administrator\Model;
 
+use Exception;
+use HighlandVision\KR\Framework\KrFactory;
+use HighlandVision\KR\Framework\KrMethods;
+use HighlandVision\KR\Joomla\Extend\AdminModel;
+use HighlandVision\KR\Session as KrSession;
+use HighlandVision\KR\TickTock;
+use HighlandVision\KR\Utility;
+use InvalidArgumentException;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Versioning\VersionableControllerTrait;
+use RuntimeException;
+use stdClass;
+
+use function array_map;
+use function count;
+use function implode;
+use function is_countable;
+
 // phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
