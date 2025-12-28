@@ -10,11 +10,10 @@
 use HighlandVision\KR\Framework\KrMethods;
 
 // phpcs:disable PSR1.Files.SideEffects
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
 
-if (empty($this->approvals))
-{
+if (empty($this->approvals)) {
     return;
 }
 ?>

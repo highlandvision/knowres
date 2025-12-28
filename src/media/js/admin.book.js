@@ -166,7 +166,7 @@ if (typeof jQuery !== 'undefined') {
 					}
 				},
 				error: function () {
-					window.alert("Sorry an error has occurred, please try again");
+                    window.alert('Sorry an error has occurred, please try again');
 				}
 			});
 		}

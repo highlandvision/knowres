@@ -16,34 +16,40 @@ use HighlandVision\KR\Utility;
 use Joomla\CMS\HTML\HTMLHelper;
 
 // phpcs:disable PSR1.Files.SideEffects
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
 
 $Translations = new Translations();
 $region_name  = $Translations->getText('region', $this->item->region_id);
 $country_name = $Translations->getText('country', $this->item->country_id);
-$image        = Media\Images::getPropertyImageName($this->item->id);
+/** @noinspection PhpUnhandledExceptionInspection */
+$image = Media\Images::getPropertyImageName($this->item->id);
 
 $sleeps = $this->item->sleeps;
-if ((int) $this->item->sleeps_extra > 0)
-{
+if ((int)$this->item->sleeps_extra > 0) {
     $sleeps .= ' + ' . $this->item->sleeps_extra;
 }
 
 $edit        = KrMethods::route('index.php?option=com_knowres&task=property.edit&id=' . $this->item->id);
 $changerates = KrMethods::route('index.php?option=com_knowres&task=propertysettings.solo&property_id=' . $this->item->id
-        . '#rates');
+    . '#rates',
+);
 ?>
 
-<?php if (!is_null($this->item->checked_out) && $this->item->checked_out
-        && ($this->item->checked_out != KrMethods::getUser()->id)) : ?>
+<?php
+/** @noinspection PhpUnhandledExceptionInspection */
+if (!is_null($this->item->checked_out) && $this->item->checked_out
+    && ($this->item->checked_out != KrMethods::getUser()->id)) : ?>
     <div class="row">
         <div class="col">
             <h3 style="color:red;">
-                <?php echo KrMethods::sprintf('COM_KNOWRES_PROPERTYDASHBOARD_CHECKOUT',
-                        KrMethods::getUser($this->item->checked_out)->name,
-                        TickTock::displayTS($this->item->checked_out_time),
-                        KrMethods::route('index.php?option=com_knowres&task=property.checkin&id=' . $this->item->id));
+                <?php
+                /** @noinspection PhpUnhandledExceptionInspection */
+                echo KrMethods::sprintf('COM_KNOWRES_PROPERTYDASHBOARD_CHECKOUT',
+                    KrMethods::getUser($this->item->checked_out)->name,
+                    TickTock::displayTS($this->item->checked_out_time),
+                    KrMethods::route('index.php?option=com_knowres&task=property.checkin&id=' . $this->item->id),
+                );
                 ?>
             </h3>
             <br>
@@ -54,7 +60,8 @@ $changerates = KrMethods::route('index.php?option=com_knowres&task=propertysetti
 <div class="row">
     <div class="col-12 col-md-4 col-lg-2">
         <?php echo HTMLHelper::_('image', Media\Images::getImagePath($this->item->id, 'solo', $image),
-                $this->item->property_name, ['class' => "img-fluid"]); ?>
+            $this->item->property_name, ['class' => 'img-fluid'],
+        ); ?>
     </div>
     <div class="col-12 col-md-8 col-lg-4">
         <h3><?php echo $this->item->property_name; ?></h3>
@@ -89,8 +96,9 @@ $changerates = KrMethods::route('index.php?option=com_knowres&task=propertysetti
                 <?php endif; ?>
 
                 <?php if ($this->owner->mobile): ?>
-                    <?php $mobile = Utility::formatPhoneNumber($this->owner->mobile,
-                            $this->owner->mobile_country_id);
+                    <?php
+                    /** @noinspection PhpUnhandledExceptionInspection */
+                    $mobile = Utility::formatPhoneNumber($this->owner->mobile, $this->owner->mobile_country_id);
                     ?>
                     <dt class="col-12 col-md-3">
                         <?php echo KrMethods::plain('COM_KNOWRES_OWNERS_MOBILE') . ":"; ?>
@@ -110,7 +118,7 @@ $changerates = KrMethods::route('index.php?option=com_knowres&task=propertysetti
                 <?php echo KrMethods::plain('COM_KNOWRES_PROPERTIES_BOOKING_TYPE') . ":"; ?>
             </dt>
             <dd class="col-12 col-md-9">
-                <?php echo KrFactory::getAdminModel('property')::bookingTypeText((int) $this->item->booking_type); ?>
+                <?php echo KrFactory::getAdminModel('property')::bookingTypeText((int)$this->item->booking_type); ?>
                 <?php if ($this->access_level > 10) : ?>
                     <span class="smaller">
 						<a style="text-decoration:underline;font-size:86%;" href="<?php echo $edit; ?>">
@@ -124,12 +132,11 @@ $changerates = KrMethods::route('index.php?option=com_knowres&task=propertysetti
                 <?php echo KrMethods::plain('JSTATUS') . ":"; ?>
             </dt>
             <dd class="col-12 col-md-9">
-                <?php echo match ($this->item->state)
-                {
+                <?php echo match ($this->item->state) {
                     1 => KrMethods::plain('JPUBLISHED'),
                     0 => KrMethods::plain('JUNPUBLISHED'),
                     2 => KrMethods::plain('JARCHIVED'),
-                    -2 => KrMethods::plain('JTRASHED')
+                    -2 => KrMethods::plain('JTRASHED'),
                 };
                 ?>
             </dd>

@@ -1,720 +1,720 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form addfieldprefix="HighlandVision\Component\Knowres\Administrator\Field"
-	addruleprefix="HighlandVision\Component\Knowres\Administrator\Rule">
-	<fieldset name="bookings-left">
-		<field name="display_calendar"
-		       type="radio"
-			class="btn-group btn-group-yesno"
-			default="1"
-			filter="int"
-			required="true"
-			label="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_DISPLAY_CALENDAR"
-			description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_DISPLAY_CALENDAR_DSC">
-			<option value="1">JYES</option>
-			<option value="0">JNO</option>
-		</field>
-		<field name="advanceBookingsLimit"
-		       type="number"
-			default="365"
-			filter="int"
-			required="true"
-			min="365"
-			max="1460"
-			step="1"
-			label="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_ADVANCE_LIMIT"
-			description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_ADVANCE_LIMIT_DSC"/>
-		<field name="mindaysbeforearrival"
-		       type="number"
-			default="1"
-			filter="int"
-			required="true"
-			min="0"
-			max="14"
-			step="1"
-			label="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_ARRIVAL_NOTICE"
-			description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_ARRIVAL_NOTICE_DSC"/>
-		<field name="canwebook"
-		       type="number"
-			default="0"
-			filter="int"
-			required="true"
-			min="0"
-			max="7"
-			step="1"
-			label="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_CANWEBOOK"
-			description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_CANWEBOOK_DSC"/>
-		<field name="shortbook"
-		       type="number"
-			default="0"
-			filter="int"
-			required="true"
-			min="0"
-			max="7"
-			step="1"
-			label="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_SHORTBOOK"
-			description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_SHORTBOOK_DSC"/>
-		<field name="default_manager"
-		       type="listmanagers"
-			filter="int"
-			required="true"
-			label="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_DEFAULT_MANAGER"
-			description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_DEFAULT_MANAGER_DSC">
-			<option value="0">COM_KNOWRES_SELECT_REQUIRED</option>
-		</field>
-	</fieldset>
-	<fieldset name="bookings-lefttax">
-		<field name="tax_code_1"
-		       type="listtaxcodes"
-			filter="string"
-			hiddenDescription="true"
-			label="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_TAX_CODE, 1"
-			description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_TAX_CODE_DSC">
-			<option value="0">COM_KNOWRES_SELECT</option>
-		</field>
-		<field name="tax_code_2"
-		       type="listtaxcodes"
-			filter="int"
-			hiddenDescription="true"
-			label="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_TAX_CODE, 2"
-			description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_TAX_CODE_DSC">
-			<option value="0">COM_KNOWRES_SELECT</option>
-		</field>
-		<field name="tax_code_3"
-		       type="listtaxcodes"
-			filter="int"
-			label="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_TAX_CODE, 3"
-			description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_TAX_CODE_DSC">
-			<option value="0">COM_KNOWRES_SELECT</option>
-		</field>
-	</fieldset>
-	<fieldset name="bookings-right">
-		<field name="chargeDepositYesNo"
-		       type="radio"
-			class="btn-group btn-group-yesno"
-			default="1"
-			filter="int"
-			required="true"
-			label="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_DEPOSIT_CHARGE"
-			description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_DEPOSIT_CHARGE">
-			<option value="1">JYES</option>
-			<option value="0">JNO</option>
-		</field>
-		<field name="depositIsPercentage"
-		       type="radio"
-			class="btn-group btn-group-yesno"
-			default="1"
-			filter="int"
-			required="true"
-			label="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_DEPOSIT_PERCENTAGE"
-			description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_DEPOSIT_PERCENTAGE_DSC">
-			<option value="1">JYES</option>
-			<option value="0">JNO</option>
-		</field>
-		<field name="depositValue"
-		       type="number"
-			default="30"
-			filter="int"
-			required="true"
-			min="0"
-			max="100"
-			step="1"
-			label="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_DEPOSIT_VALUE"
-			description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_DEPOSIT_VALUE_DSC"/>
-		<field name="roundupDepositYesNo"
-		       type="radio"
-			class="btn-group btn-group-yesno"
-			default="1"
-			filter="int"
-			required="true"
-			label="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_DEPOSIT_ROUND"
-			description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_DEPOSIT_ROUND_DSC">
-			<option value="1">JYES</option>
-			<option value="0">JNO</option>
-		</field>
-		<field name="variable_deposit_threashold"
-		       type="number"
-			default="30"
-			filter="int"
-			required="true"
-			min="0"
-			max="100"
-			step="1"
-			label="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_DEPOSIT_VARIABLE"
-			description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_DEPOSIT_VARIABLE_DSC"/>
-		<field name="expiry_days"
-		       type="number"
-			default="2"
-			filter="int"
-			required="true"
-			min="0"
-			max="21"
-			step="1"
-			label="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_EXPIRY_DAYS"
-			description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_EXPIRY_DAYS_DSC"/>
-		<field name="balance_days"
-		       type="number"
-			default="30"
-			filter="int"
-			required="true"
-			min="0"
-			max="120"
-			step="1"
-			label="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_BALANCE_DAYS"
-			description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_BALANCE_DAYS_DSC"/>
-		<field name="weekenddays"
-		       type="listweekenddays"
-			default=""
-			filter="string"
-			required="true"
-			label="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_WEEKEND_DAYS"
-			description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_WEEKEND_DAYS_DSC"/>
-	</fieldset>
-	<fieldset name="form-left">
-		<field name="bookingform_requiredfields_firstname"
-		       type="radio"
-			class="btn-group"
-			default="1"
-			required="true"
-			label="COM_KNOWRES_FIRSTNAME"
-			description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_FORM_FIELD_DSC">
-			<option class="btn btn-outline-danger" value="2">COM_KNOWRES_HIDDEN</option>
-			<option class="btn btn-outline-success" value="0">COM_KNOWRES_OPTIONAL</option>
-			<option class="btn btn-outline-primary" value="1">COM_KNOWRES_MANDATORY</option>
-		</field>
-		<field name="bookingform_requiredfields_surname"
-		       type="radio"
-			class="btn-group"
-			default="1"
-			required="true"
-			label="COM_KNOWRES_SURNAME"
-			description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_FORM_FIELD_DSC">
-			<option class="btn btn-outline-danger" value="2">COM_KNOWRES_HIDDEN</option>
-			<option class="btn btn-outline-success" value="0">COM_KNOWRES_OPTIONAL</option>
-			<option class="btn btn-outline-primary" value="1">COM_KNOWRES_MANDATORY</option>
-		</field>
-		<field name="bookingform_requiredfields_address1"
-		       type="radio"
-			class="btn-group"
-			default="1"
-			filter="int"
-			required="true"
-			label="COM_KNOWRES_ADDRESS1"
-			description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_FORM_FIELD_DSC">
-			<option class="btn btn-outline-danger" value="2">COM_KNOWRES_HIDDEN</option>
-			<option class="btn btn-outline-success" value="0">COM_KNOWRES_OPTIONAL</option>
-			<option class="btn btn-outline-primary" value="1">COM_KNOWRES_MANDATORY</option>
-		</field>
-		<field name="bookingform_requiredfields_town"
-		       type="radio"
-			class="btn-group"
-			default="0"
-			filter="int"
-			required="true"
-			label="COM_KNOWRES_TOWN"
-			description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_FORM_FIELD_DSC">
-			<option class="btn btn-outline-danger" value="2">COM_KNOWRES_HIDDEN</option>
-			<option class="btn btn-outline-success" value="0">COM_KNOWRES_OPTIONAL</option>
-			<option class="btn btn-outline-primary" value="1">COM_KNOWRES_MANDATORY</option>
-		</field>
-		<field name="bookingform_requiredfields_postcode"
-		       type="radio"
-			class="btn-group"
-			default="1"
-			filter="int"
-			required="true"
-			label="COM_KNOWRES_POSTCODE"
-			description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_FORM_FIELD_DSC">
-			<option class="btn btn-outline-danger" value="2">COM_KNOWRES_HIDDEN</option>
-			<option class="btn btn-outline-success" value="0">COM_KNOWRES_OPTIONAL</option>
-			<option class="btn btn-outline-primary" value="1">COM_KNOWRES_MANDATORY</option>
-		</field>
-		<field name="bookingform_requiredfields_region"
-		       type="radio"
-			class="btn-group"
-			default="1"
-			filter="int"
-			required="true"
-			label="COM_KNOWRES_REGION_COUNTRY"
-			description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_FORM_FIELD_DSC">
-			<option class="btn btn-outline-danger" value="2">COM_KNOWRES_HIDDEN</option>
-			<option class="btn btn-outline-success" value="0">COM_KNOWRES_OPTIONAL</option>
-			<option class="btn btn-outline-primary" value="1">COM_KNOWRES_MANDATORY</option>
-		</field>
-		<field name="bookingform_requiredfields_mobile"
-		       type="radio"
-			class="btn-group"
-			default="1"
-			filter="int"
-			required="true"
-			label="COM_KNOWRES_MOBILE"
-			description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_FORM_FIELD_DSC">
-			<option class="btn btn-outline-danger" value="2">COM_KNOWRES_HIDDEN</option>
-			<option class="btn btn-outline-success" value="0">COM_KNOWRES_OPTIONAL</option>
-			<option class="btn btn-outline-primary" value="1">COM_KNOWRES_MANDATORY</option>
-		</field>
-		<field name="defaultcountry"
-		       type="listcountry"
-			default="0"
-			filter="int"
-			layout="joomla.form.field.list-fancy-select"
-			required="true"
-			label="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_DEFAULT_COUNTRY"
-			description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_DEFAULT_COUNTRY_DSC"/>
-	</fieldset>
-	<fieldset name="form-right">
-		<field name="manager_requiredfields_firstname"
-		       type="radio"
-			class="btn-group"
-			default="1"
-			filter="int"
-			required="true"
-			label="COM_KNOWRES_FIRSTNAME"
-			description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_FORM_FIELD_DSC">
-			<option class="btn btn-outline-danger" value="2">COM_KNOWRES_HIDDEN</option>
-			<option class="btn btn-outline-success" value="0">COM_KNOWRES_OPTIONAL</option>
-			<option class="btn btn-outline-primary" value="1">COM_KNOWRES_MANDATORY</option>
-		</field>
-		<field name="manager_requiredfields_surname"
-		       type="radio"
-			class="btn-group"
-			default="1"
-			filter="int"
-			required="true"
-			label="COM_KNOWRES_SURNAME"
-			description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_FORM_FIELD_DSC">
-			<option class="btn btn-outline-danger" value="2">COM_KNOWRES_HIDDEN</option>
-			<option class="btn btn-outline-success" value="0">COM_KNOWRES_OPTIONAL</option>
-			<option class="btn btn-outline-primary" value="1">COM_KNOWRES_MANDATORY</option>
-		</field>
-		<field name="manager_requiredfields_address1"
-		       type="radio"
-			class="btn-group"
-			default="1"
-			filter="int"
-			required="true"
-			label="COM_KNOWRES_ADDRESS1"
-			description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_FORM_FIELD_DSC">
-			<option class="btn btn-outline-danger" value="2">COM_KNOWRES_HIDDEN</option>
-			<option class="btn btn-outline-success" value="0">COM_KNOWRES_OPTIONAL</option>
-			<option class="btn btn-outline-primary" value="1">COM_KNOWRES_MANDATORY</option>
-		</field>
-		<field name="manager_requiredfields_town"
-		       type="radio"
-			class="btn-group"
-			default="0"
-			filter="int"
-			required="true"
-			label="COM_KNOWRES_TOWN"
-			description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_FORM_FIELD_DSC">
-			<option class="btn btn-outline-danger" value="2">COM_KNOWRES_HIDDEN</option>
-			<option class="btn btn-outline-success" value="0">COM_KNOWRES_OPTIONAL</option>
-			<option class="btn btn-outline-primary" value="1">COM_KNOWRES_MANDATORY</option>
-		</field>
-		<field name="manager_requiredfields_postcode"
-		       type="radio"
-			class="btn-group"
-			default="1"
-			filter="int"
-			required="true"
-			label="COM_KNOWRES_POSTCODE"
-			description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_FORM_FIELD_DSC">
-			<option class="btn btn-outline-danger" value="2">COM_KNOWRES_HIDDEN</option>
-			<option class="btn btn-outline-success" value="0">COM_KNOWRES_OPTIONAL</option>
-			<option class="btn btn-outline-primary" value="1">COM_KNOWRES_MANDATORY</option>
-		</field>
-		<field name="manager_requiredfields_region"
-		       type="radio"
-			class="btn-group"
-			default="1"
-			filter="int"
-			required="true"
-			label="COM_KNOWRES_REGION_COUNTRY"
-			description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_FORM_FIELD_DSC">
-			<option class="btn btn-outline-danger" value="2">COM_KNOWRES_HIDDEN</option>
-			<option class="btn btn-outline-success" value="0">COM_KNOWRES_OPTIONAL</option>
-			<option class="btn btn-outline-primary" value="1">COM_KNOWRES_MANDATORY</option>
-		</field>
-		<field name="manager_requiredfields_mobile"
-		       type="radio"
-			class="btn-group"
-			default="1"
-			filter="int"
-			required="true"
-			label="COM_KNOWRES_MOBILE"
-			description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_FORM_FIELD_DSC">
-			<option class="btn btn-outline-danger" value="2">COM_KNOWRES_HIDDEN</option>
-			<option class="btn btn-outline-success" value="0">COM_KNOWRES_OPTIONAL</option>
-			<option class="btn btn-outline-primary" value="1">COM_KNOWRES_MANDATORY</option>
-		</field>
-		<field name="manager_requiredfields_expiry_days"
-		       type="radio"
-			class="btn-group"
-			default="1"
-			filter="int"
-			required="true"
-			label="COM_KNOWRES_CONTRACTS_EXPIRY_DAYS"
-			description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_FORM_FIELD_DSC">
-			<option class="btn btn-outline-danger" value="2">COM_KNOWRES_HIDDEN</option>
-			<option class="btn btn-outline-success" value="0">COM_KNOWRES_OPTIONAL</option>
-			<option class="btn btn-outline-primary" value="1">COM_KNOWRES_MANDATORY</option>
-		</field>
-		<field name="manager_requiredfields_balance_days"
-		       type="radio"
-			class="btn-group"
-			default="1"
-			filter="int"
-			required="true"
-			label="COM_KNOWRES_CONTRACTS_BALANCE_DAYS"
-			description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_FORM_FIELD_DSC">
-			<option class="btn btn-outline-danger" value="2">COM_KNOWRES_HIDDEN</option>
-			<option class="btn btn-outline-success" value="0">COM_KNOWRES_OPTIONAL</option>
-			<option class="btn btn-outline-primary" value="1">COM_KNOWRES_MANDATORY</option>
-		</field>
-		<field name="manager_requiredfields_net_price"
-		       type="radio"
-			class="btn-group"
-			default="0"
-			filter="int"
-			required="true"
-			label="COM_KNOWRES_CONTRACTS_NET_PRICE"
-			description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_FORM_FIELD_DSC">
-			<option class="btn btn-outline-danger" value="2">COM_KNOWRES_HIDDEN</option>
-			<option class="btn btn-outline-success" value="0">COM_KNOWRES_OPTIONAL</option>
-			<option class="btn btn-outline-primary" value="1">COM_KNOWRES_MANDATORY</option>
-		</field>
-		<field name="manager_requiredfields_block_note"
-		       type="radio"
-			class="btn-group"
-			default="0"
-			filter="int"
-			required="true"
-			label="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_BLOCK_NOTE"
-			description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_FORM_FIELD_DSC">
-			<option class="btn btn-outline-danger" value="2">COM_KNOWRES_HIDDEN</option>
-			<option class="btn btn-outline-success" value="0">COM_KNOWRES_OPTIONAL</option>
-			<option class="btn btn-outline-primary" value="1">COM_KNOWRES_MANDATORY</option>
-		</field>
-	</fieldset>
-	<fieldset name="rates-left">
-		<field name="currency"
-		       type="listpaymentcurrency"
-			class="input-mini"
-			filter="string"
-			required="true"
-			label="COM_KNOWRES_PROPERTYSETTINGS_RATE_CURRENCY"
-			description="COM_KNOWRES_PROPERTYSETTINGS_RATE_CURRENCY_DSC">
-		</field>
-		<field name="tariffChargesStoredWeeklyYesNo"
-		       type="radio"
-			class="btn-group btn-group-yesno"
-			filter="int"
-			required="true"
-			label="COM_KNOWRES_PROPERTYSETTINGS_RATE_WEEKLY"
-			description="COM_KNOWRES_PROPERTYSETTINGS_RATE_WEEKLY_DSC">
-			<option value="1">JYES</option>
-			<option value="0">JNO</option>
-		</field>
-	</fieldset>
-	<fieldset name="rates-leftlos">
-		<field name="longstay_days1"
-		       type="string"
-			addonAfter="days"
-			class="input-tiny"
-			default="27"
-			filter="int"
-			hiddenLabel="true"
-			required="true"
-			label="COM_KNOWRES_PROPERTYSETTINGS_RATE_LONGSTAY"/>
-		<field name="longstay_percentage1"
-		       type="string"
-			addonAfter="% base rate"
-			class="input-tiny"
-			default="100"
-			filter="int"
-			hiddenLabel="true"
-			required="true"
-			label="COM_KNOWRES_PROPERTYSETTINGS_RATE_LONGSTAY"/>
-		<field name="longstay_days2"
-		       type="string"
-			addonAfter="days"
-			class="input-tiny"
-			default="55"
-			filter="int"
-			hiddenLabel="true"
-			required="true"
-			label="COM_KNOWRES_PROPERTYSETTINGS_RATE_LONGSTAY"/>
-		<field name="longstay_percentage2"
-		       type="string"
-			addonAfter="% base rate"
-			class="input-tiny"
-			default="100"
-			filter="int"
-			hiddenLabel="true"
-			required="true"
-			label="COM_KNOWRES_PROPERTYSETTINGS_RATE_LONGSTAY"/>
-		<field name="longstay_days3"
-		       type="string"
-			addonAfter="days"
-			class="input-tiny"
-			default="71"
-			filter="int"
-			hiddenLabel="true"
-			required="true"
-			label="COM_KNOWRES_PROPERTYSETTINGS_RATE_LONGSTAY"/>
-		<field name="longstay_percentage3"
-		       type="string"
-			addonAfter="% base rate"
-			class="input-tiny"
-			default="100"
-			hiddenLabel="true"
-			filter="int"
-			required="true"
-			label="COM_KNOWRES_PROPERTYSETTINGS_RATE_LONGSTAY"/>
-	</fieldset>
-	<fieldset name="rates-leftsb">
-		<field name="shortstay_percentage2"
-		       type="string"
-			addonAfter="% base rate"
-			addonBefore="2 days"
-			class="input-tiny"
-			default="100"
-			filter="int"
-			hiddenLabel="true"
-			required="true"
-			label="COM_KNOWRES_PROPERTYSETTINGS_RATE_SHORTSTAY"/>
-		<field name="shortstay_percentage3"
-		       type="string"
-			addonAfter="% base rate"
-			addonBefore="3 days"
-			class="input-tiny"
-			default="100"
-			filter="int"
-			hiddenLabel="true"
-			required="true"
-			label="COM_KNOWRES_PROPERTYSETTINGS_RATE_SHORTSTAY"/>
-		<field name="shortstay_percentage4"
-		       type="string"
-			addonAfter="% base rate"
-			addonBefore="4 days"
-			class="input-tiny"
-			default="100"
-			filter="int"
-			hiddenLabel="true"
-			required="true"
-			label="COM_KNOWRES_PROPERTYSETTINGS_RATE_SHORTSTAY"/>
-		<field name="shortstay_percentage5"
-		       type="string"
-			addonAfter="% base rate"
-			addonBefore="5 days"
-			class="input-tiny"
-			default="100"
-			filter="int"
-			hiddenLabel="true"
-			required="true"
-			label="COM_KNOWRES_PROPERTYSETTINGS_RATE_SHORTSTAY"/>
-		<field name="shortstay_percentage6"
-		       type="string"
-			addonAfter="% base rate"
-			addonBefore="6 days"
-			class="input-tiny"
-			default="100"
-			filter="int"
-			hiddenLabel="true"
-			required="true"
-			label="COM_KNOWRES_PROPERTYSETTINGS_RATE_SHORTSTAY"/>
-	</fieldset>
-	<fieldset name="rates-right-net">
-		<field name="net_rates"
-		       type="radio"
-			class="btn-group btn-group-yesno"
-			default="0"
-			filter="int"
-			required="true"
-			label="COM_KNOWRES_PROPERTYSETTINGS_RATE_NET"
-			description="COM_KNOWRES_PROPERTYSETTINGS_RATE_NET_DSC">
-			<option value="0">JNO</option>
-			<option value="1" onchange="togglerates('net_rates', 1);">JYES</option>
-		</field>
-		<field name="net_markup"
-		       type="string"
-			addonAfter="%"
-			class="input-tiny"
-			default="20"
-			filter="int"
-			showon="net_rates:1"
-			label="COM_KNOWRES_PROPERTYSETTINGS_RATE_NET_MARKUP"
-			description="COM_KNOWRES_PROPERTYSETTINGS_RATE_NET_MARKUP_DSC"/>
-	</fieldset>
-	<fieldset name="rates-right-managed">
-		<field name="managed_rates"
-		       type="radio"
-			class="btn-group btn-group-yesno"
-			default="0"
-			filter="int"
-			label="COM_KNOWRES_PROPERTYSETTINGS_RATE_MANAGER"
-			description="COM_KNOWRES_PROPERTYSETTINGS_RATE_MANAGER_DSC">
-			<option value="0">JNO</option>
-			<option value="1" onchange="togglerates('managed_rates', 1);">JYES</option>
-		</field>
-	</fieldset>
-	<fieldset name="rates-right-managed-data">
-		<field name="cluster"
-		       type="listclusters"
-		       filter="int"
-		       showon="managed_rates:1"
-		       label="COM_KNOWRES_PROPERTYSETTINGS_RATE_CLUSTER"
-		       description="COM_KNOWRES_PROPERTYSETTINGS_RATE_CLUSTER_DSC">
-			<option value="0">COM_KNOWRES_SELECT</option>
-		</field>
-		<field name="minimuminterval"
-		       type="number"
-			default="1"
-			showon="managed_rates:1"
-			min="1"
-			max="7"
-			step="1"
-			label="COM_KNOWRES_PROPERTYSETTINGS_RATE_MIN_NIGHTS"
-			description="COM_KNOWRES_PROPERTYSETTINGS_RATE_MIN_NIGHTS_DSC"/>
-		<field name="exclude_lastminute0"
-		       type="radio"
-			class="btn-group btn-group-yesno"
-			default="0"
-			showon="managed_rates:1"
-			label="COM_KNOWRES_PROPERTYSETTINGS_RATE_LASTMINUTE_EXCLUDE"
-			description="COM_KNOWRES_PROPERTYSETTINGS_RATE_LASTMINUTE_EXCLUDE_DSC">
-			<option value="1">JYES</option>
-			<option value="0">JNO</option>
-		</field>
-		<fieldset name="rates-right-seasons">
-			<field name="seasons"
-			       type="spacer"
-				class="h5"
-				showon="managed_rates:1"
-				label="COM_KNOWRES_PROPERTYSETTINGS_RATE_SEASONS"/>
-			<field name="xlow_season_pc"
-			       type="string"
-				addonAfter="% base rate"
-				class="input-tiny"
-				default="100"
-				filter="int"
-				required="true"
-				showon="managed_rates:1"
-				label="COM_KNOWRES_PROPERTYSETTINGS_RATE_XLOW"/>
-			<field name="low_season_pc"
-			       type="string"
-				addonAfter="% base rate"
-				class="input-tiny"
-				default="100"
-				filter="int"
-				required="true"
-				showon="managed_rates:1"
-				label="COM_KNOWRES_PROPERTYSETTINGS_RATE_LOW"/>
-			<field name="slow_season_pc"
-			       type="string"
-				addonAfter="% base rate"
-				class="input-tiny"
-				default="100"
-				filter="int"
-				required="true"
-				showon="managed_rates:1"
-				label="COM_KNOWRES_PROPERTYSETTINGS_RATE_SLOW"/>
-			<field name="mid_season_pc"
-			       type="string"
-				addonAfter="% base rate"
-				class="input-tiny"
-				default="100"
-				filter="int"
-				required="true"
-				showon="managed_rates:1"
-				label="COM_KNOWRES_PROPERTYSETTINGS_RATE_MID"/>
-			<field name="high_season_pc"
-			       type="string"
-				addonAfter="% base rate"
-				class="input-tiny"
-				default="100"
-				filter="int"
-				required="true"
-				showon="managed_rates:1"
-				label="COM_KNOWRES_PROPERTYSETTINGS_RATE_HIGH"/>
-			<field name="xhigh_season_pc"
-			       type="string"
-				addonAfter="% base rate"
-				class="input-tiny"
-				default="100"
-				filter="int"
-				required="true"
-				showon="managed_rates:1"
-				label="COM_KNOWRES_PROPERTYSETTINGS_RATE_XHIGH"/>
-		</fieldset>
-		<fieldset name="rates-right-daily">
-			<field name="daily"
-			       type="spacer"
-				class="h5"
-				showon="managed_rates:1"
-				label="COM_KNOWRES_PROPERTYSETTINGS_RATE_DAILY"/>
-			<field name="monday_pc"
-			       type="string"
-				addonAfter="% base rate"
-				class="input-tiny"
-				default="100"
-				filter="int"
-				required="true"
-				showon="managed_rates:1"
-				label="COM_KNOWRES_MONDAY"/>
-			<field name="tuesday_pc"
-			       type="string"
-				addonAfter="% base rate"
-				class="input-tiny"
-				default="100"
-				filter="int"
-				required="true"
-				showon="managed_rates:1"
-				label="COM_KNOWRES_TUESDAY"/>
-			<field name="wednesday_pc"
-			       type="string"
-				addonAfter="% base rate"
-				class="input-tiny"
-				default="100"
-				filter="int"
-				required="true"
-				showon="managed_rates:1"
-				label="COM_KNOWRES_WEDNESDAY"/>
-			<field name="thursday_pc"
-			       type="string"
-				addonAfter="% base rate"
-				class="input-tiny"
-				default="100"
-				filter="int"
-				required="true"
-				showon="managed_rates:1"
-				label="COM_KNOWRES_THURSDAY"/>
-			<field name="friday_pc"
-			       type="string"
-				addonAfter="% base rate"
-				class="input-tiny"
-				default="100"
-				filter="int"
-				required="true"
-				showon="managed_rates:1"
-				label="COM_KNOWRES_FRIDAY"/>
-			<field name="saturday_pc"
-			       type="string"
-				addonAfter="% base rate"
-				class="input-tiny"
-				default="100"
-				filter="int"
-				required="true"
-				showon="managed_rates:1"
-				label="COM_KNOWRES_SATURDAY"/>
-			<field name="sunday_pc"
-			       type="string"
-				addonAfter="% base rate"
-				class="input-tiny"
-				default="100"
-				filter="int"
-				required="true"
-				showon="managed_rates:1"
-				label="COM_KNOWRES_SUNDAY"/>
-		</fieldset>
-	</fieldset>
+      addruleprefix="HighlandVision\Component\Knowres\Administrator\Rule">
+    <fieldset name="bookings-left">
+        <field name="display_calendar"
+               type="radio"
+               class="btn-group btn-group-yesno"
+               default="1"
+               filter="int"
+               required="true"
+               label="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_DISPLAY_CALENDAR"
+               description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_DISPLAY_CALENDAR_DSC">
+            <option value="1">JYES</option>
+            <option value="0">JNO</option>
+        </field>
+        <field name="advanceBookingsLimit"
+               type="number"
+               default="365"
+               filter="int"
+               required="true"
+               min="365"
+               max="1460"
+               step="1"
+               label="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_ADVANCE_LIMIT"
+               description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_ADVANCE_LIMIT_DSC"/>
+        <field name="mindaysbeforearrival"
+               type="number"
+               default="1"
+               filter="int"
+               required="true"
+               min="0"
+               max="14"
+               step="1"
+               label="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_ARRIVAL_NOTICE"
+               description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_ARRIVAL_NOTICE_DSC"/>
+        <field name="canwebook"
+               type="number"
+               default="0"
+               filter="int"
+               required="true"
+               min="0"
+               max="7"
+               step="1"
+               label="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_CANWEBOOK"
+               description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_CANWEBOOK_DSC"/>
+        <field name="shortbook"
+               type="number"
+               default="0"
+               filter="int"
+               required="true"
+               min="0"
+               max="7"
+               step="1"
+               label="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_SHORTBOOK"
+               description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_SHORTBOOK_DSC"/>
+        <field name="default_manager"
+               type="listmanagers"
+               filter="int"
+               required="true"
+               label="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_DEFAULT_MANAGER"
+               description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_DEFAULT_MANAGER_DSC">
+            <option value="0">COM_KNOWRES_SELECT_REQUIRED</option>
+        </field>
+    </fieldset>
+    <fieldset name="bookings-lefttax">
+        <field name="tax_code_1"
+               type="listtaxcodes"
+               filter="string"
+               hiddenDescription="true"
+               label="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_TAX_CODE, 1"
+               description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_TAX_CODE_DSC">
+            <option value="0">COM_KNOWRES_SELECT</option>
+        </field>
+        <field name="tax_code_2"
+               type="listtaxcodes"
+               filter="int"
+               hiddenDescription="true"
+               label="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_TAX_CODE, 2"
+               description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_TAX_CODE_DSC">
+            <option value="0">COM_KNOWRES_SELECT</option>
+        </field>
+        <field name="tax_code_3"
+               type="listtaxcodes"
+               filter="int"
+               label="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_TAX_CODE, 3"
+               description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_TAX_CODE_DSC">
+            <option value="0">COM_KNOWRES_SELECT</option>
+        </field>
+    </fieldset>
+    <fieldset name="bookings-right">
+        <field name="chargeDepositYesNo"
+               type="radio"
+               class="btn-group btn-group-yesno"
+               default="1"
+               filter="int"
+               required="true"
+               label="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_DEPOSIT_CHARGE"
+               description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_DEPOSIT_CHARGE">
+            <option value="1">JYES</option>
+            <option value="0">JNO</option>
+        </field>
+        <field name="depositIsPercentage"
+               type="radio"
+               class="btn-group btn-group-yesno"
+               default="1"
+               filter="int"
+               required="true"
+               label="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_DEPOSIT_PERCENTAGE"
+               description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_DEPOSIT_PERCENTAGE_DSC">
+            <option value="1">JYES</option>
+            <option value="0">JNO</option>
+        </field>
+        <field name="depositValue"
+               type="number"
+               default="30"
+               filter="int"
+               required="true"
+               min="0"
+               max="100"
+               step="1"
+               label="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_DEPOSIT_VALUE"
+               description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_DEPOSIT_VALUE_DSC"/>
+        <field name="roundupDepositYesNo"
+               type="radio"
+               class="btn-group btn-group-yesno"
+               default="1"
+               filter="int"
+               required="true"
+               label="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_DEPOSIT_ROUND"
+               description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_DEPOSIT_ROUND_DSC">
+            <option value="1">JYES</option>
+            <option value="0">JNO</option>
+        </field>
+        <field name="variable_deposit_threashold"
+               type="number"
+               default="30"
+               filter="int"
+               required="true"
+               min="0"
+               max="100"
+               step="1"
+               label="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_DEPOSIT_VARIABLE"
+               description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_DEPOSIT_VARIABLE_DSC"/>
+        <field name="expiry_days"
+               type="number"
+               default="2"
+               filter="int"
+               required="true"
+               min="0"
+               max="21"
+               step="1"
+               label="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_EXPIRY_DAYS"
+               description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_EXPIRY_DAYS_DSC"/>
+        <field name="balance_days"
+               type="number"
+               default="30"
+               filter="int"
+               required="true"
+               min="0"
+               max="120"
+               step="1"
+               label="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_BALANCE_DAYS"
+               description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_BALANCE_DAYS_DSC"/>
+        <field name="weekenddays"
+               type="listweekenddays"
+               default=""
+               filter="string"
+               required="true"
+               label="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_WEEKEND_DAYS"
+               description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_WEEKEND_DAYS_DSC"/>
+    </fieldset>
+    <fieldset name="form-left">
+        <field name="bookingform_requiredfields_firstname"
+               type="radio"
+               class="btn-group"
+               default="1"
+               required="true"
+               label="COM_KNOWRES_FIRSTNAME"
+               description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_FORM_FIELD_DSC">
+            <option class="btn btn-outline-danger" value="2">COM_KNOWRES_HIDDEN</option>
+            <option class="btn btn-outline-success" value="0">COM_KNOWRES_OPTIONAL</option>
+            <option class="btn btn-outline-primary" value="1">COM_KNOWRES_MANDATORY</option>
+        </field>
+        <field name="bookingform_requiredfields_surname"
+               type="radio"
+               class="btn-group"
+               default="1"
+               required="true"
+               label="COM_KNOWRES_SURNAME"
+               description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_FORM_FIELD_DSC">
+            <option class="btn btn-outline-danger" value="2">COM_KNOWRES_HIDDEN</option>
+            <option class="btn btn-outline-success" value="0">COM_KNOWRES_OPTIONAL</option>
+            <option class="btn btn-outline-primary" value="1">COM_KNOWRES_MANDATORY</option>
+        </field>
+        <field name="bookingform_requiredfields_address1"
+               type="radio"
+               class="btn-group"
+               default="1"
+               filter="int"
+               required="true"
+               label="COM_KNOWRES_ADDRESS1"
+               description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_FORM_FIELD_DSC">
+            <option class="btn btn-outline-danger" value="2">COM_KNOWRES_HIDDEN</option>
+            <option class="btn btn-outline-success" value="0">COM_KNOWRES_OPTIONAL</option>
+            <option class="btn btn-outline-primary" value="1">COM_KNOWRES_MANDATORY</option>
+        </field>
+        <field name="bookingform_requiredfields_town"
+               type="radio"
+               class="btn-group"
+               default="0"
+               filter="int"
+               required="true"
+               label="COM_KNOWRES_TOWN"
+               description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_FORM_FIELD_DSC">
+            <option class="btn btn-outline-danger" value="2">COM_KNOWRES_HIDDEN</option>
+            <option class="btn btn-outline-success" value="0">COM_KNOWRES_OPTIONAL</option>
+            <option class="btn btn-outline-primary" value="1">COM_KNOWRES_MANDATORY</option>
+        </field>
+        <field name="bookingform_requiredfields_postcode"
+               type="radio"
+               class="btn-group"
+               default="1"
+               filter="int"
+               required="true"
+               label="COM_KNOWRES_POSTCODE"
+               description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_FORM_FIELD_DSC">
+            <option class="btn btn-outline-danger" value="2">COM_KNOWRES_HIDDEN</option>
+            <option class="btn btn-outline-success" value="0">COM_KNOWRES_OPTIONAL</option>
+            <option class="btn btn-outline-primary" value="1">COM_KNOWRES_MANDATORY</option>
+        </field>
+        <field name="bookingform_requiredfields_region"
+               type="radio"
+               class="btn-group"
+               default="1"
+               filter="int"
+               required="true"
+               label="COM_KNOWRES_REGION_COUNTRY"
+               description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_FORM_FIELD_DSC">
+            <option class="btn btn-outline-danger" value="2">COM_KNOWRES_HIDDEN</option>
+            <option class="btn btn-outline-success" value="0">COM_KNOWRES_OPTIONAL</option>
+            <option class="btn btn-outline-primary" value="1">COM_KNOWRES_MANDATORY</option>
+        </field>
+        <field name="bookingform_requiredfields_mobile"
+               type="radio"
+               class="btn-group"
+               default="1"
+               filter="int"
+               required="true"
+               label="COM_KNOWRES_MOBILE"
+               description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_FORM_FIELD_DSC">
+            <option class="btn btn-outline-danger" value="2">COM_KNOWRES_HIDDEN</option>
+            <option class="btn btn-outline-success" value="0">COM_KNOWRES_OPTIONAL</option>
+            <option class="btn btn-outline-primary" value="1">COM_KNOWRES_MANDATORY</option>
+        </field>
+        <field name="defaultcountry"
+               type="listcountry"
+               default="0"
+               filter="int"
+               layout="joomla.form.field.list-fancy-select"
+               required="true"
+               label="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_DEFAULT_COUNTRY"
+               description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_DEFAULT_COUNTRY_DSC"/>
+    </fieldset>
+    <fieldset name="form-right">
+        <field name="manager_requiredfields_firstname"
+               type="radio"
+               class="btn-group"
+               default="1"
+               filter="int"
+               required="true"
+               label="COM_KNOWRES_FIRSTNAME"
+               description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_FORM_FIELD_DSC">
+            <option class="btn btn-outline-danger" value="2">COM_KNOWRES_HIDDEN</option>
+            <option class="btn btn-outline-success" value="0">COM_KNOWRES_OPTIONAL</option>
+            <option class="btn btn-outline-primary" value="1">COM_KNOWRES_MANDATORY</option>
+        </field>
+        <field name="manager_requiredfields_surname"
+               type="radio"
+               class="btn-group"
+               default="1"
+               filter="int"
+               required="true"
+               label="COM_KNOWRES_SURNAME"
+               description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_FORM_FIELD_DSC">
+            <option class="btn btn-outline-danger" value="2">COM_KNOWRES_HIDDEN</option>
+            <option class="btn btn-outline-success" value="0">COM_KNOWRES_OPTIONAL</option>
+            <option class="btn btn-outline-primary" value="1">COM_KNOWRES_MANDATORY</option>
+        </field>
+        <field name="manager_requiredfields_address1"
+               type="radio"
+               class="btn-group"
+               default="1"
+               filter="int"
+               required="true"
+               label="COM_KNOWRES_ADDRESS1"
+               description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_FORM_FIELD_DSC">
+            <option class="btn btn-outline-danger" value="2">COM_KNOWRES_HIDDEN</option>
+            <option class="btn btn-outline-success" value="0">COM_KNOWRES_OPTIONAL</option>
+            <option class="btn btn-outline-primary" value="1">COM_KNOWRES_MANDATORY</option>
+        </field>
+        <field name="manager_requiredfields_town"
+               type="radio"
+               class="btn-group"
+               default="0"
+               filter="int"
+               required="true"
+               label="COM_KNOWRES_TOWN"
+               description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_FORM_FIELD_DSC">
+            <option class="btn btn-outline-danger" value="2">COM_KNOWRES_HIDDEN</option>
+            <option class="btn btn-outline-success" value="0">COM_KNOWRES_OPTIONAL</option>
+            <option class="btn btn-outline-primary" value="1">COM_KNOWRES_MANDATORY</option>
+        </field>
+        <field name="manager_requiredfields_postcode"
+               type="radio"
+               class="btn-group"
+               default="1"
+               filter="int"
+               required="true"
+               label="COM_KNOWRES_POSTCODE"
+               description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_FORM_FIELD_DSC">
+            <option class="btn btn-outline-danger" value="2">COM_KNOWRES_HIDDEN</option>
+            <option class="btn btn-outline-success" value="0">COM_KNOWRES_OPTIONAL</option>
+            <option class="btn btn-outline-primary" value="1">COM_KNOWRES_MANDATORY</option>
+        </field>
+        <field name="manager_requiredfields_region"
+               type="radio"
+               class="btn-group"
+               default="1"
+               filter="int"
+               required="true"
+               label="COM_KNOWRES_REGION_COUNTRY"
+               description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_FORM_FIELD_DSC">
+            <option class="btn btn-outline-danger" value="2">COM_KNOWRES_HIDDEN</option>
+            <option class="btn btn-outline-success" value="0">COM_KNOWRES_OPTIONAL</option>
+            <option class="btn btn-outline-primary" value="1">COM_KNOWRES_MANDATORY</option>
+        </field>
+        <field name="manager_requiredfields_mobile"
+               type="radio"
+               class="btn-group"
+               default="1"
+               filter="int"
+               required="true"
+               label="COM_KNOWRES_MOBILE"
+               description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_FORM_FIELD_DSC">
+            <option class="btn btn-outline-danger" value="2">COM_KNOWRES_HIDDEN</option>
+            <option class="btn btn-outline-success" value="0">COM_KNOWRES_OPTIONAL</option>
+            <option class="btn btn-outline-primary" value="1">COM_KNOWRES_MANDATORY</option>
+        </field>
+        <field name="manager_requiredfields_expiry_days"
+               type="radio"
+               class="btn-group"
+               default="1"
+               filter="int"
+               required="true"
+               label="COM_KNOWRES_CONTRACTS_EXPIRY_DAYS"
+               description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_FORM_FIELD_DSC">
+            <option class="btn btn-outline-danger" value="2">COM_KNOWRES_HIDDEN</option>
+            <option class="btn btn-outline-success" value="0">COM_KNOWRES_OPTIONAL</option>
+            <option class="btn btn-outline-primary" value="1">COM_KNOWRES_MANDATORY</option>
+        </field>
+        <field name="manager_requiredfields_balance_days"
+               type="radio"
+               class="btn-group"
+               default="1"
+               filter="int"
+               required="true"
+               label="COM_KNOWRES_CONTRACTS_BALANCE_DAYS"
+               description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_FORM_FIELD_DSC">
+            <option class="btn btn-outline-danger" value="2">COM_KNOWRES_HIDDEN</option>
+            <option class="btn btn-outline-success" value="0">COM_KNOWRES_OPTIONAL</option>
+            <option class="btn btn-outline-primary" value="1">COM_KNOWRES_MANDATORY</option>
+        </field>
+        <field name="manager_requiredfields_net_price"
+               type="radio"
+               class="btn-group"
+               default="0"
+               filter="int"
+               required="true"
+               label="COM_KNOWRES_CONTRACTS_NET_PRICE"
+               description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_FORM_FIELD_DSC">
+            <option class="btn btn-outline-danger" value="2">COM_KNOWRES_HIDDEN</option>
+            <option class="btn btn-outline-success" value="0">COM_KNOWRES_OPTIONAL</option>
+            <option class="btn btn-outline-primary" value="1">COM_KNOWRES_MANDATORY</option>
+        </field>
+        <field name="manager_requiredfields_block_note"
+               type="radio"
+               class="btn-group"
+               default="0"
+               filter="int"
+               required="true"
+               label="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_BLOCK_NOTE"
+               description="COM_KNOWRES_PROPERTYSETTINGS_BOOKING_FORM_FIELD_DSC">
+            <option class="btn btn-outline-danger" value="2">COM_KNOWRES_HIDDEN</option>
+            <option class="btn btn-outline-success" value="0">COM_KNOWRES_OPTIONAL</option>
+            <option class="btn btn-outline-primary" value="1">COM_KNOWRES_MANDATORY</option>
+        </field>
+    </fieldset>
+    <fieldset name="rates-left">
+        <field name="currency"
+               type="listcurrencyproperty"
+               class="input-mini"
+               filter="string"
+               required="true"
+               label="COM_KNOWRES_PROPERTYSETTINGS_RATE_CURRENCY"
+               description="COM_KNOWRES_PROPERTYSETTINGS_RATE_CURRENCY_DSC">
+        </field>
+        <field name="tariffChargesStoredWeeklyYesNo"
+               type="radio"
+               class="btn-group btn-group-yesno"
+               filter="int"
+               required="true"
+               label="COM_KNOWRES_PROPERTYSETTINGS_RATE_WEEKLY"
+               description="COM_KNOWRES_PROPERTYSETTINGS_RATE_WEEKLY_DSC">
+            <option value="1">JYES</option>
+            <option value="0">JNO</option>
+        </field>
+    </fieldset>
+    <fieldset name="rates-leftlos">
+        <field name="longstay_days1"
+               type="string"
+               addonAfter="days"
+               class="input-tiny"
+               default="27"
+               filter="int"
+               hiddenLabel="true"
+               required="true"
+               label="COM_KNOWRES_PROPERTYSETTINGS_RATE_LONGSTAY"/>
+        <field name="longstay_percentage1"
+               type="string"
+               addonAfter="% base rate"
+               class="input-tiny"
+               default="100"
+               filter="int"
+               hiddenLabel="true"
+               required="true"
+               label="COM_KNOWRES_PROPERTYSETTINGS_RATE_LONGSTAY"/>
+        <field name="longstay_days2"
+               type="string"
+               addonAfter="days"
+               class="input-tiny"
+               default="55"
+               filter="int"
+               hiddenLabel="true"
+               required="true"
+               label="COM_KNOWRES_PROPERTYSETTINGS_RATE_LONGSTAY"/>
+        <field name="longstay_percentage2"
+               type="string"
+               addonAfter="% base rate"
+               class="input-tiny"
+               default="100"
+               filter="int"
+               hiddenLabel="true"
+               required="true"
+               label="COM_KNOWRES_PROPERTYSETTINGS_RATE_LONGSTAY"/>
+        <field name="longstay_days3"
+               type="string"
+               addonAfter="days"
+               class="input-tiny"
+               default="71"
+               filter="int"
+               hiddenLabel="true"
+               required="true"
+               label="COM_KNOWRES_PROPERTYSETTINGS_RATE_LONGSTAY"/>
+        <field name="longstay_percentage3"
+               type="string"
+               addonAfter="% base rate"
+               class="input-tiny"
+               default="100"
+               hiddenLabel="true"
+               filter="int"
+               required="true"
+               label="COM_KNOWRES_PROPERTYSETTINGS_RATE_LONGSTAY"/>
+    </fieldset>
+    <fieldset name="rates-leftsb">
+        <field name="shortstay_percentage2"
+               type="string"
+               addonAfter="% base rate"
+               addonBefore="2 days"
+               class="input-tiny"
+               default="100"
+               filter="int"
+               hiddenLabel="true"
+               required="true"
+               label="COM_KNOWRES_PROPERTYSETTINGS_RATE_SHORTSTAY"/>
+        <field name="shortstay_percentage3"
+               type="string"
+               addonAfter="% base rate"
+               addonBefore="3 days"
+               class="input-tiny"
+               default="100"
+               filter="int"
+               hiddenLabel="true"
+               required="true"
+               label="COM_KNOWRES_PROPERTYSETTINGS_RATE_SHORTSTAY"/>
+        <field name="shortstay_percentage4"
+               type="string"
+               addonAfter="% base rate"
+               addonBefore="4 days"
+               class="input-tiny"
+               default="100"
+               filter="int"
+               hiddenLabel="true"
+               required="true"
+               label="COM_KNOWRES_PROPERTYSETTINGS_RATE_SHORTSTAY"/>
+        <field name="shortstay_percentage5"
+               type="string"
+               addonAfter="% base rate"
+               addonBefore="5 days"
+               class="input-tiny"
+               default="100"
+               filter="int"
+               hiddenLabel="true"
+               required="true"
+               label="COM_KNOWRES_PROPERTYSETTINGS_RATE_SHORTSTAY"/>
+        <field name="shortstay_percentage6"
+               type="string"
+               addonAfter="% base rate"
+               addonBefore="6 days"
+               class="input-tiny"
+               default="100"
+               filter="int"
+               hiddenLabel="true"
+               required="true"
+               label="COM_KNOWRES_PROPERTYSETTINGS_RATE_SHORTSTAY"/>
+    </fieldset>
+    <fieldset name="rates-right-net">
+        <field name="net_rates"
+               type="radio"
+               class="btn-group btn-group-yesno"
+               default="0"
+               filter="int"
+               required="true"
+               label="COM_KNOWRES_PROPERTYSETTINGS_RATE_NET"
+               description="COM_KNOWRES_PROPERTYSETTINGS_RATE_NET_DSC">
+            <option value="0">JNO</option>
+            <option value="1" onchange="togglerates('net_rates', 1);">JYES</option>
+        </field>
+        <field name="net_markup"
+               type="string"
+               addonAfter="%"
+               class="input-tiny"
+               default="20"
+               filter="int"
+               showon="net_rates:1"
+               label="COM_KNOWRES_PROPERTYSETTINGS_RATE_NET_MARKUP"
+               description="COM_KNOWRES_PROPERTYSETTINGS_RATE_NET_MARKUP_DSC"/>
+    </fieldset>
+    <fieldset name="rates-right-managed">
+        <field name="managed_rates"
+               type="radio"
+               class="btn-group btn-group-yesno"
+               default="0"
+               filter="int"
+               label="COM_KNOWRES_PROPERTYSETTINGS_RATE_MANAGER"
+               description="COM_KNOWRES_PROPERTYSETTINGS_RATE_MANAGER_DSC">
+            <option value="0">JNO</option>
+            <option value="1" onchange="togglerates('managed_rates', 1);">JYES</option>
+        </field>
+    </fieldset>
+    <fieldset name="rates-right-managed-data">
+        <field name="cluster"
+               type="listclusters"
+               filter="int"
+               showon="managed_rates:1"
+               label="COM_KNOWRES_PROPERTYSETTINGS_RATE_CLUSTER"
+               description="COM_KNOWRES_PROPERTYSETTINGS_RATE_CLUSTER_DSC">
+            <option value="0">COM_KNOWRES_SELECT</option>
+        </field>
+        <field name="minimuminterval"
+               type="number"
+               default="1"
+               showon="managed_rates:1"
+               min="1"
+               max="7"
+               step="1"
+               label="COM_KNOWRES_PROPERTYSETTINGS_RATE_MIN_NIGHTS"
+               description="COM_KNOWRES_PROPERTYSETTINGS_RATE_MIN_NIGHTS_DSC"/>
+        <field name="exclude_lastminute0"
+               type="radio"
+               class="btn-group btn-group-yesno"
+               default="0"
+               showon="managed_rates:1"
+               label="COM_KNOWRES_PROPERTYSETTINGS_RATE_LASTMINUTE_EXCLUDE"
+               description="COM_KNOWRES_PROPERTYSETTINGS_RATE_LASTMINUTE_EXCLUDE_DSC">
+            <option value="1">JYES</option>
+            <option value="0">JNO</option>
+        </field>
+        <fieldset name="rates-right-seasons">
+            <field name="seasons"
+                   type="spacer"
+                   class="h5"
+                   showon="managed_rates:1"
+                   label="COM_KNOWRES_PROPERTYSETTINGS_RATE_SEASONS"/>
+            <field name="xlow_season_pc"
+                   type="string"
+                   addonAfter="% base rate"
+                   class="input-tiny"
+                   default="100"
+                   filter="int"
+                   required="true"
+                   showon="managed_rates:1"
+                   label="COM_KNOWRES_PROPERTYSETTINGS_RATE_XLOW"/>
+            <field name="low_season_pc"
+                   type="string"
+                   addonAfter="% base rate"
+                   class="input-tiny"
+                   default="100"
+                   filter="int"
+                   required="true"
+                   showon="managed_rates:1"
+                   label="COM_KNOWRES_PROPERTYSETTINGS_RATE_LOW"/>
+            <field name="slow_season_pc"
+                   type="string"
+                   addonAfter="% base rate"
+                   class="input-tiny"
+                   default="100"
+                   filter="int"
+                   required="true"
+                   showon="managed_rates:1"
+                   label="COM_KNOWRES_PROPERTYSETTINGS_RATE_SLOW"/>
+            <field name="mid_season_pc"
+                   type="string"
+                   addonAfter="% base rate"
+                   class="input-tiny"
+                   default="100"
+                   filter="int"
+                   required="true"
+                   showon="managed_rates:1"
+                   label="COM_KNOWRES_PROPERTYSETTINGS_RATE_MID"/>
+            <field name="high_season_pc"
+                   type="string"
+                   addonAfter="% base rate"
+                   class="input-tiny"
+                   default="100"
+                   filter="int"
+                   required="true"
+                   showon="managed_rates:1"
+                   label="COM_KNOWRES_PROPERTYSETTINGS_RATE_HIGH"/>
+            <field name="xhigh_season_pc"
+                   type="string"
+                   addonAfter="% base rate"
+                   class="input-tiny"
+                   default="100"
+                   filter="int"
+                   required="true"
+                   showon="managed_rates:1"
+                   label="COM_KNOWRES_PROPERTYSETTINGS_RATE_XHIGH"/>
+        </fieldset>
+        <fieldset name="rates-right-daily">
+            <field name="daily"
+                   type="spacer"
+                   class="h5"
+                   showon="managed_rates:1"
+                   label="COM_KNOWRES_PROPERTYSETTINGS_RATE_DAILY"/>
+            <field name="monday_pc"
+                   type="string"
+                   addonAfter="% base rate"
+                   class="input-tiny"
+                   default="100"
+                   filter="int"
+                   required="true"
+                   showon="managed_rates:1"
+                   label="COM_KNOWRES_MONDAY"/>
+            <field name="tuesday_pc"
+                   type="string"
+                   addonAfter="% base rate"
+                   class="input-tiny"
+                   default="100"
+                   filter="int"
+                   required="true"
+                   showon="managed_rates:1"
+                   label="COM_KNOWRES_TUESDAY"/>
+            <field name="wednesday_pc"
+                   type="string"
+                   addonAfter="% base rate"
+                   class="input-tiny"
+                   default="100"
+                   filter="int"
+                   required="true"
+                   showon="managed_rates:1"
+                   label="COM_KNOWRES_WEDNESDAY"/>
+            <field name="thursday_pc"
+                   type="string"
+                   addonAfter="% base rate"
+                   class="input-tiny"
+                   default="100"
+                   filter="int"
+                   required="true"
+                   showon="managed_rates:1"
+                   label="COM_KNOWRES_THURSDAY"/>
+            <field name="friday_pc"
+                   type="string"
+                   addonAfter="% base rate"
+                   class="input-tiny"
+                   default="100"
+                   filter="int"
+                   required="true"
+                   showon="managed_rates:1"
+                   label="COM_KNOWRES_FRIDAY"/>
+            <field name="saturday_pc"
+                   type="string"
+                   addonAfter="% base rate"
+                   class="input-tiny"
+                   default="100"
+                   filter="int"
+                   required="true"
+                   showon="managed_rates:1"
+                   label="COM_KNOWRES_SATURDAY"/>
+            <field name="sunday_pc"
+                   type="string"
+                   addonAfter="% base rate"
+                   class="input-tiny"
+                   default="100"
+                   filter="int"
+                   required="true"
+                   showon="managed_rates:1"
+                   label="COM_KNOWRES_SUNDAY"/>
+        </fieldset>
+    </fieldset>
 </form>

@@ -409,9 +409,15 @@ CREATE TABLE IF NOT EXISTS `#__knowres_email_trigger` (
 	`send_owner`        TINYINT(1)       NOT NULL DEFAULT 0,
 	`send_caretaker`    TINYINT(1)       NOT NULL DEFAULT 0,
 	`send_admin`        TINYINT(1)       NOT NULL DEFAULT 0,
-	`send_agent`        TINYINT(1)       NOT NULL DEFAULT 0,
+    `send_agency` TINYINT
+(
+    1
+) NOT NULL DEFAULT 0,
 	`state`             TINYINT(1)       NOT NULL DEFAULT 0,
-	`checked_out`      INT(11)          DEFAULT NULL,
+    `checked_out` INT
+(
+    11
+) DEFAULT NULL,
 	`checked_out_time`  DATETIME         DEFAULT NULL,
 	`created_by`        INT(11)          NOT NULL DEFAULT 0,
 	`created_at`        DATETIME         DEFAULT NULL,

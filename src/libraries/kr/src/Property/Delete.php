@@ -19,7 +19,7 @@ use InvalidArgumentException;
 use Joomla\Database\DatabaseDriver;
 
 // phpcs:disable PSR1.Files.SideEffects
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
 
 /**
@@ -29,128 +29,123 @@ defined('_JEXEC') or die;
  */
 class Delete
 {
-	/** @var DatabaseDriver Database instance */
-	protected DatabaseDriver $db;
-	/** @var int Property id of property being cloned */
-	protected int $property_id = 0;
+    /** @var DatabaseDriver Database instance */
+    protected DatabaseDriver $db;
+    /** @var int Property id of property being cloned */
+    protected int $property_id = 0;
 
-	/**
-	 * Initialise
-	 *
-	 * @param   int  $id  ID of property to delete
-	 *
-	 * @throws InvalidArgumentException
-	 * @since  3.0.0
-	 */
-	function __construct(int $id)
-	{
-		$this->property_id = $id;
-		$this->db          = KrFactory::getDatabase();
-	}
+    /**
+     * Initialise
+     *
+     * @param   int  $id  ID of property to delete
+     *
+     * @throws InvalidArgumentException
+     * @since  3.0.0
+     */
+    public function __construct(int $id)
+    {
+        $this->property_id = $id;
+        $this->db          = KrFactory::getDatabase();
+    }
 
-	/**
-	 * Delete property also needs canDelete set in Model
-	 *
-	 * @throws Exception
-	 * @since  3.0.0
-	 */
-	public function deleteTheProperty(): void
-	{
-		$data                               = [];
-		$data['#__knowres_coupon']          = 'Coupon';
-		$data['#__knowres_discount']        = 'Discount';
-		$data['#__knowres_extra']           = 'Extra';
-		$data['#__knowres_ical_block']      = 'Icalblock';
-		$data['#__knowres_image']           = 'Image';
-		$data['#__knowres_property_ical']   = 'Propertyical';
-		$data['#__knowres_property_option'] = 'Propertyoption';
-		$data['#__knowres_property_room']   = 'Propertyroom';
-		$data['#__knowres_rate']            = 'Rate';
-		$data['#__knowres_rate_markup']     = 'Ratemarkup';
-		$data['#__knowres_service_log']     = 'Servicelog';
-		$data['#__knowres_service_queue']   = 'Servicequeue';
-		$data['#__knowres_service_xref']    = 'Servicexref';
+    /**
+     * Delete property also needs canDelete set in Model
+     *
+     * @throws Exception
+     * @since  3.0.0
+     */
+    public function deleteTheProperty(): void
+    {
+        $data                               = [];
+        $data['#__knowres_coupon']          = 'Coupon';
+        $data['#__knowres_discount']        = 'Discount';
+        $data['#__knowres_extra']           = 'Extra';
+        $data['#__knowres_ical_block']      = 'Icalblock';
+        $data['#__knowres_image']           = 'Image';
+        $data['#__knowres_property_ical']   = 'Propertyical';
+        $data['#__knowres_property_option'] = 'Propertyoption';
+        $data['#__knowres_property_room']   = 'Propertyroom';
+        $data['#__knowres_rate']            = 'Rate';
+        $data['#__knowres_rate_markup']     = 'Ratemarkup';
+        $data['#__knowres_service_log']     = 'Servicelog';
+        $data['#__knowres_service_queue']   = 'Servicequeue';
+        $data['#__knowres_service_xref']    = 'Servicexref';
 
-		try
-		{
-			$this->db->transactionStart();
+        try {
+            $this->db->transactionStart();
 
-			foreach ($data as $table => $model)
-			{
-				$this->deleteLinked($table, $model);
-			}
+            foreach ($data as $table => $model) {
+                $this->deleteLinked($table, $model);
+            }
 
-			$this->deletePropertysettings();
-			$this->deleteProperty();
-			Media\Images::deletePropertyImages($this->property_id);
+            $this->deletePropertysettings();
+            $this->deleteProperty();
+            Media\Images::deletePropertyImages($this->property_id);
 
-			$this->db->transactionCommit();
-		}
-		catch (Exception $e)
-		{
-			$this->db->transactionRollback();
-			Logger::logMe($e->getMessage());
-		}
-	}
+            $this->db->transactionCommit();
+        } catch (Exception $e) {
+            $this->db->transactionRollback();
+            Logger::logMe($e->getMessage());
+        }
+    }
 
-	/**
-	 * Delete linked tables with translations
-	 *
-	 * @param   string  $table  Table to replicate
-	 * @param   string  $class  Model class
-	 *
-	 * @throws Exception
-	 * @since  3.0.0
-	 */
-	protected function deleteLinked(string $table, string $class): void
-	{
-		$query = $this->db->getQuery(true);
-		$query->select($this->db->qn('id'))
-		      ->from($this->db->qn($table))
-		      ->where($this->db->qn('property_id') . '=' . $this->property_id);
+    /**
+     * Delete linked tables with translations
+     *
+     * @param   string  $table  Table to replicate
+     * @param   string  $class  Model class
+     *
+     * @throws Exception
+     * @since  3.0.0
+     */
+    protected function deleteLinked(string $table, string $class): void
+    {
+        $query = $this->db->getQuery(true);
+        $query->select($this->db->qn('id'))
+              ->from($this->db->qn($table))
+              ->where($this->db->qn('property_id') . '=' . $this->property_id);
 
-		$this->db->setQuery($query);
-		$ids = $this->db->loadColumn();
+        $this->db->setQuery($query);
+        $ids = $this->db->loadColumn();
 
-		if (count($ids))
-		{
-			$model = KrFactory::getAdminModel($class);
-			$model->delete($ids);
-		}
-	}
+        if (count($ids)) {
+            $model = KrFactory::getAdminModel($class);
+            $model->delete($ids);
+        }
+    }
 
-	/**
-	 * Create tmp table based on actual table
-	 * loading all rows with matching id
-	 *
-	 * @throws Exception
-	 * @since  3.0.0
-	 */
-	protected function deleteProperty(): void
-	{
-		$model = KrFactory::getAdminModel('property');
-		$cid   = array($this->property_id);
-		$model->delete($cid);
-	}
+    /**
+     * Create tmp table based on actual table
+     * loading all rows with matching id
+     *
+     * @throws Exception
+     * @since  3.0.0
+     */
+    protected function deleteProperty(): void
+    {
+        $model = KrFactory::getAdminModel('property');
+        $cid   = [$this->property_id];
+        $model->delete($cid);
+    }
 
-	/**
-	 * Delete property settings table
-	 *
-	 * @throws Exception
-	 * @since 3.0.0
-	 */
-	protected function deletePropertysettings(): void
-	{
-		$query = $this->db->getQuery(true);
+    /**
+     * Delete property settings table
+     *
+     * @throws Exception
+     * @since 3.0.0
+     */
+    protected function deletePropertysettings(): void
+    {
+        $query = $this->db->getQuery(true);
 
-		$conditions = [
-			$this->db->qn('property_id') . '=' . $this->property_id
-		];
+        $conditions = [
+            $this->db->qn('property_id') . '=' . $this->property_id,
+        ];
 
-		$query->delete($this->db->qn('#__knowres_property_setting'));
-		$query->where($conditions);
+        $query->delete($this->db->qn('#__knowres_property_setting'));
+        $query->where($conditions);
 
-		$this->db->setQuery($query);
-		$this->db->execute();
-	}
+        $this->db->setQuery($query);
+        $this->db->execute();
+    }
 }

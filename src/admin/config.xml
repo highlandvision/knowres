@@ -124,27 +124,27 @@
                default=""
                label="COM_KNOWRES_CONFIG_ADMIN_GMAPKEY"
                description="COM_KNOWRES_CONFIG_ADMIN_GMAPKEY_DSC"/>
-<!--        <field name="save_history"-->
-<!--                type="radio"-->
-<!--                class="btn-group btn-group-yesno"-->
-<!--                default="0"-->
-<!--                label="JGLOBAL_SAVE_HISTORY_OPTIONS_LABEL"-->
-<!--                description="JGLOBAL_SAVE_HISTORY_OPTIONS_DESC">-->
-<!--            <option value="1">JYES</option>-->
-<!--            <option value="0">JNO</option>-->
-<!--        </field>-->
-<!--        <field-->
-<!--                class="w-auto"-->
-<!--                filter="integer"-->
-<!--                name="history_limit"-->
-<!--                showon="save_history:1"-->
-<!--                type="number"-->
-<!--                min="1"-->
-<!--                max="10"-->
-<!--                step="1"-->
-<!--                label="JGLOBAL_HISTORY_LIMIT_OPTIONS_LABEL"-->
-<!--                description="JGLOBAL_HISTORY_LIMIT_OPTIONS_DESC"-->
-<!--                default="5"/>-->
+        <!--        <field name="save_history"-->
+        <!--                type="radio"-->
+        <!--                class="btn-group btn-group-yesno"-->
+        <!--                default="0"-->
+        <!--                label="JGLOBAL_SAVE_HISTORY_OPTIONS_LABEL"-->
+        <!--                description="JGLOBAL_SAVE_HISTORY_OPTIONS_DESC">-->
+        <!--            <option value="1">JYES</option>-->
+        <!--            <option value="0">JNO</option>-->
+        <!--        </field>-->
+        <!--        <field-->
+        <!--                class="w-auto"-->
+        <!--                filter="integer"-->
+        <!--                name="history_limit"-->
+        <!--                showon="save_history:1"-->
+        <!--                type="number"-->
+        <!--                min="1"-->
+        <!--                max="10"-->
+        <!--                step="1"-->
+        <!--                label="JGLOBAL_HISTORY_LIMIT_OPTIONS_LABEL"-->
+        <!--                description="JGLOBAL_HISTORY_LIMIT_OPTIONS_DESC"-->
+        <!--                default="5"/>-->
         <field name="create_user"
                type="hidden"
                default="0"
@@ -180,8 +180,8 @@
                class="btn-group btn-group-yesno"
                label="COM_KNOWRES_CONFIG_SITE_TEMPLATE_TABS"
                description="COM_KNOWRES_CONFIG_SITE_TEMPLATE_TABS_DSC">
-                <option value="1">JYES</option>
-                <option value="0">JNO</option>
+            <option value="1">JYES</option>
+            <option value="0">JNO</option>
         </field>
         <field name="property_template"
                default="custom"
@@ -422,11 +422,11 @@
                    default="2"
                    label="COM_KNOWRES_CONFIG_SEARCH_VIEW_MEDIUM"
                    description="COM_KNOWRES_CONFIG_SEARCH_VIEW_MEDIUM_DSC">
-                    <option value="">Please Select</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
+                <option value="">Please Select</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
             </field>
             <field name="per_row_large"
                    type="list"
@@ -963,8 +963,11 @@
                    class="btn-group"
                    label="COM_KNOWRES_CONFIG_IMAGE_SLIDESHOW_TYPE"
                    description="COM_KNOWRES_CONFIG_IMAGE_SLIDESHOW_TYPE_DSC">
-                <option class="btn btn-outline-success" value="centered">COM_KNOWRES_CONFIG_IMAGE_SLIDESHOW_TYPE_CENTERED</option>
-                <option class="btn btn-outline-danger" value="solo">COM_KNOWRES_CONFIG_IMAGE_SLIDESHOW_TYPE_SOLO</option>
+                <option class="btn btn-outline-success" value="centered">
+                    COM_KNOWRES_CONFIG_IMAGE_SLIDESHOW_TYPE_CENTERED
+                </option>
+                <option class="btn btn-outline-danger" value="solo">COM_KNOWRES_CONFIG_IMAGE_SLIDESHOW_TYPE_SOLO
+                </option>
             </field>
             <field name="property_thumbs"
                    type="radio"
@@ -1111,8 +1114,8 @@
                type="radio"
                default="0"
                class="btn-group btn-group-yesno"
-               label="COM_KNOWRES_CONFIG_OWNERS_PAYMENTS"
-               description="COM_KNOWRES_CONFIG_OWNERS_PAYMENTS_DSC">
+               label="COM_KNOWRES_CONFIG_OWNERS_PAYMENTS_REQUIRED"
+               description="COM_KNOWRES_CONFIG_OWNERS_PAYMENTS_REQUIRED_DSC">
             <option value="1">JYES</option>
             <option value="0">JNO</option>
         </field>
@@ -1120,8 +1123,8 @@
                type="menuitem"
                class="span4"
                menu="hide"
-               label="COM_KNOWRES_CONFIG_OWNERS_TERMS"
-               description="COM_KNOWRES_CONFIG_OWNERS_TERMS_DSC">
+               label="COM_KNOWRES_CONFIG_OWNERS_PAYMENT_TERMS"
+               description="COM_KNOWRES_CONFIG_OWNERS_PAYMENT_TERMS_DSC">
             <option value="">JSELECT</option>
         </field>
         <fieldset name="access"

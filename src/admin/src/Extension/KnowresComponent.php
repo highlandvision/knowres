@@ -32,29 +32,29 @@ use UnexpectedValueException;
  */
 class KnowresComponent extends MVCComponent implements BootableExtensionInterface, RouterServiceInterface
 {
-	use HTMLRegistryAwareTrait;
-	use RouterServiceTrait;
+    use HTMLRegistryAwareTrait;
+    use RouterServiceTrait;
 
-	/**
-	 * Booting the extension. This is the function to set up the environment of the extension like
-	 * registering new class loaders, etc.
-	 * If required, some initial set up can be done from services of the container, e.g.
-	 * registering HTML services.
-	 *
-	 * @param   ContainerInterface  $container  The container
-	 *
-	 * @return void
-	 * @throws NotFoundExceptionInterface
-	 * @throws RuntimeException
-	 * @throws UnexpectedValueException
-	 * @throws ContainerExceptionInterface
-	 * @since  4.0.0
-	 */
-	public function boot(ContainerInterface $container): void
-	{
-		$Knowres = new Knowres();
-		$Knowres->setDatabase($container->get(DatabaseInterface::class));
+    /**
+     * Booting the extension. This is the function to set up the environment of the extension like
+     * registering new class loaders, etc.
+     * If required, some initial set up can be done from services of the container, e.g.
+     * registering HTML services.
+     *
+     * @param   ContainerInterface  $container  The container
+     *
+     * @return void
+     * @throws NotFoundExceptionInterface
+     * @throws RuntimeException
+     * @throws UnexpectedValueException
+     * @throws ContainerExceptionInterface
+     * @since  4.0.0
+     */
+    public function boot(ContainerInterface $container): void
+    {
+        $Knowres = new Knowres();
+        $Knowres->setDatabase($container->get(DatabaseInterface::class));
 
-		$this->getRegistry()->register('knowres', $Knowres);
-	}
+        $this->getRegistry()->register('knowres', $Knowres);
+    }
 }

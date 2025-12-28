@@ -8,11 +8,12 @@
 
 namespace HighlandVision\KR\Joomla\Extend;
 
-defined('_JEXEC') or die;
-
 use Exception;
 use HighlandVision\KR\Framework\KrMethods;
-use function defined;
+
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Knowres extension of FormController
@@ -21,35 +22,29 @@ use function defined;
  */
 class FormController extends \Joomla\CMS\MVC\Controller\FormController
 {
-	/**
-	 * Back to the previous page as held in session or url
-	 * If all else fails then back to defined KR home page
-	 *
-	 * @return void
-	 * @throws Exception
-	 * @since  3.3.1
-	 */
-	public function back(): void
-	{
-		$gobackto = KrMethods::inputString('gobackto', '');
-		if ($gobackto)
-		{
-			$return = KrMethods::route('index.php?option=com_knowres&' . $gobackto, false);
-		}
-		else
-		{
-			$return = KrMethods::getUserState('com_knowres.gobackto');
-			if ($return)
-			{
-				KrMethods::setUserState('com_knowres.gobackto', null);
-				$return = KrMethods::route('index.php?option=com_knowres&' . $return, false);
-			}
-			else
-			{
-				$return = KrMethods::route('index.php?option=com_knowres', false);
-			}
-		}
+    /**
+     * Back to the previous page as held in session or url
+     * If all else fails then back to defined KR home page
+     *
+     * @return void
+     * @throws Exception
+     * @since  3.3.1
+     */
+    public function back(): void
+    {
+        $gobackto = KrMethods::inputString('gobackto', '');
+        if ($gobackto) {
+            $return = KrMethods::route('index.php?option=com_knowres&' . $gobackto, false);
+        } else {
+            $return = KrMethods::getUserState('com_knowres.gobackto');
+            if ($return) {
+                KrMethods::setUserState('com_knowres.gobackto', null);
+                $return = KrMethods::route('index.php?option=com_knowres&' . $return, false);
+            } else {
+                $return = KrMethods::route('index.php?option=com_knowres', false);
+            }
+        }
 
-		KrMethods::redirect($return);
-	}
+        KrMethods::redirect($return);
+    }
 }

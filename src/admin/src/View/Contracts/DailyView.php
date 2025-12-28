@@ -3,7 +3,7 @@
  * @package     KR
  * @subpackage  Admin views
  * @copyright   2020 Highland Vision. All rights reserved.
- * @license     See the file "LICENSE.txt" for the full license governing this code.
+ * @license     See the file "LICENCE.txt" for the full licence governing this code.
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
@@ -28,12 +28,11 @@ use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use stdClass;
 
-use function defined;
 use function is_null;
 use function ucfirst;
 
 // phpcs:disable PSR1.Files.SideEffects
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
 
 /**
@@ -82,10 +81,18 @@ class DailyView extends KrHtmlView
         $userSession        = new KrSession\User();
         $this->access_level = $userSession->getAccessLevel();
         if ($this->access_level == 40) {
-            $this->approvals     = KrFactory::getListModel('properties')->getForApproval();
-            $this->reviews       = KrFactory::getListModel('reviews')->getReviewsForApproval();
-            $this->payments      = KrFactory::getListModel('contractpayments')->getOverview();
-            $this->ownerpayments = KrFactory::getListModel('ownerpayments')->getOverview();
+            /** @var PropertiesModel $pm */
+            $pm              = KrFactory::getListModel('properties');
+            $this->approvals = $pm->getForApproval();
+            /** @var ReviewsModel $rm */
+            $rm            = KrFactory::getListModel('reviews');
+            $this->reviews = $rm->getReviewsForApproval();
+            /** @var ContractpaymentsModel $cpm */
+            $cpm            = KrFactory::getListModel('contractpayments');
+            $this->payments = $cpm->getOverview();
+            /** @var OwnerpaymentsModel $mp */
+            $mp                  = KrFactory::getListModel('ownerpayments');
+            $this->ownerpayments = $mp->getOverview();
         }
 
         $this->setLines();
@@ -105,36 +112,40 @@ class DailyView extends KrHtmlView
     }
 
     /**
-     * Set the section / line data for output
+     * Add the page title and toolbar
      *
      * @throws Exception
-     * @since  4.0.0
+     * @since  1.0.0
      */
-    #[NoReturn]
-    protected function setLines(): void
+    protected function addToolbar(): void
     {
-        foreach ($this->items as $c) {
-            $line = $this->setLine($c);
+        $Toolbar = Toolbar::getInstance();
 
-            if ($c->booking_status == 1 && (int)$c->on_request) {
-                $this->lines['requests'][] = $line;
-            } elseif ($c->booking_status == 1 && !(int)$c->on_request) {
-                $this->lines['option'][] = $line;
-            } elseif ($c->booking_status == 5) {
-                $this->lines['duedeposit'][] = $line;
-            } elseif ($c->booking_status == 30) {
-                $this->lines['overduebalance'][] = $line;
-            } elseif ($c->booking_status == 35) {
-                $this->lines['duebalance'][] = $line;
-            } elseif ($c->booking_status == 99) {
-                $this->lines['cancelled'][] = $line;
-            } elseif ($c->arrival == $this->today) {
-                $this->lines['arrivals'][] = $line;
-            } elseif ($c->departure == $this->today) {
-                $this->lines['departures'][] = $line;
-            } elseif ($c->booking_status) {
-                $this->lines['new'][] = $line;
-            }
+        if (!empty($this->registration)) {
+            $title = KrMethods::plain('COM_KNOWRES_CONFIG_ADMIN_DOWNLOAD_REGISTRATION');
+            $html  = KrMethods::render('toolbar.contract.registration', ['title' => $title]);
+            $Toolbar->customButton('guestregistration')
+                    ->html($html);
+        }
+
+        /* @var Toolbar\LinkButton $Toolbar * */
+        $Toolbar->linkButton('refresh')
+                ->icon('fa-solid fa-redo knowres')
+                ->text('COM_KNOWRES_REFRESH')
+                ->url(KrMethods::route('index.php?option=com_knowres&task=contracts.daily'));
+
+        $Toolbar = $this->addConfigToolbar($Toolbar);
+        $Toolbar = $this->addQuickLinksToolbar($Toolbar);
+        $Toolbar = $this->addBackLink($Toolbar);
+
+        /* @var Toolbar\LinkButton $Toolbar * */
+        $Toolbar->linkButton('close')
+                ->icon('fa-solid fa-times knowres')
+                ->text('JTOOLBAR_CLOSE')
+                ->url(KrMethods::route('index.php?option=com_knowres&task=gantt.cancel'));
+
+        if ($this->canDo->get('core.admin')) {
+            ToolbarHelper::preferences('com_knowres');
         }
     }
 
@@ -187,40 +198,36 @@ class DailyView extends KrHtmlView
     }
 
     /**
-     * Add the page title and toolbar
+     * Set the section / line data for output
      *
      * @throws Exception
-     * @since  1.0.0
+     * @since  4.0.0
      */
-    protected function addToolbar(): void
+    #[NoReturn]
+    protected function setLines(): void
     {
-        $Toolbar = Toolbar::getInstance();
+        foreach ($this->items as $c) {
+            $line = $this->setLine($c);
 
-        if (!empty($this->registration)) {
-            $title = KrMethods::plain('COM_KNOWRES_CONFIG_ADMIN_DOWNLOAD_REGISTRATION');
-            $html  = KrMethods::render('toolbar.contract.registration', ['title' => $title]);
-            $Toolbar->customButton('guestregistration')
-                    ->html($html);
-        }
-
-        /* @var Toolbar\LinkButton $Toolbar * */
-        $Toolbar->linkButton('refresh')
-                ->icon('fa-solid fa-redo knowres')
-                ->text('COM_KNOWRES_REFRESH')
-                ->url(KrMethods::route('index.php?option=com_knowres&task=contracts.daily'));
-
-        $Toolbar = $this->addConfigToolbar($Toolbar);
-        $Toolbar = $this->addQuickLinksToolbar($Toolbar);
-        $Toolbar = $this->addBackLink($Toolbar);
-
-        /* @var Toolbar\LinkButton $Toolbar * */
-        $Toolbar->linkButton('close')
-                ->icon('fa-solid fa-times knowres')
-                ->text('JTOOLBAR_CLOSE')
-                ->url(KrMethods::route('index.php?option=com_knowres&task=gantt.cancel'));
-
-        if ($this->canDo->get('core.admin')) {
-            ToolbarHelper::preferences('com_knowres');
+            if ($c->booking_status == 1 && (int)$c->on_request) {
+                $this->lines['requests'][] = $line;
+            } elseif ($c->booking_status == 1 && !(int)$c->on_request) {
+                $this->lines['option'][] = $line;
+            } elseif ($c->booking_status == 5) {
+                $this->lines['duedeposit'][] = $line;
+            } elseif ($c->booking_status == 30) {
+                $this->lines['overduebalance'][] = $line;
+            } elseif ($c->booking_status == 35) {
+                $this->lines['duebalance'][] = $line;
+            } elseif ($c->booking_status == 99) {
+                $this->lines['cancelled'][] = $line;
+            } elseif ($c->arrival == $this->today) {
+                $this->lines['arrivals'][] = $line;
+            } elseif ($c->departure == $this->today) {
+                $this->lines['departures'][] = $line;
+            } elseif ($c->booking_status) {
+                $this->lines['new'][] = $line;
+            }
         }
     }
 }
