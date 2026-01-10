@@ -28,12 +28,12 @@ if (count($data)) {
         $parts = [];
 
         if ($d['cancellation_penalty_from'] > 0 || $d['cancellation_penalty_to'] > 0) {
-            $parts[] = $d['cancellation_penalty_from'] . "-" . $d['cancellation_penalty_to'];
+            $parts[] = $d['cancellation_penalty_from'] . '-' . $d['cancellation_penalty_to'];
             $parts[] = $days;
-            $parts[] = $d['cancellation_penalty_pc'] . "%";
-            $all[]   = implode(" ", $parts);
+            $parts[] = $d['cancellation_penalty_pc'] . '%';
+            $all[]   = implode(' ', $parts);
         }
     }
 
-    echo implode(", ", $all);
+    echo implode(', ', $all);
 }

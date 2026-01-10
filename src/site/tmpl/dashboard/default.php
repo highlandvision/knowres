@@ -18,36 +18,56 @@ use HighlandVision\KR\Utility;
 defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
 
-$wa = $this->document->getWebAssetManager();
-$wa->useScript('com_knowres.site')
-   ->useScript('form.validate')
-   ->useScript('keepalive');
+/** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
+$wa = $this->getDocument()->getWebAssetManager();
+$wa
+    ->useScript('com_knowres.site')
+    ->useScript('form.validate')
+    ->useScript('keepalive');
 ?>
 
 <div id="kr-dashboard-reservations">
-    <?php echo $this->loadTemplate('head'); ?>
+    <?php
+    echo $this->loadTemplate('head'); ?>
 
-    <?php for ($i = 0; $i < 2; $i++): ?>
-        <?php $first = true; ?>
-        <?php foreach ($this->items as $this->item) : ?>
-            <?php if ($i == 1 && $this->item->departure >= TickTock::getDate()): ?>
-                <?php continue; ?>
-            <?php elseif ($i == 0 && $this->item->departure < TickTock::getDate()): ?>
-                <?php continue; ?>
-            <?php endif; ?>
+    <?php
+    for ($i = 0; $i < 2; $i++): ?>
+        <?php
+        $first = true; ?>
+        <?php
+        foreach ($this->items as $this->item) : ?>
+            <?php
+            if ($i == 1 && $this->item->departure >= TickTock::getDate()): ?>
+                <?php
+                continue; ?>
+            <?php
+            elseif ($i == 0 && $this->item->departure < TickTock::getDate()): ?>
+                <?php
+                continue; ?>
+            <?php
+            endif; ?>
 
-            <?php if ($first): ?>
+            <?php
+            if ($first): ?>
                 <h2>
-                    <?php if ($i == 1): ?>
-                        <?php echo KrMethods::plain('COM_KNOWRES_YOUR_PREVIOUS'); ?>
-                    <?php else: ?>
-                        <?php echo KrMethods::plain('COM_KNOWRES_YOUR_RESERVATIONS'); ?>
-                    <?php endif; ?>
+                    <?php
+                    if ($i == 1): ?>
+                        <?php
+                        echo KrMethods::plain('COM_KNOWRES_YOUR_PREVIOUS'); ?>
+                    <?php
+                    else: ?>
+                        <?php
+                        echo KrMethods::plain('COM_KNOWRES_YOUR_RESERVATIONS'); ?>
+                    <?php
+                    endif; ?>
                 </h2>
-                <?php $first = false; ?>
-            <?php endif; ?>
+                <?php
+                $first = false; ?>
+            <?php
+            endif; ?>
 
-            <?php $this->item->child_ages = Utility::decodeJson(is_null($this->item->child_ages) ? '[]'
+            <?php
+            $this->item->child_ages = Utility::decodeJson(is_null($this->item->child_ages) ? '[]'
                 : $this->item->child_ages, true,
             );
 
@@ -60,19 +80,26 @@ $wa->useScript('com_knowres.site')
             <div class="callout medium">
                 <div class="grid-x grid-margin-x">
                     <div class="small-12 medium-8 cell">
-                        <?php echo KrMethods::render('dashboard.header', [
+                        <?php
+                        echo KrMethods::render('dashboard.header', [
                             'contract' => $this->item,
                             'times'    => true,
                         ]); ?>
                     </div>
                     <div class="small-12 medium-4 cell">
-                        <?php if ($this->item->booking_status > 1): ?>
-                            <?php echo $this->loadTemplate('confirmed'); ?>
-                        <?php else: ?>
-                            <?php echo $this->loadTemplate('new'); ?>
-                        <?php endif; ?>
+                        <?php
+                        if ($this->item->booking_status > 1): ?>
+                            <?php
+                            echo $this->loadTemplate('confirmed'); ?>
+                        <?php
+                        else: ?>
+                            <?php
+                            echo $this->loadTemplate('new'); ?>
+                        <?php
+                        endif; ?>
                         <div>
-                            <?php echo KrMethods::render('dashboard.downloads', [
+                            <?php
+                            echo KrMethods::render('dashboard.downloads', [
                                 'invoice'   => $invoice,
                                 'guestdata' => $guestdata,
                                 'voucher'   => $voucher,
@@ -83,9 +110,12 @@ $wa->useScript('com_knowres.site')
                     </div>
                 </div>
             </div>
-        <?php endforeach; ?>
-    <?php endfor; ?>
+        <?php
+        endforeach; ?>
+    <?php
+    endfor; ?>
 
     <br>
-    <?php echo $this->loadTemplate('footer'); ?>
+    <?php
+    echo $this->loadTemplate('footer'); ?>
 </div>

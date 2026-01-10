@@ -16,14 +16,14 @@ defined('_JEXEC') or die;
 
 $wa = $this->document->getWebAssetManager();
 $wa->getRegistry()->addExtensionRegistryFile('com_knowres');
-$wa->useScript('com_knowres.site')
-   ->useScript('form.validate')
-   ->useScript('keepalive');
+$wa
+    ->useScript('com_knowres.site')
+    ->useScript('form.validate')
+    ->useScript('keepalive');
 
 HTMLHelper::_('script', trim(Utility::getGmapsURL()), [], ['async' => 'async', 'defer' => 'defer']);
 HTMLHelper::_('script', trim(Utility::getMarkerClustererURL()), [], ['async' => 'async', 'defer' => 'defer']);
-?>
 
-<?php echo $this->loadTemplate('heading'); ?>
-<?php echo $this->loadTemplate('main'); ?>
-<?php echo $this->loadTemplate('modalmap'); ?>
+echo $this->loadTemplate('heading');
+echo $this->loadTemplate('main');
+echo $this->loadTemplate('modalmap');

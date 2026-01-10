@@ -28,12 +28,12 @@ if (count($data)) {
         $parts = [];
 
         if ($d['checkin_fees_amount'] > 0) {
-            $parts[] = $d['checkin_fees_from'] . "-" . $d['checkin_fees_to'];
+            $parts[] = $d['checkin_fees_from'] . '-' . $d['checkin_fees_to'];
             $parts[] = Utility::displayMoney($d['checkin_fees_amount']);
 
-            $all[] = implode(" ", $parts);
+            $all[] = implode(' ', $parts);
         }
     }
 
-    echo implode(", ", $all);
+    echo implode(', ', $all);
 }
