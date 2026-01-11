@@ -30,8 +30,8 @@ FormHelper::loadFieldClass('list');
 class JFormFieldXeroaccountlist extends JFormField
 {
 
-	/** @var string   The form field type * */
-	protected string $type = 'Xeroaccountlist';
+    /** @var string Required type */
+    protected string $type = 'Xeroaccountlist';
 
     /**
      * Get the field options.ader
@@ -54,23 +54,21 @@ class JFormFieldXeroaccountlist extends JFormField
         } else {
             $options[] = HTMLHelper::_('select.option', 0, KrMethods::plain('COM_KNOWRES_XERO_SELECT_ACCOUNT'));
 
-			foreach ($data as $d)
-			{
-				if ($this->type == $d->Type)
-				{
-					$options[] = HTMLHelper::_('select.option', $d->Code, $d->Name);
-				}
-			}
-		}
+            foreach ($data as $d) {
+                if ($this->type == $d->Type) {
+                    $options[] = HTMLHelper::_('select.option', $d->Code, $d->Name);
+                }
+            }
+        }
 
-		$input_options = [];
-		if ($this->class)
-		{
-			$input_options[] = 'class="' . $this->class . '"';
-		}
+        $input_options = [];
+        if ($this->class) {
+            $input_options[] = 'class="' . $this->class . '"';
+        }
 
-		return HTMLHelper::_('select.genericlist', $options, $this->name, implode(' ', $input_options), 'value', 'text',
-			$this->value);
+        return HTMLHelper::_('select.genericlist', $options, $this->name, implode(' ', $input_options), 'value', 'text',
+            $this->value,
+        );
 
         return $html;
     }

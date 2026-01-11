@@ -30,13 +30,8 @@ FormHelper::loadFieldClass('list');
  */
 class JFormFieldXerotrackingcommission extends JFormField
 {
-	/**
-	 * The form field type.
-	 *
-	 * @since    3.1.0
-	 * @var        string
-	 */
-	protected $type = 'Xerotrackingcommission';
+    /** @var string Required type */
+    protected $type = 'Xerotrackingcommission';
 
     /**
      * Get the field options.ader
@@ -51,16 +46,14 @@ class JFormFieldXerotrackingcommission extends JFormField
         $html          = [];
         $message       = '';
 
-		while (true)
-		{
-			$service_id = KrFactory::getListModel('services')::checkForSingleService(true, 'xero');
-			$xero       = new Xero($service_id);
-			$tracking   = $xero->getTracking();
-			if (!$tracking)
-			{
-				$message = 'Please configure relevant tracking options on Xero';
-				break;
-			}
+        while (true) {
+            $service_id = KrFactory::getListModel('services')::checkForSingleService(true, 'xero');
+            $xero       = new Xero($service_id);
+            $tracking   = $xero->getTracking();
+            if (!$tracking) {
+                $message = 'Please configure relevant tracking options on Xero';
+                break;
+            }
 
             $xero_tracking[] = HTMLHelper::_('select.option', '', KrMethods::plain('JSELECT'));
 
@@ -74,44 +67,43 @@ class JFormFieldXerotrackingcommission extends JFormField
                                 $o->Name,
                             ];
 
-							$xero_tracking[] = HTMLHelper::_('select.option', Utility::encodeJson($option),
-								$top . ' / ' . $o->Name);
-						}
-					}
-				}
-			}
+                            $xero_tracking[] = HTMLHelper::_('select.option', Utility::encodeJson($option),
+                                $top . ' / ' . $o->Name,
+                            );
+                        }
+                    }
+                }
+            }
 
-			$input_options = [];
-			if ($this->class)
-			{
-				$input_options[] = 'class="' . $this->class . '"';
-			}
+            $input_options = [];
+            if ($this->class) {
+                $input_options[] = 'class="' . $this->class . '"';
+            }
 
             $types = [
                 'Gross',
                 'Net',
             ];
 
-			$data = Utility::decodeJson($this->value, true);
-			foreach ($types as $r)
-			{
-				$default = '';
-				if (count($data) && isset($data[$r]))
-				{
-					$default = $data[$r];
-				}
+            $data = Utility::decodeJson($this->value, true);
+            foreach ($types as $r) {
+                $default = '';
+                if (count($data) && isset($data[$r])) {
+                    $default = $data[$r];
+                }
 
-				$id     = "map_commission" . $r;
-				$html[] = '<div class="control-group">';
-				$html[] = '<div class="control-label">';
-				$html[] = $r;
-				$html[] = '</div>';
-				$html[] = '<div class="controls">';
-				$html[] = HTMLHelper::_('select.genericlist', $xero_tracking, "map_commission[$r]",
-					implode(' ', $input_options), 'value', 'text', $default, $id);
-				$html[] = '</div>';
-				$html[] = '</div>';
-			}
+                $id     = "map_commission" . $r;
+                $html[] = '<div class="control-group">';
+                $html[] = '<div class="control-label">';
+                $html[] = $r;
+                $html[] = '</div>';
+                $html[] = '<div class="controls">';
+                $html[] = HTMLHelper::_('select.genericlist', $xero_tracking, "map_commission[$r]",
+                    implode(' ', $input_options), 'value', 'text', $default, $id,
+                );
+                $html[] = '</div>';
+                $html[] = '</div>';
+            }
 
             return implode('', $html);
         }
