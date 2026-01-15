@@ -12,6 +12,7 @@ namespace HighlandVision\Component\Knowres\Site\View\Property;
 use Exception;
 use HighlandVision\KR\Joomla\Extend\HtmlView as KrHtmlView;
 use JetBrains\PhpStorm\NoReturn;
+use Joomla\Registry\Registry;
 
 // phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die;
@@ -24,6 +25,15 @@ defined('_JEXEC') or die;
  */
 class MapinfowindowView extends KrHtmlView\Site
 {
+    public array $net = [];
+    public array $discount = [];
+    public bool $byAvailability = false;
+    public string $currency = '';
+    public array $images = [];
+    public Registry $params;
+    public string $link = '';
+    public mixed $ratings;
+
     /**
      * Display the view
      *

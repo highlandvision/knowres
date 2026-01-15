@@ -18,10 +18,11 @@ use HighlandVision\KR\Utility;
 defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
 
-$wa = $this->document->getWebAssetManager();
+/** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
+$wa = $this->getDocument()->getWebAssetManager();
 $wa->useScript('com_knowres.site')
-   ->useScript('form.validate')
-   ->useScript('keepalive');
+    ->useScript('form.validate')
+    ->useScript('keepalive');
 ?>
 
 <div id="kr-dashboard-reservations">
@@ -48,21 +49,21 @@ $wa->useScript('com_knowres.site')
             <?php endif; ?>
 
             <?php $this->item->child_ages = Utility::decodeJson(is_null($this->item->child_ages) ? '[]'
-                : $this->item->child_ages, true,
+                    : $this->item->child_ages, true,
             );
 
-            $invoice   = SiteHelper::getInvoice($this->item);
+            $invoice = SiteHelper::getInvoice($this->item);
             $guestdata = SiteHelper::getGuestdata($this->item);
-            $voucher   = SiteHelper::getVoucher($this->params, $this->item);
-            $pdfs      = SiteHelper::getPdfs($this->item);
+            $voucher = SiteHelper::getVoucher($this->params, $this->item);
+            $pdfs = SiteHelper::getPdfs($this->item);
             ?>
 
             <div class="callout medium">
                 <div class="grid-x grid-margin-x">
                     <div class="small-12 medium-8 cell">
                         <?php echo KrMethods::render('dashboard.header', [
-                            'contract' => $this->item,
-                            'times'    => true,
+                                'contract' => $this->item,
+                                'times' => true,
                         ]); ?>
                     </div>
                     <div class="small-12 medium-4 cell">
@@ -73,11 +74,11 @@ $wa->useScript('com_knowres.site')
                         <?php endif; ?>
                         <div>
                             <?php echo KrMethods::render('dashboard.downloads', [
-                                'invoice'   => $invoice,
-                                'guestdata' => $guestdata,
-                                'voucher'   => $voucher,
-                                'pdfs'      => $pdfs,
-                                'key'       => $this->item->id,
+                                    'invoice' => $invoice,
+                                    'guestdata' => $guestdata,
+                                    'voucher' => $voucher,
+                                    'pdfs' => $pdfs,
+                                    'key' => $this->item->id,
                             ]); ?>
                         </div>
                     </div>

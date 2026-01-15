@@ -29,14 +29,8 @@ FormHelper::loadFieldClass('list');
  */
 class JFormFieldXerolineamounttypes extends JFormField
 {
-
-	/**
-	 * The form field type.
-	 *
-	 * @since 3.1.0
-	 * @var   string
-	 */
-	protected string $type = 'Xerolineamounttypes';
+    /** @var string Required type */
+    protected string $type = 'Xerolineamounttypes';
 
     /**
      * Get the field options.ader
@@ -49,20 +43,22 @@ class JFormFieldXerolineamounttypes extends JFormField
     {
         $options = [];
 
-		$options[] = HTMLHelper::_('select.option', Invoice::LINEAMOUNT_TYPE_EXCLUSIVE,
-			Invoice::LINEAMOUNT_TYPE_EXCLUSIVE);
-		$options[] = HTMLHelper::_('select.option', Invoice::LINEAMOUNT_TYPE_INCLUSIVE,
-			Invoice::LINEAMOUNT_TYPE_INCLUSIVE);
-		$options[] = HTMLHelper::_('select.option', Invoice::LINEAMOUNT_TYPE_NOTAX, Invoice::LINEAMOUNT_TYPE_NOTAX);
+        $options[] = HTMLHelper::_('select.option', Invoice::LINEAMOUNT_TYPE_EXCLUSIVE,
+            Invoice::LINEAMOUNT_TYPE_EXCLUSIVE,
+        );
+        $options[] = HTMLHelper::_('select.option', Invoice::LINEAMOUNT_TYPE_INCLUSIVE,
+            Invoice::LINEAMOUNT_TYPE_INCLUSIVE,
+        );
+        $options[] = HTMLHelper::_('select.option', Invoice::LINEAMOUNT_TYPE_NOTAX, Invoice::LINEAMOUNT_TYPE_NOTAX);
 
-		$input_options = [];
-		if ($this->class)
-		{
-			$input_options[] = 'class="' . $this->class . '"';
-		}
+        $input_options = [];
+        if ($this->class) {
+            $input_options[] = 'class="' . $this->class . '"';
+        }
 
-		return HTMLHelper::_('select.genericlist', $options, $this->name, implode(' ', $input_options), 'value', 'text',
-			$this->value);
+        return HTMLHelper::_('select.genericlist', $options, $this->name, implode(' ', $input_options), 'value', 'text',
+            $this->value,
+        );
 
         return $html;
     }

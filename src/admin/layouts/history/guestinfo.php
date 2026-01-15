@@ -25,12 +25,12 @@ if (count($data)) {
 
         foreach ($d as $k => $v) {
             if ($v) {
-                $parts[] = ucfirst($k) . ": " . $v;
+                $parts[] = ucfirst($k) . ': ' . $v;
             }
         }
 
-        $all[] = implode(" ", $parts);
+        $all[] = implode(' ', $parts);
     }
 
-    echo implode(", ", $all);
+    echo implode(', ', $all);
 }

@@ -20,7 +20,6 @@ use InvalidArgumentException;
 use Joomla\Database\QueryInterface;
 use Joomla\DI\Exception\KeyNotFoundException;
 use RuntimeException;
-
 use function implode;
 use function is_array;
 use function is_numeric;
@@ -36,10 +35,12 @@ defined('_JEXEC') or die;
  */
 class PropertiesModel extends ListModel
 {
+    private string $user_properties;
+
     /**
      * Constructor.
      *
-     * @param   array  $config  An optional associative array of configuration settings.
+     * @param array $config An optional associative array of configuration settings.
      *
      * @throws Exception
      * @since  1.0.0
@@ -50,7 +51,7 @@ class PropertiesModel extends ListModel
             $config['filter_fields'] = KrListField::setPropertyFilterFields();
         }
 
-        $userSession           = new KrSession\User();
+        $userSession = new KrSession\User();
         $this->user_properties = $userSession->getUserProperties();
 
         parent::__construct($config);
@@ -68,17 +69,17 @@ class PropertiesModel extends ListModel
      */
     public static function propertyDates(): array
     {
-        $db    = KrFactory::getDatabase();
+        $db = KrFactory::getDatabase();
         $query = $db->getQuery(true);
 
         $query->select(
             'GREATEST(MAX(' . $db->qn('p.created_at') . '), MAX(' . $db->qn('p.updated_at') . '))  as '
             . $db->qn('maxdate'),
         )
-              ->select($db->qn('p.id', 'pid'))
-              ->from($db->qn('#__knowres_property', 'p'))
-              ->where($db->qn('p.state') . ' = 1')
-              ->group($db->qn('pid'));
+            ->select($db->qn('p.id', 'pid'))
+            ->from($db->qn('#__knowres_property', 'p'))
+            ->where($db->qn('p.state') . ' = 1')
+            ->group($db->qn('pid'));
 
         $db->setQuery($query);
 
@@ -88,7 +89,7 @@ class PropertiesModel extends ListModel
     /**
      * Get last property update on sub tables
      *
-     * @param   string  $table  Name of table
+     * @param string $table Name of table
      *
      * @return array
      * @throws KeyNotFoundException
@@ -98,17 +99,17 @@ class PropertiesModel extends ListModel
      */
     public static function propertySubDates(string $table): array
     {
-        $db    = KrFactory::getDatabase();
+        $db = KrFactory::getDatabase();
         $query = $db->getQuery(true);
 
         $query->select(
             'GREATEST(MAX(' . $db->qn('s.created_at') . '), MAX(' . $db->qn('s.updated_at') . '))  as '
             . $db->qn('maxdate'),
         )
-              ->select($db->qn('s.property_id'))
-              ->from($db->qn($table, 's'))
-              ->where($db->qn('s.state') . ' IN(0,1)')
-              ->group($db->qn('property_id'));
+            ->select($db->qn('s.property_id'))
+            ->from($db->qn($table, 's'))
+            ->where($db->qn('s.state') . ' IN(0,1)')
+            ->group($db->qn('property_id'));
         $db->setQuery($query);
 
         return $db->loadAssocList('property_id');
@@ -117,8 +118,8 @@ class PropertiesModel extends ListModel
     /**
      * Get property areas for typeahead
      *
-     * @param   int     $region_id  ID of region
-     * @param  ?string  $search     Search value
+     * @param int $region_id ID of region
+     * @param  ?string $search Search value
      *
      * @return array
      * @throws RuntimeException
@@ -126,13 +127,13 @@ class PropertiesModel extends ListModel
      */
     public function getArea(int $region_id = 0, ?string $search = null): array
     {
-        $db    = $this->getDatabase();
+        $db = $this->getDatabase();
         $query = $db->getQuery(true);
 
         $query->select($db->qn('a.property_area'));
         $query->from($db->qn('#__knowres_property', 'a'))
-              ->where($db->qn('a.state') . '=1')
-              ->where($db->qn('a.approved') . '=1');
+            ->where($db->qn('a.state') . '=1')
+            ->where($db->qn('a.approved') . '=1');
 
         if ($region_id) {
             $query->where($db->qn('a.region_id') . '=' . $region_id);
@@ -158,7 +159,7 @@ class PropertiesModel extends ListModel
     /**
      * Get property autosearch data
      *
-     * @param   string  $name  Property name string
+     * @param string $name Property name string
      *
      * @return array
      * @throws RuntimeException
@@ -166,17 +167,17 @@ class PropertiesModel extends ListModel
      */
     public function getAutosearch(string $name): array
     {
-        $db   = $this->getDatabase();
+        $db = $this->getDatabase();
         $lang = KrMethods::getLanguageTag();
 
-        $item           = 'region';
+        $item = 'region';
         $subQueryRegion = $db->getQuery(true);
         $subQueryRegion->select('sub.text')
-                       ->from($db->qn('#__knowres_translation', 'sub'))
-                       ->where($db->qn('sub.item') . ' = ' . $db->q($item))
-                       ->where($db->qn('sub.item_id') . ' = ' . $db->qn('p.region_id'))
-                       ->order('(CASE WHEN ' . $db->qn('sub.language') . ' = ' . $db->q($lang) . ' THEN 1 ELSE 2 END )')
-                       ->setLimit(1);
+            ->from($db->qn('#__knowres_translation', 'sub'))
+            ->where($db->qn('sub.item') . ' = ' . $db->q($item))
+            ->where($db->qn('sub.item_id') . ' = ' . $db->qn('p.region_id'))
+            ->order('(CASE WHEN ' . $db->qn('sub.language') . ' = ' . $db->q($lang) . ' THEN 1 ELSE 2 END )')
+            ->setLimit(1);
 
         $query = $db->getQuery(true)->select(
             $db->qn([
@@ -191,7 +192,7 @@ class PropertiesModel extends ListModel
 
         $query->select('(' . $subQueryRegion->__toString() . ') ' . $db->q('region_name'));
         $query->where($db->qn('p.state') . '=1')
-              ->where($db->qn('p.approved') . '=1');
+            ->where($db->qn('p.approved') . '=1');
 
         if ($name) {
             $name = $db->q('%' . $db->escape($name) . '%');
@@ -212,19 +213,19 @@ class PropertiesModel extends ListModel
      */
     public function getForApproval(): array
     {
-        $db    = $this->getDatabase();
+        $db = $this->getDatabase();
         $query = $db->getQuery(true);
-        $lang  = KrMethods::getLanguageTag();
+        $lang = KrMethods::getLanguageTag();
 
-        $item           = 'region';
+        $item = 'region';
         $subQueryRegion = $db->getQuery(true);
         $subQueryRegion->select('sub.text')
-                       ->from($db->qn('#__knowres_translation', 'sub'))
-                       ->where($db->qn('sub.item') . ' = ' . $db->q($item))
-                       ->where($db->qn('sub.item_id') . ' = ' . $db->qn('region_id'))
-                       ->where($db->qn('sub.field') . ' = ' . $db->q('name'))
-                       ->order('(CASE WHEN ' . $db->qn('sub.language') . ' = ' . $db->q($lang) . ' THEN 1 ELSE 2 END )')
-                       ->setLimit(1);
+            ->from($db->qn('#__knowres_translation', 'sub'))
+            ->where($db->qn('sub.item') . ' = ' . $db->q($item))
+            ->where($db->qn('sub.item_id') . ' = ' . $db->qn('region_id'))
+            ->where($db->qn('sub.field') . ' = ' . $db->q('name'))
+            ->order('(CASE WHEN ' . $db->qn('sub.language') . ' = ' . $db->q($lang) . ' THEN 1 ELSE 2 END )')
+            ->setLimit(1);
 
         $query->select($db->qn([
             'id',
@@ -232,10 +233,10 @@ class PropertiesModel extends ListModel
             'property_area',
         ]));
         $query->from($db->qn('#__knowres_property'))
-              ->where($db->qn('state') . '=1')
-              ->where($db->qn('approved') . '=0')
-              ->select('(' . $subQueryRegion->__toString() . ') ' . $db->q('region_name'))
-              ->order($db->qn('created_at'));
+            ->where($db->qn('state') . '=1')
+            ->where($db->qn('approved') . '=0')
+            ->select('(' . $subQueryRegion->__toString() . ') ' . $db->q('region_name'))
+            ->order($db->qn('created_at'));
 
         if (!empty($this->user_properties)) {
             $query->where('id IN (' . $this->user_properties . ')');
@@ -249,7 +250,7 @@ class PropertiesModel extends ListModel
     /**
      * Method to get all the data for the property dashboard.
      *
-     * @param   int  $id  The id of the primary key.
+     * @param int $id The id of the primary key.
      *
      * @return mixed  The return value or null if the query failed.
      * @throws Exception
@@ -261,7 +262,7 @@ class PropertiesModel extends ListModel
     {
         $today = TickTock::getDate();
 
-        $db    = $this->getDatabase();
+        $db = $this->getDatabase();
         $query = $db->getQuery(true);
 
         $query->select($db->qn([
@@ -285,58 +286,58 @@ class PropertiesModel extends ListModel
         ]));
 
         $query->from($db->qn('#__knowres_property', 'a'))
-              ->where($db->qn('a.id') . '=' . $id);
+            ->where($db->qn('a.id') . '=' . $id);
 
         $query->select('COUNT(DISTINCT op.id) AS ownerpayments')
-              ->join(
-                  'LEFT',
-                  $db->qn('#__knowres_service', 'op') . 'ON' . $db->qn('op.property_id') . '=' . $db->qn('a.id') . 'AND'
-                  . $db->qn('op.type') . '=' . $db->q('g') . 'AND' . $db->qn('op.state') . '=1',
-              );
+            ->join(
+                'LEFT',
+                $db->qn('#__knowres_service', 'op') . 'ON' . $db->qn('op.property_id') . '=' . $db->qn('a.id') . 'AND'
+                . $db->qn('op.type') . '=' . $db->q('g') . 'AND' . $db->qn('op.state') . '=1',
+            );
 
         $query->select('COUNT(DISTINCT x.id) AS channels')
-              ->join(
-                  'LEFT',
-                  $db->qn('#__knowres_service_xref', 'x') . 'ON' . $db->qn('x.property_id') . '=' . $db->qn('a.id')
-                  . 'AND' . $db->qn('x.state') . '=1',
-              );
+            ->join(
+                'LEFT',
+                $db->qn('#__knowres_service_xref', 'x') . 'ON' . $db->qn('x.property_id') . '=' . $db->qn('a.id')
+                . 'AND' . $db->qn('x.state') . '=1',
+            );
 
         $query->select('COUNT(DISTINCT ical.id) AS icals')
-              ->join(
-                  'LEFT',
-                  $db->qn('#__knowres_property_ical', 'ical') . 'ON' . $db->qn('ical.property_id') . '='
-                  . $db->qn('a.id') . 'AND'
-                  . $db->qn('ical.state') . '=1',
-              );
+            ->join(
+                'LEFT',
+                $db->qn('#__knowres_property_ical', 'ical') . 'ON' . $db->qn('ical.property_id') . '='
+                . $db->qn('a.id') . 'AND'
+                . $db->qn('ical.state') . '=1',
+            );
 
         $query->select('COUNT(DISTINCT rm.id) AS ratemarkups')
-              ->join(
-                  'LEFT',
-                  $db->qn('#__knowres_rate_markup', 'rm') . 'ON' . $db->qn('rm.property_id') . '=' . $db->qn('a.id')
-                  . 'AND'
-                  . $db->qn('rm.state') . '=1 AND' . $db->qn('rm.valid_to') . '>=' . $db->q($today),
-              );
+            ->join(
+                'LEFT',
+                $db->qn('#__knowres_rate_markup', 'rm') . 'ON' . $db->qn('rm.property_id') . '=' . $db->qn('a.id')
+                . 'AND'
+                . $db->qn('rm.state') . '=1 AND' . $db->qn('rm.valid_to') . '>=' . $db->q($today),
+            );
 
         $query->select('COUNT(DISTINCT c.id) AS coupons')
-              ->join(
-                  'LEFT',
-                  $db->qn('#__knowres_coupon', 'c') . 'ON' . $db->qn('c.property_id') . '=' . $db->qn('a.id') . 'AND'
-                  . $db->qn('c.state') . '=1 AND' . $db->qn('c.valid_to') . '>=' . $db->q($today),
-              );
+            ->join(
+                'LEFT',
+                $db->qn('#__knowres_coupon', 'c') . 'ON' . $db->qn('c.property_id') . '=' . $db->qn('a.id') . 'AND'
+                . $db->qn('c.state') . '=1 AND' . $db->qn('c.valid_to') . '>=' . $db->q($today),
+            );
 
         $query->select('COUNT(DISTINCT d.id) AS discounts')
-              ->join(
-                  'LEFT',
-                  $db->qn('#__knowres_discount', 'd') . 'ON' . $db->qn('d.property_id') . '=' . $db->qn('a.id') . 'AND'
-                  . $db->qn('d.state') . '=1 AND' . $db->qn('d.valid_to') . '>=' . $db->q($today),
-              );
+            ->join(
+                'LEFT',
+                $db->qn('#__knowres_discount', 'd') . 'ON' . $db->qn('d.property_id') . '=' . $db->qn('a.id') . 'AND'
+                . $db->qn('d.state') . '=1 AND' . $db->qn('d.valid_to') . '>=' . $db->q($today),
+            );
 
         $query->select('COUNT(DISTINCT e.id) AS extras')
-              ->join(
-                  'LEFT',
-                  $db->qn('#__knowres_extra', 'e') . 'ON' . $db->qn('e.property_id') . '=' . $db->qn('a.id') . 'AND'
-                  . $db->qn('e.state') . '=1',
-              );
+            ->join(
+                'LEFT',
+                $db->qn('#__knowres_extra', 'e') . 'ON' . $db->qn('e.property_id') . '=' . $db->qn('a.id') . 'AND'
+                . $db->qn('e.state') . '=1',
+            );
 
         $query->group($db->qn('id'));
 
@@ -354,7 +355,7 @@ class PropertiesModel extends ListModel
      */
     public function getForGantt(): array
     {
-        $db    = $this->getDatabase();
+        $db = $this->getDatabase();
         $query = $db->getQuery(true);
 
         $query->select($db->qn([
@@ -363,7 +364,7 @@ class PropertiesModel extends ListModel
             'a.region_id',
         ]));
         $query->from($db->qn('#__knowres_property', 'a'))
-              ->where($db->qn('a.state') . '=1');
+            ->where($db->qn('a.state') . '=1');
 
         if (!empty($this->user_properties)) {
             $query->where($db->qn('a.id') . ' IN (' . $this->user_properties . ')');
@@ -378,7 +379,7 @@ class PropertiesModel extends ListModel
     /**
      * Get properties for change list
      *
-     * @param   int  $id  ID of property
+     * @param int $id ID of property
      *
      * @return mixed
      * @throws RuntimeException
@@ -386,14 +387,14 @@ class PropertiesModel extends ListModel
      */
     public function getForSwitch(int $id): mixed
     {
-        $db    = $this->getDatabase();
+        $db = $this->getDatabase();
         $query = $db->getQuery(true);
 
         $query->select($db->qn(['id', 'property_name']));
         $query->from($db->qn('#__knowres_property'))
-              ->where($db->qn('id') . '<>' . $id)
-              ->where($db->qn('state') . '=1')
-              ->where($db->qn('approved') . '=1');
+            ->where($db->qn('id') . '<>' . $id)
+            ->where($db->qn('state') . '=1')
+            ->where($db->qn('approved') . '=1');
 
         if (!empty($this->user_properties)) {
             $query->where('id IN (' . $this->user_properties . ')');
@@ -409,7 +410,7 @@ class PropertiesModel extends ListModel
     /**
      * Get property IDs for a specific state
      *
-     * @param   int  $state  Required state or 0 for all
+     * @param int $state Required state or 0 for all
      *
      * @return mixed
      * @throws RuntimeException
@@ -417,11 +418,11 @@ class PropertiesModel extends ListModel
      */
     public function getIds(int $state = 1): mixed
     {
-        $db    = $this->getDatabase();
+        $db = $this->getDatabase();
         $query = $db->getQuery(true);
 
         $query->select($db->qn('id'))
-              ->from($db->qn('#__knowres_property'));
+            ->from($db->qn('#__knowres_property'));
 
         if ($state) {
             $query->where($db->qn('state') . '=' . $state);
@@ -437,8 +438,8 @@ class PropertiesModel extends ListModel
     /**
      * Get rates for annual update of property
      *
-     * @param   int     $id    ID of property
-     * @param   string  $date  From date
+     * @param int $id ID of property
+     * @param string $date From date
      *
      * @return mixed
      * @since  3.3.0
@@ -452,12 +453,12 @@ class PropertiesModel extends ListModel
 
         $subQuery = $db->getQuery(true);
         $subQuery->select('sub.text')
-                 ->from($db->qn('#__knowres_translation', 'sub'))
-                 ->where($db->qn('sub.item') . '=' . $db->q($item))
-                 ->where($db->qn('sub.item_id') . '=' . $db->qn('r.id'))
-                 ->where($db->qn('sub.field') . '=' . $db->q('name'))
-                 ->order('(CASE WHEN ' . $db->qn('sub.language') . '=' . $db->q($lang) . ' THEN 1 ELSE 2 END )')
-                 ->setLimit(1);
+            ->from($db->qn('#__knowres_translation', 'sub'))
+            ->where($db->qn('sub.item') . '=' . $db->q($item))
+            ->where($db->qn('sub.item_id') . '=' . $db->qn('r.id'))
+            ->where($db->qn('sub.field') . '=' . $db->q('name'))
+            ->order('(CASE WHEN ' . $db->qn('sub.language') . '=' . $db->q($lang) . ' THEN 1 ELSE 2 END )')
+            ->setLimit(1);
 
         $query = $db->getQuery(true);
         $query->select($db->qn([
@@ -475,11 +476,11 @@ class PropertiesModel extends ListModel
             'more_guests',
             'state',
         ]))
-              ->from($db->qn('#__knowres_rate', 'r'))
-              ->select('(' . $subQuery->__toString() . ') ' . $db->q('name'))
-              ->where($db->qn('r.property_id') . '=' . $id)
-              ->where($db->qn('r.valid_from') . '>=' . $db->q($date))
-              ->order($db->qn('r.valid_to') . 'DESC');
+            ->from($db->qn('#__knowres_rate', 'r'))
+            ->select('(' . $subQuery->__toString() . ') ' . $db->q('name'))
+            ->where($db->qn('r.property_id') . '=' . $id)
+            ->where($db->qn('r.valid_from') . '>=' . $db->q($date))
+            ->order($db->qn('r.valid_to') . 'DESC');
 
         $db->setQuery($query);
 
@@ -495,29 +496,29 @@ class PropertiesModel extends ListModel
      */
     protected function getListQuery(): QueryInterface
     {
-        $db    = $this->getDatabase();
+        $db = $this->getDatabase();
         $query = $db->getQuery(true);
 
         $lang = KrMethods::getLanguageTag();
 
-        $item           = 'region';
+        $item = 'region';
         $subQueryRegion = $db->getQuery(true);
         $subQueryRegion->select('sub.text')
-                       ->from($db->qn('#__knowres_translation', 'sub'))
-                       ->where($db->qn('sub.item') . ' = ' . $db->q($item))
-                       ->where($db->qn('sub.item_id') . ' = ' . $db->qn('a.region_id'))
-                       ->where($db->qn('sub.field') . ' = ' . $db->q('name'))
-                       ->order('(CASE WHEN ' . $db->qn('sub.language') . ' = ' . $db->q($lang) . ' THEN 1 ELSE 2 END )')
-                       ->setLimit(1);
+            ->from($db->qn('#__knowres_translation', 'sub'))
+            ->where($db->qn('sub.item') . ' = ' . $db->q($item))
+            ->where($db->qn('sub.item_id') . ' = ' . $db->qn('a.region_id'))
+            ->where($db->qn('sub.field') . ' = ' . $db->q('name'))
+            ->order('(CASE WHEN ' . $db->qn('sub.language') . ' = ' . $db->q($lang) . ' THEN 1 ELSE 2 END )')
+            ->setLimit(1);
 
-        $item         = 'type';
+        $item = 'type';
         $subQueryType = $db->getQuery(true);
         $subQueryType->select('sub.text')
-                     ->from($db->qn('#__knowres_translation', 'sub'))
-                     ->where($db->qn('sub.item') . '=' . $db->q($item))
-                     ->where($db->qn('sub.item_id') . '=' . $db->qn('a.type_id'))
-                     ->order('(CASE WHEN ' . $db->qn('sub.language') . ' = ' . $db->q($lang) . ' THEN 1 ELSE 2 END )')
-                     ->setLimit(1);
+            ->from($db->qn('#__knowres_translation', 'sub'))
+            ->where($db->qn('sub.item') . '=' . $db->q($item))
+            ->where($db->qn('sub.item_id') . '=' . $db->qn('a.type_id'))
+            ->order('(CASE WHEN ' . $db->qn('sub.language') . ' = ' . $db->q($lang) . ' THEN 1 ELSE 2 END )')
+            ->setLimit(1);
 
         $query->select($this->getState('list.select', 'a.*'));
         $query->from($db->qn('#__knowres_property', 'a'));
@@ -616,7 +617,7 @@ class PropertiesModel extends ListModel
             $orderCustom = $this->state->get('list.ordercustom');
             $query->order($db->escape($orderCustom));
         } else {
-            $orderCol  = $this->state->get('list.ordering');
+            $orderCol = $this->state->get('list.ordering');
             $orderDirn = $this->state->get('list.direction');
             if ($orderCol && $orderDirn) {
                 $query->order($db->escape($orderCol . ' ' . $orderDirn));
@@ -632,7 +633,7 @@ class PropertiesModel extends ListModel
      * different modules that might need different sets of data or different
      * ordering requirements.
      *
-     * @param   string  $id  A prefix for the store id.
+     * @param string $id A prefix for the store id.
      *
      * @return string
      * @since  1.0.0
@@ -653,8 +654,8 @@ class PropertiesModel extends ListModel
      * Method to autopopulate the model state.
      * Note. Calling getState in this method will result in recursion.
      *
-     * @param   string  $ordering
-     * @param   string  $direction
+     * @param string $ordering
+     * @param string $direction
      *
      * @throws Exception
      * @since  1.0.0

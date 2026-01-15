@@ -27,14 +27,17 @@ class AgenciesController extends AdminController
     /**
      * Proxy for getModel.
      *
-     * @param   string  $name    Model name
+     * @param   string  $name  Model name
      * @param   string  $prefix  Model prefix administrator or site (defaults to Administrator)
      * @param   array   $config  Configuration array for model. Optional.
      *
      * @return  bool|BaseDatabaseModel Model object on success; otherwise false on failure.
      * @since   1.6
      */
-    public function getModel($name = 'agency', $prefix = 'Administrator', $config = ['ignore_request' => true],
+    public function getModel(
+        $name = 'agency',
+        $prefix = 'Administrator',
+        $config = ['ignore_request' => true],
     ): bool|BaseDatabaseModel {
         return parent::getModel($name, $prefix, $config);
     }

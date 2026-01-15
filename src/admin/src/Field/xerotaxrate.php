@@ -30,14 +30,8 @@ FormHelper::loadFieldClass('list');
  */
 class JFormFieldXerotaxrate extends JFormField
 {
-
-	/**
-	 * The form field type.
-	 *
-	 * @since    3.1.0
-	 * @var        string
-	 */
-	protected $type = 'Xerotaxrate';
+    /** @var string Required type */
+    protected $type = 'Xerotaxrate';
 
     /**
      * Get the field options.ader
@@ -55,28 +49,24 @@ class JFormFieldXerotaxrate extends JFormField
         $xero       = new Xero($service_id);
         $data       = $xero->getTaxRates(true);
 
-		if (!count($data))
-		{
-			$options[] = HTMLHelper::_('select.option', '0', "Please add some tax rates on Xero and come back again");
-		}
-		else
-		{
-			$options[] = HTMLHelper::_('select.option', 0, KrMethods::plain('COM_KNOWRES_XERO_SELECT_TAXRATE'));
+        if (!count($data)) {
+            $options[] = HTMLHelper::_('select.option', '0', "Please add some tax rates on Xero and come back again");
+        } else {
+            $options[] = HTMLHelper::_('select.option', 0, KrMethods::plain('COM_KNOWRES_XERO_SELECT_TAXRATE'));
 
-			foreach ($data as $d)
-			{
-				$options[] = HTMLHelper::_('select.option', $d->Name, $d->Name);
-			}
-		}
+            foreach ($data as $d) {
+                $options[] = HTMLHelper::_('select.option', $d->Name, $d->Name);
+            }
+        }
 
-		$input_options = [];
-		if ($this->class)
-		{
-			$input_options[] = 'class="' . $this->class . '"';
-		}
+        $input_options = [];
+        if ($this->class) {
+            $input_options[] = 'class="' . $this->class . '"';
+        }
 
-		return HTMLHelper::_('select.genericlist', $options, $this->name, implode(' ', $input_options), 'value', 'text',
-			$this->value);
+        return HTMLHelper::_('select.genericlist', $options, $this->name, implode(' ', $input_options), 'value', 'text',
+            $this->value,
+        );
 
         return $html;
     }

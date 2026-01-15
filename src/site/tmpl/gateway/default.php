@@ -8,7 +8,6 @@
  */
 
 /** @noinspection PhpPossiblePolymorphicInvocationInspection */
-
 /** @noinspection PhpUnhandledExceptionInspection */
 
 use Joomla\CMS\Factory;

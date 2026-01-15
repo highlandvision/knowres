@@ -3,7 +3,7 @@
  * @package     Know Reservations
  * @subpackage  Admin Layouts
  * @copyright   2020 Highland Vision. All rights reserved.
- * @license     See the file "LICENSE.txt" for the full license governing this code.
+ * @license     See the file 'LICENSE.txt' for the full license governing this code.
  * @author      Hazel Wilson <hazel@highlandvision.com>
  */
 
@@ -27,12 +27,12 @@ if (count($data)) {
         $parts = [];
 
         if ($d['checkout_fees_amount'] > 0) {
-            $parts[] = $d['checkout_fees_from'] . "-" . $d['checkout_fees_to'];
+            $parts[] = $d['checkout_fees_from'] . '-' . $d['checkout_fees_to'];
             $parts[] = Utility::displayMoney($d['checkout_fees_amount']);
 
-            $all[] = implode(" ", $parts);
+            $all[] = implode(' ', $parts);
         }
     }
 
-    echo implode(", ", $all);
+    echo implode(', ', $all);
 }

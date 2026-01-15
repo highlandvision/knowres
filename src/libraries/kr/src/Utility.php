@@ -17,6 +17,7 @@ use RuntimeException;
 use stdClass;
 
 use function ceil;
+use function defined;
 use function floor;
 use function implode;
 use function json_decode;
@@ -31,7 +32,7 @@ if (!defined('KRFRAMEWORK')) {
 }
 
 // phpcs:disable PSR1.Files.SideEffects
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
 
 /**
@@ -258,20 +259,37 @@ class Utility
      * @since  3.3.0
      */
     public static function formatAddress(?string $address1, ?string $address2, ?string $postcode, ?string $town,
-        mixed $region, mixed $country, ?string $string): ?string
-    {
+        mixed $region, mixed $country, ?string $string,
+    ): ?string {
         $Translations = new Translations();
-
-        $tmp   = [];
-        $tmp[] = $address1 ?: '';
-        $tmp[] = $address2 ?: '';
-        $tmp[] = $town ?: '';
-        $tmp[] = $postcode ?: '';
-        $tmp[] = $region ? self::getAddressValue($Translations, 'region', $region) : '';
-        $tmp[] = $country ? self::getAddressValue($Translations, 'country', $country) : '';
-        $tmp   = array_filter($tmp);
+        $tmp          = [];
+        $tmp[]        = $address1 ?: '';
+        $tmp[]        = $address2 ?: '';
+        $tmp[]        = $town ?: '';
+        $tmp[]        = $postcode ?: '';
+        $tmp[]        = $region ? self::formatAddressField($Translations, 'region', $region) : '';
+        $tmp[]        = $country ? self::formatAddressField($Translations, 'country', $country) : '';
+        $tmp          = array_filter($tmp);
 
         return implode($string, $tmp);
+    }
+
+    /**
+     * Get translations for address fields
+     *
+     * @param   Translations  $Translations  Translations object
+     * @param   string        $item          Table name
+     * @param   mixed         $value         Item valuel
+     * @param   string        $field         Translation field name
+     *
+     * @return array|string
+     * @throws RuntimeException
+     * @since  3.3.0
+     */
+    public static function formatAddressField(Translations $Translations, string $item, mixed $value,
+        string $field = 'name',
+    ): array|string {
+        return is_numeric($value) ? $Translations->getText($item, $value, $field) : $value;
     }
 
     /**
@@ -293,10 +311,30 @@ class Utility
 
         $code = '';
         if ($country_id) {
-            $code = self::getDialCode($country_id, $paypal);
+            $code = self::generateDialCode($country_id, $paypal);
         }
 
         return $paypal ? $code . str_replace(' ', '', $number) : $code . ' ' . $number;
+    }
+
+    /**
+     * Get dialing code from country
+     *
+     * @param   int   $country_id  ID of country
+     * @param   bool  $paypal      True for PayPal format that requires 00 instead of plus
+     *
+     * @return string
+     * @throws Exception
+     * @since  3.7.0
+     */
+    public static function generateDialCode(int $country_id, bool $paypal = false): string
+    {
+        $country = KrFactory::getAdminItem('country', $country_id);
+        if (isset($country->id) && $country->dial_code) {
+            return $paypal ? '' : '+' . $country->dial_code;
+        } else {
+            return '';
+        }
     }
 
     /**
@@ -335,24 +373,6 @@ class Utility
         }
 
         return 'Unknown Place';
-    }
-
-    /**
-     * Get translations for address fields
-     *
-     * @param   Translations  $Translations  Translations object
-     * @param   string        $item          Table name
-     * @param   mixed         $value         Item value
-     * @param   string        $field         Translation field name
-     *
-     * @return array|string
-     * @throws RuntimeException
-     * @since  3.3.0
-     */
-    public static function getAddressValue(Translations $Translations, string $item, mixed $value,
-        string $field = 'name',
-    ): array|string {
-        return is_numeric($value) ? $Translations->getText($item, $value, $field) : $value;
     }
 
     /**
@@ -411,26 +431,6 @@ class Utility
     }
 
     /**
-     * Get dialing code from country
-     *
-     * @param   int   $country_id  ID of country
-     * @param   bool  $paypal      True for PayPal format that requires 00 instead of plus
-     *
-     * @return string
-     * @throws Exception
-     * @since  3.7.0
-     */
-    public static function getDialCode(int $country_id, bool $paypal = false): string
-    {
-        $country = KrFactory::getAdminItem('country', $country_id);
-        if (isset($country->id) && $country->dial_code) {
-            return $paypal ? '' : '+' . $country->dial_code;
-        } else {
-            return '';
-        }
-    }
-
-    /**
      * Return URL for Google Maps
      *
      * @return string
@@ -439,18 +439,16 @@ class Utility
     public static function getGmapsURL(): string
     {
         $key = KrMethods::getParams()->get('gmapkey', '');
-        if ($key) {
-            $url = 'https://maps.googleapis.com/maps/api/js?';
-            $url .= 'key=' . $key;
-//			$url .= '&callback=initMap';
-            $url .= '&libraries=marker';
-            $url .= '&loading=async';
-
-//			src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap&v=weekly&libraries=marker"
-//defer
-
-            return $url;
+        if (!$key) {
+            throw new RuntimeException ('A Google maps key must be entered in KR Options to use Google Maps', 400);
         }
+
+        $url = 'https://maps.googleapis.com/maps/api/js?';
+        $url .= 'key=' . $key;
+        $url .= '&libraries=marker';
+        $url .= '&loading=async';
+
+        return $url;
     }
 
     /**
@@ -475,7 +473,7 @@ class Utility
     }
 
     /**
-     * Return URL for Google Maps
+     * Return URL for Google Maps MarkerClusterer
      *
      * @return string
      * @since  2.3.0

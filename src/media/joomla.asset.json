@@ -297,6 +297,14 @@
       "version": "5.9.3"
     },
     {
+      "name": "com_knowres.vendor-googlemaps",
+      "type": "script",
+      "uri": "media/com_knowres/vendor/corejavascript/typeahead.js/dist/typeahead.bundle.min.js",
+      "attributes": {
+        "defer": true
+      }
+    },
+    {
       "name": "com_knowres.vendor-jqueryui",
       "type": "script",
       "uri": "com_knowres/admin.jquery-ui.min.js",

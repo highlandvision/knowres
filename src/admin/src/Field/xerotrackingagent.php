@@ -30,14 +30,8 @@ FormHelper::loadFieldClass('list');
  */
 class JFormFieldXerotrackingagent extends JFormField
 {
-
-	/**
-	 * The form field type.
-	 *
-	 * @since    3.1.0
-	 * @var        string
-	 */
-	protected $type = 'Xerotrackingagent';
+    /** @var string Required type */
+    protected $type = 'Xerotrackingagent';
 
     /**
      * Get the field options.ader
@@ -52,17 +46,15 @@ class JFormFieldXerotrackingagent extends JFormField
         $html          = [];
         $message       = '';
 
-		while (true)
-		{
-			$service_id = KrFactory::getListModel('services')::checkForSingleService(true, 'xero');
+        while (true) {
+            $service_id = KrFactory::getListModel('services')::checkForSingleService(true, 'xero');
 
-			$xero     = new Xero($service_id);
-			$tracking = $xero->getTracking();
-			if (!$tracking)
-			{
-				$message = 'Please configure relevant tracking options on Xero if tracking is required';
-				break;
-			}
+            $xero     = new Xero($service_id);
+            $tracking = $xero->getTracking();
+            if (!$tracking) {
+                $message = 'Please configure relevant tracking options on Xero if tracking is required';
+                break;
+            }
 
             $xero_tracking[] = HTMLHelper::_('select.option', 0, KrMethods::plain('JSELECT'));
 
@@ -76,40 +68,39 @@ class JFormFieldXerotrackingagent extends JFormField
                                 $o->Name,
                             ];
 
-							$xero_tracking[] = HTMLHelper::_('select.option', Utility::encodeJson($option),
-								$top . ' / ' . $o->Name);
-						}
-					}
-				}
-			}
+                            $xero_tracking[] = HTMLHelper::_('select.option', Utility::encodeJson($option),
+                                $top . ' / ' . $o->Name,
+                            );
+                        }
+                    }
+                }
+            }
 
-			$input_options = [];
-			if ($this->class)
-			{
-				$input_options[] = 'class="' . $this->class . '"';
-			}
+            $input_options = [];
+            if ($this->class) {
+                $input_options[] = 'class="' . $this->class . '"';
+            }
 
             $data = Utility::decodeJson($this->value, true);
 
-			$agents = KrFactory::getListModel('agents')->getAgents();
-			foreach ($agents as $a)
-			{
-				$default = 0;
-				if (count($data) && isset($data[$a->id]))
-				{
-					$default = $data[$a->id];
-				}
+            $agents = KrFactory::getListModel('agents')->getAgents();
+            foreach ($agents as $a) {
+                $default = 0;
+                if (count($data) && isset($data[$a->id])) {
+                    $default = $data[$a->id];
+                }
 
-				$html[] = '<div class="control-group">';
-				$html[] = '<div class="control-label">';
-				$html[] = $a->name;
-				$html[] = '</div>';
-				$html[] = '<div class="controls">';
-				$html[] = HTMLHelper::_('select.genericlist', $xero_tracking, "map_agent[$a->id]",
-					implode(' ', $input_options), 'value', 'text', $default);
-				$html[] = '</div>';
-				$html[] = '</div>';
-			}
+                $html[] = '<div class="control-group">';
+                $html[] = '<div class="control-label">';
+                $html[] = $a->name;
+                $html[] = '</div>';
+                $html[] = '<div class="controls">';
+                $html[] = HTMLHelper::_('select.genericlist', $xero_tracking, "map_agent[$a->id]",
+                    implode(' ', $input_options), 'value', 'text', $default,
+                );
+                $html[] = '</div>';
+                $html[] = '</div>';
+            }
 
             return implode('', $html);
         }

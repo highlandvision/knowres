@@ -1,9 +1,9 @@
-.idea
-src/media/vendor/
-package.json
+.idea/
+/buiid/composer.phar
+/src/media/vendor/
 privatekey.pem
 publickey.cer
 stats.json
-*.min.js*
-*.min.css*
-*.css.map
+**.min.js*
+**.min.css*
+**.css.map
