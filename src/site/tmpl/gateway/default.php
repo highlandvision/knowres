@@ -17,9 +17,10 @@ defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
 
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-$wa->useScript('com_knowres.site')
-   ->useScript('form.validate')
-   ->useScript('keepalive');
+$wa
+    ->useScript('com_knowres.site')
+    ->useScript('form.validate')
+    ->useScript('keepalive');
 
 if ($this->paymentData->payment_type == 'OBR') {
     echo $this->loadTemplate('stripe_request');

@@ -262,14 +262,15 @@ class Utility
         mixed $region, mixed $country, ?string $string,
     ): ?string {
         $Translations = new Translations();
-        $tmp          = [];
-        $tmp[]        = $address1 ?: '';
-        $tmp[]        = $address2 ?: '';
-        $tmp[]        = $town ?: '';
-        $tmp[]        = $postcode ?: '';
-        $tmp[]        = $region ? self::formatAddressField($Translations, 'region', $region) : '';
-        $tmp[]        = $country ? self::formatAddressField($Translations, 'country', $country) : '';
-        $tmp          = array_filter($tmp);
+
+        $tmp   = [];
+        $tmp[] = $address1 ?: '';
+        $tmp[] = $address2 ?: '';
+        $tmp[] = $town ?: '';
+        $tmp[] = $postcode ?: '';
+        $tmp[] = $region ? self::formatAddressField($Translations, 'region', $region) : '';
+        $tmp[] = $country ? self::formatAddressField($Translations, 'country', $country) : '';
+        $tmp   = array_filter($tmp);
 
         return implode($string, $tmp);
     }
