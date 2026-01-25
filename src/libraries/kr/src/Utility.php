@@ -631,7 +631,7 @@ class Utility
      */
     public static function roundValue(?float $value, ?string $iso = '', int $decimals = 0): float
     {
-        if (is_null($float)) {
+        if (is_null($value)) {
             return 0;
         }
 
